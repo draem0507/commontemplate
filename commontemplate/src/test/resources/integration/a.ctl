@@ -1,0 +1,2 @@
+aa
+$inline{"b.ctl"}

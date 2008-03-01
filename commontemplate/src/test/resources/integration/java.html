@@ -1,0 +1,27 @@
+// 导入commontemplate模块 
+import org.commontemplate.core.*; 
+import org.commontemplate.engine.*; 
+import org.commontemplate.standard.*; 
+
+// 配置并建造工厂, 工厂可单例重用 
+StandardConfiguration config = new StandardConfiguration(); 
+config.set...
+Factory factory = new Engine(config); 
+
+// 定义运行期数据 
+Map model = ... 
+Writer output = ... 
+Locale locale = ... 
+
+// 执行 
+Template template = factory.getTemplate("mytemplate.mtl"); 
+Context context = factory.createContext(output, locale); 
+context.defineAllVariables(model); 
+context.defineVariable("name", "value"); 
+... 
+template.render(context); 
+
+// 清理，最好放在finally块中 
+context.destroy(); //销毁上下文 
+output.flush(); 
+output.close(); 

@@ -1,0 +1,10 @@
+${users[name="liangfei"].email}
+${users[name="liangfei"].name}
+${users.toArray[name="zhangyong"].email}
+${mails[key="liangfei"]}
+${mails[key="liangfei"].value}
+${mails[key="liangfei"].key}
+${mails[value="liangfei0201@163.com"]}
+${mails[value="liangfei0201@163.com"].key}
+${mails[value="liangfei0201@163.com"].value}
+${users[name="liangfei",email="liangfei0201@163.com"].name}

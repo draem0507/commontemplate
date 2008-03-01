@@ -1,0 +1,10 @@
+\${users[0].name}
+\\${users[0].name}
+\\\${users[0].name}
+\\\\${users[0].name}
+\\\\\${users[0].name}
+\\3${users[0].name}
+\${"aa\r\nbb\`\h\\jjj\"\t\'\1\5ddd"}
+${"aa\r\nbb\`\h\\jjj\"\t\'\1\5ddd"}
+\aaaaaaaaaa\
+\\\\
