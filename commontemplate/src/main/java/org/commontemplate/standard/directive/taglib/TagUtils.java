@@ -9,9 +9,9 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.DynamicAttributes;
 
 class TagUtils {
-	
+
 	private TagUtils(){}
-	
+
 	static void initTag(Object tag, Map attributes) throws SecurityException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, JspException {
 		for (Iterator iterator = attributes.entrySet().iterator(); iterator.hasNext();) {
 			Map.Entry attribute = (Map.Entry)iterator.next();
@@ -31,14 +31,14 @@ class TagUtils {
 				}
 			}
 			if (! hasSetter) { // 如果没有setter方法, 则检测动态属性注入.
-				if (tag instanceof DynamicAttributes) 
-					((DynamicAttributes)tag).setDynamicAttribute(null, name, value);
-				else 
+				if (tag instanceof DynamicAttributes)
+					((DynamicAttributes)tag).setDynamicAttribute(null, name, value); // TODO 名称空间未处理 <taga ns:attr="value" />
+				else
 					throw new JspException("no such method : " + setterName + " from " + tag.getClass().getName());
 			}
 		}
 	}
-	
+
 	static Object convert(Object value, Class target) {
 		if (value == null)
 			return null;
