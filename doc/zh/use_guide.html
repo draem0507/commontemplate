@@ -1,0 +1,501 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=gb2312" />
+		<title>Common Template Engine</title>
+		<meta name="keywords" content="commontemplate ctl template language engine code generator" />
+		<style type="text/css">
+			body {
+				margin: 0px;
+				padding: 0px;
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 12px;
+				color: #000000;
+				cursor: url('../images/cursor.cur');
+			}
+			
+			td {
+				font-size: 12px;
+				height: 26;
+			}
+			
+			img {
+				border: 0px;
+				clear: right;
+			}
+			
+			input {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 12px;
+				color: #000000;
+			}
+			
+			a:link {
+				font-size: 12px;
+				color: #003399;
+				text-decoration: none;
+			}
+			a:visited {
+				font-size: 12px;
+				color: #003399;
+				text-decoration: none;
+			}
+			a:active {
+				font-size: 12px;
+				color: #003399;
+				text-decoration: none;
+			}
+			a:hover {
+				font-size: 12px;
+				color: #003399;
+				text-decoration: underline;
+			}
+		</style>
+	</head>
+	<body>
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td colspan="2" rowspan="2" height="60">
+					<a href="http://www.commontemplate.org"><img src="../images/banner.gif" alt="Common Template Engine" border="0" width="400" height="50" /></a>
+				</td>
+				<td valign="top" align="right">
+					<a href="../en/use_guide.html">English</a> | 中文 | <a href="join.html">翻译</a>&nbsp;&nbsp;
+				</td>
+			</tr>
+			<tr>
+				<td valign="bottom" align="right">
+					<table border="1" cellpadding="0" cellspacing="0" height="22" style="border-collapse: collapse; border-style: solid; border-color: #CCCCCC; font-weight: bold;">
+						<tr align="center">
+							<td width="90"><a href="download.html">下载</a></td>
+							<td width="90"><a href="news.html">新闻</a></td>
+							<td width="90"><a target="_blank" href="http://forum.commontemplate.org/">论坛</a></td>
+							<td width="90"><a href="about.html">关于我们</a></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" height="6" style="background-color: #005B88;"></td>
+			</tr>
+			<tr>
+				<td colspan="3" height="6"></td>
+			</tr>
+			<tr>
+				<td width="20%" height="600" valign="top">
+					<table border="1" style="border-collapse:collapse; table-layout:fixed; word-wrap:beak-word;" cellspacing="1" cellpadding="2">
+						<tr>
+							<td height="24" style="background-color: #F4F4F4;">
+								<table width="100%" border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td width="4" height="22" style="background-color: #0055CC;"></td>
+										<td width="4"></td>
+										<td style="font-weight: bold;">文档</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td height="24" style="background-color: #F4F4F4;">
+								<table width="100%" border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td width="16"></td>
+										<td><a href="index.html">概览</a></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td height="24" style="background-color: #F4F4F4;">
+								<table width="100%" border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td width="16"></td>
+										<td><a href="template_guide.html">模板指南</a></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td height="24" style="background-color: #F4F4F4;">
+								<table width="100%" border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td width="16"></td>
+										<td><a href="integration_guide.html">集成指南</a></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td height="24" style="background-color: #F4F4F4;">
+								<table width="100%" border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td width="16"></td>
+										<td><a href="config_guide.html">配置指南</a></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td height="24" style="background-color: #F4F4F4;">
+								<table width="100%" border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td width="16"></td>
+										<td><a href="use_guide.html">使用指南</a></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td height="24" style="background-color: #F4F4F4;">
+								<table width="100%" border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td width="16"></td>
+										<td><a href="expansibility_guide.html">扩展指南</a></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td height="24" style="background-color: #F4F4F4;">
+								<table width="100%" border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td width="16"></td>
+										<td><a href="architecture_guide.html">架构指南</a></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td height="24" style="background-color: #F4F4F4;">
+								<table width="100%" border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td width="16"></td>
+										<td><a href="faq.html">常见问题</a></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td height="24" style="background-color: #F4F4F4;">
+								<table width="100%" border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td width="4" height="22" style="background-color: #0055CC;"></td>
+										<td width="4"></td>
+										<td style="font-weight: bold;">下载</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td height="24" style="background-color: #F4F4F4;">
+								<table width="100%" border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td width="16"></td>
+										<td><a href="download.html">发行版本</a></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td height="24" style="background-color: #F4F4F4;">
+								<table width="100%" border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td width="16"></td>
+										<td><a href="svn.html">SVN</a></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td height="24" style="background-color: #F4F4F4;">
+								<table width="100%" border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td width="16"></td>
+										<td><a href="example.html">使用范例</a></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td height="24" style="background-color: #F4F4F4;">
+								<table width="100%" border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td width="16"></td>
+										<td><a href="editor.html">编辑器插件</a></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td height="24" style="background-color: #F4F4F4;">
+								<table width="100%" border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td width="4" height="22" style="background-color: #0055CC;"></td>
+										<td width="4"></td>
+										<td style="font-weight: bold;">资源</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td height="24" style="background-color: #F4F4F4;">
+								<table width="100%" border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td width="16"></td>
+										<td><a href="../resource/license.txt" target="_blank">许可协议</a></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td height="24" style="background-color: #F4F4F4;">
+								<table width="100%" border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td width="16"></td>
+										<td><a href="#">更新日志</a></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td height="24" style="background-color: #F4F4F4;">
+								<table width="100%" border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td width="16"></td>
+										<td><a href="../resource/commontemplate.properties" target="_blank">配置文件</a></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td height="24" style="background-color: #F4F4F4;">
+								<table width="100%" border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td width="16"></td>
+										<td><a href="uml.html">UML</a></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td height="24" style="background-color: #F4F4F4;">
+								<table width="100%" border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td width="16"></td>
+										<td><a target="_blank" href="../javadoc/index.html">Java Doc</a></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td height="24" style="background-color: #F4F4F4;">
+								<table width="100%" border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td width="16"></td>
+										<td><a href="#">测试覆盖率</a></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td height="24" style="background-color: #F4F4F4;">
+								<table width="100%" border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td width="4" height="22" style="background-color: #0055CC;"></td>
+										<td width="4"></td>
+										<td style="font-weight: bold;">社区</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td height="24" style="background-color: #F4F4F4;">
+								<table width="100%" border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td width="16"></td>
+										<td><a target="_blank" href="http://forum.commontemplate.org/">论坛</a></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td height="24" style="background-color: #F4F4F4;">
+								<table width="100%" border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td width="16"></td>
+										<td><a target="_blank" href="http://sourceforge.net/mail/?group_id=193256">邮件列表</a></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td height="24" style="background-color: #F4F4F4;">
+								<table width="100%" border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td width="16"></td>
+										<td><a target="_blank" href="http://sourceforge.net/tracker/?group_id=193256&atid=944685">问题列表</a></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td height="24" style="background-color: #F4F4F4;">
+								<table width="100%" border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td width="16"></td>
+										<td><a target="_blank" href="http://sourceforge.net/tracker/?func=add&group_id=193256&atid=944685" style="color: #FF5555;"><b>点这里报告问题 !<b></a></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+
+						<tr>
+							<td height="24" style="background-color: #F4F4F4;">
+								<table width="100%" border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td width="4" height="22" style="background-color: #0055CC;"></td>
+										<td width="4"></td>
+										<td style="font-weight: bold;">支持</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td height="24" style="background-color: #F4F4F4;">
+								<table width="100%" border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td width="16"></td>
+										<td><a target="_blank" href="http://sourceforge.net" target="_blank"><img src="../images/sourceforge.jpg" border="0" /></a></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td height="24" style="background-color: #F4F4F4;">
+								<table width="100%" border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td width="16"></td>
+										<td><a href="http://www.commontemplate.org" target="_blank"><img src="../images/logo.gif" border="0" /></a></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</td>
+				<td colspan="2" width="80%" align="center" valign="top">
+					<table width="90%" border="0" cellpadding="0" cellspacing="0">
+						<tr>
+							<td height="32" align="left"><b><font size="3">CommonTemplate API使用指南</font></b></td>
+						<tr>
+						<tr>
+							<td align="left"><hr width="30%"></td>
+						<tr>
+						<tr>
+							<td align="left">
+								<br/>
+								<b>一. 模板引擎使用</b> <a href="../javadoc/index.html">JavaDoc&gt;&gt;</a><br/>
+								<b>(1) Java版: </b><font color="green">(环境需求JRE1.4.2_10以上)</font> <a href="http://java.sun.com/j2se/1.4.2/download.html" target="_blank">下载...</a><br/>
+<font color="#7f0055"><b>import</b></font> java.util.*; <br/>
+<br/>
+<font color="#3f7f5f">// 导入commontemplate模块 </font><br/>
+<font color="#7f0055"><b>import</b></font> org.commontemplate.core.*; <br/>
+<font color="#7f0055"><b>import</b></font> org.commontemplate.engine.*; <br/>
+<font color="#7f0055"><b>import</b></font> org.commontemplate.standard.*; <br/>
+<font color="#7f0055"><b>import</b></font> org.commontemplate.tools.*; <br/>
+<br/>
+<font color="#3f7f5f">// 配置并建造引擎 (Engine是内同步线程安全的，可单例重用) </font><br/>
+ConfigurationSettings config = PropertiesConfigurationLoader.loadStandardConfiguration(); <br/>
+<font color="#3f7f5f">// 或者：ConfigurationSettings config = PropertiesConfigurationLoader.loadConfiguration("xxx.properties"); </font><br/>
+<font color="#3f7f5f">// 或者：StandardConfiguration config = new StandardConfiguration(); </font><br/>
+Engine engine = <font color="#7f0055"><b>new</b></font> Engine(config); <br/>
+<br/>
+<font color="#3f7f5f">// 设置全局上下文 (GlobalContext在同一Engine创建的Context间共享)</font><br/>
+GlobalContext globalContext = engine.getGlobalContext();<br/>
+globalContext.put(<font color="#2a00ff">"name"</font>, <font color="#2a00ff">"value"</font>); <br/>
+...<br/>
+<br/>
+<font color="#3f7f5f">// 定义运行期数据 </font><br/>
+Map model = ... <br/>
+Writer out = ... <br/>
+<br/>
+<font color="#3f7f5f">// 创建上下文 (Context非线程安全，应为每次执行创建新的Context)</font><br/>
+<font color="#3f7f5f">// 注：国际化信息传入可用factory.createContext(output, locale, timeZone);</font><br/>
+Context context = engine.createContext(output);<br/>
+context.putAll(model); <br/>
+context.put(<font color="#2a00ff">"name"</font>, <font color="#2a00ff">"value"</font>); <br/>
+... <br/>
+<br/>
+<font color="#3f7f5f">// 执行模板 </font><br/>
+Template template = engine.getTemplate(<font color="#2a00ff">"mytemplate.ctl"</font>); <br/>
+template.render(context); <br/>
+<br/>
+<font color="#3f7f5f">// 清理上下文及输出(最好放在finally块中) </font><br/>
+context.clear(); <br/>
+output.flush(); <br/>
+output.close(); <br/>
+								<br/>
+								<b>关系图如下：</b><br/>
+								<img src="../images/uml/api.gif"/><br/>
+								<br/>
+								<b>工具类：</b> org.commontemplate.tools.TemplateRenderer<br/>
+								Writer out = ...;<br/>
+								<font color="#7f0055"><b>new</b></font> TemplateRenderer(<font color="#2a00ff">"$for{times} ${user.name} $end"</font>).put(<font color="#2a00ff">"times"</font>, 5).put(<font color="#2a00ff">"user"</font>, <font color="#7f0055"><b>new</b></font> User()).render(out);<br/>
+								或者：<br/>
+								String result = <font color="#7f0055"><b>new</b></font> TemplateRenderer(<font color="#2a00ff">"$for{times} ${user.name} $end"</font>).put(<font color="#2a00ff">"times"</font>, 5).put(<font color="#2a00ff">"user"</font>, <font color="#7f0055"><b>new</b></font> User()).evaluate();<br/>
+								<br/>
+								<b>(2) .Net版: </b><font color="green">(环境需求CLR1.1以上)</font><br/>
+								......<br/>
+								<br/>
+								<b>二. 表达式引擎使用</b><br/>
+								<b>Java API:</b><br/>
+								<font color="#3f7f5f">// 导入相关模块 </font><br/>
+								<font color="#7f0055"><b>import</b></font> org.commontemplate.core.*; <br/>
+								<font color="#7f0055"><b>import</b></font> org.commontemplate.engine.expression.*;<br/>
+								<font color="#7f0055"><b>import</b></font> org.commontemplate.standard.*; <br/>
+								<font color="#7f0055"><b>import</b></font> org.commontemplate.tools.*; <br/>
+								<br/>
+								<font color="#3f7f5f">// 配置并建造引擎</font><br/>
+								ExpressionConfigurationSettings config = PropertiesConfigurationLoader.loadStandardExpressionConfiguration();<br/>
+								<font color="#3f7f5f">// 或者：ExpressionConfigurationSettings config = PropertiesConfigurationLoader.loadExpressionConfiguration("xxx.properties");</font><br/>
+								ExpressionEngine engine = <font color="#7f0055"><b>new</b></font> ExpressionEngine(config);<br/>
+								<br/>
+								<font color="#3f7f5f">// 创建上下文</font><br/>
+								VariableResolver context = ...<br/>
+								<br/>
+								<font color="#3f7f5f">// 解析表达式</font><br/>
+								Expression expression = engine.parseExpression(<font color="#2a00ff">"1 + 1"</font>);<br/>
+								Object result = expression.evaluate(context);<br/>
+								<br/>
+								<b>工具类:</b> org.commontemplate.tools.ExpressionEvaluator<br/>
+								Object result = <font color="#7f0055"><b>new</b></font> ExpressionEvaluator(<font color="#2a00ff">"book.price * discount + 1"</font>).put(<font color="#2a00ff">"book"</font>, <font color="#7f0055"><b>new</b></font> Book()).put(<font color="#2a00ff">"discount"</font>, 0.8).evaluate();<br/>
+								<br/>
+							</td>
+						<tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" height="6" align="center"><hr width="94%"/></td>
+			</tr>
+			<tr>
+				<td colspan="3" height="24" align="center">
+					<table border="0" cellpadding="0" cellspacing="0">
+						<tr>
+							<td>
+								版权所有 &#169; 2007-2008 <a href="about.html">CommonTemplate开发小组</a>
+							</td>
+							<td width="20">
+								&nbsp;
+							</td>
+							<td>
+								<a href="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" target="_blank"><img src="../images/w3c_xhtml.gif" border="0" /></a>
+							</td>
+							<td>
+								<a href="http://www.w3.org/Style/CSS/" target="_blank"><img src="../images/w3c_css.gif" border="0" /></a>
+							</td>
+						<tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>
