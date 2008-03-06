@@ -474,6 +474,18 @@ public class ExpressionReducerTester extends TestCase {
 		
 	}
 	
+	/**
+	 * 表达式进行预优化的测试。
+	 * @condition
+	 *  条件<br>
+	 *  表达式为 a-1+2
+	 * @result
+	 *  结果<br>
+	 *  表达式应该被优化成 a - (-1)
+	 * @throws ParseException
+	 * @throws IOException
+	 * @throws ScanningException
+	 */
 	public void testPreOptimizeReduce8() throws IOException, ScanningException{
 		
 		String expressionText = "a-1+2";
@@ -493,6 +505,18 @@ public class ExpressionReducerTester extends TestCase {
 		assertEquals("-1", rightExpression.getName());
 	}
 	
+	/**
+	 * 表达式进行预优化的测试。
+	 * @condition
+	 *  条件<br>
+	 *  表达式为 a-1*2
+	 * @result
+	 *  结果<br>
+	 *  表达式应该被优化成 a - 2
+	 * @throws ParseException
+	 * @throws IOException
+	 * @throws ScanningException
+	 */
 	public void testPreOptimizeReduce9() throws IOException, ScanningException{
 		
 		String expressionText = "a-1*2";
@@ -510,6 +534,222 @@ public class ExpressionReducerTester extends TestCase {
 		
 		assertEquals("a", leftExpression.getName());
 		assertEquals("2", rightExpression.getName());
+	}
+	
+	/**
+	 * 表达式进行预优化的测试。
+	 * @condition
+	 *  条件<br>
+	 *  表达式为 a*1-2
+	 * @result
+	 *  结果<br>
+	 *  表达式应该不被优化
+	 * @throws ParseException
+	 * @throws IOException
+	 * @throws ScanningException
+	 */
+	public void testPreOptimizeReduce10() throws IOException, ScanningException{
+		
+		String expressionText = "a*1-2";
+		
+		List tokens = expressionTokenizer.split(expressionText);
+		List expressions = expressionTranslator.translate(tokens);		
+		Expression root = expressionReducer.reduce(expressions);
+		
+		assertEquals("-", root.getName());
+		
+		BinaryOperatorImpl binaryOperatorImpl = (BinaryOperatorImpl) root;
+		
+		Expression leftExpression = binaryOperatorImpl.getLeftOperand();
+		Expression rightExpression = binaryOperatorImpl.getRightOperand();
+		
+		assertEquals("*", leftExpression.getName());
+		assertEquals("2", rightExpression.getName());
+		
+		binaryOperatorImpl = (BinaryOperatorImpl) leftExpression;
+		
+		leftExpression = binaryOperatorImpl.getLeftOperand();
+		rightExpression = binaryOperatorImpl.getRightOperand();
+		
+		assertEquals("a", leftExpression.getName());
+		assertEquals("1", rightExpression.getName());
+		
+	}
+	
+	/**
+	 * 表达式进行预优化的测试。
+	 * @condition
+	 *  条件<br>
+	 *  表达式为 a*2*2
+	 * @result
+	 *  结果<br>
+	 *  表达式应该被优化成 a*4
+	 * @throws ParseException
+	 * @throws IOException
+	 * @throws ScanningException
+	 */
+	public void testPreOptimizeReduce11() throws IOException, ScanningException{
+		
+		String expressionText = "a*2*2";
+		
+		List tokens = expressionTokenizer.split(expressionText);
+		List expressions = expressionTranslator.translate(tokens);		
+		Expression root = expressionReducer.reduce(expressions);
+		
+		assertEquals("*", root.getName());
+		
+		BinaryOperatorImpl binaryOperatorImpl = (BinaryOperatorImpl) root;
+		
+		Expression leftExpression = binaryOperatorImpl.getLeftOperand();
+		Expression rightExpression = binaryOperatorImpl.getRightOperand();
+		
+		assertEquals("a", leftExpression.getName());
+		assertEquals("4", rightExpression.getName());
+		
+	}
+	
+	/**
+	 * 表达式进行预优化的测试。
+	 * @condition
+	 *  条件<br>
+	 *  表达式为 a*2**3
+	 * @result
+	 *  结果<br>
+	 *  表达式应该被优化成 a*8
+	 * @throws ParseException
+	 * @throws IOException
+	 * @throws ScanningException
+	 */
+	public void testPreOptimizeReduce12() throws IOException, ScanningException{
+		
+		String expressionText = "a*2**3";
+		
+		List tokens = expressionTokenizer.split(expressionText);
+		List expressions = expressionTranslator.translate(tokens);		
+		Expression root = expressionReducer.reduce(expressions);
+		
+		assertEquals("*", root.getName());
+		
+		BinaryOperatorImpl binaryOperatorImpl = (BinaryOperatorImpl) root;
+		
+		Expression leftExpression = binaryOperatorImpl.getLeftOperand();
+		Expression rightExpression = binaryOperatorImpl.getRightOperand();
+		
+		assertEquals("a", leftExpression.getName());
+		assertEquals("8.0", rightExpression.getName());
+		
+	}
+	
+	/**
+	 * 表达式进行预优化的测试。
+	 * @condition
+	 *  条件<br>
+	 *  表达式为 a/2*3
+	 * @result
+	 *  结果<br>
+	 *  表达式应该不被优化
+	 * @throws ParseException
+	 * @throws IOException
+	 * @throws ScanningException
+	 */
+	public void testPreOptimizeReduce13() throws IOException, ScanningException{
+		
+		String expressionText = "a/2*3";
+		
+		List tokens = expressionTokenizer.split(expressionText);
+		List expressions = expressionTranslator.translate(tokens);		
+		Expression root = expressionReducer.reduce(expressions);
+		
+		assertEquals("*", root.getName());
+		
+		BinaryOperatorImpl binaryOperatorImpl = (BinaryOperatorImpl) root;
+		
+		Expression leftExpression = binaryOperatorImpl.getLeftOperand();
+		Expression rightExpression = binaryOperatorImpl.getRightOperand();
+		
+		assertEquals("/", leftExpression.getName());
+		assertEquals("3", rightExpression.getName());
+		
+		binaryOperatorImpl = (BinaryOperatorImpl) leftExpression;
+		
+		leftExpression = binaryOperatorImpl.getLeftOperand();
+		rightExpression = binaryOperatorImpl.getRightOperand();
+		
+		assertEquals("a", leftExpression.getName());
+		assertEquals("2", rightExpression.getName());
+		
+	}
+	
+	/**
+	 * 表达式进行预优化的测试。
+	 * @condition
+	 *  条件<br>
+	 *  表达式为 a/(2*3)
+	 * @result
+	 *  结果<br>
+	 *  表达式应该被优化成 a/6
+	 * @throws ParseException
+	 * @throws IOException
+	 * @throws ScanningException
+	 */
+	public void testPreOptimizeReduce14() throws IOException, ScanningException{
+		
+		String expressionText = "a/(2*3)";
+		
+		List tokens = expressionTokenizer.split(expressionText);
+		List expressions = expressionTranslator.translate(tokens);		
+		Expression root = expressionReducer.reduce(expressions);
+		
+		assertEquals("/", root.getName());
+		
+		BinaryOperatorImpl binaryOperatorImpl = (BinaryOperatorImpl) root;
+		
+		Expression leftExpression = binaryOperatorImpl.getLeftOperand();
+		Expression rightExpression = binaryOperatorImpl.getRightOperand();
+		
+		assertEquals("a", leftExpression.getName());
+		assertEquals("6", rightExpression.getName());
+		
+	}
+	
+	/**
+	 * 表达式进行预优化的测试。
+	 * @condition
+	 *  条件<br>
+	 *  表达式为 a/2/3
+	 * @result
+	 *  结果<br>
+	 *  表达式应该不被优化
+	 * @throws ParseException
+	 * @throws IOException
+	 * @throws ScanningException
+	 */
+	public void testPreOptimizeReduce15() throws IOException, ScanningException{
+		
+		String expressionText = "a/2/3";
+		
+		List tokens = expressionTokenizer.split(expressionText);
+		List expressions = expressionTranslator.translate(tokens);		
+		Expression root = expressionReducer.reduce(expressions);
+		
+		assertEquals("/", root.getName());
+		
+		BinaryOperatorImpl binaryOperatorImpl = (BinaryOperatorImpl) root;
+		
+		Expression leftExpression = binaryOperatorImpl.getLeftOperand();
+		Expression rightExpression = binaryOperatorImpl.getRightOperand();
+		
+		assertEquals("/", leftExpression.getName());
+		assertEquals("3", rightExpression.getName());
+		
+		binaryOperatorImpl = (BinaryOperatorImpl) leftExpression;
+		
+		leftExpression = binaryOperatorImpl.getLeftOperand();
+		rightExpression = binaryOperatorImpl.getRightOperand();
+		
+		assertEquals("a", leftExpression.getName());
+		assertEquals("2", rightExpression.getName());
+		
 	}
 	
 }

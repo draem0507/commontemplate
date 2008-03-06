@@ -1,5 +1,7 @@
 package org.commontemplate.engine.expression;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 
 import org.commontemplate.core.BinaryOperator;
@@ -95,6 +97,8 @@ final class ExpressionReducer {
 		Expression prevExpression;
 		Operator currentOperator;
 		Operator prevOperator;
+		// 这个变量的命名还需要改进
+		Operator prePreOperator;
 
 		for (int i = 0; i < expressions.size(); i++) {
 
@@ -141,20 +145,9 @@ final class ExpressionReducer {
 				if(prevOperator.getClass() != BinaryOperatorImpl.class) {
 					continue;
 				}
-				BinaryOperatorImpl binaryOperator = ((BinaryOperatorImpl) prevOperator);
-				
-				// 目前只优化2元的算数表达式，1元的表达式如 !true ，暂时先不考虑
-				// TODO: 结合率目前还没有完善，等完善后，使用结合率来判断。
-				/*if(!"+".equals(binaryOperator.getName()) &&
-						!"-".equals(binaryOperator.getName()) &&
-						!"*".equals(binaryOperator.getName()) &&
-						!"/".equals(binaryOperator.getName()) &&
-						!"**".equals(binaryOperator.getName()) &&
-						!"%".equals(binaryOperator.getName())) {
-					
-					continue;
-				}*/
-				if(!binaryOperator.isAssociativeLaw()) {
+				BinaryOperatorImpl preBinaryOperator = ((BinaryOperatorImpl) prevOperator);
+				// 是否满足结合率
+				if(!preBinaryOperator.isAssociativeLaw()) {
 					continue;
 				}	
 				// 取当前操作符
@@ -178,38 +171,46 @@ final class ExpressionReducer {
 					
 					// 只有当级别相同的时候才优化
 					if (currentOperator == null
-							|| (currentOperator.getPriority() <= binaryOperator.getPriority() &&
+							|| (currentOperator.getPriority() <= preBinaryOperator.getPriority() &&
 									!((BinaryOperatorImpl) currentOperator).isRightToLeft())
 							|| currentOperator == Parenthesis.RIGHT_PARENTHESIS) {
 						
-						// 再往前取一个操作符
+						// 再往前取一个操作符。例如当前的表达式是 a-1+2
+						// 那么 currentOperator = null, preBinaryOperator = +
+						// prevExpression = 1。
+						// 所以，我们必须再往前寻找一个操作符。也就是例子中的第一个减号。
 						//TODO: flag 的使用需要重构
 						boolean flag = false;
 						if(i>=3) {
-							prevOperator = (Operator) expressions.get(i - 3);
+							prePreOperator = (Operator) expressions.get(i - 3);
 							//如果是2元操作符，则处理
-							if(prevOperator.getClass() == BinaryOperatorImpl.class) {
+							if(prePreOperator.getClass() == BinaryOperatorImpl.class) {
+								
+								// 如果不满足结合的条件，那么不处理
+								if(!isAssociative((BinaryOperatorImpl)prePreOperator, preBinaryOperator)) {
+									continue;
+								}
+								
 								// 如果是减号
-								if("-".equals(prevOperator.getName())) {
+								if("-".equals(prePreOperator.getName())) {
 									// 如果级别相同
-									if(binaryOperator.getPriority() == prevOperator.getPriority()) {
+									if(preBinaryOperator.getPriority() == prePreOperator.getPriority()) {
 										
 										Number number = (Number)((Constant) expression).getValue();
-										// new Integer(0-number.intValue()
 										// TODO:这个地方是bug，如果根据 Number 取到相反的数值，有时间修改
-										binaryOperator.setOperands(prevExpression, 
-												new ConstantImpl(new Integer(0-number.intValue()),
+										preBinaryOperator.setOperands(prevExpression, 
+												new ConstantImpl(getReversValueObject(number),
 														expression.getLocation()));	
 										
-										expression = new ConstantImpl(binaryOperator.evaluate(null), null);
+										expression = new ConstantImpl(preBinaryOperator.evaluate(null), null);
 										flag = true;
 									}
 								}
 							}
 						}
 						if(!flag) {
-							binaryOperator.setOperands(prevExpression, expression);						
-							expression = new ConstantImpl(binaryOperator.evaluate(null), null);
+							preBinaryOperator.setOperands(prevExpression, expression);						
+							expression = new ConstantImpl(preBinaryOperator.evaluate(null), null);
 						}
 						
 						expressions.remove(i - 1);
@@ -226,6 +227,84 @@ final class ExpressionReducer {
 		}
 
 		return expressions;
+	}
+	
+	/**
+	 * 当优化常量的时候，判断是否可以结合。
+	 * @author YanRong
+	 * @param prePreOperator
+	 * 常量的前一个的前一个操作符
+	 * @param preOperator
+	 * 常量的前一个操作符
+	 * @return
+	 * true: 可以结合
+	 * false:　不可以结合
+	 */
+	private boolean isAssociative(BinaryOperatorImpl prePreOperator, BinaryOperatorImpl preOperator) {
+		
+		// TODO:这个方法需要改进
+		
+		// 前提条件：优先级的判断
+		if(preOperator.getPriority()<prePreOperator.getPriority()) {
+			return false;
+		}
+		// 如果优先级大，那么就可以结合了
+		if(preOperator.getPriority()>prePreOperator.getPriority()) {
+			return true;
+		}
+		// 以下要处理的就是优先级相同的情况
+		
+		// 加法，减法的情况
+		if("+".equals(preOperator.getName()) || "-".equals(preOperator.getName())) {
+			return true;
+		}
+		
+		// 处理乘号
+		if("*".equals(preOperator.getName())) {
+			if("*".equals(prePreOperator.getName())) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		
+		return false;
+	}
+	/**
+	 * 得到一个数字的相反数值。
+	 * @author YanRong
+	 * @param number
+	 * @return
+	 */
+	private Object getReversValueObject(Number number) {
+		// TODO:这个方法需要改进
+		if(number instanceof BigDecimal) {
+			return BigDecimal.valueOf(0 - number.doubleValue());
+		}
+		if(number instanceof BigInteger) {
+			return BigInteger.valueOf(0 - number.longValue());
+		}
+		if(number instanceof Double) {
+			return Double.valueOf(0 - number.doubleValue());
+		}
+		if(number instanceof Float) {
+			return Float.valueOf(0 - number.floatValue());
+		}
+		if(number instanceof Integer) {
+			return Integer.valueOf(0 - number.intValue());
+		}
+		if(number instanceof Long) {
+			return Long.valueOf(0 - number.longValue());
+		}
+		if(number instanceof Short) {
+			return Short.valueOf((short)(0 - number.shortValue()));
+		}
+		/*if(number instanceof Byte) {
+			return Byte.valueOf(0 - number.byteValue());
+		}*/
+		Assert.assertNotNull(null, "getReversValueObject error! number = " + number);
+		
+		return null;
 	}
 
 	// 表达式归约辅助栈
