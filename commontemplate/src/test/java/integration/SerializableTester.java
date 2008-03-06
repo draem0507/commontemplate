@@ -19,7 +19,7 @@ public class SerializableTester extends TestCase {
 	public void testSerializable() throws Exception {
 		// 配置
 		Factory factory = TestEngineProvider.getTestEngine();
-		
+
 		// 执行模板
 		StringWriter output = new StringWriter();
 		Context context = factory.createContext(output, Locale.getDefault());
@@ -27,9 +27,13 @@ public class SerializableTester extends TestCase {
 		context.pushLocalContext(ModelProvider.getModel());
 		Template t1 = factory.getTemplate("/integration/serial.ctl");
 		super.assertEquals("/integration/serial.ctl", t1.getName());
-		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File("cache/test.template")));
+		File dir = new File("cache");
+		if (! dir.exists())
+			dir.mkdirs();
+		File file = new File(dir, "test.template");
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
 		oos.writeObject(t1);
-		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File("cache/test.template")));
+		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
 		Template t2 = (Template)ois.readObject();
 		super.assertEquals("/integration/serial.ctl", t2.getName());
 		t2.render(context);
