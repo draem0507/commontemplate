@@ -474,4 +474,42 @@ public class ExpressionReducerTester extends TestCase {
 		
 	}
 	
+	public void testPreOptimizeReduce8() throws IOException, ScanningException{
+		
+		String expressionText = "a-1+2";
+		
+		List tokens = expressionTokenizer.split(expressionText);
+		List expressions = expressionTranslator.translate(tokens);		
+		Expression root = expressionReducer.reduce(expressions);
+		
+		assertEquals("-", root.getName());
+		
+		BinaryOperatorImpl binaryOperatorImpl = (BinaryOperatorImpl) root;
+		
+		Expression leftExpression = binaryOperatorImpl.getLeftOperand();
+		Expression rightExpression = binaryOperatorImpl.getRightOperand();
+		
+		assertEquals("a", leftExpression.getName());
+		assertEquals("-1", rightExpression.getName());
+	}
+	
+	public void testPreOptimizeReduce9() throws IOException, ScanningException{
+		
+		String expressionText = "a-1*2";
+		
+		List tokens = expressionTokenizer.split(expressionText);
+		List expressions = expressionTranslator.translate(tokens);		
+		Expression root = expressionReducer.reduce(expressions);
+		
+		assertEquals("-", root.getName());
+		
+		BinaryOperatorImpl binaryOperatorImpl = (BinaryOperatorImpl) root;
+		
+		Expression leftExpression = binaryOperatorImpl.getLeftOperand();
+		Expression rightExpression = binaryOperatorImpl.getRightOperand();
+		
+		assertEquals("a", leftExpression.getName());
+		assertEquals("2", rightExpression.getName());
+	}
+	
 }

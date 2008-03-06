@@ -136,9 +136,7 @@ final class ExpressionReducer {
 
 					continue;
 				}
-
-				// 取出前一个参数
-				prevExpression = (Expression) expressions.get(i - 2);
+				
 				// 如果不是2元操作符，则不处理
 				if(prevOperator.getClass() != BinaryOperatorImpl.class) {
 					continue;
@@ -158,8 +156,17 @@ final class ExpressionReducer {
 				}*/
 				if(!binaryOperator.isAssociativeLaw()) {
 					continue;
+				}	
+				// 取当前操作符
+				if (i < expressions.size() - 1) {
+					currentOperator = (Operator) expressions.get(i + 1);
+				} else {
+					currentOperator = null;
 				}
+				// 取当前操作符 -- end
 				
+				// 取出前一个参数
+				prevExpression = (Expression) expressions.get(i - 2);
 				// 前一个参数是常量，进行优化
 				if (prevExpression.getClass() == ConstantImpl.class) {
 					
@@ -169,21 +176,41 @@ final class ExpressionReducer {
 						continue;
 					}
 					
-					if (i < expressions.size() - 1) {
-						// 取当前操作符
-						currentOperator = (Operator) expressions.get(i + 1);
-					} else {
-						currentOperator = null;
-					}
-
 					// 只有当级别相同的时候才优化
 					if (currentOperator == null
-							|| (currentOperator.getPriority() <= prevOperator.getPriority() &&
+							|| (currentOperator.getPriority() <= binaryOperator.getPriority() &&
 									!((BinaryOperatorImpl) currentOperator).isRightToLeft())
 							|| currentOperator == Parenthesis.RIGHT_PARENTHESIS) {
 						
-						binaryOperator.setOperands(prevExpression, expression);						
-						expression = new ConstantImpl(binaryOperator.evaluate(null), null);
+						// 再往前取一个操作符
+						//TODO: flag 的使用需要重构
+						boolean flag = false;
+						if(i>=3) {
+							prevOperator = (Operator) expressions.get(i - 3);
+							//如果是2元操作符，则处理
+							if(prevOperator.getClass() == BinaryOperatorImpl.class) {
+								// 如果是减号
+								if("-".equals(prevOperator.getName())) {
+									// 如果级别相同
+									if(binaryOperator.getPriority() == prevOperator.getPriority()) {
+										
+										Number number = (Number)((Constant) expression).getValue();
+										// new Integer(0-number.intValue()
+										// TODO:这个地方是bug，如果根据 Number 取到相反的数值，有时间修改
+										binaryOperator.setOperands(prevExpression, 
+												new ConstantImpl(new Integer(0-number.intValue()),
+														expression.getLocation()));	
+										
+										expression = new ConstantImpl(binaryOperator.evaluate(null), null);
+										flag = true;
+									}
+								}
+							}
+						}
+						if(!flag) {
+							binaryOperator.setOperands(prevExpression, expression);						
+							expression = new ConstantImpl(binaryOperator.evaluate(null), null);
+						}
 						
 						expressions.remove(i - 1);
 						expressions.remove(i - 2);
