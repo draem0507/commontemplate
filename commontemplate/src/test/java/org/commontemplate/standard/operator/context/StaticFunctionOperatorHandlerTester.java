@@ -30,9 +30,9 @@ public class StaticFunctionOperatorHandlerTester extends TestCase {
 	 * 结果<br>
 	 * 执行该函数。
 	 * @throws Exception
-	 *//*
+	 */
 	public void testDoEvaluate() throws Exception{
 		
 		UnaryOperatorHandler handler = operatorHandlerProvider.getUnaryOperatorHandler(".");
-	}*/
+	}
 }
