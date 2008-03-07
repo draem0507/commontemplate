@@ -1,17 +1,20 @@
-package org.commontemplate.standard.operator.string;
+package org.commontemplate.standard.operator.collection;
 
-import junit.framework.TestCase;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import org.commontemplate.config.Configuration;
 import org.commontemplate.config.OperatorHandlerProvider;
 import org.commontemplate.standard.operator.BinaryOperatorHandlerChain;
 import org.commontemplate.tools.PropertiesConfigurationLoader;
+
+import junit.framework.TestCase;
 /**
- * StringMatchOperatorHandler 的测试。
+ * NotContainOperatorHandler 的测试。
  * @author YanRong
  *
  */
-public class StringMatchOperatorHandlerTester extends TestCase {
+public class NotContainOperatorHandlerTester extends TestCase {
 
 	OperatorHandlerProvider operatorHandlerProvider;
 	
@@ -23,26 +26,26 @@ public class StringMatchOperatorHandlerTester extends TestCase {
 	}
 	
 	/**
-	 * 对2元操作符 ~ 的测试。<br>
+	 * 对2元操作符 !~ 的测试。<br>
 	 * @condition
 	 * 条件<br>
-	 * 参数为一个string和一个正则表达式。
+	 * 参数为一个List 和 一个 Object。
 	 * @result
 	 * 结果<br>
-	 * 返回string和正则表达式是否匹配的boolean对象。
+	 * 返回List 中是否包含 Object 的boolean对象。
 	 * @throws Exception
 	 */
 	public void testDoEvaluate() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
-			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("~");
+			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("!~");
 		
-		String str = "tan";
-		String regx = "t[aeno]n";
-		assertEquals(Boolean.TRUE, handler.doEvaluate(str, regx));
+		Collection list = new ArrayList();
+		list.add("a");
+		list.add("b");
 		
-		str = "taan";
-		assertEquals(Boolean.FALSE, handler.doEvaluate(str, regx));
+		assertEquals(Boolean.FALSE, handler.doEvaluate("a", list));
+		assertEquals(Boolean.TRUE, handler.doEvaluate("c", list));
+		
 	}
-		
 }
