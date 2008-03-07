@@ -38,46 +38,46 @@ public class NumberNegativeOperatorHandlerTester extends TestCase {
 		
 		UnaryOperatorHandler handler = operatorHandlerProvider.getUnaryOperatorHandler("-");
 		
-		Number number = Integer.valueOf(10);
+		Number number = new Integer(10);
 		assertEquals(-10, ((Number)handler.doEvaluate(number)).intValue());
 		
-		number = Integer.valueOf(-10);
+		number = new Integer(-10);
 		assertEquals(10, ((Number)handler.doEvaluate(number)).intValue());
 		
-		number = Short.valueOf((short)10);
+		number = new Short((short)10);
 		assertEquals(-10, ((Number)handler.doEvaluate(number)).shortValue());
 		
-		number = Short.valueOf((short)-10);
+		number = new Short((short)-10);
 		assertEquals(10, ((Number)handler.doEvaluate(number)).shortValue());
 		
-		number = Long.valueOf(10);
+		number = new Long(10);
 		assertEquals(-10, ((Number)handler.doEvaluate(number)).longValue());
 		
-		number = Long.valueOf(-10);
+		number = new Long(-10);
 		assertEquals(10, ((Number)handler.doEvaluate(number)).longValue());
 		
-		number = Float.valueOf((float)10.11);
+		number = new Float((float)10.11);
 		assertTrue((float)-10.11 == ((Number)handler.doEvaluate(number)).floatValue());
 		
-		number = Float.valueOf((float)-10.10);
+		number = new Float((float)-10.10);
 		assertTrue((float)10.10 == ((Number)handler.doEvaluate(number)).floatValue());
 		
-		number = Double.valueOf((double)10.10);
+		number = new Double((double)10.10);
 		assertTrue((double)-10.10 == ((Number)handler.doEvaluate(number)).doubleValue());
 		
-		number = Double.valueOf((double)-10.10);
+		number = new Double((double)-10.10);
 		assertTrue((double)10.10 == ((Number)handler.doEvaluate(number)).doubleValue());
 		
-		number = BigDecimal.valueOf((double)10.10);
+		number = new BigDecimal((double)10.10);
 		assertTrue((double)-10.10 == ((Number)handler.doEvaluate(number)).doubleValue());
 		
-		number = BigDecimal.valueOf((double)-10.10);
+		number = new BigDecimal((double)-10.10);
 		assertTrue((double)10.10 == ((Number)handler.doEvaluate(number)).doubleValue());
 		
-		number = BigInteger.valueOf(10);
+		number = new BigInteger(String.valueOf(10));
 		assertEquals(-10, ((Number)handler.doEvaluate(number)).intValue());
 		
-		number = BigInteger.valueOf(-10);
+		number = new BigInteger(String.valueOf(-10));
 		assertEquals(10, ((Number)handler.doEvaluate(number)).intValue());
 		
 	}
