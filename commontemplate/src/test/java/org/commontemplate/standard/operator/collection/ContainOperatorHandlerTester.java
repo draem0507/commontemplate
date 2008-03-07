@@ -26,7 +26,7 @@ public class ContainOperatorHandlerTester extends TestCase {
 	}
 	
 	/**
-	 * 对一元操作符 ~ 的测试。<br>
+	 * 对2元操作符 ~ 的测试。<br>
 	 * @condition
 	 * 条件<br>
 	 * 参数为一个List 和 一个 Object。
