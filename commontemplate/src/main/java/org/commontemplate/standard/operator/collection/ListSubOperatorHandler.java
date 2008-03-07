@@ -7,7 +7,7 @@ import org.commontemplate.standard.operator.sequence.IntegerSequence;
 
 /**
  * 从列表中提取子列表处理器
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
@@ -24,7 +24,13 @@ public class ListSubOperatorHandler extends IndexedBinaryOperatorHandlerSupport 
 		List list = (List)leftOperand;
 		if (rightOperand instanceof IntegerSequence) {
 			IntegerSequence seq = (IntegerSequence)rightOperand;
-			return list.subList(seq.getBegin(), seq.getEnd() + 1);
+			int begin = seq.getBegin();
+			if (begin < 0)
+				begin = 0;
+			int end = seq.getEnd() + 1;
+			if (end > list.size())
+				end = list.size();
+			return list.subList(begin, end);
 		}
 		List indexs = (List)rightOperand;
 		List sub = new ArrayList(indexs.size());
