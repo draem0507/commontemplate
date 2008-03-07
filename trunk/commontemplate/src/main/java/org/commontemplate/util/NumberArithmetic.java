@@ -1,5 +1,8 @@
 package org.commontemplate.util;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 /**
  * 数字加减乘除四则运算，主要处理类型混合运算，如：Integer + Double
  * 
@@ -522,6 +525,10 @@ public final class NumberArithmetic {
 			return new Integer(- n1.intValue());
 		if (n1 instanceof Short)
 			return new Short((short)(- n1.shortValue()));
+		if (n1 instanceof BigDecimal)
+			return new BigDecimal(-n1.doubleValue());
+		if (n1 instanceof BigInteger) 
+			return new BigInteger(String.valueOf(-n1.longValue()));
 		//if (n1 instanceof Byte)
 			return new Byte((byte)(- n1.byteValue()));
 	}
