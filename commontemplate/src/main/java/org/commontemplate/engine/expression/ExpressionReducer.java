@@ -12,6 +12,7 @@ import org.commontemplate.core.UnaryOperator;
 import org.commontemplate.core.Variable;
 import org.commontemplate.util.Assert;
 import org.commontemplate.util.LinkedStack;
+import org.commontemplate.util.NumberArithmetic;
 import org.commontemplate.util.Stack;
 
 /**
@@ -197,9 +198,8 @@ final class ExpressionReducer {
 									if(preBinaryOperator.getPriority() == prePreOperator.getPriority()) {
 										
 										Number number = (Number)((Constant) expression).getValue();
-										// TODO:这个地方是bug，如果根据 Number 取到相反的数值，有时间修改
 										preBinaryOperator.setOperands(prevExpression, 
-												new ConstantImpl(getReversValueObject(number),
+												new ConstantImpl(NumberArithmetic.negative(number),
 														expression.getLocation()));	
 										
 										expression = new ConstantImpl(preBinaryOperator.evaluate(null), null);
@@ -269,43 +269,7 @@ final class ExpressionReducer {
 		}
 		
 		return false;
-	}
-	/**
-	 * 得到一个数字的相反数值。
-	 * @author YanRong
-	 * @param number
-	 * @return
-	 */
-	private Object getReversValueObject(Number number) {
-		// TODO:这个方法需要改进
-		if(number instanceof BigDecimal) {
-			return BigDecimal.valueOf(0 - number.doubleValue());
-		}
-		if(number instanceof BigInteger) {
-			return BigInteger.valueOf(0 - number.longValue());
-		}
-		if(number instanceof Double) {
-			return Double.valueOf(0 - number.doubleValue());
-		}
-		if(number instanceof Float) {
-			return Float.valueOf(0 - number.floatValue());
-		}
-		if(number instanceof Integer) {
-			return Integer.valueOf(0 - number.intValue());
-		}
-		if(number instanceof Long) {
-			return Long.valueOf(0 - number.longValue());
-		}
-		if(number instanceof Short) {
-			return Short.valueOf((short)(0 - number.shortValue()));
-		}
-		/*if(number instanceof Byte) {
-			return Byte.valueOf(0 - number.byteValue());
-		}*/
-		Assert.assertNotNull(null, "getReversValueObject error! number = " + number);
-		
-		return null;
-	}
+	}	
 
 	// 表达式归约辅助栈
 	private static final class ReduceStack {
