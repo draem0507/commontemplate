@@ -32,6 +32,10 @@ public final class NumberArithmetic {
 				return new Double(n1.doubleValue() + n2.intValue());
 			if (n2 instanceof Short)
 				return new Double(n1.doubleValue() + n2.shortValue());
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.doubleValue() + n2.doubleValue());
+			if (n2 instanceof BigInteger)
+				return new Double(n1.doubleValue() + n2.longValue());
 			if (n2 instanceof Byte)
 				return new Double(n1.doubleValue() + n2.byteValue());
 		}
@@ -47,6 +51,10 @@ public final class NumberArithmetic {
 				return new Float(n1.floatValue() + n2.intValue());
 			if (n2 instanceof Short)
 				return new Float(n1.floatValue() + n2.shortValue());
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.floatValue() + n2.doubleValue());
+			if (n2 instanceof BigInteger)
+				return new Float(n1.floatValue() + n2.longValue());
 			if (n2 instanceof Byte)
 				return new Float(n1.floatValue() + n2.byteValue());
 		}
@@ -62,6 +70,10 @@ public final class NumberArithmetic {
 				return new Long(n1.longValue() + n2.intValue());
 			if (n2 instanceof Short)
 				return new Long(n1.longValue() + n2.shortValue());
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.longValue() + n2.doubleValue());
+			if (n2 instanceof BigInteger)
+				return new BigInteger(String.valueOf(n1.longValue() + n2.longValue()));
 			if (n2 instanceof Byte)
 				return new Long(n1.longValue() + n2.byteValue());
 		}
@@ -77,8 +89,31 @@ public final class NumberArithmetic {
 				return new Integer(n1.intValue() + n2.intValue());
 			if (n2 instanceof Short)
 				return new Integer(n1.intValue() + n2.shortValue());
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.intValue() + n2.doubleValue());
+			if (n2 instanceof BigInteger)
+				return new BigInteger(String.valueOf(n1.intValue() + n2.longValue()));
 			if (n2 instanceof Byte)
 				return new Integer(n1.intValue() + n2.byteValue());
+		}
+		
+		if (n1 instanceof BigInteger) {
+			if (n2 instanceof Double)
+				return new Double(n1.longValue() + n2.doubleValue());
+			if (n2 instanceof Float)
+				return new Float(n1.longValue() + n2.floatValue());
+			if (n2 instanceof Long)
+				return new BigInteger(String.valueOf(n1.longValue() + n2.longValue()));
+			if (n2 instanceof Integer)
+				return new BigInteger(String.valueOf(n1.longValue() + n2.intValue()));
+			if (n2 instanceof Short)
+				return new BigInteger(String.valueOf(n1.longValue() + n2.shortValue()));
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.longValue() + n2.doubleValue());
+			if (n2 instanceof BigInteger)
+				return new BigInteger(String.valueOf(n1.longValue() + n2.longValue()));
+			if (n2 instanceof Byte)
+				return new BigInteger(String.valueOf(n1.longValue() + n2.byteValue()));
 		}
 
 		if (n1 instanceof Short) {
@@ -92,8 +127,31 @@ public final class NumberArithmetic {
 				return new Integer(n1.shortValue() + n2.intValue());
 			if (n2 instanceof Short)
 				return new Integer(n1.shortValue() + n2.shortValue());
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.shortValue() + n2.doubleValue());
+			if (n2 instanceof BigInteger)
+				return new BigInteger(String.valueOf(n1.shortValue() + n2.longValue()));
 			if (n2 instanceof Byte)
 				return new Integer(n1.shortValue() + n2.byteValue());
+		}
+		
+		if (n1 instanceof BigDecimal) {
+			if (n2 instanceof Double)
+				return new BigDecimal(n1.doubleValue() + n2.doubleValue());
+			if (n2 instanceof Float)
+				return new BigDecimal(n1.doubleValue() + n2.floatValue());
+			if (n2 instanceof Long)
+				return new BigDecimal(n1.doubleValue() + n2.longValue());
+			if (n2 instanceof Integer)
+				return new BigDecimal(n1.doubleValue() + n2.intValue());
+			if (n2 instanceof Short)
+				return new BigDecimal(n1.doubleValue() + n2.shortValue());
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.doubleValue() + n2.doubleValue());
+			if (n2 instanceof BigInteger)
+				return new BigDecimal(n1.doubleValue() + n2.longValue());
+			if (n2 instanceof Byte)
+				return new BigDecimal(n1.doubleValue() + n2.byteValue());
 		}
 
 		//if (n1 instanceof Byte) {
@@ -107,6 +165,10 @@ public final class NumberArithmetic {
 				return new Integer(n1.shortValue() + n2.intValue());
 			if (n2 instanceof Short)
 				return new Integer(n1.shortValue() + n2.shortValue());
+			if (n2 instanceof BigInteger) 
+				return new BigInteger(String.valueOf(n1.shortValue() + n2.longValue()));
+			if (n2 instanceof BigDecimal) 
+				return new BigDecimal(n1.shortValue() + n2.doubleValue());
 			//if (n2 instanceof Byte)
 				return new Integer(n1.byteValue() + n2.byteValue());
 		//}
@@ -131,6 +193,10 @@ public final class NumberArithmetic {
 				return new Double(n1.doubleValue() - n2.intValue());
 			if (n2 instanceof Short)
 				return new Double(n1.doubleValue() - n2.shortValue());
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.doubleValue() - n2.doubleValue());
+			if (n2 instanceof BigInteger)
+				return new Double(n1.doubleValue() - n2.longValue());
 			if (n2 instanceof Byte)
 				return new Double(n1.doubleValue() - n2.byteValue());
 		}
@@ -146,6 +212,10 @@ public final class NumberArithmetic {
 				return new Float(n1.floatValue() - n2.intValue());
 			if (n2 instanceof Short)
 				return new Float(n1.floatValue() - n2.shortValue());
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.floatValue() - n2.doubleValue());
+			if (n2 instanceof BigInteger)
+				return new Float(n1.floatValue() - n2.longValue());
 			if (n2 instanceof Byte)
 				return new Float(n1.floatValue() - n2.byteValue());
 		}
@@ -161,6 +231,10 @@ public final class NumberArithmetic {
 				return new Long(n1.longValue() - n2.intValue());
 			if (n2 instanceof Short)
 				return new Long(n1.longValue() - n2.shortValue());
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.longValue() - n2.doubleValue());
+			if (n2 instanceof BigInteger)
+				return new BigInteger(String.valueOf(n1.longValue() - n2.longValue()));
 			if (n2 instanceof Byte)
 				return new Long(n1.longValue() - n2.byteValue());
 		}
@@ -176,8 +250,31 @@ public final class NumberArithmetic {
 				return new Integer(n1.intValue() - n2.intValue());
 			if (n2 instanceof Short)
 				return new Integer(n1.intValue() - n2.shortValue());
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.intValue() - n2.doubleValue());
+			if (n2 instanceof BigInteger)
+				return new BigInteger(String.valueOf(n1.intValue() - n2.longValue()));
 			if (n2 instanceof Byte)
 				return new Integer(n1.intValue() - n2.byteValue());
+		}
+		
+		if (n1 instanceof BigInteger) {
+			if (n2 instanceof Double)
+				return new Double(n1.longValue() - n2.doubleValue());
+			if (n2 instanceof Float)
+				return new Float(n1.longValue() - n2.floatValue());
+			if (n2 instanceof Long)
+				return new BigInteger(String.valueOf(n1.longValue() - n2.longValue()));
+			if (n2 instanceof Integer)
+				return new BigInteger(String.valueOf(n1.longValue() - n2.intValue()));
+			if (n2 instanceof Short)
+				return new BigInteger(String.valueOf(n1.longValue() - n2.shortValue()));
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.longValue() - n2.doubleValue());
+			if (n2 instanceof BigInteger)
+				return new BigInteger(String.valueOf(n1.longValue() - n2.longValue()));
+			if (n2 instanceof Byte)
+				return new BigInteger(String.valueOf(n1.longValue() - n2.byteValue()));
 		}
 
 		if (n1 instanceof Short) {
@@ -191,8 +288,31 @@ public final class NumberArithmetic {
 				return new Integer(n1.shortValue() - n2.intValue());
 			if (n2 instanceof Short)
 				return new Integer(n1.shortValue() - n2.shortValue());
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.shortValue() - n2.doubleValue());
+			if (n2 instanceof BigInteger)
+				return new BigInteger(String.valueOf(n1.shortValue() - n2.longValue()));
 			if (n2 instanceof Byte)
 				return new Integer(n1.shortValue() - n2.byteValue());
+		}
+		
+		if (n1 instanceof BigDecimal) {
+			if (n2 instanceof Double)
+				return new BigDecimal(n1.doubleValue() - n2.doubleValue());
+			if (n2 instanceof Float)
+				return new BigDecimal(n1.doubleValue() - n2.floatValue());
+			if (n2 instanceof Long)
+				return new BigDecimal(n1.doubleValue() - n2.longValue());
+			if (n2 instanceof Integer)
+				return new BigDecimal(n1.doubleValue() - n2.intValue());
+			if (n2 instanceof Short)
+				return new BigDecimal(n1.doubleValue() - n2.shortValue());
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.doubleValue() - n2.doubleValue());
+			if (n2 instanceof BigInteger)
+				return new BigDecimal(n1.doubleValue() - n2.longValue());
+			if (n2 instanceof Byte)
+				return new BigDecimal(n1.doubleValue() - n2.byteValue());
 		}
 
 		//if (n1 instanceof Byte) {
@@ -206,6 +326,10 @@ public final class NumberArithmetic {
 				return new Integer(n1.shortValue() - n2.intValue());
 			if (n2 instanceof Short)
 				return new Integer(n1.shortValue() - n2.shortValue());
+			if (n2 instanceof BigInteger) 
+				return new BigInteger(String.valueOf(n1.shortValue() - n2.longValue()));
+			if (n2 instanceof BigDecimal) 
+				return new BigDecimal(n1.shortValue() - n2.doubleValue());
 			//if (n2 instanceof Byte)
 				return new Integer(n1.byteValue() - n2.byteValue());
 		//}
@@ -230,6 +354,10 @@ public final class NumberArithmetic {
 				return new Double(n1.doubleValue() * n2.intValue());
 			if (n2 instanceof Short)
 				return new Double(n1.doubleValue() * n2.shortValue());
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.doubleValue() * n2.doubleValue());
+			if (n2 instanceof BigInteger)
+				return new Double(n1.doubleValue() * n2.longValue());
 			if (n2 instanceof Byte)
 				return new Double(n1.doubleValue() * n2.byteValue());
 		}
@@ -245,6 +373,10 @@ public final class NumberArithmetic {
 				return new Float(n1.floatValue() * n2.intValue());
 			if (n2 instanceof Short)
 				return new Float(n1.floatValue() * n2.shortValue());
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.floatValue() * n2.doubleValue());
+			if (n2 instanceof BigInteger)
+				return new Float(n1.floatValue() * n2.longValue());
 			if (n2 instanceof Byte)
 				return new Float(n1.floatValue() * n2.byteValue());
 		}
@@ -260,6 +392,10 @@ public final class NumberArithmetic {
 				return new Long(n1.longValue() * n2.intValue());
 			if (n2 instanceof Short)
 				return new Long(n1.longValue() * n2.shortValue());
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.longValue() * n2.doubleValue());
+			if (n2 instanceof BigInteger)
+				return new BigInteger(String.valueOf(n1.longValue() * n2.longValue()));
 			if (n2 instanceof Byte)
 				return new Long(n1.longValue() * n2.byteValue());
 		}
@@ -275,8 +411,31 @@ public final class NumberArithmetic {
 				return new Integer(n1.intValue() * n2.intValue());
 			if (n2 instanceof Short)
 				return new Integer(n1.intValue() * n2.shortValue());
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.intValue() * n2.doubleValue());
+			if (n2 instanceof BigInteger)
+				return new BigInteger(String.valueOf(n1.intValue() * n2.longValue()));
 			if (n2 instanceof Byte)
 				return new Integer(n1.intValue() * n2.byteValue());
+		}
+		
+		if (n1 instanceof BigInteger) {
+			if (n2 instanceof Double)
+				return new Double(n1.longValue() * n2.doubleValue());
+			if (n2 instanceof Float)
+				return new Float(n1.longValue() * n2.floatValue());
+			if (n2 instanceof Long)
+				return new BigInteger(String.valueOf(n1.longValue() * n2.longValue()));
+			if (n2 instanceof Integer)
+				return new BigInteger(String.valueOf(n1.longValue() * n2.intValue()));
+			if (n2 instanceof Short)
+				return new BigInteger(String.valueOf(n1.longValue() * n2.shortValue()));
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.longValue() * n2.doubleValue());
+			if (n2 instanceof BigInteger)
+				return new BigInteger(String.valueOf(n1.longValue() * n2.longValue()));
+			if (n2 instanceof Byte)
+				return new BigInteger(String.valueOf(n1.longValue() * n2.byteValue()));
 		}
 
 		if (n1 instanceof Short) {
@@ -290,8 +449,31 @@ public final class NumberArithmetic {
 				return new Integer(n1.shortValue() * n2.intValue());
 			if (n2 instanceof Short)
 				return new Integer(n1.shortValue() * n2.shortValue());
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.shortValue() * n2.doubleValue());
+			if (n2 instanceof BigInteger)
+				return new BigInteger(String.valueOf(n1.shortValue() * n2.longValue()));
 			if (n2 instanceof Byte)
 				return new Integer(n1.shortValue() * n2.byteValue());
+		}
+		
+		if (n1 instanceof BigDecimal) {
+			if (n2 instanceof Double)
+				return new BigDecimal(n1.doubleValue() * n2.doubleValue());
+			if (n2 instanceof Float)
+				return new BigDecimal(n1.doubleValue() * n2.floatValue());
+			if (n2 instanceof Long)
+				return new BigDecimal(n1.doubleValue() * n2.longValue());
+			if (n2 instanceof Integer)
+				return new BigDecimal(n1.doubleValue() * n2.intValue());
+			if (n2 instanceof Short)
+				return new BigDecimal(n1.doubleValue() * n2.shortValue());
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.doubleValue() * n2.doubleValue());
+			if (n2 instanceof BigInteger)
+				return new BigDecimal(n1.doubleValue() * n2.longValue());
+			if (n2 instanceof Byte)
+				return new BigDecimal(n1.doubleValue() * n2.byteValue());
 		}
 
 		//if (n1 instanceof Byte) {
@@ -305,6 +487,10 @@ public final class NumberArithmetic {
 				return new Integer(n1.shortValue() * n2.intValue());
 			if (n2 instanceof Short)
 				return new Integer(n1.shortValue() * n2.shortValue());
+			if (n2 instanceof BigInteger) 
+				return new BigInteger(String.valueOf(n1.shortValue() * n2.longValue()));
+			if (n2 instanceof BigDecimal) 
+				return new BigDecimal(n1.shortValue() * n2.doubleValue());
 			//if (n2 instanceof Byte)
 				return new Integer(n1.byteValue() * n2.byteValue());
 		//}
@@ -329,6 +515,10 @@ public final class NumberArithmetic {
 				return new Double(n1.doubleValue() / n2.intValue());
 			if (n2 instanceof Short)
 				return new Double(n1.doubleValue() / n2.shortValue());
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.doubleValue() / n2.doubleValue());
+			if (n2 instanceof BigInteger)
+				return new Double(n1.doubleValue() / n2.longValue());
 			if (n2 instanceof Byte)
 				return new Double(n1.doubleValue() / n2.byteValue());
 		}
@@ -344,6 +534,10 @@ public final class NumberArithmetic {
 				return new Float(n1.floatValue() / n2.intValue());
 			if (n2 instanceof Short)
 				return new Float(n1.floatValue() / n2.shortValue());
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.floatValue() / n2.doubleValue());
+			if (n2 instanceof BigInteger)
+				return new Float(n1.floatValue() / n2.longValue());
 			if (n2 instanceof Byte)
 				return new Float(n1.floatValue() / n2.byteValue());
 		}
@@ -359,6 +553,10 @@ public final class NumberArithmetic {
 				return new Long(n1.longValue() / n2.intValue());
 			if (n2 instanceof Short)
 				return new Long(n1.longValue() / n2.shortValue());
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.longValue() / n2.doubleValue());
+			if (n2 instanceof BigInteger)
+				return new BigInteger(String.valueOf(n1.longValue() / n2.longValue()));
 			if (n2 instanceof Byte)
 				return new Long(n1.longValue() / n2.byteValue());
 		}
@@ -374,8 +572,31 @@ public final class NumberArithmetic {
 				return new Integer(n1.intValue() / n2.intValue());
 			if (n2 instanceof Short)
 				return new Integer(n1.intValue() / n2.shortValue());
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.intValue() / n2.doubleValue());
+			if (n2 instanceof BigInteger)
+				return new BigInteger(String.valueOf(n1.intValue() / n2.longValue()));
 			if (n2 instanceof Byte)
 				return new Integer(n1.intValue() / n2.byteValue());
+		}
+		
+		if (n1 instanceof BigInteger) {
+			if (n2 instanceof Double)
+				return new Double(n1.longValue() / n2.doubleValue());
+			if (n2 instanceof Float)
+				return new Float(n1.longValue() / n2.floatValue());
+			if (n2 instanceof Long)
+				return new BigInteger(String.valueOf(n1.longValue() / n2.longValue()));
+			if (n2 instanceof Integer)
+				return new BigInteger(String.valueOf(n1.longValue() / n2.intValue()));
+			if (n2 instanceof Short)
+				return new BigInteger(String.valueOf(n1.longValue() / n2.shortValue()));
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.longValue() / n2.doubleValue());
+			if (n2 instanceof BigInteger)
+				return new BigInteger(String.valueOf(n1.longValue() / n2.longValue()));
+			if (n2 instanceof Byte)
+				return new BigInteger(String.valueOf(n1.longValue() / n2.byteValue()));
 		}
 
 		if (n1 instanceof Short) {
@@ -389,8 +610,31 @@ public final class NumberArithmetic {
 				return new Integer(n1.shortValue() / n2.intValue());
 			if (n2 instanceof Short)
 				return new Integer(n1.shortValue() / n2.shortValue());
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.shortValue() / n2.doubleValue());
+			if (n2 instanceof BigInteger)
+				return new BigInteger(String.valueOf(n1.shortValue() / n2.longValue()));
 			if (n2 instanceof Byte)
 				return new Integer(n1.shortValue() / n2.byteValue());
+		}
+		
+		if (n1 instanceof BigDecimal) {
+			if (n2 instanceof Double)
+				return new BigDecimal(n1.doubleValue() / n2.doubleValue());
+			if (n2 instanceof Float)
+				return new BigDecimal(n1.doubleValue() / n2.floatValue());
+			if (n2 instanceof Long)
+				return new BigDecimal(n1.doubleValue() / n2.longValue());
+			if (n2 instanceof Integer)
+				return new BigDecimal(n1.doubleValue() / n2.intValue());
+			if (n2 instanceof Short)
+				return new BigDecimal(n1.doubleValue() / n2.shortValue());
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.doubleValue() / n2.doubleValue());
+			if (n2 instanceof BigInteger)
+				return new BigDecimal(n1.doubleValue() / n2.longValue());
+			if (n2 instanceof Byte)
+				return new BigDecimal(n1.doubleValue() / n2.byteValue());
 		}
 
 		//if (n1 instanceof Byte) {
@@ -404,6 +648,10 @@ public final class NumberArithmetic {
 				return new Integer(n1.shortValue() / n2.intValue());
 			if (n2 instanceof Short)
 				return new Integer(n1.shortValue() / n2.shortValue());
+			if (n2 instanceof BigInteger) 
+				return new BigInteger(String.valueOf(n1.shortValue() / n2.longValue()));
+			if (n2 instanceof BigDecimal) 
+				return new BigDecimal(n1.shortValue() / n2.doubleValue());
 			//if (n2 instanceof Byte)
 				return new Integer(n1.byteValue() / n2.byteValue());
 		//}
@@ -428,6 +676,10 @@ public final class NumberArithmetic {
 				return new Double(n1.doubleValue() % n2.intValue());
 			if (n2 instanceof Short)
 				return new Double(n1.doubleValue() % n2.shortValue());
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.doubleValue() % n2.doubleValue());
+			if (n2 instanceof BigInteger)
+				return new Double(n1.doubleValue() % n2.longValue());
 			if (n2 instanceof Byte)
 				return new Double(n1.doubleValue() % n2.byteValue());
 		}
@@ -443,6 +695,10 @@ public final class NumberArithmetic {
 				return new Float(n1.floatValue() % n2.intValue());
 			if (n2 instanceof Short)
 				return new Float(n1.floatValue() % n2.shortValue());
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.floatValue() % n2.doubleValue());
+			if (n2 instanceof BigInteger)
+				return new Float(n1.floatValue() % n2.longValue());
 			if (n2 instanceof Byte)
 				return new Float(n1.floatValue() % n2.byteValue());
 		}
@@ -458,6 +714,10 @@ public final class NumberArithmetic {
 				return new Long(n1.longValue() % n2.intValue());
 			if (n2 instanceof Short)
 				return new Long(n1.longValue() % n2.shortValue());
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.longValue() % n2.doubleValue());
+			if (n2 instanceof BigInteger)
+				return new BigInteger(String.valueOf(n1.longValue() % n2.longValue()));
 			if (n2 instanceof Byte)
 				return new Long(n1.longValue() % n2.byteValue());
 		}
@@ -473,8 +733,31 @@ public final class NumberArithmetic {
 				return new Integer(n1.intValue() % n2.intValue());
 			if (n2 instanceof Short)
 				return new Integer(n1.intValue() % n2.shortValue());
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.intValue() % n2.doubleValue());
+			if (n2 instanceof BigInteger)
+				return new BigInteger(String.valueOf(n1.intValue() % n2.longValue()));
 			if (n2 instanceof Byte)
 				return new Integer(n1.intValue() % n2.byteValue());
+		}
+		
+		if (n1 instanceof BigInteger) {
+			if (n2 instanceof Double)
+				return new Double(n1.longValue() % n2.doubleValue());
+			if (n2 instanceof Float)
+				return new Float(n1.longValue() % n2.floatValue());
+			if (n2 instanceof Long)
+				return new BigInteger(String.valueOf(n1.longValue() % n2.longValue()));
+			if (n2 instanceof Integer)
+				return new BigInteger(String.valueOf(n1.longValue() % n2.intValue()));
+			if (n2 instanceof Short)
+				return new BigInteger(String.valueOf(n1.longValue() % n2.shortValue()));
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.longValue() % n2.doubleValue());
+			if (n2 instanceof BigInteger)
+				return new BigInteger(String.valueOf(n1.longValue() % n2.longValue()));
+			if (n2 instanceof Byte)
+				return new BigInteger(String.valueOf(n1.longValue() % n2.byteValue()));
 		}
 
 		if (n1 instanceof Short) {
@@ -488,8 +771,31 @@ public final class NumberArithmetic {
 				return new Integer(n1.shortValue() % n2.intValue());
 			if (n2 instanceof Short)
 				return new Integer(n1.shortValue() % n2.shortValue());
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.shortValue() % n2.doubleValue());
+			if (n2 instanceof BigInteger)
+				return new BigInteger(String.valueOf(n1.shortValue() % n2.longValue()));
 			if (n2 instanceof Byte)
 				return new Integer(n1.shortValue() % n2.byteValue());
+		}
+		
+		if (n1 instanceof BigDecimal) {
+			if (n2 instanceof Double)
+				return new BigDecimal(n1.doubleValue() % n2.doubleValue());
+			if (n2 instanceof Float)
+				return new BigDecimal(n1.doubleValue() % n2.floatValue());
+			if (n2 instanceof Long)
+				return new BigDecimal(n1.doubleValue() % n2.longValue());
+			if (n2 instanceof Integer)
+				return new BigDecimal(n1.doubleValue() % n2.intValue());
+			if (n2 instanceof Short)
+				return new BigDecimal(n1.doubleValue() % n2.shortValue());
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.doubleValue() % n2.doubleValue());
+			if (n2 instanceof BigInteger)
+				return new BigDecimal(n1.doubleValue() % n2.longValue());
+			if (n2 instanceof Byte)
+				return new BigDecimal(n1.doubleValue() % n2.byteValue());
 		}
 
 		//if (n1 instanceof Byte) {
@@ -503,6 +809,10 @@ public final class NumberArithmetic {
 				return new Integer(n1.shortValue() % n2.intValue());
 			if (n2 instanceof Short)
 				return new Integer(n1.shortValue() % n2.shortValue());
+			if (n2 instanceof Short)
+				return new Integer(n1.shortValue() % n2.shortValue());
+			if (n2 instanceof BigInteger) 
+				return new BigInteger(String.valueOf(n1.shortValue() % n2.longValue()));
 			//if (n2 instanceof Byte)
 				return new Integer(n1.byteValue() % n2.byteValue());
 		//}
