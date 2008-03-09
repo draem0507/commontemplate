@@ -497,10 +497,10 @@
 								$init{name = "guest"}<br/>
 								<b>(5) 包含指令:</b><br/>
 								内嵌其它模板: <font color="green">(注：被内嵌的文件<b>可以</b>访问当前上下文的变量，<b>不可以</b>传参)</font><br/>
-								$inline{"common.ctl"}<br/>
-								$inline{"common.ctl", "UTF-8"}<br/>
+								$embed{"common.ctl"}<br/>
+								$embed{"common.ctl", "UTF-8"}<br/>
 								内嵌其它模板的一部分: <font color="green">(注：#后为zone的名称, 参见$zone指令)</font><br/>
-								$inline{"common.ctl#zone"}<br/>
+								$embed{"common.ctl#zone"}<br/>
 								包含其它模板的输出: <font color="green">(注：只包含输出，被包含的文件在新的上下文中执行，<b>不能</b>访问当前上下文的变量，<b>可以</b>传参)</font><br/>
 								$include{"common.ctl"}<br/>
 								$include{"common.ctl", "UTF-8"}<br/>
