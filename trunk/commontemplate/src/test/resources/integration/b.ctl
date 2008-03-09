@@ -1,2 +1,2 @@
 bb
-$inline{"a.ctl"}
+$embed{"a.ctl"}
