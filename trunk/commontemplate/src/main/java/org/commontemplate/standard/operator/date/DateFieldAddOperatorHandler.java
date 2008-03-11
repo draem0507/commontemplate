@@ -23,13 +23,12 @@ public class DateFieldAddOperatorHandler extends BinaryOperatorHandlerSupport {
 	public Object doEvaluate(Object leftOperand, Object rightOperand) throws Exception {
 		Date leftDate = (Date)leftOperand;
 		DateField field = (DateField)rightOperand;
-		if (field.getType() == DateField.MONTH) {
-			Calendar c = Calendar.getInstance();
+		Calendar c = Calendar.getInstance();
+		if (field.getType() == DateField.MONTH) {			
 			c.setTime(leftDate);
 			c.add(Calendar.MONTH, field.getValue());
 			return c.getTime();
 		} else if (field.getType() == DateField.YEAR) {
-			Calendar c = Calendar.getInstance();
 			c.setTime(leftDate);
 			c.add(Calendar.YEAR, field.getValue());
 			return c.getTime();
