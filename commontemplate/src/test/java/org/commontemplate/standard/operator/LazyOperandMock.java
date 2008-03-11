@@ -7,9 +7,15 @@ import org.commontemplate.core.Expression;
 public class LazyOperandMock implements LazyOperand {
 
 	private final Object obj;
+	private Expression expression;
 
 	public LazyOperandMock(Object obj) {
 		this.obj = obj;
+	}
+	
+	public LazyOperandMock(Object obj, Expression expression) {
+		this.obj = obj;
+		this.expression = expression;
 	}
 
 	public Object evaluate() throws EvaluationException {
@@ -17,7 +23,6 @@ public class LazyOperandMock implements LazyOperand {
 	}
 
 	public Expression getExpression() {
-		return null;
+		return expression;
 	}
-
 }
