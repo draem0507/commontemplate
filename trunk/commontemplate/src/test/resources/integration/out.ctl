@@ -1,1 +1,2 @@
-${users[0..99]}
+$form{name:"xxx"}
+$end
