@@ -32,20 +32,20 @@ public class NumberPositiveOperatorHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testDoEvaluate() throws Exception{
-		
+
 		UnaryOperatorHandler handler = operatorHandlerProvider.getUnaryOperatorHandler("+");
-		
-		Number number = Integer.valueOf(10);
+
+		Number number = new Integer(10);
 		assertEquals(10, ((Number)handler.doEvaluate(number)).intValue());
-		
-		number = Integer.valueOf(-10);
+
+		number = new Integer(-10);
 		assertEquals(-10, ((Number)handler.doEvaluate(number)).intValue());
-		
-		number = Double.valueOf(11.1);
+
+		number = new Double(11.1);
 		assertTrue(11.1 == ((Number)handler.doEvaluate(number)).doubleValue());
-		
-		number = Double.valueOf(-11.1);
+
+		number = new Double(-11.1);
 		assertTrue(-11.1 == ((Number)handler.doEvaluate(number)).doubleValue());
-		
+
 	}
 }
