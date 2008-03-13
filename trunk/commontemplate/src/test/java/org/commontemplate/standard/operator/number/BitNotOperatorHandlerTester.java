@@ -33,16 +33,16 @@ public class BitNotOperatorHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testDoEvaluate() throws Exception{
-		
+
 		UnaryOperatorHandler handler = operatorHandlerProvider.getUnaryOperatorHandler("~");
-		
-		Integer integer = Integer.valueOf(5);		
+
+		Integer integer = new Integer(5);
 		Integer resultInt = (Integer) handler.doEvaluate(integer);
 		assertEquals(-6, resultInt.intValue());
-		
-		integer = Integer.valueOf(7);
+
+		integer = new Integer(7);
 		resultInt = (Integer) handler.doEvaluate(integer);
 		assertEquals(-8, resultInt.intValue());
 	}
-	
+
 }
