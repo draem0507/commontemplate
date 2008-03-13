@@ -50,5 +50,15 @@ public class BooleanSelectOperatorHandlerTester extends TestCase {
 		selector = (Selector) handler.doEvaluate(leftOperand, rightOperand);
 		assertEquals(false, selector.isSelected());
 		assertNull(selector.getSelectedValue());
+		
+		Float f = new Float(1.2);
+		selector = (Selector) handler.doEvaluate(f, rightOperand);
+		assertEquals(true, selector.isSelected());
+		assertEquals("2", (String) selector.getSelectedValue()); 
+		
+		f = new Float(0.2);
+		selector = (Selector) handler.doEvaluate(f, rightOperand);
+		assertEquals(false, selector.isSelected());
+		assertNull(selector.getSelectedValue());
 	}
 }
