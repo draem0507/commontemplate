@@ -5,10 +5,9 @@ import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 import org.commontemplate.util.TypeUtils;
 
 /**
- * 布尔"短路选择"运算, 即C/C++/Java/C#中的三目运算符.
- * <p/>
- * 如: isOk ? "yes" : "no"
- * 
+ * 布尔"短路选择"逻辑三目操作符: "?:"<br/>
+ * 如: isOk ? "yes" : "no"<br/>
+ *
  * @author liangfei0201@163.com
  *
  */
