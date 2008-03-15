@@ -5,8 +5,9 @@ import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 import org.commontemplate.util.TypeUtils;
 
 /**
- * 布尔值"短路或"运算
- * 
+ * 布尔值"短路或"逻辑操作符: "||" 或 "or"<br/>
+ * 如: $if{isX || isY} $if{isX or isY}<br/>
+ *
  * @author liangfei0201@163.com
  *
  */
