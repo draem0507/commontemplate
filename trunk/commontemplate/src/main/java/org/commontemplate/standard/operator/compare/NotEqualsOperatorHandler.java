@@ -3,8 +3,9 @@ package org.commontemplate.standard.operator.compare;
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 
 /**
- * "不等于"操作符处理器
- * 
+ * 值不相等比较操作符: "!=" <br/>
+ * 如: $if{num1 != num2}<br/>
+ *
  * @see java.lang.Object#equals(Object)
  * @author liangfei0201@163.com
  *

@@ -2,6 +2,13 @@ package org.commontemplate.standard.operator.compare;
 
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 
+/**
+ * 字符串忽略大小写比较操作符: "~="<br/>
+ * 如: $if{"aa" ~= "AA"}<br/>
+ *
+ * @author liangfei0201@163.com
+ *
+ */
 public class ApproximateEqualsOperatorHandler extends BinaryOperatorHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
