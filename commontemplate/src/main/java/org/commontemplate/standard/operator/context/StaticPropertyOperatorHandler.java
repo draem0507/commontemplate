@@ -5,6 +5,13 @@ import java.util.Map;
 import org.commontemplate.standard.operator.UnaryOperatorHandlerSupport;
 import org.commontemplate.standard.property.StaticPropertyHandler;
 
+/**
+ * 系统属性取值一元操作符: "."<br/>
+ * 如: ${.now} $if{order.date + 3.day > .now} ${.random} ${.uuid} ${.system["os.name"]}<br/>
+ *
+ * @author liangfei0201@163.com
+ *
+ */
 public class StaticPropertyOperatorHandler extends UnaryOperatorHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
@@ -14,10 +21,10 @@ public class StaticPropertyOperatorHandler extends UnaryOperatorHandlerSupport {
 	}
 
 	private Map propertyHandlers;
-	
+
 	/**
 	 * 设置全局属性
-	 * 
+	 *
 	 * @param propertyHandlers Map<String, StaticPropertyHandler>
 	 */
 	public void setStaticPropertyHandlers(Map propertyHandlers) {
@@ -33,6 +40,5 @@ public class StaticPropertyOperatorHandler extends UnaryOperatorHandlerSupport {
 		}
 		throw new RuntimeException("未找到静态属性:" + property);
 	}
-
 
 }
