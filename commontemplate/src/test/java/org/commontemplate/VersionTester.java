@@ -3,13 +3,14 @@ package org.commontemplate;
 import junit.framework.TestCase;
 
 public class VersionTester extends TestCase {
-	
+
 	public void testRightVersions() {
 		super.assertTrue(Version.compare("0.6.5", "0.6.1") > 0);
 		super.assertTrue(Version.compare("0.6", "0.6.1") < 0);
 		super.assertTrue(Version.compare("0.5.9", "0.6.1") < 0);
+		super.assertTrue(Version.compare("0.5.9", "0.5.9") == 0);
 	}
-	
+
 	public void testErrorVersions() {
 		try {
 			Version.compare("ver", "0.6.1");
@@ -24,7 +25,7 @@ public class VersionTester extends TestCase {
 			// right
 		}
 	}
-	
+
 	public void testNullVersions() {
 		try {
 			Version.compare(null, "0.6.1");
