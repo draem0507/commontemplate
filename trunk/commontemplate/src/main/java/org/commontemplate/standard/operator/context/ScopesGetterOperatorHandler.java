@@ -3,6 +3,13 @@ package org.commontemplate.standard.operator.context;
 import org.commontemplate.core.Context;
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 
+/**
+ * 选择局部上下文操作符: "[]"<br/>
+ * 如: ${context["session"].user}<br/>
+ *
+ * @author liangfei0201@163.com
+ *
+ */
 public class ScopesGetterOperatorHandler extends BinaryOperatorHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
