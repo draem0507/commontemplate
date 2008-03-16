@@ -2,6 +2,13 @@ package org.commontemplate.standard.operator.sequence;
 
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 
+/**
+ * 数字序列操作符: ".."<br/>
+ * 如: ${1..5}<br/>
+ *
+ * @author liangfei0201@163.com
+ *
+ */
 public class IntegerSequenceOperatorHandler extends BinaryOperatorHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
