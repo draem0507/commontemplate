@@ -1,0 +1,1 @@
+${null}${null.null}${user.null}${users[0].null}${users[999].null}${null.xxx}
