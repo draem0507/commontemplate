@@ -6,17 +6,17 @@ import org.commontemplate.standard.operator.UnaryOperatorHandlerSupport;
 import org.commontemplate.util.CompareUtils;
 
 /**
- * 最大值静态函数操作符: "max"<br/>
- * 如: ${max(3,11,7) + 1}<br/>
+ * 最小值静态函数操作符: "min"<br/>
+ * 如: ${min(3,11,7) + 1}<br/>
  *
  * @author liangfei0201@163.com
  *
  */
-public class MaxFunctionHandler extends UnaryOperatorHandlerSupport {
+public class MinFunctionHandler extends UnaryOperatorHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	public MaxFunctionHandler() {
+	public MinFunctionHandler() {
 		super(List.class);
 	}
 
@@ -35,14 +35,14 @@ public class MaxFunctionHandler extends UnaryOperatorHandlerSupport {
 
 	public Object doEvaluate(Object operand) throws Exception {
 		List numbers = (List)operand;
-		Number max = null;
+		Number min = null;
 		for (int i = 0, n = numbers.size(); i < n ; i ++) {
 			Number num = (Number)numbers.get(i);
-			if (i == 0 || CompareUtils.compareNumber(num, max) > 0) {
-				max = num;
+			if (i == 0 || CompareUtils.compareNumber(num, min) < 0) {
+				min = num;
 			}
 		}
-		return max;
+		return min;
 	}
 
 }
