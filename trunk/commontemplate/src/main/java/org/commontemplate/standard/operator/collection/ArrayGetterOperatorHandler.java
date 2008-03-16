@@ -3,8 +3,9 @@ package org.commontemplate.standard.operator.collection;
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 
 /**
- * 数组按索引号取值处理器
- * 
+ * 数组按索引号取值操作符: "[]"<br/>
+ * 如: ${array[3]}<br/>
+ *
  * @author liangfei0201@163.com
  *
  */

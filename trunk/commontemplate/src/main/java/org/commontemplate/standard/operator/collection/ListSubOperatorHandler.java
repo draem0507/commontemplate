@@ -6,7 +6,8 @@ import java.util.List;
 import org.commontemplate.standard.operator.sequence.IntegerSequence;
 
 /**
- * 从列表中提取子列表处理器
+ * 子列表操作符: "[]"<br/>
+ * 如: ${users[0..3]} ${users[2,5,7]}<br/>
  *
  * @author liangfei0201@163.com
  *

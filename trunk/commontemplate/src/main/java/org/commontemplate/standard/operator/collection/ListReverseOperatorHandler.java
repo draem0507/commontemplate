@@ -5,6 +5,13 @@ import java.util.List;
 
 import org.commontemplate.standard.operator.UnaryOperatorHandlerSupport;
 
+/**
+ * 列表反转一元操作符: "-"<br/>
+ * 如: ${- list}<br/>
+ *
+ * @author liangfei0201@163.com
+ *
+ */
 public class ListReverseOperatorHandler extends UnaryOperatorHandlerSupport {
 
 	private static final long serialVersionUID = 1L;

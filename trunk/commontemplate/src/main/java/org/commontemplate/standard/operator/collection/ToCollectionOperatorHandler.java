@@ -9,10 +9,11 @@ import java.util.Map.Entry;
 import org.commontemplate.standard.operator.UnaryOperatorHandlerSupport;
 
 /**
- * 单一对象转化成集合处理器, Object 转成 List, Entry 转成 Map
- * <p/>
- * 注: 此处理器应放在处理器链的最后, 其不再调用nextHandler.
- * 
+ * 单一对象转化成集合一元操作符: "[]"<br/>
+ * Object 转成 List, Entry 转成 Map <br/>
+ * 如: ${[xxx]}<br/>
+ * 注: 此处理器应放在处理器链的最后, 其不再调用nextHandler.<br/>
+ *
  * @author liangfei0201@163.com
  *
  */

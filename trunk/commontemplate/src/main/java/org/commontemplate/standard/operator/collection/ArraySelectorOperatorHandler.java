@@ -5,6 +5,13 @@ import java.util.Map.Entry;
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 import org.commontemplate.util.ClassUtils;
 
+/**
+ * 数组内容选择操作符: "[=]"<br/>
+ * 如: ${users[name="xxx"]}<br/>
+ *
+ * @author liangfei0201@163.com
+ *
+ */
 public class ArraySelectorOperatorHandler extends BinaryOperatorHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
@@ -12,7 +19,7 @@ public class ArraySelectorOperatorHandler extends BinaryOperatorHandlerSupport {
 	public ArraySelectorOperatorHandler() {
 		super(Object[].class, Entry.class);
 	}
-	
+
 	public Object doEvaluate(Object leftOperand, Object rightOperand) throws Exception {
 		Object[] array = (Object[])leftOperand;
 		Entry entry = (Entry)rightOperand;
@@ -22,7 +29,7 @@ public class ArraySelectorOperatorHandler extends BinaryOperatorHandlerSupport {
 			Object obj = array[i];
 			try {
 				Object pro = ClassUtils.getObjectProperty(obj, peoperty);
-				if ((value == null && pro == null) || 
+				if ((value == null && pro == null) ||
 						(value != null && value.equals(pro)))
 					return obj;
 			} catch (Exception e) {
@@ -31,7 +38,7 @@ public class ArraySelectorOperatorHandler extends BinaryOperatorHandlerSupport {
 		}
 		return null;
 	}
-	
-	
-	
+
+
+
 }

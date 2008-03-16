@@ -7,6 +7,13 @@ import java.util.Map;
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 import org.commontemplate.util.ClassUtils;
 
+/**
+ * 集合多属性查询操作符: "[]"<br/>
+ * 如：${users[name="james", role="admin"]}<br/>
+ *
+ * @author liangfei0201@163.com
+ *
+ */
 public class ListMultiSelectorOperatorHandler extends BinaryOperatorHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
@@ -14,7 +21,7 @@ public class ListMultiSelectorOperatorHandler extends BinaryOperatorHandlerSuppo
 	public ListMultiSelectorOperatorHandler() {
 		super(Collection.class, Map.class);
 	}
-	
+
 	public Object doEvaluate(Object leftOperand, Object rightOperand) throws Exception {
 		Collection collection = (Collection)leftOperand;
 		Map map = (Map)rightOperand;
@@ -25,7 +32,7 @@ public class ListMultiSelectorOperatorHandler extends BinaryOperatorHandlerSuppo
 		}
 		return null;
 	}
-	
+
 	private boolean match(Object obj, Map map) {
 		for (Iterator iterator = map.entrySet().iterator(); iterator.hasNext();) {
 			Map.Entry entry = (Map.Entry)iterator.next();
@@ -41,5 +48,5 @@ public class ListMultiSelectorOperatorHandler extends BinaryOperatorHandlerSuppo
 		}
 		return true;
 	}
-	
+
 }

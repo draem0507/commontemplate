@@ -4,6 +4,12 @@ import java.util.Comparator;
 
 import org.commontemplate.util.ClassUtils;
 
+/**
+ * 属性比较器
+ *
+ * @author liangfei0201@163.com
+ *
+ */
 public class PropertyComparator implements Comparator, java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;

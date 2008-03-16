@@ -6,7 +6,8 @@ import java.util.Collection;
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 
 /**
- * 两个集合数据相加
+ * 集合数据相加操作符: "+"<br/>
+ * 如：${list1 + ["xxx", "yyy"]} ${list1 + list2}<br/>
  *
  * @author liangfei0201@163.com
  *

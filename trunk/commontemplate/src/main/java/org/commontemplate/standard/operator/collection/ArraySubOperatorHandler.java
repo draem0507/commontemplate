@@ -4,15 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 从数组中提取子数据集处理器
- * 
+ * 从数组中提取子数组操作符: "[]"<br/>
+ * 如: ${arr[0..3]} ${arr[1,3,4]}<br/>
+ *
  * @author liangfei0201@163.com
  *
  */
 public class ArraySubOperatorHandler extends IndexedBinaryOperatorHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	public ArraySubOperatorHandler() {
 		super(Object[].class);
 	}

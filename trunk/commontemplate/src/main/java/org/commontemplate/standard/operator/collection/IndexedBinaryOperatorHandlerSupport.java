@@ -4,6 +4,12 @@ import java.util.List;
 
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 
+/**
+ * 数字下标操作符基类<br/>
+ *
+ * @author liangfei0201@163.com
+ *
+ */
 public abstract class IndexedBinaryOperatorHandlerSupport extends BinaryOperatorHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
@@ -11,7 +17,7 @@ public abstract class IndexedBinaryOperatorHandlerSupport extends BinaryOperator
 	public IndexedBinaryOperatorHandlerSupport(Class leftOperandClass) {
 		super(leftOperandClass, List.class);
 	}
-	
+
 	public boolean isMatch(Object leftOperand, Object rightOperand) {
 		boolean m = super.isMatch(leftOperand, rightOperand);
 		if (! m)

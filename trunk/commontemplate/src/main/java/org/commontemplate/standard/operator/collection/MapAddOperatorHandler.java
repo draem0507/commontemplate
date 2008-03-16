@@ -6,7 +6,8 @@ import java.util.Map;
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 
 /**
- * 两个Map的数据相加
+ * Map数据相加操作符: "+"<br/>
+ * 如: ${map1 + map2}<br/>
  *
  * @author liangfei0201@163.com
  *
