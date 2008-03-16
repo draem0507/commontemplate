@@ -6,8 +6,10 @@ import java.util.Date;
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 
 /**
- * 日期格式化
- * 
+ * 日期格式化操作符: "#"<br/>
+ * 如: ${date # "yyyy-MM-dd HH:mm:ss"}<br/>
+ *
+ * @see java.text.DateFormat#format(Date)
  * @author liangfei0201@163.com
  *
  */

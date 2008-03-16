@@ -7,8 +7,9 @@ import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 import org.commontemplate.standard.property.number.DateField;
 
 /**
- * 日期指定字段的数值向前滚动操作符
- * 
+ * 日期指定字段的数值向前滚动操作符: "+"<br/>
+ * 如: ${date + 1.year} ${date + 3.day}<br/>
+ *
  * @author liangfei0201@163.com
  *
  */
@@ -22,8 +23,8 @@ public class DateFieldAddOperatorHandler extends BinaryOperatorHandlerSupport {
 
 	public Object doEvaluate(Object leftOperand, Object rightOperand) throws Exception {
 		Date leftDate = (Date)leftOperand;
-		DateField field = (DateField)rightOperand;		
-		if (field.getType() == DateField.MONTH) {	
+		DateField field = (DateField)rightOperand;
+		if (field.getType() == DateField.MONTH) {
 			Calendar c = Calendar.getInstance();
 			c.setTime(leftDate);
 			c.add(Calendar.MONTH, field.getValue());
