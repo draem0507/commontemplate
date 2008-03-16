@@ -7,8 +7,9 @@ import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 import org.commontemplate.standard.property.number.DateField;
 
 /**
- * 日期指定字段的数值向后滚动操作符
- * 
+ * 日期指定字段的数值向后滚动操作符: "-"<br/>
+ * 如: ${date - 1.year} ${date - 3.day}<br/>
+ *
  * @author liangfei0201@163.com
  *
  */
