@@ -4,6 +4,13 @@ import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 /**
  * 字符串重复的操作。
  */
+/**
+ * 字符重复操作符: "*"<br/>
+ * 如: ${"abc" * 2}<br/>
+ *
+ * @author liangfei0201@163.com
+ *
+ */
 public class StringRepeatOperatorHandler extends BinaryOperatorHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
