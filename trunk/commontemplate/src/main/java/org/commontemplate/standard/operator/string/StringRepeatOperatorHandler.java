@@ -1,7 +1,9 @@
 package org.commontemplate.standard.operator.string;
 
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
-
+/**
+ * 字符串重复的操作。
+ */
 public class StringRepeatOperatorHandler extends BinaryOperatorHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
