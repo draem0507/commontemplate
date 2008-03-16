@@ -14,7 +14,7 @@ public class StringCharAtOperatorHandler extends BinaryOperatorHandlerSupport {
 	private static final long serialVersionUID = 1L;
 
 	public StringCharAtOperatorHandler() {
-		super(String.class, Integer.class, true);
+		super(String.class, Integer.class);
 	}
 
 	public Object doEvaluate(Object leftOperand, Object rightOperand) throws Exception {

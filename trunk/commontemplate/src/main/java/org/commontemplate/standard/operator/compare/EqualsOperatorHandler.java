@@ -22,6 +22,8 @@ public class EqualsOperatorHandler extends BinaryOperatorHandlerSupport {
 	public Object doEvaluate(Object leftOperand, Object rightOperand) throws Exception {
 		if (leftOperand == null && rightOperand == null)
 			return Boolean.TRUE;
+		if (leftOperand == null || rightOperand == null)
+			return Boolean.FALSE;
 		if (leftOperand instanceof Character && rightOperand instanceof String) {
 			String str = (String)rightOperand;
 			return Boolean.valueOf(str.length() == 1 && ((Character)leftOperand).charValue() == str.charAt(0));
@@ -30,7 +32,7 @@ public class EqualsOperatorHandler extends BinaryOperatorHandlerSupport {
 			String str = (String)leftOperand;
 			return Boolean.valueOf(str.length() == 1 && ((Character)rightOperand).charValue() == str.charAt(0));
 		}
-		return Boolean.valueOf(leftOperand != null && leftOperand.equals(rightOperand));
+		return Boolean.valueOf(leftOperand.equals(rightOperand));
 	}
 
 }

@@ -23,7 +23,6 @@ public class LiteralListOperatorHandler extends BinaryOperatorHandlerSupport {
 		super(Object.class, Object.class, true);
 	}
 
-
 	public Object doEvaluate(Object leftOperand, Object rightOperand) throws Exception {
 		if (rightOperand instanceof Entry) {
 			if (leftOperand instanceof Map){

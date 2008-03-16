@@ -7,14 +7,14 @@ import org.commontemplate.config.SpecialBinaryOperatorHandler;
 
 /**
  * 二元操作符链, 将多个重载的二元操作符组装成一个二元操作符, 并负责按类型分派处理.
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
 public class BinaryOperatorHandlerChain extends SpecialBinaryOperatorHandler implements java.io.Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private List binaryOperatorHandlers;
 
 	public void setBinaryOperatorHandlers(List binaryOperatorHandlers) {
@@ -25,7 +25,7 @@ public class BinaryOperatorHandlerChain extends SpecialBinaryOperatorHandler imp
 			if (handler == null)
 				throw new java.lang.IllegalArgumentException("二元操作符处理类不能为空!");
 			if (! (handler instanceof BinaryOperatorHandlerMatcher))
-				throw new java.lang.IllegalArgumentException("二元操作符处理类:" + handler.getClass().getName() 
+				throw new java.lang.IllegalArgumentException("二元操作符处理类:" + handler.getClass().getName()
 						+ " 未实现接口:" + BinaryOperatorHandlerMatcher.class.getName());
 		}
 		this.binaryOperatorHandlers = binaryOperatorHandlers;
@@ -43,12 +43,14 @@ public class BinaryOperatorHandlerChain extends SpecialBinaryOperatorHandler imp
 				}
 			}
 		}
+		if (leftOperand == null || rightOperand == null) // 对null的默认处理
+			return null;
 		throw new UnhandleException("无法处理参数类型为: ("
 				+ (leftOperand == null ? null : leftOperand.getClass().getName()) + ", "
-				+ (rightOperand == null ? null : rightOperand.getClass().getName()) 
+				+ (rightOperand == null ? null : rightOperand.getClass().getName())
 				+ ") 值为: (" + leftOperand + ", " + rightOperand + ")" + " 被调用的处理类:" + binaryOperatorHandlers);
 	}
-	
+
 	private boolean leftOperandLazy;
 
 	public boolean isLeftOperandLazy() {
@@ -108,9 +110,9 @@ public class BinaryOperatorHandlerChain extends SpecialBinaryOperatorHandler imp
 	public void setRightToLeft(boolean rightToLeft) {
 		this.rightToLeft = rightToLeft;
 	}
-	
+
 	private boolean associativeLaw;
-	
+
 	public boolean isAssociativeLaw() {
 		return associativeLaw;
 	}
