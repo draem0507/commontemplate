@@ -4,6 +4,13 @@ import java.text.DecimalFormat;
 
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 
+/**
+ * 数字格式化操作符: "#"<br/>
+ * 如: ${12 # "###,##0.00"} ${num1 # "###,##0.00"}<br/>
+ *
+ * @author liangfei0201@163.com
+ *
+ */
 public class NumberFormatOperatorHandler extends BinaryOperatorHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
