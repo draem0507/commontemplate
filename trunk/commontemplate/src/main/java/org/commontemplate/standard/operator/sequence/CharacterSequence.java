@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * 连续的Unicode字符序列
- * 
+ * 连续的Unicode字符序列集合实现
+ *
  * @author liangfei0201@163.com
  *
  */
@@ -17,17 +17,17 @@ public class CharacterSequence implements List, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private char begin;
-	
+
 	private char end;
-	
+
 	private char min;
-	
+
 	private char max;
 
 	private boolean asc;
-	
+
 	private int size;
-	
+
 	public CharacterSequence(char begin, char end) {
 		this.begin = begin;
 		this.end = end;
@@ -42,15 +42,15 @@ public class CharacterSequence implements List, Serializable {
 		}
 		size = max - min + 1;
 	}
-	
+
 	public char getBegin() {
 		return begin;
 	}
-	
+
 	public char getEnd() {
 		return end;
 	}
-	
+
 	public int size() {
 		return size;
 	}
@@ -86,10 +86,10 @@ public class CharacterSequence implements List, Serializable {
 
 	public Object get(int index) {
 		char value = (char)(begin + (asc ? index : - index));
-		
-		if ((asc && value > end) || (! asc && value < end)) 
+
+		if ((asc && value > end) || (! asc && value < end))
 			throw new IndexOutOfBoundsException("index = " + index);
-		
+
 		return new Character(value);
 	}
 
@@ -111,10 +111,10 @@ public class CharacterSequence implements List, Serializable {
 
 	public ListIterator listIterator(int index) {
 		char beginIndex = (char)(begin + (asc ? index : - index));
-		
-		if ((asc && beginIndex > end) || (! asc && beginIndex < end)) 
+
+		if ((asc && beginIndex > end) || (! asc && beginIndex < end))
 			throw new IndexOutOfBoundsException("index = " + index);
-		
+
 		return new CharacterSequenceIterator(beginIndex, end);
 	}
 
@@ -126,7 +126,7 @@ public class CharacterSequence implements List, Serializable {
         if (fromIndex > toIndex)
             throw new IllegalArgumentException("fromIndex(" + fromIndex +
                                                ") > toIndex(" + toIndex + ")");
-        
+
 		return new CharacterSequence((char)(begin + fromIndex), (char)(begin + fromIndex + toIndex));
 	}
 
@@ -169,9 +169,9 @@ public class CharacterSequence implements List, Serializable {
 	public Object remove(int index) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	private String buffer;
-	
+
 	public String toString() {
 		if (buffer == null) {
 			StringBuffer sb = new StringBuffer();
@@ -186,25 +186,25 @@ public class CharacterSequence implements List, Serializable {
 		}
 		return buffer;
 	}
-	
+
 	private static final class CharacterSequenceIterator implements ListIterator {
-		
+
 		private char begin;
-		
+
 		private char end;
-		
+
 		private char cur;
-		
+
 		private char inc;
-		
+
 		private boolean first;
-		
+
 		public CharacterSequenceIterator(char begin, char end) {
 			this.begin = begin;
 			this.end = end;
 			first = true;
 			cur = begin;
-			inc = (char)(begin < end ? 1 : -1); 
+			inc = (char)(begin < end ? 1 : -1);
 		}
 
 		public boolean hasNext() {
@@ -216,10 +216,10 @@ public class CharacterSequence implements List, Serializable {
 				first = false;
 				return new Character(cur);
 			}
-			
-			if (cur == end) 
+
+			if (cur == end)
 				throw new java.util.NoSuchElementException("IndexOutOfBounds");
-			
+
 			cur = (char)(cur + inc);
 			return new Character(cur);
 		}
@@ -227,12 +227,12 @@ public class CharacterSequence implements List, Serializable {
 		public int nextIndex() {
 			if (first) {
 				first = false;
-				return 0; 
+				return 0;
 			}
-			
-			if (cur == end) 
+
+			if (cur == end)
 				throw new java.util.NoSuchElementException("IndexOutOfBounds");
-			
+
 			cur = (char)(cur + inc);
 			return cur - begin;
 		}
@@ -246,10 +246,10 @@ public class CharacterSequence implements List, Serializable {
 				first = false;
 				return new Character(cur);
 			}
-			
-			if (cur == begin) 
+
+			if (cur == begin)
 				throw new java.util.NoSuchElementException("IndexOutOfBounds");
-			
+
 			cur = (char)(cur - inc);
 			return new Character(cur);
 		}
@@ -259,10 +259,10 @@ public class CharacterSequence implements List, Serializable {
 				first = false;
 				return 0;
 			}
-			
-			if (cur == begin) 
+
+			if (cur == begin)
 				throw new java.util.NoSuchElementException("IndexOutOfBounds");
-			
+
 			cur = (char)(cur - inc);
 			return cur - begin;
 		}
@@ -278,7 +278,7 @@ public class CharacterSequence implements List, Serializable {
 		public void set(Object o) {
 			throw new UnsupportedOperationException();
 		}
-		
+
 	}
 
 

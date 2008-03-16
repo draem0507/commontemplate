@@ -7,27 +7,27 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * 连续的数字序列
- * 
+ * 连续的数字序列集合实现
+ *
  * @author liangfei0201@163.com
  *
  */
 public class IntegerSequence implements List, Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	private int begin;
-	
+
 	private int end;
-	
+
 	private int min;
-	
+
 	private int max;
 
 	private boolean asc;
-	
+
 	private int size;
-	
+
 	public IntegerSequence(int begin, int end) {
 		this.begin = begin;
 		this.end = end;
@@ -42,15 +42,15 @@ public class IntegerSequence implements List, Serializable {
 		}
 		size = max - min + 1;
 	}
-	
+
 	public int getBegin() {
 		return begin;
 	}
-	
+
 	public int getEnd() {
 		return end;
 	}
-	
+
 	public int size() {
 		return size;
 	}
@@ -86,10 +86,10 @@ public class IntegerSequence implements List, Serializable {
 
 	public Object get(int index) {
 		int value = begin + (asc ? index : - index);
-		
-		if ((asc && value > end) || (! asc && value < end)) 
+
+		if ((asc && value > end) || (! asc && value < end))
 			throw new IndexOutOfBoundsException("index = " + index);
-		
+
 		return new Integer(value);
 	}
 
@@ -111,10 +111,10 @@ public class IntegerSequence implements List, Serializable {
 
 	public ListIterator listIterator(int index) {
 		int beginIndex = begin + (asc ? index : - index);
-		
-		if ((asc && beginIndex > end) || (! asc && beginIndex < end)) 
+
+		if ((asc && beginIndex > end) || (! asc && beginIndex < end))
 			throw new IndexOutOfBoundsException("index = " + index);
-		
+
 		return new IntegerSequenceIterator(beginIndex, end);
 	}
 
@@ -126,7 +126,7 @@ public class IntegerSequence implements List, Serializable {
         if (fromIndex > toIndex)
             throw new IllegalArgumentException("fromIndex(" + fromIndex +
                                                ") > toIndex(" + toIndex + ")");
-        
+
 		return new IntegerSequence(begin + fromIndex, begin + fromIndex + toIndex);
 	}
 
@@ -169,9 +169,9 @@ public class IntegerSequence implements List, Serializable {
 	public Object remove(int index) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	private String buffer;
-	
+
 	public String toString() {
 		if (buffer == null) {
 			StringBuffer sb = new StringBuffer();
@@ -186,25 +186,25 @@ public class IntegerSequence implements List, Serializable {
 		}
 		return buffer;
 	}
-	
+
 	private static final class IntegerSequenceIterator implements ListIterator {
-		
+
 		private int begin;
-		
+
 		private int end;
-		
+
 		private int cur;
-		
+
 		private int inc;
-		
+
 		private boolean first;
-		
+
 		public IntegerSequenceIterator(int begin, int end) {
 			this.begin = begin;
 			this.end = end;
 			first = true;
 			cur = begin;
-			inc = begin < end ? 1 : -1; 
+			inc = begin < end ? 1 : -1;
 		}
 
 		public boolean hasNext() {
@@ -216,10 +216,10 @@ public class IntegerSequence implements List, Serializable {
 				first = false;
 				return new Integer(cur);
 			}
-			
-			if (cur == end) 
+
+			if (cur == end)
 				throw new java.util.NoSuchElementException("IndexOutOfBounds");
-			
+
 			cur = cur + inc;
 			return new Integer(cur);
 		}
@@ -227,12 +227,12 @@ public class IntegerSequence implements List, Serializable {
 		public int nextIndex() {
 			if (first) {
 				first = false;
-				return 0; 
+				return 0;
 			}
-			
-			if (cur == end) 
+
+			if (cur == end)
 				throw new java.util.NoSuchElementException("IndexOutOfBounds");
-			
+
 			cur = cur + inc;
 			return cur - begin;
 		}
@@ -246,10 +246,10 @@ public class IntegerSequence implements List, Serializable {
 				first = false;
 				return new Integer(cur);
 			}
-			
-			if (cur == begin) 
+
+			if (cur == begin)
 				throw new java.util.NoSuchElementException("IndexOutOfBounds");
-			
+
 			cur = cur - inc;
 			return new Integer(cur);
 		}
@@ -259,10 +259,10 @@ public class IntegerSequence implements List, Serializable {
 				first = false;
 				return 0;
 			}
-			
-			if (cur == begin) 
+
+			if (cur == begin)
 				throw new java.util.NoSuchElementException("IndexOutOfBounds");
-			
+
 			cur = cur - inc;
 			return cur - begin;
 		}
@@ -278,7 +278,7 @@ public class IntegerSequence implements List, Serializable {
 		public void set(Object o) {
 			throw new UnsupportedOperationException();
 		}
-		
+
 	}
 
 }

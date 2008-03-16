@@ -9,7 +9,9 @@ import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 import org.commontemplate.standard.operator.UnhandleException;
 
 /**
- * 自定义序列
+ * 自定义字符串序列操作符: ".."<br/>
+ * 如: ${"January".."December"}<br/>
+ *
  * @author liangfei0201@163.com
  *
  */
@@ -22,7 +24,7 @@ public class StringSequenceOperatorHandler extends BinaryOperatorHandlerSupport 
 	public StringSequenceOperatorHandler() {
 		super(String.class, String.class);
 	}
-	
+
 	public void setSequences(Set seq) {
 		this.sequences = new ArrayList(seq.size());
 		for (Iterator iterator = seq.iterator(); iterator.hasNext();) {
