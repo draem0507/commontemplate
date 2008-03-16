@@ -3,6 +3,13 @@ package org.commontemplate.standard.operator.object;
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 import org.commontemplate.standard.operator.UnhandleException;
 
+/**
+ * 类型检查操作符: "instanceof"<br/>
+ * 如: $if{user instanceof "com.xxx.XXXClass"}<br/>
+ *
+ * @author liangfei0201@163.com
+ *
+ */
 public class InstanceofOperatorHandler extends BinaryOperatorHandlerSupport {
 
 	private static final long serialVersionUID = 1L;

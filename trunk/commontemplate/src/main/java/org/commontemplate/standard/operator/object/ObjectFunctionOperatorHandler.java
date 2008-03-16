@@ -11,6 +11,13 @@ import org.commontemplate.standard.function.FunctionMatcher;
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 import org.commontemplate.util.Function;
 
+/**
+ * 对象函数操符符: "."<br/>
+ * 如: ${action.exec()}<br/>
+ *
+ * @author liangfei0201@163.com
+ *
+ */
 public class ObjectFunctionOperatorHandler extends BinaryOperatorHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
@@ -18,12 +25,12 @@ public class ObjectFunctionOperatorHandler extends BinaryOperatorHandlerSupport 
 	public ObjectFunctionOperatorHandler() {
 		super(Object.class, Function.class);
 	}
-	
+
 	private Map functionHandlers;
-	
+
 	/**
 	 * 设置全局属性
-	 * 
+	 *
 	 * @param handlers Map<String, FunctionHandler>
 	 */
 	public void setFunctionHandlers(Map handlers) {
@@ -51,7 +58,7 @@ public class ObjectFunctionOperatorHandler extends BinaryOperatorHandlerSupport 
 				}
 			}
 		}
-		
+
 		try {
 			Method method = getMethod(leftOperand, functionName, types);
 			return method.invoke(leftOperand, args);
@@ -69,7 +76,7 @@ public class ObjectFunctionOperatorHandler extends BinaryOperatorHandlerSupport 
 			return getLikeMethod(model, functionName, types);
 		}
 	}
-	
+
 	// 获取相似方法
 	private Method getLikeMethod(Object model, String functionName, Class[] types) throws Exception {
 		Method[] methods = model.getClass().getMethods();
@@ -83,13 +90,13 @@ public class ObjectFunctionOperatorHandler extends BinaryOperatorHandlerSupport 
 		}
 		throw new Exception("在 " + model.getClass().getName() + " 中, 没有找到函数: " + getSignature(functionName, types));
 	}
-	
+
 	// 判断两个参数列表类型是否相似
 	private boolean typeLikes(Class[] cs1, Class[] cs2) {
 		for (int j = 0, m = cs1.length; j < m; j ++) {
 			Class c1 = cs1[j];
 			Class c2 = cs2[j];
-			if (! (c1 == c2 || (c1.isPrimitive() 
+			if (! (c1 == c2 || (c1.isPrimitive()
 					&& ((c1 == Boolean.TYPE && c2 == Boolean.class)
 							|| (c1 == Byte.TYPE && c2 == Byte.class)
 							|| (c1 == Character.TYPE && c2 == Character.class)
@@ -103,7 +110,7 @@ public class ObjectFunctionOperatorHandler extends BinaryOperatorHandlerSupport 
 		}
 		return true;
 	}
-	
+
 	private String getSignature(String functionName, Class[] types) {
 		StringBuffer signature = new StringBuffer();
 		signature.append(functionName);
