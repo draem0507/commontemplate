@@ -9,8 +9,9 @@ import java.util.Map.Entry;
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 
 /**
- * 字面列表生成处理器
- * 
+ * 字面列表操作符: ","<br/>
+ * 如: ${"aa","bb","cc"]<br/>
+ *
  * @author liangfei0201@163.com
  *
  */
@@ -22,7 +23,7 @@ public class LiteralListOperatorHandler extends BinaryOperatorHandlerSupport {
 		super(Object.class, Object.class, true);
 	}
 
-	
+
 	public Object doEvaluate(Object leftOperand, Object rightOperand) throws Exception {
 		if (rightOperand instanceof Entry) {
 			if (leftOperand instanceof Map){
@@ -39,13 +40,13 @@ public class LiteralListOperatorHandler extends BinaryOperatorHandlerSupport {
 				return literalMap;
 			}
 		}
-		
+
 		if (leftOperand instanceof List) {
 			List literalList = (List)leftOperand;
 			literalList.add(rightOperand);
 			return literalList;
 		}
-		
+
 		List literalList = new ArrayList();
 		literalList.add(leftOperand);
 		literalList.add(rightOperand);

@@ -8,6 +8,13 @@ import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 import org.commontemplate.util.Assert;
 import org.commontemplate.util.MapEntry;
 
+/**
+ * Map条件选择操作符: "[]"<br/>
+ * 如: ${map[key="x"].value} ${map[value="x"].key}<br/>
+ *
+ * @author liangfei0201@163.com
+ *
+ */
 public class MapSelectorOperatorHandler extends BinaryOperatorHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
@@ -28,7 +35,7 @@ public class MapSelectorOperatorHandler extends BinaryOperatorHandlerSupport {
 			for (Iterator iterator = map.entrySet().iterator(); iterator.hasNext();) {
 				Map.Entry e = (Map.Entry)iterator.next();
 				Object v = e.getValue();
-				if ((value == null && v == null) 
+				if ((value == null && v == null)
 						|| (value != null && value.equals(v)))
 					return e;
 			}

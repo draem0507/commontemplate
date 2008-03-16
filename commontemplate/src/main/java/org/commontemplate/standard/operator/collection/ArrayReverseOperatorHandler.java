@@ -2,6 +2,13 @@ package org.commontemplate.standard.operator.collection;
 
 import org.commontemplate.standard.operator.UnaryOperatorHandlerSupport;
 
+/**
+ * 数组反转一元操作符: "-"<br/>
+ * 如: ${- array}<br/>
+ *
+ * @author liangfei0201@163.com
+ *
+ */
 public class ArrayReverseOperatorHandler extends UnaryOperatorHandlerSupport {
 
 	private static final long serialVersionUID = 1L;

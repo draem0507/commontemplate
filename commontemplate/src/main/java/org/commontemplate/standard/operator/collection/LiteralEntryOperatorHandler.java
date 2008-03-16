@@ -4,10 +4,10 @@ import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 import org.commontemplate.util.MapEntry;
 
 /**
- * 字面键值对生成处理器.
- * <p/>
- * 注: 此处理器应放在处理器链的最后, 其不再调用nextHandler.
- * 
+ * 字面键值对操作符: ":"<br/>
+ * 如: ${key : value}<br/>
+ * 注: 此处理器应放在处理器链的最后, 其不再调用nextHandler.<br/>
+ *
  * @author liangfei0201@163.com
  *
  */

@@ -10,6 +10,13 @@ import java.util.Map;
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 import org.commontemplate.util.TypeUtils;
 
+/**
+ * 列表条件选择操作符<br/>
+ * 如: ${users[u => u.name != "guest" && count < 5]}<br/>
+ *
+ * @author liangfei0201@163.com
+ *
+ */
 public class ListSubFilterOperatorHandler extends BinaryOperatorHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
@@ -17,7 +24,7 @@ public class ListSubFilterOperatorHandler extends BinaryOperatorHandlerSupport {
 	public ListSubFilterOperatorHandler() {
 		super(Collection.class, Filter.class);
 	}
-	
+
 	public Object doEvaluate(Object leftOperand, Object rightOperand) throws Exception {
 		Collection collection = (Collection)leftOperand;
 		Filter filter = (Filter)rightOperand;
@@ -39,17 +46,17 @@ public class ListSubFilterOperatorHandler extends BinaryOperatorHandlerSupport {
 		}
 		return sub;
 	}
-	
+
 	private String itemName;
-	
+
 	private static final String DEFAULT_ITEM_NAME = "item";
-	
+
 	public final String resolveItemName(String name) {
-		if (name != null && name.length() > 0) 
+		if (name != null && name.length() > 0)
 			return name;
 		return getItemName();
 	}
-	
+
 	public final String getItemName() {
 		if (itemName == null || itemName.length() == 0)
 			return DEFAULT_ITEM_NAME;
@@ -61,9 +68,9 @@ public class ListSubFilterOperatorHandler extends BinaryOperatorHandlerSupport {
 	}
 
 	private String indexName;
-	
+
 	private static final String DEFAULT_INDEX_NAME = "index";
-	
+
 	public final String getIndexName() {
 		if (indexName == null || indexName.length() == 0)
 			return DEFAULT_INDEX_NAME;
@@ -75,9 +82,9 @@ public class ListSubFilterOperatorHandler extends BinaryOperatorHandlerSupport {
 	}
 
 	private String sizeName;
-	
+
 	private static final String DEFAULT_SIZE_NAME = "size";
-	
+
 	public final String getSizeName() {
 		if (sizeName == null || sizeName.length() == 0)
 			return DEFAULT_SIZE_NAME;
@@ -89,9 +96,9 @@ public class ListSubFilterOperatorHandler extends BinaryOperatorHandlerSupport {
 	}
 
 	private String countName;
-	
+
 	private static final String DEFAULT_COUNT_NAME = "count";
-	
+
 	public final String getCountName() {
 		if (countName == null || countName.length() == 0)
 			return DEFAULT_COUNT_NAME;

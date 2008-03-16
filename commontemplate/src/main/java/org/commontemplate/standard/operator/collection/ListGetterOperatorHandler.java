@@ -5,8 +5,9 @@ import java.util.List;
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 
 /**
- * 列表按索引号取值处理器
- * 
+ * 列表按索引号取值操作符: "[]"<br/>
+ * 如：${list[1]}<br/>
+ *
  * @author liangfei0201@163.com
  *
  */

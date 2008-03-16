@@ -13,12 +13,18 @@ import org.commontemplate.core.UndefinedException;
 import org.commontemplate.core.VariableException;
 import org.commontemplate.util.TypeUtils;
 
+/**
+ * 简单表达式变量上下文实现
+ *
+ * @author liangfei0201@163.com
+ *
+ */
 public class SimpleExpressionContext implements VariableResolver {
-	
+
 	public SimpleExpressionContext() {
-		
+
 	}
-	
+
 	// 断言 -----
 
 	protected void assertVariables(Map model) throws VariableException {
@@ -26,23 +32,23 @@ public class SimpleExpressionContext implements VariableResolver {
 			for (Iterator iterator = model.keySet().iterator(); iterator.hasNext();) {
 				String name = (String)iterator.next();
 				assertVariableName(name);
-				if (isDefinedVariable(name)) 
+				if (isDefinedVariable(name))
 					throw new DefinedException(name + " 已经定义!", name);
 			}
 		}
 	}
 
 	protected void assertVariableName(String var) throws VariableException {
-		if (var == null) 
+		if (var == null)
 			throw new VariableException("变量名不能为空!", null);
-		
-		if (! TypeUtils.isNamed(var)) 
+
+		if (! TypeUtils.isNamed(var))
 			throw new VariableException(var + " 不符合命名规范!", var);
-		
+
 	}
 
 	private final Map variablesContainer = new HashMap();
-	
+
 	private final Map aliasContainer = new HashMap();
 
 	private final Set readonlyContainer = new HashSet();
@@ -52,7 +58,7 @@ public class SimpleExpressionContext implements VariableResolver {
 	public void lockVariables() {
 		this.isLock = true;
 	}
-	
+
 	public void unlockVariables() {
 		this.isLock = false;
 	}
@@ -101,7 +107,7 @@ public class SimpleExpressionContext implements VariableResolver {
 	public Object lookupVariable(String name) throws VariableException {
 		return variablesContainer.get(name);
 	}
-	
+
 	public Map getDefinedVariables() {
 		return Collections.unmodifiableMap(variablesContainer);
 	}
@@ -109,10 +115,10 @@ public class SimpleExpressionContext implements VariableResolver {
 	public void removeVariableAlias(String alias) throws VariableException {
 		aliasContainer.remove(alias);
 	}
-	
+
 	public void removeVariable(String var) throws UndefinedException,
 			VariableException {
-		if (isLock) 
+		if (isLock)
 			throw new VariableException("变量容器锁定! 无法移除：" + var, var);
 		assertVariableName(var);
 		variablesContainer.remove(var);

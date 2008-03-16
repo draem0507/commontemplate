@@ -7,6 +7,13 @@ import java.util.Map;
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 import org.commontemplate.util.TypeUtils;
 
+/**
+ * Map数据过滤操作符: "=>"<br/>
+ * 如: ${map[entry => entry.key == "xxx"]}<br/>
+ *
+ * @author liangfei0201@163.com
+ *
+ */
 public class MapSubFilterOperatorHandler extends BinaryOperatorHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
@@ -14,7 +21,7 @@ public class MapSubFilterOperatorHandler extends BinaryOperatorHandlerSupport {
 	public MapSubFilterOperatorHandler() {
 		super(Map.class, Filter.class);
 	}
-	
+
 	public Object doEvaluate(Object leftOperand, Object rightOperand) throws Exception {
 		Map map = (Map)leftOperand;
 		Filter filter = (Filter)rightOperand;
@@ -36,17 +43,17 @@ public class MapSubFilterOperatorHandler extends BinaryOperatorHandlerSupport {
 		}
 		return sub;
 	}
-	
+
 	private String entryName;
-	
+
 	private static final String DEFAULT_ENTRY_NAME = "item";
-	
+
 	public final String resolveEntryName(String name) {
-		if (name != null && name.length() > 0) 
+		if (name != null && name.length() > 0)
 			return name;
 		return getEntryName();
 	}
-	
+
 	public final String getEntryName() {
 		if (entryName == null || entryName.length() == 0)
 			return DEFAULT_ENTRY_NAME;
@@ -58,9 +65,9 @@ public class MapSubFilterOperatorHandler extends BinaryOperatorHandlerSupport {
 	}
 
 	private String indexName;
-	
+
 	private static final String DEFAULT_INDEX_NAME = "index";
-	
+
 	public final String getIndexName() {
 		if (indexName == null || indexName.length() == 0)
 			return DEFAULT_INDEX_NAME;
@@ -72,9 +79,9 @@ public class MapSubFilterOperatorHandler extends BinaryOperatorHandlerSupport {
 	}
 
 	private String sizeName;
-	
+
 	private static final String DEFAULT_SIZE_NAME = "size";
-	
+
 	public final String getSizeName() {
 		if (sizeName == null || sizeName.length() == 0)
 			return DEFAULT_SIZE_NAME;
@@ -86,9 +93,9 @@ public class MapSubFilterOperatorHandler extends BinaryOperatorHandlerSupport {
 	}
 
 	private String countName;
-	
+
 	private static final String DEFAULT_COUNT_NAME = "count";
-	
+
 	public final String getCountName() {
 		if (countName == null || countName.length() == 0)
 			return DEFAULT_COUNT_NAME;
