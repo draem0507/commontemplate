@@ -2,6 +2,13 @@ package org.commontemplate.standard.operator.string;
 
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 
+/**
+ * 字符重复操作符: "*"<br/>
+ * 如: ${2 * "abc"}<br/>
+ *
+ * @author liangfei0201@163.com
+ *
+ */
 public class StringRepeat2OperatorHandler extends BinaryOperatorHandlerSupport {
 
 	private static final long serialVersionUID = 1L;

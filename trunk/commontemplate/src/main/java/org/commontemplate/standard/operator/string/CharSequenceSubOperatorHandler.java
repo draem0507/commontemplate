@@ -5,6 +5,13 @@ import java.util.List;
 import org.commontemplate.standard.operator.collection.IndexedBinaryOperatorHandlerSupport;
 import org.commontemplate.standard.operator.sequence.IntegerSequence;
 
+/**
+ * 字符序列操作符: ".."<br/>
+ * 如: ${'A'..'Z'} ${"A".."Z"}<br/>
+ *
+ * @author liangfei0201@163.com
+ *
+ */
 public class CharSequenceSubOperatorHandler extends IndexedBinaryOperatorHandlerSupport {
 
 	private static final long serialVersionUID = 1L;

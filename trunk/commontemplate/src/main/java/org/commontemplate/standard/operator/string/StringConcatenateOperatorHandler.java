@@ -3,8 +3,9 @@ package org.commontemplate.standard.operator.string;
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 
 /**
- * toString字符串连接符处理器
- * 
+ * toString字符串连接操作符: "+"<br/>
+ * 如: ${"abc" + "def"}<br/>
+ *
  * @author liangfei0201@163.com
  *
  */
@@ -19,9 +20,9 @@ public class StringConcatenateOperatorHandler extends BinaryOperatorHandlerSuppo
 	public Object doEvaluate(Object leftOperand, Object rightOperand) throws Exception {
 		return getString(leftOperand) + getString(rightOperand);
 	}
-	
+
 	private String getString(Object operand) {
-		if (operand == null) 
+		if (operand == null)
 			return "";
 		return operand.toString();
 	}
