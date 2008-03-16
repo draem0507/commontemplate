@@ -1,9 +1,7 @@
 package org.commontemplate.standard.operator.string;
 
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
-/**
- * 字符串重复的操作。
- */
+
 /**
  * 字符重复操作符: "*"<br/>
  * 如: ${"abc" * 2}<br/>
