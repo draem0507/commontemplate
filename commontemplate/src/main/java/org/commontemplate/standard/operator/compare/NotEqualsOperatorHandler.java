@@ -1,6 +1,6 @@
 package org.commontemplate.standard.operator.compare;
 
-import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
+import org.commontemplate.util.TypeUtils;
 
 /**
  * 值不相等比较操作符: "!=" <br/>
@@ -10,26 +10,16 @@ import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
  * @author liangfei0201@163.com
  *
  */
-public class NotEqualsOperatorHandler extends BinaryOperatorHandlerSupport {
+public class NotEqualsOperatorHandler extends EqualsOperatorHandler {
 
 	private static final long serialVersionUID = 1L;
 
 	public NotEqualsOperatorHandler() {
-		super(Object.class, Object.class, true);
+		super();
 	}
 
 	public Object doEvaluate(Object leftOperand, Object rightOperand) throws Exception {
-		if (leftOperand == null && rightOperand == null)
-			return Boolean.FALSE;
-		if (leftOperand instanceof Character && rightOperand instanceof String) {
-			String str = (String)rightOperand;
-			return Boolean.valueOf(! (str.length() == 1 && ((Character)leftOperand).charValue() == str.charAt(0)));
-		}
-		if (leftOperand instanceof String && rightOperand instanceof Character) {
-			String str = (String)leftOperand;
-			return Boolean.valueOf(! (str.length() == 1 && ((Character)rightOperand).charValue() == str.charAt(0)));
-		}
-		return Boolean.valueOf(! (leftOperand != null && leftOperand.equals(rightOperand)));
+		return Boolean.valueOf(! TypeUtils.isTrue(super.doEvaluate(leftOperand, rightOperand)));
 	}
 
 }

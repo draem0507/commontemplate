@@ -20,8 +20,8 @@ import org.commontemplate.standard.directive.DirectiveUtils;
 import org.commontemplate.util.Assert;
 
 /**
- * 集合循环迭代指令. 
- * 
+ * 集合循环迭代指令.
+ *
  * @author liangfei0201@163.com
  *
  */
@@ -43,9 +43,11 @@ public class ForeachDirectiveHandler implements BlockDirectiveHandler {
 		boolean isSuccess = doForeach(context, param, innerElements);
 		context.getSuperLocalContext().setStatus(FOR_STATUS, Boolean.valueOf(isSuccess));
 	}
-	
+
 	private boolean doForeach(Context context, Object param, List elements) throws RenderingException, EvaluationException, IOException {
-		if (param instanceof Entry) {
+		if (param == null) {
+			return false;
+		} else if (param instanceof Entry) {
 			return normalForeach(context, (Entry)param, elements);
 		} else if (param instanceof Map) {
 			return parallelForeach(context, (Map)param, elements);
@@ -55,9 +57,9 @@ public class ForeachDirectiveHandler implements BlockDirectiveHandler {
 			throw new RuntimeException("for指令参数错误!");
 		}
 	}
-	
+
 	private boolean simpleForeach(Context context, int count, List elements) {
-		if (count == 0) 
+		if (count == 0)
 			return false;
 		if (count < 0) count = - count;
 		ForeachStatus status = new ForeachStatus(count);
@@ -76,7 +78,7 @@ public class ForeachDirectiveHandler implements BlockDirectiveHandler {
 		}
 		return true;
 	}
-	
+
 	private boolean normalForeach(Context context, Entry entry, List elements) {
 		String itemName = String.valueOf(entry.getKey());
 		Collection collection = getCollection(entry.getValue());
@@ -101,7 +103,7 @@ public class ForeachDirectiveHandler implements BlockDirectiveHandler {
 		}
 		return true;
 	}
-	
+
 	private boolean parallelForeach(Context context, Map map, List elements) {
 		int max = 0;
 		Map iters = new HashMap(map.size());
@@ -115,14 +117,14 @@ public class ForeachDirectiveHandler implements BlockDirectiveHandler {
 				max = coll.size();
 			}
 		}
-		if (max == 0) 
+		if (max == 0)
 			return false;
-		
+
 		ForeachStatus status = new ForeachStatus(max);
 		context.defineVariable(statusName, status);
 		for (int i = 0; i < max; i ++) {
 			context.assignVariable(statusName, status);
-			
+
 			for (Iterator iterator = iters.entrySet().iterator(); iterator.hasNext();) {
 				Map.Entry entry = (Map.Entry)iterator.next();
 				String itemName = (String)entry.getKey();
@@ -133,7 +135,7 @@ public class ForeachDirectiveHandler implements BlockDirectiveHandler {
 					context.assignVariable(itemName, null);
 				}
 			}
-			
+
 			try {
 				DirectiveUtils.renderAll(elements, context);
 				status.increment();
@@ -145,9 +147,9 @@ public class ForeachDirectiveHandler implements BlockDirectiveHandler {
 			}
 		}
 		return true;
-		
+
 	}
-	
+
 	private Collection getCollection(Object data) {
 		if (data == null)
 			return null;
