@@ -35,7 +35,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateDoublePlusDouble() throws Exception{
+	public void testDoEvaluateDoubleMultiplyDouble() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -56,7 +56,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateDoublePlusFloat() throws Exception{
+	public void testDoEvaluateDoubleMultiplyFloat() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -77,7 +77,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateDoublePlusLong() throws Exception{
+	public void testDoEvaluateDoubleMultiplyLong() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -98,7 +98,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateDoublePlusInt() throws Exception{
+	public void testDoEvaluateDoubleMultiplyInt() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -119,7 +119,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateDoublePlusShort() throws Exception{
+	public void testDoEvaluateDoubleMultiplyShort() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -140,7 +140,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateDoublePlusBigDecimal() throws Exception{
+	public void testDoEvaluateDoubleMultiplyBigDecimal() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -161,7 +161,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateDoublePlusBigInt() throws Exception{
+	public void testDoEvaluateDoubleMultiplyBigInt() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -182,7 +182,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateDoublePlusByte() throws Exception{
+	public void testDoEvaluateDoubleMultiplyByte() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -203,7 +203,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateFloatPlusDouble() throws Exception{
+	public void testDoEvaluateFloatMultiplyDouble() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -224,7 +224,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateFloatPlusFloat() throws Exception{
+	public void testDoEvaluateFloatMultiplyFloat() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -245,7 +245,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateFloatPlusLong() throws Exception{
+	public void testDoEvaluateFloatMultiplyLong() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -266,7 +266,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateFloatPlusInteger() throws Exception{
+	public void testDoEvaluateFloatMultiplyInteger() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -287,7 +287,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateFloatPlusShort() throws Exception{
+	public void testDoEvaluateFloatMultiplyShort() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -308,7 +308,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateFloatPlusBigDecimal() throws Exception{
+	public void testDoEvaluateFloatMultiplyBigDecimal() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -329,7 +329,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateFloatPlusBigInteger() throws Exception{
+	public void testDoEvaluateFloatMultiplyBigInteger() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -350,7 +350,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateFloatPlusByte() throws Exception{
+	public void testDoEvaluateFloatMultiplyByte() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -371,7 +371,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateLongPlusDouble() throws Exception{
+	public void testDoEvaluateLongMultiplyDouble() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -392,7 +392,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateLongPlusFloat() throws Exception{
+	public void testDoEvaluateLongMultiplyFloat() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -413,7 +413,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateLongPlusLong() throws Exception{
+	public void testDoEvaluateLongMultiplyLong() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -434,7 +434,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateLongPlusInteger() throws Exception{
+	public void testDoEvaluateLongMultiplyInteger() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -455,7 +455,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateLongPlusShort() throws Exception{
+	public void testDoEvaluateLongMultiplyShort() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -476,7 +476,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateLongPlusBigDecimal() throws Exception{
+	public void testDoEvaluateLongMultiplyBigDecimal() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -497,7 +497,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateLongPlusBigInteger() throws Exception{
+	public void testDoEvaluateLongMultiplyBigInteger() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -518,7 +518,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateLongPlusByte() throws Exception{
+	public void testDoEvaluateLongMultiplyByte() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -539,7 +539,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateIntegerPlusDouble() throws Exception{
+	public void testDoEvaluateIntegerMultiplyDouble() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -560,7 +560,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateIntegerPlusFloat() throws Exception{
+	public void testDoEvaluateIntegerMultiplyFloat() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -581,7 +581,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateIntegerPlusLong() throws Exception{
+	public void testDoEvaluateIntegerMultiplyLong() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -602,7 +602,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateIntegerPlusInteger() throws Exception{
+	public void testDoEvaluateIntegerMultiplyInteger() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -623,7 +623,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateIntegerPlusShort() throws Exception{
+	public void testDoEvaluateIntegerMultiplyShort() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -644,7 +644,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateIntegerPlusBigDecimal() throws Exception{
+	public void testDoEvaluateIntegerMultiplyBigDecimal() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -665,7 +665,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateIntegerPlusBigInteger() throws Exception{
+	public void testDoEvaluateIntegerMultiplyBigInteger() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -686,7 +686,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateIntegerPlusByte() throws Exception{
+	public void testDoEvaluateIntegerMultiplyByte() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -707,7 +707,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateBigIntegerPlusDouble() throws Exception{
+	public void testDoEvaluateBigIntegerMultiplyDouble() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -728,7 +728,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateBigIntegerPlusFloat() throws Exception{
+	public void testDoEvaluateBigIntegerMultiplyFloat() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -749,7 +749,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateBigIntegerPlusLong() throws Exception{
+	public void testDoEvaluateBigIntegerMultiplyLong() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -770,7 +770,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateBigIntegerPlusInteger() throws Exception{
+	public void testDoEvaluateBigIntegerMultiplyInteger() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -791,7 +791,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateBigIntegerPlusShort() throws Exception{
+	public void testDoEvaluateBigIntegerMultiplyShort() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -812,7 +812,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateBigIntegerPlusBigDecimal() throws Exception{
+	public void testDoEvaluateBigIntegerMultiplyBigDecimal() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -833,7 +833,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateBigIntegerPlusBigInteger() throws Exception{
+	public void testDoEvaluateBigIntegerMultiplyBigInteger() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -854,7 +854,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateBigIntegerPlusByte() throws Exception{
+	public void testDoEvaluateBigIntegerMultiplyByte() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -875,7 +875,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateShortPlusDouble() throws Exception{
+	public void testDoEvaluateShortMultiplyDouble() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -896,7 +896,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateShortPlusFloat() throws Exception{
+	public void testDoEvaluateShortMultiplyFloat() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -917,7 +917,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateShortPlusLong() throws Exception{
+	public void testDoEvaluateShortMultiplyLong() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -938,7 +938,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateShortPlusInteger() throws Exception{
+	public void testDoEvaluateShortMultiplyInteger() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -959,7 +959,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateShortPlusShort() throws Exception{
+	public void testDoEvaluateShortMultiplyShort() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -980,7 +980,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateShortPlusBigDecimal() throws Exception{
+	public void testDoEvaluateShortMultiplyBigDecimal() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -1001,7 +1001,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateShortPlusBigInteger() throws Exception{
+	public void testDoEvaluateShortMultiplyBigInteger() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -1022,7 +1022,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateShortPlusByte() throws Exception{
+	public void testDoEvaluateShortMultiplyByte() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -1043,7 +1043,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateBigDecimalPlusDouble() throws Exception{
+	public void testDoEvaluateBigDecimalMultiplyDouble() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -1064,7 +1064,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateBigDecimalPlusFloat() throws Exception{
+	public void testDoEvaluateBigDecimalMultiplyFloat() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -1085,7 +1085,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateBigDecimalPlusLong() throws Exception{
+	public void testDoEvaluateBigDecimalMultiplyLong() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -1106,7 +1106,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateBigDecimalPlusInteger() throws Exception{
+	public void testDoEvaluateBigDecimalMultiplyInteger() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -1127,7 +1127,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateBigDecimalPlusShort() throws Exception{
+	public void testDoEvaluateBigDecimalMultiplyShort() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -1148,7 +1148,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateBigDecimalPlusBigDecimal() throws Exception{
+	public void testDoEvaluateBigDecimalMultiplyBigDecimal() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -1169,7 +1169,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateBigDecimalPlusBigInteger() throws Exception{
+	public void testDoEvaluateBigDecimalMultiplyBigInteger() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -1190,7 +1190,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateBigDecimalPlusByte() throws Exception{
+	public void testDoEvaluateBigDecimalMultiplyByte() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -1211,7 +1211,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateBytePlusDouble() throws Exception{
+	public void testDoEvaluateByteMultiplyDouble() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -1232,7 +1232,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateBytePlusFloat() throws Exception{
+	public void testDoEvaluateByteMultiplyFloat() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -1253,7 +1253,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateBytePlusLong() throws Exception{
+	public void testDoEvaluateByteMultiplyLong() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -1274,7 +1274,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateBytePlusInteger() throws Exception{
+	public void testDoEvaluateByteMultiplyInteger() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -1295,7 +1295,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateBytePlusShort() throws Exception{
+	public void testDoEvaluateByteMultiplyShort() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -1316,7 +1316,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateBytePlusBigDecimal() throws Exception{
+	public void testDoEvaluateByteMultiplyBigDecimal() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -1337,7 +1337,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateBytePlusBigInteger() throws Exception{
+	public void testDoEvaluateByteMultiplyBigInteger() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
@@ -1358,7 +1358,7 @@ public class NumberMultiplyOperatorHandlerTester extends TestCase {
 	 * 返回两个Number 对象的乘法运算的结果。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateBytePlusByte() throws Exception{
+	public void testDoEvaluateByteMultiplyByte() throws Exception{
 		
 		BinaryOperatorHandlerChain handler = 
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
