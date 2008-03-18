@@ -1,25 +1,16 @@
 package org.commontemplate.standard.operator.string;
 
-import org.commontemplate.config.Configuration;
-import org.commontemplate.config.OperatorHandlerProvider;
 import org.commontemplate.config.UnaryOperatorHandler;
-import org.commontemplate.tools.PropertiesConfigurationLoader;
-
-import junit.framework.TestCase;
+import org.commontemplate.standard.operator.UnaryOperatorHandlerTester;
 /**
  * StringPresenceOperatorHandler 的测试。
  * @author YanRong
  *
  */
-public class StringPresenceOperatorHandlerTester extends TestCase {
+public class StringPresenceOperatorHandlerTester extends UnaryOperatorHandlerTester {
 
-	OperatorHandlerProvider operatorHandlerProvider;
-	
-	public void setUp() {
-
-		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		// 默认会取得 StandardOperatorHandlerProvider
-		operatorHandlerProvider = config.getOperatorHandlerProvider();
+	protected UnaryOperatorHandler newUnaryOperatorHandler() {
+		return new StringPresenceOperatorHandler();
 	}
 	/**
 	 * 对一元操作符 ？ 的测试。<br>
@@ -31,21 +22,13 @@ public class StringPresenceOperatorHandlerTester extends TestCase {
 	 * 根据string是否为空，以及length是否大于零而返回boolean类型。。
 	 * @throws Exception
 	 */
-	public void testDoEvaluateForString() throws Exception{
+	public void testDoEvaluate() throws Exception{
 		
-		UnaryOperatorHandler handler = operatorHandlerProvider.getUnaryOperatorHandler("?");
+		assertEvaluation(null, Boolean.FALSE);
+		assertEvaluation("", Boolean.FALSE);
+		assertEvaluation("   ", Boolean.FALSE);
+		assertEvaluation("1", Boolean.TRUE);
 		
-		String str = null;
-		assertFalse(((Boolean)handler.doEvaluate(str)).booleanValue());
-		
-		str = "";
-		assertFalse(((Boolean)handler.doEvaluate(str)).booleanValue());
-		
-		str = "   ";
-		assertFalse(((Boolean)handler.doEvaluate(str)).booleanValue());
-		
-		str = "1";
-		assertTrue(((Boolean)handler.doEvaluate(str)).booleanValue());
 	}
 		
 }
