@@ -3,13 +3,10 @@ package org.commontemplate.standard.operator.date;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.commontemplate.config.Configuration;
-import org.commontemplate.config.OperatorHandlerProvider;
-import org.commontemplate.standard.operator.BinaryOperatorHandlerChain;
-import org.commontemplate.standard.property.number.DateField;
-import org.commontemplate.tools.PropertiesConfigurationLoader;
-
 import junit.framework.TestCase;
+
+import org.commontemplate.config.BinaryOperatorHandler;
+import org.commontemplate.standard.property.number.DateField;
 /**
  * DateFieldAddOperatorHandler 的测试。
  * @author YanRong
@@ -17,13 +14,11 @@ import junit.framework.TestCase;
  */
 public class DateFieldAddOperatorHandlerTester extends TestCase {
 
-	OperatorHandlerProvider operatorHandlerProvider;
+	BinaryOperatorHandler handler;
 	
 	public void setUp() {
 
-		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		// 默认会取得 StandardOperatorHandlerProvider
-		operatorHandlerProvider = config.getOperatorHandlerProvider();
+		handler = new DateFieldAddOperatorHandler();			
 	}
 	
 	/**
@@ -38,8 +33,6 @@ public class DateFieldAddOperatorHandlerTester extends TestCase {
 	 */
 	public void testDoEvaluateForYear() throws Exception{
 		
-		BinaryOperatorHandlerChain handler = 
-			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("+");
 		Calendar calendar = Calendar.getInstance();
 		
 		Date leftOperand = new Date();
@@ -64,9 +57,7 @@ public class DateFieldAddOperatorHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testDoEvaluateForMonth() throws Exception{
-		
-		BinaryOperatorHandlerChain handler = 
-			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("+");
+				
 		Calendar calendar = Calendar.getInstance();
 		
 		Date leftOperand = new Date();
@@ -93,9 +84,7 @@ public class DateFieldAddOperatorHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testDoEvaluateForDay() throws Exception{
-		
-		BinaryOperatorHandlerChain handler = 
-			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("+");
+				
 		Calendar calendar = Calendar.getInstance();
 		
 		Date leftOperand = new Date();
@@ -123,9 +112,7 @@ public class DateFieldAddOperatorHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testDoEvaluateForDay2() throws Exception{
-		
-		BinaryOperatorHandlerChain handler = 
-			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("+");
+				
 		Calendar calendar = Calendar.getInstance();
 		
 		Date leftOperand = new Date();
@@ -153,9 +140,7 @@ public class DateFieldAddOperatorHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testDoEvaluateForWeek() throws Exception{
-		
-		BinaryOperatorHandlerChain handler = 
-			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("+");
+				
 		Calendar calendar = Calendar.getInstance();
 		
 		Date leftOperand = new Date();
@@ -183,9 +168,7 @@ public class DateFieldAddOperatorHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testDoEvaluateForHour() throws Exception{
-		
-		BinaryOperatorHandlerChain handler = 
-			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("+");
+				
 		Calendar calendar = Calendar.getInstance();
 		
 		Date leftOperand = new Date();
@@ -213,9 +196,7 @@ public class DateFieldAddOperatorHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testDoEvaluateForMinute() throws Exception{
-		
-		BinaryOperatorHandlerChain handler = 
-			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("+");
+				
 		Calendar calendar = Calendar.getInstance();
 		
 		Date leftOperand = new Date();
@@ -244,9 +225,7 @@ public class DateFieldAddOperatorHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testDoEvaluateForSecond() throws Exception{
-		
-		BinaryOperatorHandlerChain handler = 
-			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("+");
+				
 		Calendar calendar = Calendar.getInstance();
 		
 		Date leftOperand = new Date();
@@ -276,9 +255,7 @@ public class DateFieldAddOperatorHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testDoEvaluateForMillonSecond() throws Exception{
-		
-		BinaryOperatorHandlerChain handler = 
-			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("+");
+				
 		Calendar calendar = Calendar.getInstance();
 		
 		Date leftOperand = new Date();
