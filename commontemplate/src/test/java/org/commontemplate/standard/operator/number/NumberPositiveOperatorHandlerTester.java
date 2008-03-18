@@ -1,25 +1,16 @@
 package org.commontemplate.standard.operator.number;
 
-import org.commontemplate.config.Configuration;
-import org.commontemplate.config.OperatorHandlerProvider;
 import org.commontemplate.config.UnaryOperatorHandler;
-import org.commontemplate.tools.PropertiesConfigurationLoader;
-
-import junit.framework.TestCase;
+import org.commontemplate.standard.operator.UnaryOperatorHandlerTester;
 /**
  * NumberPositiveOperatorHandler 的测试。
  * @author YanRong
  *
  */
-public class NumberPositiveOperatorHandlerTester extends TestCase {
+public class NumberPositiveOperatorHandlerTester extends UnaryOperatorHandlerTester {
 
-	OperatorHandlerProvider operatorHandlerProvider;
-
-	public void setUp() {
-
-		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		// 默认会取得 StandardOperatorHandlerProvider
-		operatorHandlerProvider = config.getOperatorHandlerProvider();
+	protected UnaryOperatorHandler newUnaryOperatorHandler() {
+		return new NumberPositiveOperatorHandler();
 	}
 	/**
 	 * 对一元操作符　+ 的测试。<br>
@@ -33,19 +24,10 @@ public class NumberPositiveOperatorHandlerTester extends TestCase {
 	 */
 	public void testDoEvaluate() throws Exception{
 
-		UnaryOperatorHandler handler = operatorHandlerProvider.getUnaryOperatorHandler("+");
-
-		Number number = new Integer(10);
-		assertEquals(10, ((Number)handler.doEvaluate(number)).intValue());
-
-		number = new Integer(-10);
-		assertEquals(-10, ((Number)handler.doEvaluate(number)).intValue());
-
-		number = new Double(11.1);
-		assertTrue(11.1 == ((Number)handler.doEvaluate(number)).doubleValue());
-
-		number = new Double(-11.1);
-		assertTrue(-11.1 == ((Number)handler.doEvaluate(number)).doubleValue());
+		assertEvaluation(new Integer(10), new Integer(10));
+		assertEvaluation(new Integer(-10), new Integer(-10));
+		assertEvaluation(new Double(11.1), new Double(11.1));
+		assertEvaluation(new Double(-11.1), new Double(-11.1));
 
 	}
 }

@@ -1,11 +1,8 @@
 package org.commontemplate.standard.operator.collection;
 
-import org.commontemplate.config.Configuration;
-import org.commontemplate.config.OperatorHandlerProvider;
-import org.commontemplate.config.UnaryOperatorHandler;
-import org.commontemplate.tools.PropertiesConfigurationLoader;
-
 import junit.framework.TestCase;
+
+import org.commontemplate.config.UnaryOperatorHandler;
 /**
  * ArrayReverseOperatorHandler 的测试。
  * @author YanRong
@@ -13,13 +10,10 @@ import junit.framework.TestCase;
  */
 public class ArrayReverseOperatorHandlerTester extends TestCase {
 
-	OperatorHandlerProvider operatorHandlerProvider;
+	UnaryOperatorHandler handler;
 
 	public void setUp() {
-
-		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		// 默认会取得 StandardOperatorHandlerProvider
-		operatorHandlerProvider = config.getOperatorHandlerProvider();
+		handler = new ArrayReverseOperatorHandler();
 	}
 	/**
 	 * 对一元操作符　- 的测试。<br>
@@ -32,8 +26,6 @@ public class ArrayReverseOperatorHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testDoEvaluate() throws Exception{
-		
-		UnaryOperatorHandler handler = operatorHandlerProvider.getUnaryOperatorHandler("-");
 		
 		String strs[] = new String[]{"1", "2", "3", "4"};
 		Object reversStrs[] = (Object[]) handler.doEvaluate(strs);
