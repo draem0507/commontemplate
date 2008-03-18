@@ -6,28 +6,19 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import org.commontemplate.config.Configuration;
-import org.commontemplate.config.OperatorHandlerProvider;
-import org.commontemplate.config.UnaryOperatorHandler;
-import org.commontemplate.tools.PropertiesConfigurationLoader;
 import java.util.Map.Entry;
 
-import junit.framework.TestCase;
+import org.commontemplate.config.UnaryOperatorHandler;
+import org.commontemplate.standard.operator.UnaryOperatorHandlerTester;
 /**
  * 单一对象转化成集合处理器, Object 转成 List, Entry 转成 Map 的测试。
  * @author YanRong
  *
  */
-public class ToCollectionOperatorHandlerTester extends TestCase {
+public class ToCollectionOperatorHandlerTester extends UnaryOperatorHandlerTester {
 
-	OperatorHandlerProvider operatorHandlerProvider;
-
-	public void setUp() {
-
-		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		// 默认会取得 StandardOperatorHandlerProvider
-		operatorHandlerProvider = config.getOperatorHandlerProvider();
+	protected UnaryOperatorHandler newUnaryOperatorHandler() {
+		return new ToCollectionOperatorHandler();
 	}
 	/**
 	 * 对一元操作符　[ 的测试。<br>
@@ -41,26 +32,22 @@ public class ToCollectionOperatorHandlerTester extends TestCase {
 	 */
 	public void testDoEvaluate() throws Exception{
 		
-		UnaryOperatorHandler handler = operatorHandlerProvider.getUnaryOperatorHandler("[");
-		
 		List list = new ArrayList();
 		list.add("a");
-		assertEquals(list, handler.doEvaluate(list));
+		assertEvaluation(list, list);
 		
 		Map map = new HashMap();
 		map.put("a", "1");
-		assertEquals(map, handler.doEvaluate(map));
+		assertEvaluation(map, map);
 		
 		Set set = map.entrySet();
 		Iterator it = set.iterator();
 		
 		Entry entry = (Entry) it.next();
+
+		assertEvaluation(entry, map);
 		
-		Map newMap = (Map) handler.doEvaluate(entry);
-		
-		assertEquals(map, newMap);
-		
-		assertEquals(list, handler.doEvaluate("a"));
+		assertEvaluation("a", list);
 		
 	}
 }
