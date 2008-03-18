@@ -1,11 +1,12 @@
 package org.commontemplate.standard.operator.number;
 
+import org.commontemplate.config.BinaryOperatorHandler;
 import org.commontemplate.standard.operator.BinaryOperatorHandlerTester;
 
 public class NumberDivideOperatorHandlerTester extends BinaryOperatorHandlerTester {
 
-	public void setUp() throws Exception {
-		super.binaryOperatorHandler = new NumberDivideOperatorHandler();
+	protected BinaryOperatorHandler newBinaryOperatorHandler() {
+		return new NumberDivideOperatorHandler();
 	}
 
 	public void testByteDivide() throws Exception {

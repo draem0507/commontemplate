@@ -6,30 +6,66 @@ import org.commontemplate.config.UnaryOperatorHandler;
 
 public abstract class UnaryOperatorHandlerTester extends TestCase {
 
-	protected UnaryOperatorHandler unaryOperatorHandler;
+	/**
+	 * 操作符供给模板方法
+	 * 
+	 * @return 待测试的操作符
+	 */
+	protected abstract UnaryOperatorHandler newUnaryOperatorHandler();
 
-	public abstract void setUp() throws Exception;
+	private UnaryOperatorHandler unaryOperatorHandler;
+
+	public void setUp() throws Exception {
+		unaryOperatorHandler = newUnaryOperatorHandler();
+	}
 
 	public void tearDown() throws Exception {
 		super.tearDown();
 		unaryOperatorHandler = null;
 	}
 
+	/**
+	 * 断言运算结果是否正确
+	 * 
+	 * @param operand 操作数
+	 * @param result 断言结果
+	 * @throws Exception 任意异常, 不应捕获, 由JUnit处理.
+	 */
 	protected void assertEvaluation(Object operand, Object result) throws Exception {
-		assertEvaluation("表达式求值结果错误！", operand, result);
+		assertEvaluation(operand, result, "表达式求值结果错误！");
 	}
 
-	protected void assertEvaluation(String message, Object operand, Object result) throws Exception {
+	/**
+	 * 断言运算结果是否正确, 并指定出错信息
+	 * 
+	 * @param operand 操作数
+	 * @param result 断言结果
+	 * @param message 出错信息
+	 * @throws Exception 任意异常, 不应捕获, 由JUnit处理.
+	 */
+	protected void assertEvaluation(Object operand, Object result, String message) throws Exception {
 		if (unaryOperatorHandler == null)
 			throw new NullPointerException("测试用例: " + getClass().getName() + "，未初始化unaryOperatorHandler！请覆写setUp()方法进行初始化！");
 		assertEquals(message, result, unaryOperatorHandler.doEvaluate(operand));
 	}
 
+	/**
+	 * 传入非法类型，断言运算操作符未处理
+	 * 
+	 * @param operand 操作数
+	 * @throws Exception 任意异常, 不应捕获, 由JUnit处理.
+	 */
 	protected void assertUnhandle(Object operand) throws Exception {
-		assertUnhandle("传入错误类型的参数，应该抛出异常！", operand);
+		assertUnhandle(operand, "传入错误类型的参数，应该抛出异常！");
 	}
 
-	protected void assertUnhandle(String message, Object operand) throws Exception {
+	/**
+	 * 传入非法类型，断言运算操作符未处理, 并指定出错信息
+	 * 
+	 * @param operand 操作数
+	 * @throws Exception 任意异常, 不应捕获, 由JUnit处理.
+	 */
+	protected void assertUnhandle(Object operand, String message) throws Exception {
 		try {
 			unaryOperatorHandler.doEvaluate(operand);
 			fail(message);

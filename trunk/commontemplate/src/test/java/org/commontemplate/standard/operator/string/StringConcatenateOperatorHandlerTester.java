@@ -1,11 +1,12 @@
 package org.commontemplate.standard.operator.string;
 
+import org.commontemplate.config.BinaryOperatorHandler;
 import org.commontemplate.standard.operator.BinaryOperatorHandlerTester;
 
 public class StringConcatenateOperatorHandlerTester extends BinaryOperatorHandlerTester {
 
-	public void setUp() throws Exception {
-		super.binaryOperatorHandler = new StringConcatenateOperatorHandler();
+	protected BinaryOperatorHandler newBinaryOperatorHandler() {
+		return new StringConcatenateOperatorHandler();
 	}
 
 	public void testNull() throws Exception {
