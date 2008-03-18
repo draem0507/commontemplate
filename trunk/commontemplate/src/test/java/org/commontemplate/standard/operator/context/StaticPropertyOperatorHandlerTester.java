@@ -14,12 +14,14 @@ import junit.framework.TestCase;
 public class StaticPropertyOperatorHandlerTester extends TestCase {
 
 	OperatorHandlerProvider operatorHandlerProvider;
+	UnaryOperatorHandler handler;
 
 	public void setUp() {
 
 		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
 		// 默认会取得 StandardOperatorHandlerProvider
 		operatorHandlerProvider = config.getOperatorHandlerProvider();
+		handler = operatorHandlerProvider.getUnaryOperatorHandler(".");
 	}
 	/**
 	 * 对一元操作符　. 的测试。<br>
@@ -32,8 +34,6 @@ public class StaticPropertyOperatorHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testDoEvaluate() throws Exception{
-		
-		UnaryOperatorHandler handler = operatorHandlerProvider.getUnaryOperatorHandler(".");
 		
 		String properties[] = new String[]{"system", "engine", "now", "random", "uuid"};
 		
