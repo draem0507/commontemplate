@@ -3,26 +3,17 @@ package org.commontemplate.standard.operator.collection;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import junit.framework.TestCase;
-
-import org.commontemplate.config.Configuration;
-import org.commontemplate.config.OperatorHandlerProvider;
-import org.commontemplate.standard.operator.BinaryOperatorHandlerChain;
-import org.commontemplate.tools.PropertiesConfigurationLoader;
+import org.commontemplate.config.BinaryOperatorHandler;
+import org.commontemplate.standard.operator.BinaryOperatorHandlerTester;
 /**
  * ContainOperatorHandler 的测试。
  * @author YanRong
  *
  */
-public class ContainOperatorHandlerTester extends TestCase {
+public class ContainOperatorHandlerTester extends BinaryOperatorHandlerTester {
 
-	OperatorHandlerProvider operatorHandlerProvider;
-	
-	public void setUp() {
-
-		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		// 默认会取得 StandardOperatorHandlerProvider
-		operatorHandlerProvider = config.getOperatorHandlerProvider();
+	protected BinaryOperatorHandler newBinaryOperatorHandler() {
+		return new ContainOperatorHandler();
 	}
 	
 	/**
@@ -37,15 +28,12 @@ public class ContainOperatorHandlerTester extends TestCase {
 	 */
 	public void testDoEvaluate() throws Exception{
 		
-		BinaryOperatorHandlerChain handler = 
-			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("~");
-		
 		Collection list = new ArrayList();
 		list.add("a");
 		list.add("b");
 		
-		assertEquals(Boolean.TRUE, handler.doEvaluate("a", list));
-		assertEquals(Boolean.FALSE, handler.doEvaluate("c", list));
+		assertEvaluation("a", list, Boolean.TRUE);
+		assertEvaluation("c", list, Boolean.FALSE);
 		
 	}
 }
