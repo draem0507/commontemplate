@@ -1,11 +1,12 @@
 package org.commontemplate.standard.operator.bool;
 
+import org.commontemplate.config.UnaryOperatorHandler;
 import org.commontemplate.standard.operator.UnaryOperatorHandlerTester;
 
 public class BooleanNotOperatorHandlerTester extends UnaryOperatorHandlerTester {
 
-	public void setUp() throws Exception {
-		super.unaryOperatorHandler = new BooleanNotOperatorHandler();
+	protected UnaryOperatorHandler newUnaryOperatorHandler() {
+		return new BooleanNotOperatorHandler();
 	}
 
 	public void testNull() throws Exception {

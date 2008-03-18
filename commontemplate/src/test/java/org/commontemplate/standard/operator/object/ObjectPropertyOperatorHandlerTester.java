@@ -1,11 +1,12 @@
 package org.commontemplate.standard.operator.object;
 
+import org.commontemplate.config.BinaryOperatorHandler;
 import org.commontemplate.standard.operator.BinaryOperatorHandlerTester;
 
 public class ObjectPropertyOperatorHandlerTester extends BinaryOperatorHandlerTester {
 
-	public void setUp() throws Exception {
-		super.binaryOperatorHandler = new ObjectPropertyOperatorHandler();
+	protected BinaryOperatorHandler newBinaryOperatorHandler() {
+		return new ObjectPropertyOperatorHandler();
 	}
 
 	public void testNull() throws Exception {

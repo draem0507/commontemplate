@@ -1,12 +1,13 @@
 package org.commontemplate.standard.operator.bool;
 
+import org.commontemplate.config.BinaryOperatorHandler;
 import org.commontemplate.standard.operator.BinaryOperatorHandlerTester;
 import org.commontemplate.standard.operator.LazyOperandMock;
 
 public class BooleanAndOperatorHandlerTester extends BinaryOperatorHandlerTester {
 
-	public void setUp() throws Exception {
-		super.binaryOperatorHandler = new BooleanAndOperatorHandler();
+	protected BinaryOperatorHandler newBinaryOperatorHandler() {
+		return new BooleanAndOperatorHandler();
 	}
 
 	public void testNull() throws Exception {

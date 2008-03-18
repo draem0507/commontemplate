@@ -1,11 +1,12 @@
 package org.commontemplate.standard.operator.collection;
 
+import org.commontemplate.config.BinaryOperatorHandler;
 import org.commontemplate.standard.operator.BinaryOperatorHandlerTester;
 
 public class ListMultiSelectorOperatorHandlerTester extends BinaryOperatorHandlerTester {
 
-	public void setUp() throws Exception {
-		super.binaryOperatorHandler = new ListMultiSelectorOperatorHandler();
+	protected BinaryOperatorHandler newBinaryOperatorHandler() {
+		return new ListMultiSelectorOperatorHandler();
 	}
 
 	public void testNull() throws Exception {
