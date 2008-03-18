@@ -4,6 +4,13 @@ import org.commontemplate.config.BinaryOperatorHandler;
 
 import junit.framework.TestCase;
 
+/**
+ * 二元操作符测试用例基类.
+ * 所有的二元操作符测试用例均继承于此类.
+ * 
+ * @author liangfei0201@163.com
+ *
+ */
 public abstract class BinaryOperatorHandlerTester extends TestCase {
 
 	/**

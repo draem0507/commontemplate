@@ -4,6 +4,13 @@ import junit.framework.TestCase;
 
 import org.commontemplate.config.UnaryOperatorHandler;
 
+/**
+ * 一元操作符测试用例基类
+ * 所有的一元操作符测试用例均继承于此类.
+ * 
+ * @author liangfei0201@163.com
+ *
+ */
 public abstract class UnaryOperatorHandlerTester extends TestCase {
 
 	/**
