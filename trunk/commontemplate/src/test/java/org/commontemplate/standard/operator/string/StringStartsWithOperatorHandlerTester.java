@@ -1,25 +1,16 @@
 package org.commontemplate.standard.operator.string;
 
-import org.commontemplate.config.Configuration;
-import org.commontemplate.config.OperatorHandlerProvider;
-import org.commontemplate.standard.operator.BinaryOperatorHandlerChain;
-import org.commontemplate.tools.PropertiesConfigurationLoader;
-
-import junit.framework.TestCase;
+import org.commontemplate.config.BinaryOperatorHandler;
+import org.commontemplate.standard.operator.BinaryOperatorHandlerTester;
 /**
  * StringStartsWithOperatorHandler 的测试。
  * @author YanRong
  *
  */
-public class StringStartsWithOperatorHandlerTester extends TestCase {
+public class StringStartsWithOperatorHandlerTester extends BinaryOperatorHandlerTester {
 
-	OperatorHandlerProvider operatorHandlerProvider;
-	
-	public void setUp() {
-
-		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		// 默认会取得 StandardOperatorHandlerProvider
-		operatorHandlerProvider = config.getOperatorHandlerProvider();
+	protected BinaryOperatorHandler newBinaryOperatorHandler() {
+		return new StringStartsWithOperatorHandler();
 	}
 	
 	/**
@@ -34,11 +25,9 @@ public class StringStartsWithOperatorHandlerTester extends TestCase {
 	 */
 	public void testDoEvaluate() throws Exception{
 		
-		BinaryOperatorHandlerChain handler = 
-			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("^=");
+		assertEvaluation("Hello World!", "Hell", Boolean.TRUE);
+		assertEvaluation("Hello World!", " Hell", Boolean.FALSE);
+		assertEvaluation("Hello World!", " hell", Boolean.FALSE);
 		
-		assertEquals(Boolean.TRUE, handler.doEvaluate("Hello World!", "Hell"));
-		assertEquals(Boolean.FALSE, handler.doEvaluate("Hello World!", " Hell"));
-		assertEquals(Boolean.FALSE, handler.doEvaluate("Hello World!", " hell"));
 	}
 }

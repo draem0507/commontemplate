@@ -1,25 +1,16 @@
 package org.commontemplate.standard.operator.compare;
 
-import org.commontemplate.config.Configuration;
-import org.commontemplate.config.OperatorHandlerProvider;
-import org.commontemplate.standard.operator.BinaryOperatorHandlerChain;
-import org.commontemplate.tools.PropertiesConfigurationLoader;
-
-import junit.framework.TestCase;
+import org.commontemplate.config.BinaryOperatorHandler;
+import org.commontemplate.standard.operator.BinaryOperatorHandlerTester;
 /**
  * ApproximateEqualsOperatorHandler 的测试。
  * @author YanRong
  *
  */
-public class ApproximateEqualsOperatorHandlerTester extends TestCase {
+public class ApproximateEqualsOperatorHandlerTester extends BinaryOperatorHandlerTester {
 
-	OperatorHandlerProvider operatorHandlerProvider;
-	
-	public void setUp() {
-
-		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		// 默认会取得 StandardOperatorHandlerProvider
-		operatorHandlerProvider = config.getOperatorHandlerProvider();
+	protected BinaryOperatorHandler newBinaryOperatorHandler() {
+		return new ApproximateEqualsOperatorHandler();
 	}
 	
 	/**
@@ -34,20 +25,18 @@ public class ApproximateEqualsOperatorHandlerTester extends TestCase {
 	 */
 	public void testDoEvaluate() throws Exception{
 		
-		BinaryOperatorHandlerChain handler = 
-			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("~=");
-		
 		StringBuffer buffer1 = new StringBuffer();
 		StringBuffer buffer2 = new StringBuffer();
 		
-		assertEquals(Boolean.TRUE, handler.doEvaluate(null, null));
-		assertEquals(Boolean.TRUE, handler.doEvaluate(buffer1.append("Abc"), buffer2.append("abc")));
-		assertEquals(Boolean.FALSE, handler.doEvaluate(buffer1.append("Abc "), buffer2.append("Abc")));
-		assertEquals(Boolean.FALSE, handler.doEvaluate(buffer1.append("Abc "), buffer2.append("abc")));
-		assertEquals(Boolean.FALSE, handler.doEvaluate(null, "a"));
-		assertEquals(Boolean.FALSE, handler.doEvaluate("a", null));
-		assertEquals(Boolean.FALSE, handler.doEvaluate("b", "a"));
-		assertEquals(Boolean.TRUE, handler.doEvaluate(new Integer(1), new Integer(1)));
-		assertEquals(Boolean.FALSE, handler.doEvaluate(new Integer(1), new Integer(2)));
+		assertEvaluation(null, null, Boolean.TRUE);
+		assertEvaluation(buffer1.append("Abc"), buffer2.append("abc"), Boolean.TRUE);
+		assertEvaluation(buffer1.append("Abc "), buffer2.append("Abc"), Boolean.FALSE);
+		assertEvaluation(buffer1.append("Abc "), buffer2.append("abc"), Boolean.FALSE);
+		assertEvaluation(null, "a", Boolean.FALSE);
+		assertEvaluation("a", null, Boolean.FALSE);
+		assertEvaluation("b", "a", Boolean.FALSE);
+		assertEvaluation(new Integer(1), new Integer(1), Boolean.TRUE);
+		assertEvaluation(new Integer(1), new Integer(2), Boolean.FALSE);
+		
 	}
 }

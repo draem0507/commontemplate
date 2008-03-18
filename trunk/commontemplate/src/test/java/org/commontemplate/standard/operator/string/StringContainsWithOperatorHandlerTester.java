@@ -1,27 +1,17 @@
 package org.commontemplate.standard.operator.string;
 
-import org.commontemplate.config.Configuration;
-import org.commontemplate.config.OperatorHandlerProvider;
-import org.commontemplate.standard.operator.BinaryOperatorHandlerChain;
-import org.commontemplate.tools.PropertiesConfigurationLoader;
-
-import junit.framework.TestCase;
+import org.commontemplate.config.BinaryOperatorHandler;
+import org.commontemplate.standard.operator.BinaryOperatorHandlerTester;
 /**
  * StringContainsWithOperatorHandler 的测试。
  * @author YanRong
  *
  */
-public class StringContainsWithOperatorHandlerTester extends TestCase {
+public class StringContainsWithOperatorHandlerTester extends BinaryOperatorHandlerTester {
 
-	OperatorHandlerProvider operatorHandlerProvider;
-	
-	public void setUp() {
-
-		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		// 默认会取得 StandardOperatorHandlerProvider
-		operatorHandlerProvider = config.getOperatorHandlerProvider();
+	protected BinaryOperatorHandler newBinaryOperatorHandler() {
+		return new StringContainsWithOperatorHandler();
 	}
-	
 	/**
 	 * 对2元操作符 *= 的测试。<br>
 	 * @condition
@@ -34,11 +24,8 @@ public class StringContainsWithOperatorHandlerTester extends TestCase {
 	 */
 	public void testDoEvaluate() throws Exception{
 		
-		BinaryOperatorHandlerChain handler = 
-			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*=");
-		
-		assertEquals(Boolean.TRUE, handler.doEvaluate("Hello World!", "orld!"));
-		assertEquals(Boolean.FALSE, handler.doEvaluate("Hello World!", " orld"));
-		assertEquals(Boolean.TRUE, handler.doEvaluate("Hello World!", "orld"));
+		assertEvaluation("Hello World!", "orld!", Boolean.TRUE);
+		assertEvaluation("Hello World!", " orld", Boolean.FALSE);
+		assertEvaluation("Hello World!", "orld", Boolean.TRUE);
 	}
 }
