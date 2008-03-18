@@ -1,25 +1,16 @@
 package org.commontemplate.standard.operator.number;
 
-import org.commontemplate.config.Configuration;
-import org.commontemplate.config.OperatorHandlerProvider;
-import org.commontemplate.standard.operator.BinaryOperatorHandlerChain;
-import org.commontemplate.tools.PropertiesConfigurationLoader;
-
-import junit.framework.TestCase;
+import org.commontemplate.config.BinaryOperatorHandler;
+import org.commontemplate.standard.operator.BinaryOperatorHandlerTester;
 /**
  * BitOrOperatorHandler 的测试。
  * @author YanRong
  *
  */
-public class BitOrOperatorHandlerTester extends TestCase {
+public class BitOrOperatorHandlerTester extends BinaryOperatorHandlerTester {
 
-	OperatorHandlerProvider operatorHandlerProvider;
-	
-	public void setUp() {
-
-		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		// 默认会取得 StandardOperatorHandlerProvider
-		operatorHandlerProvider = config.getOperatorHandlerProvider();
+	protected BinaryOperatorHandler newBinaryOperatorHandler() {
+		return new BitOrOperatorHandler();
 	}
 	
 	/**
@@ -34,17 +25,8 @@ public class BitOrOperatorHandlerTester extends TestCase {
 	 */
 	public void testDoEvaluate() throws Exception{
 		
-		BinaryOperatorHandlerChain handler = 
-			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("|");
+		assertEvaluation(new Integer(1), new Integer(2), new Integer(3));
+		assertEvaluation(new Integer(2), new Integer(3), new Integer(3));
 		
-		Integer int1 = new Integer(1);
-		Integer int2 = new Integer(2);
-		
-		assertEquals(Integer.valueOf("3"), handler.doEvaluate(int1, int2));
-		
-		int1 = new Integer(2);
-		int2 = new Integer(3);
-		
-		assertEquals(Integer.valueOf("3"), handler.doEvaluate(int1, int2));
 	}
 }

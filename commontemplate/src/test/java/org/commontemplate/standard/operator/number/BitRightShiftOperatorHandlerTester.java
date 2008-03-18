@@ -1,25 +1,16 @@
 package org.commontemplate.standard.operator.number;
 
-import org.commontemplate.config.Configuration;
-import org.commontemplate.config.OperatorHandlerProvider;
-import org.commontemplate.standard.operator.BinaryOperatorHandlerChain;
-import org.commontemplate.tools.PropertiesConfigurationLoader;
-
-import junit.framework.TestCase;
+import org.commontemplate.config.BinaryOperatorHandler;
+import org.commontemplate.standard.operator.BinaryOperatorHandlerTester;
 /**
  * BitRightShiftOperatorHandler 的测试。
  * @author YanRong
  *
  */
-public class BitRightShiftOperatorHandlerTester extends TestCase {
+public class BitRightShiftOperatorHandlerTester extends BinaryOperatorHandlerTester {
 
-	OperatorHandlerProvider operatorHandlerProvider;
-	
-	public void setUp() {
-
-		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		// 默认会取得 StandardOperatorHandlerProvider
-		operatorHandlerProvider = config.getOperatorHandlerProvider();
+	protected BinaryOperatorHandler newBinaryOperatorHandler() {
+		return new BitRightShiftOperatorHandler();
 	}
 	
 	/**
@@ -34,13 +25,7 @@ public class BitRightShiftOperatorHandlerTester extends TestCase {
 	 */
 	public void testDoEvaluate() throws Exception{
 		
-		BinaryOperatorHandlerChain handler = 
-			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler(">>");
-		
-		Integer int1 = new Integer(8);
-		Integer int2 = new Integer(1);
-		
-		assertEquals(Integer.valueOf("4"), handler.doEvaluate(int1, int2));
+		assertEvaluation(new Integer(8), new Integer(1), new Integer(4));
 		
 	}
 }

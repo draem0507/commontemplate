@@ -15,12 +15,15 @@ import junit.framework.TestCase;
 public class LiteralEntryOperatorHandlerTester extends TestCase {
 
 	OperatorHandlerProvider operatorHandlerProvider;
+	BinaryOperatorHandlerChain handler;
 	
 	public void setUp() {
 
 		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
 		// 默认会取得 StandardOperatorHandlerProvider
 		operatorHandlerProvider = config.getOperatorHandlerProvider();
+		handler = 
+			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler(":");
 	}
 	
 	/**
@@ -34,9 +37,6 @@ public class LiteralEntryOperatorHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testDoEvaluate() throws Exception{
-		
-		BinaryOperatorHandlerChain handler = 
-			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler(":");
 		
 		MapEntry mapEntry = (MapEntry) handler.doEvaluate("a", "b");
 		assertEquals("a", mapEntry.getKey());
@@ -55,9 +55,6 @@ public class LiteralEntryOperatorHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testDoEvaluate2() throws Exception{
-		
-		BinaryOperatorHandlerChain handler = 
-			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("=");
 		
 		MapEntry mapEntry = (MapEntry) handler.doEvaluate("a", "b");
 		assertEquals("a", mapEntry.getKey());

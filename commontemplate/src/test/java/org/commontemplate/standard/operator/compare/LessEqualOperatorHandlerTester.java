@@ -1,25 +1,16 @@
 package org.commontemplate.standard.operator.compare;
 
-import org.commontemplate.config.Configuration;
-import org.commontemplate.config.OperatorHandlerProvider;
-import org.commontemplate.standard.operator.BinaryOperatorHandlerChain;
-import org.commontemplate.tools.PropertiesConfigurationLoader;
-
-import junit.framework.TestCase;
+import org.commontemplate.config.BinaryOperatorHandler;
+import org.commontemplate.standard.operator.BinaryOperatorHandlerTester;
 /**
  * LessEqualOperatorHandler 的测试。
  * @author YanRong
  *
  */
-public class LessEqualOperatorHandlerTester extends TestCase {
+public class LessEqualOperatorHandlerTester extends BinaryOperatorHandlerTester {
 
-	OperatorHandlerProvider operatorHandlerProvider;
-	
-	public void setUp() {
-
-		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		// 默认会取得 StandardOperatorHandlerProvider
-		operatorHandlerProvider = config.getOperatorHandlerProvider();
+	protected BinaryOperatorHandler newBinaryOperatorHandler() {
+		return new LessEqualOperatorHandler();
 	}
 	
 	/**
@@ -34,12 +25,10 @@ public class LessEqualOperatorHandlerTester extends TestCase {
 	 */
 	public void testDoEvaluate() throws Exception{
 		
-		BinaryOperatorHandlerChain handler = 
-			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("<=");
-		
-		assertEquals(Boolean.TRUE, handler.doEvaluate(new Integer(3), new Integer(3)));
-		assertEquals(Boolean.TRUE, handler.doEvaluate(new Integer(3), new Integer(4)));
-		
-		assertEquals(Boolean.TRUE, handler.doEvaluate("a", "b"));		
+		assertEvaluation(new Integer(3), new Integer(3), Boolean.TRUE);
+		assertEvaluation(new Integer(3), new Integer(2), Boolean.FALSE);
+		assertEvaluation(new Integer(2), new Integer(3), Boolean.TRUE);
+		assertEvaluation("b", "a", Boolean.FALSE);		
+		assertEvaluation("a", "b", Boolean.TRUE);
 	}
 }
