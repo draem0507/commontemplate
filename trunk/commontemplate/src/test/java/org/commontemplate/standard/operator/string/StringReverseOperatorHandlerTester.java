@@ -1,25 +1,16 @@
 package org.commontemplate.standard.operator.string;
 
-import org.commontemplate.config.Configuration;
-import org.commontemplate.config.OperatorHandlerProvider;
 import org.commontemplate.config.UnaryOperatorHandler;
-import org.commontemplate.tools.PropertiesConfigurationLoader;
-
-import junit.framework.TestCase;
+import org.commontemplate.standard.operator.UnaryOperatorHandlerTester;
 /**
  * StringReverseOperatorHandler 的测试。
  * @author YanRong
  *
  */
-public class StringReverseOperatorHandlerTester extends TestCase {
+public class StringReverseOperatorHandlerTester extends UnaryOperatorHandlerTester {
 
-	OperatorHandlerProvider operatorHandlerProvider;
-
-	public void setUp() {
-
-		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		// 默认会取得 StandardOperatorHandlerProvider
-		operatorHandlerProvider = config.getOperatorHandlerProvider();
+	protected UnaryOperatorHandler newUnaryOperatorHandler() {
+		return new StringReverseOperatorHandler();
 	}
 	/**
 	 * 对一元操作符　- 的测试。<br>
@@ -33,11 +24,7 @@ public class StringReverseOperatorHandlerTester extends TestCase {
 	 */
 	public void testDoEvaluate() throws Exception{
 		
-		UnaryOperatorHandler handler = operatorHandlerProvider.getUnaryOperatorHandler("-");
-		
-		String str = "abcd1234";
-		
-		assertEquals("4321dcba", (String)handler.doEvaluate(str));
+		assertEvaluation("abcd1234", "4321dcba");
 		
 	}
 }

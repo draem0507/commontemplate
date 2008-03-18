@@ -3,26 +3,17 @@ package org.commontemplate.standard.operator.collection;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.commontemplate.config.Configuration;
-import org.commontemplate.config.OperatorHandlerProvider;
 import org.commontemplate.config.UnaryOperatorHandler;
-import org.commontemplate.tools.PropertiesConfigurationLoader;
-
-import junit.framework.TestCase;
+import org.commontemplate.standard.operator.UnaryOperatorHandlerTester;
 /**
  * ListReverseOperatorHandler　的测试。
  * @author YanRong
  *
  */
-public class ListReverseOperatorHandlerTester extends TestCase {
+public class ListReverseOperatorHandlerTester extends UnaryOperatorHandlerTester {
 
-	OperatorHandlerProvider operatorHandlerProvider;
-
-	public void setUp() {
-
-		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		// 默认会取得 StandardOperatorHandlerProvider
-		operatorHandlerProvider = config.getOperatorHandlerProvider();
+	protected UnaryOperatorHandler newUnaryOperatorHandler() {
+		return new ListReverseOperatorHandler();
 	}
 	/**
 	 * 对一元操作符　- 的测试。<br>
@@ -36,20 +27,19 @@ public class ListReverseOperatorHandlerTester extends TestCase {
 	 */
 	public void testDoEvaluate() throws Exception{
 		
-		UnaryOperatorHandler handler = operatorHandlerProvider.getUnaryOperatorHandler("-");
-		
 		List list = new ArrayList();
 		list.add("a");
 		list.add("b");
 		list.add("1");
 		list.add("2");
 		
-		List reversList = (List) handler.doEvaluate(list);
+		List resultList = new ArrayList();
+		resultList.add("2");
+		resultList.add("1");
+		resultList.add("b");
+		resultList.add("a");
 		
-		for(int i = 0, m = list.size(); i < m; i++) {
-			
-			assertEquals(list.get(i), reversList.get(m - i -1));
-		}
+		assertEvaluation(list, resultList);
 		
 	}
 }

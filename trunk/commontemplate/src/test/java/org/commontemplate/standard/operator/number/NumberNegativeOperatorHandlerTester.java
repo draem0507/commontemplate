@@ -3,26 +3,17 @@ package org.commontemplate.standard.operator.number;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import org.commontemplate.config.Configuration;
-import org.commontemplate.config.OperatorHandlerProvider;
 import org.commontemplate.config.UnaryOperatorHandler;
-import org.commontemplate.tools.PropertiesConfigurationLoader;
-
-import junit.framework.TestCase;
+import org.commontemplate.standard.operator.UnaryOperatorHandlerTester;
 /**
  * NumberNegativeOperatorHandler 的测试。
  * @author YanRong
  *
  */
-public class NumberNegativeOperatorHandlerTester extends TestCase {
+public class NumberNegativeOperatorHandlerTester extends UnaryOperatorHandlerTester {
 
-	OperatorHandlerProvider operatorHandlerProvider;
-
-	public void setUp() {
-
-		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		// 默认会取得 StandardOperatorHandlerProvider
-		operatorHandlerProvider = config.getOperatorHandlerProvider();
+	protected UnaryOperatorHandler newUnaryOperatorHandler() {
+		return new NumberNegativeOperatorHandler();
 	}
 	/**
 	 * 对一元操作符　- 的测试。<br>
@@ -35,50 +26,27 @@ public class NumberNegativeOperatorHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testDoEvaluate() throws Exception{
+
+		assertEvaluation(new Integer(10), new Integer(-10));		
+		assertEvaluation(new Integer(-10), new Integer(10));
 		
-		UnaryOperatorHandler handler = operatorHandlerProvider.getUnaryOperatorHandler("-");
+		assertEvaluation(Short.valueOf("10"), Short.valueOf("-10"));
+		assertEvaluation(Short.valueOf("-10"), Short.valueOf("10"));
 		
-		Number number = new Integer(10);
-		assertEquals(-10, ((Number)handler.doEvaluate(number)).intValue());
+		assertEvaluation(new Long(10), new Long(-10));		
+		assertEvaluation(new Long(-10), new Long(10));
 		
-		number = new Integer(-10);
-		assertEquals(10, ((Number)handler.doEvaluate(number)).intValue());
+		assertEvaluation(new Float((float)10.11), new Float((float)-10.11));		
+		assertEvaluation(new Float((float)-10.11), new Float((float)10.11));
 		
-		number = new Short((short)10);
-		assertEquals(-10, ((Number)handler.doEvaluate(number)).shortValue());
+		assertEvaluation(new Double((double)10.10), new Double((double)-10.10));		
+		assertEvaluation(new Double((double)-10.10), new Double((double)10.10));
 		
-		number = new Short((short)-10);
-		assertEquals(10, ((Number)handler.doEvaluate(number)).shortValue());
+		assertEvaluation(new BigDecimal((double)10.10), new BigDecimal((double)-10.10));		
+		assertEvaluation(new BigDecimal((double)-10.10), new BigDecimal((double)10.10));
 		
-		number = new Long(10);
-		assertEquals(-10, ((Number)handler.doEvaluate(number)).longValue());
-		
-		number = new Long(-10);
-		assertEquals(10, ((Number)handler.doEvaluate(number)).longValue());
-		
-		number = new Float((float)10.11);
-		assertTrue((float)-10.11 == ((Number)handler.doEvaluate(number)).floatValue());
-		
-		number = new Float((float)-10.10);
-		assertTrue((float)10.10 == ((Number)handler.doEvaluate(number)).floatValue());
-		
-		number = new Double((double)10.10);
-		assertTrue((double)-10.10 == ((Number)handler.doEvaluate(number)).doubleValue());
-		
-		number = new Double((double)-10.10);
-		assertTrue((double)10.10 == ((Number)handler.doEvaluate(number)).doubleValue());
-		
-		number = new BigDecimal((double)10.10);
-		assertTrue((double)-10.10 == ((Number)handler.doEvaluate(number)).doubleValue());
-		
-		number = new BigDecimal((double)-10.10);
-		assertTrue((double)10.10 == ((Number)handler.doEvaluate(number)).doubleValue());
-		
-		number = new BigInteger(String.valueOf(10));
-		assertEquals(-10, ((Number)handler.doEvaluate(number)).intValue());
-		
-		number = new BigInteger(String.valueOf(-10));
-		assertEquals(10, ((Number)handler.doEvaluate(number)).intValue());
+		assertEvaluation(new BigInteger(String.valueOf(10)), new BigInteger(String.valueOf(-10)));		
+		assertEvaluation(new BigInteger(String.valueOf(-10)), new BigInteger(String.valueOf(10)));
 		
 	}
 }
