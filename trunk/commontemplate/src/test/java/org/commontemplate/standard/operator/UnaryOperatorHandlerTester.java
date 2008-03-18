@@ -20,8 +20,6 @@ public abstract class UnaryOperatorHandlerTester extends TestCase {
 	 */
 	protected abstract UnaryOperatorHandler newUnaryOperatorHandler();
 
-	private UnaryOperatorHandler unaryOperatorHandler;
-
 	public void setUp() throws Exception {
 		unaryOperatorHandler = newUnaryOperatorHandler();
 	}
@@ -29,6 +27,12 @@ public abstract class UnaryOperatorHandlerTester extends TestCase {
 	public void tearDown() throws Exception {
 		super.tearDown();
 		unaryOperatorHandler = null;
+	}
+
+	private UnaryOperatorHandler unaryOperatorHandler;
+
+	protected UnaryOperatorHandler getUnaryOperatorHandler() {
+		return unaryOperatorHandler;
 	}
 
 	/**
