@@ -813,6 +813,8 @@ public final class NumberArithmetic {
 				return new Integer(n1.shortValue() % n2.shortValue());
 			if (n2 instanceof BigInteger) 
 				return new BigInteger(String.valueOf(n1.shortValue() % n2.longValue()));
+			if (n2 instanceof BigDecimal)
+				return new BigDecimal(n1.shortValue() % n2.doubleValue());
 			//if (n2 instanceof Byte)
 				return new Integer(n1.byteValue() % n2.byteValue());
 		//}
