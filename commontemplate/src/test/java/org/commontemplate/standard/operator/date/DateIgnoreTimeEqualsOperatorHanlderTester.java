@@ -3,26 +3,17 @@ package org.commontemplate.standard.operator.date;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.commontemplate.config.Configuration;
-import org.commontemplate.config.OperatorHandlerProvider;
-import org.commontemplate.standard.operator.BinaryOperatorHandlerChain;
-import org.commontemplate.tools.PropertiesConfigurationLoader;
-
-import junit.framework.TestCase;
+import org.commontemplate.config.BinaryOperatorHandler;
+import org.commontemplate.standard.operator.BinaryOperatorHandlerTester;
 /**
  * DateIgnoreTimeEqualsOperatorHanlder 的测试。
  * @author YanRong
  *
  */
-public class DateIgnoreTimeEqualsOperatorHanlderTester extends TestCase {
+public class DateIgnoreTimeEqualsOperatorHanlderTester extends BinaryOperatorHandlerTester {
 
-	OperatorHandlerProvider operatorHandlerProvider;
-	
-	public void setUp() {
-
-		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		// 默认会取得 StandardOperatorHandlerProvider
-		operatorHandlerProvider = config.getOperatorHandlerProvider();
+	protected BinaryOperatorHandler newBinaryOperatorHandler() {
+		return new DateIgnoreTimeEqualsOperatorHanlder();
 	}
 	
 	/**
@@ -37,9 +28,6 @@ public class DateIgnoreTimeEqualsOperatorHanlderTester extends TestCase {
 	 */
 	public void testDoEvaluate() throws Exception{
 		
-		BinaryOperatorHandlerChain handler = 
-			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("~=");
-		
 		Calendar calendar1 = Calendar.getInstance();
 		calendar1.setTime(new Date());
 		calendar1.set(Calendar.YEAR, 2008);
@@ -52,11 +40,11 @@ public class DateIgnoreTimeEqualsOperatorHanlderTester extends TestCase {
 		calendar2.set(Calendar.MONTH, Calendar.MARCH);
 		calendar2.set(Calendar.DAY_OF_MONTH, 8);
 		
-		assertEquals(Boolean.TRUE, handler.doEvaluate(calendar1, calendar2));
+		assertEvaluation(calendar1.getTime(), calendar2.getTime(), Boolean.TRUE);
 		
 		calendar2.set(Calendar.DAY_OF_MONTH, 9);
 		
-		assertEquals(Boolean.FALSE, handler.doEvaluate(calendar1, calendar2));
+		assertEvaluation(calendar1.getTime(), calendar2.getTime(), Boolean.FALSE);
 		
 	}
 }

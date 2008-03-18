@@ -1,25 +1,16 @@
 package org.commontemplate.standard.operator.string;
 
-import org.commontemplate.config.Configuration;
-import org.commontemplate.config.OperatorHandlerProvider;
-import org.commontemplate.standard.operator.BinaryOperatorHandlerChain;
-import org.commontemplate.tools.PropertiesConfigurationLoader;
-
-import junit.framework.TestCase;
+import org.commontemplate.config.BinaryOperatorHandler;
+import org.commontemplate.standard.operator.BinaryOperatorHandlerTester;
 /**
  * StringIngoreCaseEqualsOperatorHanlder 的测试。
  * @author YanRong
  *
  */
-public class StringIngoreCaseEqualsOperatorHanlderTester extends TestCase {
+public class StringIngoreCaseEqualsOperatorHanlderTester extends BinaryOperatorHandlerTester {
 
-	OperatorHandlerProvider operatorHandlerProvider;
-	
-	public void setUp() {
-
-		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		// 默认会取得 StandardOperatorHandlerProvider
-		operatorHandlerProvider = config.getOperatorHandlerProvider();
+	protected BinaryOperatorHandler newBinaryOperatorHandler() {
+		return new StringIngoreCaseEqualsOperatorHanlder();
 	}
 	
 	/**
@@ -34,12 +25,9 @@ public class StringIngoreCaseEqualsOperatorHanlderTester extends TestCase {
 	 */
 	public void testDoEvaluate() throws Exception{
 		
-		BinaryOperatorHandlerChain handler = 
-			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("~=");
-		
-		assertEquals(Boolean.TRUE, handler.doEvaluate("abc  ", "  abc"));
-		assertEquals(Boolean.TRUE, handler.doEvaluate("Abc  ", "  aBc"));
-		assertEquals(Boolean.FALSE, handler.doEvaluate("abe  ", "  abc"));
+		assertEvaluation("abc  ", "  abc", Boolean.TRUE);
+		assertEvaluation("Abc  ", "  aBc", Boolean.TRUE);
+		assertEvaluation("abe  ", "  abc", Boolean.FALSE);
 		
 	}
 }
