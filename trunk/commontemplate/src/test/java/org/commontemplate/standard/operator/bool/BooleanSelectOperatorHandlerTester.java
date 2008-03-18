@@ -16,12 +16,15 @@ import junit.framework.TestCase;
 public class BooleanSelectOperatorHandlerTester extends TestCase {
 
 	OperatorHandlerProvider operatorHandlerProvider;
+	BinaryOperatorHandlerChain handler;
 	
 	public void setUp() {
 
 		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
 		// 默认会取得 StandardOperatorHandlerProvider
 		operatorHandlerProvider = config.getOperatorHandlerProvider();
+		handler = 
+			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("?");
 	}
 	
 	/**
@@ -35,9 +38,6 @@ public class BooleanSelectOperatorHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testDoEvaluate() throws Exception{
-		
-		BinaryOperatorHandlerChain handler = 
-			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("?");
 		
 		LazyOperand rightOperand = new LazyOperandMock("2");
 		Boolean leftOperand = Boolean.TRUE;

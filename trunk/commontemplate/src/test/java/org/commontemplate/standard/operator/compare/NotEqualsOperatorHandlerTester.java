@@ -1,27 +1,17 @@
 package org.commontemplate.standard.operator.compare;
 
-import org.commontemplate.config.Configuration;
-import org.commontemplate.config.OperatorHandlerProvider;
-import org.commontemplate.standard.operator.BinaryOperatorHandlerChain;
-import org.commontemplate.tools.PropertiesConfigurationLoader;
-
-import junit.framework.TestCase;
+import org.commontemplate.config.BinaryOperatorHandler;
+import org.commontemplate.standard.operator.BinaryOperatorHandlerTester;
 /**
  * NotEqualsOperatorHandler 的测试。
  * @author YanRong
  *
  */
-public class NotEqualsOperatorHandlerTester extends TestCase {
+public class NotEqualsOperatorHandlerTester extends BinaryOperatorHandlerTester {
 
-	OperatorHandlerProvider operatorHandlerProvider;
-	
-	public void setUp() {
-
-		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		// 默认会取得 StandardOperatorHandlerProvider
-		operatorHandlerProvider = config.getOperatorHandlerProvider();
+	protected BinaryOperatorHandler newBinaryOperatorHandler() {
+		return new NotEqualsOperatorHandler();
 	}
-	
 	/**
 	 * 对2元操作符 != 的测试。<br>
 	 * @condition
@@ -34,25 +24,22 @@ public class NotEqualsOperatorHandlerTester extends TestCase {
 	 */
 	public void testDoEvaluate() throws Exception{
 		
-		BinaryOperatorHandlerChain handler = 
-			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("!=");
-		
 		Character character = new Character('a');
-		String str = "a";		
-		assertEquals(Boolean.FALSE, (Boolean) handler.doEvaluate(character, str));
-		assertEquals(Boolean.FALSE, (Boolean) handler.doEvaluate(str, character));
+		String str = "a";	
+		assertEvaluation(character, str, Boolean.FALSE);
+		assertEvaluation(str, character, Boolean.FALSE);
 		
 		character = new Character('a');
 		str = "aa";		
-		assertEquals(Boolean.TRUE, (Boolean) handler.doEvaluate(character, str));
-		assertEquals(Boolean.TRUE, (Boolean) handler.doEvaluate(str, character));
+		assertEvaluation(character, str, Boolean.TRUE);
+		assertEvaluation(str, character, Boolean.TRUE);
 		
 		character = new Character('a');
 		str = "b";
 		
-		assertEquals(Boolean.TRUE, (Boolean) handler.doEvaluate(character, str));
-		assertEquals(Boolean.TRUE, (Boolean) handler.doEvaluate(str, character));
+		assertEvaluation(character, str, Boolean.TRUE);
+		assertEvaluation(str, character, Boolean.TRUE);
 		
-		assertEquals(Boolean.FALSE, (Boolean) handler.doEvaluate("abc", "abc"));
+		assertEvaluation("abc", "abc", Boolean.FALSE);
 	}
 }

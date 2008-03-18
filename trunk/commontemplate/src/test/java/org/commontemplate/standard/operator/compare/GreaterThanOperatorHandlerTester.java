@@ -1,25 +1,16 @@
 package org.commontemplate.standard.operator.compare;
 
-import org.commontemplate.config.Configuration;
-import org.commontemplate.config.OperatorHandlerProvider;
-import org.commontemplate.standard.operator.BinaryOperatorHandlerChain;
-import org.commontemplate.tools.PropertiesConfigurationLoader;
-
-import junit.framework.TestCase;
+import org.commontemplate.config.BinaryOperatorHandler;
+import org.commontemplate.standard.operator.BinaryOperatorHandlerTester;
 /**
  * GreaterThanOperatorHandler 的测试。
  * @author YanRong
  *
  */
-public class GreaterThanOperatorHandlerTester extends TestCase {
+public class GreaterThanOperatorHandlerTester extends BinaryOperatorHandlerTester {
 
-	OperatorHandlerProvider operatorHandlerProvider;
-	
-	public void setUp() {
-
-		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		// 默认会取得 StandardOperatorHandlerProvider
-		operatorHandlerProvider = config.getOperatorHandlerProvider();
+	protected BinaryOperatorHandler newBinaryOperatorHandler() {
+		return new GreaterThanOperatorHandler();
 	}
 	
 	/**
@@ -34,11 +25,7 @@ public class GreaterThanOperatorHandlerTester extends TestCase {
 	 */
 	public void testDoEvaluate() throws Exception{
 		
-		BinaryOperatorHandlerChain handler = 
-			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler(">");
-		
-		assertEquals(Boolean.TRUE, handler.doEvaluate(new Integer(3), new Integer(2)));
-		
-		assertEquals(Boolean.TRUE, handler.doEvaluate("b", "a"));		
+		assertEvaluation(new Integer(3), new Integer(2), Boolean.TRUE);
+		assertEvaluation("b", "a", Boolean.TRUE);
 	}
 }
