@@ -5,8 +5,22 @@ import junit.framework.TestCase;
 public class SyntaxTester extends TestCase {
 	
 	public void testRightSyntax() {
-		new Syntax('$', '{', '}', '#', '*', '!', "end");
-		new Syntax('@', '{', '}', '#', '*', '!', "end1");
+		Syntax syntax = new Syntax('$', '{', '}', '#', '*', '!', "end");
+		assertEquals('$', syntax.getLeader());
+		assertEquals('{', syntax.getExpressionBegin());
+		assertEquals('}', syntax.getExpressionEnd());
+		assertEquals('#', syntax.getLineComment());
+		assertEquals('*', syntax.getBlockComment());
+		assertEquals('!', syntax.getNoParse());
+		assertEquals("end", syntax.getEndDirectiveName());
+		syntax = new Syntax('@', '{', '}', '#', '*', '!', "end1");
+		assertEquals('@', syntax.getLeader());
+		assertEquals('{', syntax.getExpressionBegin());
+		assertEquals('}', syntax.getExpressionEnd());
+		assertEquals('#', syntax.getLineComment());
+		assertEquals('*', syntax.getBlockComment());
+		assertEquals('!', syntax.getNoParse());
+		assertEquals("end1", syntax.getEndDirectiveName());
 	}
 	
 	public void testRepeatSyntax() {
