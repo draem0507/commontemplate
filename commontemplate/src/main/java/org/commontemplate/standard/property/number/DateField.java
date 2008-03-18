@@ -1,5 +1,7 @@
 package org.commontemplate.standard.property.number;
 
+import org.commontemplate.util.Assert;
+
 /**
  * Number类型的扩展，代表日期差值的数字.
  * 如：3y表示3年, 3M表示3个月
@@ -29,6 +31,11 @@ public final class DateField implements Comparable {
 	public static final int YEAR = MONTH * 12;
 
 	public DateField(int type, int value) {
+		Assert.assertTrue(type == MILLISECOND || type == SECOND 
+				|| type == MINUTE || type == HOUR || type == DAY 
+				|| type == WEEK || type == MONTH || type == YEAR
+				, "非法的DateField类型!");
+		
 		this.type = type;
 		this.value = value;
 	}
