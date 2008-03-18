@@ -55,6 +55,58 @@ public abstract class UnaryOperatorHandlerTester extends TestCase {
 			throw new NullPointerException("测试用例: " + getClass().getName() + "，未初始化unaryOperatorHandler！请覆写setUp()方法进行初始化！");
 		assertEquals(message, result, unaryOperatorHandler.doEvaluate(operand));
 	}
+	
+	/**
+	 * 断言运算结果是否正确
+	 * 
+	 * @param operand 操作数
+	 * @param result 断言结果
+	 * @throws Exception 任意异常, 不应捕获, 由JUnit处理.
+	 */
+	protected void assertEvaluationResultNotNull(Object operand) throws Exception{
+		assertEvaluationResultNotNull(operand, "表达式求值结果错误！");
+	}
+	
+	/**
+	 * 断言运算结果是否正确, 并指定出错信息
+	 * 
+	 * @param operand 操作数
+	 * @param result 断言结果
+	 * @param message 出错信息
+	 * @throws Exception 任意异常, 不应捕获, 由JUnit处理.
+	 */
+	protected void assertEvaluationResultNotNull(Object operand, String message) throws Exception {
+		if (unaryOperatorHandler == null)
+			throw new NullPointerException("测试用例: " + getClass().getName() + "，未初始化unaryOperatorHandler！请覆写setUp()方法进行初始化！");
+		
+		assertNotNull(message, unaryOperatorHandler.doEvaluate(operand));
+	}
+	
+	/**
+	 * 断言运算结果是否正确
+	 * 
+	 * @param operand 操作数
+	 * @param result 断言结果
+	 * @throws Exception 任意异常, 不应捕获, 由JUnit处理.
+	 */
+	protected void assertEvaluationResultNull(Object operand) throws Exception{
+		assertEvaluationResultNull(operand, "表达式求值结果错误！");
+	}
+	
+	/**
+	 * 断言运算结果是否正确, 并指定出错信息
+	 * 
+	 * @param operand 操作数
+	 * @param result 断言结果
+	 * @param message 出错信息
+	 * @throws Exception 任意异常, 不应捕获, 由JUnit处理.
+	 */
+	protected void assertEvaluationResultNull(Object operand, String message) throws Exception {
+		if (unaryOperatorHandler == null)
+			throw new NullPointerException("测试用例: " + getClass().getName() + "，未初始化unaryOperatorHandler！请覆写setUp()方法进行初始化！");
+		
+		assertNull(message, unaryOperatorHandler.doEvaluate(operand));
+	}
 
 	/**
 	 * 传入非法类型，断言运算操作符未处理

@@ -1,25 +1,16 @@
 package org.commontemplate.standard.operator.object;
 
-import org.commontemplate.config.Configuration;
-import org.commontemplate.config.OperatorHandlerProvider;
 import org.commontemplate.config.UnaryOperatorHandler;
-import org.commontemplate.tools.PropertiesConfigurationLoader;
-
-import junit.framework.TestCase;
+import org.commontemplate.standard.operator.UnaryOperatorHandlerTester;
 /**
  * ClassPackageOperatorHandler 的测试。
  * @author YanRong
  *
  */
-public class ClassPackageOperatorHandlerTester extends TestCase {
+public class ClassPackageOperatorHandlerTester extends UnaryOperatorHandlerTester {
 
-	OperatorHandlerProvider operatorHandlerProvider;
-
-	public void setUp() {
-
-		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		// 默认会取得 StandardOperatorHandlerProvider
-		operatorHandlerProvider = config.getOperatorHandlerProvider();
+	protected UnaryOperatorHandler newUnaryOperatorHandler() {
+		return new ClassPackageOperatorHandler();
 	}
 	/**
 	 * 测试 ClassPackageOperatorHandler。
@@ -32,14 +23,9 @@ public class ClassPackageOperatorHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testDoEvaluate() throws Exception{
-		
-		UnaryOperatorHandler handler = operatorHandlerProvider.getUnaryOperatorHandler("&");
-		
-		Class clazz = (Class) handler.doEvaluate("org.commontemplate.standard.operator.object.ClassPackageOperatorHandlerTester");		
-		assertNotNull(clazz);
-		
-		clazz = (Class) handler.doEvaluate("xxxxxxxx");		
-		assertNull(clazz);
+				
+		assertEvaluationResultNotNull("org.commontemplate.standard.operator.object.ClassPackageOperatorHandlerTester");
+		assertEvaluationResultNull("xxxxxxx");
 	}
 	
 }
