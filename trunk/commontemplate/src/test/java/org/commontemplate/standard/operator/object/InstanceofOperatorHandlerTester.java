@@ -1,25 +1,16 @@
 package org.commontemplate.standard.operator.object;
 
-import org.commontemplate.config.Configuration;
-import org.commontemplate.config.OperatorHandlerProvider;
-import org.commontemplate.standard.operator.BinaryOperatorHandlerChain;
-import org.commontemplate.tools.PropertiesConfigurationLoader;
-
-import junit.framework.TestCase;
+import org.commontemplate.config.BinaryOperatorHandler;
+import org.commontemplate.standard.operator.BinaryOperatorHandlerTester;
 /**
  * InstanceofOperatorHandler 的测试。
  * @author YanRong
  *
  */
-public class InstanceofOperatorHandlerTester extends TestCase {
+public class InstanceofOperatorHandlerTester extends BinaryOperatorHandlerTester {
 
-OperatorHandlerProvider operatorHandlerProvider;
-	
-	public void setUp() {
-
-		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		// 默认会取得 StandardOperatorHandlerProvider
-		operatorHandlerProvider = config.getOperatorHandlerProvider();
+	protected BinaryOperatorHandler newBinaryOperatorHandler() {
+		return new InstanceofOperatorHandler();
 	}
 	
 	/**
@@ -34,20 +25,20 @@ OperatorHandlerProvider operatorHandlerProvider;
 	 */
 	public void testDoEvaluate() throws Exception{
 		
-		BinaryOperatorHandlerChain handler = 
-			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("instanceof");
+		assertEvaluation(this, 
+				"org.commontemplate.standard.operator.object.InstanceofOperatorHandlerTester", 
+				Boolean.TRUE);
 		
-		assertTrue(((Boolean)handler.doEvaluate(this, 
-				"org.commontemplate.standard.operator.object.InstanceofOperatorHandlerTester")).booleanValue());
-		assertFalse(((Boolean)handler.doEvaluate(new Integer(2), 
-				"org.commontemplate.standard.operator.object.InstanceofOperatorHandlerTester")).booleanValue());
+		assertEvaluation(new Integer(2), 
+				"org.commontemplate.standard.operator.object.InstanceofOperatorHandlerTester", 
+				Boolean.FALSE);
 		
-		assertTrue(((Boolean)handler.doEvaluate(new Integer(2), 
-				"java.lang.Integer")).booleanValue());
-		
+		assertEvaluation(new Integer(2), 
+				"java.lang.Integer", 
+				Boolean.TRUE);
 		// 父类是false
-		assertFalse(((Boolean)handler.doEvaluate(this, 
-				"junit.framework.TestCase")).booleanValue());
-		
+		assertEvaluation(this, 
+				"junit.framework.TestCase", 
+				Boolean.FALSE);			
 	}
 }

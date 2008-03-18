@@ -1,25 +1,16 @@
 package org.commontemplate.standard.operator.string;
 
-import junit.framework.TestCase;
-
-import org.commontemplate.config.Configuration;
-import org.commontemplate.config.OperatorHandlerProvider;
-import org.commontemplate.standard.operator.BinaryOperatorHandlerChain;
-import org.commontemplate.tools.PropertiesConfigurationLoader;
+import org.commontemplate.config.BinaryOperatorHandler;
+import org.commontemplate.standard.operator.BinaryOperatorHandlerTester;
 /**
  * StringMatchOperatorHandler 的测试。
  * @author YanRong
  *
  */
-public class StringMatchOperatorHandlerTester extends TestCase {
+public class StringMatchOperatorHandlerTester extends BinaryOperatorHandlerTester {
 
-	OperatorHandlerProvider operatorHandlerProvider;
-	
-	public void setUp() {
-
-		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		// 默认会取得 StandardOperatorHandlerProvider
-		operatorHandlerProvider = config.getOperatorHandlerProvider();
+	protected BinaryOperatorHandler newBinaryOperatorHandler() {
+		return new StringMatchOperatorHandler();
 	}
 	
 	/**
@@ -34,15 +25,8 @@ public class StringMatchOperatorHandlerTester extends TestCase {
 	 */
 	public void testDoEvaluate() throws Exception{
 		
-		BinaryOperatorHandlerChain handler = 
-			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("~");
-		
-		String str = "tan";
-		String regx = "t[aeno]n";
-		assertEquals(Boolean.TRUE, handler.doEvaluate(str, regx));
-		
-		str = "taan";
-		assertEquals(Boolean.FALSE, handler.doEvaluate(str, regx));
+		assertEvaluation("tan", "t[aeno]n", Boolean.TRUE);		
+		assertEvaluation("taan", "t[aeno]n", Boolean.FALSE);
 	}
 		
 }
