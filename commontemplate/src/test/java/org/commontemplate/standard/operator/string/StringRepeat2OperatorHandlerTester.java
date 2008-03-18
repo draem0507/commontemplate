@@ -1,25 +1,16 @@
 package org.commontemplate.standard.operator.string;
 
-import org.commontemplate.config.Configuration;
-import org.commontemplate.config.OperatorHandlerProvider;
-import org.commontemplate.standard.operator.BinaryOperatorHandlerChain;
-import org.commontemplate.tools.PropertiesConfigurationLoader;
-
-import junit.framework.TestCase;
+import org.commontemplate.config.BinaryOperatorHandler;
+import org.commontemplate.standard.operator.BinaryOperatorHandlerTester;
 /**
  * StringRepeat2OperatorHandler 的测试。
  * @author YanRong
  *
  */
-public class StringRepeat2OperatorHandlerTester extends TestCase {
+public class StringRepeat2OperatorHandlerTester extends BinaryOperatorHandlerTester {
 
-	OperatorHandlerProvider operatorHandlerProvider;
-	
-	public void setUp() {
-
-		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		// 默认会取得 StandardOperatorHandlerProvider
-		operatorHandlerProvider = config.getOperatorHandlerProvider();
+	protected BinaryOperatorHandler newBinaryOperatorHandler() {
+		return new StringRepeat2OperatorHandler();
 	}
 	
 	/**
@@ -34,10 +25,7 @@ public class StringRepeat2OperatorHandlerTester extends TestCase {
 	 */
 	public void testDoEvaluate() throws Exception{
 		
-		BinaryOperatorHandlerChain handler = 
-			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("*");
-		
-		assertEquals("aaa", handler.doEvaluate(Integer.valueOf("3"), "a"));
-		assertEquals(" a a a", handler.doEvaluate(Integer.valueOf("3"), " a"));
+		assertEvaluation(Integer.valueOf("3"), "a", "aaa");
+		assertEvaluation(Integer.valueOf("3"), " a", " a a a");
 	}
 }

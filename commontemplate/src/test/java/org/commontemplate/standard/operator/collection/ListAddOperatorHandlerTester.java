@@ -8,10 +8,7 @@ import java.util.Vector;
 
 import junit.framework.TestCase;
 
-import org.commontemplate.config.Configuration;
-import org.commontemplate.config.OperatorHandlerProvider;
-import org.commontemplate.standard.operator.BinaryOperatorHandlerChain;
-import org.commontemplate.tools.PropertiesConfigurationLoader;
+import org.commontemplate.config.BinaryOperatorHandler;
 /**
  * ListAddOperatorHandler 的测试。
  * @author YanRong
@@ -19,13 +16,11 @@ import org.commontemplate.tools.PropertiesConfigurationLoader;
  */
 public class ListAddOperatorHandlerTester extends TestCase {
 
-	OperatorHandlerProvider operatorHandlerProvider;
+	BinaryOperatorHandler handler;
 	
 	public void setUp() {
 
-		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		// 默认会取得 StandardOperatorHandlerProvider
-		operatorHandlerProvider = config.getOperatorHandlerProvider();
+		handler = new ListAddOperatorHandler();
 	}
 	
 	/**
@@ -39,9 +34,6 @@ public class ListAddOperatorHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testDoEvaluateForArrayList() throws Exception{
-		
-		BinaryOperatorHandlerChain handler = 
-			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("+");
 		
 		Collection c1 = new ArrayList();
 		c1.add("1");
@@ -74,9 +66,6 @@ public class ListAddOperatorHandlerTester extends TestCase {
 	 */
 	public void testDoEvaluateForHashSet() throws Exception{
 		
-		BinaryOperatorHandlerChain handler = 
-			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("+");
-		
 		Collection c1 = new HashSet();
 		c1.add("1");
 		c1.add("2");
@@ -108,9 +97,6 @@ public class ListAddOperatorHandlerTester extends TestCase {
 	 */
 	public void testDoEvaluateForLinkedList() throws Exception{
 		
-		BinaryOperatorHandlerChain handler = 
-			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("+");
-		
 		Collection c1 = new LinkedList();
 		c1.add("1");
 		c1.add("2");
@@ -141,9 +127,6 @@ public class ListAddOperatorHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testDoEvaluateForVector() throws Exception{
-		
-		BinaryOperatorHandlerChain handler = 
-			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("+");
 		
 		Collection c1 = new Vector();
 		c1.add("1");

@@ -4,12 +4,9 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
-import org.commontemplate.config.Configuration;
-import org.commontemplate.config.OperatorHandlerProvider;
-import org.commontemplate.standard.operator.BinaryOperatorHandlerChain;
-import org.commontemplate.tools.PropertiesConfigurationLoader;
-
 import junit.framework.TestCase;
+
+import org.commontemplate.config.BinaryOperatorHandler;
 /**
  * MapAddOperatorHandler 的测试。
  * @author YanRong
@@ -17,13 +14,11 @@ import junit.framework.TestCase;
  */
 public class MapAddOperatorHandlerTester extends TestCase {
 
-	OperatorHandlerProvider operatorHandlerProvider;
+	BinaryOperatorHandler handler;
 	
 	public void setUp() {
 
-		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		// 默认会取得 StandardOperatorHandlerProvider
-		operatorHandlerProvider = config.getOperatorHandlerProvider();
+		handler = new MapAddOperatorHandler();
 	}
 	
 	/**
@@ -37,9 +32,6 @@ public class MapAddOperatorHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testDoEvaluateForHashMap() throws Exception{
-		
-		BinaryOperatorHandlerChain handler = 
-			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("+");
 		
 		Map map1 = new HashMap();
 		map1.put("a", "A");
@@ -70,9 +62,6 @@ public class MapAddOperatorHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testDoEvaluateForHashTable() throws Exception{
-		
-		BinaryOperatorHandlerChain handler = 
-			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("+");
 		
 		Map map1 = new Hashtable();
 		map1.put("a", "A");
