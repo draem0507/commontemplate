@@ -11,7 +11,7 @@ import org.commontemplate.standard.operator.UnhandleException;
 /**
  * 自定义字符串序列操作符: ".."<br/>
  * 如: ${"January".."December"}<br/>
- *
+ * 参考 expression.properties 里的 sequence<quarters> 等定义。
  * @author liangfei0201@163.com
  *
  */
