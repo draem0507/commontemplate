@@ -1,12 +1,9 @@
 package org.commontemplate.standard.operator.collection;
 
-import org.commontemplate.config.Configuration;
-import org.commontemplate.config.OperatorHandlerProvider;
-import org.commontemplate.standard.operator.BinaryOperatorHandlerChain;
-import org.commontemplate.tools.PropertiesConfigurationLoader;
-import org.commontemplate.util.MapEntry;
-
 import junit.framework.TestCase;
+
+import org.commontemplate.config.BinaryOperatorHandler;
+import org.commontemplate.util.MapEntry;
 /**
  * LiteralEntryOperatorHandler 的测试。
  * @author YanRong
@@ -14,16 +11,11 @@ import junit.framework.TestCase;
  */
 public class LiteralEntryOperatorHandlerTester extends TestCase {
 
-	OperatorHandlerProvider operatorHandlerProvider;
-	BinaryOperatorHandlerChain handler;
+	BinaryOperatorHandler handler;
 	
 	public void setUp() {
 
-		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		// 默认会取得 StandardOperatorHandlerProvider
-		operatorHandlerProvider = config.getOperatorHandlerProvider();
-		handler = 
-			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler(":");
+		handler = new LiteralEntryOperatorHandler();
 	}
 	
 	/**
