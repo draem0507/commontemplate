@@ -1,7 +1,5 @@
 package org.commontemplate.engine.expression;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.List;
 
 import org.commontemplate.core.BinaryOperator;
@@ -17,9 +15,9 @@ import org.commontemplate.util.Stack;
 
 /**
  * 表达式归约器
- * 
+ *
  * @author liangfei0201@163.com
- * 
+ *
  */
 final class ExpressionReducer {
 
@@ -29,7 +27,7 @@ final class ExpressionReducer {
 
 	/**
 	 * 将表达式序列归约成表达式树
-	 * 
+	 *
 	 * @param expressions
 	 *            表达式序列
 	 * @return 表达式树的根表达式
@@ -62,7 +60,7 @@ final class ExpressionReducer {
 
 	/**
 	 * 待比较的操作符是否比栈顶的操作符的优先级高
-	 * 
+	 *
 	 * @param operator
 	 *            待比较的操作符
 	 * @param topOperator
@@ -85,7 +83,7 @@ final class ExpressionReducer {
 	 * a*(1+2+b) 优化成 a*(3+b)<br>
 	 * a*(1+2*b) 仍然是 a*(1+2*b)<br>
 	 * a*1+2+3 优化成 a*1+5<br>
-	 * 
+	 *
 	 * @author YanRong
 	 * @param expressions
 	 *            表达式的列表
@@ -141,7 +139,7 @@ final class ExpressionReducer {
 
 					continue;
 				}
-				
+
 				// 如果不是2元操作符，则不处理
 				if(prevOperator.getClass() != BinaryOperatorImpl.class) {
 					continue;
@@ -150,7 +148,7 @@ final class ExpressionReducer {
 				// 是否满足结合率
 				if(!preBinaryOperator.isAssociativeLaw()) {
 					continue;
-				}	
+				}
 				// 取当前操作符
 				if (i < expressions.size() - 1) {
 					currentOperator = (Operator) expressions.get(i + 1);
@@ -158,24 +156,24 @@ final class ExpressionReducer {
 					currentOperator = null;
 				}
 				// 取当前操作符 -- end
-				
+
 				// 取出前一个参数
 				prevExpression = (Expression) expressions.get(i - 2);
 				// 前一个参数是常量，进行优化
 				if (prevExpression.getClass() == ConstantImpl.class) {
-					
+
 					// 因为目前只优化2元的算数表达式，所以参数必须为数字
 					if(!(((Constant) prevExpression).getValue() instanceof Number) ||
 							!(((Constant) expression).getValue() instanceof Number)) {
 						continue;
 					}
-					
+
 					// 只有当级别相同的时候才优化
 					if (currentOperator == null
 							|| (currentOperator.getPriority() <= preBinaryOperator.getPriority() &&
 									!((BinaryOperatorImpl) currentOperator).isRightToLeft())
 							|| currentOperator == Parenthesis.RIGHT_PARENTHESIS) {
-						
+
 						// 再往前取一个操作符。例如当前的表达式是 a-1+2
 						// 那么 currentOperator = null, preBinaryOperator = +
 						// prevExpression = 1。
@@ -186,22 +184,22 @@ final class ExpressionReducer {
 							prePreOperator = (Operator) expressions.get(i - 3);
 							//如果是2元操作符，则处理
 							if(prePreOperator.getClass() == BinaryOperatorImpl.class) {
-								
+
 								// 如果不满足结合的条件，那么不处理
 								if(!isAssociative((BinaryOperatorImpl)prePreOperator, preBinaryOperator)) {
 									continue;
 								}
-								
+
 								// 如果是减号
 								if("-".equals(prePreOperator.getName())) {
 									// 如果级别相同
 									if(preBinaryOperator.getPriority() == prePreOperator.getPriority()) {
-										
+
 										Number number = (Number)((Constant) expression).getValue();
-										preBinaryOperator.setOperands(prevExpression, 
+										preBinaryOperator.setOperands(prevExpression,
 												new ConstantImpl(NumberArithmetic.negative(number),
-														expression.getLocation()));	
-										
+														expression.getLocation()));
+
 										expression = new ConstantImpl(preBinaryOperator.evaluate(null), null);
 										flag = true;
 									}
@@ -209,10 +207,10 @@ final class ExpressionReducer {
 							}
 						}
 						if(!flag) {
-							preBinaryOperator.setOperands(prevExpression, expression);						
+							preBinaryOperator.setOperands(prevExpression, expression);
 							expression = new ConstantImpl(preBinaryOperator.evaluate(null), null);
 						}
-						
+
 						expressions.remove(i - 1);
 						expressions.remove(i - 2);
 						i = i - 2;
@@ -228,7 +226,7 @@ final class ExpressionReducer {
 
 		return expressions;
 	}
-	
+
 	/**
 	 * 当优化常量的时候，判断是否可以结合。
 	 * @author YanRong
@@ -241,9 +239,9 @@ final class ExpressionReducer {
 	 * false:　不可以结合
 	 */
 	private boolean isAssociative(BinaryOperatorImpl prePreOperator, BinaryOperatorImpl preOperator) {
-		
+
 		// TODO:这个方法需要改进
-		
+
 		// 前提条件：优先级的判断
 		if(preOperator.getPriority()<prePreOperator.getPriority()) {
 			return false;
@@ -253,12 +251,12 @@ final class ExpressionReducer {
 			return true;
 		}
 		// 以下要处理的就是优先级相同的情况
-		
+
 		// 加法，减法的情况
 		if("+".equals(preOperator.getName()) || "-".equals(preOperator.getName())) {
 			return true;
 		}
-		
+
 		// 处理乘号
 		if("*".equals(preOperator.getName())) {
 			if("*".equals(prePreOperator.getName())) {
@@ -267,9 +265,9 @@ final class ExpressionReducer {
 				return false;
 			}
 		}
-		
+
 		return false;
-	}	
+	}
 
 	// 表达式归约辅助栈
 	private static final class ReduceStack {
@@ -282,7 +280,7 @@ final class ExpressionReducer {
 
 		/**
 		 * 压入操作符
-		 * 
+		 *
 		 * @param operator
 		 *            操作符
 		 */
@@ -292,7 +290,7 @@ final class ExpressionReducer {
 
 		/**
 		 * 压入参数
-		 * 
+		 *
 		 * @param parameter
 		 *            参数
 		 */
@@ -302,7 +300,7 @@ final class ExpressionReducer {
 
 		/**
 		 * 窥取栈顶操作符
-		 * 
+		 *
 		 * @return 操作符
 		 */
 		Operator peekOperator() {
@@ -313,7 +311,7 @@ final class ExpressionReducer {
 
 		/**
 		 * 弹出(组装好的)操作符
-		 * 
+		 *
 		 * @return 操作符
 		 */
 		Operator popOperator() {
@@ -386,7 +384,7 @@ final class ExpressionReducer {
 
 		/**
 		 * 弹出(最后的)结果
-		 * 
+		 *
 		 * @return 结果
 		 */
 		Expression popResult() {
