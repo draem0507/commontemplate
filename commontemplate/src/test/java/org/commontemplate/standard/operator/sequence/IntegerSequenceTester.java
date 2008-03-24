@@ -1,7 +1,9 @@
 package org.commontemplate.standard.operator.sequence;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import junit.framework.TestCase;
 
@@ -290,6 +292,259 @@ public class IntegerSequenceTester extends TestCase{
 		for(int i = 0, c = 10, m = list.size(); i < m; i++, c--) {
 			
 			assertEquals(i, list.indexOf(new Integer(c))); 
+		}
+	}
+	
+	/**
+	 * 对IntegerSequence的实现List接口的测试。<br>
+	 * @condition
+	 * 条件<br>
+	 * 构造一个IntegerSequence对象。
+	 * @result
+	 * 结果<br>
+	 * 应该根据对象得到正确的索引号。
+	 * @throws Exception
+	 */
+	public void testLastIndexOf() {
+		
+		list = new IntegerSequence(2, 10);
+		
+		for(int i = 0, c = 2, m = list.size(); i < m; i++, c++) {
+			
+			assertEquals(i, list.lastIndexOf(new Integer(c))); 
+		}
+		
+		list = new IntegerSequence(10, 2);
+		
+		for(int i = 0, c = 10, m = list.size(); i < m; i++, c--) {
+			
+			assertEquals(i, list.lastIndexOf(new Integer(c))); 
+		}
+	}
+	
+	/**
+	 * 对IntegerSequence的实现List接口的测试。<br>
+	 * @condition
+	 * 条件<br>
+	 * 构造一个IntegerSequence对象。
+	 * @result
+	 * 结果<br>
+	 * 应该根据对象得到一个非空的ListIterator对象。
+	 * @throws Exception
+	 */
+	public void testListIterator() {
+		
+		list = new IntegerSequence(2, 10);
+		
+		ListIterator it = list.listIterator();
+		assertNotNull(it);
+	}
+	
+	/**
+	 * 对IntegerSequence的实现List接口的测试。<br>
+	 * @condition
+	 * 条件<br>
+	 * 构造一个IntegerSequence对象。
+	 * @result
+	 * 结果<br>
+	 * 应该根据对象得到一个非空的ListIterator对象。
+	 * @throws Exception
+	 */
+	public void testListIetrator2() {
+		
+		list = new IntegerSequence(2, 10);
+		
+		ListIterator it = list.listIterator(2);
+		assertNotNull(it);
+	}
+	
+	/**
+	 * 对IntegerSequence的实现List接口的测试。<br>
+	 * @condition
+	 * 条件<br>
+	 * 构造一个IntegerSequence对象。
+	 * @result
+	 * 结果<br>
+	 * 应该根据对象得到正确的SubList对象。
+	 * @throws Exception
+	 */
+	public void testSubList() {
+		
+		list = new IntegerSequence(2, 10);
+		
+		List subList = list.subList(1, 3);
+		
+		assertEquals(4, subList.size());
+		Integer[] expectInt = new Integer[]{new Integer(3), new Integer(4), new Integer(5), new Integer(6)};
+		for(int i = 0, m = expectInt.length; i < m; i++) {
+			assertEquals(expectInt[i], subList.get(i));
+		}
+		
+		list = new IntegerSequence(10, 2);
+		subList = list.subList(1, 3);
+		assertEquals(4, subList.size());
+		expectInt = new Integer[]{new Integer(9), new Integer(8), new Integer(7), new Integer(6)};
+		for(int i = 0, m = expectInt.length; i < m; i++) {
+			assertEquals(expectInt[i], subList.get(i));
+		}
+	}
+	
+	/**
+	 * 对IntegerSequence的实现List接口的测试。<br>
+	 * @condition
+	 * 条件<br>
+	 * 构造一个IntegerSequence对象。
+	 * @result
+	 * 结果<br>
+	 * 应该根据对象得到正确的toString结果。
+	 * @throws Exception
+	 */
+	public void testToString() {
+		
+		list = new IntegerSequence(2, 10);
+		String s = list.toString();
+		assertEquals("[2,3,4,5,6,7,8,9,10]", s);
+		
+		list = new IntegerSequence(10, 2);
+		s = list.toString();
+		assertEquals("[10,9,8,7,6,5,4,3,2]", s);
+	}
+	
+	/**
+	 * 对IntegerSequence的实现List接口的测试。<br>
+	 * @condition
+	 * 条件<br>
+	 * 构造一个IntegerSequence对象。
+	 * @result
+	 * 结果<br>
+	 * 迭代器应该正常显示。
+	 * @throws Exception
+	 */
+	public void testOnlyIterator() {
+		
+		list = new IntegerSequence(2, 10);
+		Iterator it = list.iterator();
+		int index = 2;
+		while(it.hasNext()) {
+			
+			assertEquals(new Integer(index), it.next());
+			index++;
+		}		
+		
+		list = new IntegerSequence(10, 2);
+		it = list.iterator();
+		index = 10;
+		while(it.hasNext()) {
+			
+			assertEquals(new Integer(index), it.next());
+			index--;
+		}
+	}
+	
+	/**
+	 * 对IntegerSequence的实现List接口的测试。<br>
+	 * @condition
+	 * 条件<br>
+	 * 构造一个IntegerSequence对象。
+	 * @result
+	 * 结果<br>
+	 * 迭代器应该正常显示。
+	 * @throws Exception
+	 */
+	public void testIteratorWithListIterator() {
+		// ---  升序的测试
+		list = new IntegerSequence(2, 10);
+		Iterator it = list.listIterator();
+		int index = 2;
+		while(it.hasNext()) {
+			
+			assertEquals(new Integer(index), it.next());
+			index++;
+		}
+		
+		ListIterator ListIt = list.listIterator();
+		index = 0;
+		while(ListIt.hasNext()){
+			
+			assertEquals(index, ListIt.nextIndex());
+			index++;
+		}
+		index = 10;
+		while(ListIt.hasPrevious()) {
+			
+			assertEquals(new Integer(index), ListIt.previous());
+			index--;
+		}
+
+		// --- 降序的测试
+		list = new IntegerSequence(10, 2);
+		it = list.listIterator();
+		index = 10;
+		while(it.hasNext()) {
+			
+			assertEquals(new Integer(index), it.next());
+			index--;
+		}
+		
+		ListIt = list.listIterator();
+		index = 0;
+		while(ListIt.hasNext()){
+			
+			assertEquals(index, ListIt.nextIndex());
+			index++;
+		}
+		index = 2;
+		while(ListIt.hasPrevious()) {
+			
+			assertEquals(new Integer(index), ListIt.previous());
+			index++;
+		}
+	}
+	
+	/**
+	 * 对IntegerSequence的实现List接口的测试。<br>
+	 * @condition
+	 * 条件<br>
+	 * 构造一个IntegerSequence对象。
+	 * @result
+	 * 结果<br>
+	 * 迭代器应该正常显示。
+	 * @throws Exception
+	 */
+	public void testIteratorWithListIterator2() {
+		
+		list = new IntegerSequence(2, 10);
+		Iterator it = list.listIterator(1);
+		int index = 3;
+		while(it.hasNext()) {
+			
+			assertEquals(new Integer(index), it.next());
+			index++;
+		}
+		
+		ListIterator ListIt = list.listIterator();
+		index = 0;
+		while(ListIt.hasNext()){
+			
+			assertEquals(index, ListIt.nextIndex());
+			index++;
+		}
+		
+		list = new IntegerSequence(10, 2);
+		it = list.listIterator(1);
+		index = 9;
+		while(it.hasNext()) {
+			
+			assertEquals(new Integer(index), it.next());
+			index--;
+		}
+		
+		ListIt = list.listIterator();
+		index = 0;
+		while(ListIt.hasNext()){
+			
+			assertEquals(index, ListIt.nextIndex());
+			index++;
 		}
 	}
 	
