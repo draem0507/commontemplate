@@ -426,7 +426,7 @@ public class IntegerSequenceTester extends TestCase{
 		Iterator it = list.iterator();
 		int index = 2;
 		while(it.hasNext()) {
-			
+						
 			assertEquals(new Integer(index), it.next());
 			index++;
 		}		
@@ -475,6 +475,18 @@ public class IntegerSequenceTester extends TestCase{
 			assertEquals(new Integer(index), ListIt.previous());
 			index--;
 		}
+		assertEquals(1, index);
+		
+		while(ListIt.hasNext()){
+			
+			ListIt.nextIndex();
+		}
+		index = 8;
+		while(ListIt.hasPrevious()) {
+			
+			assertEquals(index, ListIt.previousIndex());
+			index--;
+		}
 
 		// --- 降序的测试
 		list = new IntegerSequence(10, 2);
@@ -499,6 +511,15 @@ public class IntegerSequenceTester extends TestCase{
 			assertEquals(new Integer(index), ListIt.previous());
 			index++;
 		}
+		while(ListIt.hasNext()) {
+			ListIt.nextIndex();
+		}
+		index = 8;
+		while(ListIt.hasPrevious()) {
+			
+			assertEquals(index, ListIt.previousIndex());
+			index--;
+		}
 	}
 	
 	/**
@@ -512,7 +533,7 @@ public class IntegerSequenceTester extends TestCase{
 	 * @throws Exception
 	 */
 	public void testIteratorWithListIterator2() {
-		
+		// --- 升序的测试
 		list = new IntegerSequence(2, 10);
 		Iterator it = list.listIterator(1);
 		int index = 3;
@@ -522,14 +543,31 @@ public class IntegerSequenceTester extends TestCase{
 			index++;
 		}
 		
-		ListIterator ListIt = list.listIterator();
+		ListIterator ListIt = list.listIterator(1);
 		index = 0;
 		while(ListIt.hasNext()){
 			
 			assertEquals(index, ListIt.nextIndex());
 			index++;
 		}
+		index = 10;
+		while(ListIt.hasPrevious()) {
+			
+			assertEquals(new Integer(index), ListIt.previous());
+			index --;
+		}
+		assertEquals(2, index);
+		while(ListIt.hasNext()){
+			ListIt.nextIndex();
+		}
+		index = 7;
+		while(ListIt.hasPrevious()) {
+			
+			assertEquals(index, ListIt.previousIndex());
+			index --;
+		}
 		
+		// --- 降序的测试
 		list = new IntegerSequence(10, 2);
 		it = list.listIterator(1);
 		index = 9;
@@ -539,12 +577,28 @@ public class IntegerSequenceTester extends TestCase{
 			index--;
 		}
 		
-		ListIt = list.listIterator();
+		ListIt = list.listIterator(1);
 		index = 0;
 		while(ListIt.hasNext()){
 			
 			assertEquals(index, ListIt.nextIndex());
 			index++;
+		}
+		index = 2;
+		while(ListIt.hasPrevious()) {
+			
+			assertEquals(new Integer(index), ListIt.previous());
+			index ++;
+		}
+		assertEquals(10, index);
+		while(ListIt.hasNext()){
+			ListIt.nextIndex();
+		}
+		index = 7;
+		while(ListIt.hasPrevious()) {
+			
+			assertEquals(index, ListIt.previousIndex());
+			index --;
 		}
 	}
 	
