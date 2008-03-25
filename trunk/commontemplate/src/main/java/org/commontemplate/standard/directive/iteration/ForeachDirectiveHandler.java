@@ -59,9 +59,8 @@ public class ForeachDirectiveHandler implements BlockDirectiveHandler {
 	}
 
 	private boolean simpleForeach(Context context, int count, List elements) {
-		if (count == 0)
+		if (count <= 0) // count小于0, 不进行迭代.
 			return false;
-		if (count < 0) count = - count;
 		ForeachStatus status = new ForeachStatus(count);
 		context.defineVariable(statusName, status);
 		for (int i = 0; i < count; i ++) {
