@@ -1,24 +1,34 @@
 package org.commontemplate.util;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Map;
 
 public final class TypeUtils {
-	
+
 	private TypeUtils() {}
-	
+
 	public static boolean isTrue(final Object obj) {
 		if (obj == null)
 			return false;
-		if (obj instanceof Boolean) 
+		if (obj instanceof Boolean)
 			return ((Boolean)obj).booleanValue();
-		if (obj instanceof Number) 
+		if (obj instanceof BigDecimal)
+			return ((BigDecimal)obj).doubleValue() != 0;
+		if (obj instanceof BigInteger)
+			return ((BigInteger)obj).intValue() != 0;
+		if (obj instanceof Double)
+			return ((Double)obj).doubleValue() != 0;
+		if (obj instanceof Float)
+			return ((Double)obj).floatValue() != 0;
+		if (obj instanceof Number)
 			return ((Number)obj).intValue() != 0;
-		if (obj instanceof String) 
+		if (obj instanceof String)
 			return ((String)obj).length() > 0;
-		if (obj instanceof Collection) 
+		if (obj instanceof Collection)
 			return ((Collection)obj).size() > 0;
-		if (obj instanceof Map) 
+		if (obj instanceof Map)
 			return ((Map)obj).size() > 0;
 		return true;
 	}
@@ -26,17 +36,17 @@ public final class TypeUtils {
 	public static boolean isEmpty(final Object obj) {
 		if (obj == null)
 			return true;
-		if (obj instanceof String) 
+		if (obj instanceof String)
 			return ((String)obj).length() == 0;
-		if (obj instanceof Collection) 
+		if (obj instanceof Collection)
 			return ((Collection)obj).size() == 0;
-		if (obj instanceof Map) 
+		if (obj instanceof Map)
 			return ((Map)obj).size() == 0;
 		return false;
 	}
 
 	public static boolean isString(final String name) {
-		if (name == null) 
+		if (name == null)
 			return false;
 		String t = name.trim();
 		if (t.length() < 2) {
@@ -48,25 +58,25 @@ public final class TypeUtils {
 		}
 		return false;
 	}
-	
+
 	public static boolean isNumber(final String name) {
-		if (name != null && name.length() > 0 
+		if (name != null && name.length() > 0
 				&& name.charAt(0) >= '0' && name.charAt(0) <= '9')
 			return true;
 		return false;
 	}
-	
+
 	public static boolean isSignNumber(final String name) {
-		if (name != null && name.length() > 0 
+		if (name != null && name.length() > 0
 				&& name.charAt(0) >= '0' && name.charAt(0) <= '9')
 			return true;
-		if (name != null && name.length() > 1 
+		if (name != null && name.length() > 1
 				&& (name.charAt(0) == '+' || name.charAt(0) == '-')
 				&& name.charAt(1) >= '0' && name.charAt(1) <= '9')
 			return true;
 		return false;
 	}
-	
+
 	public static Number parseSignNumber(final String name) {
 		char endChar = name.charAt(name.length() - 1);
 		if (endChar >= '0' && endChar <= '9') {
@@ -87,12 +97,12 @@ public final class TypeUtils {
 	}
 
 	public static boolean isNamed(final String name) {
-		return name != null && name.length() > 0 
+		return name != null && name.length() > 0
 				&& name.matches("^[_|A-Z|a-z][_|0-9|A-Z|a-z]*$");
 	}
-	
+
 	public static boolean isFunction(final String name) {
-		if (name != null && name.length() > 1 
+		if (name != null && name.length() > 1
 				&& name.charAt(0) == '.' && isNamed(name.substring(1)))
 			return true;
 		return false;
@@ -102,21 +112,21 @@ public final class TypeUtils {
 		if (name == null)
 			return false;
 		String t = name.trim();
-		if (t.length() == 0) 
+		if (t.length() == 0)
 			return false;
 		for (int i = 0, n = t.length(); i < n; i ++) {
 			char ch = t.charAt(i);
-			if (ch == '_' || ch == '\"' || ch == '\'' 
-				|| (ch >= '0' && ch <='9') 
-				|| (ch >= 'A' && ch <='Z') 
-				|| (ch >= 'a' && ch <='z')) 
+			if (ch == '_' || ch == '\"' || ch == '\''
+				|| (ch >= '0' && ch <='9')
+				|| (ch >= 'A' && ch <='Z')
+				|| (ch >= 'a' && ch <='z'))
 				return false;
 		}
 		return true;
 	}
-	
+
 	public static boolean isMultiOperator(String name) {
 		return name != null && name.trim().length() > 1 && isOperator(name);
 	}
-	
+
 }
