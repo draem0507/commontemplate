@@ -11,6 +11,8 @@ public class ShowBlockDirectiveHandler implements LineDirectiveHandler {
 	private static final long serialVersionUID = 1L;
 
 	public void doRender(Context context, String directiveName, Object param) throws Exception {
+		if (param == null)
+			throw new java.lang.IllegalArgumentException("$show 指令必需指定引用块名称! 如: $show{\"blockName\"}");
 		String blockName = (String)param;
 		DirectiveUtils.renderAll(((List)context.lookupObject(BlockDefineDirectiveHandler.BLOCK_TYPE, blockName)), context);
 	}
