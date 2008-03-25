@@ -24,23 +24,22 @@ public class ListAddOperatorHandler extends BinaryOperatorHandlerSupport {
 		Collection leftCollection = (Collection)leftOperand;
 		Collection rightCollection = (Collection)rightOperand;
 
-		/* 允许不同类型集合相加
-		if(! leftCollection.getClass().getName().equals(rightCollection.getClass().getName())) {
-			Assert.fail("leftOperand and rightOperand is not same implement class!");
-		}*/
-
 		Collection sumCollection = null; // 新建Collection对象, 以保证不改变原有数据模型
 		try {
 			sumCollection = (Collection) leftCollection.getClass().newInstance();
+			sumCollection.addAll(leftCollection); // 有些集合可能不支持addAll操作, 所以放在try内
+			sumCollection.addAll(rightCollection);
 		} catch (Exception e) { // 当左集合实现类没有无参构造子时, 试用右集合实现类
 			try {
 				sumCollection = (Collection) rightCollection.getClass().newInstance();
+				sumCollection.addAll(leftCollection);
+				sumCollection.addAll(rightCollection);
 			} catch (Exception e2) { // 默认采用ArrayList
 				sumCollection = new ArrayList(leftCollection.size() + rightCollection.size());
+				sumCollection.addAll(leftCollection);
+				sumCollection.addAll(rightCollection);
 			}
 		}
-		sumCollection.addAll(leftCollection);
-		sumCollection.addAll(rightCollection);
 		return sumCollection;
 	}
 
