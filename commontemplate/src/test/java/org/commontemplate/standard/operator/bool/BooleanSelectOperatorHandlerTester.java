@@ -17,16 +17,16 @@ public class BooleanSelectOperatorHandlerTester extends TestCase {
 
 	OperatorHandlerProvider operatorHandlerProvider;
 	BinaryOperatorHandlerChain handler;
-	
+
 	public void setUp() {
 
 		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
 		// 默认会取得 StandardOperatorHandlerProvider
 		operatorHandlerProvider = config.getOperatorHandlerProvider();
-		handler = 
+		handler =
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("?");
 	}
-	
+
 	/**
 	 * 对2元操作符 ? 的测试。<br>
 	 * @condition
@@ -38,27 +38,27 @@ public class BooleanSelectOperatorHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testDoEvaluate() throws Exception{
-		
+
 		LazyOperand rightOperand = new LazyOperandMock("2");
 		Boolean leftOperand = Boolean.TRUE;
-		
+
 		Selector selector = (Selector) handler.doEvaluate(leftOperand, rightOperand);
 		assertEquals(true, selector.isSelected());
-		assertEquals("2", (String) selector.getSelectedValue()); 
-		
+		assertEquals("2", (String) selector.getSelectedValue());
+
 		leftOperand = Boolean.FALSE;
 		selector = (Selector) handler.doEvaluate(leftOperand, rightOperand);
 		assertEquals(false, selector.isSelected());
 		assertNull(selector.getSelectedValue());
-		
+
 		Float f = new Float(1.2);
 		selector = (Selector) handler.doEvaluate(f, rightOperand);
 		assertEquals(true, selector.isSelected());
-		assertEquals("2", (String) selector.getSelectedValue()); 
-		
+		assertEquals("2", (String) selector.getSelectedValue());
+
 		f = new Float(0.2);
 		selector = (Selector) handler.doEvaluate(f, rightOperand);
-		assertEquals(false, selector.isSelected());
-		assertNull(selector.getSelectedValue());
+		assertEquals(true, selector.isSelected());
+		assertNotNull(selector.getSelectedValue());
 	}
 }

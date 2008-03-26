@@ -14,14 +14,10 @@ public final class TypeUtils {
 			return false;
 		if (obj instanceof Boolean)
 			return ((Boolean)obj).booleanValue();
-		if (obj instanceof BigDecimal)
-			return ((BigDecimal)obj).doubleValue() != 0;
-		if (obj instanceof BigInteger)
-			return ((BigInteger)obj).intValue() != 0;
-		if (obj instanceof Double)
-			return ((Double)obj).doubleValue() != 0;
-		if (obj instanceof Float)
-			return ((Double)obj).floatValue() != 0;
+		if (obj instanceof BigDecimal
+				|| obj instanceof Double
+				|| obj instanceof Float) // 加入对小数的支持
+			return ((Number)obj).doubleValue() != 0;
 		if (obj instanceof Number)
 			return ((Number)obj).intValue() != 0;
 		if (obj instanceof String)
