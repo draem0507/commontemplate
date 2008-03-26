@@ -71,17 +71,34 @@ public class CharacterSequence implements List, Serializable {
 	public Object[] toArray() {
 		Character[] arr = new Character[size];
 		for (int i = 0, n = arr.length; i < n; i ++) {
-			arr[i] = new Character((char)(begin + i));
+			arr[i] = new Character((char)(begin + (asc?i:-i)));
 		}
 		return arr;
 	}
 
-	public Object[] toArray(Object[] a) {
-		return a;
+	public Object[] toArray(Object[] arr) {
+		for (int i = 0, n = arr.length; i < n && i < size; i ++) {
+			if(asc) {
+				arr[i] = new Character((char)(begin + i));
+			} else {
+				arr[i] = new Character((char)(begin - i));
+			}
+		}		
+		return arr;
 	}
 
 	public boolean containsAll(Collection c) {
-		return false;
+		Iterator it = c.iterator();
+		Object obj;
+		while(it.hasNext()) {
+			
+			obj = it.next();
+			if(!contains(obj)) {
+				return false;
+			}
+		}
+		
+		return true;
 	}
 
 	public Object get(int index) {
@@ -98,7 +115,7 @@ public class CharacterSequence implements List, Serializable {
 		if (i < min || i > max) {
 			return -1;
 		}
-		return i - begin;
+		return asc?i - begin:begin - i;
 	}
 
 	public int lastIndexOf(Object o) {
@@ -126,8 +143,11 @@ public class CharacterSequence implements List, Serializable {
         if (fromIndex > toIndex)
             throw new IllegalArgumentException("fromIndex(" + fromIndex +
                                                ") > toIndex(" + toIndex + ")");
-
-		return new CharacterSequence((char)(begin + fromIndex), (char)(begin + fromIndex + toIndex));
+        if(asc) {
+        	return new CharacterSequence((char)(begin + fromIndex), (char)(begin + fromIndex + toIndex));
+        }else {
+        	return new CharacterSequence((char)(begin - fromIndex), (char)(begin - fromIndex - toIndex));
+        }
 	}
 
 	public boolean add(Object o) {
@@ -279,6 +299,10 @@ public class CharacterSequence implements List, Serializable {
 			throw new UnsupportedOperationException();
 		}
 
+	}
+
+	public boolean isAsc() {
+		return asc;
 	}
 
 
