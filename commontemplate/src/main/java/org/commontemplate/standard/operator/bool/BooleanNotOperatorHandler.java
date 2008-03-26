@@ -15,7 +15,7 @@ public class BooleanNotOperatorHandler extends UnaryOperatorHandlerSupport {
 	private static final long serialVersionUID = 1L;
 
 	public BooleanNotOperatorHandler() {
-		super(Object.class);
+		super(Object.class, true);
 	}
 
 	public Object doEvaluate(Object operand) throws Exception {

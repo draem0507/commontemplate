@@ -23,9 +23,8 @@ public class ClassPackageOperatorHandlerTester extends UnaryOperatorHandlerTeste
 	 * @throws Exception
 	 */
 	public void testDoEvaluate() throws Exception{
-				
-		assertEvaluationResultNotNull("org.commontemplate.standard.operator.object.ClassPackageOperatorHandlerTester");
-		assertEvaluationResultNull("xxxxxxx");
+		assertEvaluation("org.commontemplate.standard.operator.object.ClassPackageOperatorHandlerTester", org.commontemplate.standard.operator.object.ClassPackageOperatorHandlerTester.class);
+		assertEvaluation("xxxxxxx", null);
 	}
-	
+
 }

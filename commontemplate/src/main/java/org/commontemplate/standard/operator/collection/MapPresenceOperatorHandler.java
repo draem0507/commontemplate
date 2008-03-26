@@ -17,7 +17,7 @@ public class MapPresenceOperatorHandler extends UnaryOperatorHandlerSupport {
 	private static final long serialVersionUID = 1L;
 
 	public MapPresenceOperatorHandler() {
-		super(Map.class);
+		super(Map.class, true);
 	}
 
 	public Object doEvaluate(Object operand) throws Exception {
