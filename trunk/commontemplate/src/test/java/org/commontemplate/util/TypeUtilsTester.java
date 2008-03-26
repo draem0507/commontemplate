@@ -9,12 +9,12 @@ import junit.framework.TestCase;
 
 /**
  * 类型测试
- * 
+ *
  * @author Yan Rong (yananay@126.com)
  *
  */
 public class TypeUtilsTester extends TestCase {
-	
+
 	public void testRightNumber() {
 		assertTrue(TypeUtils.isNumber("1"));
 		assertTrue(TypeUtils.isNumber("1L"));
@@ -22,7 +22,7 @@ public class TypeUtilsTester extends TestCase {
 		assertTrue(TypeUtils.isNumber("1.2F"));
 		assertTrue(TypeUtils.isNumber("1.2D"));
 	}
-	
+
 	public void testNotNumber() {
 		assertFalse(TypeUtils.isNumber("a"));
 		assertFalse(TypeUtils.isNumber("a1"));
@@ -32,7 +32,7 @@ public class TypeUtilsTester extends TestCase {
 		assertFalse(TypeUtils.isNumber("_1.2F"));
 		assertFalse(TypeUtils.isNumber("+1.2D"));
 	}
-	
+
 	/**
 	 * 对TypeUtils.isTrue的测试。<br>
 	 * @condition
@@ -46,7 +46,7 @@ public class TypeUtilsTester extends TestCase {
 	public void testIsTrueForNullObj() {
 		assertFalse(TypeUtils.isTrue(null));
 	}
-	
+
 	/**
 	 * 对TypeUtils.isTrue的测试。<br>
 	 * @condition
@@ -61,7 +61,7 @@ public class TypeUtilsTester extends TestCase {
 		assertFalse(TypeUtils.isTrue(Boolean.FALSE));
 		assertTrue(TypeUtils.isTrue(Boolean.TRUE));
 	}
-	
+
 	/**
 	 * 对TypeUtils.isTrue的测试。<br>
 	 * @condition
@@ -69,15 +69,15 @@ public class TypeUtilsTester extends TestCase {
 	 * 参数 Number 对象。
 	 * @result
 	 * 结果<br>
-	 * Number 的 value(如果是小数，则取整数) > 0 : 返回 true,<br>
+	 * Number 的 value> 0 : 返回 true,<br>
 	 * 否则返回 false
 	 * @throws Exception
 	 */
 	public void testIsTrueForNumber() {
-		assertFalse(TypeUtils.isTrue(Float.valueOf("0.9")));
+		assertTrue(TypeUtils.isTrue(Float.valueOf("0.9")));
 		assertTrue(TypeUtils.isTrue(Float.valueOf("1.1")));
 	}
-	
+
 	/**
 	 * 对TypeUtils.isTrue的测试。<br>
 	 * @condition
@@ -94,7 +94,7 @@ public class TypeUtilsTester extends TestCase {
 		assertTrue(TypeUtils.isTrue(" "));
 		assertTrue(TypeUtils.isTrue("abc"));
 	}
-	
+
 	/**
 	 * 对TypeUtils.isTrue的测试。<br>
 	 * @condition
@@ -107,13 +107,13 @@ public class TypeUtilsTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testIsTrueForCollection() {
-		
+
 		Collection c = new ArrayList();
 		assertFalse(TypeUtils.isTrue(c));
-		c.add("a");		
+		c.add("a");
 		assertTrue(TypeUtils.isTrue(c));
 	}
-	
+
 	/**
 	 * 对TypeUtils.isTrue的测试。<br>
 	 * @condition
@@ -126,13 +126,13 @@ public class TypeUtilsTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testIsTrueForMap() {
-		
+
 		Map map = new HashMap();
 		assertFalse(TypeUtils.isTrue(map));
 		map.put("a", "a");
 		assertTrue(TypeUtils.isTrue(map));
 	}
-	
+
 	/**
 	 * 对TypeUtils.isTrue的测试。<br>
 	 * @condition
@@ -145,7 +145,7 @@ public class TypeUtilsTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testIsTrueForOtherObject() {
-				
+
 		assertTrue(TypeUtils.isTrue(this));
 	}
 
