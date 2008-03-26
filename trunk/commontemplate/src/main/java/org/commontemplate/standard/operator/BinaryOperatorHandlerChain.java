@@ -38,6 +38,8 @@ public class BinaryOperatorHandlerChain extends SpecialBinaryOperatorHandler imp
 			if (handler.isMatch(leftOperand, rightOperand)) {
 				try {
 					return handler.doEvaluate(leftOperand, rightOperand);
+				} catch (NullPointerException e) {
+					return null;
 				} catch (UnhandleException e) {
 					// ignore, continue next
 				}

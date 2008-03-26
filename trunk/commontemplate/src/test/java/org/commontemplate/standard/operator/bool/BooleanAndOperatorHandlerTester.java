@@ -11,19 +11,19 @@ public class BooleanAndOperatorHandlerTester extends BinaryOperatorHandlerTester
 	}
 
 	public void testNull() throws Exception {
-		assertEvaluation(null, new LazyOperandMock(null), Boolean.FALSE);
+		assertEvaluation(null, new LazyOperandMock(null), null);
 	}
 
 	public void testObject() throws Exception {
-		assertEvaluation(new Integer(1), new LazyOperandMock("a"), Boolean.TRUE);
+		assertEvaluation(new Integer(1), new LazyOperandMock("a"), "a");
 	}
 
 	public void testNullObject() throws Exception {
-		assertEvaluation(null, new LazyOperandMock("a"), Boolean.FALSE);
+		assertEvaluation(null, new LazyOperandMock("a"), null);
 	}
 
 	public void testObjectNull() throws Exception {
-		assertEvaluation(new Integer(1), new LazyOperandMock(null), Boolean.FALSE);
+		assertEvaluation(new Integer(1), new LazyOperandMock(null), null);
 	}
 
 	public void testTrue() throws Exception {

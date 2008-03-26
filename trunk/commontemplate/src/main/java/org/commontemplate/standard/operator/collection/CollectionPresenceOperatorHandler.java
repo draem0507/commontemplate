@@ -17,7 +17,7 @@ public class CollectionPresenceOperatorHandler extends UnaryOperatorHandlerSuppo
 	private static final long serialVersionUID = 1L;
 
 	public CollectionPresenceOperatorHandler() {
-		super(Collection.class);
+		super(Collection.class, true);
 	}
 
 	public Object doEvaluate(Object operand) throws Exception {
