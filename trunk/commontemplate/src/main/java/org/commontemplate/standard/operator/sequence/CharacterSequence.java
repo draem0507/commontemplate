@@ -215,76 +215,85 @@ public class CharacterSequence implements List, Serializable {
 
 		private char cur;
 
-		private char inc;
-
-		private boolean first;
+		private int inc;
 
 		public CharacterSequenceIterator(char begin, char end) {
 			this.begin = begin;
 			this.end = end;
-			first = true;
 			cur = begin;
-			inc = (char)(begin < end ? 1 : -1);
+			inc = (begin < end ? 1 : -1);
 		}
 
 		public boolean hasNext() {
-			return first || cur != end;
+			return (inc>0?cur <= end:cur>=end);
 		}
 
 		public Object next() {
-			if (first) {
-				first = false;
-				return new Character(cur);
-			}
-
-			if (cur == end)
+			if (isOverFlowEnd())
 				throw new java.util.NoSuchElementException("IndexOutOfBounds");
 
+			Character next;
+			if(isOverFlowOfBegin()) {				
+				cur = (char)(cur + inc);
+				next = new Character(cur);
+			} else {			
+				next = new Character(cur);				
+			}
 			cur = (char)(cur + inc);
-			return new Character(cur);
+			
+			return next;
 		}
 
 		public int nextIndex() {
-			if (first) {
-				first = false;
-				return 0;
-			}
-
-			if (cur == end)
+			if (isOverFlowEnd())
 				throw new java.util.NoSuchElementException("IndexOutOfBounds");
 
+			int index;
+			if(isOverFlowOfBegin()) {
+				cur = (char)(cur + inc);
+				index = (inc > 0?cur - begin: begin - cur);
+			} else {
+				index = (inc > 0?cur - begin: begin - cur);				
+			}
 			cur = (char)(cur + inc);
-			return cur - begin;
+
+			return index;
 		}
 
 		public boolean hasPrevious() {
-			return first || cur != begin;
+			return (inc>0?cur >= begin:cur<=begin);
 		}
 
 		public Object previous() {
-			if (first) {
-				first = false;
-				return new Character(cur);
-			}
-
-			if (cur == begin)
+			if (isOverFlowOfBegin())
 				throw new java.util.NoSuchElementException("IndexOutOfBounds");
-
+			
+			Character prev;
+			if(isOverFlowEnd()) {
+				cur = (char)(cur - inc);
+				prev = new Character(cur);
+			} else {
+				prev = new Character(cur);
+			}
 			cur = (char)(cur - inc);
-			return new Character(cur);
+			
+			return prev;
 		}
 
 		public int previousIndex() {
-			if (first) {
-				first = false;
-				return 0;
-			}
-
-			if (cur == begin)
+			if (isOverFlowOfBegin())
 				throw new java.util.NoSuchElementException("IndexOutOfBounds");
-
+			
+			int index;
+			if(isOverFlowEnd()) {
+				cur = (char)(cur - inc);
+				index = (inc > 0?cur - begin: begin - cur);
+			} else {
+				index = (inc > 0?cur - begin: begin - cur);
+			}
 			cur = (char)(cur - inc);
-			return cur - begin;
+			
+			return index;
 		}
 
 		public void add(Object o) {
@@ -297,6 +306,16 @@ public class CharacterSequence implements List, Serializable {
 
 		public void set(Object o) {
 			throw new UnsupportedOperationException();
+		}
+		
+		private boolean isOverFlowOfBegin() {
+			return (inc > 0 && cur < begin) ||
+					(inc < 0 && cur > begin);
+		}
+		
+		private boolean isOverFlowEnd() {
+			return (inc > 0 && cur > end) ||
+					(inc < 0 && cur < end);
 		}
 
 	}
