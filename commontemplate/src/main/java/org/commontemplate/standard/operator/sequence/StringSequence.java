@@ -55,6 +55,11 @@ public class StringSequence implements Serializable { // FIXME 应该实现List�
 	public List getSequence(String begin, String end) {
 		int beginIndex = indexOf(begin);
 		int endIndex = indexOf(end);
+		
+		if(beginIndex == -1 || endIndex == -1) {
+			return Arrays.asList(new String[0]);
+		}
+		
 		if (beginIndex <= endIndex)
 			return sequence.subList(beginIndex, endIndex + 1);
 		if (cycle)
@@ -72,7 +77,13 @@ public class StringSequence implements Serializable { // FIXME 应该实现List�
 	}
 
 	private List reverseList(int beginIndex, int endIndex) {
-		List sub = sequence.subList(endIndex, beginIndex + 1);
+		List sub;
+		try {
+			sub = (List) (sequence.getClass().newInstance());
+		} catch(Exception e) {
+			sub = new ArrayList();
+		}
+		sub.addAll(sequence.subList(endIndex, beginIndex + 1));
 		Collections.reverse(sub);
 		return sub;
 	}
@@ -80,7 +91,7 @@ public class StringSequence implements Serializable { // FIXME 应该实现List�
 	private int indexOf(String item) {
 		if (ignoreCase) {
 			for (int i = 0, n = sequence.size(); i < n; i ++) {
-				if (item.equalsIgnoreCase((String)sequence.get(i))) {
+				if (((String)sequence.get(i)).equalsIgnoreCase(item)) {
 					return i;
 				}
 			}
