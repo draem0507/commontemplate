@@ -3,8 +3,11 @@ package org.commontemplate.standard.operator.sequence;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  * 字符串序列集合类
@@ -12,7 +15,7 @@ import java.util.List;
  * @author liangfei0201@163.com
  *
  */
-public class StringSequence implements Serializable { // FIXME 应该实现List接口
+public class StringSequence implements List, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -98,6 +101,106 @@ public class StringSequence implements Serializable { // FIXME 应该实现List�
 			return -1;
 		}
 		return sequence.indexOf(item);
+	}
+
+	public void add(int index, Object element) {
+		sequence.add(index, element);
+	}
+
+	public boolean add(Object o) {
+		return sequence.add(o);
+	}
+
+	public boolean addAll(Collection c) {
+		return sequence.addAll(c);
+	}
+
+	public boolean addAll(int index, Collection c) {
+		return sequence.addAll(index, c);
+	}
+
+	public void clear() {
+		sequence.clear();
+	}
+
+	public boolean contains(Object o) {
+		return sequence.contains(o);
+	}
+
+	public boolean containsAll(Collection c) {
+		return sequence.containsAll(c);
+	}
+
+	public boolean equals(Object o) {
+		return sequence.equals(o);
+	}
+
+	public Object get(int index) {
+		return sequence.get(index);
+	}
+
+	public int hashCode() {
+		return sequence.hashCode();
+	}
+
+	public int indexOf(Object o) {
+		return sequence.indexOf(o);
+	}
+
+	public boolean isEmpty() {
+		return sequence.isEmpty();
+	}
+
+	public Iterator iterator() {
+		return sequence.iterator();
+	}
+
+	public int lastIndexOf(Object o) {
+		return sequence.lastIndexOf(o);
+	}
+
+	public ListIterator listIterator() {
+		return sequence.listIterator();
+	}
+
+	public ListIterator listIterator(int index) {
+		return sequence.listIterator(index);
+	}
+
+	public Object remove(int index) {
+		return sequence.remove(index);
+	}
+
+	public boolean remove(Object o) {
+		return sequence.remove(o);
+	}
+
+	public boolean removeAll(Collection c) {
+		return sequence.removeAll(c);
+	}
+
+	public boolean retainAll(Collection c) {
+		return sequence.retainAll(c);
+	}
+
+	public Object set(int index, Object element) {
+		return sequence.set(index, element);
+	}
+
+	public int size() {
+		return sequence.size();
+	}
+
+	public List subList(int fromIndex, int toIndex) {
+		return sequence.subList(fromIndex, toIndex);
+	}
+
+	public Object[] toArray() {
+		return sequence.toArray();
+	}
+
+	public Object[] toArray(Object[] a) {
+		return sequence.toArray(a);
 	}
 
 }
