@@ -1,7 +1,6 @@
 package org.commontemplate.util;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Map;
 
