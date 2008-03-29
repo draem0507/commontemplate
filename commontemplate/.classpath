@@ -2,9 +2,9 @@
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="src" path="src/main/resources"/>
-	<classpathentry kind="src" path="src/test/java"/>
-	<classpathentry kind="src" path="src/test/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/j2sdk1.4.2_10"/>
+	<classpathentry kind="lib" path="lib/ant.jar"/>
+	<classpathentry kind="lib" path="lib/commons-el.jar"/>
 	<classpathentry kind="lib" path="lib/commons-logging.jar"/>
 	<classpathentry kind="lib" path="lib/ehcache.jar"/>
 	<classpathentry kind="lib" path="lib/java2html.jar"/>
@@ -17,7 +17,5 @@
 	<classpathentry kind="lib" path="lib/webwork.jar"/>
 	<classpathentry kind="lib" path="lib/xwork.jar"/>
 	<classpathentry kind="lib" path="lib/xwork2.jar"/>
-	<classpathentry kind="lib" path="lib/ant.jar"/>
-	<classpathentry kind="lib" path="lib/commons-el.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

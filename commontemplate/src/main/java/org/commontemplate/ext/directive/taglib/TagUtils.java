@@ -1,4 +1,4 @@
-package org.commontemplate.standard.directive.taglib;
+package org.commontemplate.ext.directive.taglib;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

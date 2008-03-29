@@ -1,4 +1,4 @@
-package org.commontemplate.standard.cache;
+package org.commontemplate.ext.cache;
 
 import org.commontemplate.config.CacheException;
 import org.commontemplate.util.Assert;

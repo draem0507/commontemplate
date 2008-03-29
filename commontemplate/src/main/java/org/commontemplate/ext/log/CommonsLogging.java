@@ -1,4 +1,4 @@
-package org.commontemplate.standard.log;
+package org.commontemplate.ext.log;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
