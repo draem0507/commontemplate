@@ -2,7 +2,7 @@ package integration;
 
 import java.io.IOException;
 
-import org.commontemplate.standard.directive.filter.highlight.XmlCodeFilter;
+import org.commontemplate.ext.directive.code.XmlCodeFilter;
 
 public class XmlHighlight {
 
