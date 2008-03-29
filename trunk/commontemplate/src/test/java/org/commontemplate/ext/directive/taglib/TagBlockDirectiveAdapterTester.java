@@ -1,4 +1,4 @@
-package org.commontemplate.standard.directive.taglib;
+package org.commontemplate.ext.directive.taglib;
 
 import integration.TestEngineProvider;
 
