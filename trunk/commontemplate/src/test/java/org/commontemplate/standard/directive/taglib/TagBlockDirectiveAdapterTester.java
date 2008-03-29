@@ -11,20 +11,21 @@ import java.util.Map;
 import junit.framework.TestCase;
 
 import org.commontemplate.engine.Engine;
+import org.commontemplate.ext.directive.taglib.TagBlockDirectiveAdapter;
 
 public class TagBlockDirectiveAdapterTester extends TestCase {
-	
+
 	private TagBlockDirectiveAdapter tagBlockDirectiveAdapter;
-	
+
 	public void setUp() {
 		tagBlockDirectiveAdapter = new TagBlockDirectiveAdapter();
 		tagBlockDirectiveAdapter.setTagClassName(TestTag.class.getName());
 	}
-	
+
 	public void tearDown() {
 		tagBlockDirectiveAdapter = null;
 	}
-	
+
 	public void testRightTag() throws Exception {
 		Map param = new HashMap();
 		List innerDirectives = new ArrayList();
