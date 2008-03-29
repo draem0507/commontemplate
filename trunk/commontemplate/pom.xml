@@ -16,7 +16,6 @@
 					<include>**/*.properties</include>
 				</includes>
 			</resource>
-			<resources>
 			<resource>
 				<directory>src/main/resources</directory>
 				<includes>
@@ -113,7 +112,7 @@
 			<groupId>de.java2html</groupId>
 			<artifactId>java2html</artifactId>
 			<version>5.0</version>
-		</dependency>	
+		</dependency>
 	</dependencies>
 	<repositories>
 		<repository>
