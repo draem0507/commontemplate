@@ -1,4 +1,4 @@
-package org.commontemplate.standard.cache;
+package org.commontemplate.ext.cache;
 
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
