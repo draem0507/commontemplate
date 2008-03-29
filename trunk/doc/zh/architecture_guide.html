@@ -430,19 +430,24 @@
 								<b>(3) config包 (配置SPI包)</b><br/>
 								<font color="gray">位置：</font>org.commontemplate.config及其子包<br/>
 								<font color="gray">职责定义：</font>留给第三方的扩展接口，以Configuration接口为中心，Configuration定义了engine包所需配置的getXXX()方法，但不包括setXXX()等，因为SPI不应限制实现类的注册方式。<br/>
-								<font color="gray">入口类：</font>org.commontemplate.config.Configuration<br/>
 								<font color="gray">依赖于：</font>core包<br/>
+								<font color="gray">入口类：</font>org.commontemplate.config.Configuration<br/>
 								<b>(4) standard包 (标准参考配置实现包)</b><br/>
 								<font color="gray">位置：</font>org.commontemplate.standard及其子包<br/>
 								<font color="gray">职责定义：</font>config包的标准参考实现，包括指令及操作符等语法的定义相关配置，并提供Configuration相应的setXXX, addXXX等注册方法类。<br/>
-								<font color="gray">入口类：</font>org.commontemplate.standard.ConfigurationSettings<br/>
 								<font color="gray">依赖于：</font>core包, config包<br/>
-								<b>(5) tools包 (Client使用工具包)</b><br/>
+								<font color="gray">入口类：</font>org.commontemplate.standard.ConfigurationSettings<br/>
+								<b>(5) ext包 (扩展配置实现包)</b><br/>
+								<font color="gray">位置：</font>org.commontemplate.ext及其子包<br/>
+								<font color="gray">职责定义：</font>config包的第三方适配实现等。<br/>
+								<font color="gray">依赖于：</font>core包, config包, standard包<br/>
+								<b>(6) tools包 (Client使用工具包)</b><br/>
 								<font color="gray">位置：</font>org.commontemplate.tools及其子包<br/>
 								<font color="gray">职责定义：</font>一些常用的客户端工具以及与其它框架集成相关类，这些已不属于CommonTemplate引擎的范围内，只是为了方便用户使用而提供。<br/>
-								<font color="gray">入口类：</font>org.commontemplate.standard.PropertiesConfigurationLoader<br/>
 								<font color="gray">依赖于：</font>core包, engine包, config包, standard包<br/>
-								<b>总体包结构图如下：</b><br/>
+								<font color="gray">入口类：</font>org.commontemplate.standard.PropertiesConfigurationLoader<br/>
+								<br/>
+								<b>总体包结构图如下：</b> <font color="green">(注：隐抑了继承包相同于被继承包的依赖关系)</font><br/>
 								<img src="../images/uml/package.gif"/><br/>
 								<br/>
 								<b>不稳定度与抽象度的计算与关系：</b><br/>
