@@ -10,21 +10,21 @@ import org.commontemplate.util.scanner.Tokenizer;
 
 /**
  * 指令片断分解器
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
 final class DirectiveTokenizer {
-	
+
 	//单字母命名, 保证状态机图简洁
 	private static final int E = Tokenizer.END;
-	
+
 	private static final int B = Tokenizer.BREAK;
-	
+
 	private static final int R = Tokenizer.ERROR;
-	
+
 	private static final int S = Tokenizer.BACK_SPACE;
-	
+
 	// 指令语法状态机图
 	private static final int states[][] = {
 		            /* 0.空格, 1.反斜杠, 2.$, 3.字母, 4.{, 5.}, 6.!, 7.*, 8.#, 9.\n, 10.", 11.', 12.`, 14.其它 */ // 对应types
@@ -47,16 +47,17 @@ final class DirectiveTokenizer {
 		/*16.反单引号*/ { 16, 17, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 5, 16}, // 在表达式中遇到引号时忽略关键字符$,{,}等
 		/*17.转义    */ { 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16} // 字符串转义
 	};
-	
+
 	private final Tokenizer tokenizer;
 
 	DirectiveTokenizer(Syntax syntax) {
 		// 状态机输入类型，对应状态机图的列
 		final String[] types = {
-			" |\t|\r|\f", "\\", String.valueOf(syntax.getLeader()), 
-			"0-9|_|a-z|A-Z", String.valueOf(syntax.getExpressionBegin()), 
-			String.valueOf(syntax.getExpressionEnd()), String.valueOf(syntax.getNoParse()), 
-			String.valueOf(syntax.getBlockComment()), String.valueOf(syntax.getLineComment()), 
+			// 0.空格, 1.反斜杠, 2.$, 3.字母, 4.{, 5.}, 6.!, 7.*, 8.#, 9.\n, 10.", 11.', 12.`, 14.其它
+			" |\t|\r|\f", "\\", String.valueOf(syntax.getLeader()),
+			"0-9|_|a-z|A-Z", String.valueOf(syntax.getExpressionBegin()),
+			String.valueOf(syntax.getExpressionEnd()), String.valueOf(syntax.getNoParse()),
+			String.valueOf(syntax.getBlockComment()), String.valueOf(syntax.getLineComment()),
 			"\n", "\"", "\'", "`"
 		};
 		tokenizer = new Tokenizer(types, states);
@@ -64,7 +65,7 @@ final class DirectiveTokenizer {
 
 	/**
 	 * 分解模板指令
-	 * 
+	 *
 	 * @param templateProvider 模板内容读取器
 	 * @return 指令片断列表, 类型: List&lt;Token&gt;
 	 * @throws IOException 读取模板内容失败时抛出
