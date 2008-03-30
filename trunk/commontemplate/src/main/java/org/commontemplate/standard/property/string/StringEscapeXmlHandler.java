@@ -6,7 +6,7 @@ public class StringEscapeXmlHandler extends PropertyHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	public Object handleProperty(Object bean) throws Exception {
+	public Object getProperty(Object bean) throws Exception {
 		String str = (String)bean;
 		return str.replaceAll("&", "&amp;")
 					.replaceAll(">", "&gt;")

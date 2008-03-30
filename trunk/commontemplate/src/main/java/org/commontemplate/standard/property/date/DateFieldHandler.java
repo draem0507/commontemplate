@@ -13,7 +13,7 @@ public abstract class DateFieldHandler extends PropertyHandlerSupport {
 		this.field = field;
 	}
 	
-	public Object handleProperty(Object bean) throws Exception {
+	public Object getProperty(Object bean) throws Exception {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime((Date)bean);
 		return new Integer(calendar.get(field));

@@ -36,7 +36,7 @@ public class StaticPropertyOperatorHandler extends UnaryOperatorHandlerSupport {
 		if (propertyHandlers != null) {
 			StaticPropertyHandler handler = (StaticPropertyHandler)propertyHandlers.get(property);
 			if (handler != null)
-				return handler.handleProperty();
+				return handler.getProperty();
 		}
 		throw new RuntimeException("未找到静态属性:" + property);
 	}

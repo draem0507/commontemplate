@@ -6,7 +6,7 @@ import org.commontemplate.standard.property.StaticPropertyHandler;
 
 public class NowPropertyHanlder implements StaticPropertyHandler {
 
-	public Object handleProperty() throws Exception {
+	public Object getProperty() throws Exception {
 		return new Date();
 	}
 

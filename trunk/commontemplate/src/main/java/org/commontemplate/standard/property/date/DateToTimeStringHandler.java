@@ -12,7 +12,7 @@ public class DateToTimeStringHandler extends PropertyHandlerSupport {
 
 	private final DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
-	public Object handleProperty(Object bean) throws Exception {
+	public Object getProperty(Object bean) throws Exception {
 		return dateFormat.format((Date)bean);
 	}
 
