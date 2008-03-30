@@ -10,18 +10,18 @@ import java.util.Map;
 
 /**
  * 类工具
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
 public class ClassUtils {
-	
+
 	private ClassUtils(){}
-	
+
 	/**
 	 * 通过类名反射得到类元.
 	 * 使用的类名应该和<code>java.lang.Class#getName()</code>一致
-	 * 
+	 *
 	 * @see java.lang.Class#getName()
 	 * @param className 类名
 	 * @return 类元
@@ -31,12 +31,12 @@ public class ClassUtils {
 		Assert.assertNotNull(className, "className不能为空！");
 		return Class.forName(className);
 	}
-	
+
 	/**
 	 * 通过标准类名反射得到类元.
 	 * <p/>
 	 * 与forName主要区别在于数组名使用："java.lang.Object[]"，在forName时使用："[Ljava.lang.Object;"
-	 *  
+	 *
 	 * @param className 标准类名
 	 * @return 类元
 	 * @throws ClassNotFoundException 类不存在时抛出
@@ -50,7 +50,7 @@ public class ClassUtils {
 
 	/**
 	 * 获取对象的属性值
-	 * 
+	 *
 	 * @param object 对象实例
 	 * @param property 属性名
 	 * @return 属性的值
@@ -59,7 +59,7 @@ public class ClassUtils {
 	 * @throws IllegalArgumentException
 	 * @throws IllegalAccessException
 	 * @throws InvocationTargetException
-	 * @throws NoSuchFieldException 
+	 * @throws NoSuchFieldException
 	 */
 	public static Object getObjectProperty(Object object, String property) throws NoSuchMethodException, SecurityException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchFieldException {
 		if (object == null)
@@ -73,7 +73,7 @@ public class ClassUtils {
 
 	/**
 	 * 查找getXXX与isXXX的属性Getter方法
-	 * 
+	 *
 	 * @param clazz 类元
 	 * @param property 属性名
 	 * @return 属性Getter方法
@@ -103,7 +103,7 @@ public class ClassUtils {
 
 	/**
 	 * 获取类的方法 (保证返回方法的公开性)
-	 * 
+	 *
 	 * @param clazz 类
 	 * @param methodName 方法名
 	 * @return 公开的方法
@@ -145,7 +145,7 @@ public class ClassUtils {
 
 	/**
 	 * 获取对象的多个属性值
-	 * 
+	 *
 	 * @param object 对象实例
 	 * @param properties 属性列表
 	 * @return 属性集合
@@ -154,7 +154,7 @@ public class ClassUtils {
 	 * @throws IllegalArgumentException
 	 * @throws IllegalAccessException
 	 * @throws InvocationTargetException
-	 * @throws NoSuchFieldException 
+	 * @throws NoSuchFieldException
 	 */
 	public static Map getObjectProperties(Object object, String[] properties) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchFieldException {
 		if (object == null || properties == null)
@@ -167,10 +167,10 @@ public class ClassUtils {
 		}
 		return map;
 	}
-	
+
 	/**
 	 * 获取对象的所有属性值
-	 * 
+	 *
 	 * @param object 对象实例
 	 * @return 属性集合
 	 * @throws SecurityException
@@ -187,20 +187,25 @@ public class ClassUtils {
 		Method[] methods = clazz.getMethods();
 		for (int i = 0, n = methods.length; i < n; i ++) {
 			Method method = methods[i];
-			String property = method.getName();
-			if (property.startsWith("get")) {
-				property = property.substring(3);
-				String lower = property.substring(0, 1).toLowerCase() + property.substring(1);
-				map.put(lower, method.invoke(object, new Object[0]));
-			} else if (property.startsWith("is")) {
-				property = property.substring(2);
-				String lower = property.substring(0, 1).toLowerCase() + property.substring(1);
-				map.put(lower, method.invoke(object, new Object[0]));
+			if ((method.getModifiers() & Modifier.PUBLIC) == 1
+					&& method.getDeclaringClass() != Object.class
+					&& (method.getParameterTypes() == null
+							|| method.getParameterTypes().length == 0)) {
+				String property = method.getName();
+				if (property.startsWith("get")) {
+					property = property.substring(3);
+					String lower = property.substring(0, 1).toLowerCase() + property.substring(1);
+					map.put(lower, method.invoke(object, new Object[0]));
+				} else if (property.startsWith("is")) {
+					property = property.substring(2);
+					String lower = property.substring(0, 1).toLowerCase() + property.substring(1);
+					map.put(lower, method.invoke(object, new Object[0]));
+				}
 			}
 		}
 		return map;
 	}
-	
+
 	public static List getObjectAllPropertyNames(Object object) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
 		if (object == null)
 			return null;
@@ -217,7 +222,7 @@ public class ClassUtils {
 		}
 		return list;
 	}
-	
+
 	public static Object getStaticProperty(Class clazz, String property) throws NoSuchMethodException, SecurityException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchFieldException {
 		if (clazz == null)
 			return null;
@@ -227,8 +232,8 @@ public class ClassUtils {
 			return clazz.getField(property).get(null);
 		}
 	}
-	
-	// FIXME 未处理int与Integer的区别, 以及null参数的处理. 
+
+	// FIXME 未处理int与Integer的区别, 以及null参数的处理.
 	public static Object getStaticFunction(Class clazz, String name, Object[] args) throws NoSuchMethodException, SecurityException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchFieldException {
 		if (clazz == null)
 			return null;
