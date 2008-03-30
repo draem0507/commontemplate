@@ -67,7 +67,7 @@ public class DFAScanner implements Scanner {
 				Accepter accepter = (Accepter)accepters.get(new Integer(state));
 				if (accepter == null)
 					throw new ScanningException(new Token(buffer.toString(), last, state).getEndPosition(),
-							state, ch, "接收策略不能为空！");
+							state, ch, "状态图有误！未找到相应接收策略用来处理：" + state);
 				int acceptLength = accepter.accept(buffer.toString());
 				if (acceptLength < 0 || acceptLength > buffer.length())
 					throw new ScanningException(new Token(buffer.toString(), last, state).getEndPosition(),
