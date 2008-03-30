@@ -1,6 +1,6 @@
 package org.commontemplate.standard.property.bean;
 
-public class Bean {
+class Bean implements IBean {
 
 	private String name;
 

@@ -3,10 +3,10 @@ package org.commontemplate.util;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 类工具
@@ -183,44 +183,65 @@ public class ClassUtils {
 		if (object == null)
 			return null;
 		Map map = new HashMap();
-		Class clazz = object.getClass();
-		Method[] methods = clazz.getMethods();
-		for (int i = 0, n = methods.length; i < n; i ++) {
-			Method method = methods[i];
-			if ((method.getModifiers() & Modifier.PUBLIC) == 1
-					&& method.getDeclaringClass() != Object.class
-					&& (method.getParameterTypes() == null
-							|| method.getParameterTypes().length == 0)) {
-				String property = method.getName();
-				if (property.startsWith("get")) {
-					property = property.substring(3);
-					String lower = property.substring(0, 1).toLowerCase() + property.substring(1);
-					map.put(lower, method.invoke(object, new Object[0]));
-				} else if (property.startsWith("is")) {
-					property = property.substring(2);
-					String lower = property.substring(0, 1).toLowerCase() + property.substring(1);
-					map.put(lower, method.invoke(object, new Object[0]));
+		for (Iterator iterator = getClassAllProperties(object.getClass()).entrySet().iterator(); iterator.hasNext();) {
+			Map.Entry entry = (Map.Entry)iterator.next();
+			map.put(entry.getKey(), ((Method)entry.getValue()).invoke(object, new Object[0]));
+		}
+		return map;
+	}
+
+	public static Set getObjectAllPropertyNames(Object object) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+		if (object == null)
+			return null;
+		return getObjectAllPropertyNames(object.getClass());
+	}
+
+	public static Set getClassAllPropertyNames(Class clazz) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+		if (clazz == null)
+			return null;
+		return getClassAllProperties(clazz).keySet();
+	}
+
+	public static Map getClassAllProperties(Class clazz) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+		Map map = new HashMap();
+		if (clazz != null) {
+			if ((clazz.getModifiers() & Modifier.PUBLIC) == 1) { // 首先保证类是公开的
+				Method[] methods = clazz.getMethods();
+				for (int i = 0, n = methods.length; i < n; i ++) {
+					Method method = methods[i];
+					if ((method.getModifiers() & Modifier.PUBLIC) == 1 // 再保证函数是公开的
+							&& method.getDeclaringClass() != Object.class
+							&& (method.getParameterTypes() == null
+									|| method.getParameterTypes().length == 0)) {
+						String property = method.getName();
+						if (property.startsWith("get")) {
+							property = property.substring(3);
+							String lower = property.substring(0, 1).toLowerCase() + property.substring(1);
+							map.put(lower, method);
+						} else if (property.startsWith("is")) {
+							property = property.substring(2);
+							String lower = property.substring(0, 1).toLowerCase() + property.substring(1);
+							map.put(lower, method);
+						}
+					}
 				}
+			} else { // 如果当前类不是公开的, 查找其父类与接口
+				map.putAll(searchClassAllProperties(clazz.getInterfaces()));
+				map.putAll(searchClassAllProperties(clazz.getClasses()));
 			}
 		}
 		return map;
 	}
 
-	public static List getObjectAllPropertyNames(Object object) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
-		if (object == null)
-			return null;
-		List list = new ArrayList();
-		Class clazz = object.getClass();
-		Method[] methods = clazz.getMethods();
-		for (int i = 0, n = methods.length; i < n; i ++) {
-			Method method = methods[i];
-			if (method.getName().startsWith("get")) {
-				list.add(method.getName().substring(3, 4).toLowerCase() + method.getName().substring(4));
-			} else if (method.getName().startsWith("is")) {
-				list.add(method.getName().substring(2, 3).toLowerCase() + method.getName().substring(3));
+	private static Map searchClassAllProperties(Class[] classes) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+		Map all = new HashMap();
+		if (classes != null && classes.length > 0) {
+			for (int i = 0, n = classes.length; i < n; i ++) {
+				Class clazz = classes[i];
+				all.putAll(getClassAllProperties(clazz));
 			}
 		}
-		return list;
+		return all;
 	}
 
 	public static Object getStaticProperty(Class clazz, String property) throws NoSuchMethodException, SecurityException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchFieldException {
