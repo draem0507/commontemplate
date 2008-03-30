@@ -113,24 +113,24 @@ public class BinaryOperatorHandlerChain extends SpecialBinaryOperatorHandler imp
 		this.rightToLeft = rightToLeft;
 	}
 
-	private boolean associativeLaw;
+	private boolean associative;
 
-	public boolean isAssociativeLaw() {
-		return associativeLaw;
+	public boolean isAssociative() {
+		return associative;
 	}
 
-	public void setAssociativeLaw(boolean associativeLaw) {
-		this.associativeLaw = associativeLaw;
+	public void setAssociative(boolean associative) {
+		this.associative = associative;
 	}
 
-	private boolean commutativeLaw;
+	private boolean commutative;
 
-	public boolean isCommutativeLaw() {
-		return commutativeLaw;
+	public boolean isCommutative() {
+		return commutative;
 	}
 
-	public void setCommutativeLaw(boolean commutativeLaw) {
-		this.commutativeLaw = commutativeLaw;
+	public void setCommutative(boolean commutative) {
+		this.commutative = commutative;
 	}
 
 }

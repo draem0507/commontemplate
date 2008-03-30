@@ -61,8 +61,8 @@ final class BinaryOperatorImpl extends BinaryOperator {
 			this.leftOperandNamed = shandler.isLeftOperandNamed();
 			this.rightOperandNamed = shandler.isRightOperandNamed();
 			this.rightOperandFunctioned = shandler.isRightOperandFunctioned();
-			this.associativeLaw = shandler.isAssociativeLaw();
-			this.commutativeLaw = shandler.isCommutativeLaw();
+			this.associativeLaw = shandler.isAssociative();
+			this.commutativeLaw = shandler.isCommutative();
 		} else {
 			this.rightToLeft = false;
 			this.leftOperandLazy = false;

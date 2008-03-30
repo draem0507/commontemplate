@@ -14,7 +14,7 @@ public abstract class SpecialBinaryOperatorHandler implements
 	 * 
 	 * @return 是否符合结合律
 	 */
-	public boolean isAssociativeLaw() {
+	public boolean isAssociative() {
 		return false;
 	}
 	
@@ -23,7 +23,7 @@ public abstract class SpecialBinaryOperatorHandler implements
 	 * 
 	 * @return 是否符合交换律
 	 */
-	public boolean isCommutativeLaw() {
+	public boolean isCommutative() {
 		return false;
 	}
 
