@@ -20,28 +20,28 @@ import org.commontemplate.util.scanner.ScanningException;
 
 /**
  * 指令引擎 (线程安全)
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
 public final class TemplateEngine implements TemplateParser {
 
 	private final ExpressionParser expressionParser;
-	
+
 	private final DirectiveTokenizer directiveTokenizer;
-	
+
 	private final DirectiveTranslator directiveTranslator;
 
 	private final DirectiveReducer directiveReducer;
-	
+
 	private final ResourceFilter resourceFilter;
-	
+
 	public TemplateEngine(TemplateConfiguration config) {
 		Assert.assertNotNull(config, "配置信息不能为空!");
 		expressionParser = new ExpressionEngine(config);
 		directiveTokenizer = new DirectiveTokenizer(config.getSyntax());
 		directiveTranslator = new DirectiveTranslator(new DirectiveFactory(
-				config.getSyntax(), config.getDirectiveHandlerProvider(), 
+				config.getSyntax(), config.getDirectiveHandlerProvider(),
 				expressionParser, config.getTextFilter()));
 		directiveReducer = new DirectiveReducer();
 		resourceFilter = config.getResourceFilter();
@@ -56,7 +56,7 @@ public final class TemplateEngine implements TemplateParser {
 		} catch (ParsingException e) {
 			throw e;
 		} catch (ScanningException e) {
-			throw new ParsingException(new Location(e.getOffset().getPosition(), e.getOffset().getPosition()), e);
+			throw new ParsingException(new Location(e.getPosition(), e.getPosition()), e);
 		}
 	}
 
@@ -71,7 +71,7 @@ public final class TemplateEngine implements TemplateParser {
 	public final Template parseTemplate(Resource resource)
 			throws ParsingException, IOException {
 		Reader reader = resource.getReader();
-		if (resourceFilter != null) 
+		if (resourceFilter != null)
 			reader = resourceFilter.filter(reader);
 		try {
 			return new TemplateImpl(resource, parseDirective(reader));

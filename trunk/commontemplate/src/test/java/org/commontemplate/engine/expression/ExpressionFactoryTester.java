@@ -12,26 +12,26 @@ import org.commontemplate.util.scanner.Token;
 import junit.framework.TestCase;
 
 public class ExpressionFactoryTester extends TestCase {
-	
+
 	private ExpressionFactory expressionFactory;
-	
+
 	public void setUp() {
 		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
 		expressionFactory = new ExpressionFactory(config.getOperatorHandlerProvider(), config.getKeywords(), config.isFunctionAvailable());
 	}
-	
+
 	public void testNumberExpression() throws ParsingException {
-		Expression expression = expressionFactory.getUnaryExpression(new Token("3", 1, new Position(1, 1)));
+		Expression expression = expressionFactory.getUnaryExpression(new Token("3", new Position(1, 1, 1)));
 		super.assertEquals("3", expression.getName());
-		super.assertEquals(new Location(1, 1, 1, 2), expression.getLocation());
+		super.assertEquals(new Location(1, 1, 1, 2, 1, 2), expression.getLocation());
 	}
-	
+
 	public void testNullExpression() throws ParsingException {
-		Expression expression = expressionFactory.getUnaryExpression(new Token("null", 1, new Position(1, 1)));
+		Expression expression = expressionFactory.getUnaryExpression(new Token("null", new Position(1, 1, 1)));
 		super.assertEquals("null", expression.getName());
-		super.assertEquals(new Location(1, 1, 1, 5), expression.getLocation());
+		super.assertEquals(new Location(1, 1, 1, 5, 1, 5), expression.getLocation());
 	}
-	
+
 	public void testNull() throws ParsingException {
 		try {
 			expressionFactory.getUnaryExpression(null);

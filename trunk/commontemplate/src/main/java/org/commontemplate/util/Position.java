@@ -5,31 +5,42 @@ import java.io.Serializable;
 /**
  * 位置坐标
  * (不变类，线程安全)
- * 
+ *
  * @see org.commontemplate.util.Location
- * @see org.commontemplate.util.Offset
  * @author liangfei0201@163.com
  *
  */
 public final class Position implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
-	public static final Position ZERO = new Position(0, 0);
+
+	public static final Position ZERO = new Position(0, 0, 0);
+
+	private final int offset;
 
 	private final int row;
-	
+
 	private final int column;
-	
-	public Position(int row, int column) {
+
+	public Position(int offset, int row, int column) {
 		super();
+		this.offset = offset;
 		this.row = row;
 		this.column = column;
 	}
 
 	/**
+	 * 获取偏移量
+	 *
+	 * @return 偏移量
+	 */
+	public int getOffset() {
+		return offset;
+	}
+
+	/**
 	 * 获取位置行
-	 * 
+	 *
 	 * @return 位置行
 	 */
 	public int getRow() {
@@ -38,59 +49,38 @@ public final class Position implements Serializable {
 
 	/**
 	 * 获取位置列
-	 * 
+	 *
 	 * @return 位置列
 	 */
 	public int getColumn() {
 		return column;
 	}
-	
+
 	/**
 	 * 偏移指定行列数
-	 * 
+	 *
 	 * @param pos 行列数
 	 * @return 偏移结果
 	 */
 	public Position offset(Position pos) {
-		return new Position(this.row + pos.row, this.column + pos.column);
-	}
-	
-	/**
-	 * 偏移指定行数
-	 * 
-	 * @param row 行数
-	 * @return 偏移结果
-	 */
-	public Position offsetRow(int row) {
-		return new Position(this.row + row, this.column);
-	}
-	
-	
-	/**
-	 * 偏移指定列数
-	 * 
-	 * @param column 列数
-	 * @return 偏移结果
-	 */
-	public Position offsetColumn(int column) {
-		return new Position(this.row, this.column + column);
+		return new Position(this.offset + pos.offset, this.row + pos.row, this.column + pos.column);
 	}
 
 	public boolean equals(Object o) {
-		if (o == null) 
+		if (o == null)
 			return false;
-		if (! (o instanceof Position))
+		if (o.getClass() != Position.class) // 因Position为不变类，采用等号比instanceof高效
 			return false;
 		Position pos = (Position)o;
-		return this.row == pos.row && this.column == pos.column;
+		return this.offset == pos.offset && this.row == pos.row && this.column == pos.column;
 	}
-	
+
 	public int hashCode() {
-		return 37 * (row + column);
+		return 37 * (offset + row + column);
 	}
 
 	public String toString() {
-		return "(" + row + "," + column + ")";
+		return "(" + offset + ":" + row + "," + column + ")";
 	}
-	
+
 }

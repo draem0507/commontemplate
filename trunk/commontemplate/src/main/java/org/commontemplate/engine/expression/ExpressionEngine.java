@@ -13,25 +13,25 @@ import org.commontemplate.util.scanner.ScanningException;
 
 /**
  * 表达式引擎 (线程安全)
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
 public final class ExpressionEngine implements ExpressionParser {
-	
+
 	private final ExpressionTokenizer expressionTokenizer;
-	
+
 	private final ExpressionTranslator expressionTranslator;
-	
+
 	private final ExpressionReducer expressionReducer;
-	
+
 	public ExpressionEngine(ExpressionConfiguration config) {
 		Assert.assertNotNull(config, "配置信息不能为空!");
 		config.validate(); // 配置自验证
-		
+
 		expressionTokenizer = new ExpressionTokenizer();
 		expressionTranslator = new ExpressionTranslator(new ExpressionFactory(
-				config.getOperatorHandlerProvider(), config.getKeywords(), 
+				config.getOperatorHandlerProvider(), config.getKeywords(),
 				config.isFunctionAvailable()), config.isFunctionAvailable());
 		expressionReducer = new ExpressionReducer();
 	}
@@ -45,7 +45,7 @@ public final class ExpressionEngine implements ExpressionParser {
 		} catch (ParsingException e) {
 			throw e;
 		} catch (ScanningException e) {
-			throw new ParsingException(new Location(e.getOffset().getPosition(), e.getOffset().getPosition()), e);
+			throw new ParsingException(new Location(e.getPosition(), e.getPosition()), e);
 		} catch (IOException e) { // 因为是字符串输入，一般不会出现IOException
 			throw new RuntimeException(e);
 		}
