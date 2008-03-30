@@ -6,7 +6,7 @@ public class NumberToSizeHandler extends PropertyHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	public Object handleProperty(Object bean) throws Exception {
+	public Object getProperty(Object bean) throws Exception {
 		float value = ((Number)bean).floatValue();
 		if (value < 0) 
 			throw new java.lang.IllegalArgumentException(value + ".toSizeString出错，Size必需大于或等于0 !");

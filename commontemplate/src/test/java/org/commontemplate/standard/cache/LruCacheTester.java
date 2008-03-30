@@ -10,7 +10,24 @@ public class LruCacheTester extends CacheTester {
 		return cache;
 	}
 
-	public void testCacheOverflow() {
+	/**
+	 * 测试缓存最近溢出策略
+	 */
+	public void testCacheTimeOverflow() {
+		cache.put("aa", "xx");
+		cache.put("bb", "yy");
+		cache.put("cc", "zz");
+		cache.put("dd", "ww");
+		assertNull(cache.get("aa"));
+		assertEquals("yy", cache.get("bb"));
+		assertEquals("zz", cache.get("cc"));
+		assertEquals("ww", cache.get("dd"));
+	}
+
+	/**
+	 * 测试缓存最少使用溢出策略
+	 */
+	public void testCacheCountOverflow() {
 		cache.put("aa", "xx");
 		cache.put("bb", "yy");
 		cache.put("cc", "zz");

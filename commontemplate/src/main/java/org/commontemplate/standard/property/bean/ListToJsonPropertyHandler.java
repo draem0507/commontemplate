@@ -6,7 +6,7 @@ public class ListToJsonPropertyHandler extends PropertyHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	public Object handleProperty(Object bean) throws Exception {
+	public Object getProperty(Object bean) throws Exception {
 		return null; // TODO 生成JSON
 	}
 

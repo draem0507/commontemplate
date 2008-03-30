@@ -8,7 +8,7 @@ public class StringEscapeUrlHandler extends PropertyHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	public Object handleProperty(Object bean) throws Exception {
+	public Object getProperty(Object bean) throws Exception {
 		String str = (String)bean;
 		return URLEncoder.encode(str, "UTF-8");
 	}

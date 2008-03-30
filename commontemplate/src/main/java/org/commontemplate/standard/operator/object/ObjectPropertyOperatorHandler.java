@@ -51,7 +51,7 @@ public class ObjectPropertyOperatorHandler extends BinaryOperatorHandlerSupport 
 			for (Iterator iterator = propertyHandlers.entrySet().iterator(); iterator.hasNext();) {
 				Entry entry = (Entry)iterator.next();
 				if (((PropertyMatcher)entry.getKey()).isMatch(leftOperand.getClass(), property)) {
-					return ((PropertyHandler)entry.getValue()).handleProperty(leftOperand);
+					return ((PropertyHandler)entry.getValue()).getProperty(leftOperand);
 				}
 			}
 		}

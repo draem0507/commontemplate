@@ -20,17 +20,26 @@ public abstract class CacheTester extends TestCase {
 		cache = null;
 	}
 
+	/**
+	 * 测试缓存加入
+	 */
 	public void testCachePut() {
 		cache.put("test", "xx");
 		assertEquals("xx", cache.get("test"));
 	}
 
+	/**
+	 * 测试缓存移除
+	 */
 	public void testCacheRemove() {
 		cache.put("test", "xx");
 		cache.remove("test");
 		assertNull(cache.get("test"));
 	}
 
+	/**
+	 * 测试缓存清空
+	 */
 	public void testCacheClear() {
 		cache.put("test", "xx");
 		cache.clear();

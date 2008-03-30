@@ -8,7 +8,7 @@ public class StringToDateHandler extends PropertyHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	public Object handleProperty(Object bean) throws Exception {
+	public Object getProperty(Object bean) throws Exception {
 		return new SimpleDateFormat("yyyy-MM-dd").parse((String)bean);
 	}
 

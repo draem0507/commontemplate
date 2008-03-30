@@ -6,7 +6,7 @@ public class EnginePropertyHanlder implements StaticPropertyHandler {
 	
 	private static final EngineBean engineBean = new EngineBean();
 	
-	public Object handleProperty() throws Exception {
+	public Object getProperty() throws Exception {
 		return engineBean;
 	}
 
