@@ -48,7 +48,7 @@ public class UnaryOperatorHandlerChain extends SpecialUnaryOperatorHandler imple
 		if (operand == null) // 对null的默认处理
 			return null;
 		throw new UnhandleException("未找到相应处理类，用于处理操作符: \"" + getClass().getName() + "\", 参数: ("
-				+ (operand == null ? null : operand.getClass().getName() + ") 值: (" + operand) + ")"
+				+ operand.getClass().getName() + ") 值: (" + operand + ")"
 				+ " 被调用的处理类:" + unaryOperatorHandlers);
 	}
 

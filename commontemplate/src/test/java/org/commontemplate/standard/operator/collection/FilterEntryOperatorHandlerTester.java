@@ -21,16 +21,16 @@ public class FilterEntryOperatorHandlerTester extends TestCase {
 
 	OperatorHandlerProvider operatorHandlerProvider;
 	BinaryOperatorHandlerChain handler;
-	
+
 	public void setUp() {
 
 		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
 		// 默认会取得 StandardOperatorHandlerProvider
 		operatorHandlerProvider = config.getOperatorHandlerProvider();
-		handler = 
+		handler =
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("=>");
 	}
-	
+
 	/**
 	 * 对2元操作符 => 的测试。<br>
 	 * @condition
@@ -42,12 +42,12 @@ public class FilterEntryOperatorHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testDoEvaluate() throws Exception{
-		
+
 		Integer leftOperand = new Integer(10);
 		LazyOperand rightOperand = new LazyOperandMock("a", new ConstantImpMock("e", null));
-		
+
 		Filter filter = (Filter) handler.doEvaluate(leftOperand, rightOperand);
-		
+
 		assertEquals("10", filter.getName());
 		Expression expression = filter.getExpression();
 		assertTrue(expression instanceof ConstantImpMock);
@@ -58,12 +58,12 @@ public class FilterEntryOperatorHandlerTester extends TestCase {
 	 * @author YanRong
 	 *
 	 */
-	class ConstantImpMock extends Constant {
-		
+	private static class ConstantImpMock extends Constant {
+
 		private static final long serialVersionUID = 1L;
 
 		private final Object value;
-		
+
 		private final Location location;
 
 		ConstantImpMock(Object value, Location location) {
@@ -74,7 +74,7 @@ public class FilterEntryOperatorHandlerTester extends TestCase {
 		public String getName() {
 			return String.valueOf(value);
 		}
-		
+
 		public String getCanonicalForm() {
 			return null;
 		}
@@ -82,13 +82,13 @@ public class FilterEntryOperatorHandlerTester extends TestCase {
 		public Location getLocation() {
 			return location;
 		}
-		
-		public void accept(Visitor visitor) {			
+
+		public void accept(Visitor visitor) {
 		}
 
 		public Object getValue() {
 			return value;
 		}
 	}
-	
+
 }

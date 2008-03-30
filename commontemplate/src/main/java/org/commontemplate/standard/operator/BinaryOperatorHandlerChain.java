@@ -48,8 +48,8 @@ public class BinaryOperatorHandlerChain extends SpecialBinaryOperatorHandler imp
 		if (leftOperand == null || rightOperand == null) // 对null的默认处理
 			return null;
 		throw new UnhandleException("无法处理参数类型为: ("
-				+ (leftOperand == null ? null : leftOperand.getClass().getName()) + ", "
-				+ (rightOperand == null ? null : rightOperand.getClass().getName())
+				+ leftOperand.getClass().getName() + ", "
+				+ rightOperand.getClass().getName()
 				+ ") 值为: (" + leftOperand + ", " + rightOperand + ")" + " 被调用的处理类:" + binaryOperatorHandlers);
 	}
 
