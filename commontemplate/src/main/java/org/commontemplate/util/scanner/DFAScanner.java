@@ -45,16 +45,16 @@ public class DFAScanner implements Scanner {
 		// 解析时状态 ----
 		StringBuffer buffer = new StringBuffer(); // 缓存字符
 		StringBuffer remain = new StringBuffer(); // 残存字符
+		Position last = Position.ZERO; // 已被接收token的最后位置
 		int state = 0; // 当前状态
 		char ch; // 当前字符
-		Position last = Position.ZERO; // 已被接收token的最后位置
 
 		// 逐字解析 ----
 		for(;;) {
-			if (remain.length() > 0) { // 先处理残存
+			if (remain.length() > 0) { // 先处理残存字符
 				ch = remain.charAt(0);
 				remain.deleteCharAt(0);
-			} else { // 没有残存则读取流
+			} else { // 没有残存字符则读取字符流
 				ch = charStream.nextChar();
 				if (ch == CharStream.END) // 直到流读完
 					break;

@@ -66,17 +66,30 @@ public final class Position implements Serializable {
 		return new Position(this.offset + pos.offset, this.row + pos.row, this.column + pos.column);
 	}
 
-	public boolean equals(Object o) {
-		if (o == null)
-			return false;
-		if (o.getClass() != Position.class) // 因Position为不变类，采用等号比instanceof高效
-			return false;
-		Position pos = (Position)o;
-		return this.offset == pos.offset && this.row == pos.row && this.column == pos.column;
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + column;
+		result = prime * result + offset;
+		result = prime * result + row;
+		return result;
 	}
 
-	public int hashCode() {
-		return 37 * (offset + row + column);
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final Position other = (Position) obj;
+		if (column != other.column)
+			return false;
+		if (offset != other.offset)
+			return false;
+		if (row != other.row)
+			return false;
+		return true;
 	}
 
 	public String toString() {
