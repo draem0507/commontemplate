@@ -25,7 +25,7 @@
 	<target name="compile">
 		<delete dir="${build}" failonerror="false" />
 		<mkdir dir="${build}" />
-		<javac srcdir="${src}" destdir="${build}" classpathref="project.class.path" encoding="UTF-8" />
+		<javac srcdir="${src}" destdir="${build}" debug="true" fork="true" classpathref="project.class.path" encoding="UTF-8" />
 		<copy todir="${build}" includeEmptyDirs="no">
 			<fileset dir="${res}">
 				<include name="**/*.properties" />
@@ -37,8 +37,8 @@
 
 	<target name="jar" depends="compile">
 		<mkdir dir="${dist}" />
-		<delete file="${dist}/commontemplate-${versionNumber}.jar" failonerror="false" />
-		<jar destfile="${dist}/commontemplate-${versionNumber}.jar" basedir="${build}" encoding="UTF-8">
+		<delete file="${dist}/commontemplate-debug-${versionNumber}.jar" failonerror="false" />
+		<jar destfile="${dist}/commontemplate-debug-${versionNumber}.jar" basedir="${build}" encoding="UTF-8">
 			<manifest>
 				<attribute name="Implementation-Title" value="${app.name}" />
 				<attribute name="Implementation-Version" value="${versionNumber}" />
@@ -46,31 +46,6 @@
 			</manifest>
 		</jar>
 		<delete dir="${build}" failonerror="false" />
-	</target>
-
-	<target name="javadoc">
-		<delete dir="${javadoc}" failonerror="false" />
-		<mkdir dir="${javadoc}" />
-		<javadoc packagenames="org.commontemplate.*"
-			sourcepath="${src}"
-			defaultexcludes="yes"
-			destdir="${javadoc}"
-			author="true"
-			version="true"
-			use="true"
-			windowtitle="${app.name}"
-			classpathref="project.class.path"
-			encoding="UTF-8"
-			docencoding="UTF-8"
-			header="&lt;meta http-equiv='Content-Type' content='text/html;charset=UTF-8' /&gt;">
-			<doctitle>
-				<![CDATA[<h1>Common Template Engine Java API</h1>]]>
-			</doctitle>
-			<bottom>
-				<![CDATA[<i>Copyright &#169; 2007 www.commontemplate.org All Rights Reserved.</i>]]>
-			</bottom>
-			<link href="http://www.commontemplate.org/javadoc/" />
-		</javadoc>
 	</target>
 
 </project>
