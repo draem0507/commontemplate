@@ -301,7 +301,7 @@
 								<table width="100%" border="0" cellpadding="0" cellspacing="0">
 									<tr>
 										<td width="16"></td>
-										<td><a href="#">测试覆盖率</a></td>
+										<td><a href="#">测试报告</a></td>
 									</tr>
 								</table>
 							</td>
@@ -401,6 +401,34 @@
 						<tr>
 						<tr>
 							<td align="left">
+								<br/>
+								<b>0.8.3 版本发布！(2008-03-30)</b> <a href="download.html">下载...</a><br/>
+								此版本新功能较少, 主要为加强测试与BUG修复. <br/>
+								将操作符类型重载处理方式从职责链模式改成配置分派模式.<br/>
+								加入数组格式化器, Object[].toString不再出现地址符, 相关配置: defaultArraySeparator=,<br/>
+								加入输出类型定义配置: response.contentType=text/html<br/>
+								优化编译期常量计算算法. 已可以处理var + 3 + 2等左匹配常量.<br/>
+								修复Taglib输出栈的一个空指针BUG.<br/>
+								加入String.escapeXml, escapeUrl, escapeJs, shaCode, base64Code, 进一步完善转码处理.<br/>
+								加入Object.toJson, toXml, 使数据格式转换更简单.<br/>
+								默认开启函数功能.<br/>
+								实现外部文件引入List和Map.<br/>
+								修复TemplateRenderer求值无效的BUG.<br/>
+								修复list[0..10]下标越界异常.<br/>
+								修复各操作符对null的处理.<br/>
+								增强操作符测试覆盖率.<br/>
+								操作符实现类注释完善.<br/>
+								$for{-1} 参数小于0时改为不迭代(以前为取绝对值)<br/>
+								NumberArithmetic加入对BigDecimal和BigInteger的支持<br/>
+								ListAddOperatorHandler当两个Set相加时, 返回Set.(以前全部返回ArrayList)<br/>
+								修复Boolean判断时0.3约等于0的Bug, 加入对小数的支持<br/>
+								加入@一元操作符, 输出不转义地址字符串, 如: ${@"C:\native\room\u5678\user\java\3333\file.txt"}<br/>
+								全面检查所有操作符与指令实现, 防止抛出NullPointerException与IndexOutOfBoundsException以及ClassCastException<br/>
+								将与第三方适配实现的配置方案放入ext包.<br/>
+								将与struts2集成包, 按struts2的plugin方式打包, 这样在struts.xml的配置可以直接用:&lt;package name="my-app" extends="commontemplate-default"&gt;<br/>
+								------------------<br/>
+								感谢yananay参与开发,优化与测试.<br/>
+								感谢saro和keel发现的bug及提出的建议.<br/>
 								<br/>
 								<b>0.8.2 版本发布！(2008-02-12)</b> <a href="download.html">下载...</a><br/>
 								核心包类结构全面稳定.<br/>
