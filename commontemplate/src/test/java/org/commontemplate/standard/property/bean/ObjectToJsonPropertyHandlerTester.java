@@ -19,7 +19,7 @@ public class ObjectToJsonPropertyHandlerTester extends TestCase {
 
 	public void testBean() throws Exception {
 		String json = (String)propertyHandler.getProperty(new Bean("liangfei", 4, true));
-		super.assertEquals("{ok:true,count:4,name:\"liangfei\"}", json);
+		super.assertEquals("{ok:true,name:\"liangfei\",count:4}", json);
 	}
 
 }
