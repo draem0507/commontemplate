@@ -18,7 +18,7 @@ public class ListTokenReceiver implements TokenReceiver {
 	}
 
 	/**
-	 * 获取收集到的Token列表
+	 * 获取接收到的Token列表
 	 *
 	 * @return Token列表, 类型: List&lt;Token&gt;
 	 */

@@ -19,7 +19,7 @@ import org.commontemplate.util.Assert;
  * @author liangfei0201@163.com
  * 
  */
-public class MatchingTypeResolver implements TypeResolver {
+public class PatternTypeResolver implements TypeResolver {
 	
 	public static final char DISCRETE_SEPARATOR = '|';
 	
@@ -33,7 +33,7 @@ public class MatchingTypeResolver implements TypeResolver {
 	
 	private final int otherType;
 	
-	public MatchingTypeResolver(String[] patterns) {
+	public PatternTypeResolver(String[] patterns) {
 		this.otherType = patterns.length;
 		for (int i = 0, n = patterns.length; i < n; i ++) {
 			String pattern = patterns[i];

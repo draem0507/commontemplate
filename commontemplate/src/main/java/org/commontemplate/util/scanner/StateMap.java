@@ -3,6 +3,8 @@ package org.commontemplate.util.scanner;
 /**
  * 状态图
  *
+ * @see org.commontemplate.util.scanner.DFAScanner
+ * @see org.commontemplate.util.scanner.TypeResolver
  * @author liangfei0201@163.com
  *
  */
