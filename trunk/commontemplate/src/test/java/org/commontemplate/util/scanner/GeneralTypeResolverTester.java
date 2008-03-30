@@ -1,6 +1,6 @@
 package org.commontemplate.util.scanner;
 
-import org.commontemplate.util.scanner.MatchingTypeResolver;
+import org.commontemplate.util.scanner.PatternTypeResolver;
 
 import junit.framework.TestCase;
 
@@ -8,7 +8,7 @@ public class GeneralTypeResolverTester extends TestCase {
 	
 	public void testEscapeType() {
 		String[] types = {"+|-|||&"};
-		MatchingTypeResolver patternTypeResolver = new MatchingTypeResolver(types);
+		PatternTypeResolver patternTypeResolver = new PatternTypeResolver(types);
 		assertEquals(0, patternTypeResolver.getType('+'));
 		assertEquals(0, patternTypeResolver.getType('-'));
 		assertEquals(0, patternTypeResolver.getType('|'));
@@ -17,7 +17,7 @@ public class GeneralTypeResolverTester extends TestCase {
 
 	public void testExpressionType() {
 		String[] types = {" |\t|\n|\r", "_|a-z|A-Z", "0-9", ".", "\"|\'", "\\", "(|)|[|]"};
-		MatchingTypeResolver patternTypeResolver = new MatchingTypeResolver(types);
+		PatternTypeResolver patternTypeResolver = new PatternTypeResolver(types);
 		assertEquals(0, patternTypeResolver.getType(' '));
 		assertEquals(0, patternTypeResolver.getType('\t'));
 		assertEquals(0, patternTypeResolver.getType('\n'));
@@ -56,7 +56,7 @@ public class GeneralTypeResolverTester extends TestCase {
 		String[] types = {
 			" |\t|\r", "\\", "$", "0-9|_|a-z|A-Z", "{", "}", "!", "*", "#", "\n", "\"|\'|`"
 		};
-		MatchingTypeResolver patternTypeResolver = new MatchingTypeResolver(types);
+		PatternTypeResolver patternTypeResolver = new PatternTypeResolver(types);
 		assertEquals(0, patternTypeResolver.getType(' '));
 		assertEquals(0, patternTypeResolver.getType('\t'));
 		assertEquals(0, patternTypeResolver.getType('\r'));
