@@ -12,7 +12,7 @@ public interface Accepter {
 	 * 接收长度
 	 *
 	 * @param token 待接收内容
-	 * @return 接收长度 (不变式: 返回值必须大于或等于0, 小于或等于token.length())
+	 * @return 接收长度 (不变式: 返回值必须大于等于0, 并且小于等于token.length())
 	 */
 	public int accept(String token);
 

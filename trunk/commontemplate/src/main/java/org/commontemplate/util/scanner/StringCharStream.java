@@ -4,15 +4,21 @@ import java.io.IOException;
 
 /**
  * 使用字符串作为输入子带
+ *
  * @author liangfei0201@163.com
  *
  */
 public class StringCharStream implements CharStream {
-	
+
 	private final String source;
-	
+
 	private int index = 0;
 
+	/**
+	 * 构造字符串字符流
+	 *
+	 * @param source 字符源
+	 */
 	public StringCharStream(String source) {
 		this.source = source;
 	}

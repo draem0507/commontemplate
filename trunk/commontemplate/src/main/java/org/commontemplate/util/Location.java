@@ -90,18 +90,33 @@ public final class Location implements Serializable {
 		return new Location(begin, end.offset(p));
 	}
 
-	public boolean equals(Object o) {
-		if (o == null)
-			return false;
-		if (o.getClass() != Location.class) // 因Location为不变类，采用等号比instanceof高效
-			return false;
-		Location r = (Location)o;
-		return begin.equals(r.begin)
-			&& end.equals(r.end);
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((begin == null) ? 0 : begin.hashCode());
+		result = prime * result + ((end == null) ? 0 : end.hashCode());
+		return result;
 	}
 
-	public int hashCode() {
-		return 37 * (begin.hashCode() + end.hashCode());
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final Location other = (Location) obj;
+		if (begin == null) {
+			if (other.begin != null)
+				return false;
+		} else if (!begin.equals(other.begin))
+			return false;
+		if (end == null) {
+			if (other.end != null)
+				return false;
+		} else if (!end.equals(other.end))
+			return false;
+		return true;
 	}
 
 	public String toString() {
