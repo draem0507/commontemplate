@@ -6,7 +6,7 @@ public class FifoCacheTester extends CacheTester {
 
 	protected Cache newCache() {
 		FifoCache cache = new FifoCache();
-		cache.setMaxSize(2);
+		cache.setMaxSize(3);
 		return cache;
 	}
 
@@ -18,9 +18,11 @@ public class FifoCacheTester extends CacheTester {
 		cache.put("bb", "yy");
 		cache.get("aa"); // 保证与调用次数无关
 		cache.put("cc", "zz");
+		cache.put("dd", "ww");
 		assertNull(cache.get("aa"));
 		assertEquals("yy", cache.get("bb"));
 		assertEquals("zz", cache.get("cc"));
+		assertEquals("ww", cache.get("dd"));
 	}
 
 }

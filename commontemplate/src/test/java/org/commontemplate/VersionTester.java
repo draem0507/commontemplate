@@ -1,8 +1,20 @@
 package org.commontemplate;
 
+import java.util.Date;
+
 import junit.framework.TestCase;
 
 public class VersionTester extends TestCase {
+
+	public void testVersion() {
+		super.assertTrue(Version.compareTo("0.5.9") > 0);
+	}
+
+	public void testVersionInfo() {
+		super.assertTrue(Version.getReleaseDate() instanceof Date);
+		super.assertEquals("http://www.commontemplate.org/", Version.getVendor());
+		super.assertNotNull(Version.getVersionNumber());
+	}
 
 	public void testRightVersions() {
 		super.assertTrue(Version.compare("0.6.5", "0.6.1") > 0);
