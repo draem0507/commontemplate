@@ -38,8 +38,8 @@ public class StandardOperatorHandlerProviderTester extends TestCase {
 			(BinaryOperatorHandlerChain) operatorHandlerProvider.getBinaryOperatorHandler("+");
 
 		// 验证从配置文件中读取的是否正确
-		assertEquals(true, handler.isAssociativeLaw());
-		assertEquals(true, handler.isCommutativeLaw());
+		assertEquals(true, handler.isAssociative());
+		assertEquals(true, handler.isCommutative());
 	}
 
 }
