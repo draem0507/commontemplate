@@ -32,6 +32,9 @@
 				<include name="**/*.xml" />
 				<include name="**/*.tld" />
 			</fileset>
+			<fileset dir="${src}">
+				<include name="**/*.java" />
+			</fileset>
 		</copy>
 	</target>
 
