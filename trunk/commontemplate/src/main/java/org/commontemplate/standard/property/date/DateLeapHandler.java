@@ -14,7 +14,7 @@ public class DateLeapHandler extends PropertyHandlerSupport {
 	public Object getProperty(Object bean) throws Exception {
 		calendar.setTime((Date)bean);
 		int year = calendar.get(Calendar.YEAR);
-		return Boolean.valueOf((year % 4) == 0);
+		return Boolean.valueOf((year%4==0   &&   year%100!=0)   ||   year%400==0);
 	}
 
 }
