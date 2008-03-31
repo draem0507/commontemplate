@@ -24,17 +24,17 @@ public class DateDayHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testHandleProperty() throws Exception{
-		
+
 		PropertyHandler propertyHandler = new DateDayHandler();
-		Calendar calendar = Calendar.getInstance();		
+		Calendar calendar = Calendar.getInstance();
 		Date dt = new Date();
 		calendar.setTime(dt);
-		
+
 		for(int i = 1; i <= 12; i++) {
-			
+
 			calendar.set(Calendar.DAY_OF_MONTH, i);
-			assertEquals(Integer.valueOf(i), propertyHandler.getProperty(calendar.getTime()));
+			assertEquals(new Integer(i), propertyHandler.getProperty(calendar.getTime()));
 		}
-		
+
 	}
 }
