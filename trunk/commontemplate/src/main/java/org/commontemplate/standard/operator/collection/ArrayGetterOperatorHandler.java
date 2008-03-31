@@ -21,7 +21,7 @@ public class ArrayGetterOperatorHandler extends BinaryOperatorHandlerSupport {
 		Object[] arr = (Object[])leftOperand;
 		Integer index = (Integer)rightOperand;
 		if (index.intValue() < 0) // 小于0表示倒数
-			index = new Integer(arr.length - index.intValue());
+			index = new Integer(arr.length - 1 + index.intValue());
 		if (index.intValue() < 0 || index.intValue() >= arr.length) // 忽略越界
 			return null;
 		return arr[index.intValue()];
