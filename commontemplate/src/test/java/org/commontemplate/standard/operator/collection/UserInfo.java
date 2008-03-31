@@ -10,6 +10,15 @@ public class UserInfo {
 	private String userName;
 	private int userAge;
 	
+	// ClassStaticPropertyOperatorHandler 测试用
+	public static String TEST_CONST = "test const";
+	//ClassStaticPropertyOperatorHandler 测试用
+	private static String country = "China";
+	
+	public static String getCountry() {
+		return country;
+	}
+	
 	public UserInfo(String userName, int userAge) {
 		this.userName = userName;
 		this.userAge = userAge;
@@ -26,5 +35,23 @@ public class UserInfo {
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+	
+	/**
+	 * 测试 ObjectFunctionOperatorHandler 使用
+	 * @return
+	 */
+	public String getMessage() {
+		
+		return "hello man";
+	}
+	
+	/**
+	 * 测试 ObjectFunctionOperatorHandler 使用
+	 * @return
+	 */
+	public String getMessage(Integer i) {
+		
+		return "hello man " + i;
 	}
 }
