@@ -28,7 +28,7 @@ public class ArraySubOperatorHandler extends IndexedBinaryOperatorHandlerSupport
 			if (index < list.length - 1)
 				sub.add(list[index]);
 		}
-		return sub;
+		return sub.toArray();
 	}
 
 }
