@@ -24,14 +24,14 @@ public class DateMillisecondHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testHandleProperty() throws Exception{
-		
+
 		PropertyHandler propertyHandler = new DateMillisecondHandler();
-		Calendar calendar = Calendar.getInstance();		
+		Calendar calendar = Calendar.getInstance();
 		Date dt = new Date();
 		calendar.setTime(dt);
-		
+
 		calendar.set(Calendar.MILLISECOND, 100);
-		
-		assertEquals(Integer.valueOf(100), propertyHandler.getProperty(calendar.getTime()));
+
+		assertEquals(new Integer(100), propertyHandler.getProperty(calendar.getTime()));
 	}
 }

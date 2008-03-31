@@ -24,16 +24,16 @@ public class DateHourHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testHandleProperty() throws Exception{
-		
+
 		PropertyHandler propertyHandler = new DateHourHandler();
-		Calendar calendar = Calendar.getInstance();		
+		Calendar calendar = Calendar.getInstance();
 		Date dt = new Date();
 		calendar.setTime(dt);
-		
+
 		calendar.set(Calendar.HOUR_OF_DAY, 23);
-		assertEquals(Integer.valueOf(23), propertyHandler.getProperty(calendar.getTime()));
-		
+		assertEquals(new Integer(23), propertyHandler.getProperty(calendar.getTime()));
+
 		calendar.set(Calendar.HOUR_OF_DAY, 1);
-		assertEquals(Integer.valueOf(1), propertyHandler.getProperty(calendar.getTime()));
+		assertEquals(new Integer(1), propertyHandler.getProperty(calendar.getTime()));
 	}
 }

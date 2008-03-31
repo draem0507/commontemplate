@@ -24,15 +24,15 @@ public class DateMonthHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testHandleProperty() throws Exception{
-		
+
 		PropertyHandler propertyHandler = new DateMonthHandler();
-		
-		Calendar calendar = Calendar.getInstance();		
+
+		Calendar calendar = Calendar.getInstance();
 		Date dt = new Date();
 		calendar.setTime(dt);
-		
+
 		calendar.set(Calendar.MONTH, 11);
-		
-		assertEquals(Integer.valueOf(11), propertyHandler.getProperty(calendar.getTime()));
+
+		assertEquals(new Integer(11), propertyHandler.getProperty(calendar.getTime()));
 	}
 }

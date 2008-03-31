@@ -24,15 +24,15 @@ public class DateMinuteHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testHandleProperty() throws Exception{
-		
+
 		PropertyHandler propertyHandler = new DateMinuteHandler();
-		Calendar calendar = Calendar.getInstance();		
+		Calendar calendar = Calendar.getInstance();
 		Date dt = new Date();
 		calendar.setTime(dt);
-		
+
 		calendar.set(Calendar.MINUTE, 59);
-		
-		assertEquals(Integer.valueOf(59), propertyHandler.getProperty(calendar.getTime()));
-		
+
+		assertEquals(new Integer(59), propertyHandler.getProperty(calendar.getTime()));
+
 	}
 }

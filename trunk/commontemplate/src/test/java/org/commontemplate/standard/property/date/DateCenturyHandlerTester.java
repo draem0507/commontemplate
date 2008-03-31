@@ -25,28 +25,28 @@ public class DateCenturyHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testHandleProperty() throws Exception{
-		
+
 		PropertyHandler propertyHandler = new DateCenturyHandler();
-		Calendar calendar = Calendar.getInstance();		
+		Calendar calendar = Calendar.getInstance();
 		Date dt = new Date();
 		calendar.setTime(dt);
-		
-		calendar.set(Calendar.YEAR, 2008);		
-		assertEquals(Integer.valueOf(20), propertyHandler.getProperty(dt));
-				
-		calendar.set(Calendar.YEAR, 1979);		
-		assertEquals(Integer.valueOf(19), propertyHandler.getProperty(calendar.getTime()));
-		
-		calendar.set(Calendar.YEAR, 2000);		
-		assertEquals(Integer.valueOf(20), propertyHandler.getProperty(calendar.getTime()));
-		
-		calendar.set(Calendar.YEAR, 1900);		
-		assertEquals(Integer.valueOf(19), propertyHandler.getProperty(calendar.getTime()));
-		
-		calendar.set(Calendar.YEAR, 800);		
-		assertEquals(Integer.valueOf(8), propertyHandler.getProperty(calendar.getTime()));
-		
-		calendar.set(Calendar.YEAR, 60);		
-		assertEquals(Integer.valueOf(0), propertyHandler.getProperty(calendar.getTime()));
+
+		calendar.set(Calendar.YEAR, 2008);
+		assertEquals(new Integer(20), propertyHandler.getProperty(dt));
+
+		calendar.set(Calendar.YEAR, 1979);
+		assertEquals(new Integer(19), propertyHandler.getProperty(calendar.getTime()));
+
+		calendar.set(Calendar.YEAR, 2000);
+		assertEquals(new Integer(20), propertyHandler.getProperty(calendar.getTime()));
+
+		calendar.set(Calendar.YEAR, 1900);
+		assertEquals(new Integer(19), propertyHandler.getProperty(calendar.getTime()));
+
+		calendar.set(Calendar.YEAR, 800);
+		assertEquals(new Integer(8), propertyHandler.getProperty(calendar.getTime()));
+
+		calendar.set(Calendar.YEAR, 60);
+		assertEquals(new Integer(0), propertyHandler.getProperty(calendar.getTime()));
 	}
 }
