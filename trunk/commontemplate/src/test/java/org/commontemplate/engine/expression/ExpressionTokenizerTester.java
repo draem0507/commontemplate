@@ -64,6 +64,18 @@ public class ExpressionTokenizerTester extends TestCase {
 		assertTokens(tokens, messages);
 	}
 	
+	public void testNotEscapeStringExpression() throws IOException, ScanningException {
+		List tokens = expressionTokenizer.split("@c:\native\test.txt");
+		String[] messages = {"@", "c", ":", "ative", "est", ".", "txt"};
+		assertTokens(tokens, messages);
+	}
+	
+	public void testFunctionalExpression() throws IOException, ScanningException {
+		List tokens = expressionTokenizer.split("getName()");
+		String[] messages = {"getName","(", ")"};
+		assertTokens(tokens, messages);
+	}
+	
 	public void testIllegalExpression() {
 		
 	}
