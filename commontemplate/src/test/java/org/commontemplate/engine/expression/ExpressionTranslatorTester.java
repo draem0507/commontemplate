@@ -8,8 +8,6 @@ import junit.framework.TestCase;
 import org.commontemplate.config.Configuration;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.ParsingException;
-import org.commontemplate.engine.expression.ExpressionFactory;
-import org.commontemplate.engine.expression.ExpressionTranslator;
 import org.commontemplate.tools.PropertiesConfigurationLoader;
 import org.commontemplate.util.Position;
 import org.commontemplate.util.scanner.Token;
@@ -66,6 +64,19 @@ public class ExpressionTranslatorTester extends TestCase {
 		super.assertEquals("..", ((Expression)expressions.get(4)).getName());
 		super.assertEquals("9", ((Expression)expressions.get(5)).getName());
 		super.assertEquals(")", ((Expression)expressions.get(6)).getName());
+	}
+	
+	public void testConjointOperatorExpression() throws ParsingException {
+		List tokens = new ArrayList();
+		tokens.add(new Token("3", new Position(1, 1, 1)));
+		tokens.add(new Token("*-", new Position(1, 1, 2)));
+		tokens.add(new Token("2 ", new Position(1, 1, 3)));
+		List expressions = expressionTranslator.translate(tokens);
+		assertEquals(4, expressions.size());
+		assertEquals("3", ((Expression)expressions.get(0)).getName());
+		assertEquals("*", ((Expression)expressions.get(1)).getName());
+		assertEquals("-", ((Expression)expressions.get(2)).getName());
+		assertEquals("2", ((Expression)expressions.get(3)).getName());
 	}
 
 }
