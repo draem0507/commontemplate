@@ -97,7 +97,7 @@ final class ExpressionReducer {
 		Operator currentOperator;
 		Operator prevOperator;
 		// 这个变量的命名还需要改进
-		Operator prePreOperator;
+		Operator preOfpreOperator;
 
 		for (int i = 0; i < expressions.size(); i++) {
 
@@ -142,6 +142,18 @@ final class ExpressionReducer {
 
 				// 如果不是2元操作符，则不处理
 				if(prevOperator.getClass() != BinaryOperatorImpl.class) {
+					
+					// 判断是不是一元操作符
+					if(prevOperator.getClass() == UnaryOperatorImpl.class) {
+						UnaryOperatorImpl preUnaryOperator = (UnaryOperatorImpl) prevOperator;
+						preUnaryOperator.setOperand(expression);
+						expression = new ConstantImpl(preUnaryOperator.evaluate(null), null);
+						// 重新设置 Expressions
+						i = resetExpressions(i, 1, expressions, expression);
+						
+						continue;
+					}
+					
 					continue;
 				}
 				BinaryOperatorImpl preBinaryOperator = ((BinaryOperatorImpl) prevOperator);
@@ -181,19 +193,19 @@ final class ExpressionReducer {
 						//TODO: flag 的使用需要重构
 						boolean flag = false;
 						if(i>=3) {
-							prePreOperator = (Operator) expressions.get(i - 3);
+							preOfpreOperator = (Operator) expressions.get(i - 3);
 							//如果是2元操作符，则处理
-							if(prePreOperator.getClass() == BinaryOperatorImpl.class) {
+							if(preOfpreOperator.getClass() == BinaryOperatorImpl.class) {
 
 								// 如果不满足结合的条件，那么不处理
-								if(!isAssociative((BinaryOperatorImpl)prePreOperator, preBinaryOperator)) {
+								if(!isAssociative((BinaryOperatorImpl)preOfpreOperator, preBinaryOperator)) {
 									continue;
 								}
 
 								// 如果是减号
-								if("-".equals(prePreOperator.getName())) {
+								if("-".equals(preOfpreOperator.getName())) {
 									// 如果级别相同
-									if(preBinaryOperator.getPriority() == prePreOperator.getPriority()) {
+									if(preBinaryOperator.getPriority() == preOfpreOperator.getPriority()) {
 
 										Number number = (Number)((Constant) expression).getValue();
 										preBinaryOperator.setOperands(prevExpression,
@@ -210,15 +222,9 @@ final class ExpressionReducer {
 							preBinaryOperator.setOperands(prevExpression, expression);
 							expression = new ConstantImpl(preBinaryOperator.evaluate(null), null);
 						}
-
-						expressions.remove(i - 1);
-						expressions.remove(i - 2);
-						i = i - 2;
-						expressions.set(i, expression);
-						// 寻找是否可以再和前一个参数进行优化
-						if (i - 1 > 0) {
-							i--;
-						}
+						
+						// 重新设置 Expressions
+						i = resetExpressions(i, 2, expressions, expression);
 					}
 				}
 			}
@@ -226,11 +232,38 @@ final class ExpressionReducer {
 
 		return expressions;
 	}
+	
+	/**
+	 * 重新设置表达式列表。
+	 * @param currentIndex
+	 * 当前的表达式列表的索引号
+	 * @param removeIndexCount
+	 * 要删除的表达式的个数
+	 * @param expressions
+	 * 表达式列表
+	 * @param expression
+	 * 新增加的表达式
+	 * @return
+	 * 新的表达式列表的索引号
+	 */
+	private int resetExpressions(int currentIndex, int removeIndexCount, List expressions, Expression expression) {
+		
+		for(int i = 1; i <= removeIndexCount; i++) {
+			expressions.remove(currentIndex - i);
+		}
+		currentIndex -= removeIndexCount;
+		expressions.set(currentIndex, expression);
+		// 寻找是否可以再和前一个参数进行优化
+		if (currentIndex - 1 > 0) {
+			currentIndex--;
+		}
+		return currentIndex;
+	}
 
 	/**
 	 * 当优化常量的时候，判断是否可以结合。
 	 * @author YanRong
-	 * @param prePreOperator
+	 * @param preOfpreOperator
 	 * 常量的前一个的前一个操作符
 	 * @param preOperator
 	 * 常量的前一个操作符
@@ -238,16 +271,16 @@ final class ExpressionReducer {
 	 * true: 可以结合
 	 * false:　不可以结合
 	 */
-	private boolean isAssociative(BinaryOperatorImpl prePreOperator, BinaryOperatorImpl preOperator) {
+	private boolean isAssociative(BinaryOperatorImpl preOfpreOperator, BinaryOperatorImpl preOperator) {
 
 		// TODO:这个方法需要改进
 
 		// 前提条件：优先级的判断
-		if(preOperator.getPriority()<prePreOperator.getPriority()) {
+		if(preOperator.getPriority()<preOfpreOperator.getPriority()) {
 			return false;
 		}
 		// 如果优先级大，那么就可以结合了
-		if(preOperator.getPriority()>prePreOperator.getPriority()) {
+		if(preOperator.getPriority()>preOfpreOperator.getPriority()) {
 			return true;
 		}
 		// 以下要处理的就是优先级相同的情况
@@ -259,7 +292,7 @@ final class ExpressionReducer {
 
 		// 处理乘号
 		if("*".equals(preOperator.getName())) {
-			if("*".equals(prePreOperator.getName())) {
+			if("*".equals(preOfpreOperator.getName())) {
 				return true;
 			} else {
 				return false;
