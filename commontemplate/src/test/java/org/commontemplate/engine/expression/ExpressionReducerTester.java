@@ -808,4 +808,36 @@ public class ExpressionReducerTester extends TestCase {
 		assertEquals("-6", rightExpression.getName());
 	}
 	
+	/**
+	 * 对表达式进行预优化的测试。
+	 * @condition
+	 *  条件<br>
+	 *  表达式为 a*-2*3
+	 * @result
+	 *  结果<br>
+	 *  表达式应该被优化成 a*-6
+	 * @throws ParseException
+	 * @throws IOException
+	 * @throws ScanningException
+	 */
+	public void testPreOptimizeReduce18() throws IOException, ScanningException{
+		
+		String expressionText = "a*-2*3";
+		List tokens = expressionTokenizer.split(expressionText);
+		List expressions = expressionTranslator.translate(tokens);
+		
+		Expression root = expressionReducer.reduce(expressions);
+		
+		assertTrue(root instanceof BinaryOperatorImpl);
+		assertEquals("*", root.getName());
+		
+		BinaryOperatorImpl binaryOperatorImpl = (BinaryOperatorImpl) root;
+		
+		Expression leftExpression = binaryOperatorImpl.getLeftOperand();
+		Expression rightExpression = binaryOperatorImpl.getRightOperand();
+		
+		assertEquals("a", leftExpression.getName());
+		assertEquals("-6", rightExpression.getName());
+	}
+	
 }
