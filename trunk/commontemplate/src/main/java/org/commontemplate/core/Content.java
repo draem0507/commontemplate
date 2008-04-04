@@ -9,9 +9,9 @@ package org.commontemplate.core;
 public abstract class Content extends Element {
 
 	/**
-	 * 获取注释静态内容元素的值
+	 * 获取内容
 	 *
-	 * @return 静态内容元素的值
+	 * @return 内容
 	 */
 	public abstract String getValue();
 
