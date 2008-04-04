@@ -1,0 +1,22 @@
+非标准起始文字
+some text
+<html>
+	$if{yy}<input type="text" ct:if="yy">$end
+	<something>
+	asdfasdf;<"&<,>&lt;&gt;
+
+    <body>
+        $if{users != null && users.size > 0}<table ct:if="users != null && users.size > 0" border="1">
+            $for{user : users}<tr ct:for="user : users">
+                <td>$out{for.index + 1}<span ct:out="for.index + 1">1</span>$end</td>
+                <td>$out{user.name}<span ct:out="user.name">james</span>$end</td>
+                <td>$out{user.coins}<span ct:out="user.coins">2.00</span>$end</td>
+            </tr>$end
+        </table>$end
+    </body>
+</html>
+$if{xx}<tag ct:if="xx">
+	$if{yy}<tag ct:if="yy"/>$end
+</tag>$end
+some text
+非标准结束
