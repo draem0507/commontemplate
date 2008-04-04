@@ -8,12 +8,12 @@ import java.io.IOException;
  * @author liangfei0201@163.com
  *
  */
-public abstract class Text extends Static {
+public abstract class Text extends Content {
 
 	// final: 只允许输出固定文本, 保证语义正确
 	public final void render(Context context) throws RenderingException {
 		try {
-			context.output(getContent());
+			context.output(getValue());
 		} catch (IOException e) {
 			throw new RenderingException(this, e);
 		}

@@ -45,7 +45,7 @@ final class CommentImpl extends Comment {
 		visitor.visit(this);
 	}
 
-	public String getContent() {
+	public String getValue() {
 		return comment;
 	}
 

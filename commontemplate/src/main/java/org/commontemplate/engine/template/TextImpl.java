@@ -31,7 +31,7 @@ final class TextImpl extends Text {
 	}
 
 	public String getCanonicalForm() {
-		return getContent();
+		return getValue();
 	}
 
 	public Location getLocation() {
@@ -42,7 +42,7 @@ final class TextImpl extends Text {
 		visitor.visit(this);
 	}
 
-	public String getContent() {
+	public String getValue() {
 		return text;
 	}
 
