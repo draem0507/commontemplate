@@ -11,7 +11,7 @@ public class Attribute {
 	private String name;
 	private String value;
 
-	public Attribute(String name, String value) {
+	public Attribute(final String name, final String value) {
 		super();
 		this.name = name;
 		this.value = value;
@@ -21,7 +21,7 @@ public class Attribute {
 		return name;
 	}
 
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 
@@ -29,7 +29,7 @@ public class Attribute {
 		return value;
 	}
 
-	public void setValue(String value) {
+	public void setValue(final String value) {
 		this.value = value;
 	}
 
