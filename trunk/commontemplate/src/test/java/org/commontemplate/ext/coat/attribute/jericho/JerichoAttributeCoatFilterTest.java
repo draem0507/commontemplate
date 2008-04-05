@@ -31,7 +31,9 @@ public class JerichoAttributeCoatFilterTest extends TestCase {
 		long start = System.currentTimeMillis();
 		Reader filted = coatFilter.filter(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("integration/ext/coat/test01.ctl"),"UTF-8"));
 		String expect = IOUtils.readToString(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("integration/ext/coat/test01.out"),"UTF-8"));
-		assertEquals(expect, IOUtils.readToString(filted));
+		String actual = IOUtils.readToString(filted);
+		System.out.println(actual);
+		assertEquals(expect, actual);
 		long end = System.currentTimeMillis();
 		System.out.println("attribute coat cost:"+(end-start) +" ms");
 	}

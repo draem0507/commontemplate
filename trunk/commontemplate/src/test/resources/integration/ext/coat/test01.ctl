@@ -6,7 +6,7 @@ some text
 	asdfasdf;<"&<,>&lt;&gt;
 
     <body>
-        <table ct:if="users != null && users.size > 0" border="1">
+        <table ct:if="users != null && users.size> 0" ct:for="xx" border="1">
             <tr ct:for="user : users">
                 <td><span ct:out="for.index + 1">1</span></td>
                 <td><span ct:out="user.name">james</span></td>
