@@ -1,11 +1,13 @@
 package org.commontemplate.standard.operator.context;
 
+import java.util.Date;
+
+import junit.framework.TestCase;
+
 import org.commontemplate.config.Configuration;
 import org.commontemplate.config.OperatorHandlerProvider;
 import org.commontemplate.config.UnaryOperatorHandler;
 import org.commontemplate.tools.PropertiesConfigurationLoader;
-
-import junit.framework.TestCase;
 /**
  * StaticFunctionOperatorHandler 的测试。
  * @author YanRong
@@ -32,7 +34,10 @@ public class StaticFunctionOperatorHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testDoEvaluate() throws Exception{
-		
 		UnaryOperatorHandler handler = operatorHandlerProvider.getUnaryOperatorHandler(".");
+		super.assertTrue(handler.doEvaluate("random") instanceof Number);
+		super.assertTrue(handler.doEvaluate("uuid") instanceof String);
+		super.assertEquals(36, ((String)handler.doEvaluate("uuid")).length());
+		super.assertTrue(handler.doEvaluate("now") instanceof Date);
 	}
 }
