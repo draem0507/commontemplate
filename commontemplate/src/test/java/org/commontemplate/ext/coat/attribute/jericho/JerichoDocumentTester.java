@@ -4,9 +4,9 @@
 package org.commontemplate.ext.coat.attribute.jericho;
 
 import java.io.InputStreamReader;
+import java.util.*;
 
 import org.commontemplate.ext.coat.attribute.Segment;
-import org.commontemplate.ext.coat.attribute.jericho.JerichoDocument;
 
 import junit.framework.TestCase;
 import au.id.jericho.lib.html.Source;
@@ -33,10 +33,13 @@ public class JerichoDocumentTester extends TestCase {
 	 */
 	public void testGetTopSegments() {
 		assertNotNull(document.getTopSegments());
-		Segment[] segments = document.getTopSegments();
-		for(int i=0;i<segments.length;i++){
-			assertNotNull(segments[i]);
-			assertNotNull(segments[i].getText());
+//		Segment[] segments = document.getTopSegments();
+		List segements = document.getTopSegments();
+//		for(int i=0;i<segments.length;i++){
+		for(Iterator i = segements.iterator();i.hasNext();){
+			Segment s = (Segment) i.next();
+			assertNotNull(s);
+			assertNotNull(s.getText());
 		}
 	}
 

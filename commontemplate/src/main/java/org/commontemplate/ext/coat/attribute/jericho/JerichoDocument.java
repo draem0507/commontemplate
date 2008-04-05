@@ -6,7 +6,6 @@ package org.commontemplate.ext.coat.attribute.jericho;
 import java.util.*;
 
 import org.commontemplate.ext.coat.attribute.*;
-import org.commontemplate.ext.coat.attribute.Segment;
 
 import au.id.jericho.lib.html.*;
 
@@ -17,28 +16,33 @@ import au.id.jericho.lib.html.*;
 public class JerichoDocument implements Document {
 
 	private final Source source;
-	private Segment[] segments;
+	private List segments;
 
 	public JerichoDocument(final Source source) {
 		super();
 		this.source = source;
 	}
 
-	public Segment[] getTopSegments() {
+	public List getTopSegments() {
 		if (segments == null) {
+			segments = new ArrayList();
 			final List childs = source.getChildElements();
-			segments = new Segment[childs.size() * 2 + 1];
 			int pos = source.getBegin();
-			int c = 0;
 			for (final Iterator i = childs.iterator(); i.hasNext();) {
 				final Element e = (Element) i.next();
-				segments[c++] = new TextSegment((String) source.subSequence(
-						pos, e.getBegin()));
-				segments[c++] = new JerichoElement(source, e);
+				String text =  source.subSequence(
+						pos, e.getBegin()).toString();
+				if(text!=null && text.length() > 0){
+					segments.add(new TextSegment(text));
+				}
+				segments.add(new JerichoElement(source,e));
 				pos = e.getEnd();
 			}
-			segments[c] = new TextSegment((String) source.subSequence(pos,
-					source.getEnd()));
+			String text =  source.subSequence(
+					pos, source.getEnd()).toString();
+			if(text!=null && text.length() > 0){
+				segments.add(new TextSegment(text));
+			}
 		}
 		return segments;
 	}
