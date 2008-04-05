@@ -32,11 +32,9 @@ public class UuidPropertyHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testDoEvaluate() throws Exception{
-		
 		UnaryOperatorHandler handler = operatorHandlerProvider.getUnaryOperatorHandler(".");
 		Object obj = handler.doEvaluate("uuid");
-		
-		assertTrue(obj instanceof org.commontemplate.util.coder.UUID);
-		
+		assertTrue(obj instanceof String);
+
 	}
 }
