@@ -1,10 +1,12 @@
-package org.commontemplate.ext.coat;
+package org.commontemplate.ext.coat.attribute.simple;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
 import org.commontemplate.config.Syntax;
+import org.commontemplate.ext.coat.attribute.simple.TagTokenizer;
+import org.commontemplate.ext.coat.attribute.simple.TagTranslator;
 import org.commontemplate.util.scanner.ScanningException;
 
 public class TagTranslatorTester {

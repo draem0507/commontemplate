@@ -1,11 +1,12 @@
 /**
  *
  */
-package org.commontemplate.ext.coat.jericho;
+package org.commontemplate.ext.coat.attribute.jericho;
 
 import java.io.InputStreamReader;
 
-import org.commontemplate.ext.coat.common.Segment;
+import org.commontemplate.ext.coat.attribute.Segment;
+import org.commontemplate.ext.coat.attribute.jericho.JerichoDocument;
 
 import junit.framework.TestCase;
 import au.id.jericho.lib.html.Source;
@@ -28,7 +29,7 @@ public class JerichoDocumentTester extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link org.commontemplate.ext.coat.jericho.JerichoDocument#getTopSegments()}.
+	 * Test method for {@link org.commontemplate.ext.coat.attribute.jericho.JerichoDocument#getTopSegments()}.
 	 */
 	public void testGetTopSegments() {
 		assertNotNull(document.getTopSegments());

@@ -1,10 +1,11 @@
 /**
  *
  */
-package org.commontemplate.ext.coat.jericho;
+package org.commontemplate.ext.coat.attribute.jericho;
 
 import java.io.*;
 
+import org.commontemplate.ext.coat.attribute.jericho.JerichoAttributeCoatFilter;
 import org.commontemplate.util.IOUtils;
 
 import junit.framework.TestCase;
@@ -23,7 +24,7 @@ public class JerichoAttributeCoatFilterTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link org.commontemplate.ext.coat.common.AbstractAttributeFilter#filter(java.io.Reader)}.
+	 * Test method for {@link org.commontemplate.ext.coat.attribute.AbstractAttributeFilter#filter(java.io.Reader)}.
 	 * @throws Exception
 	 */
 	public void testFilter() throws Exception {
