@@ -256,7 +256,7 @@ public class ClassUtils {
 
 	// FIXME 未处理int与Integer的区别, 以及null参数的处理.
 	public static Object getStaticFunction(Class clazz, String name, Object[] args) throws NoSuchMethodException, SecurityException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchFieldException {
-		if (clazz == null)
+		if (clazz == null || name == null)
 			return null;
 		Class[] classes = new Class[args.length];
 		for (int i = 0, n = args.length; i < n; i ++) {
