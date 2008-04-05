@@ -3,14 +3,15 @@
  */
 package org.commontemplate.ext.coat.attribute.jericho;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
 
 import org.commontemplate.ext.coat.attribute.Document;
 import org.commontemplate.ext.coat.attribute.Segment;
 import org.commontemplate.ext.coat.attribute.TextSegment;
-import org.commontemplate.ext.coat.common.*;
 
-import au.id.jericho.lib.html.*;
+import au.id.jericho.lib.html.Element;
+import au.id.jericho.lib.html.Source;
 
 /**
  * @author GL
@@ -27,18 +28,20 @@ public class JerichoDocument implements Document {
 	}
 
 	public Segment[] getTopSegments() {
-		if(segments == null){
+		if (segments == null) {
 			List childs = source.getChildElements();
-			segments = new Segment[childs.size()*2+1];
+			segments = new Segment[childs.size() * 2 + 1];
 			int pos = source.getBegin();
 			int c = 0;
-			for(Iterator i = childs.iterator();i.hasNext();){
+			for (Iterator i = childs.iterator(); i.hasNext();) {
 				Element e = (Element) i.next();
-				segments[c++] = new TextSegment((String)source.subSequence(pos, e.getBegin()));
-				segments[c++] = new JerichoElement(source,e);
+				segments[c++] = new TextSegment((String) source.subSequence(
+						pos, e.getBegin()));
+				segments[c++] = new JerichoElement(source, e);
 				pos = e.getEnd();
 			}
-			segments[c]=new TextSegment((String) source.subSequence(pos, source.getEnd()));
+			segments[c] = new TextSegment((String) source.subSequence(pos,
+					source.getEnd()));
 		}
 		return segments;
 	}
