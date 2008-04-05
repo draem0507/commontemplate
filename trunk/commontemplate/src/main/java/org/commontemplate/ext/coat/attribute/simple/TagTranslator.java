@@ -1,4 +1,4 @@
-package org.commontemplate.ext.coat;
+package org.commontemplate.ext.coat.attribute.simple;
 
 import java.util.List;
 

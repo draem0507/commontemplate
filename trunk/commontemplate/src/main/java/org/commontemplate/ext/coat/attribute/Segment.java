@@ -1,7 +1,7 @@
 /**
  *
  */
-package org.commontemplate.ext.coat.common;
+package org.commontemplate.ext.coat.attribute;
 
 /**
  * 用于表示文档中的片段，TagElement继承Segment

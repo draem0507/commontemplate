@@ -1,12 +1,14 @@
 /**
  *
  */
-package org.commontemplate.ext.coat.jericho;
+package org.commontemplate.ext.coat.attribute.jericho;
 
 import java.util.*;
 
+import org.commontemplate.ext.coat.attribute.Document;
+import org.commontemplate.ext.coat.attribute.Segment;
+import org.commontemplate.ext.coat.attribute.TextSegment;
 import org.commontemplate.ext.coat.common.*;
-import org.commontemplate.ext.coat.common.Segment;
 
 import au.id.jericho.lib.html.*;
 
