@@ -19,5 +19,7 @@
 	<classpathentry kind="lib" path="lib/webwork.jar"/>
 	<classpathentry kind="lib" path="lib/xwork.jar"/>
 	<classpathentry kind="lib" path="lib/xwork2.jar"/>
+	<classpathentry kind="lib" path="lib/jericho-html-2.5.jar"/>
+	<classpathentry kind="lib" path="lib/log4j.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
