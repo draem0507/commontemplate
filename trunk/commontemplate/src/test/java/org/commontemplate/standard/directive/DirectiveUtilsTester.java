@@ -60,6 +60,8 @@ public class DirectiveUtilsTester extends TestCase {
 
 	private static final class MockDirective extends Element {
 
+		private static final long serialVersionUID = 1L;
+
 		private String name;
 
 		public MockDirective(String name) {
@@ -118,7 +120,7 @@ public class DirectiveUtilsTester extends TestCase {
 		 * @param visitor 访问者
 		 */
 		public void accept(Visitor visitor) throws BreakVisitException {
-
+			visitor.visit(this);
 		}
 
 		public void setName(String name) {
