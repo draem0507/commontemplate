@@ -12,7 +12,7 @@ import org.commontemplate.util.Assert;
 public class TextSegment implements Segment {
 	private String text;
 
-	public TextSegment(String text) {
+	public TextSegment(final String text) {
 		super();
 		Assert.assertNotNull(text);
 		this.text = text;
@@ -22,7 +22,7 @@ public class TextSegment implements Segment {
 		return text;
 	}
 
-	public void setText(String text) {
+	public void setText(final String text) {
 		this.text = text;
 	}
 

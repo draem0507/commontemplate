@@ -3,9 +3,7 @@
  */
 package org.commontemplate.ext.coat.attribute;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
+import java.io.*;
 
 import org.commontemplate.config.ResourceFilter;
 
@@ -17,23 +15,23 @@ import org.commontemplate.config.ResourceFilter;
  */
 public abstract class AbstractAttributeFilter implements ResourceFilter {
 
-	public Reader filter(Reader reader) throws IOException {
-		Document document = getDocument(reader);
-		Segment[] segments = document.getTopSegments();
+	public Reader filter(final Reader reader) throws IOException {
+		final Document document = getDocument(reader);
+		final Segment[] segments = document.getTopSegments();
 		for (int i = 0; i < segments.length; i++) {
 			if (segments[i] instanceof TagElement) {
 				cycleParse((TagElement) segments[i]);
 			}
 		}
-		StringBuffer sb = new StringBuffer();
+		final StringBuffer sb = new StringBuffer();
 		for (int i = 0; i < segments.length; i++) {
 			sb.append(segments[i].getText());
 		}
 		return new StringReader(sb.toString());
 	}
 
-	private void cycleParse(TagElement element) {
-		Segment[] segments = element.getSegments();
+	private void cycleParse(final TagElement element) {
+		final Segment[] segments = element.getSegments();
 		for (int i = 0; i < segments.length; i++) {
 			if (segments[i] instanceof TagElement) {
 				cycleParse((TagElement) segments[i]);
@@ -49,12 +47,12 @@ public abstract class AbstractAttributeFilter implements ResourceFilter {
 	 * @param
 	 * @return
 	 */
-	protected void parse(TagElement element) {
-		Attribute[] attributes = element.getAttributes();
+	protected void parse(final TagElement element) {
+		final Attribute[] attributes = element.getAttributes();
 		for (int i = 0; i < attributes.length; i++) {
-			String name = attributes[i].getName();
+			final String name = attributes[i].getName();
 			if (name.startsWith("ct:")) {
-				String directive = name.substring(3);
+				final String directive = name.substring(3);
 				element.removeAttribute(name);
 				element.insertSegment(0, new TextSegment("$" + directive + "{"
 						+ attributes[i].getValue() + "}"));

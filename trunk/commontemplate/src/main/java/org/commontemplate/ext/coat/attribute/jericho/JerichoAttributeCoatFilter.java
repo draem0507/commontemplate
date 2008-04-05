@@ -3,11 +3,9 @@
  */
 package org.commontemplate.ext.coat.attribute.jericho;
 
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 
-import org.commontemplate.ext.coat.attribute.AbstractAttributeFilter;
-import org.commontemplate.ext.coat.attribute.Document;
+import org.commontemplate.ext.coat.attribute.*;
 
 import au.id.jericho.lib.html.Source;
 
@@ -17,8 +15,8 @@ import au.id.jericho.lib.html.Source;
  */
 public class JerichoAttributeCoatFilter extends AbstractAttributeFilter {
 
-	protected Document getDocument(Reader reader) throws IOException {
-		Source source = new Source(reader);
+	protected Document getDocument(final Reader reader) throws IOException {
+		final Source source = new Source(reader);
 		return new JerichoDocument(source);
 	}
 
