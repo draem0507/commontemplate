@@ -3,37 +3,39 @@
  */
 package org.commontemplate.ext.coat.attribute;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
 
 import org.commontemplate.config.ResourceFilter;
 
 /**
- * 继承此类可以方便的实现AttributeFilter
- * TODO: 优化性能
+ * 继承此类可以方便的实现AttributeFilter TODO: 优化性能
+ *
  * @author GL
  * @since 2008-4-5 上午12:10:05
  */
-public abstract class AbstractAttributeFilter implements ResourceFilter{
+public abstract class AbstractAttributeFilter implements ResourceFilter {
 
 	public Reader filter(Reader reader) throws IOException {
 		Document document = getDocument(reader);
 		Segment[] segments = document.getTopSegments();
-		for(int i=0;i<segments.length;i++){
-			if(segments[i] instanceof TagElement){
+		for (int i = 0; i < segments.length; i++) {
+			if (segments[i] instanceof TagElement) {
 				cycleParse((TagElement) segments[i]);
 			}
 		}
 		StringBuffer sb = new StringBuffer();
-		for(int i=0;i<segments.length;i++){
+		for (int i = 0; i < segments.length; i++) {
 			sb.append(segments[i].getText());
 		}
 		return new StringReader(sb.toString());
 	}
 
-	private void cycleParse(TagElement element){
+	private void cycleParse(TagElement element) {
 		Segment[] segments = element.getSegments();
-		for(int i=0;i<segments.length;i++){
-			if(segments[i] instanceof TagElement){
+		for (int i = 0; i < segments.length; i++) {
+			if (segments[i] instanceof TagElement) {
 				cycleParse((TagElement) segments[i]);
 			}
 		}
@@ -47,15 +49,15 @@ public abstract class AbstractAttributeFilter implements ResourceFilter{
 	 * @param
 	 * @return
 	 */
-	protected void parse(TagElement element){
+	protected void parse(TagElement element) {
 		Attribute[] attributes = element.getAttributes();
-		for(int i=0;i<attributes.length;i++){
-			String name=attributes[i].getName();
-			if(name.startsWith("ct:")){
+		for (int i = 0; i < attributes.length; i++) {
+			String name = attributes[i].getName();
+			if (name.startsWith("ct:")) {
 				String directive = name.substring(3);
 				element.removeAttribute(name);
-				element.insertSegment(0,
-						new TextSegment("$"+directive+"{"+attributes[i].getValue()+"}"));
+				element.insertSegment(0, new TextSegment("$" + directive + "{"
+						+ attributes[i].getValue() + "}"));
 				element.insertSegment(element.getSegments().length,
 						new TextSegment("$end"));
 			}

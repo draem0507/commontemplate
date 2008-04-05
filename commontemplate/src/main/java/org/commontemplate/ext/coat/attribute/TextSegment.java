@@ -9,7 +9,7 @@ import org.commontemplate.util.Assert;
  * @author GL
  * @since 2008-4-5 上午02:36:24
  */
-public class TextSegment implements Segment{
+public class TextSegment implements Segment {
 	private String text;
 
 	public TextSegment(String text) {
