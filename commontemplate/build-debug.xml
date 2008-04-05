@@ -40,8 +40,8 @@
 
 	<target name="jar" depends="compile">
 		<mkdir dir="${dist}" />
-		<delete file="${dist}/commontemplate-debug-${versionNumber}.jar" failonerror="false" />
-		<jar destfile="${dist}/commontemplate-debug-${versionNumber}.jar" basedir="${build}" encoding="UTF-8">
+		<delete file="${dist}/commontemplate-debug-SNAPSHOT.jar" failonerror="false" />
+		<jar destfile="${dist}/commontemplate-debug-SNAPSHOT.jar" basedir="${build}" encoding="UTF-8">
 			<manifest>
 				<attribute name="Implementation-Title" value="${app.name}" />
 				<attribute name="Implementation-Version" value="${versionNumber}" />

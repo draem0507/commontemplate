@@ -37,8 +37,8 @@
 
 	<target name="jar" depends="compile">
 		<mkdir dir="${dist}" />
-		<delete file="${dist}/commontemplate-${versionNumber}.jar" failonerror="false" />
-		<jar destfile="${dist}/commontemplate-${versionNumber}.jar" basedir="${build}" encoding="UTF-8">
+		<delete file="${dist}/commontemplate-SNAPSHOT.jar" failonerror="false" />
+		<jar destfile="${dist}/commontemplate-SNAPSHOT.jar" basedir="${build}" encoding="UTF-8">
 			<manifest>
 				<attribute name="Implementation-Title" value="${app.name}" />
 				<attribute name="Implementation-Version" value="${versionNumber}" />
