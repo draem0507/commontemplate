@@ -1,10 +1,12 @@
 /**
  *
  */
-package org.commontemplate.ext.coat.jericho;
+package org.commontemplate.ext.coat.attribute.jericho;
 
 import java.io.*;
 
+import org.commontemplate.ext.coat.attribute.AbstractAttributeFilter;
+import org.commontemplate.ext.coat.attribute.Document;
 import org.commontemplate.ext.coat.common.*;
 
 import au.id.jericho.lib.html.Source;

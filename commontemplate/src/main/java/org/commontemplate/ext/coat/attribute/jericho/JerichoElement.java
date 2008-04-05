@@ -1,14 +1,16 @@
 /**
  *
  */
-package org.commontemplate.ext.coat.jericho;
+package org.commontemplate.ext.coat.attribute.jericho;
 
 import java.util.*;
 
 import org.apache.log4j.Logger;
+import org.commontemplate.ext.coat.attribute.Attribute;
+import org.commontemplate.ext.coat.attribute.Segment;
+import org.commontemplate.ext.coat.attribute.TagElement;
+import org.commontemplate.ext.coat.attribute.TextSegment;
 import org.commontemplate.ext.coat.common.*;
-import org.commontemplate.ext.coat.common.Attribute;
-import org.commontemplate.ext.coat.common.Segment;
 
 import au.id.jericho.lib.html.*;
 

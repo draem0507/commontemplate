@@ -1,7 +1,7 @@
 /**
  *
  */
-package org.commontemplate.ext.coat.common;
+package org.commontemplate.ext.coat.attribute;
 
 /**
  * @author GL

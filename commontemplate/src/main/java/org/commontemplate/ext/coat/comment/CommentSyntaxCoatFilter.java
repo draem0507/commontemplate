@@ -1,4 +1,4 @@
-package org.commontemplate.ext.coat;
+package org.commontemplate.ext.coat.comment;
 
 import org.commontemplate.config.TextFilter;
 
