@@ -14,7 +14,7 @@ import org.commontemplate.core.VariableException;
 
 /**
  * 全局变量存储器实现
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
@@ -25,7 +25,7 @@ final class GlobalVariableStorageImpl extends VariableStorageSupport {
 	}
 
 	private final Map variablesContainer = new HashMap();
-	
+
 	private final Map aliasContainer = new HashMap();
 
 	private final Set readonlyContainer = new HashSet();
@@ -35,7 +35,7 @@ final class GlobalVariableStorageImpl extends VariableStorageSupport {
 	public synchronized void lockVariables() {
 		this.isLock = true;
 	}
-	
+
 	public synchronized void unlockVariables() {
 		this.isLock = false;
 	}
@@ -69,7 +69,7 @@ final class GlobalVariableStorageImpl extends VariableStorageSupport {
 		this.variablesContainer.putAll(variables);
 	}
 
-	public void defineVariableAlias(String alias, String name)
+	public synchronized void defineVariableAlias(String alias, String name)
 			throws VariableException {
 		aliasContainer.put(alias, name);
 	}
@@ -84,18 +84,18 @@ final class GlobalVariableStorageImpl extends VariableStorageSupport {
 	public synchronized Object lookupVariable(String name) throws VariableException {
 		return variablesContainer.get(name);
 	}
-	
+
 	public synchronized Map getDefinedVariables() {
 		return Collections.unmodifiableMap(variablesContainer);
 	}
 
-	public void removeVariableAlias(String alias) throws VariableException {
+	public synchronized void removeVariableAlias(String alias) throws VariableException {
 		aliasContainer.remove(alias);
 	}
-	
+
 	public synchronized void removeVariable(String var) throws UndefinedException,
 			VariableException {
-		if (isLock) 
+		if (isLock)
 			throw new VariableException("变量容器锁定! 无法移除：" + var, var);
 		assertVariableName(var);
 		variablesContainer.remove(var);
