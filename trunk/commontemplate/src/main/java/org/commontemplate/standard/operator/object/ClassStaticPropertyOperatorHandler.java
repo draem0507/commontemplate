@@ -1,7 +1,7 @@
 package org.commontemplate.standard.operator.object;
 
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
-import org.commontemplate.util.ClassUtils;
+import org.commontemplate.util.BeanUtils;
 
 /**
  * 静态属性操作符: "."<br/>
@@ -20,7 +20,7 @@ public class ClassStaticPropertyOperatorHandler extends BinaryOperatorHandlerSup
 
 	public Object doEvaluate(Object leftOperand, Object rightOperand)
 			throws Exception {
-		return ClassUtils.getStaticProperty((Class)leftOperand, (String)rightOperand);
+		return BeanUtils.getStaticProperty((Class)leftOperand, (String)rightOperand);
 	}
 
 }

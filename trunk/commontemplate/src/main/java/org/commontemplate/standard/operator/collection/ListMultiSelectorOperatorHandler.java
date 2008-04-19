@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
-import org.commontemplate.util.ClassUtils;
+import org.commontemplate.util.BeanUtils;
 
 /**
  * 集合多属性查询操作符: "[]"<br/>
@@ -39,7 +39,7 @@ public class ListMultiSelectorOperatorHandler extends BinaryOperatorHandlerSuppo
 			String peoperty = (String)entry.getKey();
 			Object value = entry.getValue();
 			try {
-				Object pro = ClassUtils.getObjectProperty(obj, peoperty);
+				Object pro = BeanUtils.getProperty(obj, peoperty);
 				if (! ((value == null && pro == null) || (value != null && value.equals(pro))))
 					return false;
 			} catch (Exception e) {

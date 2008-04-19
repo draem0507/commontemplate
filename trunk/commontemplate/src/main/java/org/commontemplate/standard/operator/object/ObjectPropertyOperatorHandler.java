@@ -9,7 +9,7 @@ import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 import org.commontemplate.standard.operator.UnhandleException;
 import org.commontemplate.standard.property.PropertyHandler;
 import org.commontemplate.standard.property.PropertyMatcher;
-import org.commontemplate.util.ClassUtils;
+import org.commontemplate.util.BeanUtils;
 
 /**
  * 对象属性取值操作符: "."<br/>
@@ -57,7 +57,7 @@ public class ObjectPropertyOperatorHandler extends BinaryOperatorHandlerSupport 
 		}
 
 		try {
-			return ClassUtils.getObjectProperty(leftOperand, property);
+			return BeanUtils.getProperty(leftOperand, property);
 		} catch (Exception e) {
 			throw new UnhandleException("在 " + leftOperand.getClass().getName() + " 中，没有找到属性 " + property + " 的相关取值函数！", e);
 		}

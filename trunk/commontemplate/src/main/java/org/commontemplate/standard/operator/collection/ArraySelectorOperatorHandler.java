@@ -3,7 +3,7 @@ package org.commontemplate.standard.operator.collection;
 import java.util.Map.Entry;
 
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
-import org.commontemplate.util.ClassUtils;
+import org.commontemplate.util.BeanUtils;
 
 /**
  * 数组内容选择操作符: "[=]"<br/>
@@ -28,7 +28,7 @@ public class ArraySelectorOperatorHandler extends BinaryOperatorHandlerSupport {
 		for (int i = 0, n = array.length; i < n; i ++) {
 			Object obj = array[i];
 			try {
-				Object pro = ClassUtils.getObjectProperty(obj, peoperty);
+				Object pro = BeanUtils.getProperty(obj, peoperty);
 				if ((value == null && pro == null) ||
 						(value != null && value.equals(pro)))
 					return obj;

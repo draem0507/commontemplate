@@ -20,9 +20,9 @@ public class OutputFormatterChain implements OutputFormatter, Serializable {
 	private Map typeFormatters;
 
 	private OutputFormatter nullFormatter;
-	
+
 	private OutputFormatter generalFormatter;
-	
+
 	public void setTypeFormatters(Map typeFormatters) {
 		this.typeFormatters = new HashMap(typeFormatters.size());
 		for (Iterator iterator = typeFormatters.entrySet().iterator(); iterator.hasNext();) {
@@ -42,7 +42,7 @@ public class OutputFormatterChain implements OutputFormatter, Serializable {
 	public void setGeneralFormatter(OutputFormatter generalFormatter) {
 		this.generalFormatter = generalFormatter;
 	}
-	
+
 	public String format(Object model, Locale locale, TimeZone timeZone)
 			throws UnformattedException {
 		if (model == null) {

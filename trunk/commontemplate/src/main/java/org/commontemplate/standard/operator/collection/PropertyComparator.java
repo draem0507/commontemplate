@@ -2,7 +2,7 @@ package org.commontemplate.standard.operator.collection;
 
 import java.util.Comparator;
 
-import org.commontemplate.util.ClassUtils;
+import org.commontemplate.util.BeanUtils;
 
 /**
  * 属性比较器
@@ -33,8 +33,8 @@ public class PropertyComparator implements Comparator, java.io.Serializable {
 			} else if ('+' == property.charAt(0)) {
 				property = property.substring(1);
 			}
-			Object pro1 = ClassUtils.getObjectProperty(o1, property);
-			Object pro2 = ClassUtils.getObjectProperty(o2, property);
+			Object pro1 = BeanUtils.getProperty(o1, property);
+			Object pro2 = BeanUtils.getProperty(o2, property);
 			if (pro1 instanceof java.lang.Comparable) {
 				int comp = ((Comparable)pro1).compareTo(pro2);
 				if (isDesc)

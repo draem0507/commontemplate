@@ -1,14 +1,4 @@
-<servlet>
-    <servlet-name>meteor</servlet-name>
-    <servlet-class>org.commontemplate.side.servlet.TemplateServlet</servlet-class>
-    <init-param>
-        <param-name>settings</param-name>
-        <param-value>org/commontemplate/standard/commontemplate.properties</param-value>
-    </init-param>
-    <load-on-startup>1</load-on-startup>
-</servlet>
-
-<servlet-mapping>
-    <servlet-name>meteor</servlet-name>
-    <url-pattern>*.mtl</url-pattern>
-</servlet-mapping>
+<taglib>
+	<taglib-uri>commontemplate</taglib-uri>
+	<taglib-location>commontemplate.tld</taglib-location>
+</taglib>
