@@ -24,13 +24,13 @@ public class DateToLongHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testHandleProperty() throws Exception{
-		
+
 		PropertyHandler propertyHandler = new DateToLongHandler();
-		Calendar calendar = Calendar.getInstance();		
+		Calendar calendar = Calendar.getInstance();
 		Date dt = new Date();
 		calendar.setTime(dt);
-		
-		assertEquals(Long.valueOf(calendar.getTime().getTime()), 
+
+		assertEquals(new Long(calendar.getTime().getTime()),
 				propertyHandler.getProperty(calendar.getTime()));
 	}
 }
