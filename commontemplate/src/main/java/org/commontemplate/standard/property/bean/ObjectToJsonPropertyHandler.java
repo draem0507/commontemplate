@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.commontemplate.standard.property.PropertyHandlerSupport;
-import org.commontemplate.util.ClassUtils;
+import org.commontemplate.util.BeanUtils;
 import org.commontemplate.util.TypeUtils;
 
 public class ObjectToJsonPropertyHandler extends PropertyHandlerSupport {
@@ -39,7 +39,7 @@ public class ObjectToJsonPropertyHandler extends PropertyHandlerSupport {
 		} else if (bean instanceof Map) {
 			appendMap((Map)bean, buf);
 		} else {
-			appendMap(ClassUtils.getObjectAllProperties(bean), buf);
+			appendMap(BeanUtils.getProperties(bean), buf);
 		}
 	}
 

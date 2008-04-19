@@ -2,7 +2,7 @@ package org.commontemplate.core;
 
 import java.util.Locale;
 
-public class NoSuchMessageException extends RuntimeException {
+public class NoSuchMessageException extends Exception {
 
 	private static final long serialVersionUID = 1L;
 

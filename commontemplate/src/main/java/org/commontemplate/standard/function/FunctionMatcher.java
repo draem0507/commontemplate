@@ -7,10 +7,10 @@ public class FunctionMatcher implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Class bean; 
-	
+	private Class bean;
+
 	private String function;
-	
+
 	public FunctionMatcher(String beanAndFunction) {
 		int i = beanAndFunction.lastIndexOf('.');
 		Assert.assertTrue(i > -1 && i < beanAndFunction.length(), "格式错误，必需为：org.xxx.Bean.function");
@@ -22,15 +22,15 @@ public class FunctionMatcher implements java.io.Serializable {
 			throw new RuntimeException("类型错误：" + beanName , e);
 		}
 	}
-	
+
 	public FunctionMatcher(Class bean, String function) {
 		Assert.assertNotNull(bean);
 		Assert.assertNotNull(function);
-		
+
 		this.bean = bean;
 		this.function = function;
 	}
-	
+
 	public boolean isMatch(Class bean, String property) {
 		return this.bean.isAssignableFrom(bean) && this.function.equals(property);
 	}

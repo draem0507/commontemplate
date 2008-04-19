@@ -7,10 +7,10 @@ public class PropertyMatcher implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Class bean; 
-	
+	private Class bean;
+
 	private String property;
-	
+
 	public PropertyMatcher(String beanAndProperty) {
 		int i = beanAndProperty.lastIndexOf('.');
 		Assert.assertTrue(i > -1 && i < beanAndProperty.length(), "格式错误，必需为：org.xxx.Bean.property");
@@ -22,15 +22,15 @@ public class PropertyMatcher implements java.io.Serializable {
 			throw new RuntimeException("类型错误：" + beanName , e);
 		}
 	}
-	
+
 	public PropertyMatcher(Class bean, String property) {
 		Assert.assertNotNull(bean);
 		Assert.assertNotNull(property);
-		
+
 		this.bean = bean;
 		this.property = property;
 	}
-	
+
 	public boolean isMatch(Class bean, String property) {
 		return this.bean.isAssignableFrom(bean) && this.property.equals(property);
 	}

@@ -2,14 +2,9 @@ package org.commontemplate.util;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
 
 /**
- * 类工具
+ * 类元处理工具类
  *
  * @author liangfei0201@163.com
  *
@@ -49,221 +44,118 @@ public class ClassUtils {
 	}
 
 	/**
-	 * 获取对象的属性值
+	 * 执行类方法
 	 *
-	 * @param object 对象实例
-	 * @param property 属性名
-	 * @return 属性的值
-	 * @throws SecurityException
-	 * @throws NoSuchMethodException
-	 * @throws IllegalArgumentException
-	 * @throws IllegalAccessException
-	 * @throws InvocationTargetException
-	 * @throws NoSuchFieldException
+	 * @param obj 类实例
+	 * @param name 方法名
+	 * @param args 方法参数
+	 * @return 方法返回值
+	 * @throws NoSuchMethodException 方法不存在时抛出
 	 */
-	public static Object getObjectProperty(Object object, String property) throws NoSuchMethodException, SecurityException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchFieldException {
-		if (object == null)
+	public static Object invokeMethod(Object obj, String name, Object[] args) throws NoSuchMethodException {
+		if (obj == null || name == null)
 			return null;
 		try {
-			return getClassGetter(object.getClass(), property).invoke(object, new Object[0]);
-		} catch (NoSuchMethodException e) {
-			return object.getClass().getField(property).get(object);
+			Method method = getMethod(obj.getClass(), name, args);
+			return method.invoke(obj, args);
+		} catch (SecurityException e) {
+			throw new NoSuchMethodException(e.getMessage());
+		} catch (IllegalArgumentException e) {
+			throw new NoSuchMethodException(e.getMessage());
+		} catch (IllegalAccessException e) {
+			throw new NoSuchMethodException(e.getMessage());
+		} catch (InvocationTargetException e) {
+			throw new NoSuchMethodException(e.getMessage());
 		}
 	}
 
 	/**
-	 * 查找getXXX与isXXX的属性Getter方法
+	 * 执行静态方法
 	 *
 	 * @param clazz 类元
-	 * @param property 属性名
-	 * @return 属性Getter方法
-	 * @throws NoSuchMethodException Getter不存时抛出
+	 * @param name 方法名
+	 * @param args 方法参数
+	 * @return 方法返回值
+	 * @throws NoSuchMethodException 方法不存在时抛出
 	 */
-	public static Method getClassGetter(Class clazz, String property) throws NoSuchMethodException, SecurityException {
-		Assert.assertNotNull(clazz, "class不能为空！");
-		Assert.assertNotEmpty(property, "property不能为空！");
-		property = property.trim();
-		String upper = property.substring(0, 1).toUpperCase() + property.substring(1);
-		try {
-			Method getter = getClassMethod(clazz, "get" + upper);
-			Assert.assertTrue(getter.getReturnType() != Void.class, "getter返回值类型不能为void！");
-			return getter;
-		} catch (NoSuchMethodException e1) {
-			try {
-				Method getter = getClassMethod(clazz, "is" + upper);
-				Assert.assertTrue(getter.getReturnType() != Void.class, "getter返回值类型不能为void！");
-				return getter;
-			} catch (NoSuchMethodException e2) {
-				Method getter = getClassMethod(clazz, property);
-				Assert.assertTrue(getter.getReturnType() != Void.class, "getter返回值类型不能为void！");
-				return getter;
-			}
-		}
-	}
-
-	/**
-	 * 获取类的方法 (保证返回方法的公开性)
-	 *
-	 * @param clazz 类
-	 * @param methodName 方法名
-	 * @return 公开的方法
-	 * @throws NoSuchMethodException
-	 * @throws SecurityException
-	 */
-	public static Method getClassMethod(Class clazz, String methodName) throws NoSuchMethodException, SecurityException {
-		Assert.assertNotNull(clazz, "class不能为空！");
-		Assert.assertNotNull(methodName, "methodName不能为空！");
-		try {
-			return searchPublicMethod(clazz.getInterfaces(), methodName);
-		} catch (NoSuchMethodException e1) {
-			try {
-				return searchPublicMethod(clazz.getClasses(), methodName);
-			} catch (NoSuchMethodException e2) {
-				return clazz.getMethod(methodName, new Class[0]);
-			}
-		}
-	}
-
-	// 查找公开的方法 (辅助方法)
-	private static Method searchPublicMethod(Class[] classes, String methodName) throws NoSuchMethodException, SecurityException {
-		if (classes != null && classes.length > 0) {
-			for (int i = 0, n = classes.length; i < n; i ++) {
-				Class cls = classes[i];
-				if ((cls.getModifiers() & Modifier.PUBLIC) == 1) { // 首先保证类是公开的
-					try {
-						Method method = cls.getMethod(methodName, new Class[0]);
-						if ((method.getModifiers() & Modifier.PUBLIC) == 1) // 再保证方法是公开的
-							return method;
-					} catch (NoSuchMethodException e) {
-						// ignore, continue
-					}
-				}
-			}
-		}
-		throw new NoSuchMethodException(); // 未找到方法
-	}
-
-	/**
-	 * 获取对象的多个属性值
-	 *
-	 * @param object 对象实例
-	 * @param properties 属性列表
-	 * @return 属性集合
-	 * @throws SecurityException
-	 * @throws NoSuchMethodException
-	 * @throws IllegalArgumentException
-	 * @throws IllegalAccessException
-	 * @throws InvocationTargetException
-	 * @throws NoSuchFieldException
-	 */
-	public static Map getObjectProperties(Object object, String[] properties) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchFieldException {
-		if (object == null || properties == null)
-			return null;
-		Map map = new HashMap(properties.length);
-		for (int i = 0, n = properties.length; i < n; i ++) {
-			String prop = properties[i];
-			if (prop != null && prop.length() > 0)
-				map.put(prop, getObjectProperty(object, prop));
-		}
-		return map;
-	}
-
-	/**
-	 * 获取对象的所有属性值
-	 *
-	 * @param object 对象实例
-	 * @return 属性集合
-	 * @throws SecurityException
-	 * @throws NoSuchMethodException
-	 * @throws IllegalArgumentException
-	 * @throws IllegalAccessException
-	 * @throws InvocationTargetException
-	 */
-	public static Map getObjectAllProperties(Object object) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
-		if (object == null)
-			return null;
-		Map map = new HashMap();
-		for (Iterator iterator = getClassAllProperties(object.getClass()).entrySet().iterator(); iterator.hasNext();) {
-			Map.Entry entry = (Map.Entry)iterator.next();
-			map.put(entry.getKey(), ((Method)entry.getValue()).invoke(object, new Object[0]));
-		}
-		return map;
-	}
-
-	public static Set getObjectAllPropertyNames(Object object) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
-		if (object == null)
-			return null;
-		return getObjectAllPropertyNames(object.getClass());
-	}
-
-	public static Set getClassAllPropertyNames(Class clazz) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
-		if (clazz == null)
-			return null;
-		return getClassAllProperties(clazz).keySet();
-	}
-
-	public static Map getClassAllProperties(Class clazz) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
-		Map map = new HashMap();
-		if (clazz != null) {
-			if ((clazz.getModifiers() & Modifier.PUBLIC) == 1) { // 首先保证类是公开的
-				Method[] methods = clazz.getMethods();
-				for (int i = 0, n = methods.length; i < n; i ++) {
-					Method method = methods[i];
-					if ((method.getModifiers() & Modifier.PUBLIC) == 1 // 再保证函数是公开的
-							&& method.getDeclaringClass() != Object.class
-							&& (method.getParameterTypes() == null
-									|| method.getParameterTypes().length == 0)) {
-						String property = method.getName();
-						if (property.startsWith("get")) {
-							property = property.substring(3);
-							String lower = property.substring(0, 1).toLowerCase() + property.substring(1);
-							map.put(lower, method);
-						} else if (property.startsWith("is")) {
-							property = property.substring(2);
-							String lower = property.substring(0, 1).toLowerCase() + property.substring(1);
-							map.put(lower, method);
-						}
-					}
-				}
-			} else { // 如果当前类不是公开的, 查找其父类与接口
-				map.putAll(searchClassAllProperties(clazz.getInterfaces()));
-				map.putAll(searchClassAllProperties(clazz.getClasses()));
-			}
-		}
-		return map;
-	}
-
-	private static Map searchClassAllProperties(Class[] classes) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
-		Map all = new HashMap();
-		if (classes != null && classes.length > 0) {
-			for (int i = 0, n = classes.length; i < n; i ++) {
-				Class clazz = classes[i];
-				all.putAll(getClassAllProperties(clazz));
-			}
-		}
-		return all;
-	}
-
-	public static Object getStaticProperty(Class clazz, String property) throws NoSuchMethodException, SecurityException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchFieldException {
-		if (clazz == null)
-			return null;
-		try {
-			return getClassGetter(clazz, property).invoke(null, new Object[0]);
-		} catch (NoSuchMethodException e) {
-			return clazz.getField(property).get(null);
-		}
-	}
-
-	// FIXME 未处理int与Integer的区别, 以及null参数的处理.
-	public static Object getStaticFunction(Class clazz, String name, Object[] args) throws NoSuchMethodException, SecurityException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchFieldException {
+	public static Object invokeStaticMethod(Class clazz, String name, Object[] args) throws NoSuchMethodException {
 		if (clazz == null || name == null)
 			return null;
-		Class[] classes = new Class[args.length];
-		for (int i = 0, n = args.length; i < n; i ++) {
-			classes[i] = args[i].getClass();
+		try {
+			Method method = getMethod(clazz, name, args);
+			return method.invoke(null, args);
+		} catch (SecurityException e) {
+			throw new NoSuchMethodException(e.getMessage());
+		} catch (IllegalArgumentException e) {
+			throw new NoSuchMethodException(e.getMessage());
+		} catch (IllegalAccessException e) {
+			throw new NoSuchMethodException(e.getMessage());
+		} catch (InvocationTargetException e) {
+			throw new NoSuchMethodException(e.getMessage());
 		}
-		return clazz.getMethod(name, classes).invoke(null, args);
 	}
 
+	// 获取方法
+	private static Method getMethod(Class clazz, String name, Object[] args) throws NoSuchMethodException {
+		if (args == null)
+			args = new Object[0];
+		Class[] types = new Class[args.length];
+		for (int i = 0, n = args.length; i < n; i ++) {
+			types[i] = (args[i] == null ? Object.class : args[i].getClass());
+		}
+		try {
+			return clazz.getMethod(name, types);
+		} catch (NoSuchMethodException e) {
+			return getLikeMethod(clazz, name, types);
+		}
+	}
+
+	// 获取相似方法
+	private static Method getLikeMethod(Class clazz, String name, Class[] types) throws NoSuchMethodException {
+		Method[] methods = clazz.getMethods();
+		for (int i = 0, n = methods.length; i < n; i ++) {
+			if (methods[i].getName().equals(name)
+					&& methods[i].getParameterTypes().length == types.length) {
+				Class[] paramTypes = methods[i].getParameterTypes();
+				if (typeLikes(paramTypes, types))
+					return methods[i];
+			}
+		}
+		throw new NoSuchMethodException("无法访问 " + clazz.getName() + " 的 " + getSignature(name, types) + " 方法！");
+	}
+
+	// 判断两个参数列表类型是否相似
+	private static boolean typeLikes(Class[] cs1, Class[] cs2) {
+		for (int j = 0, m = cs1.length; j < m; j ++) {
+			Class c1 = cs1[j];
+			Class c2 = cs2[j];
+			if (! (c1 == c2 || (c1.isPrimitive()
+					&& ((c1 == Boolean.TYPE && c2 == Boolean.class)
+							|| (c1 == Byte.TYPE && c2 == Byte.class)
+							|| (c1 == Character.TYPE && c2 == Character.class)
+							|| (c1 == Short.TYPE && c2 == Short.class)
+							|| (c1 == Integer.TYPE && c2 == Integer.class)
+							|| (c1 == Long.TYPE && c2 == Long.class)
+							|| (c1 == Float.TYPE && c2 == Float.class)
+							|| (c1 == Double.TYPE && c2 == Double.class))))) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	// 获取函数签名
+	private static String getSignature(String name, Class[] types) {
+		StringBuffer signature = new StringBuffer();
+		signature.append(name);
+		signature.append("(");
+		if (types.length > 0) {
+			for (int i = 0, n = types.length; i < n; i ++) {
+				signature.append(types[i].getName());
+			}
+		}
+		signature.append(")");
+		return signature.toString();
+	}
 
 }

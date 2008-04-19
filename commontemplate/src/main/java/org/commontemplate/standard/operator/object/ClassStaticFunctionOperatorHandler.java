@@ -23,7 +23,7 @@ public class ClassStaticFunctionOperatorHandler extends BinaryOperatorHandlerSup
 			throws Exception {
 		Class clazz = (Class)leftOperand;
 		Function func = (Function)rightOperand;
-		return ClassUtils.getStaticFunction(clazz, func.getName(), func.getArguments().toArray());
+		return ClassUtils.invokeStaticMethod(clazz, func.getName(), func.getArguments().toArray());
 	}
 
 }

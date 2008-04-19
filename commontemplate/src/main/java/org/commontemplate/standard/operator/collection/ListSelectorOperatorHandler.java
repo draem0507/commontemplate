@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
-import org.commontemplate.util.ClassUtils;
+import org.commontemplate.util.BeanUtils;
 
 /**
  * 列表属性选择操作符: "[]"<br/>
@@ -30,7 +30,7 @@ public class ListSelectorOperatorHandler extends BinaryOperatorHandlerSupport {
 		for (Iterator iterator = collection.iterator(); iterator.hasNext();) {
 			Object obj = iterator.next();
 			try {
-				Object pro = ClassUtils.getObjectProperty(obj, peoperty);
+				Object pro = BeanUtils.getProperty(obj, peoperty);
 				if ((value == null && pro == null) ||
 						(value != null && value.equals(pro)))
 					return obj;
