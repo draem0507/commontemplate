@@ -24,14 +24,14 @@ public class DateYearHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testHandleProperty() throws Exception{
-		
+
 		PropertyHandler propertyHandler = new DateYearHandler();
-		Calendar calendar = Calendar.getInstance();		
+		Calendar calendar = Calendar.getInstance();
 		Date dt = new Date();
 		calendar.setTime(dt);
-		
+
 		calendar.set(Calendar.YEAR, 2007);
-		
-		assertEquals(Integer.valueOf(2007), propertyHandler.getProperty(calendar.getTime()));
+
+		assertEquals(new Integer(2007), propertyHandler.getProperty(calendar.getTime()));
 	}
 }

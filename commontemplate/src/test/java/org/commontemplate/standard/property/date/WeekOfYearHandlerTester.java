@@ -24,16 +24,16 @@ public class WeekOfYearHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testHandleProperty() throws Exception{
-		
+
 		PropertyHandler propertyHandler = new WeekOfYearHandler();
-		Calendar calendar = Calendar.getInstance();		
+		Calendar calendar = Calendar.getInstance();
 		Date dt = new Date();
 		calendar.setTime(dt);
-		
+
 		calendar.set(Calendar.YEAR, 2008);
 		calendar.set(Calendar.MONTH, Calendar.MARCH);
 		calendar.set(Calendar.DAY_OF_MONTH, 8);
-		
-		assertEquals(Integer.valueOf(10), propertyHandler.getProperty(calendar.getTime()));
+
+		assertEquals(new Integer(10), propertyHandler.getProperty(calendar.getTime()));
 	}
 }
