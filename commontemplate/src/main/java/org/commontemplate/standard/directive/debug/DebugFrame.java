@@ -387,6 +387,7 @@ class DebugFrame implements ActionListener, WindowListener {
 
 	private void openFrame() {
 		enableToolbar();
+		enableToolbar();
 		frame.show();
 	}
 
