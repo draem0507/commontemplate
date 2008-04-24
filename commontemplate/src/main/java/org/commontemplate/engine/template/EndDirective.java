@@ -9,16 +9,16 @@ import org.commontemplate.util.Location;
 
 /**
  * 结束指令
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
 final class EndDirective extends Directive {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	static final EndDirective END_DIRECTIVE = new EndDirective();
-	
+
 	private EndDirective() {}
 
 	public void render(Context context) throws RenderingException {
@@ -36,13 +36,17 @@ final class EndDirective extends Directive {
 	public String getCanonicalForm() {
 		return "$end";
 	}
-	
+
 	public Location getLocation() {
 		return null;
 	}
 
 	public String getName() {
 		return "end";
+	}
+
+	public String getSignature() {
+		return "$end";
 	}
 
 }

@@ -6,7 +6,7 @@ import org.commontemplate.util.Location;
 
 /**
  * 注释内容元素实现
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
@@ -15,11 +15,11 @@ final class CommentImpl extends Comment {
 	private static final long serialVersionUID = 1L;
 
 	private final String name;
-	
+
 	private final Location location;
-	
+
 	private final String comment;
-	
+
 	private final String prototype;
 
 	CommentImpl(String name, Location location, String comment, String prototype) {
@@ -47,6 +47,10 @@ final class CommentImpl extends Comment {
 
 	public String getValue() {
 		return comment;
+	}
+
+	public String getSignature() {
+		return prototype.substring(0,2);
 	}
 
 }

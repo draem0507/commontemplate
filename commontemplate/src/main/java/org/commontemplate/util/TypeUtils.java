@@ -1,5 +1,6 @@
 package org.commontemplate.util;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Map;
@@ -124,4 +125,17 @@ public final class TypeUtils {
 		return name != null && name.trim().length() > 1 && isOperator(name);
 	}
 
+	public static boolean isPrimitive(Class cls) {
+		if (cls != Integer.TYPE && cls != Integer.class && cls != String.class
+				&& cls != Boolean.TYPE && cls != Boolean.class
+				&& cls != Short.TYPE && cls != Short.class && cls != Long.TYPE
+				&& cls != Long.class && cls != Character.TYPE
+				&& cls != Character.class && cls != Float.TYPE
+				&& cls != Float.class && cls != Double.TYPE
+				&& cls != Double.class && cls != Byte.TYPE && cls != Byte.class
+				&& cls != File.class) {
+			return false;
+		}
+		return true;
+	}
 }

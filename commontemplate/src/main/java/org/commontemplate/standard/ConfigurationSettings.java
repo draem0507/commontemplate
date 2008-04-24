@@ -1,5 +1,7 @@
 package org.commontemplate.standard;
 
+import java.util.List;
+
 import org.commontemplate.config.Cache;
 import org.commontemplate.config.Configuration;
 import org.commontemplate.config.ConfigurationException;
@@ -8,10 +10,10 @@ import org.commontemplate.config.Keywords;
 import org.commontemplate.config.OperatorHandlerProvider;
 import org.commontemplate.config.ReloadController;
 import org.commontemplate.config.ResourceBundleProvider;
+import org.commontemplate.config.ResourceComparator;
+import org.commontemplate.config.ResourceFilter;
 import org.commontemplate.config.Syntax;
 import org.commontemplate.config.TemplateNameFilter;
-import org.commontemplate.config.ResourceFilter;
-import org.commontemplate.config.ResourceComparator;
 import org.commontemplate.config.TextFilter;
 import org.commontemplate.core.EventListener;
 import org.commontemplate.core.Logger;
@@ -390,6 +392,16 @@ public class ConfigurationSettings extends Configuration {
 	 */
 	public void setEventListener(EventListener eventListener) {
 		this.eventListener = eventListener;
+	}
+
+	private List elementInterceptors;
+
+	public List getElementInterceptors() {
+		return elementInterceptors;
+	}
+
+	public void setElementInterceptors(List elementInterceptors) {
+		this.elementInterceptors = elementInterceptors;
 	}
 
 }

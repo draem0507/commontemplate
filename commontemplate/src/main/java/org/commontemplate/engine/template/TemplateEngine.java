@@ -42,7 +42,7 @@ public final class TemplateEngine implements TemplateParser {
 		directiveTokenizer = new DirectiveTokenizer(config.getSyntax());
 		directiveTranslator = new DirectiveTranslator(new DirectiveFactory(
 				config.getSyntax(), config.getDirectiveHandlerProvider(),
-				expressionParser, config.getTextFilter()));
+				expressionParser, config.getTextFilter(), config.getElementInterceptors()));
 		directiveReducer = new DirectiveReducer();
 		resourceFilter = config.getResourceFilter();
 	}
