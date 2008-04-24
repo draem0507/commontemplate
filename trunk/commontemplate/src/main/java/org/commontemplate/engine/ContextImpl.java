@@ -35,21 +35,21 @@ import org.commontemplate.util.Assert;
 
 /**
  * 上下文实现
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
 final class ContextImpl extends Context {
 
-	ContextImpl(GlobalContext globalContext, Writer out, 
+	ContextImpl(GlobalContext globalContext, Writer out,
 			ResourceBundle resourceBundle, Locale locale, TimeZone timeZone,
-			TemplateFactory templateFactory, TemplateNameFilter templateNameFilter, OutputFormatter defaultFormater, 
+			TemplateFactory templateFactory, TemplateNameFilter templateNameFilter, OutputFormatter defaultFormater,
 			EventListener eventListener, Logger logger, boolean debugMode, Keywords keywords) {
 		Assert.assertNotNull(globalContext);
 		Assert.assertNotNull(out);
 		Assert.assertNotNull(templateFactory);
 		Assert.assertNotNull(keywords);
-		
+
 		this.globalContext = globalContext;
 		this.out = out;
 		this.resourceBundle = resourceBundle;
@@ -62,29 +62,29 @@ final class ContextImpl extends Context {
 		this.logger = logger;
 		this.debugMode = debugMode;
 		this.keywords = keywords;
-		
+
 		eventPublisher = new EventPublisherImpl(eventListener, this);
 		templateNameStack = new TemplateStackImpl(eventPublisher, templateNameFilter);
 		localContextStack = new LocalContextStackImpl(out, defaultFormater, eventPublisher, this, keywords);
 		messageSource = new MessageSourceImpl(resourceBundle, locale);
 	}
-	
+
 	private final TemplateNameFilter templateNameFilter;
-	
+
 	// 实现 Context -----------
-	
+
 	private final Keywords keywords;
-	
+
 	private final EventListener eventListener;
 
 	private final OutputFormatter defaultFormater;
 
 	private final ResourceBundle resourceBundle;
-	
+
 	public Context createContext() {
 		return new ContextImpl(globalContext, out, resourceBundle, locale, timeZone, templateFactory, templateNameFilter, defaultFormater, eventListener, logger, debugMode, keywords);
 	}
-	
+
 	private final GlobalContext globalContext;
 
 	public GlobalContext getGlobalContext() {
@@ -98,7 +98,7 @@ final class ContextImpl extends Context {
 	}
 
 	private final Locale locale;
-	
+
 	public Locale getLocale() {
 		return locale;
 	}
@@ -108,13 +108,13 @@ final class ContextImpl extends Context {
 	public TimeZone getTimeZone() {
 		return timeZone;
 	}
-	
+
 	private final boolean debugMode;
 
 	public boolean isDebugMode() {
 		return debugMode;
 	}
-	
+
 	public void clear() {
 		// 清理栈
 		clearLocalContexts(); // 此清理将调用各级LocalContext的clear();
@@ -122,7 +122,7 @@ final class ContextImpl extends Context {
 	}
 
 	// 代理 EventPublisher ----------
-	
+
 	private final EventPublisher eventPublisher;
 
 	public void publishEvent(Event event) {
@@ -130,7 +130,7 @@ final class ContextImpl extends Context {
 	}
 
 	// 代理 TemplateNameStack --------------
-	
+
 	private final TemplateStack templateNameStack;
 
 	public void clearTemplates() {
@@ -160,13 +160,13 @@ final class ContextImpl extends Context {
 	public boolean containsTemplate(String name) {
 		return templateNameStack.containsTemplate(name);
 	}
-	
+
 	public String relateTemplateName(String name) {
 		return templateNameStack.relateTemplateName(name);
 	}
 
 	// 代理 LocalContextStack -------
-	
+
 	private final LocalContextStack localContextStack;
 
 	public void clearLocalContexts() {
@@ -211,7 +211,7 @@ final class ContextImpl extends Context {
 	}
 
 	// 代理 MessageSource ---------
-	
+
 	private final MessageSource messageSource;
 
 	public String getMessage(String key, Object[] args, String defaultValue) {
@@ -231,9 +231,9 @@ final class ContextImpl extends Context {
 		return messageSource.getMessage(key);
 	}
 	// 代理 TemplateFactory -----------
-	
+
 	private final TemplateFactory templateFactory;
-	
+
 	private String getCurrentTemplateEncoding() {// 获取当前模板编码
 		Template template = this.getCurrentTemplate();
 		if (template != null)
@@ -245,7 +245,7 @@ final class ContextImpl extends Context {
 		String encoding = getCurrentTemplateEncoding();
 		if (encoding != null)
 			return templateFactory.getTemplate(relateTemplateName(name), encoding);
-		else 
+		else
 			return templateFactory.getTemplate(relateTemplateName(name));
 	}
 
@@ -253,16 +253,16 @@ final class ContextImpl extends Context {
 			throws IOException, ParsingException {
 		return templateFactory.getTemplate(relateTemplateName(name), encoding);
 	}
-	
+
 	public Resource loadResource(String name)
 			throws IOException {
 		String encoding = getCurrentTemplateEncoding();
 		if (encoding != null)
 			return templateFactory.getTemplate(relateTemplateName(name), encoding);
-		else 
+		else
 			return templateFactory.loadResource(relateTemplateName(name));
 	}
-	
+
 	public Resource loadResource(String name, String encoding)
 			throws IOException {
 		return templateFactory.loadResource(relateTemplateName(name), encoding);
@@ -282,9 +282,9 @@ final class ContextImpl extends Context {
 	}
 
 	// 代理 Logger ------
-	
+
 	private final Logger logger;
-	
+
 	public void debug(String msg, Throwable e) {
 		if (logger != null)
 			logger.debug(msg, e);
@@ -341,11 +341,11 @@ final class ContextImpl extends Context {
 	}
 
 	// 代理 栈顶的LocalContext --------------
-	
+
 	public LocalContext getSuperLocalContext() {
 		return getCurrentLocalContext().getSuperLocalContext();
 	}
-	
+
 	public String getLocalContextName() {
 		return getCurrentLocalContext().getLocalContextName();
 	}
@@ -413,11 +413,11 @@ final class ContextImpl extends Context {
 	public void defineVariable(String name, Object value) throws DefinedException, VariableException {
 		getCurrentLocalContext().defineVariable(name, value);
 	}
-	
+
 	public void defineReadonlyVariable(String name, Object value) throws DefinedException, VariableException {
 		getCurrentLocalContext().defineReadonlyVariable(name, value);
 	}
-	
+
 	public void defineVariableAlias(String alias, String name) throws VariableException{
 		getCurrentLocalContext().defineVariableAlias(alias, name);
 	}
@@ -425,7 +425,7 @@ final class ContextImpl extends Context {
 	public void removeVariableAlias(String alias) throws VariableException {
 		getCurrentLocalContext().removeVariableAlias(alias);
 	}
-	
+
 	public void assignVariable(String name, Object value) throws UndefinedException, VariableException {
 		getCurrentLocalContext().assignVariable(name, value);
 	}
@@ -437,7 +437,7 @@ final class ContextImpl extends Context {
 	public void removeVariable(String name) throws UndefinedException, VariableException {
 		getCurrentLocalContext().removeVariable(name);
 	}
-	
+
 	public void clearVariables() {
 		getCurrentLocalContext().clearVariables();
 	}
@@ -449,7 +449,7 @@ final class ContextImpl extends Context {
 	public void defineAllVariables(Map variables) throws DefinedException, VariableException {
 		getCurrentLocalContext().defineAllVariables(variables);
 	}
-	
+
 	public void lockVariables() {
 		getCurrentLocalContext().lockVariables();
 	}
@@ -467,7 +467,7 @@ final class ContextImpl extends Context {
 	public void setStatus(String index, Object value) {
 		getCurrentLocalContext().setStatus(index, value);
 	}
-	
+
 	public void removeStatus(String index) {
 		getCurrentLocalContext().removeStatus(index);
 	}
@@ -481,7 +481,7 @@ final class ContextImpl extends Context {
 	public void clearObjects() {
 		getCurrentLocalContext().clearObjects();
 	}
-	
+
 	public Object lookupObject(String type, String name) {
 		return getCurrentLocalContext().lookupObject(type, name);
 	}
@@ -504,6 +504,26 @@ final class ContextImpl extends Context {
 
 	public void removeObject(String name) {
 		getCurrentLocalContext().removeObject(name);
+	}
+
+	private boolean step;
+
+	public boolean isStep() {
+		return step;
+	}
+
+	public void setStep(boolean step) {
+		this.step = step;
+	}
+
+	private boolean over;
+
+	public boolean isOver() {
+		return over;
+	}
+
+	public void setOver(boolean over) {
+		this.over = over;
 	}
 
 }

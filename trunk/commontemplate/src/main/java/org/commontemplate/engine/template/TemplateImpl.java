@@ -21,7 +21,7 @@ import org.commontemplate.util.IOUtils;
  * 模板实现
  * <p/>
  * (不变类，线程安全)
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
@@ -30,13 +30,13 @@ final class TemplateImpl extends Template implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private final BlockDirective rootDirective;
-	
+
 	private final String name;
-	
+
 	private final String encoding;
-	
+
 	private final long lastModified;
-	
+
 	private final char[] data;
 
 	TemplateImpl(Resource resource, BlockDirective rootDirective) throws IOException {
@@ -93,6 +93,10 @@ final class TemplateImpl extends Template implements Serializable {
 
 	public String getCanonicalForm() {
 		return rootDirective.getCanonicalForm();
+	}
+
+	public String getOriginalText() {
+		return null;
 	}
 
 }

@@ -12,19 +12,19 @@ import org.commontemplate.util.Location;
 
 /**
  * 根指令
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
-final class RootDirective extends BlockDirectiveSupport {
+final class RootBlockDirectiveImpl extends BlockDirectiveSupport {
 
 	private static final long serialVersionUID = 1L;
-	
-	RootDirective() {
-		
+
+	RootBlockDirectiveImpl() {
+
 	}
-	
-	protected void doRender(Context context) throws RenderingException {
+
+	public void render(Context context) throws RenderingException {
 		try {
 			List directives = getElements();
 			for (int i = 0, n = directives.size(); i < n; i ++) {
@@ -35,7 +35,7 @@ final class RootDirective extends BlockDirectiveSupport {
 			// ignore
 		}
 	}
-	
+
 	public String getCanonicalForm() {
 		return getCanonicalFormAll();
 	}
@@ -54,6 +54,10 @@ final class RootDirective extends BlockDirectiveSupport {
 
 	public String getName() {
 		return "root";
+	}
+
+	public String getSignature() {
+		return "";
 	}
 
 }

@@ -1,12 +1,13 @@
 package org.commontemplate.engine.template;
 
 import java.io.IOException;
+import java.util.List;
 
+import org.commontemplate.config.BlockDirectiveHandler;
 import org.commontemplate.config.DirectiveHandler;
 import org.commontemplate.config.DirectiveHandlerProvider;
 import org.commontemplate.config.LineDirectiveHandler;
 import org.commontemplate.config.MiddleBlockDirectiveHandler;
-import org.commontemplate.config.BlockDirectiveHandler;
 import org.commontemplate.config.Syntax;
 import org.commontemplate.config.TextFilter;
 import org.commontemplate.core.Element;
@@ -18,12 +19,12 @@ import org.commontemplate.util.scanner.Token;
 
 /**
  * 指令工厂
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
 final class DirectiveFactory {
-	
+
 	private final Syntax syntax;
 
 	private final DirectiveHandlerProvider directiveHandlerProvider;
@@ -32,17 +33,20 @@ final class DirectiveFactory {
 
 	private final TextFilter textFilter;
 
+	private final List elementInterceptors;
+
 	DirectiveFactory(Syntax syntax, DirectiveHandlerProvider directiveHandlerProvider,
-			ExpressionParser expressionParser, TextFilter textFilter) {
+			ExpressionParser expressionParser, TextFilter textFilter, List elementInterceptors) {
 		this.syntax = syntax;
 		this.directiveHandlerProvider = directiveHandlerProvider;
 		this.expressionParser = expressionParser;
 		this.textFilter = textFilter;
+		this.elementInterceptors = elementInterceptors;
 	}
-	
+
 	/**
 	 * 识别指令
-	 * 
+	 *
 	 * @param token 指令片断
 	 * @param isLast 是否为最后一个指令
 	 * @return 指令
@@ -75,13 +79,13 @@ final class DirectiveFactory {
 	}
 
 	private Element parseText(String name, Token token, String message) {
-		if (textFilter != null) 
+		if (textFilter != null)
 			message = textFilter.filter(message);
-		return new TextImpl(name, token.getLocation(), message);
+		return new TextImpl(name, token.getLocation(), message, elementInterceptors);
 	}
-	
+
 	String cleanEscape(String text, boolean isLast) {
-		if (text == null || text.length() < 2) 
+		if (text == null || text.length() < 2)
 			return text;
 		StringBuffer buf = new StringBuffer();
 		for (int i = 0, n = text.length(); i < n ; i ++) {
@@ -97,7 +101,7 @@ final class DirectiveFactory {
 		}
 		return buf.toString();
 	}
-	
+
 	int countLastSlash(StringBuffer buf) {
 		if (buf == null || buf.length() == 0)
 			return 0;
@@ -127,22 +131,22 @@ final class DirectiveFactory {
 		}
 		return resolveDirective(token, name.trim(), expression);
 	}
-	
+
 	private Element resolveDirective(Token token, String name, Expression expression) throws ParsingException {
 		// 结束指令
-		if (syntax.getEndDirectiveName().equals(name)) 
+		if (syntax.getEndDirectiveName().equals(name))
 			return EndDirective.END_DIRECTIVE;
 		// SPI指令
 		DirectiveHandler handler = directiveHandlerProvider.getDirectiveHandler(name);
-		if (handler == null) 
+		if (handler == null)
 			throw new ParsingException(token.getLocation(), "未找到" + name + "指令的处理类!");
-		if (handler instanceof MiddleBlockDirectiveHandler) 
-			return new MiddleDirective(name, token.getLocation(), expression, (MiddleBlockDirectiveHandler)handler, token.getMessage(), syntax.getLeader() + syntax.getEndDirectiveName());
-		if (handler instanceof BlockDirectiveHandler) 
-			return new StartDirective(name, token.getLocation(), expression, (BlockDirectiveHandler)handler, token.getMessage(), syntax.getLeader() + syntax.getEndDirectiveName());
-		if (handler instanceof LineDirectiveHandler) 
-			return new LineDirective(name, token.getLocation(), expression, (LineDirectiveHandler)handler, token.getMessage());
+		if (handler instanceof MiddleBlockDirectiveHandler)
+			return new MiddleBlockDirectiveImpl(name, token.getLocation(), expression, (MiddleBlockDirectiveHandler)handler, token.getMessage(), syntax.getLeader() + syntax.getEndDirectiveName(), elementInterceptors);
+		if (handler instanceof BlockDirectiveHandler)
+			return new BlockDirectiveImpl(name, token.getLocation(), expression, (BlockDirectiveHandler)handler, token.getMessage(), syntax.getLeader() + syntax.getEndDirectiveName(), elementInterceptors);
+		if (handler instanceof LineDirectiveHandler)
+			return new DirectiveImpl(name, token.getLocation(), expression, (LineDirectiveHandler)handler, token.getMessage(), elementInterceptors);
 		throw new ParsingException(token.getLocation(), handler.getClass().getName() + "不是正确的处理类!");
 	}
-	
+
 }

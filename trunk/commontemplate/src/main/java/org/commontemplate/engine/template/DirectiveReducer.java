@@ -27,14 +27,14 @@ final class DirectiveReducer {
 	 * @param directives 指令列表
 	 * @return 指令树的根
 	 */
-	RootDirective reduce(List directives) {
+	RootBlockDirectiveImpl reduce(List directives) {
 		Stack directiveStack = new LinkedStack();
-		RootDirective rootDirective = new RootDirective();
+		RootBlockDirectiveImpl rootDirective = new RootBlockDirectiveImpl();
 		directiveStack.push(new BlockDirectiveEntry(rootDirective));
 		for (int i = 0, n = directives.size(); i < n; i ++) {
 			Element directive = (Element)directives.get(i);
 			// 弹栈
-			if (directive == EndDirective.END_DIRECTIVE || directive instanceof MiddleDirective)
+			if (directive == EndDirective.END_DIRECTIVE || directive instanceof MiddleBlockDirectiveImpl)
 				((BlockDirectiveEntry) directiveStack.pop()).popDirective();
 			// 设置树
 			if (directive != EndDirective.END_DIRECTIVE) // 排除EndDirective
@@ -45,7 +45,7 @@ final class DirectiveReducer {
 		}
 		Element root = ((BlockDirectiveEntry) directiveStack.pop()).popDirective();
 		Assert.assertTrue(directiveStack.isEmpty(), "有指令未结束!"); // 后验条件
-		return (RootDirective)root;
+		return (RootBlockDirectiveImpl)root;
 	}
 
 	// 指令归约辅助封装类
