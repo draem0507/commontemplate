@@ -28,9 +28,7 @@
 		<javac srcdir="${src}" destdir="${build}" classpathref="project.class.path" encoding="UTF-8" />
 		<copy todir="${build}" includeEmptyDirs="no">
 			<fileset dir="${res}">
-				<include name="**/*.properties" />
-				<include name="**/*.xml" />
-				<include name="**/*.tld" />
+				<include name="**/*.*" />
 			</fileset>
 		</copy>
 	</target>
