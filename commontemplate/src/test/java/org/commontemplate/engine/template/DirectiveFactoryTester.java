@@ -22,7 +22,7 @@ public class DirectiveFactoryTester extends TestCase {
 	public void setUp() {
 		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
 		ExpressionParser expressionParser = new ExpressionEngine(config);
-		directiveFactory = new DirectiveFactory(config.getSyntax(), config.getDirectiveHandlerProvider(), expressionParser, config.getTextFilter());
+		directiveFactory = new DirectiveFactory(config.getSyntax(), config.getDirectiveHandlerProvider(), expressionParser, config.getTextFilter(), config.getElementInterceptors());
 	}
 
 	public void testNullDirective() throws IOException, ParsingException {

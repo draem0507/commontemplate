@@ -15,7 +15,7 @@ import org.commontemplate.util.Location;
  *
  */
 public class MockDirective extends Element{
-	
+
 	private static final long serialVersionUID = 1L;
 
 	private String name;
@@ -61,6 +61,10 @@ public class MockDirective extends Element{
 		return null;
 	}
 
+	public String getSignature() {
+		return getCanonicalForm();
+	}
+
 	/**
 	 * 返回模板元素的标准组成, 同getCanonicalForm()
 	 *
@@ -82,4 +86,5 @@ public class MockDirective extends Element{
 	public void setName(String name) {
 		this.name = name;
 	}
+
 }
