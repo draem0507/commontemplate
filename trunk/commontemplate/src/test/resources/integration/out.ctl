@@ -1,5 +1,15 @@
-<table ct:if="users != null && users.size > 0">
-	<tr ct:for="user: users">
-		<td><span ct:out="user.name"/></td>
+ttttt
+${allow}
+$breakpoint
+$if{users != null && users.size > 0}
+<table>
+	$for{user: users}
+	<tr>
+		<td>${user.name}</td>
 	</tr>
+	$end
 </table>
+$end
+$for{num: 1..3}
+	${num}
+$end

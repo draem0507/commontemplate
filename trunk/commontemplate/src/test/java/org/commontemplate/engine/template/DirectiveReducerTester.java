@@ -16,7 +16,7 @@ import org.commontemplate.util.scanner.ScanningException;
 
 /**
  * 模板元素树归约器测试
- * 
+ *
  * @author Yan Rong (yananay@126.com)
  *
  */
@@ -26,24 +26,24 @@ public class DirectiveReducerTester extends TestCase {
 	private DirectiveFactory directiveFactory;
 	private DirectiveTranslator directiveTranslator;
 	private DirectiveReducer directiveReducer;
-	
+
 	public void setUp() {
 		directiveTokenizer = new DirectiveTokenizer(Syntax.DEFAULT);
-		
+
 		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
 		ExpressionParser expressionParser = new ExpressionEngine(config);
-		directiveFactory = new DirectiveFactory(config.getSyntax(), 
-				config.getDirectiveHandlerProvider(), expressionParser, 
-				config.getTextFilter());
-		
+		directiveFactory = new DirectiveFactory(config.getSyntax(),
+				config.getDirectiveHandlerProvider(), expressionParser,
+				config.getTextFilter(), config.getElementInterceptors());
+
 		directiveTranslator = new DirectiveTranslator(directiveFactory);
-		
+
 		directiveReducer = new DirectiveReducer();
 	}
-	
+
 	/**
 	 * DirectiveReducer类的reduce方法的测试。<br>
-	 * @conditoin 
+	 * @conditoin
 	 * 条件：<br>
 	 *   字符串为 "aaa $if{i==1} bbbb $else  ccc $end ddd "<br>
 	 * @result
@@ -57,34 +57,34 @@ public class DirectiveReducerTester extends TestCase {
 	 * @throws ScanningException
 	 */
 	public void testReduce() throws IOException, ScanningException{
-		
+
 		String template = "aaa $if{i==1} bbbb $else  ccc $end ddd ";
 		List tokens = directiveTokenizer.split(new StringReader(template));
 		List directives = directiveTranslator.translate(tokens);
-		
+
 		assertEquals(directives.size(), 7);
-		
+
 		BlockDirective root = directiveReducer.reduce(directives);
-		
+
 		assertEquals(root.getElements().size(), 4);
-		
+
 		List innerDirectiveLists = root.getElements();
-		
+
 		assertTrue(innerDirectiveLists.get(0) instanceof TextImpl);
-		
-		assertTrue(innerDirectiveLists.get(1) instanceof StartDirective);
+
+		assertTrue(innerDirectiveLists.get(1) instanceof BlockDirectiveImpl);
 		BlockDirective blockDirective = (BlockDirective) innerDirectiveLists.get(1);
 		assertEquals(blockDirective.getElements().size(), 1);
 		assertTrue(blockDirective.getElements().get(0) instanceof TextImpl);
 		assertNotNull(blockDirective.getExpression());
-		
-		assertTrue(innerDirectiveLists.get(2) instanceof MiddleDirective);
+
+		assertTrue(innerDirectiveLists.get(2) instanceof MiddleBlockDirectiveImpl);
 		blockDirective = (BlockDirective) innerDirectiveLists.get(2);
 		assertEquals(blockDirective.getElements().size(), 1);
 		assertTrue(blockDirective.getElements().get(0) instanceof TextImpl);
-		
+
 		assertTrue(innerDirectiveLists.get(3) instanceof TextImpl);
-		
+
 	}
-	
+
 }
