@@ -20,6 +20,8 @@ public class BackAccepter implements Accepter {
 	}
 
 	public int accept(String token) {
+		if (token.length() < back)
+			return 0;
 		return token.length() - back;
 	}
 
