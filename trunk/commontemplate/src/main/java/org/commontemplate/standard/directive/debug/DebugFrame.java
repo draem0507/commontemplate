@@ -81,7 +81,7 @@ class DebugFrame implements ActionListener, WindowListener {
 	private JTree contextTree;
 
 	private DebugFrame() {
-		frame = new JFrame("Common Template Debugging");
+		frame = new JFrame("Common Template Debugging (http://www.commontemplate.org)");
 		frame.setIconImage(Toolkit.getDefaultToolkit().createImage(DebugFrame.class.getClassLoader().getResource(ICON_PATH + "debug.gif")));
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.setSize(800, 600);
@@ -227,6 +227,8 @@ class DebugFrame implements ActionListener, WindowListener {
 		openFrame();
 	}
 
+	private String templateValue;
+
 	private void initTemplatePane(Template template, Element element) {
 		String elementText;
 		if (element instanceof BlockDirective)
@@ -244,20 +246,27 @@ class DebugFrame implements ActionListener, WindowListener {
 		elementBox.setText(elementText);
 
 		String tmp = template.getCanonicalForm();
+		templateValue = escapeHtml(tmp);
+
+		// 设置高亮显示指令
 		StringBuffer buf = new StringBuffer(tmp);
 		int begin = element.getLocation().getBegin().getOffset();
 		buf.insert(begin, "\1");
 		int end = element.getLocation().getEnd().getOffset();
 		buf.insert(end + 1, "\2");
-		tmp = buf.toString();
-		tmp = tmp.replaceAll("<", "&lt;");
-		tmp = tmp.replaceAll(">", "&gt;");
-		tmp = tmp.replaceAll("\n", "<br>");
-		tmp = tmp.replaceAll(" ", "&nbsp;");
-		tmp = tmp.replaceAll("\t", "&nbsp;&nbsp;&nbsp;&nbsp;");
-		tmp = tmp.replaceAll("\1", "<font color=\"white\" bgcolor=\"blue\">");
+		tmp = escapeHtml(buf.toString());
+		tmp = tmp.replaceAll("\1", "<font color=white bgcolor=blue>");
 		tmp = tmp.replaceAll("\2", "</font>");
-		templateView.setText("<html>" + tmp + "</html>");
+		templateView.setText(tmp);
+	}
+
+	private String escapeHtml(String html) {
+		html = html.replaceAll("<", "&lt;");
+		html = html.replaceAll(">", "&gt;");
+		html = html.replaceAll("\n", "<br>");
+		html = html.replaceAll(" ", "&nbsp;");
+		html = html.replaceAll("\t", "&nbsp;&nbsp;&nbsp;&nbsp;");
+		return "<html>" + html + "</html>";
 	}
 
 	private void initContextPane(Context context) {
@@ -383,6 +392,8 @@ class DebugFrame implements ActionListener, WindowListener {
 		stepReturn.setEnabled(false);
 		resume.setEnabled(false);
 		terminate.setEnabled(false);
+		elementBox.setText("");
+		templateView.setText(templateValue);
 	}
 
 	private void openFrame() {
