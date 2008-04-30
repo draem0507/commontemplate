@@ -1,5 +1,7 @@
 package org.commontemplate.core;
 
+import java.io.IOException;
+
 /**
  * 静态文本元素
  *
@@ -7,5 +9,14 @@ package org.commontemplate.core;
  *
  */
 public abstract class Text extends Content {
+
+	// 语义的默认实现
+	public void render(Context context) throws RenderingException {
+		try {
+			context.output(getValue());
+		} catch (IOException e) {
+			throw new RenderingException(this, e);
+		}
+	}
 
 }
