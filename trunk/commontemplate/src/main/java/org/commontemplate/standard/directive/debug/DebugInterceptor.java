@@ -6,7 +6,9 @@ import org.commontemplate.config.ElementInterceptor;
 import org.commontemplate.config.ElementRendition;
 import org.commontemplate.core.BlockDirective;
 
-public class DebugInterceptor implements ElementInterceptor {
+public class DebugInterceptor implements ElementInterceptor, java.io.Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private static final String STEP_OVER_KEY = "____STEP_OVER____";
 
