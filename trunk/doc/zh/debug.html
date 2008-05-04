@@ -61,7 +61,7 @@
 							<td rowspan="2" height="60"><a href="http://www.commontemplate.org"><img src="../images/banner.gif" alt="Common Template Engine" border="0" width="400" height="50" /></a></td>
 							<td height="40" valign="top" align="right">
 								
-								<a href="../en/uml.html">English</a>
+								<a href="../en/debug.html">English</a>
 								
 								|
 								
@@ -410,7 +410,7 @@
 							<td align="left" valign="top">
 								<table width="100%" border="0" cellpadding="0" cellspacing="0">
 									<tr>
-										<td height="32" align="left" valign="bottom"><b><font size="3">CommonTemplate UML图</font></b></td>
+										<td height="32" align="left" valign="bottom"><b><font size="3">调试窗口说明</font></b></td>
 									<tr>
 									<tr>
 										<td align="left"><hr width="30%" align="left" /></td>
@@ -418,27 +418,23 @@
 									<tr>
 										<td align="left">
 											
-
-								<b>1. 包图</b><br/>
+								<b>1. 断点设置:</b><br/>
+								当引擎遇到$breakpoint指令时，弹出调试窗口，进入单步运行状态<br/>
 								<br/>
-								<img src="../images/uml/package.gif"/>
+								<b>2. 调试窗口按钮说明:</b><br/>
+								<img src="../images/debug/stepinto.gif" /> 快捷键:"ALT + F5", "Step Into"，单步运行，如果为块指令则<b>进入</b>其内部指令。<br/>
+								<img src="../images/debug/stepover.gif" /> 快捷键:"ALT + F6", "Step Over"，单步运行，如果为块指令则<b>越过</b>其内部指令。<br/>
+								<img src="../images/debug/stepreturn.gif" /> 快捷键:"ALT + F7", "Step Return"，单步运行，并<b>跳出</b>当前指令的上级块指令。<br/>
+								<img src="../images/debug/resume.gif" /> 快捷键:"ALT + F8", "Resume"，<b>恢复</b>正常运行，直到下一断点。<br/>
+								<img src="../images/debug/terminate.gif" /> 快捷键:"ALT + F9", "Terminate"，<b>终止</b>运行。<br/>
 								<br/>
-								<b>2. API图</b><br/>
+								<b>3. 调试窗口截图:</b><br/>
+								运行到指令时:<br/>
+								<img src="../images/debug/debug_directive.gif" /><br/>
 								<br/>
-								<img src="../images/uml/api.gif"/>
+								运行到文本时:<br/>
+								<img src="../images/debug/debug_text.gif" /><br/>
 								<br/>
-								<b>3. 核心包图</b><br/>
-								<br/>
-								<img src="../images/uml/core.gif"/>
-								<br/>
-								<b>4. 引擎包图</b><br/>
-								<br/>
-								<img src="../images/uml/engine.gif"/>
-								<br/>
-								<b>5. 配置包图</b><br/>
-								<br/>
-								<img src="../images/uml/config.gif"/>
-
 	
 										</td>
 									<tr>
