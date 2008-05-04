@@ -9,13 +9,13 @@ import java.util.List;
 import java.util.Map;
 
 public class ModelProvider {
-	
+
 	public static Map getSessionModel() {
 		Map model = new HashMap();
 		model.put("allow", Boolean.valueOf(true));
 		return model;
 	}
-	
+
 	public static Map getGlobalModel() {
 		Map model = new HashMap();
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -26,19 +26,19 @@ public class ModelProvider {
 		}
 		return model;
 	}
-	
+
 	public static Map getModel() {
 		Map model = new HashMap();
-		
+
 		model.put("allow", Boolean.valueOf(false));
-		
+
 		model.put("title", "test");
-		
+
 		model.put("bank", new Bank());
-		
+
 		List users = new ArrayList();
 		model.put("users", users);
-		
+
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		try {
 			users.add(new User(12, "liangfei", "liangfei0201@163.com", 10000, df.parse("2007-08-09")));
@@ -48,15 +48,37 @@ public class ModelProvider {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		
+
 		Map mails = new HashMap();
 		model.put("mails", mails);
-		
+
 		mails.put("liangfei", "liangfei0201@163.com");
 		mails.put("zhangyong", "zhangyong@aaa.com");
 		mails.put("bobo", "bobo@bbb.com");
 		mails.put("lixudong", null);
-		
+
+		model.put("menu",
+				new Menu("system").addChild(
+						new Menu("file").addChild(
+							new Menu("new")
+						).addChild(
+							new Menu("open")
+						).addChild(
+							new Menu("close")
+						)
+					).addChild(
+						new Menu("edit").addChild(
+							new Menu("undo")
+						).addChild(
+							new Menu("redo")
+						).addChild(
+							new Menu("copy")
+						).addChild(
+							new Menu("paste")
+						)
+					)
+				);
+
 		return model;
 	}
 }
