@@ -1,7 +1,6 @@
 package org.commontemplate.engine;
 
 import java.text.MessageFormat;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.commontemplate.core.MessageSource;
@@ -17,16 +16,14 @@ final class MessageSourceImpl implements MessageSource {
 
 	private final ResourceBundle resourceBundle;
 
-	private final Locale locale;
-
-	MessageSourceImpl(ResourceBundle resourceBundle, Locale locale) {
+	MessageSourceImpl(ResourceBundle resourceBundle) {
 		this.resourceBundle = resourceBundle;
-		this.locale = locale;
 	}
 
 	public String getMessage(String key) throws NoSuchMessageException {
 		if (resourceBundle == null)
-			throw new NoSuchMessageException("未找到信息源ResourceBundle! 请检查是否配置了ResourceBundleFactory或MessageBasename!");
+			throw new NoSuchMessageException(
+					"未找到信息源ResourceBundle! 请检查是否配置了ResourceBundleFactory或MessageBasename!");
 		String msg;
 		try {
 			msg = resourceBundle.getString(key);
@@ -34,11 +31,12 @@ final class MessageSourceImpl implements MessageSource {
 			msg = null;
 		}
 		if (msg == null)
-			throw new NoSuchMessageException(key, locale);
+			throw new NoSuchMessageException(key, resourceBundle.getLocale());
 		return msg;
 	}
 
-	public String getMessage(String key, Object[] args) throws NoSuchMessageException {
+	public String getMessage(String key, Object[] args)
+			throws NoSuchMessageException {
 		return formatMessage(getMessage(key), args);
 	}
 
@@ -61,9 +59,9 @@ final class MessageSourceImpl implements MessageSource {
 	}
 
 	private final String formatMessage(String msg, Object[] args) {
-		if (msg != null && msg.length() > 0
-				&& args != null && args.length > 0) {
-			return new MessageFormat(msg, locale).format(args);
+		if (msg != null && msg.length() > 0 && args != null && args.length > 0) {
+			return new MessageFormat(msg, resourceBundle.getLocale())
+					.format(args);
 		}
 		return msg;
 	}

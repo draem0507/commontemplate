@@ -66,7 +66,7 @@ final class ContextImpl extends Context {
 		eventPublisher = new EventPublisherImpl(eventListener, this);
 		templateNameStack = new TemplateStackImpl(eventPublisher, templateNameFilter);
 		localContextStack = new LocalContextStackImpl(out, defaultFormater, eventPublisher, this, keywords);
-		messageSource = new MessageSourceImpl(resourceBundle, locale);
+		messageSource = new MessageSourceImpl(resourceBundle);
 	}
 
 	private final TemplateNameFilter templateNameFilter;
