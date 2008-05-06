@@ -22,27 +22,26 @@ import javax.servlet.jsp.el.VariableResolver;
 import javax.servlet.jsp.tagext.BodyContent;
 
 import org.apache.commons.el.ExpressionEvaluatorImpl;
-
-import org.commontemplate.core.Context;
+import org.commontemplate.tools.web.WebContext;
 import org.commontemplate.util.IterEnumeration;
 import org.commontemplate.util.LinkedStack;
 import org.commontemplate.util.Stack;
 
 /**
  * PageContext适配实现
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
 class PageContextImpl extends PageContext {
 
-	private final Context context;
-	
+	private final WebContext context;
+
 	private final VariableResolver variableResolver;
 
 	private static final ExpressionEvaluator expressionEvaluator = new ExpressionEvaluatorImpl(); // 采用common-el.jar的实现
 
-	PageContextImpl(Context context) {
+	PageContextImpl(WebContext context) {
 		this.context = context;
 		variableResolver = new VariableResolver() {
 			public Object resolveVariable(String name) throws ELException {
@@ -201,11 +200,11 @@ class PageContextImpl extends PageContext {
 	}
 
 	public ServletRequest getRequest() {
-		return (ServletRequest)context.lookupObject("request");
+		return context.getRequest();
 	}
 
 	public ServletResponse getResponse() {
-		return (ServletResponse)context.lookupObject("response");
+		return context.getResponse();
 	}
 
 	public Exception getException() {
@@ -235,7 +234,7 @@ class PageContextImpl extends PageContext {
 	public void include(String url, boolean flush) throws ServletException, IOException {
 		getRequest().getRequestDispatcher(url).include(getRequest(), getResponse());
 	}
-	
+
 	public ExpressionEvaluator getExpressionEvaluator() {
 		return expressionEvaluator;
 	}
@@ -277,7 +276,7 @@ class PageContextImpl extends PageContext {
 	public JspWriter popBody() {
 		return (JspWriter) outStack.pop();
 	}
-	
+
 	private JspWriter convertToJspWriter(Writer out) {
 		if (out instanceof JspWriter)
 			return (JspWriter) out;
