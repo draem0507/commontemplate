@@ -11,18 +11,19 @@ import org.commontemplate.config.LineDirectiveHandler;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.IgnoreException;
 import org.commontemplate.standard.directive.ParameterUtils;
+import org.commontemplate.tools.web.WebContext;
 import org.commontemplate.util.Assert;
 
 /**
  * JSP标签行指令适配器
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
 public class TagLineDirectiveAdapter implements LineDirectiveHandler, Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private Class tagClass;
 
 	public void setTagClassName(String tagClassName) {
@@ -38,12 +39,12 @@ public class TagLineDirectiveAdapter implements LineDirectiveHandler, Serializab
 			throws Exception {
 		JspTag tag = (JspTag)tagClass.newInstance();
 		if (tag instanceof Tag)
-			doTag((Tag)tag, param, context);
+			doTag((Tag)tag, param, (WebContext)context);
 		else if (tag instanceof SimpleTag)
-			doSimpleTag((SimpleTag)tag, param, context);
+			doSimpleTag((SimpleTag)tag, param, (WebContext)context);
 	}
-	
-	private void doTag(Tag tag, Object param, Context context) throws Exception {
+
+	private void doTag(Tag tag, Object param, WebContext context) throws Exception {
 		try {
 			// ---- init ----
 			PageContextImpl pageContext = new PageContextImpl(context);
@@ -53,16 +54,16 @@ public class TagLineDirectiveAdapter implements LineDirectiveHandler, Serializab
 			if (parentTag != null)
 				tag.setParent(parentTag);
 			TagUtils.initTag(tag, ParameterUtils.getParameters(param));
-			
+
 			// ---- start ----
 			int s = tag.doStartTag();
-			if (s == Tag.EVAL_BODY_INCLUDE || 
+			if (s == Tag.EVAL_BODY_INCLUDE ||
 					(s == BodyTag.EVAL_BODY_BUFFERED && tag instanceof BodyTag)) {
 				// Ignore
 			} else if (s != Tag.SKIP_BODY) {
 	            throw new RuntimeException("Illegal return value " + s + " from " + tag.getClass().getName() + ".doStartTag()");
 	        }
-			
+
 			// ---- end ----
 			int e = tag.doEndTag();
 			if (e == Tag.SKIP_PAGE) {
@@ -75,9 +76,9 @@ public class TagLineDirectiveAdapter implements LineDirectiveHandler, Serializab
 			tag.release();
 		}
 	}
-	
+
 	// JSP2.0
-	private void doSimpleTag(SimpleTag tag, Object param, Context context) throws Exception {
+	private void doSimpleTag(SimpleTag tag, Object param, WebContext context) throws Exception {
 		PageContextImpl pageContext = new PageContextImpl(context);
 		tag.setJspContext(pageContext);
         JspTag parentTag = (JspTag)pageContext.findParentTag(JspTag.class);

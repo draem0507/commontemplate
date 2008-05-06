@@ -27,55 +27,55 @@ import org.commontemplate.util.Assert;
 
 /**
  * 引擎持有者
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
 public final class EngineHolder {
-	
+
 	private EngineHolder() {}
-	
+
 	/**
 	 * 搜索配置web.xml中的初始化参数名
 	 */
 	public static final String CONFIG_PARAM_NAME = "commontemplate-config";
-	
+
 	/**
 	 * 默认搜索配置Webapp路径
 	 */
 	public static final String DEFAULT_CONFIG_WEB_PATH = "/WEB-INF/commontemplate.properties";
-	
+
 	/**
 	 * 默认搜索配置Classpath路径
 	 */
 	public static final String DEFAULT_CONFIG_CLASS_PATH = "commontemplate.properties";
-	
+
 	/**
 	 * 标准web配置路径
 	 */
 	public static final String STANDARD_CONFIG_PATH = "org/commontemplate/tools/web/commontemplate.properties";
-	
+
 	/**
 	 * 判断引擎是否已初始化
 	 * (此方法未同步,请保证在单线程下调用或自行同步.)
-	 * 
+	 *
 	 * @return 是否已初始化
 	 */
 	public static final boolean isInitialized() {
 		return engine != null;
 	}
-	
+
 	/**
 	 * 初始化引擎. 并自动搜索配置文件
 	 * (此方法未同步,请保证在单线程下调用或自行同步.)
-	 * 
+	 *
 	 * @param servletContext 当前运行所在Servlet容器上下文
 	 */
 	public static final void init(ServletContext servletContext) {
 		Assert.assertNotNull(servletContext, "[commontemplate] Template engine initializtion error: servletContext == null!");
 		// 初始化配置路径
 		String propertiesPath = servletContext.getInitParameter(CONFIG_PARAM_NAME); // 查找web.xml中的配置
-		if (propertiesPath != null) 
+		if (propertiesPath != null)
 			propertiesPath = propertiesPath.trim();
 		if (propertiesPath == null || propertiesPath.length() == 0) { // 查找/WEB-INF/
 			if (new File(servletContext.getRealPath("/") + DEFAULT_CONFIG_WEB_PATH).exists())
@@ -92,11 +92,11 @@ public final class EngineHolder {
 		servletContext.log("[commontemplate] searched config: " + propertiesPath);
 		init(servletContext, propertiesPath);
 	}
-	
+
 	/**
 	 * 初始化引擎.
 	 * (此方法未同步,请保证在单线程下调用或自行同步.)
-	 * 
+	 *
 	 * @param servletContext 当前运行所在Servlet容器上下文
 	 * @param propertiesPath 配置路径
 	 */
@@ -109,7 +109,7 @@ public final class EngineHolder {
 	/**
 	 * 初始化引擎.
 	 * (此方法未同步,请保证在单线程下调用或自行同步.)
-	 * 
+	 *
 	 * @param servletContext 当前运行所在Servlet容器上下文
 	 * @param properties 配置信息
 	 */
@@ -118,7 +118,7 @@ public final class EngineHolder {
 		Assert.assertNotNull(properties, "[commontemplate] Template engine initializtion error: properties == null!");
 		doInit(servletContext, new PropertiesBeanFactory(properties, new ComboResourceLoader(servletContext), getVariables(servletContext)));
 	}
-	
+
 	private static final void doInit(ServletContext servletContext, BeanFactory beanFactory) {
 		servletContext.log("[commontemplate] Template engine initializing...");
 		long start = System.currentTimeMillis();
@@ -128,7 +128,7 @@ public final class EngineHolder {
 		EngineHolder.engine = new Engine(EngineHolder.config);
 		servletContext.log("[commontemplate] Template engine initialized in " + (System.currentTimeMillis() - start) + "ms");
 	}
-	
+
 	private static final Map getVariables(ServletContext servletContext) {
 		Map variables = new HashMap();
 		variables.put("servletContext", servletContext);
@@ -137,7 +137,7 @@ public final class EngineHolder {
 		variables.put("servletContext.version", servletContext.getMajorVersion() + "." + servletContext.getMinorVersion());
 		return variables;
 	}
-	
+
 	/**
 	 * 销毁持有的引擎.
 	 * (此方法未同步,请保证在单线程下调用或自行同步.)
@@ -147,12 +147,12 @@ public final class EngineHolder {
 		EngineHolder.config = null;
 		EngineHolder.engine = null;
 	}
-	
+
 	private static ServletContext servletContext;
-	
+
 	/**
 	 * 获取初始化引擎的ServletContext
-	 * 
+	 *
 	 * @return ServletContext
 	 * @throws NullPointerException
 	 */
@@ -160,12 +160,12 @@ public final class EngineHolder {
 		checkInitialized();
 		return servletContext;
 	}
-	
+
 	private static BeanFactory beanFactory;
-	
+
 	/**
 	 * 获取初始化引擎的配置
-	 * 
+	 *
 	 * @return 配置
 	 * @throws NullPointerException
 	 */
@@ -175,10 +175,10 @@ public final class EngineHolder {
 	}
 
 	private static Configuration config;
-	
+
 	/**
 	 * 获取初始化引擎的配置
-	 * 
+	 *
 	 * @return 配置
 	 * @throws NullPointerException
 	 */
@@ -188,10 +188,10 @@ public final class EngineHolder {
 	}
 
 	private static Factory engine;
-	
+
 	/**
 	 * 获取引擎
-	 * 
+	 *
 	 * @return 引擎
 	 * @throws NullPointerException 引擎未初始化时抛出
 	 */
@@ -205,49 +205,49 @@ public final class EngineHolder {
 		if (engine == null)
 			throw new NullPointerException("引擎未初始化！请在web.xml中加上配置： <listener><listener-class>" + EngineInitializeListener.class.getName() + "</listener-class></listener>");
 	}
-	
+
 	/**
 	 * 创建上下文
-	 * 
+	 *
 	 * @param request 请求信息
 	 * @param response 响应信息
 	 * @return 上下文
 	 * @throws IOException 调用response的Writer出错时抛出
 	 */
-	public static final Context createContext(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public static final WebContext createContext(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		return createContext(request, response, null);
 	}
 
 	/**
 	 * 创建上下文，并指定地区信息
-	 * 
+	 *
 	 * @param request 请求信息
 	 * @param response 响应信息
 	 * @param locale 地区信息
 	 * @return 上下文
 	 * @throws IOException 调用response的Writer出错时抛出
 	 */
-	public static final Context createContext(HttpServletRequest request, HttpServletResponse response, Locale locale) throws IOException {
+	public static final WebContext createContext(HttpServletRequest request, HttpServletResponse response, Locale locale) throws IOException {
 		return createContext(request, response, locale, null);
 	}
-	
+
 	private static final String APPLICATION_SCOPE_NAME = "application";
-	
+
 	private static final String COOKIE_SCOPE_NAME = "cookie";
-	
+
 	private static final String SESSION_SCOPE_NAME = "session";
-	
+
 	private static final String HEADER_SCOPE_NAME = "header";
-	
+
 	private static final String PARAMETER_SCOPE_NAME = "parameter";
-	
+
 	private static final String REQUEST_SCOPE_NAME = "request";
-	
+
 	private static final String MODEL_SCOPE_NAME = "model";
-	
+
 	/**
 	 * 创建上下文，并供给模型数据
-	 * 
+	 *
 	 * @param request 请求信息
 	 * @param response 响应信息
 	 * @param locale 地区信息
@@ -255,7 +255,7 @@ public final class EngineHolder {
 	 * @return 上下文
 	 * @throws IOException 调用response的Writer出错时抛出
 	 */
-	public static final Context createContext(HttpServletRequest request, HttpServletResponse response, Locale locale, Object model) throws IOException {
+	public static final WebContext createContext(HttpServletRequest request, HttpServletResponse response, Locale locale, Object model) throws IOException {
 		if (request == null)
 			throw new NullPointerException("request == null");
 		if (response == null)
@@ -269,27 +269,18 @@ public final class EngineHolder {
 		context.pushLocalContext(HEADER_SCOPE_NAME, new HeaderMap(request));
 		context.pushLocalContext(PARAMETER_SCOPE_NAME, new ParameterMap(request));
 		context.pushLocalContext(REQUEST_SCOPE_NAME, new RequestMap(request));
-		if (model == null) 
+		if (model == null)
 			context.pushLocalContext(MODEL_SCOPE_NAME);
 		else if (model instanceof Map)
 			context.pushLocalContext(MODEL_SCOPE_NAME, (Map)model);
 		else
 			context.pushLocalContext(MODEL_SCOPE_NAME, new ModelMap(model));
-		context.pushLocalContext();
-		context.defineReadonlyVariable("global", context.getGlobalContext());
-		context.defineReadonlyVariable("request", request);
-		context.defineReadonlyVariable("response", response);
-		context.defineReadonlyVariable("session", request.getSession());
-		context.defineReadonlyVariable("servletContext", servletContext);
-		// 用于内部处理 ----
-		context.putObject("request", request);
-		context.putObject("response", response);
-		return context;
+		return new WebContext(context, request, response);
 	}
 
 	/**
 	 * 呈现模板
-	 * 
+	 *
 	 * @param templateName 模板名称
 	 * @param context 上下文
 	 * @throws IOException 模板不存在，或读取模板出错时抛出
@@ -299,10 +290,10 @@ public final class EngineHolder {
 	public static final void renderTemplate(String templateName, Context context) throws IOException, ParsingException, RenderingException {
 		renderTemplate(templateName, null, context);
 	}
-	
+
 	/**
 	 * 呈现模板
-	 * 
+	 *
 	 * @param templateName 模板名称
 	 * @param templateEncoding 模板编码
 	 * @param context 上下文
@@ -316,7 +307,7 @@ public final class EngineHolder {
 
 	/**
 	 * 呈现模板, 并设置response编码
-	 * 
+	 *
 	 * @param templateName 模板名称
 	 * @param templateEncoding 模板编码, 可以为null, 表示用默认编码加载
 	 * @param request 请求信息
@@ -351,7 +342,7 @@ public final class EngineHolder {
 
 	/**
 	 * 呈现模板.
-	 * 
+	 *
 	 * @param template 模板
 	 * @param context 上下文
 	 * @throws IOException 模板不存在，或读取模板出错时抛出

@@ -113,6 +113,12 @@ $!
 								显示文件的内容: <font color="green">(注：不解析其内容)</font><br/>
 								$display{"article.txt"}<br/>
 								$display{"article.txt", "UTF-8"}<br/>
+								抓取远程文件的内容: <font color="green">(注：只在Web环境下有效)</font><br/>
+								$snatch{"list.jsp"} 相对于当前页面路径目录<br/>
+								$snatch{"../list.jsp"} 相对于当前页面路径的上级目录<br/>
+								$snatch{"/list.jsp"} 相对于Web根目录<br/>
+								$snatch{"/list.jsp", 'UTF-8'} 指定编码<br/>
+								$snatch{"http://www.163.com"} 远程页面<br/>
 								<b>(6) 块指令:</b><br/>
 								Block块定义: <font color="green">(注: Block块在定义的位置不显示, 需通过show指令显示, 可以多次调用显示)</font><br/>
 								$block{"myblock"}<br/>
