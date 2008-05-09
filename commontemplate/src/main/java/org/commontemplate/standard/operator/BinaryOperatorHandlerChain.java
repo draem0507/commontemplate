@@ -3,7 +3,7 @@ package org.commontemplate.standard.operator;
 import java.util.Iterator;
 import java.util.List;
 
-import org.commontemplate.config.SpecialBinaryOperatorHandler;
+import org.commontemplate.config.BinaryOperatorHandler;
 
 /**
  * 二元操作符链, 将多个重载的二元操作符组装成一个二元操作符, 并负责按类型分派处理.
@@ -11,7 +11,7 @@ import org.commontemplate.config.SpecialBinaryOperatorHandler;
  * @author liangfei0201@163.com
  *
  */
-public class BinaryOperatorHandlerChain extends SpecialBinaryOperatorHandler implements java.io.Serializable {
+public class BinaryOperatorHandlerChain extends BinaryOperatorHandler {
 
 	private static final long serialVersionUID = 1L;
 

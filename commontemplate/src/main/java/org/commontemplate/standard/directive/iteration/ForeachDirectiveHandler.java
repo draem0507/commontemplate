@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.commontemplate.config.BlockDirectiveHandler;
+import org.commontemplate.standard.directive.BlockDirectiveHandlerSupport;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.EvaluationException;
 import org.commontemplate.core.RenderingException;
@@ -25,7 +25,7 @@ import org.commontemplate.util.Assert;
  * @author liangfei0201@163.com
  *
  */
-public class ForeachDirectiveHandler implements BlockDirectiveHandler {
+public class ForeachDirectiveHandler extends BlockDirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 

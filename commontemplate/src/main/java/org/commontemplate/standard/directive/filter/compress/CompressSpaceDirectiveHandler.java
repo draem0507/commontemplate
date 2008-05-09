@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.commontemplate.standard.directive.DirectiveUtils;
 import org.commontemplate.standard.filter.BufferedFilter;
-import org.commontemplate.config.BlockDirectiveHandler;
+import org.commontemplate.standard.directive.BlockDirectiveHandlerSupport;
 import org.commontemplate.core.Context;
 
 /**
@@ -14,7 +14,7 @@ import org.commontemplate.core.Context;
  * @author liangfei0201@163.com
  *
  */
-public class CompressSpaceDirectiveHandler implements BlockDirectiveHandler {
+public class CompressSpaceDirectiveHandler extends BlockDirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 	

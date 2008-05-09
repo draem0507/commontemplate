@@ -1,10 +1,10 @@
 package org.commontemplate.standard.directive.variable;
 
-import org.commontemplate.config.LineDirectiveHandler;
+import org.commontemplate.standard.directive.DirectiveHandlerSupport;
 import org.commontemplate.core.Context;
 import org.commontemplate.util.TypeUtils;
 
-public class AssertDirectiveHandler implements LineDirectiveHandler {
+public class AssertDirectiveHandler extends DirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 

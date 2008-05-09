@@ -3,7 +3,7 @@ package org.commontemplate.standard.directive.condition;
 
 import java.util.List;
 
-import org.commontemplate.config.BlockDirectiveHandler;
+import org.commontemplate.standard.directive.BlockDirectiveHandlerSupport;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.LocalContext;
 import org.commontemplate.standard.directive.DirectiveUtils;
@@ -15,7 +15,7 @@ import org.commontemplate.util.TypeUtils;
  * @author liangfei0201@163.com
  *
  */
-public class IfDirectiveHandler implements BlockDirectiveHandler {
+public class IfDirectiveHandler extends BlockDirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 

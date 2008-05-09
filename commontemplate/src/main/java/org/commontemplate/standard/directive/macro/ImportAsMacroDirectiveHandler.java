@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.commontemplate.config.LineDirectiveHandler;
+import org.commontemplate.standard.directive.DirectiveHandlerSupport;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.Template;
 import org.commontemplate.standard.visit.ElementsVisitor;
@@ -16,7 +16,7 @@ import org.commontemplate.standard.visit.ElementsVisitor;
  * @author liangfei0201@163.com
  *
  */
-public class ImportAsMacroDirectiveHandler implements LineDirectiveHandler {
+public class ImportAsMacroDirectiveHandler extends DirectiveHandlerSupport {
 
 	// TODO 宏全导入: $import{"xxx.ctl#*"}, 以及导入前缀设置: $import{prefix: "xxx.ctl#*"}
 

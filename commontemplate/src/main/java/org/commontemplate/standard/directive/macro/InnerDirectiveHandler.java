@@ -5,10 +5,10 @@ import java.util.Map;
 
 import org.commontemplate.core.Context;
 import org.commontemplate.standard.directive.DirectiveUtils;
-import org.commontemplate.config.LineDirectiveHandler;
+import org.commontemplate.standard.directive.DirectiveHandlerSupport;
 import org.commontemplate.standard.directive.ParameterUtils;
 
-public class InnerDirectiveHandler implements LineDirectiveHandler {
+public class InnerDirectiveHandler extends DirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 	

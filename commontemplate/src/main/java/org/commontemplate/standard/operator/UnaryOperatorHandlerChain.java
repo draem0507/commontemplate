@@ -1,10 +1,9 @@
 package org.commontemplate.standard.operator;
 
-import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 
-import org.commontemplate.config.SpecialUnaryOperatorHandler;
+import org.commontemplate.config.UnaryOperatorHandler;
 
 /**
  * 一元操作符链, 将多个重载的一元操作符组装成一个一元操作符, 并负责按类型分派处理.
@@ -12,7 +11,7 @@ import org.commontemplate.config.SpecialUnaryOperatorHandler;
  * @author liangfei0201@163.com
  *
  */
-public class UnaryOperatorHandlerChain extends SpecialUnaryOperatorHandler implements Serializable {
+public class UnaryOperatorHandlerChain extends UnaryOperatorHandler {
 
 	private static final long serialVersionUID = 1L;
 

@@ -5,10 +5,10 @@ import java.util.List;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.NoSuchMessageException;
 import org.commontemplate.standard.directive.DirectiveUtils;
-import org.commontemplate.config.BlockDirectiveHandler;
+import org.commontemplate.standard.directive.BlockDirectiveHandlerSupport;
 import org.commontemplate.standard.filter.BufferedFilter;
 
-public class I18nMessageStartDirectiveHandler implements BlockDirectiveHandler {
+public class I18nMessageStartDirectiveHandler extends BlockDirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 

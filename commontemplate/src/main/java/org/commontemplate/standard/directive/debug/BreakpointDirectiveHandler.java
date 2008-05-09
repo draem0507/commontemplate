@@ -1,9 +1,9 @@
 package org.commontemplate.standard.directive.debug;
 
-import org.commontemplate.config.LineDirectiveHandler;
+import org.commontemplate.standard.directive.DirectiveHandlerSupport;
 import org.commontemplate.core.Context;
 
-public class BreakpointDirectiveHandler implements LineDirectiveHandler {
+public class BreakpointDirectiveHandler extends DirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 

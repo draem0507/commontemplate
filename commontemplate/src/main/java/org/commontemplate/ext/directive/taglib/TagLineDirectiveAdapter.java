@@ -1,15 +1,13 @@
 package org.commontemplate.ext.directive.taglib;
 
-import java.io.Serializable;
-
 import javax.servlet.jsp.tagext.BodyTag;
 import javax.servlet.jsp.tagext.JspTag;
 import javax.servlet.jsp.tagext.SimpleTag;
 import javax.servlet.jsp.tagext.Tag;
 
-import org.commontemplate.config.LineDirectiveHandler;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.IgnoreException;
+import org.commontemplate.standard.directive.DirectiveHandlerSupport;
 import org.commontemplate.standard.directive.ParameterUtils;
 import org.commontemplate.tools.web.WebContext;
 import org.commontemplate.util.Assert;
@@ -20,7 +18,7 @@ import org.commontemplate.util.Assert;
  * @author liangfei0201@163.com
  *
  */
-public class TagLineDirectiveAdapter implements LineDirectiveHandler, Serializable {
+public class TagLineDirectiveAdapter extends DirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 

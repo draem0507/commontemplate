@@ -2,10 +2,9 @@ package org.commontemplate.standard.directive;
 
 import java.util.Map;
 
+import org.commontemplate.config.BlockDirectiveHandler;
 import org.commontemplate.config.DirectiveHandler;
 import org.commontemplate.config.DirectiveHandlerProvider;
-import org.commontemplate.config.LineDirectiveHandler;
-import org.commontemplate.config.BlockDirectiveHandler;
 
 public class StandardDirectiveHandlerProvider implements DirectiveHandlerProvider {
 
@@ -15,11 +14,11 @@ public class StandardDirectiveHandlerProvider implements DirectiveHandlerProvide
 		this.directiveHandlers = directiveHandlers;
 	}
 
-	private LineDirectiveHandler defaultLineDirectiveHandler;
+	private DirectiveHandler defaultDirectiveHandler;
 
 	public void setDefaultLineDirectiveHandler(
-			LineDirectiveHandler defaultLineDirectiveHandler) {
-		this.defaultLineDirectiveHandler = defaultLineDirectiveHandler;
+			DirectiveHandler defaultDirectiveHandler) {
+		this.defaultDirectiveHandler = defaultDirectiveHandler;
 	}
 
 	private BlockDirectiveHandler defaultBlockDirectiveHandler;
@@ -28,7 +27,7 @@ public class StandardDirectiveHandlerProvider implements DirectiveHandlerProvide
 			BlockDirectiveHandler defaultBlockDirectiveHandler) {
 		this.defaultBlockDirectiveHandler = defaultBlockDirectiveHandler;
 	}
-	
+
 	private String defaultBlockDirectiveRegex = ".*_block";
 
 	public void setDefaultBlockDirectiveRegex(String defaultBlockDirectiveRegex) {
@@ -39,12 +38,12 @@ public class StandardDirectiveHandlerProvider implements DirectiveHandlerProvide
 		DirectiveHandler directiveHandler = (DirectiveHandler) directiveHandlers.get(name);
 		if (directiveHandler != null)
 			return directiveHandler;
-		
-		if (name != null && name.length() > 0 
-				&& name.matches(defaultBlockDirectiveRegex)) 
+
+		if (name != null && name.length() > 0
+				&& name.matches(defaultBlockDirectiveRegex))
 			return defaultBlockDirectiveHandler;
-		
-		return defaultLineDirectiveHandler;
+
+		return defaultDirectiveHandler;
 	}
 
 }

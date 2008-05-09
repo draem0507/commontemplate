@@ -6,7 +6,7 @@ package org.commontemplate.standard.operator;
  * @author liangfei0201@163.com
  *
  */
-public abstract class BinaryOperatorHandlerSupport implements BinaryOperatorHandlerMatcher, java.io.Serializable {
+public abstract class BinaryOperatorHandlerSupport extends BinaryOperatorHandlerMatcher {
 
 	private Class leftOperandClass;
 

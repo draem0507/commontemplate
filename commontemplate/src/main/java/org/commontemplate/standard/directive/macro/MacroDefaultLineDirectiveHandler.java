@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.commontemplate.standard.directive.DirectiveUtils;
 import org.commontemplate.standard.directive.ParameterUtils;
-import org.commontemplate.config.LineDirectiveHandler;
+import org.commontemplate.standard.directive.DirectiveHandlerSupport;
 import org.commontemplate.core.Context;
 
 /**
@@ -14,7 +14,7 @@ import org.commontemplate.core.Context;
  * @author liangfei0201@163.com
  *
  */
-public class MacroDefaultLineDirectiveHandler implements LineDirectiveHandler {
+public class MacroDefaultLineDirectiveHandler extends DirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 

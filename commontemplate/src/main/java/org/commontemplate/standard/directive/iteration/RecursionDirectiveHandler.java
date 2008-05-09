@@ -2,7 +2,7 @@ package org.commontemplate.standard.directive.iteration;
 
 import java.util.List;
 
-import org.commontemplate.config.BlockDirectiveHandler;
+import org.commontemplate.standard.directive.BlockDirectiveHandlerSupport;
 import org.commontemplate.core.Context;
 
 /**
@@ -11,7 +11,7 @@ import org.commontemplate.core.Context;
  * @author 梁飞
  *
  */
-public class RecursionDirectiveHandler implements BlockDirectiveHandler {
+public class RecursionDirectiveHandler extends BlockDirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
