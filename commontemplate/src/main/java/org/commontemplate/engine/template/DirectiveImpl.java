@@ -9,8 +9,6 @@ import org.commontemplate.core.Expression;
 import org.commontemplate.core.IgnoreException;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Visitor;
-import org.commontemplate.core.event.RenderedEvent;
-import org.commontemplate.core.event.RenderingEvent;
 import org.commontemplate.util.Location;
 
 /**
@@ -52,7 +50,6 @@ final class DirectiveImpl extends Directive {
 	}
 
 	void doRender(Context context) throws RenderingException {
-		context.publishEvent(new RenderingEvent(this));
 		try {
 			directiveHandler.doRender(context, new DirectiveProxy(this));
 		} catch (RenderingException e) {
@@ -61,8 +58,6 @@ final class DirectiveImpl extends Directive {
 			throw e;
 		} catch (Exception e) {
 			throw new RenderingException(this, e);
-		} finally {
-			context.publishEvent(new RenderedEvent(this));
 		}
 	}
 
