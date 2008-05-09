@@ -10,13 +10,19 @@ import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Visitor;
 import org.commontemplate.util.Location;
 
+/**
+ * 块指令代理
+ *
+ * @author liangfei0201@163.com
+ *
+ */
 class BlockDirectiveProxy extends BlockDirective {
 
 	private static final long serialVersionUID = 3260814916076018094L;
 
-	private final BlockDirectiveImpl blockDirective;
+	private final BlockDirective blockDirective;
 
-	BlockDirectiveProxy(BlockDirectiveImpl blockDirective) {
+	BlockDirectiveProxy(BlockDirective blockDirective) {
 		this.blockDirective = blockDirective;
 	}
 
@@ -53,7 +59,7 @@ class BlockDirectiveProxy extends BlockDirective {
 	}
 
 	public void render(Context context) throws RenderingException {
-		blockDirective.doRender(context); // 绕过拦截器
+		throw new java.lang.UnsupportedOperationException("不能在指令处理器内回调render,否则将死循环调用.");
 	}
 
 	public String toString() {

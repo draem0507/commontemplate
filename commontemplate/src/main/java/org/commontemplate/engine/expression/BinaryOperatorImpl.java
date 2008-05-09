@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.commontemplate.config.BinaryOperatorHandler;
-import org.commontemplate.config.SpecialBinaryOperatorHandler;
 import org.commontemplate.core.BinaryOperator;
-import org.commontemplate.core.Expression;
 import org.commontemplate.core.EvaluationException;
+import org.commontemplate.core.Expression;
 import org.commontemplate.core.VariableResolver;
 import org.commontemplate.core.Visitor;
 import org.commontemplate.util.Assert;
@@ -15,36 +14,36 @@ import org.commontemplate.util.Location;
 
 /**
  * 二元操作符实现类
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
 final class BinaryOperatorImpl extends BinaryOperator {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private final String name;
 
 	private final Location location;
-	
+
 	private final int priority;
 
 	private final BinaryOperatorHandler handler;
 
 	private final boolean associativeLaw;
-	
+
 	private final boolean commutativeLaw;
-	
+
 	private final boolean rightToLeft;
 
 	private final boolean leftOperandLazy;
-	
+
 	private final boolean rightOperandLazy;
-	
+
 	private final boolean leftOperandNamed;
-	
+
 	private final boolean rightOperandNamed;
-	
+
 	private final boolean rightOperandFunctioned;
 
 	BinaryOperatorImpl(String name, Location location, int priority, BinaryOperatorHandler handler) {
@@ -53,39 +52,27 @@ final class BinaryOperatorImpl extends BinaryOperator {
 		this.location = location;
 		this.priority = priority;
 		this.handler = handler;
-		if (handler instanceof SpecialBinaryOperatorHandler) {
-			SpecialBinaryOperatorHandler shandler = (SpecialBinaryOperatorHandler) handler;
-			this.rightToLeft = shandler.isRightToLeft();
-			this.leftOperandLazy = shandler.isLeftOperandLazy();
-			this.rightOperandLazy = shandler.isRightOperandLazy();
-			this.leftOperandNamed = shandler.isLeftOperandNamed();
-			this.rightOperandNamed = shandler.isRightOperandNamed();
-			this.rightOperandFunctioned = shandler.isRightOperandFunctioned();
-			this.associativeLaw = shandler.isAssociative();
-			this.commutativeLaw = shandler.isCommutative();
-		} else {
-			this.rightToLeft = false;
-			this.leftOperandLazy = false;
-			this.rightOperandLazy = false;
-			this.leftOperandNamed = false;
-			this.rightOperandNamed = false;
-			this.rightOperandFunctioned = false;
-			this.associativeLaw = false;
-			this.commutativeLaw = false;
-		}
+		this.rightToLeft = handler.isRightToLeft();
+		this.leftOperandLazy = handler.isLeftOperandLazy();
+		this.rightOperandLazy = handler.isRightOperandLazy();
+		this.leftOperandNamed = handler.isLeftOperandNamed();
+		this.rightOperandNamed = handler.isRightOperandNamed();
+		this.rightOperandFunctioned = handler.isRightOperandFunctioned();
+		this.associativeLaw = handler.isAssociative();
+		this.commutativeLaw = handler.isCommutative();
 	}
 
 	public Object evaluate(VariableResolver context) throws EvaluationException {
 		try {
 			Object left;
-			if (leftOperandLazy) 
+			if (leftOperandLazy)
 				left = new LazyOperandImpl(getLeftOperand(), context);
-			else 
+			else
 				left = getLeftOperand().evaluate(context);
 			Object right;
-			if (rightOperandLazy) 
+			if (rightOperandLazy)
 				right = new LazyOperandImpl(getRightOperand(), context);
-			else 
+			else
 				right = getRightOperand().evaluate(context);
 			return handler.doEvaluate(left, right);
 		} catch (EvaluationException e) {
@@ -94,11 +81,11 @@ final class BinaryOperatorImpl extends BinaryOperator {
 			throw new EvaluationException(this, e);
 		}
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public Location getLocation() {
 		return location;
 	}
@@ -106,11 +93,11 @@ final class BinaryOperatorImpl extends BinaryOperator {
 	public int getPriority() {
 		return priority;
 	}
-	
+
 	boolean isAssociativeLaw() {
 		return associativeLaw;
 	}
-	
+
 	boolean isCommutativeLaw() {
 		return commutativeLaw;
 	}
@@ -118,19 +105,19 @@ final class BinaryOperatorImpl extends BinaryOperator {
 	boolean isRightToLeft() {
 		return rightToLeft;
 	}
-	
+
 	boolean isLeftOperandNamed() {
 		return leftOperandNamed;
 	}
-	
+
 	boolean isRightOperandNamed() {
 		return rightOperandNamed;
 	}
-	
+
 	public boolean isRightOperandFunctioned() {
 		return rightOperandFunctioned;
 	}
-	
+
 	public String getCanonicalForm() {
 		Expression left = getLeftOperand();
 		String leftPrototype = left.getCanonicalForm();
@@ -152,7 +139,7 @@ final class BinaryOperatorImpl extends BinaryOperator {
 	}
 
 	private List operands;
-	
+
 	public List getOperands() {
 		return operands;
 	}
@@ -171,7 +158,7 @@ final class BinaryOperatorImpl extends BinaryOperator {
 
 	/**
 	 * 设置二元操作符的操作数
-	 * 
+	 *
 	 * @param leftOperand 左操作数
 	 * @param rightOperand 右操作数
 	 */
