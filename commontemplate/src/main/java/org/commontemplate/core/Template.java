@@ -38,4 +38,11 @@ public abstract class Template extends Resource implements Visitable, Serializab
 	 */
 	public abstract String getCanonicalForm();
 
+	/**
+	 * 获取原始内容
+	 *
+	 * @return 原始内容
+	 */
+	public abstract String getOriginalText();
+
 }
