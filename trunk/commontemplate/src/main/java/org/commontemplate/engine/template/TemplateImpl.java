@@ -8,12 +8,10 @@ import java.util.List;
 
 import org.commontemplate.core.BlockDirective;
 import org.commontemplate.core.Context;
-import org.commontemplate.core.Template;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Resource;
+import org.commontemplate.core.Template;
 import org.commontemplate.core.Visitor;
-import org.commontemplate.core.event.RenderedEvent;
-import org.commontemplate.core.event.RenderingEvent;
 import org.commontemplate.util.Assert;
 import org.commontemplate.util.IOUtils;
 
@@ -55,18 +53,13 @@ final class TemplateImpl extends Template implements Serializable {
 	}
 
 	public final void render(Context context) throws RenderingException {
-		context.publishEvent(new RenderingEvent(this));
 		context.pushTemplate(this);
 		try {
 			rootDirective.render(context);
 		} catch (RenderingException e) {
 			throw new RenderingException(this, context, e.getElement().getLocation(), e);
 		} finally {
-			try {
-				context.popTemplate();
-			} finally {
-				context.publishEvent(new RenderedEvent(this));
-			}
+			context.popTemplate();
 		}
 	}
 

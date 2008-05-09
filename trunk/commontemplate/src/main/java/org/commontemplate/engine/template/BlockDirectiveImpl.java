@@ -8,8 +8,6 @@ import org.commontemplate.core.Expression;
 import org.commontemplate.core.IgnoreException;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Visitor;
-import org.commontemplate.core.event.RenderedEvent;
-import org.commontemplate.core.event.RenderingEvent;
 import org.commontemplate.util.Location;
 
 /**
@@ -54,24 +52,19 @@ class BlockDirectiveImpl extends BlockDirectiveSupport {
 	}
 
 	void doRender(Context context) throws RenderingException {
-		context.publishEvent(new RenderingEvent(this));
+		context.pushLocalContext();
 		try {
-			context.pushLocalContext();
 			try {
-				try {
-					startDirectiveHandler.doRender(context, new BlockDirectiveProxy(this));
-				} catch (RenderingException e) {
-					throw e;
-				} catch (IgnoreException e) {
-					throw e;
-				} catch (Exception e) {
-					throw new RenderingException(this, e);
-				}
-			} finally {
-				context.popLocalContext();
+				startDirectiveHandler.doRender(context, new BlockDirectiveProxy(this));
+			} catch (RenderingException e) {
+				throw e;
+			} catch (IgnoreException e) {
+				throw e;
+			} catch (Exception e) {
+				throw new RenderingException(this, e);
 			}
 		} finally {
-			context.publishEvent(new RenderedEvent(this));
+			context.popLocalContext();
 		}
 	}
 
