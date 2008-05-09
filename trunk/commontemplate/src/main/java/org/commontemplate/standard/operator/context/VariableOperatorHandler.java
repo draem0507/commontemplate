@@ -8,8 +8,8 @@ import org.commontemplate.standard.operator.UnaryOperatorHandlerSupport;
  * 如果没有"\", 因为":"和"."号操作符的isLeftOperandNamed和isRightOperandNamed特殊状态位, 将变量名作为字符串.<br/>
  * 此操作通过加强优先级达到变量先于操作符执行.<br/>
  *
- * @see org.commontemplate.config.SpecialBinaryOperatorHandler#isLeftOperandNamed()
- * @see org.commontemplate.config.SpecialBinaryOperatorHandler#isRightOperandNamed()
+ * @see org.commontemplate.config.BinaryOperatorHandler#isLeftOperandNamed()
+ * @see org.commontemplate.config.BinaryOperatorHandler#isRightOperandNamed()
  * @author liangfei0201@163.com
  *
  */
