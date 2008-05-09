@@ -10,7 +10,7 @@ import org.commontemplate.config.ResourceFilter;
 
 /**
  * 继承此类可以方便的实现AttributeFilter TODO: 优化性能
- * 
+ *
  * @author GL
  * @since 2008-4-5 上午12:10:05
  */
@@ -32,8 +32,8 @@ public abstract class AbstractAttributeFilter implements ResourceFilter {
 
 	/**
 	 * 迭代调用parse方法，深度优先
-	 * 
-	 * @param element
+	 *
+	 * @param element 标签元素
 	 */
 	private void cycleParse(final TagElement element) {
 		for (final Iterator i = element.getSegments().iterator(); i.hasNext();) {
@@ -50,9 +50,8 @@ public abstract class AbstractAttributeFilter implements ResourceFilter {
 	/**
 	 * 将TagElement转换为想要的内容.<br>
 	 * 不需要转换TagElement的children
-	 * 
-	 * @param
-	 * @return
+	 *
+	 * @param element 标签元素
 	 */
 	protected void parse(final TagElement element) {
 		// 外套标记插入的位置，最先出现的attribute套在最外层

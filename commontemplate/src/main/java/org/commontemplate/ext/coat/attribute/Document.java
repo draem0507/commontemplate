@@ -13,8 +13,8 @@ public interface Document {
 
 	/**
 	 * get the Top Level Segment
-	 * 
-	 * @return
+	 *
+	 * @return the Top Level Segment
 	 */
 	public List getTopSegments();
 }
