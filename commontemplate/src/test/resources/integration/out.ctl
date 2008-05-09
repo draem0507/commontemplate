@@ -1,16 +1,6 @@
-ttttt
-${allow}
-$breakpoint
-$if{users != null && users.size > 0}
-<table>
-	$for{user: users}
-	<tr>
-		<td>${user.name}</td>
-	</tr>
-	$end
-</table>
+$for{user: users}
+  $if{for.index == 2}
+    $break
+  $end
+  ${for.count}. ${user.name}
 $end
-$for{num: 1..3}
-	${num}
-$end
-

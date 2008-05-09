@@ -11,7 +11,7 @@ import java.util.Map;
 import junit.framework.TestCase;
 
 import org.commontemplate.engine.Engine;
-import org.commontemplate.ext.directive.taglib.TagBlockDirectiveAdapter;
+import org.commontemplate.tools.web.WebContext;
 
 public class TagBlockDirectiveAdapterTester extends TestCase {
 
@@ -31,7 +31,7 @@ public class TagBlockDirectiveAdapterTester extends TestCase {
 		List innerDirectives = new ArrayList();
 		Engine engine = TestEngineProvider.getTestEngine();
 		StringWriter out = new StringWriter();
-		tagBlockDirectiveAdapter.doRender(engine.createContext(out), "xxx", param, innerDirectives);
+		tagBlockDirectiveAdapter.doRender(new WebContext(engine.createContext(out), null, null), "xxx", param, innerDirectives);
 		out.flush();
 		super.assertEquals("okok!", out.getBuffer().toString());
 	}
