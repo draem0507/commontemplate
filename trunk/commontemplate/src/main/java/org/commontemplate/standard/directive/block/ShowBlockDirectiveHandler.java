@@ -3,10 +3,10 @@ package org.commontemplate.standard.directive.block;
 import java.util.List;
 
 import org.commontemplate.standard.directive.DirectiveUtils;
-import org.commontemplate.config.LineDirectiveHandler;
+import org.commontemplate.standard.directive.DirectiveHandlerSupport;
 import org.commontemplate.core.Context;
 
-public class ShowBlockDirectiveHandler implements LineDirectiveHandler {
+public class ShowBlockDirectiveHandler extends DirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 

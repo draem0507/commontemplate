@@ -3,7 +3,7 @@ package org.commontemplate.standard.directive.extend;
 
 import java.util.List;
 
-import org.commontemplate.config.BlockDirectiveHandler;
+import org.commontemplate.standard.directive.BlockDirectiveHandlerSupport;
 import org.commontemplate.core.Context;
 
 /**
@@ -12,7 +12,7 @@ import org.commontemplate.core.Context;
  * @author liangfei0201@163.com
  *
  */
-public class ZoneDirectiveHandler implements BlockDirectiveHandler {
+public class ZoneDirectiveHandler extends BlockDirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 	

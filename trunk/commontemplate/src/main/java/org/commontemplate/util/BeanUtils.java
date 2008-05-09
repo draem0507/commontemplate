@@ -116,7 +116,9 @@ public class BeanUtils {
 				if ((cls.getModifiers() & Modifier.PUBLIC) == 1) { // 首先保证类是公开的
 					try {
 						Method method = cls.getMethod(methodName, new Class[0]);
-						if ((method.getModifiers() & Modifier.PUBLIC) == 1) // 再保证方法是公开的
+						if ((method.getModifiers() & Modifier.PUBLIC) == 1
+								&& (method.getParameterTypes() == null
+										|| method.getParameterTypes().length == 0)) // 再保证方法是公开的
 							return method;
 					} catch (NoSuchMethodException e) {
 						// ignore, continue

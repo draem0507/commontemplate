@@ -3,12 +3,12 @@ package org.commontemplate.standard.directive.macro;
 import java.util.List;
 import java.util.Map;
 
-import org.commontemplate.config.BlockDirectiveHandler;
+import org.commontemplate.standard.directive.BlockDirectiveHandlerSupport;
 import org.commontemplate.core.Context;
 import org.commontemplate.standard.directive.DirectiveUtils;
 import org.commontemplate.standard.directive.ParameterUtils;
 
-public class MacroDefaultBlockDirectiveHandler implements BlockDirectiveHandler {
+public class MacroDefaultBlockDirectiveHandler extends BlockDirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 

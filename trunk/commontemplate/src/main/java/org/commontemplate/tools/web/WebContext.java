@@ -34,8 +34,8 @@ public class WebContext extends ContextProxy {
 		context.defineReadonlyVariable("global", context.getGlobalContext());
 		context.defineReadonlyVariable("request", request);
 		context.defineReadonlyVariable("response", response);
-		context.defineReadonlyVariable("session", request.getSession());
-		context.defineReadonlyVariable("servletContext", request.getSession().getServletContext());
+		context.defineReadonlyVariable("session", getSession());
+		context.defineReadonlyVariable("servletContext", getServletContext());
 		// 用于内部处理 ----
 		context.putObject(REQUEST_KEY, request);
 		context.putObject(RESPONSE_KEY, response);

@@ -2,14 +2,14 @@ package org.commontemplate.standard.directive.filter;
 
 import java.util.List;
 
-import org.commontemplate.config.BlockDirectiveHandler;
+import org.commontemplate.standard.directive.BlockDirectiveHandlerSupport;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.Element;
 import org.commontemplate.core.OutputFilter;
 import org.commontemplate.core.Text;
 import org.commontemplate.standard.operator.collection.Filter;
 
-public class FilterDirectiveHandler implements BlockDirectiveHandler {
+public class FilterDirectiveHandler extends BlockDirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 	

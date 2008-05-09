@@ -2,11 +2,11 @@ package org.commontemplate.standard.operator;
 
 /**
  * 一元操作符类型匹配基类.
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
-public abstract class UnaryOperatorHandlerSupport implements UnaryOperatorHandlerMatcher, java.io.Serializable {
+public abstract class UnaryOperatorHandlerSupport extends UnaryOperatorHandlerMatcher {
 
 	private Class operandClass;
 
@@ -28,9 +28,9 @@ public abstract class UnaryOperatorHandlerSupport implements UnaryOperatorHandle
 		this.operandClass = operandClass;
 		this.operandNullable = operandNullable;
 	}
-	
+
 	public boolean isMatch(Object operand) {
-		return ((operand == null && operandNullable)|| 
+		return ((operand == null && operandNullable)||
 				(operand != null && operandClass.isAssignableFrom(operand.getClass())));
 	}
 }

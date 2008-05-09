@@ -1,6 +1,5 @@
 package org.commontemplate.ext.directive.taglib;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.servlet.jsp.tagext.BodyTag;
@@ -9,9 +8,9 @@ import javax.servlet.jsp.tagext.JspTag;
 import javax.servlet.jsp.tagext.SimpleTag;
 import javax.servlet.jsp.tagext.Tag;
 
-import org.commontemplate.config.BlockDirectiveHandler;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.IgnoreException;
+import org.commontemplate.standard.directive.BlockDirectiveHandlerSupport;
 import org.commontemplate.standard.directive.DirectiveUtils;
 import org.commontemplate.standard.directive.ParameterUtils;
 import org.commontemplate.tools.web.WebContext;
@@ -23,7 +22,7 @@ import org.commontemplate.util.Assert;
  * @author liangfei0201@163.com
  *
  */
-public class TagBlockDirectiveAdapter implements BlockDirectiveHandler, Serializable {
+public class TagBlockDirectiveAdapter extends BlockDirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 

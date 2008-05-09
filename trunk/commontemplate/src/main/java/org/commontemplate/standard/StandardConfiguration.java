@@ -8,19 +8,19 @@ import java.util.List;
 import java.util.Map;
 
 import org.commontemplate.config.BinaryOperatorHandler;
+import org.commontemplate.config.BlockDirectiveHandler;
+import org.commontemplate.config.Cache;
 import org.commontemplate.config.ConfigurationException;
+import org.commontemplate.config.DirectiveHandler;
 import org.commontemplate.config.DirectiveHandlerProvider;
-import org.commontemplate.config.Syntax;
 import org.commontemplate.config.Keywords;
-import org.commontemplate.config.LineDirectiveHandler;
 import org.commontemplate.config.OperatorHandlerProvider;
 import org.commontemplate.config.ReloadController;
 import org.commontemplate.config.ResourceBundleProvider;
-import org.commontemplate.config.BlockDirectiveHandler;
-import org.commontemplate.config.Cache;
-import org.commontemplate.config.TemplateNameFilter;
-import org.commontemplate.config.ResourceFilter;
 import org.commontemplate.config.ResourceComparator;
+import org.commontemplate.config.ResourceFilter;
+import org.commontemplate.config.Syntax;
+import org.commontemplate.config.TemplateNameFilter;
 import org.commontemplate.config.TextFilter;
 import org.commontemplate.config.UnaryOperatorHandler;
 import org.commontemplate.core.EventListener;
@@ -28,15 +28,15 @@ import org.commontemplate.core.Logger;
 import org.commontemplate.core.OutputFormatter;
 import org.commontemplate.core.ResourceLoader;
 import org.commontemplate.standard.cache.FifoCache;
-import org.commontemplate.standard.cache.StrongCache;
 import org.commontemplate.standard.cache.LruCache;
 import org.commontemplate.standard.cache.MruCache;
 import org.commontemplate.standard.cache.NoneCache;
 import org.commontemplate.standard.cache.SoftCache;
+import org.commontemplate.standard.cache.StrongCache;
 import org.commontemplate.standard.cache.WeakCache;
 import org.commontemplate.standard.directive.StandardDirectiveHandlerProvider;
-import org.commontemplate.standard.filter.TemplateNameFilterChain;
 import org.commontemplate.standard.filter.ResourceFilterChain;
+import org.commontemplate.standard.filter.TemplateNameFilterChain;
 import org.commontemplate.standard.filter.TextFilterChain;
 import org.commontemplate.standard.format.DateFormatter;
 import org.commontemplate.standard.format.NullFormatter;
@@ -523,7 +523,7 @@ public class StandardConfiguration extends ConfigurationSettings {
 						(BlockDirectiveHandler) entry.getValue());
 			} else {
 				addDirectiveHandler((String) entry.getKey(),
-						(LineDirectiveHandler) entry.getValue());
+						(DirectiveHandler) entry.getValue());
 			}
 		}
 	}
@@ -552,7 +552,7 @@ public class StandardConfiguration extends ConfigurationSettings {
 	 * @param name 所处理的指令名
 	 * @param handler 指令处理器
 	 */
-	public void addDirectiveHandler(String name, LineDirectiveHandler handler) {
+	public void addDirectiveHandler(String name, DirectiveHandler handler) {
 		if (handler == null)
 			throw new ConfigurationException("指令处理类不能为空!");
 		if (name == null)

@@ -2,7 +2,7 @@ package org.commontemplate.standard.directive.include;
 
 import java.util.List;
 
-import org.commontemplate.config.LineDirectiveHandler;
+import org.commontemplate.standard.directive.DirectiveHandlerSupport;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.Template;
 import org.commontemplate.standard.directive.DirectiveUtils;
@@ -17,7 +17,7 @@ import org.commontemplate.util.Assert;
  * @author liangfei0201@163.com
  *
  */
-public class EmbedTemplateDirectiveHandler implements LineDirectiveHandler {
+public class EmbedTemplateDirectiveHandler extends DirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 

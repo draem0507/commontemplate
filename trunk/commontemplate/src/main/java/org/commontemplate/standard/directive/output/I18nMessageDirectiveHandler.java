@@ -2,7 +2,7 @@ package org.commontemplate.standard.directive.output;
 
 import java.util.List;
 
-import org.commontemplate.config.LineDirectiveHandler;
+import org.commontemplate.standard.directive.DirectiveHandlerSupport;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.NoSuchMessageException;
 
@@ -12,7 +12,7 @@ import org.commontemplate.core.NoSuchMessageException;
  * @author liangfei0201@163.com
  *
  */
-public class I18nMessageDirectiveHandler implements LineDirectiveHandler {
+public class I18nMessageDirectiveHandler extends DirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
