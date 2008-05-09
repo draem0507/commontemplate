@@ -11,7 +11,7 @@ public abstract class Directive extends Element {
 	/**
 	 * 得到该指令表达式
 	 *
-	 * @return 表达式
+	 * @return 表达式, 指令未定表达式时返时null.
 	 */
 	public abstract Expression getExpression();
 

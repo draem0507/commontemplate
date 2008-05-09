@@ -6,7 +6,6 @@ import java.util.List;
 import org.commontemplate.config.BlockDirectiveHandler;
 import org.commontemplate.config.DirectiveHandler;
 import org.commontemplate.config.DirectiveHandlerProvider;
-import org.commontemplate.config.LineDirectiveHandler;
 import org.commontemplate.config.MiddleBlockDirectiveHandler;
 import org.commontemplate.config.Syntax;
 import org.commontemplate.config.TextFilter;
@@ -144,8 +143,8 @@ final class DirectiveFactory {
 			return new MiddleBlockDirectiveImpl(name, token.getLocation(), expression, (MiddleBlockDirectiveHandler)handler, token.getMessage(), syntax.getLeader() + syntax.getEndDirectiveName(), elementInterceptors);
 		if (handler instanceof BlockDirectiveHandler)
 			return new BlockDirectiveImpl(name, token.getLocation(), expression, (BlockDirectiveHandler)handler, token.getMessage(), syntax.getLeader() + syntax.getEndDirectiveName(), elementInterceptors);
-		if (handler instanceof LineDirectiveHandler)
-			return new DirectiveImpl(name, token.getLocation(), expression, (LineDirectiveHandler)handler, token.getMessage(), elementInterceptors);
+		if (handler instanceof DirectiveHandler)
+			return new DirectiveImpl(name, token.getLocation(), expression, (DirectiveHandler)handler, token.getMessage(), elementInterceptors);
 		throw new ParsingException(token.getLocation(), handler.getClass().getName() + "不是正确的处理类!");
 	}
 

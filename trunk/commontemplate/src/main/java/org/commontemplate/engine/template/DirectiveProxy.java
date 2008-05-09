@@ -14,13 +14,13 @@ import org.commontemplate.util.Location;
  * @author liangfei0201@163.com
  *
  */
-final class DirectiveProxy extends Directive {
+class DirectiveProxy extends Directive {
 
 	private static final long serialVersionUID = 2605840464184974573L;
 
-	private final DirectiveImpl directive;
+	private final Directive directive;
 
-	DirectiveProxy(DirectiveImpl directive) {
+	DirectiveProxy(Directive directive) {
 		this.directive = directive;
 	}
 
@@ -57,7 +57,7 @@ final class DirectiveProxy extends Directive {
 	}
 
 	public void render(Context context) throws RenderingException {
-		directive.doRender(context); // 绕过拦截器
+		throw new java.lang.UnsupportedOperationException("不能在指令处理器内回调render,否则将死循环调用.");
 	}
 
 	public String toString() {

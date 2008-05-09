@@ -2,7 +2,7 @@ package org.commontemplate.engine.template;
 
 import java.util.List;
 
-import org.commontemplate.config.LineDirectiveHandler;
+import org.commontemplate.config.DirectiveHandler;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.Directive;
 import org.commontemplate.core.Expression;
@@ -31,11 +31,11 @@ final class DirectiveImpl extends Directive {
 
 	private final String prototype;
 
-	private final LineDirectiveHandler directiveHandler;
+	private final DirectiveHandler directiveHandler;
 
 	private final List elementInterceptors;
 
-	DirectiveImpl(String name, Location location, Expression expression, LineDirectiveHandler directiveHandler, String prototype, List elementInterceptors) {
+	DirectiveImpl(String name, Location location, Expression expression, DirectiveHandler directiveHandler, String prototype, List elementInterceptors) {
 		this.name = name;
 		this.prototype = prototype;
 		this.location = location;
@@ -46,7 +46,7 @@ final class DirectiveImpl extends Directive {
 
 	public void render(Context context) throws RenderingException {
 		if (elementInterceptors != null && elementInterceptors.size() > 0)
-			new ElementRenditionImpl(new DirectiveProxy(this), context, elementInterceptors).doRender();
+			new ElementRenditionImpl(new DirectiveInterceptProxy(this), context, elementInterceptors).doRender();
 		else
 			doRender(context);
 	}
@@ -54,9 +54,7 @@ final class DirectiveImpl extends Directive {
 	void doRender(Context context) throws RenderingException {
 		context.publishEvent(new RenderingEvent(this));
 		try {
-			Expression expression = getExpression();
-			Object param = (expression == null ? null : expression.evaluate(context));
-			directiveHandler.doRender(context, getName(), param);
+			directiveHandler.doRender(context, new DirectiveProxy(this));
 		} catch (RenderingException e) {
 			throw e;
 		} catch (IgnoreException e) {

@@ -48,7 +48,7 @@ class BlockDirectiveImpl extends BlockDirectiveSupport {
 
 	public void render(Context context) throws RenderingException {
 		if (elementInterceptors != null && elementInterceptors.size() > 0)
-			new ElementRenditionImpl(new BlockDirectiveProxy(this), context, elementInterceptors).doRender();
+			new ElementRenditionImpl(new BlockDirectiveInterceptProxy(this), context, elementInterceptors).doRender();
 		else
 			doRender(context);
 	}
@@ -59,9 +59,7 @@ class BlockDirectiveImpl extends BlockDirectiveSupport {
 			context.pushLocalContext();
 			try {
 				try {
-					Expression expression = getExpression();
-					Object param = (expression == null ? null : expression.evaluate(context));
-					startDirectiveHandler.doRender(context, getName(), param, getElements());
+					startDirectiveHandler.doRender(context, new BlockDirectiveProxy(this));
 				} catch (RenderingException e) {
 					throw e;
 				} catch (IgnoreException e) {
