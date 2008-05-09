@@ -13,7 +13,7 @@ import org.commontemplate.core.Directive;
 public abstract class BlockDirectiveHandler extends DirectiveHandler {
 
 	// 接口适配
-	public void doRender(Context context, Directive directive) throws Exception {
+	public final void doRender(Context context, Directive directive) throws Exception {
 		doRender(context, (BlockDirective)directive);
 	}
 
