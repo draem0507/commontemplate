@@ -84,11 +84,11 @@ final class TemplateImpl extends Template implements Serializable {
 		return new CharArrayReader(data);
 	}
 
-	public String getCanonicalForm() {
+	public final String getCanonicalForm() {
 		return rootDirective.getCanonicalForm();
 	}
 
-	public String getOriginalText() {
+	public final String getOriginalText() {
 		return null;
 	}
 
