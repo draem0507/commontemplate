@@ -87,10 +87,17 @@
 								......<br/>
 								<br/>
 								<b>五、怎么下载CommonTemplate?</b><br/>
-								下载服务由<a target="_blank" href="http://sourceforge.net">SourceForge</a>平台支持:<br/>
+								下载服务由GoogleCode支持:<br/>
 								<table>
 									<tr>
 										<td width="64" height="24" align="center" style="background-color: #003399;"><a href="download.html" style="color: #FFFFFF; font-weight: bold;">下载</a></td>
+									</tr>
+								</table>
+								<b>六、交流社区</b><br/>
+								如果您有任何疑问或建议，请移步到论坛发帖，我们将尽快答复，谢谢。
+								<table>
+									<tr>
+										<td width="64" height="24" align="center" style="background-color: #003399;"><a target="_blank" href="http://forum.commontemplate.org" style="color: #FFFFFF; font-weight: bold;">论坛</a></td>
 									</tr>
 								</table>
 	<!--$end-->
