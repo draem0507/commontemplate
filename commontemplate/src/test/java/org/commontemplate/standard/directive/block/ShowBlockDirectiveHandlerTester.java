@@ -47,7 +47,7 @@ public class ShowBlockDirectiveHandlerTester extends TestCase {
 		elementList.add(new MockDirective("cc"));
 		elementList.add(new MockDirective("dd"));
 		
-		context.putObject(BlockDefineDirectiveHandler.BLOCK_TYPE, "showBlock", elementList);
+		context.putProperty(BlockDefineDirectiveHandler.BLOCK_TYPE, "showBlock", elementList);
 		
 		showDirectiveHandler.doRender(context, "testShowBlock", "showBlock");
 		Writer out = context.getOut();

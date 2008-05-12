@@ -3,7 +3,6 @@ package org.commontemplate.standard.directive;
 import java.io.IOException;
 import java.io.Writer;
 
-import org.commontemplate.core.BreakVisitException;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.Element;
 import org.commontemplate.core.RenderingException;
@@ -79,7 +78,7 @@ public class MockDirective extends Element{
 	 *
 	 * @param visitor 访问者
 	 */
-	public void accept(Visitor visitor) throws BreakVisitException {
+	public void accept(Visitor visitor) {
 		visitor.visit(this);
 	}
 
