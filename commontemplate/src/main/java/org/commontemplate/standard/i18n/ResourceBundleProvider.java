@@ -1,4 +1,4 @@
-package org.commontemplate.config;
+package org.commontemplate.standard.i18n;
 
 import java.util.Locale;
 import java.util.ResourceBundle;

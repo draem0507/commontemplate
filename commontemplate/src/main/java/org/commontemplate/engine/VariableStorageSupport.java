@@ -4,7 +4,6 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.commontemplate.config.Keywords;
-import org.commontemplate.core.DefinedException;
 import org.commontemplate.core.VariableException;
 import org.commontemplate.core.VariableStorage;
 import org.commontemplate.util.Assert;
@@ -27,26 +26,27 @@ abstract class VariableStorageSupport implements VariableStorage {
 
 	// 断言 -----
 
-	protected void assertVariables(Map model) throws VariableException {
-		if (model != null && model.size() > 0) {
-			for (Iterator iterator = model.keySet().iterator(); iterator.hasNext();) {
-				String name = (String)iterator.next();
-				assertVariableName(name);
-				if (isDefinedVariable(name))
-					throw new DefinedException(name + " 已经定义!", name);
-			}
-		}
-	}
-
-	protected void assertVariableName(String var) throws VariableException {
-		if (var == null)
+	protected void assertVariableName(String name) throws VariableException {
+		if (name == null)
 			throw new VariableException("变量名不能为空!", null);
 
-		if (! TypeUtils.isNamed(var))
-			throw new VariableException(var + " 不符合命名规范!", var);
+		if (! TypeUtils.isNamed(name))
+			throw new VariableException(name + " 不符合命名规范!", name);
 
-		if (keywords.isKeyword(var))
-			throw new VariableException("变量名不能为关键字: " + var, var);
+		if (keywords.isKeyword(name))
+			throw new VariableException("变量名不能为关键字: " + name, name);
+	}
+
+	protected void assertAllVariableNames(Map model) throws VariableException {
+		if (model != null && model.size() > 0) {
+			for (Iterator iterator = model.keySet().iterator(); iterator.hasNext();) {
+				Object obj = iterator.next();
+				if (! (obj instanceof String))
+					throw new VariableException("变量名必需为String类型!", String.valueOf(obj));
+				String name = (String)obj;
+				assertVariableName(name);
+			}
+		}
 	}
 
 }

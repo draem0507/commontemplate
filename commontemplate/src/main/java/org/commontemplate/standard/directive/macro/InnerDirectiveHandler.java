@@ -16,10 +16,10 @@ public class InnerDirectiveHandler extends DirectiveHandlerSupport {
 
 	public void doRender(Context context, String directiveName, Object param)
 			throws Exception {
-		List inner = (List)context.lookupObject(INNER_BLOCK);
+		List inner = (List)context.getProperty(INNER_BLOCK);
 		if (inner != null) {
 			Map model = ParameterUtils.getParameters(param);
-			context.defineAllVariables(model);
+			context.putAllVariables(model);
 			DirectiveUtils.renderAll(inner, context);
 		}
 	}

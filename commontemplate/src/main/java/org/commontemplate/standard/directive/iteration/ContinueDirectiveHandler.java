@@ -16,7 +16,7 @@ public class ContinueDirectiveHandler extends DirectiveHandler {
 	private static final long serialVersionUID = 1L;
 
 	public void doRender(Context context, Directive directive) throws Exception {
-		if (directive.getExpression() == null) // 当没有表达式时也执行
+		if (directive.getExpression() == null) // 无条件继续
 			throw new ContinueException();
 		Object param = directive.getExpression().evaluate(context);
 		if (TypeUtils.isTrue(param))

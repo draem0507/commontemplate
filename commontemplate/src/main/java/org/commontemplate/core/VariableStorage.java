@@ -3,119 +3,98 @@ package org.commontemplate.core;
 import java.util.Map;
 
 /**
- * 变量存储器
- * 
+ * 变量存储器.
+ *
  * @author liangfei0201@163.com
- * 
+ *
  */
 public interface VariableStorage extends VariableResolver {
 
 	/**
-	 * 判断变量是否已在当前上下文定义
-	 * 
-	 * @param name
-	 *            变量名
-	 * @return 是否已定义
-	 * @throws VariableException
-	 *             当传入非法变量名时抛出
-	 */
-	public boolean isDefinedVariable(String name) throws VariableException;
-
-	/**
-	 * 在当前上下文定义局部变量
-	 * 
-	 * @param name
-	 *            变量名
-	 * @throws DefinedException
-	 *             当变量已定义时抛出
-	 * @throws VariableException
-	 *             当传入非法变量名时抛出
-	 */
-	public void defineVariable(String name) throws DefinedException,
-			VariableException;
-
-	/**
-	 * 在当前上下文定义局部变量, 并初始化值.
-	 * 
+	 * 在当前上下文设置局部变量.
+	 *
 	 * @param name
 	 *            变量名
 	 * @param value
 	 *            初始化值
-	 * @throws DefinedException
-	 *             当变量已定义时抛出
 	 * @throws VariableException
 	 *             当传入非法变量名时抛出
 	 */
-	public void defineVariable(String name, Object value)
-			throws DefinedException, VariableException;
+	public void putVariable(String name, Object value)
+			throws VariableException;
 
 	/**
-	 * 在当前上下文定义只读局部变量, 并初始化值.
-	 * 
+	 * 在当前上下文设置局部变量空值
+	 *
+	 * @param name
+	 *            变量名
+	 * @throws VariableException
+	 *             当传入非法变量名时抛出
+	 */
+	public void putNullVariable(String name) throws VariableException;
+
+	/**
+	 * 在当前上下文设置只读局部变量.
+	 *
 	 * @param name
 	 *            变量名
 	 * @param value
 	 *            初始化值
-	 * @throws DefinedException
-	 *             当变量已定义时抛出
 	 * @throws VariableException
 	 *             当传入非法变量名时抛出
 	 */
-	public void defineReadonlyVariable(String name, Object value)
-			throws DefinedException, VariableException;
+	public void putReadonlyVariable(String name, Object value)
+			throws VariableException;
 
 	/**
-	 * 批量定义变量集
-	 * 
+	 * 批量设置变量.
+	 *
 	 * @param variables
 	 *            变量集
-	 * @throws DefinedException
-	 *             当变量已定义时抛出
 	 * @throws VariableException
 	 *             当传入非法变量名时抛出
 	 */
-	public void defineAllVariables(Map variables) throws DefinedException,
-			VariableException;
-	
+	public void putAllVariables(Map variables) throws VariableException;
+
 	/**
-	 * 定义变量别名
-	 * 
+	 * 判断变量是否包含在当前上下文中
+	 *
+	 * @param name
+	 *            变量名
+	 * @return 是否包含
+	 * @throws VariableException
+	 *             当传入非法变量名时抛出
+	 */
+	public boolean isVariableContained(String name) throws VariableException;
+
+	/**
+	 * 获取当前上下文所有变量
+	 *
+	 * @return 当前上下文所有变量, 此Map是只读的.
+	 */
+	public Map getVariables();
+
+	/**
+	 * 加入变量别名
+	 *
 	 * @param alias 别名
 	 * @param name 变量名
-	 * 
 	 * @throws VariableException 当传入非法变量名时抛出
 	 */
-	public void defineVariableAlias(String alias, String name) throws VariableException;
-	
+	public void addVariableAlias(String alias, String name) throws VariableException;
+
 	/**
 	 * 移除变量别名
-	 * 
+	 *
 	 * @param alias 别名
 	 * @throws VariableException 当传入非法变量名时抛出
 	 */
 	public void removeVariableAlias(String alias) throws VariableException;
 
 	/**
-	 * 给已定义变量赋值. 若在当前上下文中未定义, 则递归向上级上下文查找, 直到根上下文也未定义, 抛出异常.
-	 * 
-	 * @param name
-	 *            变量名
-	 * @param value
-	 *            所赋值
-	 * @throws UndefinedException
-	 *             当变量未定义时抛出
-	 * @throws VariableException
-	 *             当传入非法变量名或变量只读时抛出
+	 * 检测变量容器是否锁定(只读).
 	 */
-	public void assignVariable(String name, Object value)
-			throws UndefinedException, VariableException;
-
-	/**
-	 * 获取当前区域所有已定义变量
-	 * 
-	 * @return 所有已定义变量, 此Map是只读的
-	 */
-	public Map getDefinedVariables();
+	public boolean isVariablesLocked();
 
 	/**
 	 * 锁定变量容器，即：使容器变量只读
@@ -128,21 +107,64 @@ public interface VariableStorage extends VariableResolver {
 	public void unlockVariables();
 
 	/**
-	 * 清除当前上下文中的局部变量
-	 * 
+	 * 移除当前上下文中的局部变量
+	 *
 	 * @param name
 	 *            变量名
-	 * @throws UndefinedException
-	 *             当变量未定义时抛出
 	 * @throws VariableException
 	 *             当传入非法变量名时抛出
 	 */
-	public void removeVariable(String name) throws UndefinedException,
-			VariableException;
+	public void removeVariable(String name) throws VariableException;
 
 	/**
-	 * 清空当前上下文中所有局部变量定义
+	 * 清空当前上下文中所有局部变量定义, 并解除只读锁.
 	 */
 	public void clearVariables();
+
+	/**
+	 * 给已定义变量赋值. 若在当前上下文中未定义, 则递归向上级上下文查找, 直到全局上下文.
+	 *
+	 * @param name
+	 *            变量名
+	 * @param value
+	 *            所赋值
+	 * @throws VariableException
+	 *             当传入非法变量名或变量只读时抛出
+	 */
+	public void setVariable(String name, Object value)
+			throws VariableException;
+
+	/**
+	 * 判断变量在所有上下文定义是否存在, 递归向上级容器查找.
+	 *
+	 * @param name
+	 *            变量名
+	 * @return 是否存在
+	 * @throws VariableException
+	 *             当传入非法变量名时抛出
+	 */
+	public boolean isVariableExisted(String name) throws VariableException;
+
+	/**
+	 * 获取所有上下文中存在的变量
+	 *
+	 * @return 所有上下文中存在的变量, 此Map是只读的.
+	 */
+	public Map getExistedVariables();
+
+	/**
+	 * 移除存在的变量, 递归向上级容器移除.
+	 *
+	 * @param name
+	 *            变量名
+	 * @throws VariableException
+	 *             当传入非法变量名时抛出
+	 */
+	public void removeExistedVariable(String name) throws VariableException;
+
+	/**
+	 * 清空所有上下文的存在的变量, 递归向上级容器清空.
+	 */
+	public void clearExistedVariables();
 
 }

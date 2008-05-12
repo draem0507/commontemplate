@@ -62,9 +62,9 @@ public class ForeachDirectiveHandler extends BlockDirectiveHandlerSupport {
 		if (count <= 0) // count小于0, 不进行迭代.
 			return false;
 		ForeachStatus status = new ForeachStatus(count);
-		context.defineVariable(statusName, status);
+		context.putVariable(statusName, status);
 		for (int i = 0; i < count; i ++) {
-			context.assignVariable(statusName, status);
+			context.setVariable(statusName, status);
 			try {
 				DirectiveUtils.renderAll(elements, context);
 				status.increment();
@@ -84,12 +84,12 @@ public class ForeachDirectiveHandler extends BlockDirectiveHandlerSupport {
 		if (collection == null || collection.size() == 0)
 			return false;
 		ForeachStatus status = new ForeachStatus(collection.size());
-		context.defineVariable(itemName);
-		context.defineVariable(statusName, status);
+		context.putNullVariable(itemName);
+		context.putVariable(statusName, status);
 		for (Iterator items = collection.iterator(); items.hasNext();) {
 			Object item = items.next();
-			context.assignVariable(itemName, item);
-			context.assignVariable(statusName, status);
+			context.setVariable(itemName, item);
+			context.setVariable(statusName, status);
 			try {
 				DirectiveUtils.renderAll(elements, context);
 				status.increment();
@@ -110,7 +110,7 @@ public class ForeachDirectiveHandler extends BlockDirectiveHandlerSupport {
 			Map.Entry entry = (Map.Entry)iterator.next();
 			Collection coll = getCollection(entry.getValue());
 			String itemName = String.valueOf(entry.getKey());
-			context.defineVariable(itemName);
+			context.putNullVariable(itemName);
 			iters.put(itemName, coll.iterator());
 			if (coll.size() > max) {
 				max = coll.size();
@@ -120,18 +120,18 @@ public class ForeachDirectiveHandler extends BlockDirectiveHandlerSupport {
 			return false;
 
 		ForeachStatus status = new ForeachStatus(max);
-		context.defineVariable(statusName, status);
+		context.putVariable(statusName, status);
 		for (int i = 0; i < max; i ++) {
-			context.assignVariable(statusName, status);
+			context.setVariable(statusName, status);
 
 			for (Iterator iterator = iters.entrySet().iterator(); iterator.hasNext();) {
 				Map.Entry entry = (Map.Entry)iterator.next();
 				String itemName = (String)entry.getKey();
 				Iterator coll = (Iterator)entry.getValue();
 				if (coll.hasNext()) {
-					context.assignVariable(itemName, coll.next());
+					context.setVariable(itemName, coll.next());
 				} else {
-					context.assignVariable(itemName, null);
+					context.setVariable(itemName, null);
 				}
 			}
 

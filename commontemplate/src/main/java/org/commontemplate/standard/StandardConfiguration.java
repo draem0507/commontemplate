@@ -16,7 +16,6 @@ import org.commontemplate.config.DirectiveHandlerProvider;
 import org.commontemplate.config.Keywords;
 import org.commontemplate.config.OperatorHandlerProvider;
 import org.commontemplate.config.ReloadController;
-import org.commontemplate.config.ResourceBundleProvider;
 import org.commontemplate.config.ResourceComparator;
 import org.commontemplate.config.ResourceFilter;
 import org.commontemplate.config.Syntax;
@@ -24,7 +23,6 @@ import org.commontemplate.config.TemplateNameFilter;
 import org.commontemplate.config.TextFilter;
 import org.commontemplate.config.UnaryOperatorHandler;
 import org.commontemplate.core.EventListener;
-import org.commontemplate.core.Logger;
 import org.commontemplate.core.OutputFormatter;
 import org.commontemplate.core.ResourceLoader;
 import org.commontemplate.standard.cache.FifoCache;
@@ -43,7 +41,9 @@ import org.commontemplate.standard.format.NullFormatter;
 import org.commontemplate.standard.format.NumberFormatter;
 import org.commontemplate.standard.format.OutputFormatterChain;
 import org.commontemplate.standard.i18n.PropertiesResourceBundleProvider;
+import org.commontemplate.standard.i18n.ResourceBundleProvider;
 import org.commontemplate.standard.listener.EventListenerChain;
+import org.commontemplate.standard.log.Logger;
 import org.commontemplate.standard.operator.StandardOperatorHandlerProvider;
 import org.commontemplate.standard.reload.IntervalReloadController;
 import org.commontemplate.util.Assert;
@@ -112,19 +112,19 @@ public class StandardConfiguration extends ConfigurationSettings {
 
 	// ==========================
 
-	private boolean debugMode;
+	private boolean debug;
 
-	public boolean isDebugMode() {
-		return debugMode;
+	public boolean isDebug() {
+		return debug;
 	}
 
 	/**
 	 * 设置是否为调试模式，调试模式将输出更多信息，默认为非调试模式。
 	 *
-	 * @param debugMode 是否为调试模式
+	 * @param debug 是否为调试模式
 	 */
-	public void setDebugMode(boolean debugMode) {
-		this.debugMode = debugMode;
+	public void setDebug(boolean debug) {
+		this.debug = debug;
 	}
 
 	private boolean functionAvailable;

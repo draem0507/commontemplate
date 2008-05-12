@@ -19,7 +19,7 @@ public class LocalContextGetterOperatorHandler extends BinaryOperatorHandlerSupp
 	}
 
 	public Object doEvaluate(Object leftOperand, Object rightOperand) throws Exception {
-		return ((LocalContext)leftOperand).lookupVariable((String)rightOperand);
+		return ((LocalContext)leftOperand).getVariable((String)rightOperand);
 	}
 
 }

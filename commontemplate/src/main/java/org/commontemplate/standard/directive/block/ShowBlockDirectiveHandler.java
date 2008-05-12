@@ -14,7 +14,7 @@ public class ShowBlockDirectiveHandler extends DirectiveHandlerSupport {
 		if (param == null)
 			throw new java.lang.IllegalArgumentException("$show 指令必需指定引用块名称! 如: $show{\"blockName\"}");
 		String blockName = (String)param;
-		DirectiveUtils.renderAll(((List)context.lookupObject(BlockDefineDirectiveHandler.BLOCK_TYPE, blockName)), context);
+		DirectiveUtils.renderAll(((List)context.lookupProperty(BlockDefineDirectiveHandler.BLOCK_TYPE, blockName)), context);
 	}
 
 }

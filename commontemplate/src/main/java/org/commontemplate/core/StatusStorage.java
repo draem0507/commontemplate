@@ -1,16 +1,38 @@
 package org.commontemplate.core;
 
 /**
- * 状态管理，只用于同一LocalContext之中状态的设置，其不与上级或下级LocalContext之间交互。
- * 
+ * 状态管理器.
+ * <p/>
+ * 只用于同一LocalContext之中状态的设置，
+ * 其不与上级或下级LocalContext之间交互。
+ *
  * @author liangfei0201@163.com
- * 
+ *
  */
 public interface StatusStorage {
 
 	/**
+	 * 设置布尔型状态
+	 *
+	 * @param name
+	 *            状态索引
+	 * @param value
+	 *            状态值
+	 */
+	public void setBooleanStatus(String name, boolean value);
+
+	/**
+	 * 获取布尔型状态
+	 *
+	 * @param name
+	 *            状态索引
+	 * @return 状态值, 当状态未设置时返回null.
+	 */
+	public boolean getBooleanStatus(String name);
+
+	/**
 	 * 设置状态
-	 * 
+	 *
 	 * @param name
 	 *            状态索引
 	 * @param value
@@ -20,7 +42,7 @@ public interface StatusStorage {
 
 	/**
 	 * 获取状态
-	 * 
+	 *
 	 * @param name
 	 *            状态索引
 	 * @return 状态值, 当状态未设置时返回null.
@@ -29,7 +51,7 @@ public interface StatusStorage {
 
 	/**
 	 * 移除状态
-	 * 
+	 *
 	 * @param name
 	 *            状态索引
 	 */

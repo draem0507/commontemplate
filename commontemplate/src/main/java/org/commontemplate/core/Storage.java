@@ -7,6 +7,6 @@ package org.commontemplate.core;
  * 
  */
 public interface Storage extends VariableStorage, StatusStorage,
-		ObjectStorage {
+		PropertyStorage {
 
 }

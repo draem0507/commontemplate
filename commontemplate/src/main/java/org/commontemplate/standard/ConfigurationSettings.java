@@ -9,16 +9,16 @@ import org.commontemplate.config.DirectiveHandlerProvider;
 import org.commontemplate.config.Keywords;
 import org.commontemplate.config.OperatorHandlerProvider;
 import org.commontemplate.config.ReloadController;
-import org.commontemplate.config.ResourceBundleProvider;
 import org.commontemplate.config.ResourceComparator;
 import org.commontemplate.config.ResourceFilter;
 import org.commontemplate.config.Syntax;
 import org.commontemplate.config.TemplateNameFilter;
 import org.commontemplate.config.TextFilter;
 import org.commontemplate.core.EventListener;
-import org.commontemplate.core.Logger;
 import org.commontemplate.core.OutputFormatter;
 import org.commontemplate.core.ResourceLoader;
+import org.commontemplate.standard.i18n.ResourceBundleProvider;
+import org.commontemplate.standard.log.Logger;
 import org.commontemplate.util.Assert;
 
 /**
@@ -168,19 +168,19 @@ public class ConfigurationSettings extends Configuration {
 
 	// ======== Template ========
 
-	private boolean debugMode;
+	private boolean debug;
 
-	public boolean isDebugMode() {
-		return debugMode;
+	public boolean isDebug() {
+		return debug;
 	}
 
 	/**
 	 * 设置是否为调试模式，调试模式将输出更多信息，默认为非调试模式。
 	 *
-	 * @param debugMode 是否为调试模式
+	 * @param debug 是否为调试模式
 	 */
-	public void setDebugMode(boolean debugMode) {
-		this.debugMode = debugMode;
+	public void setDebug(boolean debug) {
+		this.debug = debug;
 	}
 
 	private Logger logger;
@@ -394,14 +394,14 @@ public class ConfigurationSettings extends Configuration {
 		this.eventListener = eventListener;
 	}
 
-	private List elementInterceptors;
+	private List renderInterceptors;
 
-	public List getElementInterceptors() {
-		return elementInterceptors;
+	public List getRenderInterceptors() {
+		return renderInterceptors;
 	}
 
-	public void setElementInterceptors(List elementInterceptors) {
-		this.elementInterceptors = elementInterceptors;
+	public void setRenderInterceptors(List renderInterceptors) {
+		this.renderInterceptors = renderInterceptors;
 	}
 
 }

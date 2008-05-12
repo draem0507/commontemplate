@@ -7,10 +7,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import org.commontemplate.core.DefinedException;
-import org.commontemplate.core.VariableResolver;
-import org.commontemplate.core.UndefinedException;
 import org.commontemplate.core.VariableException;
+import org.commontemplate.core.VariableResolver;
 import org.commontemplate.util.TypeUtils;
 
 /**
@@ -32,8 +30,6 @@ public class SimpleExpressionContext implements VariableResolver {
 			for (Iterator iterator = model.keySet().iterator(); iterator.hasNext();) {
 				String name = (String)iterator.next();
 				assertVariableName(name);
-				if (isDefinedVariable(name))
-					throw new DefinedException(name + " 已经定义!", name);
 			}
 		}
 	}
@@ -68,24 +64,24 @@ public class SimpleExpressionContext implements VariableResolver {
 	}
 
 	public void defineVariable(String name, Object value)
-			throws DefinedException, VariableException {
+			throws VariableException {
 		if (isLock)
 			throw new VariableException("容器锁定!", name);
 		variablesContainer.put(name, value);
 	}
 
-	public void defineVariable(String name) throws DefinedException,
+	public void defineVariable(String name) throws
 			VariableException {
 		defineVariable(name, null);
 	}
 
 	public void defineReadonlyVariable(String name, Object value)
-			throws DefinedException, VariableException {
+			throws VariableException {
 		defineVariable(name, value);
 		readonlyContainer.add(name);
 	}
 
-	public void defineAllVariables(Map variables) throws DefinedException,
+	public void defineAllVariables(Map variables) throws
 			VariableException {
 		if (isLock)
 			throw new VariableException("容器锁定!", variables.keySet().toString());
@@ -98,13 +94,13 @@ public class SimpleExpressionContext implements VariableResolver {
 	}
 
 	public void assignVariable(String name, Object value)
-			throws UndefinedException, VariableException {
+			throws VariableException {
 		if (isLock)
 			throw new VariableException("容器锁定!", name);
 		variablesContainer.put(name, value);
 	}
 
-	public Object lookupVariable(String name) throws VariableException {
+	public Object getVariable(String name) throws VariableException {
 		return variablesContainer.get(name);
 	}
 
@@ -116,7 +112,7 @@ public class SimpleExpressionContext implements VariableResolver {
 		aliasContainer.remove(alias);
 	}
 
-	public void removeVariable(String var) throws UndefinedException,
+	public void removeVariable(String var) throws
 			VariableException {
 		if (isLock)
 			throw new VariableException("变量容器锁定! 无法移除：" + var, var);

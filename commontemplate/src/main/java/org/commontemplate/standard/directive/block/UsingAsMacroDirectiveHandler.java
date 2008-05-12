@@ -21,11 +21,11 @@ public class UsingAsMacroDirectiveHandler extends DirectiveHandlerSupport {
 	public void doRender(Context context, String directiveName, Object param) throws Exception {
 		if (param instanceof Entry) {
 			Entry entry = (Entry)param;
-			context.putObject(MacroDirectiveHandler.MACRO_TYPE, (String)entry.getKey(), context.lookupObject(BlockDefineDirectiveHandler.BLOCK_TYPE, (String)entry.getValue()));
+			context.putProperty(MacroDirectiveHandler.MACRO_TYPE, (String)entry.getKey(), context.lookupProperty(BlockDefineDirectiveHandler.BLOCK_TYPE, (String)entry.getValue()));
 		} else if (param instanceof Map) {
 			for (Iterator iterator = ((Map)param).entrySet().iterator(); iterator.hasNext();) {
 				Map.Entry entry = (Map.Entry)iterator.next();
-				context.putObject(MacroDirectiveHandler.MACRO_TYPE, (String)entry.getKey(), context.lookupObject(BlockDefineDirectiveHandler.BLOCK_TYPE, (String)entry.getValue()));
+				context.putProperty(MacroDirectiveHandler.MACRO_TYPE, (String)entry.getKey(), context.lookupProperty(BlockDefineDirectiveHandler.BLOCK_TYPE, (String)entry.getValue()));
 			}
 		} else {
 			throw new java.lang.IllegalArgumentException("$using 指令必需指定宏名称与块名称的对应关系! 如: $using{macroName: \"blockName\"}");

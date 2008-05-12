@@ -3,7 +3,7 @@ package org.commontemplate.core.event;
 /**
  * 对象仓库中的对象值改变事件
  * 
- * @see org.commontemplate.core.ObjectStorage
+ * @see org.commontemplate.core.PropertyStorage
  * @author liangfei0201@163.com
  *
  */

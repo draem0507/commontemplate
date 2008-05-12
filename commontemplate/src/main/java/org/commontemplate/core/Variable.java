@@ -10,7 +10,7 @@ public abstract class Variable extends Parameter {
 
 	// 语义的默认实现
 	public Object evaluate(VariableResolver context) throws EvaluationException {
-		return context.lookupVariable(getName());
+		return context.getVariable(getName());
 	}
 
 }

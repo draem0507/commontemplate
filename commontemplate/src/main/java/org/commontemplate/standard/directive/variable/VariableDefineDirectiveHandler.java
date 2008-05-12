@@ -7,7 +7,7 @@ import org.commontemplate.core.Context;
 
 /**
  * 变量定义指令.
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
@@ -16,8 +16,8 @@ public class VariableDefineDirectiveHandler extends DirectiveHandlerSupport {
 	private static final long serialVersionUID = 1L;
 
 	public void doRender(Context context, String directiveName, Object param) throws Exception {
-		Entry model = (Entry)param;
-		context.defineVariable(model.getKey().toString(), model.getValue());
+		Entry entry = (Entry)param;
+		context.putVariable(String.valueOf(entry.getKey()), entry.getValue());
 	}
 
 }

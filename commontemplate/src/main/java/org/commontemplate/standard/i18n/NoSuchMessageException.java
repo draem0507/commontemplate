@@ -1,4 +1,4 @@
-package org.commontemplate.core;
+package org.commontemplate.standard.i18n;
 
 import java.util.Locale;
 

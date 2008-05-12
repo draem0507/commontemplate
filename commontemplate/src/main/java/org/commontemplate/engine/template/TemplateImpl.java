@@ -88,7 +88,7 @@ final class TemplateImpl extends Template implements Serializable {
 		return rootDirective.getCanonicalForm();
 	}
 
-	public final String getOriginalText() {
+	public final String getSource() {
 		return null;
 	}
 

@@ -5,13 +5,7 @@ import java.util.Map.Entry;
 import org.commontemplate.core.Context;
 import org.commontemplate.standard.directive.DirectiveHandlerSupport;
 
-/**
- * 默认值定义指令. 当变量为空时赋值.
- *
- * @author liangfei0201@163.com
- *
- */
-public class VariableInitializeDirectiveHandler extends DirectiveHandlerSupport {
+public class LocalAssignDirectiveHandler extends DirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
@@ -19,7 +13,9 @@ public class VariableInitializeDirectiveHandler extends DirectiveHandlerSupport 
 		Entry model = (Entry)param;
 		String var = model.getKey().toString();
 		Object value = model.getValue();
-		if (context.getVariable(var) == null) {
+		if (context.isVariableContained(var)) {
+			context.setVariable(var, value);
+		} else {
 			context.putVariable(var, value);
 		}
 	}

@@ -21,7 +21,7 @@ public class BlockDefineDirectiveHandler extends BlockDirectiveHandlerSupport {
 		if (param == null)
 			throw new java.lang.IllegalArgumentException("$block 指令必需指定块定义名称! 如: $block{\"blockName\"}");
 		String var = (String)param;
-		context.getSuperLocalContext().putObject(BLOCK_TYPE, var, innerElements);
+		context.getSuperLocalContext().putProperty(BLOCK_TYPE, var, innerElements);
 	}
 
 }

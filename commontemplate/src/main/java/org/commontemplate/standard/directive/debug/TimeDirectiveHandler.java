@@ -19,7 +19,7 @@ public class TimeDirectiveHandler extends BlockDirectiveHandlerSupport {
 	public void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
 		long beginTime = System.currentTimeMillis();
 		DirectiveUtils.renderAll(innerElements, context);
-		context.getRootLocalContext().defineReadonlyVariable((String)param, new Long(System.currentTimeMillis() - beginTime));
+		context.getRootLocalContext().putReadonlyVariable((String)param, new Long(System.currentTimeMillis() - beginTime));
 	}
 	
 }

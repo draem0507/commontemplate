@@ -7,19 +7,18 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
+import org.commontemplate.core.Block;
 import org.commontemplate.core.Context;
-import org.commontemplate.core.DefinedException;
 import org.commontemplate.core.Event;
+import org.commontemplate.core.EventListener;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.GlobalContext;
 import org.commontemplate.core.LocalContext;
-import org.commontemplate.core.NoSuchMessageException;
 import org.commontemplate.core.OutputFilter;
 import org.commontemplate.core.OutputFormatter;
 import org.commontemplate.core.ParsingException;
 import org.commontemplate.core.Resource;
 import org.commontemplate.core.Template;
-import org.commontemplate.core.UndefinedException;
 import org.commontemplate.core.VariableException;
 
 /**
@@ -36,25 +35,37 @@ public abstract class ContextProxy extends Context {
 		this.context = context;
 	}
 
-	public void assignVariable(String name, Object value)
-			throws UndefinedException, VariableException {
-		context.assignVariable(name, value);
+	public void addEventListener(EventListener listener) {
+		context.addEventListener(listener);
+	}
+
+	public void addVariableAlias(String alias, String name)
+			throws VariableException {
+		context.addVariableAlias(alias, name);
 	}
 
 	public void clear() {
 		context.clear();
 	}
 
+	public void clearEventListeners() {
+		context.clearEventListeners();
+	}
+
+	public void clearExistedVariables() {
+		context.clearExistedVariables();
+	}
+
 	public void clearLocalContexts() {
 		context.clearLocalContexts();
 	}
 
-	public void clearObjects() {
-		context.clearObjects();
-	}
-
 	public void clearOutputFormatters() {
 		context.clearOutputFormatters();
+	}
+
+	public void clearProperties() {
+		context.clearProperties();
 	}
 
 	public void clearStatus() {
@@ -77,49 +88,8 @@ public abstract class ContextProxy extends Context {
 		return context.createContext();
 	}
 
-	public void debug(String msg, Throwable e) {
-		context.debug(msg, e);
-	}
-
-	public void debug(String msg) {
-		context.debug(msg);
-	}
-
-	public void defineAllVariables(Map variables) throws DefinedException,
-			VariableException {
-		context.defineAllVariables(variables);
-	}
-
-	public void defineReadonlyVariable(String name, Object value)
-			throws DefinedException, VariableException {
-		context.defineReadonlyVariable(name, value);
-	}
-
-	public void defineVariable(String name, Object value)
-			throws DefinedException, VariableException {
-		context.defineVariable(name, value);
-	}
-
-	public void defineVariable(String name) throws DefinedException,
-			VariableException {
-		context.defineVariable(name);
-	}
-
-	public void defineVariableAlias(String alias, String name)
-			throws VariableException {
-		context.defineVariableAlias(alias, name);
-	}
-
 	public boolean equals(Object obj) {
 		return context.equals(obj);
-	}
-
-	public void error(String msg, Throwable e) {
-		context.error(msg, e);
-	}
-
-	public void error(String msg) {
-		context.error(msg);
 	}
 
 	public LocalContext findLocalContext(String name) {
@@ -134,6 +104,14 @@ public abstract class ContextProxy extends Context {
 		return context.format(content);
 	}
 
+	public boolean getBooleanStatus(String name) {
+		return context.getBooleanStatus(name);
+	}
+
+	public Block getLocalContextBlock() {
+		return context.getLocalContextBlock();
+	}
+
 	public LocalContext getCurrentLocalContext() {
 		return context.getCurrentLocalContext();
 	}
@@ -142,8 +120,8 @@ public abstract class ContextProxy extends Context {
 		return context.getCurrentTemplate();
 	}
 
-	public Map getDefinedVariables() {
-		return context.getDefinedVariables();
+	public Map getExistedVariables() {
+		return context.getExistedVariables();
 	}
 
 	public OutputFormatter getGeneralOutputFormatter() {
@@ -166,23 +144,6 @@ public abstract class ContextProxy extends Context {
 		return context.getLocale();
 	}
 
-	public String getMessage(String key, Object[] args, String defaultValue) {
-		return context.getMessage(key, args, defaultValue);
-	}
-
-	public String getMessage(String key, Object[] args)
-			throws NoSuchMessageException {
-		return context.getMessage(key, args);
-	}
-
-	public String getMessage(String key, String defaultValue) {
-		return context.getMessage(key, defaultValue);
-	}
-
-	public String getMessage(String key) throws NoSuchMessageException {
-		return context.getMessage(key);
-	}
-
 	public Writer getOut() {
 		return context.getOut();
 	}
@@ -193,6 +154,10 @@ public abstract class ContextProxy extends Context {
 
 	public OutputFormatter getOutputFormatter(Class type) {
 		return context.getOutputFormatter(type);
+	}
+
+	public Object getProperty(String name) {
+		return context.getProperty(name);
 	}
 
 	public LocalContext getRootLocalContext() {
@@ -225,48 +190,32 @@ public abstract class ContextProxy extends Context {
 		return context.getTimeZone();
 	}
 
+	public Object getVariable(String name) throws VariableException {
+		return context.getVariable(name);
+	}
+
+	public Map getVariables() {
+		return context.getVariables();
+	}
+
 	public int hashCode() {
 		return context.hashCode();
 	}
 
-	public void info(String msg) {
-		context.info(msg);
+	public boolean isDebug() {
+		return context.isDebug();
 	}
 
-	public boolean isDebugEnabled() {
-		return context.isDebugEnabled();
+	public boolean isVariableContained(String name) throws VariableException {
+		return context.isVariableContained(name);
 	}
 
-	public boolean isDebugMode() {
-		return context.isDebugMode();
+	public boolean isVariableExisted(String name) throws VariableException {
+		return context.isVariableExisted(name);
 	}
 
-	public boolean isDefinedVariable(String name) throws VariableException {
-		return context.isDefinedVariable(name);
-	}
-
-	public boolean isErrorEnabled() {
-		return context.isErrorEnabled();
-	}
-
-	public boolean isFatalEnabled() {
-		return context.isFatalEnabled();
-	}
-
-	public boolean isInfoEnabled() {
-		return context.isInfoEnabled();
-	}
-
-	public boolean isOver() {
-		return context.isOver();
-	}
-
-	public boolean isStep() {
-		return context.isStep();
-	}
-
-	public boolean isWarnEnabled() {
-		return context.isWarnEnabled();
+	public boolean isVariablesLocked() {
+		return context.isVariablesLocked();
 	}
 
 	public Resource loadResource(String name, String encoding)
@@ -282,16 +231,8 @@ public abstract class ContextProxy extends Context {
 		context.lockVariables();
 	}
 
-	public Object lookupObject(String type, String name) {
-		return context.lookupObject(type, name);
-	}
-
-	public Object lookupObject(String name) {
-		return context.lookupObject(name);
-	}
-
-	public Object lookupVariable(String name) throws VariableException {
-		return context.lookupVariable(name);
+	public Object lookupProperty(String type, String name) {
+		return context.lookupProperty(type, name);
 	}
 
 	public void output(Object content) throws IOException {
@@ -326,6 +267,10 @@ public abstract class ContextProxy extends Context {
 
 	public void pushLocalContext() {
 		context.pushLocalContext();
+	}
+
+	public void pushLocalContext(Block block) {
+		context.pushLocalContext(block);
 	}
 
 	public void pushLocalContext(Map variablesContainer) {
@@ -384,28 +329,45 @@ public abstract class ContextProxy extends Context {
 		context.putAll(map);
 	}
 
-	public void putObject(String name, Object value) {
-		context.putObject(name, value);
+	public void putAllVariables(Map variables) throws VariableException {
+		context.putAllVariables(variables);
 	}
 
-	public void putObject(String type, String name, Object value) {
-		context.putObject(type, name, value);
+	public void putNullVariable(String name) throws VariableException {
+		context.putNullVariable(name);
+	}
+
+	public void putProperty(String name, Object value) {
+		context.putProperty(name, value);
+	}
+
+	public void putProperty(String type, String name, Object value) {
+		context.putProperty(type, name, value);
+	}
+
+	public void putReadonlyVariable(String name, Object value)
+			throws VariableException {
+		context.putReadonlyVariable(name, value);
+	}
+
+	public void putVariable(String name, Object value) throws VariableException {
+		context.putVariable(name, value);
 	}
 
 	public String relateTemplateName(String name) {
 		return context.relateTemplateName(name);
 	}
 
+	public void removeEventListener(EventListener listener) {
+		context.removeEventListener(listener);
+	}
+
+	public void removeExistedVariable(String name) throws VariableException {
+		context.removeExistedVariable(name);
+	}
+
 	public void removeGeneralOutputFormatter() {
 		context.removeGeneralOutputFormatter();
-	}
-
-	public void removeObject(String type, String name) {
-		context.removeObject(type, name);
-	}
-
-	public void removeObject(String name) {
-		context.removeObject(name);
 	}
 
 	public void removeOutputFilter() {
@@ -416,12 +378,19 @@ public abstract class ContextProxy extends Context {
 		context.removeOutputFormatter(type);
 	}
 
+	public void removeProperty(String type, String name) {
+		context.removeProperty(type, name);
+	}
+
+	public void removeProperty(String name) {
+		context.removeProperty(name);
+	}
+
 	public void removeStatus(String name) {
 		context.removeStatus(name);
 	}
 
-	public void removeVariable(String name) throws UndefinedException,
-			VariableException {
+	public void removeVariable(String name) throws VariableException {
 		context.removeVariable(name);
 	}
 
@@ -429,8 +398,20 @@ public abstract class ContextProxy extends Context {
 		context.removeVariableAlias(alias);
 	}
 
+	public void setBooleanStatus(String name, boolean value) {
+		context.setBooleanStatus(name, value);
+	}
+
+	public void setDebug(boolean debug) {
+		context.setDebug(debug);
+	}
+
 	public void setGeneralOutputFormatter(OutputFormatter outputFormatter) {
 		context.setGeneralOutputFormatter(outputFormatter);
+	}
+
+	public void setLocale(Locale locale) {
+		context.setLocale(locale);
 	}
 
 	public void setOutputFilter(OutputFilter outputFilter) {
@@ -441,16 +422,16 @@ public abstract class ContextProxy extends Context {
 		context.setOutputFormatter(type, outputFormatter);
 	}
 
-	public void setOver(boolean over) {
-		context.setOver(over);
-	}
-
 	public void setStatus(String name, Object value) {
 		context.setStatus(name, value);
 	}
 
-	public void setStep(boolean step) {
-		context.setStep(step);
+	public void setTimeZone(TimeZone timeZone) {
+		context.setTimeZone(timeZone);
+	}
+
+	public void setVariable(String name, Object value) throws VariableException {
+		context.setVariable(name, value);
 	}
 
 	public String toString() {
@@ -459,14 +440,6 @@ public abstract class ContextProxy extends Context {
 
 	public void unlockVariables() {
 		context.unlockVariables();
-	}
-
-	public void warn(String msg, Throwable e) {
-		context.warn(msg, e);
-	}
-
-	public void warn(String msg) {
-		context.warn(msg);
 	}
 
 }

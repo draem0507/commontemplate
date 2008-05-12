@@ -52,17 +52,16 @@ class BlockDirectiveImpl extends BlockDirectiveSupport {
 	}
 
 	void doRender(Context context) throws RenderingException {
-		context.pushLocalContext();
+		BlockDirectiveProxy proxy = new BlockDirectiveProxy(this);
+		context.pushLocalContext(proxy);
 		try {
-			try {
-				startDirectiveHandler.doRender(context, new BlockDirectiveProxy(this));
-			} catch (RenderingException e) {
-				throw e;
-			} catch (IgnoreException e) {
-				throw e;
-			} catch (Exception e) {
-				throw new RenderingException(this, e);
-			}
+			startDirectiveHandler.doRender(context, proxy);
+		} catch (RenderingException e) {
+			throw e;
+		} catch (IgnoreException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new RenderingException(this, e);
 		} finally {
 			context.popLocalContext();
 		}
