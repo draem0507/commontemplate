@@ -3,7 +3,7 @@ package org.commontemplate.util.scanner;
 import java.io.IOException;
 
 /**
- * 分解器
+ * 状态机扫描器
  *
  * @author liangfei0201@163.com
  *

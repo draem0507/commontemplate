@@ -1,7 +1,6 @@
 package org.commontemplate.config;
 
 import org.commontemplate.core.EventListener;
-import org.commontemplate.core.Logger;
 import org.commontemplate.core.OutputFormatter;
 import org.commontemplate.core.ResourceLoader;
 
@@ -49,27 +48,13 @@ public abstract class Configuration extends TemplateConfiguration {
 	public abstract ResourceComparator getResourceComparator();
 
 	/**
-	 * 获取日志输出端
-	 *
-	 * @return 日志输出端
-	 */
-	public abstract Logger getLogger();
-
-	/**
 	 * 获取是否为调试模式设置
 	 *
 	 * @return 是否为调试模式
 	 */
-	public boolean isDebugMode() {
+	public boolean isDebug() {
 		return false;
 	}
-
-	/**
-	 * 获取国际化资源工厂
-	 *
-	 * @return 国际化资源工厂
-	 */
-	public abstract ResourceBundleProvider getResourceBundleProvider();
 
 	/**
 	 * 获取默认的格式化过滤器

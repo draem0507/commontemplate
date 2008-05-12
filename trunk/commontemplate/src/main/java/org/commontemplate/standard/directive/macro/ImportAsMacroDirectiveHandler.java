@@ -48,7 +48,7 @@ public class ImportAsMacroDirectiveHandler extends DirectiveHandlerSupport {
 		} else {
 			elements = template.getElements();
 		}
-		context.putObject(MacroDirectiveHandler.MACRO_TYPE, macroName, elements);
+		context.putProperty(MacroDirectiveHandler.MACRO_TYPE, macroName, elements);
 	}
 
 }

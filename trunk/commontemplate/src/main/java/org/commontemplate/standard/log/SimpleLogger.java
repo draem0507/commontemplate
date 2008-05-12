@@ -1,6 +1,5 @@
 package org.commontemplate.standard.log;
 
-import org.commontemplate.core.Logger;
 
 public class SimpleLogger implements Logger {
 

@@ -20,7 +20,7 @@ public class CycleDirectiveHandler extends DirectiveHandlerSupport {
 		Entry params = (Entry)param;
 		String var = params.getKey().toString();
 		List list = (List)params.getValue();
-		context.defineVariable(var, new Cycle(list));
+		context.putVariable(var, new Cycle(list));
 	}
 
 }

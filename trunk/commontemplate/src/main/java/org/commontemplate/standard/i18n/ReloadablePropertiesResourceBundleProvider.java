@@ -3,7 +3,6 @@ package org.commontemplate.standard.i18n;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import org.commontemplate.config.ResourceBundleProvider;
 
 /**
  * 可热加载的国际化信息供给器

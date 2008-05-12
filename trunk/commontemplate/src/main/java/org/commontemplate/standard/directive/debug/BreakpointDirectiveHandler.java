@@ -8,7 +8,7 @@ public class BreakpointDirectiveHandler extends DirectiveHandlerSupport {
 	private static final long serialVersionUID = 1L;
 
 	public void doRender(Context context, String directiveName, Object param) throws Exception {
-		context.setStep(true);
+		context.getRootLocalContext().setBooleanStatus(DebugInterceptor.STEP_STATUS, true);
 	}
 
 }

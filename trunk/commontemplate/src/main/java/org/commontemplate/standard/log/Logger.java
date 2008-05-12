@@ -1,4 +1,4 @@
-package org.commontemplate.core;
+package org.commontemplate.standard.log;
 
 /**
  * 日志接口 <p/> 声明：引用自commons-logging

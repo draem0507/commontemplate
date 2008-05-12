@@ -6,13 +6,13 @@ package org.commontemplate.config;
  * @author liangfei0201@163.com
  *
  */
-public interface ElementInterceptor {
+public interface RenderInterceptor {
 
 	/**
 	 * 拦截模块元素渲染过程
 	 *
 	 * @param rendition 模块元素待渲染过程封装
 	 */
-	void intercept(ElementRendition rendition);
+	void intercept(Rendition rendition);
 
 }

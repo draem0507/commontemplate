@@ -9,7 +9,7 @@ import org.commontemplate.core.Element;
  * @author liangfei0201@163.com
  *
  */
-public interface ElementRendition {
+public interface Rendition {
 
 	/**
 	 * 获取待渲染模块元素

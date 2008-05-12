@@ -53,7 +53,7 @@ public class ExpressionEvaluator implements VariableResolver {
 	
 	// 适配VariableResolver ---------
 
-	public Object lookupVariable(String name) throws VariableException {
+	public Object getVariable(String name) throws VariableException {
 		return variables.get(name);
 	}
 	

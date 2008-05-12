@@ -31,14 +31,14 @@ public class WebContext extends ContextProxy {
 		this.request = request;
 		this.response = response;
 		context.pushLocalContext();
-		context.defineReadonlyVariable("global", context.getGlobalContext());
-		context.defineReadonlyVariable("request", request);
-		context.defineReadonlyVariable("response", response);
-		context.defineReadonlyVariable("session", getSession());
-		context.defineReadonlyVariable("servletContext", getServletContext());
+		context.putReadonlyVariable("global", context.getGlobalContext());
+		context.putReadonlyVariable("request", request);
+		context.putReadonlyVariable("response", response);
+		context.putReadonlyVariable("session", getSession());
+		context.putReadonlyVariable("servletContext", getServletContext());
 		// 用于内部处理 ----
-		context.putObject(REQUEST_KEY, request);
-		context.putObject(RESPONSE_KEY, response);
+		context.putProperty(REQUEST_KEY, request);
+		context.putProperty(RESPONSE_KEY, response);
 	}
 
 	public HttpServletRequest getRequest() {

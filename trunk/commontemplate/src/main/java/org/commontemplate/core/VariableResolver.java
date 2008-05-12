@@ -19,6 +19,6 @@ public interface VariableResolver {
 	 * @throws VariableException
 	 *             当传入非法变量名时抛出
 	 */
-	public abstract Object lookupVariable(String name) throws VariableException;
+	public abstract Object getVariable(String name) throws VariableException;
 
 }

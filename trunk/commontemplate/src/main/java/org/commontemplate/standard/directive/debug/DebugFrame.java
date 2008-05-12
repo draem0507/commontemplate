@@ -80,6 +80,10 @@ class DebugFrame implements ActionListener, WindowListener {
 
 	private JTree contextTree;
 
+	private JTextField variableType;
+
+	private JTextArea variableView;
+
 	private DebugFrame() {
 		frame = new JFrame("Common Template Debugging (http://www.commontemplate.org)");
 		frame.setIconImage(Toolkit.getDefaultToolkit().createImage(DebugFrame.class.getClassLoader().getResource(ICON_PATH + "debug.gif")));
@@ -165,11 +169,11 @@ class DebugFrame implements ActionListener, WindowListener {
 	}
 
 	private JComponent createContextPane() {
-		final JTextField variableType = new JTextField();
+		variableType = new JTextField();
 		variableType.setEditable(false);
 		variableType.setBackground(Color.WHITE);
 
-		final JTextArea variableView = new JTextArea();
+		variableView = new JTextArea();
 		variableView.setEditable(false);
 		variableView.setBackground(Color.WHITE);
 		variableView.setLineWrap(true);
@@ -271,7 +275,7 @@ class DebugFrame implements ActionListener, WindowListener {
 
 	private void initContextPane(Context context) {
 		VariableTreeNode root = new VariableTreeNode("variables", null);
-		buildContextTree(root, context.getDefinedVariables());
+		buildContextTree(root, context.getExistedVariables());
 		contextTree.setModel(new DefaultTreeModel(root));
 	}
 
@@ -375,7 +379,6 @@ class DebugFrame implements ActionListener, WindowListener {
 		} else {
 			closeFrame();
 		}
-
 	}
 
 	private void enableToolbar() {
@@ -393,6 +396,8 @@ class DebugFrame implements ActionListener, WindowListener {
 		resume.setEnabled(false);
 		terminate.setEnabled(false);
 		elementBox.setText("");
+		variableType.setText("");
+		variableView.setText("");
 		templateView.setText(templateValue);
 	}
 

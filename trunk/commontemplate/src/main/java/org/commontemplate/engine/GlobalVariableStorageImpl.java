@@ -8,8 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.commontemplate.config.Keywords;
-import org.commontemplate.core.DefinedException;
-import org.commontemplate.core.UndefinedException;
+import org.commontemplate.core.ReadonlyException;
 import org.commontemplate.core.VariableException;
 
 /**
@@ -20,104 +19,138 @@ import org.commontemplate.core.VariableException;
  */
 final class GlobalVariableStorageImpl extends VariableStorageSupport {
 
+	// 变量容器, 不为空
+	private final Map variablesContainer = new HashMap();
+
+	// 变量别名容器, 不为空
+	private final Map aliasContainer = new HashMap();
+
+	// 只读变量容器, 不为空
+	private final Set readonlyContainer = new HashSet();
+
+	// 变量容器只读锁
+	private boolean lock = false;
+
 	GlobalVariableStorageImpl(Keywords keywords) {
 		super(keywords);
 	}
 
-	private final Map variablesContainer = new HashMap();
-
-	private final Map aliasContainer = new HashMap();
-
-	private final Set readonlyContainer = new HashSet();
-
-	private boolean isLock = false;
-
 	public synchronized void lockVariables() {
-		this.isLock = true;
+		this.lock = true;
 	}
 
 	public synchronized void unlockVariables() {
-		this.isLock = false;
+		this.lock = false;
 	}
 
-	public synchronized boolean isDefinedVariable(String name) throws VariableException {
+	public synchronized boolean isVariablesLocked() {
+		return lock;
+	}
+
+	public synchronized boolean isVariableContained(String name) throws VariableException {
+		assertVariableName(name);
 		return variablesContainer.containsKey(name);
 	}
 
-	public synchronized void defineVariable(String name, Object value)
-			throws DefinedException, VariableException {
-		if (isLock)
-			throw new VariableException("容器锁定!", name);
+	public synchronized void putVariable(String name, Object value)
+			throws VariableException {
+		assertVariableName(name);
+		if (lock)
+			throw new ReadonlyException("变量容器锁定! 无法定义：" + name, name);
+		if (readonlyContainer.contains(name))
+			throw new ReadonlyException(name + " 为只读变量!", name);
 		variablesContainer.put(name, value);
 	}
 
-	public synchronized void defineVariable(String name) throws DefinedException,
-			VariableException {
-		defineVariable(name, null);
+	public synchronized void putNullVariable(String name) throws VariableException {
+		putVariable(name, null);
 	}
 
-	public synchronized void defineReadonlyVariable(String name, Object value)
-			throws DefinedException, VariableException {
-		defineVariable(name, value);
+	public synchronized void putReadonlyVariable(String name, Object value)
+			throws VariableException {
+		putVariable(name, value);
 		readonlyContainer.add(name);
 	}
 
-	public synchronized void defineAllVariables(Map variables) throws DefinedException,
-			VariableException {
-		if (isLock)
-			throw new VariableException("容器锁定!", variables.keySet().toString());
-		this.variablesContainer.putAll(variables);
+	public synchronized void putAllVariables(Map variables) throws VariableException {
+		if (variables != null && variables.size() > 0) {
+			for (Iterator iterator = variables.entrySet().iterator(); iterator.hasNext();) {
+				Map.Entry entry = (Map.Entry)iterator.next();
+				Object key = entry.getKey();
+				Object value = entry.getValue();
+				if (! (key instanceof String))
+					throw new VariableException("变量名必需为String类型!", String.valueOf(key));
+				String name = (String)key;
+				putVariable(name, value);
+			}
+		}
 	}
 
-	public synchronized void defineVariableAlias(String alias, String name)
+	public synchronized void addVariableAlias(String alias, String name)
 			throws VariableException {
+		assertVariableName(alias);
+		assertVariableName(name);
 		aliasContainer.put(alias, name);
 	}
 
-	public synchronized void assignVariable(String name, Object value)
-			throws UndefinedException, VariableException {
-		if (isLock)
-			throw new VariableException("容器锁定!", name);
-		variablesContainer.put(name, value);
+	public synchronized void setVariable(String name, Object value)
+			throws VariableException {
+		if (isVariableContained(name)) {
+			if (lock)
+				throw new ReadonlyException("容器锁定!", name);
+			variablesContainer.put(name, value);
+		}
 	}
 
-	public synchronized Object lookupVariable(String name) throws VariableException {
+	public synchronized Object getVariable(String name) throws VariableException {
+		assertVariableName(name);
 		return variablesContainer.get(name);
 	}
 
-	public synchronized Map getDefinedVariables() {
+	public synchronized Map getVariables() {
 		return Collections.unmodifiableMap(variablesContainer);
 	}
 
 	public synchronized void removeVariableAlias(String alias) throws VariableException {
+		assertVariableName(alias);
 		aliasContainer.remove(alias);
 	}
 
-	public synchronized void removeVariable(String var) throws UndefinedException,
-			VariableException {
-		if (isLock)
-			throw new VariableException("变量容器锁定! 无法移除：" + var, var);
-		assertVariableName(var);
-		variablesContainer.remove(var);
-		readonlyContainer.remove(var);
-		Set dels = new HashSet();
+	public synchronized void removeVariable(String name) throws VariableException {
+		assertVariableName(name);
+		if (lock)
+			throw new ReadonlyException("变量容器锁定! 无法移除：" + name, name);
+		variablesContainer.remove(name);
+		readonlyContainer.remove(name);
 		for (Iterator iterator = aliasContainer.entrySet().iterator(); iterator.hasNext();) {
 			Map.Entry entry = (Map.Entry)iterator.next();
-			if (var.equals(entry.getValue())) {
-				dels.add(entry.getKey());
+			if (name.equals(entry.getValue())) {
+				iterator.remove();
 			}
 		}
-		for (Iterator iterator = dels.iterator(); iterator.hasNext();) {
-			Object key = iterator.next();
-			aliasContainer.remove(key);
-		}
-		dels.clear();
 	}
 
 	public synchronized void clearVariables() {
+		unlockVariables();
 		variablesContainer.clear();
 		aliasContainer.clear();
 		readonlyContainer.clear();
+	}
+
+	public synchronized Map getExistedVariables() {
+		return getVariables();
+	}
+
+	public synchronized boolean isVariableExisted(String name) throws VariableException {
+		return isVariableContained(name);
+	}
+
+	public synchronized void clearExistedVariables() {
+		clearVariables();
+	}
+
+	public synchronized void removeExistedVariable(String name) throws VariableException {
+		removeVariable(name);
 	}
 
 }

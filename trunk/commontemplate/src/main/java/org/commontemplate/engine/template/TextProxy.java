@@ -1,6 +1,5 @@
 package org.commontemplate.engine.template;
 
-import org.commontemplate.core.BreakVisitException;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Text;
@@ -23,7 +22,7 @@ final class TextProxy extends Text {
 		this.text = text;
 	}
 
-	public void accept(Visitor visitor) throws BreakVisitException {
+	public void accept(Visitor visitor) {
 		text.accept(visitor);
 	}
 

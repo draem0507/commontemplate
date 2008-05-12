@@ -3,7 +3,6 @@ package org.commontemplate.engine.template;
 import java.util.List;
 
 import org.commontemplate.core.BlockDirective;
-import org.commontemplate.core.BreakVisitException;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.RenderingException;
@@ -26,7 +25,7 @@ class BlockDirectiveProxy extends BlockDirective {
 		this.blockDirective = blockDirective;
 	}
 
-	public void accept(Visitor visitor) throws BreakVisitException {
+	public void accept(Visitor visitor) {
 		blockDirective.accept(visitor);
 	}
 

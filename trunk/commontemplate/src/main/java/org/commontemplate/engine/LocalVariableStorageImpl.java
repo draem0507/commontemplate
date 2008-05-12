@@ -9,167 +9,226 @@ import java.util.Set;
 
 import org.commontemplate.config.Keywords;
 import org.commontemplate.core.Context;
-import org.commontemplate.core.DefinedException;
+import org.commontemplate.core.GlobalContext;
 import org.commontemplate.core.LocalContext;
-import org.commontemplate.core.UndefinedException;
+import org.commontemplate.core.ReadonlyException;
 import org.commontemplate.core.VariableException;
 import org.commontemplate.core.event.VariableChangedEvent;
 import org.commontemplate.util.Assert;
 
 /**
  * 局部变量存储器实现
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
 final class LocalVariableStorageImpl extends VariableStorageSupport {
 
+	// 上级局部上下文, 当前为根级时为空
 	private final LocalContext superLocalContext;
 
+	// 当前上下文, 不为空
 	private final Context context;
-	
-	LocalVariableStorageImpl(LocalContext superLocalContext, Map variablesContainer, Context context, Keywords keywords) {
-		super(keywords);
-		Assert.assertNotNull(context);
-		
-		this.superLocalContext = superLocalContext;
-		this.context = context;
-		this.variablesContainer = (variablesContainer == null ? new HashMap() : variablesContainer);
-	}
 
+	// 全局上下文, 不为空
+	private final GlobalContext globalContext;
+
+	// 变量容器, 不为空
 	private final Map variablesContainer;
-	
+
+	// 变量别名容器, 不为空
 	private final Map aliasContainer = new HashMap();
 
+	// 只读变量容器, 不为空
 	private final Set readonlyContainer = new HashSet();
-	
-	private void variableChanged(String name, Object oldValue, Object newValue) {
-		if ((newValue == null && oldValue != null)
-				|| (newValue != null && ! newValue.equals(oldValue))) {
-			context.publishEvent(new VariableChangedEvent(this, name, oldValue, newValue));
+
+	// 变量容器只读锁
+	private boolean lock = false;
+
+	LocalVariableStorageImpl(LocalContext superLocalContext, Map variablesContainer, Context context, Keywords keywords) {
+		super(keywords);
+		this.superLocalContext = superLocalContext;
+		this.context = context;
+		Assert.assertNotNull(this.context);
+		this.globalContext = context.getGlobalContext();
+		Assert.assertNotNull(this.globalContext);
+		if (variablesContainer != null) {
+			this.variablesContainer = variablesContainer;
+		} else {
+			this.variablesContainer = new HashMap();
 		}
 	}
 
-	public boolean isDefinedVariable(String var) throws VariableException {
-		assertVariableName(var);
-		return variablesContainer.containsKey(var);
+	// 变量变化事件
+	private void variableChanged(String name, Object oldValue, Object newValue) {
+		if (isChanged(oldValue, newValue))
+			context.publishEvent(new VariableChangedEvent(this, name, oldValue, newValue));
 	}
 
-	public void defineVariable(String var, Object obj) throws DefinedException, VariableException {
-		if (isLock) 
-			throw new VariableException("变量容器锁定! 无法定义：" + var, var);
-		assertVariableName(var);
-		if (isDefinedVariable(var)) 
-			throw new DefinedException(var + " 已经定义!", var);
-		
-		variablesContainer.put(var, obj);
-		variableChanged(var, null, obj);
+	// 变量是否变化
+	private boolean isChanged(Object oldValue, Object newValue) {
+		if (oldValue == null && newValue == null)
+			return false;
+		if (oldValue == null || newValue == null)
+			return true;
+		return ! newValue.equals(oldValue);
 	}
 
-	public void defineVariable(String var) throws DefinedException, VariableException {
-		defineVariable(var, null);
+	public boolean isVariableContained(String name) throws VariableException {
+		assertVariableName(name);
+		return variablesContainer.containsKey(name);
 	}
 
-	public void defineReadonlyVariable(String name, Object value) throws DefinedException, VariableException {
-		defineVariable(name, value);
-		readonlyContainer.add(name);
+	public void putVariable(String name, Object value) throws VariableException {
+		assertVariableName(name);
+		if (lock)
+			throw new ReadonlyException("变量容器锁定! 无法定义：" + name, name);
+		if (readonlyContainer.contains(name))
+			throw new ReadonlyException(name + " 为只读变量!", name);
+		Object old = variablesContainer.get(name);
+		variablesContainer.put(name, value);
+		variableChanged(name, old, value);
 	}
 
-	public void defineVariableAlias(String alias, String name)
+	public void putNullVariable(String name) throws VariableException {
+		putVariable(name, null);
+	}
+
+	public void putReadonlyVariable(String name, Object value) throws VariableException {
+		putVariable(name, value);
+		readonlyContainer.add(name); // 注册只读状态
+	}
+
+	public void putAllVariables(Map variables) throws VariableException {
+		if (variables != null && variables.size() > 0) {
+			for (Iterator iterator = variables.entrySet().iterator(); iterator.hasNext();) {
+				Map.Entry entry = (Map.Entry)iterator.next();
+				Object key = entry.getKey();
+				Object value = entry.getValue();
+				if (! (key instanceof String))
+					throw new VariableException("变量名必需为String类型!", String.valueOf(key));
+				String name = (String)key;
+				putVariable(name, value);
+			}
+		}
+	}
+
+	public void addVariableAlias(String alias, String name)
 			throws VariableException {
-		aliasContainer.put(alias, name);
-	}
-
-	public void defineAllVariables(Map variables) throws DefinedException, VariableException {
-		if (isLock) 
-			throw new VariableException("变量容器锁定! 无法定义：" + variables.keySet().toString(), variables.keySet().toString());
-		assertVariables(variables);
-		variablesContainer.putAll(variables);
+		assertVariableName(alias);
+		assertVariableName(name);
+		aliasContainer.put(alias, name); // 注册别名
 	}
 
 	public void removeVariableAlias(String alias) throws VariableException {
+		assertVariableName(alias);
 		aliasContainer.remove(alias);
 	}
 
-	public void assignVariable(String var, Object obj) throws UndefinedException, VariableException {
-		if (isLock) 
-			throw new VariableException("变量容器锁定! 无法赋值：" + var, var);
-		assertVariableName(var);
-		if (isDefinedVariable(var)) {
-			if (readonlyContainer.contains(var)) 
-				throw new VariableException(var + " 为只读变量!", var);
-			Object old = variablesContainer.get(var);
-			variablesContainer.put(var, obj);
-			variableChanged(var, old, obj);
-		} else {
-			if (superLocalContext == null)
-				context.getGlobalContext().assignVariable(var, obj);
-			else
-				superLocalContext.assignVariable(var, obj);
-		}
+	public boolean isVariablesLocked() {
+		return lock;
 	}
-	
-	private boolean isLock = false;
 
 	public void lockVariables() {
-		this.isLock = true;
-	}
-	
-	public void unlockVariables() {
-		isLock = false;
+		this.lock = true;
 	}
 
-	public Object lookupVariable(String var) throws UndefinedException, VariableException {
-		if (keywords.getSuperLocalContextKeyword().equals(var))
-			if (superLocalContext == null)
-				return context.getGlobalContext();
-			else
-				return superLocalContext;
-		if (keywords.getContextKeyword().equals(var))
-			return context;
-		assertVariableName(var);
-		if (isDefinedVariable(var)) {
-			return variablesContainer.get(var);
-		} else if (aliasContainer.containsKey(var)) {
-			return variablesContainer.get(aliasContainer.get(var));
+	public void unlockVariables() {
+		lock = false;
+	}
+
+	public void setVariable(String name, Object value) throws VariableException {
+		if (isVariableContained(name)) {
+			putVariable(name, value);
 		} else {
-			if (superLocalContext == null) 
-				return context.getGlobalContext().lookupVariable(var);
+			if (superLocalContext != null)
+				superLocalContext.setVariable(name, value);
 			else
-				return superLocalContext.lookupVariable(var);
+				globalContext.setVariable(name, value);
 		}
 	}
 
-	public void removeVariable(String var) throws UndefinedException, VariableException {
-		if (isLock) 
-			throw new VariableException("变量容器锁定! 无法移除：" + var, var);
-		assertVariableName(var);
-		Object old = variablesContainer.get(var);
-		variablesContainer.remove(var);
-		readonlyContainer.remove(var);
-		Set dels = new HashSet();
+	public Object getVariable(String name) throws VariableException {
+		if (keywords.getSuperLocalContextKeyword().equals(name)) {
+			if (superLocalContext != null)
+				return superLocalContext;
+			else
+				return globalContext;
+		}
+		if (keywords.getContextKeyword().equals(name))
+			return context;
+		assertVariableName(name);
+		if (variablesContainer.containsKey(name)) {
+			return variablesContainer.get(name);
+		} else if (aliasContainer.containsKey(name)) {
+			return variablesContainer.get(aliasContainer.get(name));
+		} else {
+			if (superLocalContext != null)
+				return superLocalContext.getVariable(name);
+			else
+				return globalContext.getVariable(name);
+		}
+	}
+
+	public void removeVariable(String name) throws VariableException {
+		assertVariableName(name);
+		if (lock)
+			throw new ReadonlyException("变量容器锁定! 无法移除：" + name, name);
+		Object old = variablesContainer.get(name);
+		variablesContainer.remove(name); // 移除变量
+		readonlyContainer.remove(name); // 移除只读标记
 		for (Iterator iterator = aliasContainer.entrySet().iterator(); iterator.hasNext();) {
 			Map.Entry entry = (Map.Entry)iterator.next();
-			if (var.equals(entry.getValue())) {
-				dels.add(entry.getKey());
+			if (name.equals(entry.getValue())) {
+				iterator.remove(); // 移除别名
 			}
 		}
-		for (Iterator iterator = dels.iterator(); iterator.hasNext();) {
-			Object key = iterator.next();
-			aliasContainer.remove(key);
-		}
-		dels.clear();
-		variableChanged(var, old, null);
+		variableChanged(name, old, null);
 	}
 
 	public void clearVariables() {
+		unlockVariables();
 		variablesContainer.clear();
 		aliasContainer.clear();
 		readonlyContainer.clear();
 	}
 
-	public Map getDefinedVariables() {
+	public Map getVariables() {
 		return Collections.unmodifiableMap(variablesContainer);
+	}
+
+	public Map getExistedVariables() {
+		Map map = new HashMap();
+		if (superLocalContext != null)
+			map.putAll(superLocalContext.getExistedVariables());
+		else
+			map.putAll(globalContext.getExistedVariables());
+		map.putAll(variablesContainer);
+		return Collections.unmodifiableMap(map);
+	}
+
+	public boolean isVariableExisted(String name) throws VariableException {
+		if (isVariableContained(name))
+			return true;
+		if (superLocalContext != null)
+			return superLocalContext.isVariableExisted(name);
+		return globalContext.isVariableExisted(name);
+	}
+
+	public void clearExistedVariables() {
+		clearVariables();
+		if (superLocalContext != null)
+			superLocalContext.clearExistedVariables();
+		else
+			globalContext.clearExistedVariables();
+	}
+
+	public void removeExistedVariable(String name) throws VariableException {
+		removeVariable(name);
+		if (superLocalContext != null)
+			superLocalContext.removeExistedVariable(name);
+		else
+			globalContext.removeExistedVariable(name);
 	}
 
 }

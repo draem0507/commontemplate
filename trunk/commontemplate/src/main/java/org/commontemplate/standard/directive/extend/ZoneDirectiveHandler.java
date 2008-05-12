@@ -22,7 +22,7 @@ public class ZoneDirectiveHandler extends BlockDirectiveHandlerSupport {
 			Object param, List innerElements)
 			throws Exception {
 		String zoneName = (String)param;
-		Zone childZone = (Zone)context.lookupObject(ZoneDirectiveHandler.ZONE_TYPE, zoneName);
+		Zone childZone = (Zone)context.lookupProperty(ZoneDirectiveHandler.ZONE_TYPE, zoneName);
 		Zone innerZone = new Zone(innerElements);
 		if (childZone == null) {
 			innerZone.render(context);

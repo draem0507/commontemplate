@@ -44,9 +44,8 @@ public final class Engine implements Factory {
 				config.getReloadController(), config.getResourceComparator());
 		// 创建上下文工厂
 		this.contextFactory = new ContextFactoryImpl(
-				templateFactory, config.getTemplateNameFilter(),
-				config.getResourceBundleProvider(), config.getDefaultOutputFormatter(),
-				config.getEventListener(), config.getLogger(), config.isDebugMode(),
+				templateFactory, config.getTemplateNameFilter(), config.getDefaultOutputFormatter(),
+				config.getEventListener(), config.isDebug(),
 				config.getKeywords());
 	}
 

@@ -39,9 +39,9 @@ public class Zone implements java.io.Serializable {
 	public static final String SUPER_ZONE = "superzone";
 
 	public void render(Context context) throws RenderingException {
-		context.putObject(SUPER_ZONE, superZone);
+		context.putProperty(SUPER_ZONE, superZone);
 		DirectiveUtils.renderAll(directiveList, context);
-		context.removeObject(SUPER_ZONE);
+		context.removeProperty(SUPER_ZONE);
 	}
 
 }

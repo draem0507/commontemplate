@@ -67,7 +67,7 @@ class PageContextImpl extends PageContext {
 	public void setAttribute(String name, Object value, int scope) {
 		switch (scope) {
 			case PAGE_SCOPE: {
-				context.defineVariable(name, value);
+				context.putVariable(name, value);
 				break;
 			}
 			case REQUEST_SCOPE: {
@@ -95,7 +95,7 @@ class PageContextImpl extends PageContext {
 	public Object getAttribute(String name, int scope) {
 		switch (scope) {
 			case PAGE_SCOPE: {
-				return context.lookupVariable(name);
+				return context.getVariable(name);
 			}
 			case REQUEST_SCOPE: {
 				return getRequest().getAttribute(name);
@@ -174,7 +174,7 @@ class PageContextImpl extends PageContext {
 	public Enumeration getAttributeNamesInScope(int scope) {
 		switch (scope) {
 			case PAGE_SCOPE: {
-				return new IterEnumeration(context.getDefinedVariables()
+				return new IterEnumeration(context.getVariables()
 						.keySet().iterator());
 			}
 			case REQUEST_SCOPE: {

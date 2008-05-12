@@ -1,6 +1,5 @@
 package org.commontemplate.engine.template;
 
-import org.commontemplate.core.BreakVisitException;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.Directive;
 import org.commontemplate.core.Expression;
@@ -24,7 +23,7 @@ class DirectiveProxy extends Directive {
 		this.directive = directive;
 	}
 
-	public void accept(Visitor visitor) throws BreakVisitException {
+	public void accept(Visitor visitor) {
 		directive.accept(visitor);
 	}
 

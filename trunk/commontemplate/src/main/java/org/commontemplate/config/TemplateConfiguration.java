@@ -40,6 +40,6 @@ public abstract class TemplateConfiguration extends ExpressionConfiguration {
 	 */
 	public abstract ResourceFilter getResourceFilter();
 
-	public abstract List getElementInterceptors();
+	public abstract List getRenderInterceptors();
 
 }

@@ -12,9 +12,9 @@ import java.util.TimeZone;
  * @author liangfei0201@163.com
  *
  */
-public abstract class Context extends LocalContext implements LocalContextStack,
-		TemplateStack, TemplateFactory, MessageSource, EventPublisher,
-		Logger {
+public abstract class Context extends LocalContext
+			implements LocalContextStack, TemplateStack,
+			TemplateFactory, EventPublisher {
 
 	/**
 	 * 以当前上下文构造条件重建新的上下文 (共享Writer,不共享数据)
@@ -42,7 +42,7 @@ public abstract class Context extends LocalContext implements LocalContextStack,
 	 *
 	 * @param locale 区域信息
 	 */
-	//public abstract void setLocale(Locale locale);
+	public abstract void setLocale(Locale locale);
 
 	/**
 	 * 获取当前上下文所在区域
@@ -56,7 +56,7 @@ public abstract class Context extends LocalContext implements LocalContextStack,
 	 *
 	 * @param timeZone 时区信息
 	 */
-	//public abstract void setTimeZone(TimeZone timeZone);
+	public abstract void setTimeZone(TimeZone timeZone);
 
 	/**
 	 * 获取时区
@@ -70,14 +70,13 @@ public abstract class Context extends LocalContext implements LocalContextStack,
 	 *
 	 * @return 是否为调试模式
 	 */
-	public abstract boolean isDebugMode();
+	public abstract boolean isDebug();
 
-	public abstract boolean isStep();
-
-	public abstract void setStep(boolean step);
-
-	public abstract boolean isOver();
-
-	public abstract void setOver(boolean over);
+	/**
+	 * 设置调试状态
+	 *
+	 * @param debug 是否为调试状态
+	 */
+	public abstract void setDebug(boolean debug);
 
 }

@@ -19,10 +19,10 @@ public class OverZoneDirectiveHandler extends BlockDirectiveHandlerSupport {
 			Object param, List innerElements)
 			throws Exception {
 		String zoneName = (String)param;
-		Zone childZone = (Zone)context.lookupObject(ZoneDirectiveHandler.ZONE_TYPE, zoneName);
+		Zone childZone = (Zone)context.lookupProperty(ZoneDirectiveHandler.ZONE_TYPE, zoneName);
 		Zone innerZone = new Zone(innerElements);
 		if (childZone == null) {
-			context.getSuperLocalContext().putObject(ZoneDirectiveHandler.ZONE_TYPE, zoneName, innerZone);
+			context.getSuperLocalContext().putProperty(ZoneDirectiveHandler.ZONE_TYPE, zoneName, innerZone);
 		} else {
 			childZone.setSuperZone(innerZone);
 		}

@@ -15,13 +15,13 @@ public class MacroDefaultBlockDirectiveHandler extends BlockDirectiveHandlerSupp
 	public void doRender(Context context, String name,
 			Object param, List innerElements) throws Exception {
 		Map variables = ParameterUtils.getParameters(param);
-		List macro = (List)context.lookupObject(MacroDirectiveHandler.MACRO_TYPE, name);
+		List macro = (List)context.lookupProperty(MacroDirectiveHandler.MACRO_TYPE, name);
 		if (macro == null) 
 			throw new RuntimeException("非法指令名或宏指令名: " + name);
 		Context newContext = context.createContext();
-		newContext.putObject(InnerDirectiveHandler.INNER_BLOCK, innerElements);
+		newContext.putProperty(InnerDirectiveHandler.INNER_BLOCK, innerElements);
 		if (variables.size() > 0) 
-			newContext.defineAllVariables(variables);
+			newContext.putAllVariables(variables);
 		try {
 			DirectiveUtils.renderAll(macro, newContext);
 		} finally {

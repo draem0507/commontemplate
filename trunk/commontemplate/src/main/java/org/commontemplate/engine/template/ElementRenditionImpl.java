@@ -2,13 +2,13 @@ package org.commontemplate.engine.template;
 
 import java.util.List;
 
-import org.commontemplate.config.ElementInterceptor;
-import org.commontemplate.config.ElementRendition;
+import org.commontemplate.config.RenderInterceptor;
+import org.commontemplate.config.Rendition;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.Element;
 import org.commontemplate.util.Assert;
 
-final class ElementRenditionImpl implements ElementRendition {
+final class ElementRenditionImpl implements Rendition {
 
 	private final Element element;
 
@@ -60,7 +60,7 @@ final class ElementRenditionImpl implements ElementRendition {
 	 */
 	public void doRender() {
 		if (index < elementInterceptors.size()) {
-			ElementInterceptor elementInterceptor= (ElementInterceptor)elementInterceptors.get(index);
+			RenderInterceptor elementInterceptor= (RenderInterceptor)elementInterceptors.get(index);
 			if (elementInterceptor != null) {
 				elementInterceptor.intercept(new ElementRenditionImpl(element, context, elementInterceptors, index + 1));
 				return;

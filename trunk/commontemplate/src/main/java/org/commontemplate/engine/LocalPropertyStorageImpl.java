@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.commontemplate.core.Context;
 import org.commontemplate.core.LocalContext;
-import org.commontemplate.core.ObjectStorage;
+import org.commontemplate.core.PropertyStorage;
 
 /**
  * 局部对象存储器实现
@@ -14,33 +14,33 @@ import org.commontemplate.core.ObjectStorage;
  * @author liangfei0201@163.com
  *
  */
-final class LocalObjectStorageImpl implements ObjectStorage {
+final class LocalPropertyStorageImpl implements PropertyStorage {
 
 	private final LocalContext superLocalContext;
 
 	private final Context context;
 	
-	LocalObjectStorageImpl(LocalContext superLocalContext, Context context) {
+	LocalPropertyStorageImpl(LocalContext superLocalContext, Context context) {
 		this.superLocalContext = superLocalContext;
 		this.context = context;
 	}
 
 	private final Map defaultObjectContainer = new HashMap();
 
-	public Object lookupObject(String name) {
+	public Object getProperty(String name) {
 		Object o = defaultObjectContainer.get(name);
 		if (o != null) 
 			return o;
 		if (superLocalContext != null) 
-			return superLocalContext.lookupObject(name);
-		return context.getGlobalContext().lookupObject(name);
+			return superLocalContext.getProperty(name);
+		return context.getGlobalContext().getProperty(name);
 	}
 
-	public void putObject(String name, Object value) {
+	public void putProperty(String name, Object value) {
 		defaultObjectContainer.put(name, value);
 	}
 
-	public void removeObject(String name) {
+	public void removeProperty(String name) {
 		defaultObjectContainer.remove(name);
 	}
 
@@ -55,24 +55,24 @@ final class LocalObjectStorageImpl implements ObjectStorage {
 		return objectContainer;
 	}
 
-	public Object lookupObject(String type, String name) {
+	public Object lookupProperty(String type, String name) {
 		Object o = getObjectContainer(type).get(name);
 		if (o != null) 
 			return o;
 		if (superLocalContext != null) 
-			return superLocalContext.lookupObject(type, name);
-		return context.getGlobalContext().lookupObject(type, name);
+			return superLocalContext.lookupProperty(type, name);
+		return context.getGlobalContext().lookupProperty(type, name);
 	}
 
-	public void putObject(String type, String name, Object value) {
+	public void putProperty(String type, String name, Object value) {
 		getObjectContainer(type).put(name, value);
 	}
 
-	public void removeObject(String type, String name) {
+	public void removeProperty(String type, String name) {
 		getObjectContainer(type).remove(name);
 	}
 
-	public void clearObjects() {
+	public void clearProperties() {
 		defaultObjectContainer.clear();
 		for (Iterator iterator = objectContainers.values().iterator(); iterator.hasNext();) {
 			((Map)iterator.next()).clear();

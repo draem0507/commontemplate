@@ -6,21 +6,22 @@ import java.util.Map;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.StatusStorage;
 import org.commontemplate.core.event.StatusChangedEvent;
+import org.commontemplate.util.TypeUtils;
 
 /**
  * 局部状态存储器实现
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
 final class LocalStatusStorageImpl implements StatusStorage {
-	
+
 	private final Context context;
-	
+
 	LocalStatusStorageImpl(Context context) {
 		this.context = context;
 	}
-	
+
 	private final Map statusContainer = new HashMap();
 
 	public Object getStatus(String index) {
@@ -38,7 +39,7 @@ final class LocalStatusStorageImpl implements StatusStorage {
 		statusContainer.remove(index);
 		statusChanged(index, old, null);
 	}
-	
+
 	private void statusChanged(String name, Object oldValue, Object newValue) {
 		if ((newValue == null && oldValue != null)
 				|| (newValue != null && ! newValue.equals(oldValue))) {
@@ -48,6 +49,14 @@ final class LocalStatusStorageImpl implements StatusStorage {
 
 	public void clearStatus() {
 		statusContainer.clear();
+	}
+
+	public boolean getBooleanStatus(String name) {
+		return TypeUtils.isTrue(getStatus(name));
+	}
+
+	public void setBooleanStatus(String name, boolean value) {
+		setStatus(name, Boolean.valueOf(value));
 	}
 
 }

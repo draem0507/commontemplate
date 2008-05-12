@@ -2,19 +2,19 @@ package org.commontemplate.ext.log;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.commontemplate.core.Logger;
+import org.commontemplate.standard.log.Logger;
 
 /**
  * 适配CommonsLogging，依赖于commons-logging.jar
  * <br/>
  * 有关CommonsLogging详细信息请参阅：<a target="_blank" href="http://www.apache.org/">http://www.apache.org/</a>
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
 public class CommonsLogging implements Logger {
-	
-	private static final Log log = LogFactory.getLog("CommonTemplate");
+
+	private final Log log = LogFactory.getLog(CommonsLogging.class);
 
 	public void debug(String msg) {
 		log.debug(msg);
