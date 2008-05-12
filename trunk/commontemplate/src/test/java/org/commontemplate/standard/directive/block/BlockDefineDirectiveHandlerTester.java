@@ -50,7 +50,7 @@ public class BlockDefineDirectiveHandlerTester extends TestCase {
 		
 		blockDirectiveHandler.doRender(context, "test", "blockName", innerElements);
 		
-		assertEquals(innerElements, context.getSuperLocalContext().lookupObject(BlockDefineDirectiveHandler.BLOCK_TYPE, "blockName"));
+		assertEquals(innerElements, context.getSuperLocalContext().lookupProperty(BlockDefineDirectiveHandler.BLOCK_TYPE, "blockName"));
 		
 	}
 	

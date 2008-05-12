@@ -17,7 +17,7 @@ public class DemoTester {
 		Factory factory = TestEngineProvider.getTestEngine();
 		
 		GlobalContext globalContext = factory.getGlobalContext();
-		globalContext.defineVariable("title", "demo test");
+		globalContext.putVariable("title", "demo test");
 		globalContext.putAll(ModelProvider.getGlobalModel());
 		
 		// 执行模板

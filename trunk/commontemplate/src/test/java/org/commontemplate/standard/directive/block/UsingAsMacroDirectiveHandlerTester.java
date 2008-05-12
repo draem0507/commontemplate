@@ -48,11 +48,11 @@ public class UsingAsMacroDirectiveHandlerTester extends TestCase {
 		Set set = map.entrySet();
 		Entry entry = (Entry) (set.iterator()).next();
 		
-		context.putObject(BlockDefineDirectiveHandler.BLOCK_TYPE, "maroTemplate1", "testit!");
+		context.putProperty(BlockDefineDirectiveHandler.BLOCK_TYPE, "maroTemplate1", "testit!");
 		
 		directiveHandler.doRender(context, "directiveName", entry);
 		
-		assertEquals("testit!", context.lookupObject(MacroDirectiveHandler.MACRO_TYPE, "maroName1"));
+		assertEquals("testit!", context.lookupProperty(MacroDirectiveHandler.MACRO_TYPE, "maroName1"));
 	}
 	
 	/**
@@ -73,13 +73,13 @@ public class UsingAsMacroDirectiveHandlerTester extends TestCase {
 		map.put("maroName1", "maroTemplate1");
 		map.put("maroName2", "maroTemplate2");
 		
-		context.putObject(BlockDefineDirectiveHandler.BLOCK_TYPE, "maroTemplate1", "testit1!");
-		context.putObject(BlockDefineDirectiveHandler.BLOCK_TYPE, "maroTemplate2", "testit2!");
+		context.putProperty(BlockDefineDirectiveHandler.BLOCK_TYPE, "maroTemplate1", "testit1!");
+		context.putProperty(BlockDefineDirectiveHandler.BLOCK_TYPE, "maroTemplate2", "testit2!");
 		
 		directiveHandler.doRender(context, "directiveName", map);
 		
-		assertEquals("testit1!", context.lookupObject(MacroDirectiveHandler.MACRO_TYPE, "maroName1"));
-		assertEquals("testit2!", context.lookupObject(MacroDirectiveHandler.MACRO_TYPE, "maroName2"));
+		assertEquals("testit1!", context.lookupProperty(MacroDirectiveHandler.MACRO_TYPE, "maroName1"));
+		assertEquals("testit2!", context.lookupProperty(MacroDirectiveHandler.MACRO_TYPE, "maroName2"));
 	}
 	
 	/**
