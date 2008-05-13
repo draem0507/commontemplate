@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="Common Template Editor"
+            extensions="ctl"
+            icon="icons/ctl.gif"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            class="org.commontemplate.tools.editor.eclipse.TemplateEditor"
+            id="org.commontemplate.tools.editor.eclipse.TemplateEditor">
+      </editor>
+   </extension>
+
+</plugin>
