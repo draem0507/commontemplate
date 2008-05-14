@@ -29,8 +29,7 @@ public class NumberToChineseCurrencyPropertyHandler extends
 
 	public Object getProperty(Object bean) throws Exception {
 
-		BigDecimal bigdMoneyNumber = new BigDecimal(((Number) bean)
-				.floatValue());
+		BigDecimal bigdMoneyNumber = new BigDecimal(((Number) bean).doubleValue());
 
 		if (bigdMoneyNumber.intValue() == 0)
 			return NUMBER[0] + UNIT[2] + INTEGRAL;
@@ -78,7 +77,7 @@ public class NumberToChineseCurrencyPropertyHandler extends
 				// 万、亿数位的处理
 				else if (ChineseUnitIndex == 6 || ChineseUnitIndex == 10) {
 					// 段中有数字
-					if (doubMoneyNumber % 1000 > 0)
+					//if (doubMoneyNumber % 1000 > 0)
 						strChineseCurrency = UNIT[ChineseUnitIndex]
 								+ strChineseCurrency;
 				}
