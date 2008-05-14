@@ -2,6 +2,12 @@ package org.commontemplate.standard.property.number;
 
 import junit.framework.TestCase;
 
+/**
+ * 数字转中文测试类
+ *
+ * @author YanRong
+ *
+ */
 public class NumberToChinesePropertyHandlerTester extends TestCase {
 
 	private NumberToChinesePropertyHandler numberToChinesePropertyHandler;
@@ -37,7 +43,7 @@ public class NumberToChinesePropertyHandlerTester extends TestCase {
 		super.assertEquals("八百零二万零三", numberToChinesePropertyHandler.getProperty(new Integer(8020003)));
 		super.assertEquals("八千零二万零三", numberToChinesePropertyHandler.getProperty(new Integer(80020003)));
 		super.assertEquals("负八千零二万零三", numberToChinesePropertyHandler.getProperty(new Integer(-80020003)));
-		
+
 	}
 
 }

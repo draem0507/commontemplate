@@ -7,7 +7,7 @@ import org.commontemplate.standard.property.PropertyHandlerSupport;
 /**
  * 数字转中文货币
  *
- * @author liangfei0201@163.com
+ * @author YanRong
  *
  */
 public class NumberToChineseCurrencyPropertyHandler extends
