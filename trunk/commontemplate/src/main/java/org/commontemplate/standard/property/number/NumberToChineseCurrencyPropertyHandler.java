@@ -15,17 +15,17 @@ public class NumberToChineseCurrencyPropertyHandler extends
 
 	private static final long serialVersionUID = 1L;
 
-	private static final char INTEGRAL = '整';
+	private static final String INTEGRAL = "整";
 
-	private static final char NEGATIVE = '负';
+	private static final String NEGATIVE = "负";
 
 	// 中文数字字符数组
-	private static final char[] NUMBER = new char[] { '零', '壹', '贰', '叁', '肆',
-			'伍', '陆', '柒', '捌', '玖' };
+	private static final String[] NUMBER = new String[] { "零", "壹", "贰", "叁", "肆",
+			"伍", "陆", "柒", "捌", "玖" };
 
 	// 中文金额单位数组
-	private static final char[] UNIT = new char[] { '分', '角', '圆', '拾', '佰',
-			'仟', '万', '拾', '佰', '仟', '亿', '拾', '佰', '仟' };
+	private static final String[] UNIT = new String[] { "分", "角", "圆", "拾", "佰",
+			"仟", "万", "拾", "佰", "仟", "亿", "拾", "佰", "仟" };
 
 	public Object getProperty(Object bean) throws Exception {
 
@@ -33,7 +33,7 @@ public class NumberToChineseCurrencyPropertyHandler extends
 				.floatValue());
 
 		if (bigdMoneyNumber.intValue() == 0)
-			return "" + NUMBER[0] + UNIT[2] + INTEGRAL;
+			return NUMBER[0] + UNIT[2] + INTEGRAL;
 
 		String strChineseCurrency = "";
 
