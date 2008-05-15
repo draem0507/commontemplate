@@ -182,6 +182,8 @@ $!
 								toSize 根据大小显示Bytes,KB,MB等单位, 如: ${917.toSize}(输出：917Bytes) ${(11 * 1024).toSize}(输出：11KB)<br/>
 								year, month, week, day, hour, minute, second, millisecond，分别表示转换为年，月，周，日，时，分，秒，毫秒等数字单位，如：${createDate + 3.day}<br/>
 								toByte, toShort, toInteger, toLong, toFloat, toDouble 类型间转换, 如: ${3L.toFloat}<br/>
+								toChinese 数字转中文, 如: ${123.toChinese} 输出：一百二十三<br/>
+								toChineseCurrency 数字转中文货币, 如: ${123.toChineseCurrency} 输出：壹佰贰拾叁圆整<br/>
 								<b>(6) 布尔值(Boolean):</b><br/>
 								not 取反, 如: ${true.not} ${user.allow.not}<br/>
 								<b>(7) 数组(Array):</b><br/>
