@@ -165,8 +165,8 @@ final class LocalContextImpl extends LocalContext {
 		objectStorage.clearProperties();
 	}
 
-	public Object lookupProperty(String type, String name) {
-		return objectStorage.lookupProperty(type, name);
+	public Object getProperty(String type, String name) {
+		return objectStorage.getProperty(type, name);
 	}
 
 	public Object getProperty(String name) {

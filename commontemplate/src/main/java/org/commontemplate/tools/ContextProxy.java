@@ -231,8 +231,8 @@ public abstract class ContextProxy extends Context {
 		context.lockVariables();
 	}
 
-	public Object lookupProperty(String type, String name) {
-		return context.lookupProperty(type, name);
+	public Object getProperty(String type, String name) {
+		return context.getProperty(type, name);
 	}
 
 	public void output(Object content) throws IOException {

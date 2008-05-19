@@ -10,7 +10,9 @@ import org.commontemplate.ext.coat.attribute.*;
 import au.id.jericho.lib.html.Source;
 
 /**
- * @author GL
+ * Jericho属性外套实现
+ *
+ * @author GuiLeen
  * @since 2008-4-5 上午01:55:21
  */
 public class JerichoAttributeCoatFilter extends AbstractAttributeFilter {

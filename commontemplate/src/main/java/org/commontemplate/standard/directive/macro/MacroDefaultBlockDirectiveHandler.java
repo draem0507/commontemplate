@@ -15,7 +15,7 @@ public class MacroDefaultBlockDirectiveHandler extends BlockDirectiveHandlerSupp
 	public void doRender(Context context, String name,
 			Object param, List innerElements) throws Exception {
 		Map variables = ParameterUtils.getParameters(param);
-		List macro = (List)context.lookupProperty(MacroDirectiveHandler.MACRO_TYPE, name);
+		List macro = (List)context.getProperty(MacroDirectiveHandler.MACRO_TYPE, name);
 		if (macro == null) 
 			throw new RuntimeException("非法指令名或宏指令名: " + name);
 		Context newContext = context.createContext();

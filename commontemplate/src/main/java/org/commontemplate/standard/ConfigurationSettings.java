@@ -139,7 +139,7 @@ public class ConfigurationSettings extends Configuration {
 		Assert.assertTrue(value != null && value.trim().length() > 0, "DirectiveSyntaxString不能为空！");
 
 		value = value.trim();
-		char leader = value.length() > 0 ? value.charAt(0) : Syntax.DEFAULT_LEADER;
+		char leader = value.length() > 0 ? value.charAt(0) : Syntax.DEFAULT_DIRECTIVE_LEADER;
 		char expressionBegin = value.length() > 1 ? value.charAt(1) : Syntax.DEFAULT_EXPRESSION_BEGIN;
 		char expressionEnd = value.length() > 2 ? value.charAt(2) : Syntax.DEFAULT_EXPRESSION_END;
 		char lineComment = value.length() > 3 ? value.charAt(3) : Syntax.DEFAULT_LINE_COMMENT;

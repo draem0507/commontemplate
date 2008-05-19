@@ -52,7 +52,7 @@ public class UsingAsMacroDirectiveHandlerTester extends TestCase {
 		
 		directiveHandler.doRender(context, "directiveName", entry);
 		
-		assertEquals("testit!", context.lookupProperty(MacroDirectiveHandler.MACRO_TYPE, "maroName1"));
+		assertEquals("testit!", context.getProperty(MacroDirectiveHandler.MACRO_TYPE, "maroName1"));
 	}
 	
 	/**
@@ -78,8 +78,8 @@ public class UsingAsMacroDirectiveHandlerTester extends TestCase {
 		
 		directiveHandler.doRender(context, "directiveName", map);
 		
-		assertEquals("testit1!", context.lookupProperty(MacroDirectiveHandler.MACRO_TYPE, "maroName1"));
-		assertEquals("testit2!", context.lookupProperty(MacroDirectiveHandler.MACRO_TYPE, "maroName2"));
+		assertEquals("testit1!", context.getProperty(MacroDirectiveHandler.MACRO_TYPE, "maroName1"));
+		assertEquals("testit2!", context.getProperty(MacroDirectiveHandler.MACRO_TYPE, "maroName2"));
 	}
 	
 	/**

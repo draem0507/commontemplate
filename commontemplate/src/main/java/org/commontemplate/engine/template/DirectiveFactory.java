@@ -56,18 +56,26 @@ final class DirectiveFactory {
 	Element getDirective(Token token, boolean isLast) throws ParsingException {
 		String message = token.getMessage();
 		String trim = message.trim();
-		if (trim.length() > 1 && trim.charAt(0) == syntax.getLeader()) {
+		if (trim.length() > 1 && trim.charAt(0) == syntax.getDirectiveLeader()) {
 			if (trim.charAt(1) == syntax.getNoParse()) { // 不解释块指令
+				if (trim.length() < 4
+						|| trim.charAt(trim.length() - 2) != syntax.getNoParse()
+						|| trim.charAt(trim.length() - 1) != syntax.getDirectiveLeader())
+					throw new ParsingException(token.getLocation(), "不解释块未结束! \"" + syntax.getDirectiveLeader() + syntax.getNoParse() + "\"未找到相应\"" + syntax.getNoParse() + syntax.getDirectiveLeader() + "\"");
 				return parseText(String.valueOf(syntax.getNoParse()), token, message.substring(2, message.length() - 2));
 			} else if (trim.charAt(1) == syntax.getLineComment()) { // 行注释指令
-				if (trim.length() > 2 && trim.charAt(2) == syntax.getLineComment()) { // 运行期保留
+				if (trim.length() > 2
+						&& trim.charAt(2) == syntax.getLineComment()) // 运行期保留
 					return new CommentImpl(String.valueOf(syntax.getLineComment()), token.getLocation(), message.substring(3), trim);
-				}
 				return null;
 			} else if (trim.charAt(1) == syntax.getBlockComment()) { // 块注释指令
-				if (trim.length() > 2 && trim.charAt(2) == syntax.getBlockComment()) { // 运行期保留
+				if (trim.length() < 4
+						|| trim.charAt(trim.length() - 2) != syntax.getBlockComment()
+						|| trim.charAt(trim.length() - 1) != syntax.getDirectiveLeader())
+					throw new ParsingException(token.getLocation(), "块注释未结束! \"" + syntax.getDirectiveLeader() + syntax.getBlockComment() + "\"未找到相应\"" + syntax.getBlockComment() + syntax.getDirectiveLeader() + "\"");
+				if (trim.length() > 4
+						&& trim.charAt(2) == syntax.getBlockComment()) // 运行期保留
 					return new CommentImpl(String.valueOf(syntax.getBlockComment()), token.getLocation(), message.substring(3, message.length() - 2), trim);
-				}
 				return null;
 			} else { //指令
 				return parseDirective(token, trim);
@@ -89,7 +97,7 @@ final class DirectiveFactory {
 		StringBuffer buf = new StringBuffer();
 		for (int i = 0, n = text.length(); i < n ; i ++) {
 			char ch = text.charAt(i);
-			if (text.charAt(i) == syntax.getLeader()
+			if (text.charAt(i) == syntax.getDirectiveLeader()
 					|| (! isLast && i == n - 1 && ch == '\\')) {
 				int count = countLastSlash(buf);
 				Assert.assertTrue(count % 2 != 0, "语法解析错误!");
@@ -140,9 +148,9 @@ final class DirectiveFactory {
 		if (handler == null)
 			throw new ParsingException(token.getLocation(), "未找到" + name + "指令的处理类!");
 		if (handler instanceof MiddleBlockDirectiveHandler)
-			return new MiddleBlockDirectiveImpl(name, token.getLocation(), expression, (MiddleBlockDirectiveHandler)handler, token.getMessage(), syntax.getLeader() + syntax.getEndDirectiveName(), elementInterceptors);
+			return new MiddleBlockDirectiveImpl(name, token.getLocation(), expression, (MiddleBlockDirectiveHandler)handler, token.getMessage(), syntax.getDirectiveLeader() + syntax.getEndDirectiveName(), elementInterceptors);
 		if (handler instanceof BlockDirectiveHandler)
-			return new BlockDirectiveImpl(name, token.getLocation(), expression, (BlockDirectiveHandler)handler, token.getMessage(), syntax.getLeader() + syntax.getEndDirectiveName(), elementInterceptors);
+			return new BlockDirectiveImpl(name, token.getLocation(), expression, (BlockDirectiveHandler)handler, token.getMessage(), syntax.getDirectiveLeader() + syntax.getEndDirectiveName(), elementInterceptors);
 		if (handler instanceof DirectiveHandler)
 			return new DirectiveImpl(name, token.getLocation(), expression, (DirectiveHandler)handler, token.getMessage(), elementInterceptors);
 		throw new ParsingException(token.getLocation(), handler.getClass().getName() + "不是正确的处理类!");

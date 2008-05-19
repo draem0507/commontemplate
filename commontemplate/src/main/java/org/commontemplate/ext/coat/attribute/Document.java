@@ -6,6 +6,8 @@ package org.commontemplate.ext.coat.attribute;
 import java.util.List;
 
 /**
+ * 文档
+ *
  * @author GL
  * @since 2008-4-5 上午12:39:37
  */

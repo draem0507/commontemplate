@@ -12,7 +12,7 @@ class TagTokenizer {
 	//单字母命名, 保证状态机图简洁
 	private static final int E = Tokenizer.END;
 	
-	private static final int B = Tokenizer.BREAK;
+	private static final int B = Tokenizer.BACK;
 	
 	//private static final int R = Tokenizer.ERROR;
 	

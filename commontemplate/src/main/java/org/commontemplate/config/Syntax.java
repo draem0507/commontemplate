@@ -14,7 +14,7 @@ public final class Syntax implements java.io.Serializable {
 
 	// 指令语法 -----
 
-	private final char leader;
+	private final char directiveLeader;
 
 	private final char expressionBegin;
 
@@ -47,7 +47,7 @@ public final class Syntax implements java.io.Serializable {
 		Assert.assertNotEmpty(endDirectiveName, "结束指令名不能为空!");
 		assertMutex(new char[] { leader, expressionBegin, expressionEnd,
 				noParse, lineComment, blockComment });
-		this.leader = leader;
+		this.directiveLeader = leader;
 		this.expressionBegin = expressionBegin;
 		this.expressionEnd = expressionEnd;
 		this.noParse = noParse;
@@ -78,8 +78,8 @@ public final class Syntax implements java.io.Serializable {
 		}
 	}
 
-	public final char getLeader() {
-		return leader;
+	public final char getDirectiveLeader() {
+		return directiveLeader;
 	}
 
 	public final char getExpressionBegin() {
@@ -108,7 +108,7 @@ public final class Syntax implements java.io.Serializable {
 
 	// Default Syntax ------------
 
-	public static final char DEFAULT_LEADER = '$';
+	public static final char DEFAULT_DIRECTIVE_LEADER = '$';
 
 	public static final char DEFAULT_EXPRESSION_BEGIN = '{';
 
@@ -122,7 +122,7 @@ public final class Syntax implements java.io.Serializable {
 
 	public static final String DEFAULT_END_DIRECTIVE_NAME = "end";
 
-	public static final Syntax DEFAULT = new Syntax(DEFAULT_LEADER,
+	public static final Syntax DEFAULT = new Syntax(DEFAULT_DIRECTIVE_LEADER,
 			DEFAULT_EXPRESSION_BEGIN, DEFAULT_EXPRESSION_END,
 			DEFAULT_LINE_COMMENT, DEFAULT_BLOCK_COMMENT, DEFAULT_NO_PARSE,
 			DEFAULT_END_DIRECTIVE_NAME);

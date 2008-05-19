@@ -23,17 +23,22 @@ public class Tokenizer {
 	/**
 	 * 中止状态(不包含最后一个字符)
 	 */
-	public static final int BREAK = -11;
+	public static final int BACK = -11;
 
 	/**
 	 * 中止状态(不包含最后一个字符并回退其前面的一个char)
 	 */
-	public static final int BACK = -12;
+	public static final int BACK_TWO = -12;
 
 	/**
-	 * 中止状态(不包含最后一个字符并回退其前面的空格)
+	 * 中止状态(不包含最后一个字符并回退其前面的空白符)
 	 */
-	public static final int BACK_SPACE = -13;
+	public static final int BACK_BLANK = -13;
+
+	/**
+	 * 中止状态(不包含最后一个字符并回退其前面的换行符)
+	 */
+	public static final int BACK_NEWLINE = -14;
 
 	/**
 	 * 错误状态
@@ -43,12 +48,13 @@ public class Tokenizer {
 	private static final Map accepters = initAccepters();
 
 	private static final Map initAccepters() {
-		Map acc = new HashMap();
-		acc.put(new Integer(END), new AllAccepter());
-		acc.put(new Integer(BREAK), new BackAccepter(1));
-		acc.put(new Integer(BACK), new BackAccepter(2));
-		acc.put(new Integer(BACK_SPACE), new BackSpaceAccepter(1));
-		return Collections.unmodifiableMap(acc);
+		Map map = new HashMap();
+		map.put(new Integer(END), new AllAccepter());
+		map.put(new Integer(BACK), new BackAccepter(1));
+		map.put(new Integer(BACK_TWO), new BackAccepter(2));
+		map.put(new Integer(BACK_BLANK), new BackBlankAccepter(1));
+		map.put(new Integer(BACK_NEWLINE), new BackNewlineAccepter(1));
+		return Collections.unmodifiableMap(map);
 	}
 
 	private final Scanner scanner;

@@ -454,8 +454,8 @@ final class ContextImpl extends Context {
 		getCurrentLocalContext().clearProperties();
 	}
 
-	public Object lookupProperty(String type, String name) {
-		return getCurrentLocalContext().lookupProperty(type, name);
+	public Object getProperty(String type, String name) {
+		return getCurrentLocalContext().getProperty(type, name);
 	}
 
 	public void putProperty(String type, String name, Object value) {
