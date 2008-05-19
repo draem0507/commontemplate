@@ -6,7 +6,7 @@ public class SyntaxTester extends TestCase {
 	
 	public void testRightSyntax() {
 		Syntax syntax = new Syntax('$', '{', '}', '#', '*', '!', "end");
-		assertEquals('$', syntax.getLeader());
+		assertEquals('$', syntax.getDirectiveLeader());
 		assertEquals('{', syntax.getExpressionBegin());
 		assertEquals('}', syntax.getExpressionEnd());
 		assertEquals('#', syntax.getLineComment());
@@ -14,7 +14,7 @@ public class SyntaxTester extends TestCase {
 		assertEquals('!', syntax.getNoParse());
 		assertEquals("end", syntax.getEndDirectiveName());
 		syntax = new Syntax('@', '{', '}', '#', '*', '!', "end1");
-		assertEquals('@', syntax.getLeader());
+		assertEquals('@', syntax.getDirectiveLeader());
 		assertEquals('{', syntax.getExpressionBegin());
 		assertEquals('}', syntax.getExpressionEnd());
 		assertEquals('#', syntax.getLineComment());

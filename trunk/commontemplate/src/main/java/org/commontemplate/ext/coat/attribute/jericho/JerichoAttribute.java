@@ -9,7 +9,8 @@ import org.commontemplate.ext.coat.attribute.Attribute;
  * @author GL
  * @since 2008-4-5 下午05:34:50
  */
-public class JerichoAttribute implements Attribute{
+public class JerichoAttribute extends Attribute{
+
 	private final au.id.jericho.lib.html.Attribute attr;
 
 	/**

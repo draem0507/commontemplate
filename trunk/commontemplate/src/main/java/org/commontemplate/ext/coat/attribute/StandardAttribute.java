@@ -5,13 +5,15 @@ package org.commontemplate.ext.coat.attribute;
 
 /**
  * 用于构造Attribute
- * 
- * @author GL
+ *
+ * @author GuiLeen
  * @since 2008-4-4 下午11:24:11
  */
-public class StandardAttribute implements Attribute {
-	private String name;
-	private String value;
+public class StandardAttribute extends Attribute {
+
+	private final String name;
+
+	private final String value;
 
 	public StandardAttribute(final String name, final String value) {
 		super();
@@ -23,16 +25,8 @@ public class StandardAttribute implements Attribute {
 		return name;
 	}
 
-	public void setName(final String name) {
-		this.name = name;
-	}
-
 	public String getValue() {
 		return value;
-	}
-
-	public void setValue(final String value) {
-		this.value = value;
 	}
 
 	public String getText() {

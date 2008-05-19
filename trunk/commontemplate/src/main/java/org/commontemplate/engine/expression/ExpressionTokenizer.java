@@ -18,9 +18,9 @@ final class ExpressionTokenizer {
 	//单字母命名, 保证状态机图简洁
 	private static final int E = Tokenizer.END;
 
-	private static final int B = Tokenizer.BREAK;
+	private static final int B = Tokenizer.BACK;
 
-	private static final int C = Tokenizer.BACK;
+	private static final int T = Tokenizer.BACK_TWO;
 
 	private static final int R = Tokenizer.ERROR;
 
@@ -36,7 +36,7 @@ final class ExpressionTokenizer {
 	// 列表示输入字符的类型, 对应types, 比types多一列表示"其它"类型
 	// 行表示状态
 	// 行列交点表示, 在该状态时, 遇到某类型的字符时, 切换到的下一状态(数组行号)
-	// E/B/C表示接收前面经过的字符为一个片断, R表示错误状态(这些状态均为负数)
+	// E/B/T表示接收前面经过的字符为一个片断, R表示错误状态(这些状态均为负数)
 	private static final int states[][] = {
 		         /* 0.空格, 1.字母, 2.数字, 3.点号, 4.双引号, 5.单引号, 6.反单引号, 7.反斜杠, 8.括号, 9.其它 */
 		/* 0.起始  */{ 0, 1, 2, 4, 7, 9, 11, 4, 6, 4}, // 初始状态或上一片断刚接收完成状态
@@ -44,7 +44,7 @@ final class ExpressionTokenizer {
 		/* 2.数字  */{ B, 2, 2, 5, R, R, R, B, B, B}, // 数字识别
 		/* 3.小数  */{ B, 3, 3, B, R, R, R, B, B, B}, // 小数点号识别
 		/* 4.操作符*/{ B, B, B, 4, B, B, B, 4, B, 4}, // 操作符识别
-		/* 5.点号  */{ C, C, 3, C, C, C, C, C, C, C}, // 数字属性点号识别, 区分于小数点(如: 123.toString 或 11..15)
+		/* 5.点号  */{ T, T, 3, T, T, T, T, T, T, T}, // 数字属性点号识别, 区分于小数点(如: 123.toString 或 11..15)
 		/* 6.括号  */{ B, B, B, B, B, B, B, B, B, B}, // 括号
 		/* 7.字符串*/{ 7, 7, 7, 7, E, 7, 7, 8, 7, 7}, // 双引号字符串识别
 		/* 8.转义  */{ 7, 7, 7, 7, 7, 7, 7, 7, 7, 7}, // 双引号字符串转义

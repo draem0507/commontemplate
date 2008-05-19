@@ -15,9 +15,11 @@ import au.id.jericho.lib.html.*;
  * @author GL
  * @since 2008-4-5 上午02:37:05
  */
-public class JerichoElement implements TagElement {
-	private Attributes attributes;
-	private List segments;
+public class JerichoElement extends TagElement {
+
+	private final Attributes attributes;
+
+	private final List segments;
 
 	public JerichoElement(final Source source, final Element element) {
 		final List childs = element.getChildElements();
@@ -58,7 +60,7 @@ public class JerichoElement implements TagElement {
 		final StringBuffer sb = new StringBuffer();
 		for(Iterator i= getSegments().iterator();i.hasNext();){
 			Segment s = (Segment) i.next();
-			if(s!=null)
+			if(s != null)
 				sb.append(s.getText());
 		}
 		return sb.toString();

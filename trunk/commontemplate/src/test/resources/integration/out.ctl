@@ -1,7 +1,18 @@
-$breakpoint
-$for{user: users}
-  $if{for.index == 2}
-    $break
-  $end
-  ${for.count}. ${user.name}
-$end
+<html>
+	<head>
+		<title>${title}<title>
+	</head>
+	<body>
+	$#$breakpoint
+	$if{users != null && users.size > 0}
+	<table>
+		$for{user: users}
+		<tr>
+			<td>${for.count}</td>
+			<td>${user.name}</td>
+		</tr>
+		$end
+	</table>
+	$end
+	</body>
+</html>

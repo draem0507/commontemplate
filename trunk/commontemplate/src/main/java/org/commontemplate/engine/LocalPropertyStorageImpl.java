@@ -55,13 +55,13 @@ final class LocalPropertyStorageImpl implements PropertyStorage {
 		return objectContainer;
 	}
 
-	public Object lookupProperty(String type, String name) {
+	public Object getProperty(String type, String name) {
 		Object o = getObjectContainer(type).get(name);
 		if (o != null) 
 			return o;
 		if (superLocalContext != null) 
-			return superLocalContext.lookupProperty(type, name);
-		return context.getGlobalContext().lookupProperty(type, name);
+			return superLocalContext.getProperty(type, name);
+		return context.getGlobalContext().getProperty(type, name);
 	}
 
 	public void putProperty(String type, String name, Object value) {

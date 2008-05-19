@@ -13,11 +13,7 @@ public class LocalAssignDirectiveHandler extends DirectiveHandlerSupport {
 		Entry model = (Entry)param;
 		String var = model.getKey().toString();
 		Object value = model.getValue();
-		if (context.isVariableContained(var)) {
-			context.setVariable(var, value);
-		} else {
-			context.putVariable(var, value);
-		}
+		context.putVariable(var, value);
 	}
 
 }

@@ -36,7 +36,7 @@ class TagTranslator {
 					}
 					if (entry.getCount() > 0) {
 						for (int j = 0; j < entry.getCount(); j ++) {
-							message += syntax.getLeader() + syntax.getEndDirectiveName() + syntax.getExpressionBegin() + syntax.getExpressionEnd();
+							message += syntax.getDirectiveLeader() + syntax.getEndDirectiveName() + syntax.getExpressionBegin() + syntax.getExpressionEnd();
 						}
 					}
 				} else {
@@ -45,11 +45,11 @@ class TagTranslator {
 					int count = 0;
 					while (message.matches(matchesAttribute)) {
 						count ++;
-						message = message.replaceFirst(moveAttribute, syntax.getLeader() + "$2" + syntax.getExpressionBegin() + "$3" + syntax.getExpressionEnd() + "$1$4");
+						message = message.replaceFirst(moveAttribute, syntax.getDirectiveLeader() + "$2" + syntax.getExpressionBegin() + "$3" + syntax.getExpressionEnd() + "$1$4");
 					}
 					if (isEnd) {
 						for (int j = 0; j < count; j ++) {
-							message += syntax.getLeader() + syntax.getEndDirectiveName() + syntax.getExpressionBegin() + syntax.getExpressionEnd();
+							message += syntax.getDirectiveLeader() + syntax.getEndDirectiveName() + syntax.getExpressionBegin() + syntax.getExpressionEnd();
 						}
 					} else {
 						stack.push(new CountEntry(name.trim().toLowerCase(), count));

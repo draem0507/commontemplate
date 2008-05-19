@@ -74,6 +74,8 @@ class DebugFrame implements ActionListener, WindowListener {
 
 	private JButton stepInto, stepOver, stepReturn, resume, terminate;
 
+	private JTextField templateNameBox;
+
 	private JTextField elementBox;
 
 	private JLabel templateView;
@@ -146,14 +148,18 @@ class DebugFrame implements ActionListener, WindowListener {
 	}
 
 	private JComponent createTemplatePane() {
-		elementBox = new JTextField();
-		elementBox.setEditable(false);
-		elementBox.setBackground(Color.WHITE);
+		templateNameBox = new JTextField();
+		templateNameBox.setEditable(false);
+		templateNameBox.setBackground(Color.WHITE);
 
 		templateView = new JLabel();
 		templateView.setBounds(40, 100, 400, 400);
 		templateView.setOpaque(true);
 		templateView.setBackground(Color.WHITE);
+
+		elementBox = new JTextField();
+		elementBox.setEditable(false);
+		elementBox.setBackground(Color.WHITE);
 
 		JScrollPane templateBox = new JScrollPane();
 		templateBox.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -162,8 +168,9 @@ class DebugFrame implements ActionListener, WindowListener {
 
 		JPanel templatePane = new JPanel();
 		templatePane.setLayout(new BorderLayout());
-		templatePane.add(elementBox, BorderLayout.NORTH);
+		templatePane.add(templateNameBox, BorderLayout.NORTH);
 		templatePane.add(templateBox, BorderLayout.CENTER);
+		templatePane.add(elementBox, BorderLayout.SOUTH);
 
 		return templatePane;
 	}
@@ -201,7 +208,7 @@ class DebugFrame implements ActionListener, WindowListener {
 							variableView.setText("");
 						} else {
 							Class type = node.getType();
-							variableType.setText(type == null ? null : type.getName());
+							variableType.setText(type == null ? "null" : type.getName());
 							variableView.setText(String.valueOf(node.getValue()));
 						}
 					}
@@ -243,11 +250,8 @@ class DebugFrame implements ActionListener, WindowListener {
 		elementText = elementText.replaceAll("\r", "\\\\r");
 		elementText = elementText.replaceAll("\f", "\\\\f");
 
-		if (element instanceof BlockDirective)
-			elementBox.setText(element.getSignature());
-		else
-			elementBox.setText(element.getCanonicalForm());
 		elementBox.setText(elementText);
+		templateNameBox.setText(template.getName());
 
 		String tmp = template.getCanonicalForm();
 		templateValue = escapeHtml(tmp);

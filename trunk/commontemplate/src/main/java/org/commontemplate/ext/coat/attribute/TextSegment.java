@@ -6,24 +6,22 @@ package org.commontemplate.ext.coat.attribute;
 import org.commontemplate.util.Assert;
 
 /**
- * @author GL
+ * 文本片段
+ *
+ * @author GuiLeen
  * @since 2008-4-5 上午02:36:24
  */
-public class TextSegment implements Segment {
-	private String text;
+public class TextSegment extends Segment {
+
+	private final String text;
 
 	public TextSegment(final String text) {
-		super();
 		Assert.assertNotNull(text);
 		this.text = text;
 	}
 
 	public String getText() {
 		return text;
-	}
-
-	public void setText(final String text) {
-		this.text = text;
 	}
 
 	public String toString() {

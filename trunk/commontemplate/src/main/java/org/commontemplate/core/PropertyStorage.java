@@ -51,7 +51,7 @@ public interface PropertyStorage {
 	 *            对象名称
 	 * @return 对象值
 	 */
-	public Object lookupProperty(String type, String name);
+	public Object getProperty(String type, String name);
 
 	/**
 	 * 加入分类对象, 已存在将覆盖

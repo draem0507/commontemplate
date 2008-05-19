@@ -48,7 +48,7 @@ final class GlobalPropertyStorageImpl implements PropertyStorage {
 		return objectContainer;
 	}
 
-	public synchronized Object lookupProperty(String type, String name) {
+	public synchronized Object getProperty(String type, String name) {
 		return getObjectContainer(type).get(name);
 	}
 
