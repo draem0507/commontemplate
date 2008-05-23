@@ -51,6 +51,18 @@ public class IntegerSequence implements List, Serializable {
 		return end;
 	}
 
+	public int getMax() {
+		return max;
+	}
+
+	public int getMin() {
+		return min;
+	}
+
+	public boolean isAscending() {
+		return asc;
+	}
+
 	public int size() {
 		return size;
 	}
@@ -92,17 +104,17 @@ public class IntegerSequence implements List, Serializable {
 	}
 
 	public boolean containsAll(Collection c) {
-		
+
 		Iterator it = c.iterator();
 		Object obj;
 		while(it.hasNext()) {
-			
+
 			obj = it.next();
 			if(!contains(obj)) {
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -234,33 +246,33 @@ public class IntegerSequence implements List, Serializable {
 		}
 
 		public Object next() {
-			
+
 			if (isOverFlowEnd())
 				throw new java.util.NoSuchElementException("IndexOutOfBounds");
-			
+
 			Integer next;
-			if(isOverFlowOfBegin()) {				
+			if(isOverFlowOfBegin()) {
 				cur = cur + inc;
 				next = new Integer(cur);
-			} else {			
-				next = new Integer(cur);				
+			} else {
+				next = new Integer(cur);
 			}
 			cur = cur + inc;
-			
+
 			return next;
 		}
 
 		public int nextIndex() {
-			
+
 			if (isOverFlowEnd())
 				throw new java.util.NoSuchElementException("IndexOutOfBounds");
-			
+
 			int index;
 			if(isOverFlowOfBegin()) {
 				cur = cur + inc;
 				index = (inc > 0?cur - begin: begin - cur);
 			} else {
-				index = (inc > 0?cur - begin: begin - cur);				
+				index = (inc > 0?cur - begin: begin - cur);
 			}
 			cur = cur + inc;
 
@@ -272,10 +284,10 @@ public class IntegerSequence implements List, Serializable {
 		}
 
 		public Object previous() {
-			
+
 			if (isOverFlowOfBegin())
 				throw new java.util.NoSuchElementException("IndexOutOfBounds");
-			
+
 			Integer prev;
 			if(isOverFlowEnd()) {
 				cur = cur - inc;
@@ -284,15 +296,15 @@ public class IntegerSequence implements List, Serializable {
 				prev = new Integer(cur);
 			}
 			cur = cur - inc;
-			
+
 			return prev;
 		}
 
 		public int previousIndex() {
-			
+
 			if (isOverFlowOfBegin())
 				throw new java.util.NoSuchElementException("IndexOutOfBounds");
-			
+
 			int index;
 			if(isOverFlowEnd()) {
 				cur = cur - inc;
@@ -301,7 +313,7 @@ public class IntegerSequence implements List, Serializable {
 				index = (inc > 0?cur - begin: begin - cur);
 			}
 			cur = cur - inc;
-			
+
 			return index;
 		}
 
@@ -316,13 +328,13 @@ public class IntegerSequence implements List, Serializable {
 		public void set(Object o) {
 			throw new UnsupportedOperationException();
 		}
-		
+
 
 		private boolean isOverFlowOfBegin() {
 			return (inc > 0 && cur < begin) ||
 					(inc < 0 && cur > begin);
 		}
-		
+
 		private boolean isOverFlowEnd() {
 			return (inc > 0 && cur > end) ||
 					(inc < 0 && cur < end);

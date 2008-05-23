@@ -3,6 +3,7 @@ package org.commontemplate.standard.operator.collection;
 import java.util.List;
 
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
+import org.commontemplate.standard.operator.sequence.IntegerSequence;
 
 /**
  * 数字下标操作符基类<br/>
@@ -22,6 +23,8 @@ public abstract class IndexedBinaryOperatorHandlerSupport extends BinaryOperator
 		boolean m = super.isMatch(leftOperand, rightOperand);
 		if (! m)
 			return false;
+		if (rightOperand instanceof IntegerSequence)
+			return true;
 		List indexs = (List)rightOperand;
 		for (int i = 0, n = indexs.size(); i < n ; i ++) {
 			if (! (indexs.get(i) instanceof Integer)) {

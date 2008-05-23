@@ -6,8 +6,7 @@ import java.util.List;
 import org.commontemplate.standard.operator.sequence.IntegerSequence;
 
 /**
- * 子列表操作符: "[]"<br/>
- * 如: ${users[0..3]} ${users[2,5,7]}<br/>
+ * 子列表操作符: "[]"<br/> 如: ${users[0..3]} ${users[2,5,7]}<br/>
  *
  * @author liangfei0201@163.com
  *
@@ -22,23 +21,30 @@ public class ListSubOperatorHandler extends IndexedBinaryOperatorHandlerSupport 
 
 	public Object doEvaluate(Object leftOperand, Object rightOperand)
 			throws Exception {
-		List list = (List)leftOperand;
+		List list = (List) leftOperand;
+		List sub = new ArrayList();
 		if (rightOperand instanceof IntegerSequence) {
-			IntegerSequence seq = (IntegerSequence)rightOperand;
-			int begin = seq.getBegin();
-			if (begin < 0)
-				begin = 0;
-			int end = seq.getEnd() + 1;
-			if (end > list.size())
-				end = list.size();
-			return list.subList(begin, end);
-		}
-		List indexs = (List)rightOperand;
-		List sub = new ArrayList(indexs.size());
-		for (int i = 0, n = indexs.size(); i < n ; i ++) {
-			int index = ((Integer)indexs.get(i)).intValue();
-			if (index < list.size() - 1)
-				sub.add(list.get(index));
+			IntegerSequence indexs = (IntegerSequence) rightOperand;
+			if (indexs.isAscending()) { // 升序序列
+				for (int i = indexs.getMin(); i < list.size()
+						&& i <= indexs.getMax(); i++) {
+					if (i >= 0)
+						sub.add(list.get(i));
+				}
+			} else { // 降序序列
+				for (int i = indexs.getMax(); i >= 0
+						&& i >= indexs.getMin(); i--) {
+					if (i < list.size())
+						sub.add(list.get(i));
+				}
+			}
+		} else { // 散列索引
+			List indexs = (List) rightOperand;
+			for (int i = 0, n = indexs.size(); i < n; i++) {
+				int index = ((Integer) indexs.get(i)).intValue();
+				if (index >= 0 && index < list.size())
+					sub.add(list.get(index));
+			}
 		}
 		return sub;
 	}
