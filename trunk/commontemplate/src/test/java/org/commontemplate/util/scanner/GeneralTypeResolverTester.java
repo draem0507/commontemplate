@@ -9,47 +9,47 @@ public class GeneralTypeResolverTester extends TestCase {
 	public void testEscapeType() {
 		String[] types = {"+|-|||&"};
 		PatternTypeResolver patternTypeResolver = new PatternTypeResolver(types);
-		assertEquals(0, patternTypeResolver.getType('+'));
-		assertEquals(0, patternTypeResolver.getType('-'));
-		assertEquals(0, patternTypeResolver.getType('|'));
-		assertEquals(0, patternTypeResolver.getType('&'));
+		assertEquals(0, patternTypeResolver.resolveType('+'));
+		assertEquals(0, patternTypeResolver.resolveType('-'));
+		assertEquals(0, patternTypeResolver.resolveType('|'));
+		assertEquals(0, patternTypeResolver.resolveType('&'));
 	}
 
 	public void testExpressionType() {
 		String[] types = {" |\t|\n|\r", "_|a-z|A-Z", "0-9", ".", "\"|\'", "\\", "(|)|[|]"};
 		PatternTypeResolver patternTypeResolver = new PatternTypeResolver(types);
-		assertEquals(0, patternTypeResolver.getType(' '));
-		assertEquals(0, patternTypeResolver.getType('\t'));
-		assertEquals(0, patternTypeResolver.getType('\n'));
-		assertEquals(0, patternTypeResolver.getType('\r'));
+		assertEquals(0, patternTypeResolver.resolveType(' '));
+		assertEquals(0, patternTypeResolver.resolveType('\t'));
+		assertEquals(0, patternTypeResolver.resolveType('\n'));
+		assertEquals(0, patternTypeResolver.resolveType('\r'));
 		
-		assertEquals(1, patternTypeResolver.getType('_'));
+		assertEquals(1, patternTypeResolver.resolveType('_'));
 		for (char ch = 'a'; ch <= 'z'; ch = (char)(ch + 1))
-			assertEquals(1, patternTypeResolver.getType(ch));
+			assertEquals(1, patternTypeResolver.resolveType(ch));
 		for (char ch = 'A'; ch <= 'Z'; ch = (char)(ch + 1))
-			assertEquals(1, patternTypeResolver.getType(ch));
+			assertEquals(1, patternTypeResolver.resolveType(ch));
 		
 		for (char ch = '0'; ch <= '9'; ch = (char)(ch + 1))
-			assertEquals(2, patternTypeResolver.getType(ch));
+			assertEquals(2, patternTypeResolver.resolveType(ch));
 
-		assertEquals(3, patternTypeResolver.getType('.'));
+		assertEquals(3, patternTypeResolver.resolveType('.'));
 		
-		assertEquals(4, patternTypeResolver.getType('\"'));
-		assertEquals(4, patternTypeResolver.getType('\''));
+		assertEquals(4, patternTypeResolver.resolveType('\"'));
+		assertEquals(4, patternTypeResolver.resolveType('\''));
 		
-		assertEquals(5, patternTypeResolver.getType('\\'));
+		assertEquals(5, patternTypeResolver.resolveType('\\'));
 		
-		assertEquals(6, patternTypeResolver.getType('('));
-		assertEquals(6, patternTypeResolver.getType(')'));
-		assertEquals(6, patternTypeResolver.getType('['));
-		assertEquals(6, patternTypeResolver.getType(']'));
+		assertEquals(6, patternTypeResolver.resolveType('('));
+		assertEquals(6, patternTypeResolver.resolveType(')'));
+		assertEquals(6, patternTypeResolver.resolveType('['));
+		assertEquals(6, patternTypeResolver.resolveType(']'));
 		
-		assertEquals(7, patternTypeResolver.getType('+'));
-		assertEquals(7, patternTypeResolver.getType('-'));
-		assertEquals(7, patternTypeResolver.getType('*'));
-		assertEquals(7, patternTypeResolver.getType('/'));
-		assertEquals(7, patternTypeResolver.getType('|'));
-		assertEquals(7, patternTypeResolver.getType('&'));
+		assertEquals(7, patternTypeResolver.resolveType('+'));
+		assertEquals(7, patternTypeResolver.resolveType('-'));
+		assertEquals(7, patternTypeResolver.resolveType('*'));
+		assertEquals(7, patternTypeResolver.resolveType('/'));
+		assertEquals(7, patternTypeResolver.resolveType('|'));
+		assertEquals(7, patternTypeResolver.resolveType('&'));
 	}
 	
 	public void testDirectiveType() {
@@ -57,37 +57,37 @@ public class GeneralTypeResolverTester extends TestCase {
 			" |\t|\r", "\\", "$", "0-9|_|a-z|A-Z", "{", "}", "!", "*", "#", "\n", "\"|\'|`"
 		};
 		PatternTypeResolver patternTypeResolver = new PatternTypeResolver(types);
-		assertEquals(0, patternTypeResolver.getType(' '));
-		assertEquals(0, patternTypeResolver.getType('\t'));
-		assertEquals(0, patternTypeResolver.getType('\r'));
+		assertEquals(0, patternTypeResolver.resolveType(' '));
+		assertEquals(0, patternTypeResolver.resolveType('\t'));
+		assertEquals(0, patternTypeResolver.resolveType('\r'));
 		
-		assertEquals(1, patternTypeResolver.getType('\\'));
-		assertEquals(2, patternTypeResolver.getType('$'));
+		assertEquals(1, patternTypeResolver.resolveType('\\'));
+		assertEquals(2, patternTypeResolver.resolveType('$'));
 		
-		assertEquals(3, patternTypeResolver.getType('_'));
+		assertEquals(3, patternTypeResolver.resolveType('_'));
 		for (char ch = 'a'; ch <= 'z'; ch = (char)(ch + 1))
-			assertEquals(3, patternTypeResolver.getType(ch));
+			assertEquals(3, patternTypeResolver.resolveType(ch));
 		for (char ch = 'A'; ch <= 'Z'; ch = (char)(ch + 1))
-			assertEquals(3, patternTypeResolver.getType(ch));
+			assertEquals(3, patternTypeResolver.resolveType(ch));
 		for (char ch = '0'; ch <= '9'; ch = (char)(ch + 1))
-			assertEquals(3, patternTypeResolver.getType(ch));
+			assertEquals(3, patternTypeResolver.resolveType(ch));
 
-		assertEquals(4, patternTypeResolver.getType('{'));
-		assertEquals(5, patternTypeResolver.getType('}'));
-		assertEquals(6, patternTypeResolver.getType('!'));
-		assertEquals(7, patternTypeResolver.getType('*'));
-		assertEquals(8, patternTypeResolver.getType('#'));
-		assertEquals(9, patternTypeResolver.getType('\n'));
+		assertEquals(4, patternTypeResolver.resolveType('{'));
+		assertEquals(5, patternTypeResolver.resolveType('}'));
+		assertEquals(6, patternTypeResolver.resolveType('!'));
+		assertEquals(7, patternTypeResolver.resolveType('*'));
+		assertEquals(8, patternTypeResolver.resolveType('#'));
+		assertEquals(9, patternTypeResolver.resolveType('\n'));
 		
-		assertEquals(10, patternTypeResolver.getType('\"'));
-		assertEquals(10, patternTypeResolver.getType('\''));
-		assertEquals(10, patternTypeResolver.getType('`'));
+		assertEquals(10, patternTypeResolver.resolveType('\"'));
+		assertEquals(10, patternTypeResolver.resolveType('\''));
+		assertEquals(10, patternTypeResolver.resolveType('`'));
 		
-		assertEquals(11, patternTypeResolver.getType('+'));
-		assertEquals(11, patternTypeResolver.getType('-'));
-		assertEquals(11, patternTypeResolver.getType('/'));
-		assertEquals(11, patternTypeResolver.getType('|'));
-		assertEquals(11, patternTypeResolver.getType('&'));
+		assertEquals(11, patternTypeResolver.resolveType('+'));
+		assertEquals(11, patternTypeResolver.resolveType('-'));
+		assertEquals(11, patternTypeResolver.resolveType('/'));
+		assertEquals(11, patternTypeResolver.resolveType('|'));
+		assertEquals(11, patternTypeResolver.resolveType('&'));
 	}
 
 }
