@@ -11,7 +11,7 @@ package org.commontemplate.util.scanner;
 public interface TypeResolver {
 
 	/**
-	 * 获取输入字节的类型
+	 * 判定输入字节的类型
 	 *
 	 * @param ch 输入的字节
 	 * @return 字节的类型, 对应StateMap的类型
