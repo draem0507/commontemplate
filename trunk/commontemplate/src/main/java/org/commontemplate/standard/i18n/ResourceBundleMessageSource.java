@@ -25,10 +25,15 @@ public class ResourceBundleMessageSource implements MessageSource {
 	}
 
 	public String getMessage(Locale locale, String key) throws NoSuchMessageException {
+		if (key == null)
+			throw new NoSuchMessageException(
+				"ResourceBundleMessageSource.message.key.required");
+		if (locale == null)
+			locale = Locale.getDefault();
 		ResourceBundle resourceBundle = getResourceBundle(locale);
 		if (resourceBundle == null)
 			throw new NoSuchMessageException(
-					"未找到信息源ResourceBundle! 请检查是否配置了ResourceBundleFactory或MessageBasename!");
+					"ResourceBundleMessageSource.resource.bundle.required");
 		String msg;
 		try {
 			msg = resourceBundle.getString(key);
@@ -46,6 +51,10 @@ public class ResourceBundleMessageSource implements MessageSource {
 	}
 
 	public String getMessage(Locale locale, String key, String defaultValue) {
+		if (key == null)
+			return defaultValue;
+		if (locale == null)
+			locale = Locale.getDefault();
 		ResourceBundle resourceBundle = getResourceBundle(locale);
 		if (resourceBundle == null)
 			return defaultValue;
@@ -64,7 +73,7 @@ public class ResourceBundleMessageSource implements MessageSource {
 		return formatMessage(locale, getMessage(locale, key, defaultValue), args);
 	}
 
-	private final String formatMessage(Locale locale, String msg, Object[] args) {
+	private String formatMessage(Locale locale, String msg, Object[] args) {
 		if (msg != null && msg.length() > 0 && args != null && args.length > 0) {
 			return new MessageFormat(msg, locale).format(args);
 		}

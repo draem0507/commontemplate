@@ -3,10 +3,11 @@ package org.commontemplate.util;
 import java.io.IOException;
 import java.io.Writer;
 
+
 /**
  * Implementation of a fast Writer. It was originally taken from JspWriter
  * and modified to have less syncronization going on.
- * 
+ *
  * 声明：此类引用自Velocity的org.apache.velocity.io.VelocityWriter
  */
 public final class FastWriter extends Writer
@@ -71,8 +72,7 @@ public final class FastWriter extends Writer
     public FastWriter(Writer writer, int sz, boolean autoFlush)
     {
         this(sz, autoFlush);
-        if (sz < 0)
-            throw new IllegalArgumentException("Buffer size <= 0");
+        Assert.assertTrue(sz > 0, "FastWriter.buffer.size.negative");
         this.writer = writer;
         cb = sz == 0 ? null : new char[sz];
         nextChar = 0;

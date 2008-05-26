@@ -5,12 +5,12 @@ import java.io.Reader;
 import java.util.List;
 
 import org.commontemplate.standard.directive.DirectiveHandlerSupport;
-import org.commontemplate.core.Context;
 import org.commontemplate.util.Assert;
+import org.commontemplate.core.Context;
 
 /**
  * 显示文件内容指令, 不作为模板解析.
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
@@ -28,21 +28,21 @@ public class DisplayFileDirectiveHandler extends DirectiveHandlerSupport {
 			} else if (list.size() == 2 && list.get(0) instanceof String && list.get(1) instanceof String) {
 				readFile(context, (String)list.get(0), (String)list.get(1));
 			} else {
-				Assert.fail("display参数列表错误!");
+				Assert.fail("DisplayFileDirectiveHandler.parameter.error", new Object[]{param});
 			}
 		} else {
-			Assert.fail("display参数列表错误!");
+			Assert.fail("DisplayFileDirectiveHandler.parameter.error", new Object[]{param});
 		}
 	}
-	
+
 	private void readFile(Context context, String name) throws IOException {
 		read(context, context.loadResource(name).getReader());
 	}
-	
+
 	private void readFile(Context context, String name, String encoding) throws IOException {
 		read(context, context.loadResource(name, encoding).getReader());
 	}
-	
+
 	private void read(Context context, Reader reader) throws IOException {
 		try {
 			char[] buf = new char[1024];

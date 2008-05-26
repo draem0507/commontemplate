@@ -56,6 +56,11 @@ public interface LocalContextStack {
 	public void popLocalContext();
 
 	/**
+	 * 根级局部上下文名称
+	 */
+	public static final String ROOT_LOCAL_CONTEXT_NAME = "root";
+
+	/**
 	 * 获取根局部环境区，即最顶部的LocalContext
 	 */
 	public LocalContext getRootLocalContext();

@@ -33,10 +33,10 @@ public class LogDirectiveHandler extends DirectiveHandlerSupport {
 			} else if ("error".equals(level)) {
 				logger.error(msg);
 			} else {
-				Assert.fail("错误的日志级别：" + level);
+				Assert.fail("LogDirectiveHandler.log.level.error", new Object[]{level});
 			}
 		} else {
-			Assert.fail("log指令参数列表错误！");
+			Assert.fail("LogDirectiveHandler.parameter.error", new Object[]{param});
 		}
 	}
 

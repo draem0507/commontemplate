@@ -17,7 +17,7 @@ public class TemplateNameRelativer implements TemplateNameFilter {
 	public String filter(String templateName, String currentTemplateName) throws InvalidTemplateNameException {
 		try {
 			if (templateName == null)
-				throw new InvalidTemplateNameException("模板名称不能为空！");
+				throw new InvalidTemplateNameException(templateName, "TemplateNameRelativer.template.name.required");
 			if (templateName.trim().charAt(0) == UrlCleaner.PATH_SEPARATOR_CHAR) // 根目录开头，不添加当前路径
 				return UrlCleaner.clean(templateName);
 			return UrlCleaner.clean(UrlCleaner.getDirectory(currentTemplateName) + templateName);

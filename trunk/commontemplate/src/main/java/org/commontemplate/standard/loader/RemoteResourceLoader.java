@@ -7,7 +7,7 @@ import org.commontemplate.util.Assert;
 
 /**
  * 远程模板源加载器
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
@@ -21,12 +21,12 @@ public class RemoteResourceLoader extends URLResourceLoader {
 
 	/**
 	 * 初始化模板所在域 必须包含协议头, 如: http://等
-	 * 
+	 *
 	 * @param domain
 	 *            模板所在域
 	 */
 	public RemoteResourceLoader(String domain) {
-		Assert.assertContain(domain, "://", "初始化域必须包含协议头, 如http://或file://等!");
+		Assert.assertContain(domain, "://", "RemoteResourceLoader.protocol.required");
 		this.domain = domain;
 	}
 

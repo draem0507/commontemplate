@@ -93,7 +93,7 @@ public final class Position implements Serializable {
 	}
 
 	public String toString() {
-		return "(" + offset + ":" + row + "," + column + ")";
+		return "(pos:" + offset + " row:" + (row + 1) + " col:" + column + ")";
 	}
 
 }

@@ -26,7 +26,7 @@ public final class ExpressionEngine implements ExpressionParser {
 	private final ExpressionReducer expressionReducer;
 
 	public ExpressionEngine(ExpressionConfiguration config) {
-		Assert.assertNotNull(config, "配置信息不能为空!");
+		Assert.assertNotNull(config, "ExpressionEngine.config.required");
 		config.validate(); // 配置自验证
 
 		expressionTokenizer = new ExpressionTokenizer();

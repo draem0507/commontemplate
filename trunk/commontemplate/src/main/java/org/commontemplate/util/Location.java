@@ -2,6 +2,7 @@ package org.commontemplate.util;
 
 import java.io.Serializable;
 
+
 /**
  * 位置区域
  * (不变量, 线程安全)
@@ -42,7 +43,12 @@ public final class Location implements Serializable {
 	 * @param begin 起始位置
 	 * @param end 结束位置
 	 */
-	public Location(Position begin, Position end) { // FIXME 验证不变式，同行Position，offset差值应等于column之差.
+	public Location(Position begin, Position end) {
+		Assert.assertNotNull(begin);
+		Assert.assertNotNull(end);
+		// 不变式，同行Position，offset差值等于column之差.
+		if (begin.getRow() == end.getRow())
+			Assert.assertTrue(end.getOffset() - begin.getOffset() == end.getColumn() - begin.getColumn());
 		this.begin = begin;
 		this.end = end;
 	}
@@ -120,7 +126,9 @@ public final class Location implements Serializable {
 	}
 
 	public String toString() {
-		return begin.toString() + "-" + end.toString();
+		if (begin.equals(end))
+			return begin.toString();
+		return begin.toString() + " to " + end.toString();
 	}
 
 }

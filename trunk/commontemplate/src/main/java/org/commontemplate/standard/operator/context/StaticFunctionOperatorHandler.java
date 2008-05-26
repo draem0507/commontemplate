@@ -39,7 +39,7 @@ public class StaticFunctionOperatorHandler extends UnaryOperatorHandlerSupport {
 			if (handler != null)
 				return handler.handleFunction(function.getArguments());
 		}
-		throw new RuntimeException("未找到静态方法:" + function.getName());
+		return null;
 	}
 
 

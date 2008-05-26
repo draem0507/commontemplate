@@ -4,10 +4,11 @@ import java.io.IOException;
 import java.net.URL;
 
 import org.commontemplate.core.Resource;
+import org.commontemplate.util.I18nExceptionFactory;
 
 /**
  * URL模板源加载器
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
@@ -17,7 +18,7 @@ public abstract class URLResourceLoader extends AbstractResourceLoader {
 			throws IOException {
 		URL url = getURL(path);
 		if (url == null)
-			throw new IOException("找不到模板文件: " + path + "，模板名称：" + name);
+			throw I18nExceptionFactory.createFileNotFoundException("URLResourceLoader.template.not.found", new Object[]{path, name});
 		return new URLResource(url, name, encoding);
 	}
 

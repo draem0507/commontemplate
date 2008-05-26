@@ -19,7 +19,7 @@ import org.commontemplate.util.ResourceEntry;
  * 模板工厂实现
  * <p/>
  * (内同步，线程安全)
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
@@ -27,22 +27,22 @@ final class TemplateFactoryImpl implements TemplateFactory {
 
 	/**
 	 * 构造模板工厂
-	 * 
+	 *
 	 * @param templateParser 模板指令解释器
 	 * @param resourceLoader 模板加载器
 	 * @param cache 模板缓存策略
 	 * @param reloadController 热加载控制器
 	 * @param resourceComparator 模板源比较器
-	 * 
+	 *
 	 */
-	TemplateFactoryImpl(TemplateParser templateParser, ResourceLoader resourceLoader, 
-			Cache cache, ReloadController reloadController, 
+	TemplateFactoryImpl(TemplateParser templateParser, ResourceLoader resourceLoader,
+			Cache cache, ReloadController reloadController,
 			ResourceComparator resourceComparator) {
-		Assert.assertNotNull(resourceLoader, "resourceLoader不能为空！");
-		Assert.assertNotNull(templateParser, "templateParser不能为空！");
-		
+		Assert.assertNotNull(resourceLoader, "TemplateFactoryImpl.resource.loader.required");
+		Assert.assertNotNull(templateParser, "TemplateFactoryImpl.template.parser.required");
+
 		this.resourceLoader = resourceLoader;
-		
+
 		this.templateParser = templateParser;
 		this.cache = cache;
 		this.reloadController = reloadController;
@@ -62,28 +62,28 @@ final class TemplateFactoryImpl implements TemplateFactory {
 	// 缓存同步 -------
 
 	private final ReloadController reloadController;
-	
+
 	private final ResourceComparator resourceComparator;
-	
+
 	private final Cache cache;
-	
-	private Template cache(String name, String encoding) 
+
+	private Template cache(String name, String encoding)
 			throws IOException, ParsingException {
 		if (cache == null)
 			return parseTemplate(load(name, encoding));
-		
+
 		ResourceEntry entry;
-		
+
 		// 缓存总锁，锁定缓存中各条目获取过程
 		synchronized(cache) {
 			entry = (ResourceEntry)cache.get(name);
 			if(entry == null) {
-				entry = new ResourceEntry(); 
-				cache.put(name, entry); 
+				entry = new ResourceEntry();
+				cache.put(name, entry);
 			}
 			//assert(entry != null); // 后验条件
 		}
-		
+
 		// 单条目锁，锁定资源获取过程
 		synchronized (entry) {
 			Template template = (Template)entry.get();
@@ -120,24 +120,24 @@ final class TemplateFactoryImpl implements TemplateFactory {
 	public Resource loadResource(String name) throws IOException {
 		return resourceLoader.loadResource(filterName(name));
 	}
-	
+
 	public Resource loadResource(String name, String encoding)
 			throws IOException {
 		return resourceLoader.loadResource(filterName(name), encoding);
 	}
-	
+
 	private String filterName(String name) {
 		if (name == null)
-			throw new java.lang.NullPointerException("模板名称不能为null！");
+			throw new java.lang.NullPointerException("TemplateFactoryImpl.template.name.required");
 		name = name.trim();
 		if (name.length() == 0)
-			throw new java.lang.NullPointerException("模板名称不能为空！");
+			throw new java.lang.NullPointerException("TemplateFactoryImpl.template.name.required");
 		char leader = name.charAt(0);
 		if (leader != '/' && leader != '\\')
 			name = "/" + name;
 		return name;
 	}
-	
+
 	// 代理TemplateParser ----
 
 	private final TemplateParser templateParser;

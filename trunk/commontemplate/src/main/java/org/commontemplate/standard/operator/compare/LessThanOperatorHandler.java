@@ -18,7 +18,6 @@ public class LessThanOperatorHandler extends BinaryOperatorHandlerSupport {
 		super(Comparable.class, Comparable.class);
 	}
 
-
 	public Object doEvaluate(Object leftOperand, Object rightOperand) throws Exception {
 		return Boolean.valueOf(((Comparable)leftOperand).compareTo(rightOperand) < 0);
 	}

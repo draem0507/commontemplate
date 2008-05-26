@@ -1,15 +1,10 @@
 package org.commontemplate.standard.operator.collection;
 
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
 import org.commontemplate.core.VariableException;
 import org.commontemplate.core.VariableResolver;
-import org.commontemplate.util.TypeUtils;
 
 /**
  * 简单表达式变量上下文实现
@@ -23,120 +18,26 @@ public class SimpleExpressionContext implements VariableResolver {
 
 	}
 
-	// 断言 -----
-
-	protected void assertVariables(Map model) throws VariableException {
-		if (model != null && model.size() > 0) {
-			for (Iterator iterator = model.keySet().iterator(); iterator.hasNext();) {
-				String name = (String)iterator.next();
-				assertVariableName(name);
-			}
-		}
-	}
-
-	protected void assertVariableName(String var) throws VariableException {
-		if (var == null)
-			throw new VariableException("变量名不能为空!", null);
-
-		if (! TypeUtils.isNamed(var))
-			throw new VariableException(var + " 不符合命名规范!", var);
-
-	}
-
-	private final Map variablesContainer = new HashMap();
-
-	private final Map aliasContainer = new HashMap();
-
-	private final Set readonlyContainer = new HashSet();
-
-	private boolean isLock = false;
-
-	public void lockVariables() {
-		this.isLock = true;
-	}
-
-	public void unlockVariables() {
-		this.isLock = false;
-	}
-
-	public boolean isDefinedVariable(String name) throws VariableException {
-		return variablesContainer.containsKey(name);
-	}
-
-	public void defineVariable(String name, Object value)
-			throws VariableException {
-		if (isLock)
-			throw new VariableException("容器锁定!", name);
-		variablesContainer.put(name, value);
-	}
-
-	public void defineVariable(String name) throws
-			VariableException {
-		defineVariable(name, null);
-	}
-
-	public void defineReadonlyVariable(String name, Object value)
-			throws VariableException {
-		defineVariable(name, value);
-		readonlyContainer.add(name);
-	}
-
-	public void defineAllVariables(Map variables) throws
-			VariableException {
-		if (isLock)
-			throw new VariableException("容器锁定!", variables.keySet().toString());
-		this.variablesContainer.putAll(variables);
-	}
-
-	public void defineVariableAlias(String alias, String name)
-			throws VariableException {
-		aliasContainer.put(alias, name);
-	}
-
-	public void assignVariable(String name, Object value)
-			throws VariableException {
-		if (isLock)
-			throw new VariableException("容器锁定!", name);
-		variablesContainer.put(name, value);
-	}
-
 	public Object getVariable(String name) throws VariableException {
-		return variablesContainer.get(name);
+		return variables.get(name);
 	}
 
-	public Map getDefinedVariables() {
-		return Collections.unmodifiableMap(variablesContainer);
+	private final Map variables = new HashMap();
+
+	public void putVariable(String name, Object value) {
+		variables.put(name, value);
 	}
 
-	public void removeVariableAlias(String alias) throws VariableException {
-		aliasContainer.remove(alias);
+	public void putAllVariables(Map map) {
+		variables.putAll(map);
 	}
 
-	public void removeVariable(String var) throws
-			VariableException {
-		if (isLock)
-			throw new VariableException("变量容器锁定! 无法移除：" + var, var);
-		assertVariableName(var);
-		variablesContainer.remove(var);
-		readonlyContainer.remove(var);
-		Set dels = new HashSet();
-		for (Iterator iterator = aliasContainer.entrySet().iterator(); iterator.hasNext();) {
-			Map.Entry entry = (Map.Entry)iterator.next();
-			if (var.equals(entry.getValue())) {
-				dels.add(entry.getKey());
-			}
-		}
-		for (Iterator iterator = dels.iterator(); iterator.hasNext();) {
-			Object key = iterator.next();
-			aliasContainer.remove(key);
-		}
-		dels.clear();
+	public void removeVariable(String name) {
+		variables.remove(name);
 	}
 
 	public void clearVariables() {
-		variablesContainer.clear();
-		aliasContainer.clear();
-		readonlyContainer.clear();
+		variables.clear();
 	}
 
 }

@@ -27,6 +27,13 @@ public abstract class Element implements Node, Serializable {
 	public abstract String getSignature();
 
 	/**
+	 * 获取元素类型
+	 *
+	 * @return 元素类型
+	 */
+	public abstract String getType();
+
+	/**
 	 * 返回模板元素的标准组成, 同getCanonicalForm()
 	 *
 	 * @return 模板元素的标准组成

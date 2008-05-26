@@ -79,7 +79,7 @@ final class ExpressionTranslator {
 	// 添加函数到表达式序列中
 	private void appendFunction(final List expressions, final Token token) throws ParsingException {
 		if (! functionAvailable)
-			throw new ParsingException(token.getLocation(), "禁止调用函数! 函数名:" + token.getMessage() + " (配置项functionAvailable=false)");
+			throw new ParsingException(token.getLocation(), "ExpressionTranslator.function.forbidden", new Object[]{token.getMessage()});
 		expressions.add(expressionFactory.getFunctionExpression(token));
 	}
 
@@ -124,7 +124,7 @@ final class ExpressionTranslator {
 		for (int i = name.length(); i > 0; i --)
 			if (expressionFactory.hasUnaryExpression(name.substring(0, i)))
 				return i;
-		throw new ParsingException(token.getLocation(), name + " 为非法的一元运算符！");
+		throw new ParsingException(token.getLocation(), "ExpressionTranslator.invaild.unary.operator.name", new Object[]{name});
 	}
 
 	// 最大匹配二元操作符
@@ -132,7 +132,7 @@ final class ExpressionTranslator {
 		for (int i = name.length(); i > 0; i --)
 			if (expressionFactory.hasBinaryExpression(name.substring(0, i)))
 				return i;
-		throw new ParsingException(token.getLocation(), name + " 为非法的二元运算符！");
+		throw new ParsingException(token.getLocation(), "ExpressionTranslator.invaild.binary.operator.name", new Object[]{name});
 	}
 
 }

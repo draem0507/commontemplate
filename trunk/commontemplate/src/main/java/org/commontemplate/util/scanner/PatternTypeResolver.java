@@ -50,22 +50,22 @@ public class PatternTypeResolver implements TypeResolver {
 				char ch = pattern.charAt(j);
 				if (isSeparator) {
 					if (ch == SERIATE_SEPARATOR) {
-						Assert.assertFalse(isSequence, " - 分割符位置不正确, 后面应该有一字符!");
+						Assert.assertFalse(isSequence, "PatternTypeResolver.seriate.separator.miss.after.char");
 						isSequence = true;
 					} else if (ch == DISCRETE_SEPARATOR) {
-						Assert.assertTrue(buf != NULL_CHAR, "含有无用的 | 分割符");
+						Assert.assertTrue(buf != NULL_CHAR, "PatternTypeResolver.discrete.separator.miss.char");
 						types.put(new Character(buf), new Integer(i));
 						buf = NULL_CHAR;
 					} else {
-						Assert.fail("字符之间应该有分割符!");
+						Assert.fail("PatternTypeResolver.char.miss.separator");
 					}
 				} else {
 					if (isSequence) {
-						Assert.assertTrue(buf != NULL_CHAR, " - 分割符位置不正确, 前面应该有一字符!");
+						Assert.assertTrue(buf != NULL_CHAR, "PatternTypeResolver.seriate.separator.miss.before.char");
 						scopes.add(new CharScope(i, buf, ch));
 						isSequence = false;
 					} else {
-						Assert.assertTrue(buf == NULL_CHAR, "字符位置错误!");
+						Assert.assertTrue(buf == NULL_CHAR, "PatternTypeResolver.char.miss.separator");
 						buf = ch;
 					}
 				}

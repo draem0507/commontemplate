@@ -1,6 +1,5 @@
 package org.commontemplate.tools.bean;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
@@ -94,8 +93,8 @@ public class PropertiesBeanFactory implements BeanFactory {
 	 * @param variables 变量集，类型：Map<String, Object>
 	 */
 	public PropertiesBeanFactory(String propertiesPath, ResourceLoader resourceLoader, Map variables) {
-		Assert.assertNotNull(propertiesPath, "配置文件路径不能为空！");
-		Assert.assertNotNull(resourceLoader, "配置文件加载器不能为空！");
+		Assert.assertNotNull(propertiesPath, "PropertiesBeanFactory.config.path.required");
+		Assert.assertNotNull(resourceLoader, "PropertiesBeanFactory.config.loader.required");
 		this.properties = extendProperties(loadProperties(propertiesPath, resourceLoader), resourceLoader);
 		this.variables = variables;
 	}
@@ -107,8 +106,8 @@ public class PropertiesBeanFactory implements BeanFactory {
 	 * @param variables 变量集，类型：Map<String, Object>
 	 */
 	public PropertiesBeanFactory(Properties properties, ResourceLoader resourceLoader, Map variables) {
-		Assert.assertNotNull(properties, "配置信息不能为空！");
-		Assert.assertNotNull(resourceLoader, "配置文件加载器不能为空！");
+		Assert.assertNotNull(properties, "PropertiesBeanFactory.config.properties.required");
+		Assert.assertNotNull(resourceLoader, "PropertiesBeanFactory.config.loader.required");
 		this.properties = extendProperties(properties, resourceLoader);
 		this.variables = variables;
 	}
@@ -135,7 +134,7 @@ public class PropertiesBeanFactory implements BeanFactory {
 		try {
 			InputStream inputStream = resourceLoader.getResourceAsStream(path);
 			if (inputStream == null)
-				throw new FileNotFoundException("未找到配置文件: " + path);
+				throw new BeanException("PropertiesBeanFactory.config.not.found", new Object[]{path});
 			Properties props = new Properties();
 			props.load(inputStream);
 			return props;
@@ -163,11 +162,11 @@ public class PropertiesBeanFactory implements BeanFactory {
 					try {
 						method.invoke(bean, new Object[]{arg});
 					} catch (IllegalArgumentException e) {
-						throw new BeanException("请检查配配置项：" + prefix + property, e);
+						throw new BeanException("PropertiesBeanFactory.config.item.error", new Object[]{prefix + property}, e);
 					} catch (IllegalAccessException e) {
-						throw new BeanException("请检查配配置项：" + prefix + property, e);
+						throw new BeanException("PropertiesBeanFactory.config.item.error", new Object[]{prefix + property}, e);
 					} catch (InvocationTargetException e) {
-						throw new BeanException("请检查配配置项：" + prefix + property, e);
+						throw new BeanException("PropertiesBeanFactory.config.item.error", new Object[]{prefix + property}, e);
 					}
 				}
 			}
@@ -246,7 +245,8 @@ public class PropertiesBeanFactory implements BeanFactory {
 	private Object getObjectByStaticField(String classAndFieldName, String property) {
 		try {
 			int i = classAndFieldName.lastIndexOf('.');
-			Assert.assertTrue(i > 0 && i < classAndFieldName.length() - 1, "非法的静态字段：" + classAndFieldName);
+			if (i <= 0 || i > classAndFieldName.length() - 1)
+				throw new BeanException("PropertiesBeanFactory.invalid.static.name", new Object[]{classAndFieldName});
 
 			String className = classAndFieldName.substring(0, i);
 			String filedName = classAndFieldName.substring(i + 1);
@@ -270,7 +270,8 @@ public class PropertiesBeanFactory implements BeanFactory {
 	private Object getObjectByStaticMethod(String classAndMethodName, String property) {
 		try {
 			int i = classAndMethodName.lastIndexOf('.');
-			Assert.assertTrue(i > 0 && i < classAndMethodName.length() - 1, "非法的静态工厂方法：" + classAndMethodName);
+			if (i <= 0 || i > classAndMethodName.length() - 1)
+				throw new BeanException("PropertiesBeanFactory.invalid.static.name", new Object[]{classAndMethodName});
 
 			String className = classAndMethodName.substring(0, i);
 			String methodName = classAndMethodName.substring(i + 1);
@@ -309,7 +310,7 @@ public class PropertiesBeanFactory implements BeanFactory {
 
 	private Set getSet(String setName) {
 		if (! TypeUtils.isNamed(setName))
-			throw new BeanException("非法Set名称：" + setName);
+			throw new BeanException("PropertiesBeanFactory.invalid.set.name", new Object[]{setName});
 
 		Set set = new HashSet();
 		String prefix = setName + "<";
@@ -325,7 +326,7 @@ public class PropertiesBeanFactory implements BeanFactory {
 
 	private List getList(String listName) {
 		if (! TypeUtils.isNamed(listName))
-			throw new BeanException("非法List名称：" + listName);
+			throw new BeanException("PropertiesBeanFactory.invalid.list.name", new Object[]{listName});
 
 		String prefix = listName + "[";
 		int len = prefix.length();
@@ -344,7 +345,7 @@ public class PropertiesBeanFactory implements BeanFactory {
 
 	private Map getMap(String mapName) {
 		if (! TypeUtils.isNamed(mapName))
-			throw new BeanException("非法Map名称：" + mapName);
+			throw new BeanException("PropertiesBeanFactory.invalid.map.name", new Object[]{mapName});
 
 		String prefix = mapName + "{";
 		int len = prefix.length();

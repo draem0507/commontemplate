@@ -7,7 +7,7 @@ import org.commontemplate.util.Assert;
 
 /**
  * Classpath模板源加载器，用于从classpath中搜索模板源
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
@@ -20,7 +20,7 @@ public class ClasspathResourceLoader extends URLResourceLoader {
 	}
 
 	public ClasspathResourceLoader(ClassLoader classLoader) {
-		Assert.assertNotNull(classLoader, "类加载器不能为空！");
+		Assert.assertNotNull(classLoader, "ClasspathResourceLoader.class.loader.required");
 		this.classLoader = classLoader;
 	}
 

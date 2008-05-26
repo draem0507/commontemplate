@@ -36,7 +36,7 @@ public class Filter {
 
 	public Object filter(Map variables) {
 		SimpleExpressionContext context = new SimpleExpressionContext();
-		context.defineAllVariables(variables);
+		context.putAllVariables(variables);
 		return expression.evaluate(context);
 	}
 

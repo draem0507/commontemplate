@@ -5,9 +5,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.Collection;
@@ -19,8 +22,10 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
@@ -32,26 +37,30 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
 
 import org.commontemplate.core.BlockDirective;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.Element;
 import org.commontemplate.core.Template;
 import org.commontemplate.util.BeanUtils;
+import org.commontemplate.util.I18nMessages;
 import org.commontemplate.util.TypeUtils;
+import org.commontemplate.util.swing.TextPopupMenu;
 
 class DebugFrame implements ActionListener, WindowListener {
 
 	// ---- 实例管理 ----
 
-	public static void showDebugFrame(final Context context, final Element element, final DebugLock lock) {
+	public static void showDebugFrame(final Context context,
+			final Element element, final DebugLock lock) {
 		DebugFrame.getDebugFrame().initDebugFrame(context, element, lock);
 	}
 
 	private static ThreadLocal local = new ThreadLocal();
 
 	private static DebugFrame getDebugFrame() {
-		DebugFrame debugFrame = (DebugFrame)local.get();
+		DebugFrame debugFrame = (DebugFrame) local.get();
 		if (debugFrame == null) {
 			debugFrame = new DebugFrame();
 			local.set(debugFrame);
@@ -74,6 +83,9 @@ class DebugFrame implements ActionListener, WindowListener {
 
 	private JButton stepInto, stepOver, stepReturn, resume, terminate;
 
+	private JMenuItem stepIntoItem, stepOverItem, stepReturnItem, resumeItem,
+			terminateItem;
+
 	private JTextField templateNameBox;
 
 	private JTextField elementBox;
@@ -86,9 +98,16 @@ class DebugFrame implements ActionListener, WindowListener {
 
 	private JTextArea variableView;
 
+	private JPopupMenu contextTreePopupMenu;
+
+	private JPopupMenu templateViewMenu;
+
 	private DebugFrame() {
-		frame = new JFrame("Common Template Debugging (http://www.commontemplate.org)");
-		frame.setIconImage(Toolkit.getDefaultToolkit().createImage(DebugFrame.class.getClassLoader().getResource(ICON_PATH + "debug.gif")));
+		frame = new JFrame(I18nMessages.getMessage("DebugFrame.title")
+				+ " (http://www.commontemplate.org)");
+		frame.setIconImage(Toolkit.getDefaultToolkit().createImage(
+				DebugFrame.class.getClassLoader().getResource(
+						ICON_PATH + "debug.gif")));
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.setSize(800, 600);
 		Dimension scr = Toolkit.getDefaultToolkit().getScreenSize();
@@ -101,45 +120,62 @@ class DebugFrame implements ActionListener, WindowListener {
 		frame.addWindowListener(this);
 
 		JSplitPane horizontalPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-				createTemplatePane(),
-				createContextPane());
+				createTemplatePane(), createContextPane());
 		horizontalPane.setDividerLocation(500);
+		horizontalPane.setOneTouchExpandable(true);
 		frame.getContentPane().add(createToolBar(), BorderLayout.NORTH);
 		frame.getContentPane().add(horizontalPane, BorderLayout.CENTER);
 	}
 
-	private static final String ICON_PATH = DebugFrame.class.getPackage().getName().replace('.', '/') + "/";
+	private static final String ICON_PATH = DebugFrame.class.getPackage()
+			.getName().replace('.', '/')
+			+ "/";
+
+	private ImageIcon getImageIcon(String icon) {
+		return new ImageIcon(DebugFrame.class.getClassLoader().getResource(
+				ICON_PATH + icon));
+	}
 
 	private JComponent createToolBar() {
 		JToolBar buttonPane = new JToolBar();
-		buttonPane.setMargin(new Insets(0,10,0,0));
+		buttonPane.setMargin(new Insets(0, 10, 0, 0));
 
-		stepInto = new JButton(new ImageIcon(DebugFrame.class.getClassLoader().getResource(ICON_PATH + "stepinto.gif")));
-		stepInto.setToolTipText("Step Into (ALT+F5)");
+		stepInto = new JButton(getImageIcon("stepinto.gif"));
+		stepInto.setToolTipText(I18nMessages
+				.getMessage("DebugFrame.step.into.button")
+				+ " (ALT+F5)");
 		stepInto.setMnemonic(KeyEvent.VK_F5);
 		stepInto.addActionListener(this);
 		buttonPane.add(stepInto);
 
-		stepOver = new JButton(new ImageIcon(DebugFrame.class.getClassLoader().getResource(ICON_PATH + "stepover.gif")));
-		stepOver.setToolTipText("Step Over (ALT+F6)");
+		stepOver = new JButton(getImageIcon("stepover.gif"));
+		stepOver.setToolTipText(I18nMessages
+				.getMessage("DebugFrame.step.over.button")
+				+ " (ALT+F6)");
 		stepOver.setMnemonic(KeyEvent.VK_F6);
 		stepOver.addActionListener(this);
 		buttonPane.add(stepOver);
 
-		stepReturn = new JButton(new ImageIcon(DebugFrame.class.getClassLoader().getResource(ICON_PATH + "stepreturn.gif")));
-		stepReturn.setToolTipText("Step Return (ALT+F7)");
+		stepReturn = new JButton(getImageIcon("stepreturn.gif"));
+		stepReturn.setToolTipText(I18nMessages
+				.getMessage("DebugFrame.step.return.button")
+				+ " (ALT+F7)");
 		stepReturn.setMnemonic(KeyEvent.VK_F7);
 		stepReturn.addActionListener(this);
 		buttonPane.add(stepReturn);
 
-		resume = new JButton(new ImageIcon(DebugFrame.class.getClassLoader().getResource(ICON_PATH + "resume.gif")));
-		resume.setToolTipText("Resume (ALT+F8)");
+		resume = new JButton(getImageIcon("resume.gif"));
+		resume.setToolTipText(I18nMessages
+				.getMessage("DebugFrame.resume.button")
+				+ " (ALT+F8)");
 		resume.setMnemonic(KeyEvent.VK_F8);
 		resume.addActionListener(this);
 		buttonPane.add(resume);
 
-		terminate = new JButton(new ImageIcon(DebugFrame.class.getClassLoader().getResource(ICON_PATH + "terminate.gif")));
-		terminate.setToolTipText("Terminate (ALT+F9)");
+		terminate = new JButton(getImageIcon("terminate.gif"));
+		terminate.setToolTipText(I18nMessages
+				.getMessage("DebugFrame.terminate.button")
+				+ " (ALT+F9)");
 		terminate.setMnemonic(KeyEvent.VK_F9);
 		terminate.addActionListener(this);
 		buttonPane.add(terminate);
@@ -148,7 +184,72 @@ class DebugFrame implements ActionListener, WindowListener {
 	}
 
 	private JComponent createTemplatePane() {
+		stepIntoItem = new JMenuItem(I18nMessages
+				.getMessage("DebugFrame.step.into.button")
+				+ " (ALT+F5)", getImageIcon("stepinto.gif"));
+		stepIntoItem.addActionListener(this);
+
+		stepOverItem = new JMenuItem(I18nMessages
+				.getMessage("DebugFrame.step.over.button")
+				+ " (ALT+F6)", getImageIcon("stepover.gif"));
+		stepOverItem.addActionListener(this);
+
+		stepReturnItem = new JMenuItem(I18nMessages
+				.getMessage("DebugFrame.step.return.button")
+				+ " (ALT+F7)", getImageIcon("stepreturn.gif"));
+		stepReturnItem.addActionListener(this);
+
+		resumeItem = new JMenuItem(I18nMessages
+				.getMessage("DebugFrame.resume.button")
+				+ " (ALT+F8)", getImageIcon("resume.gif"));
+		resumeItem.addActionListener(this);
+
+		terminateItem = new JMenuItem(I18nMessages
+				.getMessage("DebugFrame.terminate.button")
+				+ " (ALT+F9)", getImageIcon("terminate.gif"));
+		terminateItem.addActionListener(this);
+
+		final JMenuItem copyItem = new JMenuItem(I18nMessages
+				.getMessage("DebugFrame.copy.menu.item"));
+		copyItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				String elementText;
+				if (element == null)
+					elementText = "";
+				else if (element instanceof BlockDirective)
+					elementText = element.getSignature();
+				else
+					elementText = element.getCanonicalForm();
+				StringSelection stringSelection = new StringSelection(
+						elementText);
+				Toolkit.getDefaultToolkit().getSystemClipboard().setContents(
+						stringSelection, stringSelection);
+			}
+		});
+
+		final JMenuItem copyAllItem = new JMenuItem(I18nMessages
+				.getMessage("DebugFrame.copy.all.menu.item"));
+		copyAllItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				StringSelection stringSelection = new StringSelection(
+						template == null ? "" : template.getSource());
+				Toolkit.getDefaultToolkit().getSystemClipboard().setContents(
+						stringSelection, stringSelection);
+			}
+		});
+
+		templateViewMenu = new JPopupMenu();
+		templateViewMenu.add(stepIntoItem);
+		templateViewMenu.add(stepOverItem);
+		templateViewMenu.add(stepReturnItem);
+		templateViewMenu.add(resumeItem);
+		templateViewMenu.add(terminateItem);
+		templateViewMenu.add(new JPopupMenu.Separator());
+		templateViewMenu.add(copyItem);
+		templateViewMenu.add(copyAllItem);
+
 		templateNameBox = new JTextField();
+		TextPopupMenu.bindCopy(templateNameBox);
 		templateNameBox.setEditable(false);
 		templateNameBox.setBackground(Color.WHITE);
 
@@ -156,13 +257,31 @@ class DebugFrame implements ActionListener, WindowListener {
 		templateView.setBounds(40, 100, 400, 400);
 		templateView.setOpaque(true);
 		templateView.setBackground(Color.WHITE);
+		templateView.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent me) {
+				if (me.getModifiers() == MouseEvent.META_MASK) {
+					int x = me.getX();
+					int y = me.getY();
+					boolean enableDebug = (lock != null);
+					stepIntoItem.setEnabled(enableDebug);
+					stepOverItem.setEnabled(enableDebug);
+					stepReturnItem.setEnabled(enableDebug);
+					resumeItem.setEnabled(enableDebug);
+					terminateItem.setEnabled(enableDebug);
+					copyItem.setEnabled(enableDebug);
+					templateViewMenu.show(templateView, x, y);
+				}
+			}
+		});
 
 		elementBox = new JTextField();
+		TextPopupMenu.bindCopy(elementBox);
 		elementBox.setEditable(false);
 		elementBox.setBackground(Color.WHITE);
 
 		JScrollPane templateBox = new JScrollPane();
-		templateBox.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		templateBox
+				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		templateBox.getViewport().setView(templateView);
 		templateBox.getViewport().setBackground(Color.white);
 
@@ -176,18 +295,86 @@ class DebugFrame implements ActionListener, WindowListener {
 	}
 
 	private JComponent createContextPane() {
+		final JMenuItem modifyItem = new JMenuItem(I18nMessages
+				.getMessage("DebugFrame.modify.variable.menu.item"));
+		modifyItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				// TODO 未实现
+			}
+		});
+
+		final JMenuItem newItem = new JMenuItem(I18nMessages
+				.getMessage("DebugFrame.new.variable.menu.item"));
+		newItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				// TODO 未实现
+			}
+		});
+
+		final JMenuItem copyItem = new JMenuItem(I18nMessages
+				.getMessage("DebugFrame.copy.menu.item"));
+		copyItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				TreePath path = contextTree.getSelectionPath();
+				if (path != null) {
+					VariableTreeNode node = (VariableTreeNode) path
+							.getLastPathComponent();
+					if (node != null) {
+						StringSelection stringSelection = new StringSelection(
+								node.getName());
+						Toolkit.getDefaultToolkit().getSystemClipboard()
+								.setContents(stringSelection, stringSelection);
+					}
+				}
+			}
+		});
+
+		final JMenuItem copyAllItem = new JMenuItem(I18nMessages
+				.getMessage("DebugFrame.copy.all.menu.item"));
+		copyAllItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				TreePath path = contextTree.getSelectionPath();
+				if (path != null) {
+					VariableTreeNode node = (VariableTreeNode) path
+							.getLastPathComponent();
+					if (node != null) {
+						StringSelection stringSelection = new StringSelection(
+								node.getAllName());
+						Toolkit.getDefaultToolkit().getSystemClipboard()
+								.setContents(stringSelection, stringSelection);
+						return;
+					}
+				}
+				StringSelection stringSelection = new StringSelection(
+						((VariableTreeNode) contextTree.getModel().getRoot())
+								.getAllName());
+				Toolkit.getDefaultToolkit().getSystemClipboard().setContents(
+						stringSelection, stringSelection);
+			}
+		});
+
+		contextTreePopupMenu = new JPopupMenu();
+		contextTreePopupMenu.add(modifyItem);
+		contextTreePopupMenu.add(newItem);
+		contextTreePopupMenu.add(new JPopupMenu.Separator());
+		contextTreePopupMenu.add(copyItem);
+		contextTreePopupMenu.add(copyAllItem);
+
 		variableType = new JTextField();
+		TextPopupMenu.bindCopy(variableType);
 		variableType.setEditable(false);
 		variableType.setBackground(Color.WHITE);
 
 		variableView = new JTextArea();
+		TextPopupMenu.bindCopy(variableView);
 		variableView.setEditable(false);
 		variableView.setBackground(Color.WHITE);
 		variableView.setLineWrap(true);
 		variableView.setWrapStyleWord(true);
 
 		JScrollPane variableBox = new JScrollPane();
-		variableBox.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		variableBox
+				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		variableBox.getViewport().setView(variableView);
 		variableBox.getViewport().setBackground(Color.white);
 
@@ -197,32 +384,62 @@ class DebugFrame implements ActionListener, WindowListener {
 		variablePane.add(variableBox, BorderLayout.CENTER);
 
 		contextTree = new JTree();
-		contextTree.addTreeSelectionListener(new TreeSelectionListener(){
+		contextTree.getSelectionModel().setSelectionMode(
+				TreeSelectionModel.SINGLE_TREE_SELECTION);
+		contextTree.addTreeSelectionListener(new TreeSelectionListener() {
 			public void valueChanged(TreeSelectionEvent e) {
-				TreePath path = e.getNewLeadSelectionPath();
+				TreePath path = contextTree.getSelectionPath();
 				if (path != null) {
-					VariableTreeNode node = (VariableTreeNode)path.getLastPathComponent();
+					VariableTreeNode node = (VariableTreeNode) path
+							.getLastPathComponent();
 					if (node != null) {
 						if (node.isRoot()) {
 							variableType.setText("");
 							variableView.setText("");
 						} else {
 							Class type = node.getType();
-							variableType.setText(type == null ? "null" : type.getName());
-							variableView.setText(String.valueOf(node.getValue()));
+							variableType.setText(type == null ? "null" : type
+									.getName());
+							variableView.setText(String
+									.valueOf(node.getValue()));
 						}
 					}
 				}
 			}
 		});
+		contextTree.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent me) {
+				if (me.getModifiers() == MouseEvent.META_MASK) {
+					int x = me.getX();
+					int y = me.getY();
+					int selRow = contextTree.getRowForLocation(x, y);
+					contextTree.setSelectionRow(selRow == -1 ? 0 : selRow);
+					TreePath path = contextTree.getSelectionPath();
+					modifyItem.setEnabled(false);
+					newItem.setEnabled(false);
+					if (path != null) {
+						VariableTreeNode node = (VariableTreeNode) path
+								.getLastPathComponent();
+						if (node != null) {
+							modifyItem.setEnabled(node.isModifiable());
+							newItem.setEnabled(node.isAppendable());
+						}
+					}
+					contextTreePopupMenu.show(contextTree, x, y);
+				}
+			}
+		});
 
 		JScrollPane contextBox = new JScrollPane();
-		contextBox.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		contextBox
+				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		contextBox.getViewport().setView(contextTree);
 		contextBox.getViewport().setBackground(Color.white);
 
-		JSplitPane contextPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, contextBox, variablePane);
+		JSplitPane contextPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
+				contextBox, variablePane);
 		contextPane.setDividerLocation(400);
+		contextPane.setOneTouchExpandable(true);
 
 		return contextPane;
 	}
@@ -231,16 +448,22 @@ class DebugFrame implements ActionListener, WindowListener {
 
 	private DebugLock lock;
 
-	private void initDebugFrame(final Context context, final Element element, final DebugLock lock) {
+	private void initDebugFrame(final Context context, final Element element,
+			final DebugLock lock) {
 		this.lock = lock;
 		initTemplatePane(context.getCurrentTemplate(), element);
 		initContextPane(context);
 		openFrame();
 	}
 
-	private String templateValue;
+	private Template template;
+
+	private Element element;
 
 	private void initTemplatePane(Template template, Element element) {
+		this.template = template;
+		this.element = element;
+
 		String elementText;
 		if (element instanceof BlockDirective)
 			elementText = element.getSignature();
@@ -248,13 +471,15 @@ class DebugFrame implements ActionListener, WindowListener {
 			elementText = element.getCanonicalForm();
 		elementText = elementText.replaceAll("\n", "\\\\n");
 		elementText = elementText.replaceAll("\r", "\\\\r");
+		elementText = elementText.replaceAll("\t", "\\\\t");
 		elementText = elementText.replaceAll("\f", "\\\\f");
+		elementText = elementText.replaceAll("\b", "\\\\b");
 
-		elementBox.setText(elementText);
-		templateNameBox.setText(template.getName());
+		elementBox.setText(element.getType() + ": " + elementText);
+		templateNameBox.setText(template.getEncoding() + ": "
+				+ template.getName());
 
-		String tmp = template.getCanonicalForm();
-		templateValue = escapeHtml(tmp);
+		String tmp = template.getSource();
 
 		// 设置高亮显示指令
 		StringBuffer buf = new StringBuffer(tmp);
@@ -278,7 +503,7 @@ class DebugFrame implements ActionListener, WindowListener {
 	}
 
 	private void initContextPane(Context context) {
-		VariableTreeNode root = new VariableTreeNode("variables", null);
+		VariableTreeNode root = new VariableTreeNode("variables", context);
 		buildContextTree(root, context.getExistedVariables());
 		contextTree.setModel(new DefaultTreeModel(root));
 	}
@@ -287,50 +512,52 @@ class DebugFrame implements ActionListener, WindowListener {
 		if (obj == null) {
 			return;
 		} else if (obj.getClass().isArray()) {
-			Object[] arr = (Object[])obj;
-			for (int i = 0, n = arr.length; i < n; i ++) {
+			Object[] arr = (Object[]) obj;
+			for (int i = 0, n = arr.length; i < n; i++) {
 				String name = "[" + i + "]";
 				Object value = arr[i];
 				VariableTreeNode thisNode = new VariableTreeNode(name, value);
 				root.add(thisNode);
-				if (value != null && ! TypeUtils.isPrimitive(value.getClass())) {
+				if (value != null && !TypeUtils.isPrimitive(value.getClass())) {
 					buildContextTree(thisNode, value);
 				}
 			}
 		} else if (obj instanceof Collection) {
-			Collection coll = (Collection)obj;
+			Collection coll = (Collection) obj;
 			int i = 0;
 			for (Iterator iterator = coll.iterator(); iterator.hasNext();) {
 				String name = "[" + i + "]";
 				Object value = iterator.next();
 				VariableTreeNode thisNode = new VariableTreeNode(name, value);
 				root.add(thisNode);
-				if (value != null && ! TypeUtils.isPrimitive(value.getClass())) {
+				if (value != null && !TypeUtils.isPrimitive(value.getClass())) {
 					buildContextTree(thisNode, value);
 				}
-				i ++;
+				i++;
 			}
 		} else if (obj instanceof Map) {
-			Map map = (Map)obj;
-			for (Iterator iterator = map.entrySet().iterator(); iterator.hasNext();) {
-				Map.Entry entry = (Map.Entry)iterator.next();
+			Map map = (Map) obj;
+			for (Iterator iterator = map.entrySet().iterator(); iterator
+					.hasNext();) {
+				Map.Entry entry = (Map.Entry) iterator.next();
 				String name = String.valueOf(entry.getKey());
 				Object value = entry.getValue();
 				VariableTreeNode thisNode = new VariableTreeNode(name, value);
 				root.add(thisNode);
-				if (value != null && ! TypeUtils.isPrimitive(value.getClass())) {
+				if (value != null && !TypeUtils.isPrimitive(value.getClass())) {
 					buildContextTree(thisNode, value);
 				}
 			}
 		} else {
 			Map map = BeanUtils.getProperties(obj);
-			for (Iterator iterator = map.entrySet().iterator(); iterator.hasNext();) {
-				Map.Entry entry = (Map.Entry)iterator.next();
+			for (Iterator iterator = map.entrySet().iterator(); iterator
+					.hasNext();) {
+				Map.Entry entry = (Map.Entry) iterator.next();
 				String name = String.valueOf(entry.getKey());
 				Object value = entry.getValue();
 				VariableTreeNode thisNode = new VariableTreeNode(name, value);
 				root.add(thisNode);
-				if (value != null && ! TypeUtils.isPrimitive(value.getClass())) {
+				if (value != null && !TypeUtils.isPrimitive(value.getClass())) {
 					buildContextTree(thisNode, value);
 				}
 			}
@@ -347,13 +574,13 @@ class DebugFrame implements ActionListener, WindowListener {
 			disableToolbar();
 		}
 		int status;
-		if (button == stepInto) {
+		if (button == stepInto || button == stepIntoItem) {
 			status = DebugLock.STEP_INTO;
-		} else if (button == stepOver) {
+		} else if (button == stepOver || button == stepOverItem) {
 			status = DebugLock.STEP_OVER;
-		} else if (button == stepReturn) {
+		} else if (button == stepReturn || button == stepReturnItem) {
 			status = DebugLock.STEP_RETURN;
-		} else if (button == resume) {
+		} else if (button == resume || button == resumeItem) {
 			status = DebugLock.RESUME;
 		} else {
 			status = DebugLock.TERMINATE;
@@ -361,20 +588,35 @@ class DebugFrame implements ActionListener, WindowListener {
 		releaseLock(status);
 	}
 
-	public void windowActivated(WindowEvent e) {}
-	public void windowDeactivated(WindowEvent e) {}
-	public void windowIconified(WindowEvent e) {}
-	public void windowDeiconified(WindowEvent e) {}
-	public void windowOpened(WindowEvent e) {}
-	public void windowClosed(WindowEvent e) {}
+	public void windowActivated(WindowEvent e) {
+	}
+
+	public void windowDeactivated(WindowEvent e) {
+	}
+
+	public void windowIconified(WindowEvent e) {
+	}
+
+	public void windowDeiconified(WindowEvent e) {
+	}
+
+	public void windowOpened(WindowEvent e) {
+	}
+
+	public void windowClosed(WindowEvent e) {
+	}
+
 	public void windowClosing(WindowEvent e) {
 		if (lock != null) {
-			String title = "Close";
-			String message = "Debug unfinished! Please choose command after closed.";
-			String[] buttons = new String[]{"Resume", "Terminate", "Cancel"};
+			String title = I18nMessages.getMessage("DebugFrame.close.title");
+			String message = I18nMessages
+					.getMessage("DebugFrame.close.message");
+			String[] buttons = new String[] {
+					I18nMessages.getMessage("DebugFrame.close.resume"),
+					I18nMessages.getMessage("DebugFrame.close.terminate"),
+					I18nMessages.getMessage("DebugFrame.close.cancel") };
 			int i = JOptionPane.showOptionDialog(frame, message, title,
-					JOptionPane.DEFAULT_OPTION,
-					JOptionPane.QUESTION_MESSAGE,
+					JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
 					null, buttons, buttons[0]);
 			if (i == 0 || i == 1) {
 				closeFrame();
@@ -402,7 +644,8 @@ class DebugFrame implements ActionListener, WindowListener {
 		elementBox.setText("");
 		variableType.setText("");
 		variableView.setText("");
-		templateView.setText(templateValue);
+		templateView.setText(template == null ? "" : escapeHtml(template
+				.getSource()));
 	}
 
 	private void openFrame() {

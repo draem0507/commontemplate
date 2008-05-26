@@ -3,29 +3,28 @@ package org.commontemplate.tools.web;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+import org.commontemplate.util.Assert;
 import org.commontemplate.util.MapSupport;
 
 import java.util.Enumeration;
 
 /**
  * Cookie属性Map封装
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
 public class CookieMap extends MapSupport {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private final Cookie[] cookies;
 
 	public CookieMap(HttpServletRequest request) {
-		if (request == null) 
-			throw new java.lang.NullPointerException("request is null!");
-		
+		Assert.assertNotNull(request, "CookieMap.request.required");
 		this.cookies = request.getCookies();
 	}
-	
+
 	public CookieMap(Cookie[] cks) {
 		if (cks != null) {
 			// 保护性拷贝
@@ -38,7 +37,7 @@ public class CookieMap extends MapSupport {
 			this.cookies = new Cookie[0];
 		}
 	}
-	
+
 	protected Enumeration getNames() {
 		return new CookieEnumerator(cookies == null ? new Cookie[0] : cookies);
 	}
@@ -58,7 +57,7 @@ public class CookieMap extends MapSupport {
 	 * Cookie Enumerator Class
 	 */
 	private static final class CookieEnumerator implements Enumeration {
-		
+
 		private int i = 0;
 
 		private final Cookie[] cookieArray;

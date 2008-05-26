@@ -55,7 +55,7 @@ public class ConfigurationSettings extends Configuration {
 	}
 
 	public void setKeywordsSetting(String value) {
-		Assert.assertTrue(value != null && value.trim().length() > 0, "keywordsString不能为空！");
+		Assert.assertTrue(value != null && value.trim().length() > 0, "ConfigurationSettings.keywords.string.required");
 
 		String[] values = value.trim().split("\\,");
 		String nullKeyword = values.length > 0 ? values[0] : Keywords.DEFAULT_NULL_KEYWORD;
@@ -73,6 +73,7 @@ public class ConfigurationSettings extends Configuration {
 	 * @param keywords 表达式关键字
 	 */
 	public void setKeywords(Keywords keywords) {
+		Assert.assertNotNull(syntax, "ConfigurationSettings.keywords.required");
 		this.keywords = keywords;
 	}
 
@@ -131,12 +132,12 @@ public class ConfigurationSettings extends Configuration {
 	 * @param syntax 指令语法
 	 */
 	public void setSyntax(Syntax syntax) {
-		Assert.assertNotNull(syntax, "不允许设置空语法!");
+		Assert.assertNotNull(syntax, "ConfigurationSettings.syntax.required");
 		this.syntax = syntax;
 	}
 
 	public void setSyntaxSetting(String value) {
-		Assert.assertTrue(value != null && value.trim().length() > 0, "DirectiveSyntaxString不能为空！");
+		Assert.assertTrue(value != null && value.trim().length() > 0, "ConfigurationSettings.syntax.string.required");
 
 		value = value.trim();
 		char leader = value.length() > 0 ? value.charAt(0) : Syntax.DEFAULT_DIRECTIVE_LEADER;
@@ -373,7 +374,7 @@ public class ConfigurationSettings extends Configuration {
 	 */
 	public void setResourceComparator(ResourceComparator resourceComparator) {
 		if (resourceComparator == null)
-			throw new ConfigurationException("不能设置空的resourceComparator！");
+			throw new ConfigurationException("ConfigurationSettings.resource.comparator.required");
 		this.resourceComparator = resourceComparator;
 	}
 

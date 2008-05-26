@@ -13,13 +13,13 @@ public class PropertyMatcher implements java.io.Serializable {
 
 	public PropertyMatcher(String beanAndProperty) {
 		int i = beanAndProperty.lastIndexOf('.');
-		Assert.assertTrue(i > -1 && i < beanAndProperty.length(), "格式错误，必需为：org.xxx.Bean.property");
+		Assert.assertTrue(i > -1 && i < beanAndProperty.length(), "PropertyMatcher.format.error");
 		property = beanAndProperty.substring(i + 1);
 		String beanName = beanAndProperty.substring(0, i);
 		try {
 			bean = ClassUtils.forCanonicalName(beanName);
 		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("类型错误：" + beanName , e);
+			Assert.fail("PropertyMatcher.type.error", new Object[]{beanName, e.getMessage()});
 		}
 	}
 

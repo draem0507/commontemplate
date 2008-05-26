@@ -8,7 +8,7 @@ import org.commontemplate.util.Assert;
 
 /**
  * URL模板源
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
@@ -17,10 +17,10 @@ public class URLResource extends AbstractResource {
 	private static final long serialVersionUID = 1L;
 
 	private final URL url;
-	
+
 	public URLResource(URL url, String name, String encoding) throws IOException {
 		super(name, encoding);
-		Assert.assertNotNull(url, "找不到模板文件!");
+		Assert.assertNotNull(url, "URLResource.url.required");
 		this.url = url;
 	}
 

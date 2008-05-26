@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+
 /**
  * Bean属性工具类.<br/>
  * Hack:
@@ -64,22 +65,22 @@ public class BeanUtils {
 	 * @throws NoSuchMethodException Getter不存时抛出
 	 */
 	private static Method getClassGetter(Class clazz, String property) throws NoSuchMethodException, SecurityException {
-		Assert.assertNotNull(clazz, "class不能为空！");
-		Assert.assertNotEmpty(property, "property不能为空！");
+		Assert.assertNotNull(clazz, "BeanUtils.class.required");
+		Assert.assertNotEmpty(property, "BeanUtils.property.required");
 		property = property.trim();
 		String upper = property.substring(0, 1).toUpperCase() + property.substring(1);
 		try {
 			Method getter = getClassMethod(clazz, "get" + upper);
-			Assert.assertTrue(getter.getReturnType() != Void.class, "getter返回值类型不能为void！");
+			Assert.assertTrue(getter.getReturnType() != Void.class, "BeanUtils.getter.return.void");
 			return getter;
 		} catch (NoSuchMethodException e1) {
 			try {
 				Method getter = getClassMethod(clazz, "is" + upper);
-				Assert.assertTrue(getter.getReturnType() != Void.class, "getter返回值类型不能为void！");
+				Assert.assertTrue(getter.getReturnType() != Void.class, "BeanUtils.getter.return.void");
 				return getter;
 			} catch (NoSuchMethodException e2) {
 				Method getter = getClassMethod(clazz, property);
-				Assert.assertTrue(getter.getReturnType() != Void.class, "getter返回值类型不能为void！");
+				Assert.assertTrue(getter.getReturnType() != Void.class, "BeanUtils.getter.return.void");
 				return getter;
 			}
 		}
@@ -95,8 +96,8 @@ public class BeanUtils {
 	 * @throws SecurityException
 	 */
 	private static Method getClassMethod(Class clazz, String methodName) throws NoSuchMethodException, SecurityException {
-		Assert.assertNotNull(clazz, "class不能为空！");
-		Assert.assertNotNull(methodName, "methodName不能为空！");
+		Assert.assertNotNull(clazz, "BeanUtils.class.required");
+		Assert.assertNotNull(methodName, "BeanUtils.property.required");
 		try {
 			return searchPublicMethod(clazz.getInterfaces(), methodName);
 		} catch (NoSuchMethodException e1) {

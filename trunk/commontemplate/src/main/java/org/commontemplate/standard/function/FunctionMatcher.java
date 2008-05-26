@@ -13,13 +13,13 @@ public class FunctionMatcher implements java.io.Serializable {
 
 	public FunctionMatcher(String beanAndFunction) {
 		int i = beanAndFunction.lastIndexOf('.');
-		Assert.assertTrue(i > -1 && i < beanAndFunction.length(), "格式错误，必需为：org.xxx.Bean.function");
+		Assert.assertTrue(i > -1 && i < beanAndFunction.length(), "FunctionMatcher.format.error");
 		function = beanAndFunction.substring(i + 1);
 		String beanName = beanAndFunction.substring(0, i);
 		try {
 			bean = ClassUtils.forCanonicalName(beanName);
 		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("类型错误：" + beanName , e);
+			Assert.fail("FunctionMatcher.type.error", new Object[]{beanName, e.getMessage()});
 		}
 	}
 

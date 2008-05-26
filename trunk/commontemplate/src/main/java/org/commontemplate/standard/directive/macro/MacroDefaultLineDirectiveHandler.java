@@ -6,11 +6,12 @@ import java.util.Map;
 import org.commontemplate.standard.directive.DirectiveUtils;
 import org.commontemplate.standard.directive.ParameterUtils;
 import org.commontemplate.standard.directive.DirectiveHandlerSupport;
+import org.commontemplate.util.Assert;
 import org.commontemplate.core.Context;
 
 /**
  * 动态指令处理器
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
@@ -21,10 +22,9 @@ public class MacroDefaultLineDirectiveHandler extends DirectiveHandlerSupport {
 	public void doRender(Context context, String name, Object param) throws Exception {
 		Map model = ParameterUtils.getParameters(param);
 		List macro = (List)context.getProperty(MacroDirectiveHandler.MACRO_TYPE, name);
-		if (macro == null) 
-			throw new RuntimeException("非法指令名或宏指令名: " + name);
+		Assert.assertNotNull(macro, "MacroDefaultLineDirectiveHandler.invaild.macro.name", new Object[]{name});
 		Context newContext = context.createContext();
-		if (model.size() > 0) 
+		if (model.size() > 0)
 			newContext.pushLocalContext(model);
 		try {
 			DirectiveUtils.renderAll(macro, newContext);

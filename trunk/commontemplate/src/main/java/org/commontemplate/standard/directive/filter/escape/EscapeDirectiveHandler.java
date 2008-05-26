@@ -8,22 +8,22 @@ import java.util.Map;
 import org.commontemplate.standard.directive.DirectiveUtils;
 import org.commontemplate.standard.filter.OutputFilterChain;
 import org.commontemplate.standard.directive.BlockDirectiveHandlerSupport;
+import org.commontemplate.util.Assert;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.OutputFilter;
-import org.commontemplate.util.Assert;
 
 /**
  * 过滤器指令, 用注册的过滤器进行过滤.
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
 public class EscapeDirectiveHandler extends BlockDirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private Map filters;
-	
+
 	public void setFilters(Map filters) {
 		this.filters = filters;
 	}
@@ -43,7 +43,7 @@ public class EscapeDirectiveHandler extends BlockDirectiveHandlerSupport {
 			DirectiveUtils.renderAll(innerElements, context);
 			context.removeOutputFilter();
 		} else {
-			Assert.fail("Filter的参数不合法，必需为String列表!");
+			Assert.fail("EscapeDirectiveHandler.parameter.error", new Object[]{param});
 		}
 	}
 

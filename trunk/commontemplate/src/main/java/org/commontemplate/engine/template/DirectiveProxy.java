@@ -5,6 +5,7 @@ import org.commontemplate.core.Directive;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Visitor;
+import org.commontemplate.util.I18nExceptionFactory;
 import org.commontemplate.util.Location;
 
 /**
@@ -56,7 +57,7 @@ class DirectiveProxy extends Directive {
 	}
 
 	public void render(Context context) throws RenderingException {
-		throw new java.lang.UnsupportedOperationException("不能在指令处理器内回调render,否则将死循环调用.");
+		throw I18nExceptionFactory.createUnsupportedOperationException("DirectiveProxy.cycle.render", new Object[]{getName()});
 	}
 
 	public String toString() {

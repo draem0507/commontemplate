@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.commontemplate.config.Configuration;
-import org.commontemplate.core.Factory;
 import org.commontemplate.core.Context;
+import org.commontemplate.core.Factory;
 import org.commontemplate.core.ParsingException;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Template;
@@ -24,6 +24,7 @@ import org.commontemplate.tools.bean.BeanFactory;
 import org.commontemplate.tools.bean.ComboResourceLoader;
 import org.commontemplate.tools.bean.PropertiesBeanFactory;
 import org.commontemplate.util.Assert;
+import org.commontemplate.util.I18nMessages;
 
 /**
  * 引擎持有者
@@ -72,7 +73,7 @@ public final class EngineHolder {
 	 * @param servletContext 当前运行所在Servlet容器上下文
 	 */
 	public static final void init(ServletContext servletContext) {
-		Assert.assertNotNull(servletContext, "[commontemplate] Template engine initializtion error: servletContext == null!");
+		Assert.assertNotNull(servletContext, "EngineHolder.servlet.context.required");
 		// 初始化配置路径
 		String propertiesPath = servletContext.getInitParameter(CONFIG_PARAM_NAME); // 查找web.xml中的配置
 		if (propertiesPath != null)
@@ -101,8 +102,8 @@ public final class EngineHolder {
 	 * @param propertiesPath 配置路径
 	 */
 	public static final void init(ServletContext servletContext, String propertiesPath) {
-		Assert.assertNotNull(servletContext, "[commontemplate] Template engine initializtion error: servletContext == null!");
-		Assert.assertNotNull(propertiesPath, "[commontemplate] Template engine initializtion error: propertiesPath == null!");
+		Assert.assertNotNull(servletContext, "EngineHolder.servlet.context.required");
+		Assert.assertNotNull(propertiesPath, "EngineHolder.properties.path.required");
 		doInit(servletContext, new PropertiesBeanFactory(propertiesPath.trim(), new ComboResourceLoader(servletContext), getVariables(servletContext)));
 	}
 
@@ -114,19 +115,19 @@ public final class EngineHolder {
 	 * @param properties 配置信息
 	 */
 	public static final void init(ServletContext servletContext, Properties properties) {
-		Assert.assertNotNull(servletContext, "[commontemplate] Template engine initializtion error: servletContext == null!");
-		Assert.assertNotNull(properties, "[commontemplate] Template engine initializtion error: properties == null!");
+		Assert.assertNotNull(servletContext, "EngineHolder.servlet.context.required");
+		Assert.assertNotNull(properties, "EngineHolder.properties.required");
 		doInit(servletContext, new PropertiesBeanFactory(properties, new ComboResourceLoader(servletContext), getVariables(servletContext)));
 	}
 
 	private static final void doInit(ServletContext servletContext, BeanFactory beanFactory) {
-		servletContext.log("[commontemplate] Template engine initializing...");
+		servletContext.log(I18nMessages.getMessage("EngineHolder.initializing"));
 		long start = System.currentTimeMillis();
 		EngineHolder.servletContext = servletContext;
 		EngineHolder.beanFactory = beanFactory;
 		EngineHolder.config = PropertiesConfigurationLoader.loadConfiguration(EngineHolder.beanFactory);
 		EngineHolder.engine = new Engine(EngineHolder.config);
-		servletContext.log("[commontemplate] Template engine initialized in " + (System.currentTimeMillis() - start) + "ms");
+		servletContext.log(I18nMessages.getMessage("EngineHolder.initialized", new Object[]{new Long((System.currentTimeMillis() - start))}));
 	}
 
 	private static final Map getVariables(ServletContext servletContext) {
@@ -202,8 +203,7 @@ public final class EngineHolder {
 
 	// 检查是否已初始化完成
 	private static final void checkInitialized() throws NullPointerException {
-		if (engine == null)
-			throw new NullPointerException("引擎未初始化！请在web.xml中加上配置： <listener><listener-class>" + EngineInitializeListener.class.getName() + "</listener-class></listener>");
+		Assert.assertNotNull(engine, "EngineHolder.not.initialized");
 	}
 
 	/**
@@ -256,10 +256,8 @@ public final class EngineHolder {
 	 * @throws IOException 调用response的Writer出错时抛出
 	 */
 	public static final WebContext createContext(HttpServletRequest request, HttpServletResponse response, Locale locale, Object model) throws IOException {
-		if (request == null)
-			throw new NullPointerException("request == null");
-		if (response == null)
-			throw new NullPointerException("response == null");
+		Assert.assertNotNull(request, "EngineHolder.request.required");
+		Assert.assertNotNull(response, "EngineHolder.response.required");
 		if (locale == null)
 			locale = request.getLocale();
 		Context context = getEngine().createContext(response.getWriter(), locale);
@@ -319,12 +317,9 @@ public final class EngineHolder {
 	 * @throws RenderingException 模板运行出错时抛出
 	 */
 	public static final void renderTemplate(String templateName, String templateEncoding, HttpServletRequest request, HttpServletResponse response, Locale locale, Object model) throws IOException, ParsingException, RenderingException {
-		if (templateName == null)
-			throw new NullPointerException("templateName == null");
-		if (request == null)
-			throw new NullPointerException("request == null");
-		if (response == null)
-			throw new NullPointerException("response == null");
+		Assert.assertNotNull(templateName, "EngineHolder.template.name.required");
+		Assert.assertNotNull(request, "EngineHolder.request.required");
+		Assert.assertNotNull(response, "EngineHolder.response.required");
 		Template template = getEngine().getTemplate(templateName, templateEncoding);
 		// 设置响应编码信息
 		String encoding = template.getEncoding();
@@ -350,10 +345,8 @@ public final class EngineHolder {
 	 * @throws RenderingException 模板运行出错时抛出
 	 */
 	private static final void renderTemplate(Template template, Context context) throws IOException, ParsingException, RenderingException {
-		if (template == null)
-			throw new NullPointerException("template == null");
-		if (context == null)
-			throw new NullPointerException("context == null");
+		Assert.assertNotNull(template, "EngineHolder.template.required");
+		Assert.assertNotNull(context, "EngineHolder.context.required");
 		try {
 			template.render(context);
 		} finally {

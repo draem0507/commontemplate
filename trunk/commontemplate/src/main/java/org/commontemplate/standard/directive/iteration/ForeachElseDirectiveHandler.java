@@ -29,7 +29,7 @@ public class ForeachElseDirectiveHandler extends MiddleBlockDirectiveHandlerSupp
 	public void doRender(Context context, String directiveName,
 			Object param, List innerElements)
 			throws Exception {
-		Assert.assertNotNull(context.getSuperLocalContext().getStatus(ForeachDirectiveHandler.FOR_STATUS), "without 的嵌套关系错误, 必需在 for 后面!");
+		Assert.assertNotNull(context.getSuperLocalContext().getStatus(ForeachDirectiveHandler.FOR_STATUS), "ForeachElseDirectiveHandler.location.error");
 		if (! ((Boolean)context.getSuperLocalContext().getStatus(ForeachDirectiveHandler.FOR_STATUS)).booleanValue())
 			DirectiveUtils.renderAll(innerElements, context);
 		context.getSuperLocalContext().removeStatus(ForeachDirectiveHandler.FOR_STATUS);

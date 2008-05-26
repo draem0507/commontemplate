@@ -11,12 +11,12 @@ import org.commontemplate.util.Assert;
 public class JarResource extends AbstractResource {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private final File file;
-	
+
 	public JarResource(File file, String name, String encoding) {
 		super(name, encoding);
-		Assert.assertNotNull(file, "找不到模板文件!");
+		Assert.assertNotNull(file, "JarResource.file.required");
 		this.file = file;
 	}
 

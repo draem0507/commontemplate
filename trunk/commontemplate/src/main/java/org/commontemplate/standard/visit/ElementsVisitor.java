@@ -7,6 +7,7 @@ import org.commontemplate.core.BreakVisitException;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.Visitable;
 import org.commontemplate.core.Visitor;
+import org.commontemplate.util.Assert;
 
 /**
  * 元素集访问者.
@@ -26,10 +27,8 @@ public class ElementsVisitor implements Visitor {
 	private List elements;
 
 	public ElementsVisitor(String type, String name) {
-		if (type == null)
-			throw new java.lang.NullPointerException("type == null");
-		if (name == null)
-			throw new java.lang.NullPointerException("name == null");
+		Assert.assertNotNull(type, "ElementsVisitor.type.required");
+		Assert.assertNotNull(name, "ElementsVisitor.name.required");
 		this.type = type;
 		this.name = name;
 	}

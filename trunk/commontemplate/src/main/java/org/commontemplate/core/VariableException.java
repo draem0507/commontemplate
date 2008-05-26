@@ -1,19 +1,26 @@
 package org.commontemplate.core;
 
+import org.commontemplate.util.I18nRuntimeException;
+
 /**
  * 变量异常
- * 
+ *
  * @author liangfei0201@163.com
- * 
+ *
  */
-public class VariableException extends RuntimeException {
+public class VariableException extends I18nRuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
 	private String variableName;
 
-	public VariableException(String message, String variableName) {
-		super(message);
+	public VariableException(String variableName, String message) {
+		super(message, new Object[]{variableName});
+		this.variableName = variableName;
+	}
+
+	public VariableException(String variableName, String message, Object[] args) {
+		super(message, args);
 		this.variableName = variableName;
 	}
 

@@ -8,7 +8,7 @@ import org.commontemplate.util.Assert;
 public class ExpressionConfigurationSettings extends ExpressionConfiguration {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private boolean functionAvailable;
 
 	public boolean isFunctionAvailable() {
@@ -17,7 +17,7 @@ public class ExpressionConfigurationSettings extends ExpressionConfiguration {
 
 	/**
 	 * 设置是否允许调用函数，如：${xxx.yyy(zzz)}
-	 * 
+	 *
 	 * @param functionAvailable true为允许调用，false为不允许调用
 	 */
 	public void setFunctionAvailable(boolean functionAvailable) {
@@ -25,13 +25,13 @@ public class ExpressionConfigurationSettings extends ExpressionConfiguration {
 	}
 
 	private Keywords keywords = Keywords.DEFAULT;
-	
+
 	public Keywords getKeywords() {
 		return keywords;
 	}
-	
+
 	public void setKeywordsSetting(String value) {
-		Assert.assertTrue(value != null && value.trim().length() > 0, "keywordsString不能为空！");
+		Assert.assertTrue(value != null && value.trim().length() > 0, "ExpressionConfigurationSettings.keywords.string.required");
 
 		String[] values = value.trim().split("\\,");
 		String nullKeyword = values.length > 0 ? values[0] : Keywords.DEFAULT_NULL_KEYWORD;
@@ -42,10 +42,10 @@ public class ExpressionConfigurationSettings extends ExpressionConfiguration {
 		String contextKeyword = values.length > 5 ? values[5] : Keywords.DEFAULT_CONTEXT_KEYWORD;
 		setKeywords(new Keywords(nullKeyword, trueKeyword, falseKeyword, thisKeyword, superKeyword, contextKeyword));
 	}
-	
+
 	/**
 	 * 设置表达式关键字
-	 * 
+	 *
 	 * @param keywords 表达式关键字
 	 */
 	public void setKeywords(Keywords keywords) {
@@ -55,14 +55,14 @@ public class ExpressionConfigurationSettings extends ExpressionConfiguration {
 	// 操作符优先级 --------------
 
 	private OperatorHandlerProvider operatorHandlerProvider;
-	
+
 	public OperatorHandlerProvider getOperatorHandlerProvider() {
 		return operatorHandlerProvider;
 	}
-	
+
 	/**
 	 * 设置操作符供给器
-	 * 
+	 *
 	 * @param operatorHandlerProvider 操作符供给器
 	 */
 	public void setOperatorHandlerProvider(OperatorHandlerProvider operatorHandlerProvider) {

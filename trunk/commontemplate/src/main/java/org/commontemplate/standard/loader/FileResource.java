@@ -9,7 +9,7 @@ import org.commontemplate.util.Assert;
 
 /**
  * 文件模板源
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
@@ -18,10 +18,10 @@ public class FileResource extends AbstractResource {
 	private static final long serialVersionUID = 1L;
 
 	private final File file;
-	
+
 	public FileResource(File file, String name, String encoding) {
 		super(name, encoding);
-		Assert.assertNotNull(file, "找不到模板文件!");
+		Assert.assertNotNull(file, "FileResource.file.required");
 		this.file = file;
 	}
 

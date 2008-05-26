@@ -10,8 +10,8 @@ public class ReadonlyException extends VariableException {
 
 	private static final long serialVersionUID = 1L;
 
-	public ReadonlyException(String message, String variableName) {
-		super(message, variableName);
+	public ReadonlyException(String variableName, String message) {
+		super(variableName, message);
 	}
 
 }

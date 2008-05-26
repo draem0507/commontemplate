@@ -34,12 +34,17 @@ public abstract class TemplateConfiguration extends ExpressionConfiguration {
 	public abstract TextFilter getTextFilter();
 
 	/**
+	 * 获取板渲染拦截器
+	 *
+	 * @return 模板渲染拦截器, 类型: List&lt;RenderInterceptor&gt;
+	 */
+	public abstract List getRenderInterceptors();
+
+	/**
 	 * 获取模板过滤器
 	 *
 	 * @return 模板过滤器
 	 */
 	public abstract ResourceFilter getResourceFilter();
-
-	public abstract List getRenderInterceptors();
 
 }

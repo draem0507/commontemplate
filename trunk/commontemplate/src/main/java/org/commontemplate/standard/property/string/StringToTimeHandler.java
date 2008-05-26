@@ -8,8 +8,10 @@ public class StringToTimeHandler extends PropertyHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
+	public static final String TIME_FORMAT = "hh:mm:ss";
+
 	public Object getProperty(Object bean) throws Exception {
-		return new SimpleDateFormat("hh:mm:ss").parse((String)bean);
+		return new SimpleDateFormat(TIME_FORMAT).parse((String)bean);
 	}
 
 }

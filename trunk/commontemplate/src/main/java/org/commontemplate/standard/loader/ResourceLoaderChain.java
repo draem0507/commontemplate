@@ -8,22 +8,23 @@ import java.util.List;
 import org.commontemplate.core.Resource;
 import org.commontemplate.core.ResourceLoader;
 import org.commontemplate.util.Assert;
+import org.commontemplate.util.I18nExceptionFactory;
 
 /**
  * 多模板源组合器
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
 public class ResourceLoaderChain implements ResourceLoader {
-	
+
 	private List resourceLoaders;
 
 	public void setResourceLoaders(List resourceLoaders) {
-		Assert.assertNotEmpty(resourceLoaders, "模板加载器列表不能为空！");
+		Assert.assertNotEmpty(resourceLoaders, "ResourceLoaderChain.items.required");
 		this.resourceLoaders = resourceLoaders;
 	}
-	
+
 	public void addResourceLoader(ResourceLoader resourceLoader) {
 		if (this.resourceLoaders == null)
 			this.resourceLoaders = new ArrayList();
@@ -42,7 +43,7 @@ public class ResourceLoaderChain implements ResourceLoader {
 				// 忽略，继续取下一loader
 			}
 		}
-		throw new IOException("无法找到模板源：" + name);
+		throw I18nExceptionFactory.createFileNotFoundException("ResourceLoaderChain.resource.not.found", new Object[]{name});
 	}
 
 	public Resource loadResource(String name) throws IOException {
@@ -56,9 +57,9 @@ public class ResourceLoaderChain implements ResourceLoader {
 				// 忽略，继续取下一loader
 			}
 		}
-		throw new IOException("无法找到模板源：" + name);
+		throw I18nExceptionFactory.createFileNotFoundException("ResourceLoaderChain.resource.not.found", new Object[]{name});
 	}
-	
+
 	public String toString() {
 		return resourceLoaders.toString();
 	}

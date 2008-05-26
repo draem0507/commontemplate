@@ -5,156 +5,620 @@ import java.util.Map;
 
 /**
  * 前置条件断言
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
 public final class Assert {
-	
+
 	private Assert(){}
-	
+
+	/**
+	 * 立即失败
+	 */
 	public static void fail() {
-		fail("断言此处不会被运行到，但却运行了!");
+		fail("Assert.fail");
 	}
-	
-	public static void fail(String errorMessage) {
-		throw new IllegalStateException(errorMessage);
+
+	/**
+	 * 立即失败
+	 *
+	 * @param messageKey 错误信息key值
+	 */
+	public static void fail(String messageKey) {
+		throw I18nExceptionFactory.createIllegalStateException(messageKey);
 	}
-	
-	public static void assertEquals(String value1, String value2) {
-		assertEquals(value1, value2, "断言两值相等, 但" + value1 + "不等于" + value2 + "!");
+
+	/**
+	 * 立即失败
+	 *
+	 * @param messageKey 错误信息key值
+	 * @param args
+	 */
+	public static void fail(String messageKey, Object[] args) {
+		throw I18nExceptionFactory.createIllegalStateException(messageKey, args);
 	}
-	
-	public static void assertEquals(String value1, String value2, String errorMessage) {
+
+	/**
+	 * 断言两个对象相等
+	 *
+	 * @param value1 对象1
+	 * @param value2 对象2
+	 */
+	public static void assertEquals(Object value1, Object value2) {
+		assertEquals(value1, value2, "Assert.equals");
+	}
+
+	/**
+	 * 断言两个对象相等
+	 *
+	 * @param value1 对象1
+	 * @param value2 对象2
+	 * @param messageKey 错误信息key值
+	 */
+	public static void assertEquals(Object value1, Object value2, String messageKey) {
+		assertEquals(value1, value2, messageKey, new Object[] {value1, value2});
+	}
+
+	/**
+	 * 断言两个对象相等
+	 *
+	 * @param value1 对象1
+	 * @param value2 对象2
+	 * @param messageKey 错误信息key值
+	 * @param args 错误信息参数
+	 */
+	public static void assertEquals(Object value1, Object value2, String messageKey, Object[] args) {
+		if (value1 == null && value2 == null)
+			return;
 		if (value1 == null || ! value1.equals(value2))
-			throw new IllegalStateException(errorMessage);
+			throw I18nExceptionFactory.createIllegalStateException(messageKey, args);
 	}
-	
-	public static void assertMatches(String value, String regex) {
-		assertMatches(value, regex, "断言此值匹配表达式" + regex + ", 但" + value + "不匹配!");
+
+	/**
+	 * 断言两个对象不相等
+	 *
+	 * @param value1 对象1
+	 * @param value2 对象2
+	 */
+	public static void assertNotEquals(Object value1, Object value2) {
+		assertNotEquals(value1, value2, "Assert.not.equals");
 	}
-	
-	public static void assertMatches(String value, String regex, String errorMessage) {
-		if (! value.matches(regex))
-			throw new IllegalStateException(errorMessage);
+
+	/**
+	 * 断言两个对象不相等
+	 *
+	 * @param value1 对象1
+	 * @param value2 对象2
+	 * @param messageKey 错误信息key值
+	 */
+	public static void assertNotEquals(Object value1, Object value2, String messageKey) {
+		assertNotEquals(value1, value2, messageKey, new Object[] {value1, value2});
 	}
-	
-	public static void assertAssignableFrom(Class targetClass, Class baseClass) {
-		assertAssignableFrom(targetClass, baseClass, "断言" + targetClass.getName() + "继承于" + baseClass.getName() + ",但却不是!");
+
+	/**
+	 * 断言两个对象不相等
+	 *
+	 * @param value1 对象1
+	 * @param value2 对象2
+	 * @param messageKey 错误信息key值
+	 * @param args 错误信息参数
+	 */
+	public static void assertNotEquals(Object value1, Object value2, String messageKey, Object[] args) {
+		if ((value1 == null && value2 == null)
+				|| (value1 != null && value1.equals(value2)))
+			throw I18nExceptionFactory.createIllegalStateException(messageKey, args);
 	}
-	
-	public static void assertAssignableFrom(Class targetClass, Class baseClass, String errorMessage) {
-		if (! baseClass.isAssignableFrom(targetClass))
-			throw new IllegalStateException(errorMessage);
-	}
-	
+
+	/**
+	 * 断言表达式结果为true
+	 *
+	 * @param value 表达式结果
+	 */
 	public static void assertTrue(boolean value) {
-		assertTrue(value, "断言此命题应该为真, 但却为假!");
+		assertTrue(value, "Assert.true");
 	}
-	
-	public static void assertTrue(boolean value, String errorMessage) {
+
+	/**
+	 * 断言表达式结果为true
+	 *
+	 * @param value 表达式结果
+	 * @param messageKey 错误信息key值
+	 */
+	public static void assertTrue(boolean value, String messageKey) {
 		if (! value)
-			throw new IllegalStateException(errorMessage);
+			throw I18nExceptionFactory.createIllegalStateException(messageKey);
 	}
-	
+
+	/**
+	 * 断言表达式结果为true
+	 *
+	 * @param value 表达式结果
+	 * @param messageKey 错误信息key值
+	 * @param args 错误信息参数
+	 */
+	public static void assertTrue(boolean value, String messageKey, Object[] args) {
+		if (! value)
+			throw I18nExceptionFactory.createIllegalStateException(messageKey, args);
+	}
+
+	/**
+	 * 断言表达式结果为false
+	 *
+	 * @param value 表达式结果
+	 */
 	public static void assertFalse(boolean value) {
-		assertFalse(value, "断言此命题应该为假, 但却为真!");
+		assertFalse(value, "Assert.false");
 	}
-	
-	public static void assertFalse(boolean value, String errorMessage) {
+
+	/**
+	 * 断言表达式结果为false
+	 *
+	 * @param value 表达式结果
+	 * @param messageKey 错误信息key值
+	 */
+	public static void assertFalse(boolean value, String messageKey) {
 		if (value)
-			throw new IllegalStateException(errorMessage);
+			throw I18nExceptionFactory.createIllegalStateException(messageKey);
 	}
-	
-	public static void assertNotNull(Object value) {
-		assertNotNull(value, "断言此对象不为空, 但却为空!");
+
+	/**
+	 * 断言表达式结果为false
+	 *
+	 * @param value 表达式结果
+	 * @param messageKey 错误信息key值
+	 * @param args 错误信息参数
+	 */
+	public static void assertFalse(boolean value, String messageKey, Object[] args) {
+		if (value)
+			throw I18nExceptionFactory.createIllegalStateException(messageKey, args);
 	}
-	
-	public static void assertNotNull(Object value, String errorMessage) {
-		if (value == null)
-			throw new NullPointerException(errorMessage);
+
+	/**
+	 * 断言对象为空
+	 *
+	 * @param value 对象
+	 */
+	public static void assertNull(Object value) {
+		assertNull(value, "Assert.null");
 	}
-	
-	public static void assertEmpty(Object value) {
-		assertEmpty(value, "断言此对象为空, 但却不为空!");
+
+	/**
+	 * 断言对象为空
+	 *
+	 * @param value 对象
+	 * @param messageKey 错误信息key值
+	 */
+	public static void assertNull(Object value, String messageKey) {
+		assertNull(value, messageKey, new Object[]{value});
 	}
-	
-	public static void assertEmpty(Object value, String errorMessage) {
+
+	/**
+	 * 断言对象为空
+	 *
+	 * @param value 对象
+	 * @param messageKey 错误信息key值
+	 * @param args 错误信息参数
+	 */
+	public static void assertNull(Object value, String messageKey, Object[] args) {
 		if (value != null)
-			throw new IllegalStateException(errorMessage);
+			throw I18nExceptionFactory.createIllegalStateException(messageKey, args);
 	}
-	
-	public static void assertNotEmpty(Object value) {
-		assertNotEmpty(value, "断言此对象不为空, 但却为空!");
+
+	/**
+	 * 断言对象不为空
+	 *
+	 * @param value 对象
+	 */
+	public static void assertNotNull(Object value) {
+		assertNotNull(value, "Assert.not.null");
 	}
-	
-	public static void assertNotEmpty(Object value, String errorMessage) {
+
+	/**
+	 * 断言对象不为空
+	 *
+	 * @param value 对象
+	 * @param messageKey 错误信息key值
+	 */
+	public static void assertNotNull(Object value, String messageKey) {
 		if (value == null)
-			throw new IllegalStateException(errorMessage);
+			throw I18nExceptionFactory.createNullPointerException(messageKey);
 	}
-	
+
+	/**
+	 * 断言对象不为空
+	 *
+	 * @param value 对象
+	 * @param messageKey 错误信息key值
+	 * @param args 错误信息参数
+	 */
+	public static void assertNotNull(Object value, String messageKey, Object[] args) {
+		if (value == null)
+			throw I18nExceptionFactory.createNullPointerException(messageKey, args);
+	}
+
+	/**
+	 * 断言字符串为空
+	 *
+	 * @param value 字符串
+	 */
+	public static void assertEmpty(String value) {
+		assertEmpty(value, "Assert.empty");
+	}
+
+	/**
+	 * 断言字符串为空
+	 *
+	 * @param value 字符串
+	 * @param messageKey 错误信息key值
+	 */
+	public static void assertEmpty(String value, String messageKey) {
+		assertEmpty(value, messageKey, new Object[] {value});
+	}
+
+	/**
+	 * 断言字符串为空
+	 *
+	 * @param value 字符串
+	 * @param messageKey 错误信息key值
+	 * @param args 错误信息参数
+	 */
+	public static void assertEmpty(String value, String messageKey, Object[] args) {
+		if (value != null && value.trim().length() != 0)
+			throw I18nExceptionFactory.createIllegalStateException(messageKey, args);
+	}
+
+	/**
+	 * 断言集合为空
+	 *
+	 * @param value 集合
+	 */
+	public static void assertEmpty(Collection value) {
+		assertEmpty(value, "Assert.empty");
+	}
+
+	/**
+	 * 断言集合为空
+	 *
+	 * @param value 集合
+	 * @param messageKey 错误信息key值
+	 */
+	public static void assertEmpty(Collection value, String messageKey) {
+		assertEmpty(value, messageKey, new Object[] {value});
+	}
+
+	/**
+	 * 断言集合为空
+	 *
+	 * @param value 集合
+	 * @param messageKey 错误信息key值
+	 * @param args 错误信息参数
+	 */
+	public static void assertEmpty(Collection value, String messageKey, Object[] args) {
+		if (value != null && value.size() != 0)
+			throw I18nExceptionFactory.createIllegalStateException(messageKey, args);
+	}
+
+	/**
+	 * 断言集合为空
+	 *
+	 * @param value 集合
+	 */
+	public static void assertEmpty(Map value) {
+		assertEmpty(value, "Assert.empty");
+	}
+
+	/**
+	 * 断言集合为空
+	 *
+	 * @param value 集合
+	 * @param messageKey 错误信息key值
+	 */
+	public static void assertEmpty(Map value, String messageKey) {
+		assertEmpty(value, messageKey, new Object[] {value});
+	}
+
+	/**
+	 * 断言集合为空
+	 *
+	 * @param value 集合
+	 * @param messageKey 错误信息key值
+	 * @param args 错误信息参数
+	 */
+	public static void assertEmpty(Map value, String messageKey, Object[] args) {
+		if (value != null && value.size() != 0)
+			throw I18nExceptionFactory.createIllegalStateException(messageKey, args);
+	}
+
+	/**
+	 * 断言集合为空
+	 *
+	 * @param value 集合
+	 */
+	public static void assertEmpty(Object[] value) {
+		assertEmpty(value, "Assert.empty");
+	}
+
+	/**
+	 * 断言集合为空
+	 *
+	 * @param value 集合
+	 * @param messageKey 错误信息key值
+	 */
+	public static void assertEmpty(Object[] value, String messageKey) {
+		assertEmpty(value, messageKey, new Object[] {value});
+	}
+
+	/**
+	 * 断言集合为空
+	 *
+	 * @param value 集合
+	 * @param messageKey 错误信息key值
+	 * @param args 错误信息参数
+	 */
+	public static void assertEmpty(Object[] value, String messageKey, Object[] args) {
+		if (value != null && value.length != 0)
+			throw I18nExceptionFactory.createIllegalStateException(messageKey, args);
+	}
+
+	/**
+	 * 断言字符串不为空
+	 *
+	 * @param value 字符串
+	 */
 	public static void assertNotEmpty(String value) {
-		assertNotEmpty(value, "断言此对象不为空, 但却为空!");
+		assertNotEmpty(value, "Assert.not.empty");
 	}
-	
-	public static void assertNotEmpty(String value, String errorMessage) {
+
+	/**
+	 * 断言字符串不为空
+	 *
+	 * @param value 字符串
+	 * @param messageKey 错误信息key值
+	 */
+	public static void assertNotEmpty(String value, String messageKey) {
+		assertNotEmpty(value, messageKey, new Object[] {value});
+	}
+
+	/**
+	 * 断言字符串不为空
+	 *
+	 * @param value 字符串
+	 * @param messageKey 错误信息key值
+	 * @param args 错误信息参数
+	 */
+	public static void assertNotEmpty(String value, String messageKey, Object[] args) {
 		if (value == null || value.trim().length() == 0)
-			throw new IllegalStateException(errorMessage);
+			throw I18nExceptionFactory.createIllegalArgumentException(messageKey, args);
 	}
-	
+
+	/**
+	 * 断言集合不为空
+	 *
+	 * @param value 集合
+	 */
 	public static void assertNotEmpty(Collection value) {
-		assertNotEmpty(value, "断言此对象不为空, 但却为空!");
+		assertNotEmpty(value, "Assert.not.empty");
 	}
-	
-	public static void assertNotEmpty(Collection value, String errorMessage) {
+
+	/**
+	 * 断言集合不为空
+	 *
+	 * @param value 集合
+	 * @param messageKey 错误信息key值
+	 */
+	public static void assertNotEmpty(Collection value, String messageKey) {
+		assertNotEmpty(value, messageKey, new Object[] {value});
+	}
+
+	/**
+	 * 断言集合不为空
+	 *
+	 * @param value 集合
+	 * @param messageKey 错误信息key值
+	 * @param args 错误信息参数
+	 */
+	public static void assertNotEmpty(Collection value, String messageKey, Object[] args) {
 		if (value == null || value.size() == 0)
-			throw new IllegalStateException(errorMessage);
+			throw I18nExceptionFactory.createIllegalArgumentException(messageKey, args);
 	}
-	
+
+	/**
+	 * 断言集合不为空
+	 *
+	 * @param value 集合
+	 */
 	public static void assertNotEmpty(Map value) {
-		assertNotEmpty(value, "断言此对象不为空, 但却为空!");
+		assertNotEmpty(value, "Assert.not.empty");
 	}
-	
-	public static void assertNotEmpty(Map value, String errorMessage) {
+
+	/**
+	 * 断言集合不为空
+	 *
+	 * @param value 集合
+	 * @param messageKey 错误信息key值
+	 */
+	public static void assertNotEmpty(Map value, String messageKey) {
+		assertNotEmpty(value, messageKey, new Object[] {value});
+	}
+
+	/**
+	 * 断言集合不为空
+	 *
+	 * @param value 集合
+	 * @param messageKey 错误信息key值
+	 * @param args 错误信息参数
+	 */
+	public static void assertNotEmpty(Map value, String messageKey, Object[] args) {
 		if (value == null || value.size() == 0)
-			throw new IllegalArgumentException(errorMessage);
+			throw I18nExceptionFactory.createIllegalArgumentException(messageKey, args);
 	}
-	
+
+	/**
+	 * 断言集合不为空
+	 *
+	 * @param value 集合
+	 */
 	public static void assertNotEmpty(Object[] value) {
-		assertNotEmpty(value, "断言此对象不为空, 但却为空!");
+		assertNotEmpty(value, "Assert.not.empty");
 	}
-	
-	public static void assertNotEmpty(Object[] value, String errorMessage) {
+
+	/**
+	 * 断言集合不为空
+	 *
+	 * @param value 集合
+	 * @param messageKey 错误信息key值
+	 */
+	public static void assertNotEmpty(Object[] value, String messageKey) {
+		assertNotEmpty(value, messageKey, new Object[] {value});
+	}
+
+	/**
+	 * 断言集合不为空
+	 *
+	 * @param value 集合
+	 * @param messageKey 错误信息key值
+	 * @param args 错误信息参数
+	 */
+	public static void assertNotEmpty(Object[] value, String messageKey, Object[] args) {
 		if (value == null || value.length == 0)
-			throw new IllegalArgumentException(errorMessage);
+			throw I18nExceptionFactory.createIllegalArgumentException(messageKey, args);
 	}
-	
+
+	/**
+	 * 断言字符串包含子串
+	 *
+	 * @param value 字符串
+	 * @param sub 子串
+	 */
 	public static void assertContain(String value, String sub) {
-		assertContain(value, sub, "断言\"" + value + "\"将包含\"" + sub + "\"子串，但却不包含!");
+		assertContain(value, sub, "Assert.contain");
 	}
-	
-	public static void assertContain(String value, String sub, String errorMessage) {
-		if (value == null || sub == null
-				|| value.indexOf(sub) == -1) 
-			throw new IllegalStateException(errorMessage);
+
+	/**
+	 * 断言字符串包含子串
+	 *
+	 * @param value 字符串
+	 * @param sub 子串
+	 * @param messageKey 错误信息key值
+	 */
+	public static void assertContain(String value, String sub, String messageKey) {
+		assertContain(value, sub, messageKey, new Object[]{value, sub});
 	}
-	
-	public static void assertGreaterThan(int var, int value) {
-		assertGreaterThan(var, value, "断言" + var + "应大于\"" + value + "\"!");
+
+	/**
+	 * 断言字符串包含子串
+	 *
+	 * @param value 字符串
+	 * @param sub 子串
+	 * @param messageKey 错误信息key值
+	 * @param args 错误信息参数
+	 */
+	public static void assertContain(String value, String sub, String messageKey, Object[] args) {
+		if (value == null || sub == null || value.indexOf(sub) == -1)
+			throw I18nExceptionFactory.createIllegalStateException(messageKey, args);
 	}
-	
-	public static void assertGreaterThan(int var, int value, String errorMessage) {
-		if (var <= value)
-			throw new IllegalStateException(errorMessage);
+
+	/**
+	 * 断言字符串匹配正则表达式
+	 *
+	 * @param value 字符串
+	 * @param regex 正则表达式
+	 */
+	public static void assertMatches(String value, String regex) {
+		assertMatches(value, regex, "Assert.matches");
 	}
-	
-	public static void assertGreaterEqual(int var, int value) {
-		assertGreaterEqual(var, value, "断言" + var + "应大于或等于\"" + value + "\"!");
+
+	/**
+	 * 断言字符串匹配正则表达式
+	 *
+	 * @param value 字符串
+	 * @param regex 正则表达式
+	 * @param messageKey 错误信息key值
+	 */
+	public static void assertMatches(String value, String regex, String messageKey) {
+		assertMatches(value, regex, messageKey, new Object[] {value, regex});
 	}
-	
-	public static void assertGreaterEqual(int var, int value, String errorMessage) {
-		if (var < value)
-			throw new IllegalStateException(errorMessage);
+
+	/**
+	 * 断言字符串匹配正则表达式
+	 *
+	 * @param value 字符串
+	 * @param regex 正则表达式
+	 * @param messageKey 错误信息key值
+	 * @param args 错误信息参数
+	 */
+	public static void assertMatches(String value, String regex, String messageKey, Object[] args) {
+		if (value == null || ! value.matches(regex))
+			throw I18nExceptionFactory.createIllegalStateException(messageKey, args);
+	}
+
+	/**
+	 * 断言可分派父子类关系
+	 *
+	 * @param superClass 父类
+	 * @param subClass 子类
+	 */
+	public static void assertAssignable(Class superClass, Class subClass) {
+		assertAssignable(superClass, subClass, "Assert.assignable");
+	}
+
+	/**
+	 * 断言可分派父子类关系
+	 *
+	 * @param superClass 父类
+	 * @param subClass 子类
+	 * @param messageKey 错误信息key值
+	 */
+	public static void assertAssignable(Class superClass, Class subClass, String messageKey) {
+		assertAssignable(superClass, subClass, messageKey, new Object[]{superClass, subClass});
+	}
+
+	/**
+	 * 断言可分派父子类关系
+	 *
+	 * @param superClass 父类
+	 * @param subClass 子类
+	 * @param messageKey 错误信息key值
+	 * @param args 错误信息参数
+	 */
+	public static void assertAssignable(Class superClass, Class subClass, String messageKey, Object[] args) {
+		if (superClass == null || ! superClass.isAssignableFrom(subClass))
+			throw I18nExceptionFactory.createIllegalStateException(messageKey, args);
+	}
+
+	/**
+	 * 断言类实例关系
+	 *
+	 * @param instance 实例
+	 * @param type 类型
+	 */
+	public static void assertInstance(Object instance, Class type) {
+		assertInstance(instance, type, "Assert.instance");
+	}
+
+	/**
+	 * 断言类实例关系
+	 *
+	 * @param instance 实例
+	 * @param type 类型
+	 * @param messageKey 错误信息key值
+	 */
+	public static void assertInstance(Object instance, Class type, String messageKey) {
+		assertInstance(instance, type, messageKey, new Object[]{type, instance});
+	}
+
+	/**
+	 * 断言类实例关系
+	 *
+	 * @param instance 实例
+	 * @param type 类型
+	 * @param messageKey 错误信息key值
+	 * @param args 错误信息参数
+	 */
+	public static void assertInstance(Object instance, Class type, String messageKey, Object[] args) {
+		if (type == null || ! type.isInstance(instance))
+			throw I18nExceptionFactory.createIllegalStateException(messageKey, args);
 	}
 
 }

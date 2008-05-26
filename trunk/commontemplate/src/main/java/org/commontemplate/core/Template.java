@@ -14,4 +14,10 @@ import java.io.Serializable;
  */
 public abstract class Template extends Resource implements Block, Serializable {
 
+	public static final String TYPE = "Template";
+
+	public String getType() {
+		return TYPE;
+	}
+
 }
