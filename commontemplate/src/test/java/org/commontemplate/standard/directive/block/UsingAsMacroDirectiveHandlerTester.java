@@ -30,7 +30,7 @@ public class UsingAsMacroDirectiveHandlerTester extends TestCase {
 		context = engine.createContext(out);
 		directiveHandler = new UsingAsMacroDirectiveHandler();
 	}
-	
+
 	/**
 	 * 对doRender 方法的测试。<br>
 	 * @condition
@@ -42,19 +42,19 @@ public class UsingAsMacroDirectiveHandlerTester extends TestCase {
 	 * 再将entry的key作为key，object 作为value，放入到context中。
 	 */
 	public void testDoRenderEntry() throws Exception{
-		
+
 		HashMap map = new HashMap();
 		map.put("maroName1", "maroTemplate1");
 		Set set = map.entrySet();
 		Entry entry = (Entry) (set.iterator()).next();
-		
+
 		context.putProperty(BlockDefineDirectiveHandler.BLOCK_TYPE, "maroTemplate1", "testit!");
-		
+
 		directiveHandler.doRender(context, "directiveName", entry);
-		
+
 		assertEquals("testit!", context.getProperty(MacroDirectiveHandler.MACRO_TYPE, "maroName1"));
 	}
-	
+
 	/**
 	 * 对doRender 方法的测试。<br>
 	 * @condition
@@ -68,40 +68,36 @@ public class UsingAsMacroDirectiveHandlerTester extends TestCase {
 	 * }
 	 */
 	public void testDoRenderMap() throws Exception{
-		
+
 		HashMap map = new HashMap();
 		map.put("maroName1", "maroTemplate1");
 		map.put("maroName2", "maroTemplate2");
-		
+
 		context.putProperty(BlockDefineDirectiveHandler.BLOCK_TYPE, "maroTemplate1", "testit1!");
 		context.putProperty(BlockDefineDirectiveHandler.BLOCK_TYPE, "maroTemplate2", "testit2!");
-		
+
 		directiveHandler.doRender(context, "directiveName", map);
-		
+
 		assertEquals("testit1!", context.getProperty(MacroDirectiveHandler.MACRO_TYPE, "maroName1"));
 		assertEquals("testit2!", context.getProperty(MacroDirectiveHandler.MACRO_TYPE, "maroName2"));
 	}
-	
+
 	/**
 	 * 对doRender 方法的测试。<br>
 	 * @condition
 	 * 条件<br>
-	 * 输入一个非Entry 和 非 Map 的对象。 
+	 * 输入一个非Entry 和 非 Map 的对象。
 	 * @result
 	 * 结果<br>
-	 * 会捕获到 java.lang.IllegalArgumentException。
+	 * 会捕获到 java.lang.IllegalStateException。
 	 */
-	public void testExpectException() {
-		
-		boolean expect = false;
+	public void testExpectException() throws Exception {
 		try {
 			directiveHandler.doRender(context, "directiveName", "test");
-		} catch (java.lang.IllegalArgumentException e) {
-			expect = true;
-		} catch (Exception e) {
-			
+			fail("expect IllegalArgumentException!");
+		} catch (java.lang.IllegalStateException e) {
+			// right
 		}
-		assertTrue(expect);
 	}
-	
+
 }

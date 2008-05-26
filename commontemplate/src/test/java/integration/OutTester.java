@@ -1,7 +1,7 @@
 package integration;
 
 import java.io.IOException;
-import java.io.StringWriter;
+import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Locale;
 
@@ -17,17 +17,15 @@ public class OutTester {
 		Factory factory = TestEngineProvider.getTestEngine();
 		factory.getGlobalContext().putAll(ModelProvider.getGlobalModel());
 		// 执行模板
-		StringWriter output = null;
+		Writer output = null;
 		try {
-			//output = new OutputStreamWriter(System.out);
-			output = new StringWriter();
+			output = new OutputStreamWriter(System.out);
 			Context context = factory.createContext(output, Locale.getDefault());
 			context.pushLocalContext("session", ModelProvider.getSessionModel());
 			context.pushLocalContext(ModelProvider.getModel());
 			factory.getTemplate("/integration/out.ctl").render(context);
 			context.clear();
 			output.flush();
-			System.out.print(output.getBuffer().toString());
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ParsingException e) {

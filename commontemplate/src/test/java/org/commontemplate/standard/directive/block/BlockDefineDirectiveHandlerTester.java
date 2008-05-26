@@ -41,19 +41,19 @@ public class BlockDefineDirectiveHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testDoRender() throws Exception {
-		
+
 		List innerElements = new ArrayList();
 		// 此处实际上应该增加 Element 对象，但是我们仅仅测试List的内容，
 		// 所以装入了字符串。
 		innerElements.add("a");
 		innerElements.add("b");
-		
+
 		blockDirectiveHandler.doRender(context, "test", "blockName", innerElements);
-		
+
 		assertEquals(innerElements, context.getSuperLocalContext().getProperty(BlockDefineDirectiveHandler.BLOCK_TYPE, "blockName"));
-		
+
 	}
-	
+
 	/**
 	 *  测试 BlockDefineDirectiveHandler。
 	 *  @condition
@@ -65,16 +65,13 @@ public class BlockDefineDirectiveHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testDoRenderExpectException() throws Exception {
-		
-		boolean expect = false;
-		
 		try {
 			// 如果Block名称为空，就会抛出异常，所以我们就没有必要再构造 Element List 对象了。
 			blockDirectiveHandler.doRender(context, "test", null, null);
-		} catch (java.lang.IllegalArgumentException e) {
-			expect = true;
+			fail("expect NullPointerException!");
+		} catch (java.lang.NullPointerException e) {
+			// right
 		}
-		assertTrue(expect);
 	}
-	
+
 }

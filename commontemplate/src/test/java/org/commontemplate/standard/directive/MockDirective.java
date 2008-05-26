@@ -86,4 +86,8 @@ public class MockDirective extends Element{
 		this.name = name;
 	}
 
+	public String getType() {
+		return "Mock";
+	}
+
 }
