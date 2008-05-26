@@ -3,13 +3,15 @@
  */
 package org.commontemplate.standard.directive.coat.attribute.jericho;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
-import org.commontemplate.ext.coat.attribute.*;
 import org.commontemplate.standard.directive.coat.attribute.Document;
 import org.commontemplate.standard.directive.coat.attribute.TextSegment;
 
-import au.id.jericho.lib.html.*;
+import au.id.jericho.lib.html.Element;
+import au.id.jericho.lib.html.Source;
 
 /**
  * @author GL

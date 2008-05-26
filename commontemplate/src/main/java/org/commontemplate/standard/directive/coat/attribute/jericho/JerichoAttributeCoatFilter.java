@@ -3,9 +3,9 @@
  */
 package org.commontemplate.standard.directive.coat.attribute.jericho;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.Reader;
 
-import org.commontemplate.ext.coat.attribute.*;
 import org.commontemplate.standard.directive.coat.attribute.AbstractAttributeFilter;
 import org.commontemplate.standard.directive.coat.attribute.Document;
 
