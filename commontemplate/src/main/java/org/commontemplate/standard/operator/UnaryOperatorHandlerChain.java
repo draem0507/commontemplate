@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.commontemplate.config.UnaryOperatorHandler;
+import org.commontemplate.util.I18nExceptionFactory;
 
 /**
  * 一元操作符链, 将多个重载的一元操作符组装成一个一元操作符, 并负责按类型分派处理.
@@ -19,14 +20,17 @@ public class UnaryOperatorHandlerChain extends UnaryOperatorHandler {
 
 	public void setUnaryOperatorHandlers(List unaryOperatorHandlers) {
 		if (unaryOperatorHandlers == null)
-			throw new java.lang.IllegalArgumentException("一元操作符处理类不能为空!");
+			throw I18nExceptionFactory.createIllegalArgumentException("UnaryOperatorHandlerChain.handler.required");
 		for (Iterator iterator = unaryOperatorHandlers.iterator(); iterator.hasNext();) {
 			Object handler = iterator.next();
 			if (handler == null)
-				throw new java.lang.IllegalArgumentException("一元操作符处理类不能为空!");
+				throw I18nExceptionFactory.createIllegalArgumentException(
+						"UnaryOperatorHandlerChain.handler.required");
 			if (! (handler instanceof UnaryOperatorHandlerMatcher))
-				throw new java.lang.IllegalArgumentException("一元操作符处理类:" + handler.getClass().getName()
-						+ " 未实现接口:" + UnaryOperatorHandlerMatcher.class.getName());
+				throw I18nExceptionFactory.createIllegalArgumentException(
+						"UnaryOperatorHandlerChain.handler.type.error",
+						new Object[]{ handler.getClass().getName()
+						, UnaryOperatorHandlerMatcher.class.getName()});
 		}
 		this.unaryOperatorHandlers = unaryOperatorHandlers;
 	}
@@ -46,9 +50,8 @@ public class UnaryOperatorHandlerChain extends UnaryOperatorHandler {
 		}
 		if (operand == null) // 对null的默认处理
 			return null;
-		throw new UnhandleException("未找到相应处理类，用于处理操作符: \"" + getClass().getName() + "\", 参数: ("
-				+ operand.getClass().getName() + ") 值: (" + operand + ")"
-				+ " 被调用的处理类:" + unaryOperatorHandlers);
+		throw new UnhandleException("UnaryOperatorHandlerChain.unhandle.error",
+				new Object[]{operand.getClass().getName(), operand, unaryOperatorHandlers});
 	}
 
 	private boolean operandLazy = false;

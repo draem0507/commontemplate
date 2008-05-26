@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Collections;
 
+
 /**
  * 链表栈.
  * (非线程安全, 请保证单线程使用, 或使用<code>SynchronizationStack</code>同步)
@@ -14,13 +15,13 @@ import java.util.Collections;
 public class LinkedStack implements Stack, Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private final LinkedList stack = new LinkedList();
 
 	public boolean isEmpty() {
 		return stack.size() == 0;
 	}
-	
+
 	public void push(Object value) {
 		stack.addLast(value);
 	}
@@ -32,12 +33,12 @@ public class LinkedStack implements Stack, Serializable {
 	}
 
 	public Object peek() {
-		Assert.assertFalse(isEmpty(), "空栈!");
+		Assert.assertFalse(isEmpty(), "LinkedStack.empty.stack");
 		return stack.getLast();
 	}
 
 	public void poke(Object value) {
-		Assert.assertFalse(isEmpty(), "空栈!");
+		Assert.assertFalse(isEmpty(), "LinkedStack.empty.stack");
 		stack.removeLast();
 		push(value);
 	}
@@ -49,22 +50,22 @@ public class LinkedStack implements Stack, Serializable {
 	public Iterator iterator() {
 		return Collections.unmodifiableList(stack).iterator();
 	}
-	
+
 	public String toString() {
 		return stack.toString();
 	}
-	
+
 	public boolean equals(Object o) {
-		if (o == null) 
+		if (o == null)
 			return false;
-		if (this == o) 
+		if (this == o)
 			return true;
-		if (o instanceof LinkedStack) 
+		if (o instanceof LinkedStack)
 			return false;
 		LinkedStack s = (LinkedStack)o;
 		return stack.equals(s.stack);
 	}
-	
+
 	public int hashCode() {
 		return 37 * stack.hashCode();
 	}

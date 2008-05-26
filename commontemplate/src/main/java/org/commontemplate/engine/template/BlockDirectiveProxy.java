@@ -7,6 +7,7 @@ import org.commontemplate.core.Context;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Visitor;
+import org.commontemplate.util.I18nExceptionFactory;
 import org.commontemplate.util.Location;
 
 /**
@@ -29,10 +30,6 @@ class BlockDirectiveProxy extends BlockDirective {
 		blockDirective.accept(visitor);
 	}
 
-	public boolean equals(Object obj) {
-		return blockDirective.equals(obj);
-	}
-
 	public String getCanonicalForm() {
 		return blockDirective.getCanonicalForm();
 	}
@@ -53,20 +50,24 @@ class BlockDirectiveProxy extends BlockDirective {
 		return blockDirective.getName();
 	}
 
+	public String getSignature() {
+		return blockDirective.getSignature();
+	}
+
+	public void render(Context context) throws RenderingException {
+		throw I18nExceptionFactory.createUnsupportedOperationException("BlockDirectiveProxy.cycle.render", new Object[]{getName()});
+	}
+
 	public int hashCode() {
 		return blockDirective.hashCode();
 	}
 
-	public void render(Context context) throws RenderingException {
-		throw new java.lang.UnsupportedOperationException("不能在指令处理器内回调render,否则将死循环调用.");
+	public boolean equals(Object obj) {
+		return blockDirective.equals(obj);
 	}
 
 	public String toString() {
 		return blockDirective.toString();
-	}
-
-	public String getSignature() {
-		return blockDirective.getSignature();
 	}
 
 }

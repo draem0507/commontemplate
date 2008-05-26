@@ -40,7 +40,7 @@ public class MapSelectorOperatorHandler extends BinaryOperatorHandlerSupport {
 					return e;
 			}
 		} else {
-			Assert.fail("java.util.Map只支持key和value两个属性！没有属性：" + peoperty);
+			Assert.fail("MapSelectorOperatorHandler.map.property.no.such", new Object[]{peoperty});
 		}
 		return null;
 	}

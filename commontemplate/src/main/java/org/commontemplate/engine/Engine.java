@@ -37,7 +37,7 @@ public final class Engine implements Factory {
 	 *            引擎所需的配置信息
 	 */
 	public Engine(Configuration config) {
-		Assert.assertNotNull(config, "配置信息不能为空!");
+		Assert.assertNotNull(config, "Engine.config.required");
 		// 创建模板工厂
 		this.templateFactory = new TemplateFactoryImpl(new TemplateEngine(config),
 				config.getResourceLoader(), config.getTemplateCache(),

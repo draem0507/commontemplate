@@ -38,7 +38,7 @@ public class StaticPropertyOperatorHandler extends UnaryOperatorHandlerSupport {
 			if (handler != null)
 				return handler.getProperty();
 		}
-		throw new RuntimeException("未找到静态属性:" + property);
+		return null;
 	}
 
 }

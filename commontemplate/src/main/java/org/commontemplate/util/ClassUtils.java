@@ -3,6 +3,7 @@ package org.commontemplate.util;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+
 /**
  * 类元处理工具类
  *
@@ -23,7 +24,7 @@ public class ClassUtils {
 	 * @throws ClassNotFoundException 类不存在时抛出
 	 */
 	public static Class forName(String className) throws ClassNotFoundException {
-		Assert.assertNotNull(className, "className不能为空！");
+		Assert.assertNotNull(className, "ClassUtils.class.name.required");
 		return Class.forName(className);
 	}
 
@@ -37,7 +38,7 @@ public class ClassUtils {
 	 * @throws ClassNotFoundException 类不存在时抛出
 	 */
 	public static Class forCanonicalName(String className) throws ClassNotFoundException {
-		Assert.assertNotNull(className, "className不能为空！");
+		Assert.assertNotNull(className, "ClassUtils.class.name.required");
 		if (className.endsWith("[]"))
 			className = "[L" + className.substring(0, className.length() - 2) + ";";
 		return Class.forName(className);
@@ -121,7 +122,7 @@ public class ClassUtils {
 					return methods[i];
 			}
 		}
-		throw new NoSuchMethodException("无法访问 " + clazz.getName() + " 的 " + getSignature(name, types) + " 方法！");
+		throw I18nExceptionFactory.createNoSuchMethodException("ClassUtils.method.no.such", new Object[]{clazz.getName(), getSignature(name, types)});
 	}
 
 	// 判断两个参数列表类型是否相似

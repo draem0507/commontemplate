@@ -5,31 +5,28 @@ import java.util.Enumeration;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.commontemplate.util.Assert;
 import org.commontemplate.util.MapSupport;
 
 /**
  * Application属性Map封装
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
 public class ApplicationMap extends MapSupport {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private final ServletContext context;
 
 	public ApplicationMap(ServletContext context) {
-		if (context == null) 
-			throw new java.lang.NullPointerException("context is null!");
-		
+		Assert.assertNotNull(context, "ApplicationMap.servlet.context.required");
 		this.context = context;
 	}
 
 	public ApplicationMap(HttpServletRequest request) {
-		if (request == null) 
-			throw new java.lang.NullPointerException("request is null!");
-		
+		Assert.assertNotNull(request, "ApplicationMap.request.required");
 		this.context = request.getSession().getServletContext();
 	}
 

@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.commontemplate.config.BinaryOperatorHandler;
+import org.commontemplate.util.I18nExceptionFactory;
 
 /**
  * 二元操作符链, 将多个重载的二元操作符组装成一个二元操作符, 并负责按类型分派处理.
@@ -19,14 +20,15 @@ public class BinaryOperatorHandlerChain extends BinaryOperatorHandler {
 
 	public void setBinaryOperatorHandlers(List binaryOperatorHandlers) {
 		if (binaryOperatorHandlers == null)
-			throw new java.lang.IllegalArgumentException("二元操作符处理类不能为空!");
+			throw I18nExceptionFactory.createIllegalArgumentException("BinaryOperatorHandlerChain.handler.required");
 		for (Iterator iterator = binaryOperatorHandlers.iterator(); iterator.hasNext();) {
 			Object handler = iterator.next();
 			if (handler == null)
-				throw new java.lang.IllegalArgumentException("二元操作符处理类不能为空!");
+				throw I18nExceptionFactory.createIllegalArgumentException("BinaryOperatorHandlerChain.handler.required");
 			if (! (handler instanceof BinaryOperatorHandlerMatcher))
-				throw new java.lang.IllegalArgumentException("二元操作符处理类:" + handler.getClass().getName()
-						+ " 未实现接口:" + BinaryOperatorHandlerMatcher.class.getName());
+				throw I18nExceptionFactory.createIllegalArgumentException("BinaryOperatorHandlerChain.handler.required",
+						new Object[]{ handler.getClass().getName()
+						, BinaryOperatorHandlerMatcher.class.getName()});
 		}
 		this.binaryOperatorHandlers = binaryOperatorHandlers;
 	}
@@ -38,19 +40,19 @@ public class BinaryOperatorHandlerChain extends BinaryOperatorHandler {
 			if (handler.isMatch(leftOperand, rightOperand)) {
 				try {
 					return handler.doEvaluate(leftOperand, rightOperand);
-				} catch (NullPointerException e) {
-					return null;
-				} catch (UnhandleException e) {
+				} catch (UnhandleException ue) {
 					// ignore, continue next
+				} catch (NullPointerException npe) {
+					return null;
 				}
 			}
 		}
 		if (leftOperand == null || rightOperand == null) // 对null的默认处理
 			return null;
-		throw new UnhandleException("无法处理参数类型为: ("
-				+ leftOperand.getClass().getName() + ", "
-				+ rightOperand.getClass().getName()
-				+ ") 值为: (" + leftOperand + ", " + rightOperand + ")" + " 被调用的处理类:" + binaryOperatorHandlers);
+		throw new UnhandleException("BinaryOperatorHandlerChain.unhandle.error",
+				new Object[]{ leftOperand.getClass().getName(),
+				rightOperand.getClass().getName(), leftOperand,
+				rightOperand, binaryOperatorHandlers});
 	}
 
 	private boolean leftOperandLazy;

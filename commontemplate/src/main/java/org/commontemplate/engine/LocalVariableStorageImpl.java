@@ -82,9 +82,9 @@ final class LocalVariableStorageImpl extends VariableStorageSupport {
 	public void putVariable(String name, Object value) throws VariableException {
 		assertVariableName(name);
 		if (lock)
-			throw new ReadonlyException("变量容器锁定! 无法定义：" + name, name);
+			throw new ReadonlyException(name, "LocalVariableStorageImpl.locked.error");
 		if (readonlyContainer.contains(name))
-			throw new ReadonlyException(name + " 为只读变量!", name);
+			throw new ReadonlyException(name, "LocalVariableStorageImpl.readonly.error");
 		Object old = variablesContainer.get(name);
 		variablesContainer.put(name, value);
 		variableChanged(name, old, value);
@@ -106,7 +106,7 @@ final class LocalVariableStorageImpl extends VariableStorageSupport {
 				Object key = entry.getKey();
 				Object value = entry.getValue();
 				if (! (key instanceof String))
-					throw new VariableException("变量名必需为String类型!", String.valueOf(key));
+					throw new VariableException(String.valueOf(key), "LocalVariableStorageImpl.variable.type.error");
 				String name = (String)key;
 				putVariable(name, value);
 			}
@@ -173,7 +173,7 @@ final class LocalVariableStorageImpl extends VariableStorageSupport {
 	public void removeVariable(String name) throws VariableException {
 		assertVariableName(name);
 		if (lock)
-			throw new ReadonlyException("变量容器锁定! 无法移除：" + name, name);
+			throw new ReadonlyException(name, "LocalVariableStorageImpl.locked.error");
 		Object old = variablesContainer.get(name);
 		variablesContainer.remove(name); // 移除变量
 		readonlyContainer.remove(name); // 移除只读标记

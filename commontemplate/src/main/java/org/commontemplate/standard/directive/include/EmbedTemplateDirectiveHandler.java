@@ -27,30 +27,30 @@ public class EmbedTemplateDirectiveHandler extends DirectiveHandlerSupport {
 		if (param instanceof String) {
 			templateName = (String)param;
 		} else if (param instanceof List) {
-			List list = (List)param;
-			Assert.assertTrue(list.size() == 2, "embed参数列表错误!");
-			Assert.assertTrue(list.get(0) instanceof String, "embed参数列表错误!");
-			Assert.assertTrue(list.get(1) instanceof String, "embed参数列表错误!");
+			List list = (List)param; // assert(list != null);
+			Assert.assertTrue(list.size() == 2, "EmbedTemplateDirectiveHandler.parameter.error", new Object[]{param});
+			Assert.assertTrue(list.get(0) instanceof String, "EmbedTemplateDirectiveHandler.parameter.error", new Object[]{param});
+			Assert.assertTrue(list.get(1) instanceof String, "EmbedTemplateDirectiveHandler.parameter.error", new Object[]{param});
 			templateName = (String)list.get(0);
 			templateEncoding = (String)list.get(1);
 		} else {
-			Assert.fail("embed参数列表错误!");
+			Assert.fail("EmbedTemplateDirectiveHandler.parameter.error", new Object[]{param});
 		}
-		if (templateName == null || templateName.trim().length() == 0)
-			throw new RuntimeException("embed模板名称不能为空!");
+		Assert.assertNotEmpty(templateName, "EmbedTemplateDirectiveHandler.template.name.required");
 		String zoneName = null;
 		int index = templateName.indexOf('#');
 		if (index >= 0) {
 			zoneName = templateName.substring(index + 1);
 			templateName = templateName.substring(0, index);
 		}
-		if (context.containsTemplate(context.relateTemplateName(templateName))) // 循环内嵌检测
-			throw new RuntimeException("内嵌(embed)模板时出现循环内嵌！请检查从模板 " + templateName + " 到模板 " + context.getCurrentTemplate() + " 之间的内嵌关系。");
-		Template template = context.getTemplate(templateName, templateEncoding); // getTemplate的后验条件已保证不返回null
+		// 循环内嵌检测
+		Assert.assertFalse(context.containsTemplate(context.relateTemplateName(templateName)),
+				"EmbedTemplateDirectiveHandler.cycle.embed",
+				new Object[]{templateName, context.getCurrentTemplate()});
+		Template template = context.getTemplate(templateName, templateEncoding); // assert(template != null);
 		if (zoneName != null && zoneName.length() > 0) {
 			List elements = ElementsVisitor.findElements(template, "zone", zoneName);
-			if (elements == null)
-				throw new RuntimeException("在模板: " + templateName + " 中未找到zone: " + zoneName);
+			Assert.assertNotEmpty(elements, "EmbedTemplateDirectiveHandler.template.zone.not.found", new Object[]{templateName, zoneName});
 			DirectiveUtils.renderAll(elements, context);
 		} else {
 			template.render(context);

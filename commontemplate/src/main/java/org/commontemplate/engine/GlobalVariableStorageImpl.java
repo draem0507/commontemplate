@@ -56,9 +56,9 @@ final class GlobalVariableStorageImpl extends VariableStorageSupport {
 			throws VariableException {
 		assertVariableName(name);
 		if (lock)
-			throw new ReadonlyException("变量容器锁定! 无法定义：" + name, name);
+			throw new ReadonlyException(name, "GlobalVariableStorageImpl.locked.error");
 		if (readonlyContainer.contains(name))
-			throw new ReadonlyException(name + " 为只读变量!", name);
+			throw new ReadonlyException(name, "GlobalVariableStorageImpl.readonly.error");
 		variablesContainer.put(name, value);
 	}
 
@@ -79,7 +79,7 @@ final class GlobalVariableStorageImpl extends VariableStorageSupport {
 				Object key = entry.getKey();
 				Object value = entry.getValue();
 				if (! (key instanceof String))
-					throw new VariableException("变量名必需为String类型!", String.valueOf(key));
+					throw new VariableException(String.valueOf(key), "GlobalVariableStorageImpl.variable.type.error");
 				String name = (String)key;
 				putVariable(name, value);
 			}
@@ -97,7 +97,7 @@ final class GlobalVariableStorageImpl extends VariableStorageSupport {
 			throws VariableException {
 		if (isVariableContained(name)) {
 			if (lock)
-				throw new ReadonlyException("容器锁定!", name);
+				throw new ReadonlyException(name, "GlobalVariableStorageImpl.locked.error");
 			variablesContainer.put(name, value);
 		}
 	}
@@ -119,7 +119,7 @@ final class GlobalVariableStorageImpl extends VariableStorageSupport {
 	public synchronized void removeVariable(String name) throws VariableException {
 		assertVariableName(name);
 		if (lock)
-			throw new ReadonlyException("变量容器锁定! 无法移除：" + name, name);
+			throw new ReadonlyException(name, "GlobalVariableStorageImpl.locked.error");
 		variablesContainer.remove(name);
 		readonlyContainer.remove(name);
 		for (Iterator iterator = aliasContainer.entrySet().iterator(); iterator.hasNext();) {

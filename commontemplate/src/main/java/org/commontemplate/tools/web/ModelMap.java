@@ -3,6 +3,7 @@ package org.commontemplate.tools.web;
 import java.util.Enumeration;
 import java.util.Vector;
 
+import org.commontemplate.util.Assert;
 import org.commontemplate.util.BeanUtils;
 import org.commontemplate.util.MapSupport;
 
@@ -20,9 +21,7 @@ public class ModelMap extends MapSupport {
 	private final Object model;
 
 	public ModelMap(Object model) {
-		if (model == null)
-			throw new java.lang.NullPointerException("model == null!");
-
+		Assert.assertNotNull(model, "ModelMap.model.required");
 		this.model = model;
 	}
 

@@ -18,7 +18,7 @@ public class ElseDirectiveHandler extends MiddleBlockDirectiveHandlerSupport {
 	private static final long serialVersionUID = 1L;
 
 	public void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
-		Assert.assertNotNull(context.getSuperLocalContext().getStatus(IfDirectiveHandler.IF_STATUS), "else 的嵌套关系错误, 必需在 if 或 elseif 后面!");
+		Assert.assertNotNull(context.getSuperLocalContext().getStatus(IfDirectiveHandler.IF_STATUS), "ElseDirectiveHandler.location.error");
 		if (! ((Boolean)context.getSuperLocalContext().getStatus(IfDirectiveHandler.IF_STATUS)).booleanValue())
 			DirectiveUtils.renderAll(innerElements, context);
 		context.getSuperLocalContext().removeStatus(IfDirectiveHandler.IF_STATUS);

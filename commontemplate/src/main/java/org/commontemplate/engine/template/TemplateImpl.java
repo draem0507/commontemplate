@@ -37,14 +37,14 @@ final class TemplateImpl extends Template implements Serializable {
 
 	private final char[] data;
 
-	TemplateImpl(Resource resource, BlockDirective rootDirective) throws IOException {
-		Assert.assertNotNull(resource, "resource == null");
-		Assert.assertNotNull(rootDirective, "rootDirective == null");
+	TemplateImpl(Reader reader, Resource resource, BlockDirective rootDirective) throws IOException {
+		Assert.assertNotNull(resource, "TemplateImpl.resource.required");
+		Assert.assertNotNull(rootDirective, "TemplateImpl.elements.required");
 
 		this.name = resource.getName();
 		this.encoding = resource.getEncoding();
 		this.lastModified = resource.getLastModified();
-		this.data = IOUtils.readToChars(resource.getReader());
+		this.data = IOUtils.readToChars(reader);
 		this.rootDirective = rootDirective;
 	}
 
@@ -89,7 +89,7 @@ final class TemplateImpl extends Template implements Serializable {
 	}
 
 	public final String getSource() {
-		return null;
+		return new String(data);
 	}
 
 }

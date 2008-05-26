@@ -7,12 +7,13 @@ import java.util.Map;
 
 import org.commontemplate.config.Cache;
 import org.commontemplate.config.CacheException;
+import org.commontemplate.util.Assert;
 
 /**
  * 多策略缓存，软引用加最近最少使用原则缓存，相当于SoftCache与LruCache的组合
- * 
+ *
  * 声明: 此类引自<a href="http://www.freemarker.org">FreeMarker</a>的freemarker.cache.MruCacheStorage
- * 
+ *
  */
 public class MruCache implements Cache {
 	private final MruEntry strongHead = new MruEntry();
@@ -29,7 +30,7 @@ public class MruCache implements Cache {
 
 	/**
 	 * 同时设置强缓存及弱缓存
-	 * 
+	 *
 	 * @param maxSize
 	 *            缓存大小
 	 */
@@ -40,25 +41,23 @@ public class MruCache implements Cache {
 
 	/**
 	 * 设置最大强缓存
-	 * 
+	 *
 	 * @param maxStrongSize
 	 *            the maximum number of strongly referenced templates
 	 */
 	public void setMaxStrongSize(int maxStrongSize) {
-		if (maxStrongSize < 0)
-			throw new IllegalArgumentException("maxStrongSize < 0");
+		Assert.assertTrue(maxStrongSize >= 0, "MruCache.max.strong.size");
 		this.maxStrongSize = maxStrongSize;
 	}
 
 	/**
 	 * 设置最大弱缓存
-	 * 
+	 *
 	 * @param maxSoftSize
 	 *            the maximum number of softly referenced templates
 	 */
 	public void setMaxSoftSize(int maxSoftSize) {
-		if (maxSoftSize < 0)
-			throw new IllegalArgumentException("maxSoftSize < 0");
+		Assert.assertTrue(maxStrongSize >= 0, "MruCache.max.soft.size");
 		this.maxSoftSize = maxSoftSize;
 	}
 

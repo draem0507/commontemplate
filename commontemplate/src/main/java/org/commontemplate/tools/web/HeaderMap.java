@@ -4,15 +4,17 @@ import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.commontemplate.util.Assert;
 import org.commontemplate.util.MapSupport;
 
 public class HeaderMap extends MapSupport {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private final HttpServletRequest request;
 
 	public HeaderMap(HttpServletRequest request) {
+		Assert.assertNotNull(request, "HeaderMap.request.required");
 		this.request = request;
 	}
 

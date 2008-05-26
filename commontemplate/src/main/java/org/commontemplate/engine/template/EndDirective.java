@@ -5,6 +5,7 @@ import org.commontemplate.core.Directive;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Visitor;
+import org.commontemplate.util.I18nExceptionFactory;
 import org.commontemplate.util.Location;
 
 /**
@@ -22,11 +23,11 @@ final class EndDirective extends Directive {
 	private EndDirective() {}
 
 	public void render(Context context) throws RenderingException {
-		throw new UnsupportedOperationException("此指令为结束标识, 不应出现在指令树中, 也不应被执行!");
+		throw I18nExceptionFactory.createUnsupportedOperationException("EndDirective.unsupported.error");
 	}
 
 	public void accept(Visitor visitor) {
-		throw new UnsupportedOperationException("此指令为结束标识, 不应出现在指令树中, 也不应被执行!");
+		throw new UnsupportedOperationException("EndDirective.unsupported.error");
 	}
 
 	public Expression getExpression() {

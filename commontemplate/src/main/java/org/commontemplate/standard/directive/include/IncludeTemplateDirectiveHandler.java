@@ -30,8 +30,8 @@ public class IncludeTemplateDirectiveHandler extends DirectiveHandlerSupport {
 			templateName = (String)param;
 		} else if (param instanceof List) {
 			List list = (List)param;
-			Assert.assertTrue(list.size() > 1, "include参数列表错误!");
-			Assert.assertTrue(list.get(0) instanceof String, "include参数列表错误!");
+			Assert.assertTrue(list.size() > 1, "IncludeTemplateDirectiveHandler.parameter.error", new Object[]{param});
+			Assert.assertTrue(list.get(0) instanceof String, "IncludeTemplateDirectiveHandler.parameter.error", new Object[]{param});
 			templateName = (String)list.get(0);
 			if (list.size() == 2) {
 				Object p2 = list.get(1);
@@ -40,21 +40,20 @@ public class IncludeTemplateDirectiveHandler extends DirectiveHandlerSupport {
 				} else if (p2 instanceof Entry || p2 instanceof Map) {
 					variables = ParameterUtils.getParameters(p2);
 				} else {
-					Assert.fail("include参数列表错误!");
+					Assert.fail("IncludeTemplateDirectiveHandler.parameter.error", new Object[]{param});
 				}
 			} else if (list.size() == 3) {
-				Assert.assertTrue(list.get(1) instanceof String, "include参数列表错误!");
-				Assert.assertTrue(list.get(2) instanceof Entry || list.get(2) instanceof Map, "include参数列表错误!");
+				Assert.assertTrue(list.get(1) instanceof String, "IncludeTemplateDirectiveHandler.parameter.error", new Object[]{param});
+				Assert.assertTrue(list.get(2) instanceof Entry || list.get(2) instanceof Map, "IncludeTemplateDirectiveHandler.parameter.error", new Object[]{param});
 				templateEncoding = (String)list.get(1);
 				variables = ParameterUtils.getParameters(list.get(2));
 			} else {
-				Assert.fail("include参数列表错误!");
+				Assert.fail("IncludeTemplateDirectiveHandler.parameter.error", new Object[]{param});
 			}
 		} else {
-			Assert.fail("include参数列表错误!");
+			Assert.fail("IncludeTemplateDirectiveHandler.parameter.error", new Object[]{param});
 		}
-		if (templateName == null || templateName.trim().length() == 0)
-			throw new RuntimeException("include模板名称不能为空!");
+		Assert.assertNotEmpty(templateName, "IncludeTemplateDirectiveHandler.template.name.required");
 		String zoneName = null;
 		int index = templateName.indexOf('#');
 		if (index >= 0) {
@@ -69,8 +68,7 @@ public class IncludeTemplateDirectiveHandler extends DirectiveHandlerSupport {
 				newContext.putAllVariables(variables);
 			if (zoneName != null && zoneName.length() > 0) {
 				List elements = ElementsVisitor.findElements(template, "zone", zoneName);
-				if (elements == null)
-					throw new RuntimeException("在模板: " + templateName + " 中未找到zone: " + zoneName);
+				Assert.assertNotEmpty(elements, "IncludeTemplateDirectiveHandler.template.zone.not.found", new Object[]{templateName, zoneName});
 				DirectiveUtils.renderAll(elements, newContext);
 			} else {
 				template.render(newContext);

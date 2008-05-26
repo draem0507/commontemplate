@@ -1,21 +1,22 @@
 package org.commontemplate.util;
 
+
 /**
  * 数字比较器
  * <p/>
  * 混合比较Byte, Short, Integer, Long, Float, Double等
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
 public class NumberComprator implements java.util.Comparator, java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	public int compare(Object o1, Object o2) {
-		Assert.assertTrue(o1 instanceof Number, "参数1必需为Number!");
-		Assert.assertTrue(o2 instanceof Number, "参数2必需为Number!");
-		
+		Assert.assertTrue(o1 instanceof Number, "NumberComprator.type.error");
+		Assert.assertTrue(o2 instanceof Number, "NumberComprator.type.error");
+
 		Number n1 = (Number)o1;
 		Number n2 = (Number)o2;
 		if (n1 instanceof Byte || n2 instanceof Byte) {

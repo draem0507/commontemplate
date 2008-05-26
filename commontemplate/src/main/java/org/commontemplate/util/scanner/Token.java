@@ -1,5 +1,6 @@
 package org.commontemplate.util.scanner;
 
+import org.commontemplate.util.Assert;
 import org.commontemplate.util.Location;
 import org.commontemplate.util.Position;
 
@@ -46,6 +47,7 @@ public final class Token {
 
 	// 计算结束位置
 	private void calculateToken() {
+		// TODO row基于0, 而col却基于1, 计算offset时, 应忽略不可见符
 		int lines = countLines(message);
 		int last = message.lastIndexOf('\n');
 		int endColumn = 0;
@@ -143,11 +145,9 @@ public final class Token {
 	 * @return 子片断
 	 */
 	public Token subToken(int start, int end) {
-		if (start >= end)
-			throw new java.lang.IllegalStateException(start + " >= " + end + ", 起始位置必需小于结束位置!");
+		Assert.assertTrue(start < end, "Token.rang.error", new Object[]{new Integer(start), new Integer(end)});
 		if (start < 0 || start > message.length() || end > message.length())
 			throw new java.lang.ArrayIndexOutOfBoundsException(start);
-
 		String sub = message.substring(start, end);
 		int row = beginPosition.getRow();
 		int col = beginPosition.getColumn();

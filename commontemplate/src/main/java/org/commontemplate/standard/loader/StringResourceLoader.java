@@ -10,7 +10,7 @@ import org.commontemplate.util.Assert;
 
 /**
  * 字符串模板源加载器
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
@@ -27,8 +27,8 @@ public class StringResourceLoader implements ResourceLoader {
 	}
 
 	public void addTemplate(String name, String source) {
-		Assert.assertNotEmpty(name, "name == null");
-		Assert.assertNotEmpty(source, "source == null");
+		Assert.assertNotEmpty(name, "StringResourceLoader.template.name.required");
+		Assert.assertNotEmpty(source, "StringResourceLoader.template.source.required");
 		this.resources.put(name, new StringResource(name, source));
 	}
 

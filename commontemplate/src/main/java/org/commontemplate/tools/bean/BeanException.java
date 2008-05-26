@@ -1,6 +1,8 @@
 package org.commontemplate.tools.bean;
 
-public class BeanException extends RuntimeException {
+import org.commontemplate.util.I18nRuntimeException;
+
+public class BeanException extends I18nRuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
@@ -8,12 +10,21 @@ public class BeanException extends RuntimeException {
 		super();
 	}
 
-	public BeanException(String message, Throwable cause) {
-		super(message, cause);
+	public BeanException(String messageKey, Throwable cause) {
+		super(messageKey, cause);
 	}
 
-	public BeanException(String message) {
-		super(message);
+	public BeanException(String messageKey, Object[] messageArgs) {
+		super(messageKey, messageArgs);
+	}
+
+	public BeanException(String messageKey, Object[] messageArgs,
+			Throwable cause) {
+		super(messageKey, messageArgs, cause);
+	}
+
+	public BeanException(String messageKey) {
+		super(messageKey);
 	}
 
 	public BeanException(Throwable cause) {

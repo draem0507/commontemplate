@@ -59,7 +59,7 @@ public class ObjectPropertyOperatorHandler extends BinaryOperatorHandlerSupport 
 		try {
 			return BeanUtils.getProperty(leftOperand, property);
 		} catch (Exception e) {
-			throw new UnhandleException("在 " + leftOperand.getClass().getName() + " 中，没有找到属性 " + property + " 的相关取值函数！", e);
+			throw new UnhandleException("ObjectPropertyOperatorHandler.property.no.such", new Object[]{leftOperand.getClass().getName(), property});
 		}
 	}
 

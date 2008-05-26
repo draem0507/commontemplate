@@ -3,15 +3,16 @@ package org.commontemplate.core;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 
+import org.commontemplate.util.I18nRuntimeException;
 import org.commontemplate.util.Location;
 
 /**
  * 模板异常
- * 
+ *
  * @author liangfei@0201@163.com
- * 
+ *
  */
-public class TemplateException extends RuntimeException {
+public class TemplateException extends I18nRuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
@@ -40,6 +41,13 @@ public class TemplateException extends RuntimeException {
 	}
 
 	public TemplateException(Resource resource, Location location,
+			String message, Object[] args, Throwable cause) {
+		super(message, args, cause);
+		this.resource = resource;
+		this.location = location;
+	}
+
+	public TemplateException(Resource resource, Location location,
 			String message, Throwable cause) {
 		super(message, cause);
 		this.resource = resource;
@@ -53,7 +61,7 @@ public class TemplateException extends RuntimeException {
 	public Location getLocation() {
 		return location;
 	}
-	
+
 	public void printStackTrace(PrintStream s) {
 		// printStackTrace(new PrintWriter(new OutputStreamWriter(s)));
 		s.println();
@@ -62,7 +70,7 @@ public class TemplateException extends RuntimeException {
 		s.println("[commontemplate] Error Message: " + getMessage());
 		super.printStackTrace(s);
 	}
-	
+
 	public void printStackTrace(PrintWriter s) {
 		s.println();
 		s.println("[commontemplate] Error Template Name: " + resource.getName());

@@ -8,6 +8,12 @@ package org.commontemplate.core;
  */
 public abstract class Comment extends Content {
 
+	public static final String TYPE = "Comment";
+
+	public String getType() {
+		return TYPE;
+	}
+
 	// 语义的默认实现
 	public void render(Context context) throws RenderingException {
 		// do nothing

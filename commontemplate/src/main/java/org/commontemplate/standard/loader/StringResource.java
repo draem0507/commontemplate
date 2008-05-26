@@ -9,7 +9,7 @@ import org.commontemplate.util.Assert;
 
 /**
  * 字符串模板源
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
@@ -18,7 +18,7 @@ public class StringResource extends Resource implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private final String source;
-	
+
 	private final String name;
 
 	private final long lastModified;
@@ -26,7 +26,7 @@ public class StringResource extends Resource implements java.io.Serializable {
 	private static final String STRING_ENCODING = "UTF-8";
 
 	public StringResource(String name, String source) {
-		Assert.assertNotNull(source, "模板不能为空!");
+		Assert.assertNotNull(source, "StringResource.template.source.required");
 		this.source = source;
 		this.name = name;
 		this.lastModified = System.currentTimeMillis();

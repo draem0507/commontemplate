@@ -28,13 +28,13 @@ abstract class VariableStorageSupport implements VariableStorage {
 
 	protected void assertVariableName(String name) throws VariableException {
 		if (name == null)
-			throw new VariableException("变量名不能为空!", null);
+			throw new VariableException(null, "VariableStorageSupport.variable.name.required");
 
 		if (! TypeUtils.isNamed(name))
-			throw new VariableException(name + " 不符合命名规范!", name);
+			throw new VariableException(name, "VariableStorageSupport.invaild.variable.name");
 
 		if (keywords.isKeyword(name))
-			throw new VariableException("变量名不能为关键字: " + name, name);
+			throw new VariableException(name, "VariableStorageSupport.variable.name.is.keyword");
 	}
 
 	protected void assertAllVariableNames(Map model) throws VariableException {
@@ -42,7 +42,7 @@ abstract class VariableStorageSupport implements VariableStorage {
 			for (Iterator iterator = model.keySet().iterator(); iterator.hasNext();) {
 				Object obj = iterator.next();
 				if (! (obj instanceof String))
-					throw new VariableException("变量名必需为String类型!", String.valueOf(obj));
+					throw new VariableException(String.valueOf(obj), "VariableStorageSupport.variable.type.error");
 				String name = (String)obj;
 				assertVariableName(name);
 			}

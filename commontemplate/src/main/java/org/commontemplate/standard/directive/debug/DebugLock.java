@@ -1,5 +1,7 @@
 package org.commontemplate.standard.directive.debug;
 
+import org.commontemplate.util.Assert;
+
 final class DebugLock {
 
 	public static final int STEPPING = 0;
@@ -21,8 +23,7 @@ final class DebugLock {
 	}
 
 	public void setStatus(int status) {
-		if (status < STEP_OVER || status > TERMINATE)
-			throw new IllegalArgumentException("error status: " + status);
+		Assert.assertTrue(status >= STEP_OVER && status <= TERMINATE, "DebugLock.invaild.status", new Object[]{new Integer(status)});
 		this.status = status;
 	}
 

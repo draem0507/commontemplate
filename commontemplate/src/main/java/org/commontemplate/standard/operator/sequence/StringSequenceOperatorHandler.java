@@ -43,7 +43,7 @@ public class StringSequenceOperatorHandler extends BinaryOperatorHandlerSupport 
 				return sequence.getSequence(begin, end);
 			}
 		}
-		throw new UnhandleException("没有找到序列:" + begin + " -- " + end);
+		throw new UnhandleException("ObjectPropertyOperatorHandler.sequence.no.such", new Object[]{begin, end});
 	}
 
 }

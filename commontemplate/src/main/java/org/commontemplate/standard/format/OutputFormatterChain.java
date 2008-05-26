@@ -30,7 +30,7 @@ public class OutputFormatterChain implements OutputFormatter, Serializable {
 			try {
 				this.typeFormatters.put(ClassUtils.forCanonicalName((String)entry.getKey()), entry.getValue());
 			} catch (ClassNotFoundException e) {
-				throw new ConfigurationException(entry.getKey() + "为非法的类名！", e);
+				throw new ConfigurationException("OutputFormatterChain.invaild.class.name", new Object[]{entry.getKey()}, e);
 			}
 		}
 	}

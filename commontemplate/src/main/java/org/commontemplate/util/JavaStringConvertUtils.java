@@ -26,8 +26,11 @@ public final class JavaStringConvertUtils {
 				if (aChar == 'u') {
 					// Read the xxxx
 					int value = 0;
-					for (int i = 0; i < 4; i++) {
+					boolean isRight = true;
+					StringBuffer uniBuffer = new StringBuffer(4);
+					for (int i = 0; i < 4 && isRight; i++) {
 						aChar = theString.charAt(x++);
+						uniBuffer.append(aChar);
 						switch (aChar) {
 						case '0':
 						case '1':
@@ -58,11 +61,15 @@ public final class JavaStringConvertUtils {
 							value = (value << 4) + 10 + aChar - 'A';
 							break;
 						default:
-							throw new IllegalArgumentException(
-									"Malformed \\uxxxx encoding.");
+							isRight = false;
 						}
 					}
-					outBuffer.append((char) value);
+					if (isRight) {
+						outBuffer.append((char) value);
+					} else {
+						outBuffer.append("\\u");
+						outBuffer.append(uniBuffer);
+					}
 				} else {
 					if (aChar == 't')
 						aChar = '\t';

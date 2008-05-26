@@ -32,9 +32,9 @@ public class DFAScanner implements Scanner {
 	 * @param accepters 接收策略，类型：Map<Integer, Accepter>，key必需是负整数
 	 */
 	public DFAScanner(TypeResolver typeResolver, StateMap stateMap, Map accepters) {
-		Assert.assertNotNull(typeResolver, "typeResolver == null!");
-		Assert.assertNotNull(stateMap, "stateMap == null!");
-		Assert.assertNotNull(accepters, "accepters == null!");
+		Assert.assertNotNull(typeResolver, "DFAScanner.type.resolver.required");
+		Assert.assertNotNull(stateMap, "DFAScanner.state.map.required");
+		Assert.assertNotNull(accepters, "DFAScanner.accepters.required");
 
 		this.typeResolver = typeResolver;
 		this.stateMap = stateMap;
@@ -66,12 +66,12 @@ public class DFAScanner implements Scanner {
 			if (state < 0) { // 负数表示接收状态
 				Accepter accepter = (Accepter)accepters.get(new Integer(state));
 				if (accepter == null)
-					throw new ScanningException(new Token(buffer.toString(), last, state).getEndPosition(),
-							state, ch, "状态图有误！未找到相应接收策略用来处理：" + state);
+					throw new ScanningException(state,
+							ch, new Token(buffer.toString(), last, state).getEndPosition(), "DFAScanner.state.error");
 				int acceptLength = accepter.accept(buffer.toString());
 				if (acceptLength < 0 || acceptLength > buffer.length())
-					throw new ScanningException(new Token(buffer.toString(), last, state).getEndPosition(),
-							state, ch, "接收策略返回接收长度必须在0到缓存长度之间！");
+					throw new ScanningException(state,
+							ch, new Token(buffer.toString(), last, state).getEndPosition(), "DFAScanner.accepter.error");
 				if (acceptLength != 0) {
 					Token token = new Token(buffer.substring(0, acceptLength), last, state);
 					last = token.getEndPosition(); // 记录当前接收token的结束位置，作为下一token的起始位置

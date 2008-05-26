@@ -11,15 +11,16 @@ import java.sql.Timestamp;
 import javax.sql.DataSource;
 
 import org.commontemplate.core.Resource;
+import org.commontemplate.util.I18nExceptionFactory;
 
 /**
  * 数据库模板加载器
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
 public class DataSourceResourceLoader extends AbstractResourceLoader {
-	
+
 	private DataSource dataSource;
 
     private String templateTable = "common_template";
@@ -55,12 +56,12 @@ public class DataSourceResourceLoader extends AbstractResourceLoader {
 			Resource t = query(path, name, encoding);
 			if (t != null)
 				return t;
-			throw new IOException("template \"" + name + "\" not found!");
+			throw I18nExceptionFactory.createFileNotFoundException("DataSourceResourceLoader.template.not.found", new Object[]{name});
 		} catch (SQLException e) {
 			throw new IOException(e.getMessage());
 		}
 	}
-	
+
 	private Resource query(String path, String name, String encoding) throws SQLException {
 		Connection conn = null;
 		ResultSet rs = null;

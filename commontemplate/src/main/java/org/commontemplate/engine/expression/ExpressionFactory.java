@@ -72,7 +72,7 @@ final class ExpressionFactory {
 				return new VariableImpl(name, token.getLocation());
 
 			if (! functionAvailable)
-				throw new ParsingException(token.getLocation(), "禁止调用函数! 函数名:" + name + " (配置项functionAvailable=false)");
+				throw new ParsingException(token.getLocation(), "ExpressionFactory.function.forbidden", new Object[]{name});
 		}
 
 		// 一元操作符
@@ -81,7 +81,7 @@ final class ExpressionFactory {
 					operatorHandlerProvider.getUnaryOperatorPriority(name),
 					operatorHandlerProvider.getUnaryOperatorHandler(name));
 
-		throw new ParsingException(token.getLocation(), name + " 为非法的一元运算符或名称！");
+		throw new ParsingException(token.getLocation(), "ExpressionFactory.invaild.unary.operator.name", new Object[]{name});
 	}
 
 	Expression getBinaryExpression(Token token) throws ParsingException {
@@ -96,7 +96,7 @@ final class ExpressionFactory {
 					operatorHandlerProvider.getBinaryOperatorPriority(name),
 					operatorHandlerProvider.getBinaryOperatorHandler(name));
 
-		throw new ParsingException(token.getLocation(), name + " 为非法的二元运算符！");
+		throw new ParsingException(token.getLocation(), "ExpressionFactory.invaild.binary.operator.name", new Object[]{name});
 	}
 
 }

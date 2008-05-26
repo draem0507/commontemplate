@@ -32,7 +32,7 @@ public class ForeachDirectiveHandler extends BlockDirectiveHandlerSupport {
 	private String statusName = "for";
 
 	public void setStatusName(String statusName) {
-		Assert.assertNotEmpty(statusName, "状态名称不能为空！");
+		Assert.assertNotEmpty(statusName, "ForeachDirectiveHandler.status.name.required");
 		this.statusName = statusName;
 	}
 
@@ -54,7 +54,8 @@ public class ForeachDirectiveHandler extends BlockDirectiveHandlerSupport {
 		} else if (param instanceof Integer) {
 			return simpleForeach(context, ((Integer)param).intValue(), elements);
 		} else {
-			throw new RuntimeException("for指令参数错误!");
+			Assert.fail("ForeachDirectiveHandler.parameter.error");
+			return false;
 		}
 	}
 

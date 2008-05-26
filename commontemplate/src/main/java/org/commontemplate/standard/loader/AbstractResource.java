@@ -6,14 +6,16 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 
 import org.commontemplate.core.Resource;
+import org.commontemplate.util.Assert;
 
 public abstract class AbstractResource extends Resource implements java.io.Serializable {
-	
+
 	private final String name;
 
 	private final String encoding;
 
 	public AbstractResource(String name, String encoding) {
+		Assert.assertNotNull(name, "AbstractResource.resource.name.required");
 		this.name = name;
 		this.encoding = encoding;
 	}

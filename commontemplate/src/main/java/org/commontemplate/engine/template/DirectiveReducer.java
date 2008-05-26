@@ -11,19 +11,19 @@ import org.commontemplate.util.Stack;
 
 /**
  * 指令树归约器
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
 final class DirectiveReducer {
-	
+
 	DirectiveReducer() {
-		
+
 	}
 
 	/**
 	 * 将指令列表归约成树
-	 * 
+	 *
 	 * @param directives 指令列表
 	 * @return 指令树的根
 	 */
@@ -44,7 +44,7 @@ final class DirectiveReducer {
 				directiveStack.push(new BlockDirectiveEntry((BlockDirective) directive));
 		}
 		Element root = ((BlockDirectiveEntry) directiveStack.pop()).popDirective();
-		Assert.assertTrue(directiveStack.isEmpty(), "有指令未结束!"); // 后验条件
+		Assert.assertTrue(directiveStack.isEmpty(), "DirectiveReducer.block.directive.without.end"); // 后验条件
 		return (RootBlockDirectiveImpl)root;
 	}
 

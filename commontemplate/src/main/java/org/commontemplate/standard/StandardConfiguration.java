@@ -409,7 +409,7 @@ public class StandardConfiguration extends ConfigurationSettings {
 	public void setResourceComparator(
 			ResourceComparator resourceComparator) {
 		if (resourceComparator == null)
-			throw new ConfigurationException("不能设置空的resourceComparator！");
+			throw new ConfigurationException("StandardConfiguration.resource.comparator.required");
 		this.resourceComparator = resourceComparator;
 	}
 
@@ -475,7 +475,7 @@ public class StandardConfiguration extends ConfigurationSettings {
 	 * @param syntax 指令语法
 	 */
 	public void setSyntax(Syntax syntax) {
-		Assert.assertNotNull(syntax, "不允许设置空语法!");
+		Assert.assertNotNull(syntax, "StandardConfiguration.syntax.required");
 		this.syntax = syntax;
 	}
 
@@ -536,11 +536,11 @@ public class StandardConfiguration extends ConfigurationSettings {
 	 */
 	public void addDirectiveHandler(String name, BlockDirectiveHandler handler) {
 		if (handler == null)
-			throw new ConfigurationException("指令处理类不能为空!");
+			throw new ConfigurationException("StandardConfiguration.directive.handler.required");
 		if (name == null)
 			name = "";
 		if (!"".equals(name) && !TypeUtils.isNamed(name))
-			throw new ConfigurationException("不合法的指令名称:" + name);
+			throw new ConfigurationException("StandardConfiguration.invalid.directive.handler.name", new Object[]{name});
 
 		directiveHandlers.put(name.trim(), handler);
 	}
@@ -554,11 +554,11 @@ public class StandardConfiguration extends ConfigurationSettings {
 	 */
 	public void addDirectiveHandler(String name, DirectiveHandler handler) {
 		if (handler == null)
-			throw new ConfigurationException("指令处理类不能为空!");
+			throw new ConfigurationException("StandardConfiguration.directive.handler.required");
 		if (name == null)
 			name = "";
 		if (!"".equals(name) && !TypeUtils.isNamed(name))
-			throw new ConfigurationException("不合法的指令名称:" + name);
+			throw new ConfigurationException("StandardConfiguration.invalid.directive.handler.name", new Object[]{name});
 
 		directiveHandlers.put(name.trim(), handler);
 	}
@@ -772,7 +772,7 @@ public class StandardConfiguration extends ConfigurationSettings {
 	 * @param eventListener 待添加的事件监听器
 	 */
 	public void addEventListener(EventListener eventListener) {
-		Assert.assertNotNull(eventListener, "不能添加空的EventListener");
+		Assert.assertNotNull(eventListener, "StandardConfiguration.event.listener.required");
 		eventListeners.add(eventListener);
 	}
 
@@ -801,7 +801,7 @@ public class StandardConfiguration extends ConfigurationSettings {
 	 * @param eventListener 待添加的异步执行事件监听器
 	 */
 	public void addAsynchronousEventListener(EventListener eventListener) {
-		Assert.assertNotNull(eventListener, "不能添加空的异步EventListener");
+		Assert.assertNotNull(eventListener, "StandardConfiguration.event.listener.required");
 		asynchronousEventListeners.add(eventListener);
 	}
 

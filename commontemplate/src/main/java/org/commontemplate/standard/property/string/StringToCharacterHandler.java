@@ -1,6 +1,7 @@
 package org.commontemplate.standard.property.string;
 
 import org.commontemplate.standard.property.PropertyHandlerSupport;
+import org.commontemplate.util.I18nExceptionFactory;
 
 public class StringToCharacterHandler extends PropertyHandlerSupport {
 
@@ -12,7 +13,7 @@ public class StringToCharacterHandler extends PropertyHandlerSupport {
 			return new Character('\0');
 		if (s.length() == 1)
 			return new Character(s.charAt(0));
-		throw new java.lang.IllegalArgumentException(s + "toCharacter failure: length != 1");
+		throw I18nExceptionFactory.createIllegalArgumentException("StringToCharacterHandler.length.error", new Object[]{s});
 	}
 
 }

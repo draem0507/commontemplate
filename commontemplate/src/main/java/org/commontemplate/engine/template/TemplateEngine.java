@@ -4,15 +4,15 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
 
-import org.commontemplate.config.TemplateConfiguration;
 import org.commontemplate.config.ResourceFilter;
+import org.commontemplate.config.TemplateConfiguration;
 import org.commontemplate.core.BlockDirective;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.ExpressionParser;
 import org.commontemplate.core.ParsingException;
+import org.commontemplate.core.Resource;
 import org.commontemplate.core.Template;
 import org.commontemplate.core.TemplateParser;
-import org.commontemplate.core.Resource;
 import org.commontemplate.engine.expression.ExpressionEngine;
 import org.commontemplate.util.Assert;
 import org.commontemplate.util.Location;
@@ -37,7 +37,7 @@ public final class TemplateEngine implements TemplateParser {
 	private final ResourceFilter resourceFilter;
 
 	public TemplateEngine(TemplateConfiguration config) {
-		Assert.assertNotNull(config, "配置信息不能为空!");
+		Assert.assertNotNull(config, "TemplateEngine.config.required");
 		expressionParser = new ExpressionEngine(config);
 		directiveTokenizer = new DirectiveTokenizer(config.getSyntax());
 		directiveTranslator = new DirectiveTranslator(new DirectiveFactory(
@@ -64,24 +64,30 @@ public final class TemplateEngine implements TemplateParser {
 		try {
 			return expressionParser.parseExpression(text);
 		} catch (ParsingException e) {
-			throw new ParsingException(new AnonymousResource(text), e.getLocation(), e);
+			e.setResource(new AnonymousResource(text));
+			throw e;
 		}
 	}
 
 	public final Template parseTemplate(Resource resource)
 			throws ParsingException, IOException {
-		Reader reader = resource.getReader();
-		if (resourceFilter != null)
-			reader = resourceFilter.filter(reader);
 		try {
-			return new TemplateImpl(resource, parseDirective(reader));
+			return new TemplateImpl(getReader(resource), resource, parseDirective(getReader(resource)));
 		} catch (ParsingException e) {
-			throw new ParsingException(resource, e.getLocation(), e);
+			e.setResource(resource);
+			throw e;
 		}
 	}
 
+	private final Reader getReader(Resource resource) throws IOException {
+		Reader reader = resource.getReader();
+		if (resourceFilter != null)
+			reader = resourceFilter.filter(reader);
+		return reader;
+	}
+
 	public final Template parseTemplate(String template) throws ParsingException {
-		Assert.assertNotNull(template, "不能解析空模板!");
+		Assert.assertNotNull(template, "TemplateEngine.template.name.required");
 		Resource resource = new AnonymousResource(template);
 		try {
 			return parseTemplate(resource);

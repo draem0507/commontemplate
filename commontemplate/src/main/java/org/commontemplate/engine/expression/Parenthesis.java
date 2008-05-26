@@ -11,7 +11,7 @@ import org.commontemplate.util.Location;
 /**
  * 括号, 加强优先级.
  * (单例)
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
@@ -20,9 +20,9 @@ final class Parenthesis extends Operator {
 	private static final long serialVersionUID = 1L;
 
 	static final Parenthesis LEFT_PARENTHESIS = new Parenthesis("(");
-	
+
 	static final Parenthesis RIGHT_PARENTHESIS = new Parenthesis(")");
-	
+
 	private final String name;
 
 	private Parenthesis(String name) {
@@ -30,11 +30,11 @@ final class Parenthesis extends Operator {
 	}
 
 	public Object evaluate(VariableResolver context) throws EvaluationException {
-		throw new UnsupportedOperationException("括号只作为优先级标识, 不应出现在结果树中, 不能执行运算!");
+		throw new UnsupportedOperationException("Parenthesis.unsupported.error");
 	}
 
 	public void accept(Visitor visitor) {
-		throw new UnsupportedOperationException("括号只作为优先级标识, 不应出现在结果树中, 也就不能被访问到!");
+		throw new UnsupportedOperationException("Parenthesis.unsupported.error");
 	}
 
 	public List getOperands() {

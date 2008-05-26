@@ -8,6 +8,12 @@ package org.commontemplate.core;
  */
 public abstract class Directive extends Element {
 
+	public static final String TYPE = "Directive";
+
+	public String getType() {
+		return TYPE;
+	}
+
 	/**
 	 * 得到该指令表达式
 	 *

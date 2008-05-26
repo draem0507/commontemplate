@@ -9,6 +9,7 @@ import org.commontemplate.core.Operator;
 import org.commontemplate.core.UnaryOperator;
 import org.commontemplate.core.Variable;
 import org.commontemplate.util.Assert;
+import org.commontemplate.util.I18nExceptionFactory;
 import org.commontemplate.util.LinkedStack;
 import org.commontemplate.util.NumberArithmetic;
 import org.commontemplate.util.Stack;
@@ -142,7 +143,7 @@ final class ExpressionReducer {
 
 				// 如果不是2元操作符，则不处理
 				if(prevOperator.getClass() != BinaryOperatorImpl.class) {
-					
+
 					// 判断是不是一元操作符
 					if(prevOperator.getClass() == UnaryOperatorImpl.class) {
 						UnaryOperatorImpl preUnaryOperator = (UnaryOperatorImpl) prevOperator;
@@ -150,10 +151,10 @@ final class ExpressionReducer {
 						expression = new ConstantImpl(preUnaryOperator.evaluate(null), null);
 						// 重新设置 Expressions
 						i = resetExpressions(i, 1, expressions, expression);
-						
+
 						continue;
 					}
-					
+
 					continue;
 				}
 				BinaryOperatorImpl preBinaryOperator = ((BinaryOperatorImpl) prevOperator);
@@ -222,7 +223,7 @@ final class ExpressionReducer {
 							preBinaryOperator.setOperands(prevExpression, expression);
 							expression = new ConstantImpl(preBinaryOperator.evaluate(null), null);
 						}
-						
+
 						// 重新设置 Expressions
 						i = resetExpressions(i, 2, expressions, expression);
 					}
@@ -232,7 +233,7 @@ final class ExpressionReducer {
 
 		return expressions;
 	}
-	
+
 	/**
 	 * 重新设置表达式列表。
 	 * @param currentIndex
@@ -247,7 +248,6 @@ final class ExpressionReducer {
 	 * 新的表达式列表的索引号
 	 */
 	private int resetExpressions(int currentIndex, int removeIndexCount, List expressions, Expression expression) {
-		
 		for(int i = 1; i <= removeIndexCount; i++) {
 			expressions.remove(currentIndex - i);
 		}
@@ -349,7 +349,7 @@ final class ExpressionReducer {
 		 */
 		Operator popOperator() {
 			if (operatorStack.isEmpty())
-				throw new RuntimeException("括号不配对! 结束括号\")\"的个数大于开始括号\"(\"的个数!");
+				throw I18nExceptionFactory.createIllegalStateException("ExpressionReducer.miss.parenthesis");
 
 			Operator operator = (Operator) operatorStack.pop();
 			// 从参数栈弹出所需参数组装操作表达式
@@ -424,7 +424,7 @@ final class ExpressionReducer {
 			while (!operatorStack.isEmpty())
 				popOperator(); // 弹出栈中所有操作符
 			Expression result = (Expression) parameterStack.pop();
-			Assert.assertTrue(parameterStack.isEmpty(), "参数的个数与操作符的个数不匹配!"); // 后验条件
+			Assert.assertTrue(parameterStack.isEmpty(), "ExpressionReducer.operator.miss.parameter"); // 后验条件
 			return result;
 		}
 

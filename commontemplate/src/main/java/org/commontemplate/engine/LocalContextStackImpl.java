@@ -36,7 +36,7 @@ final class LocalContextStackImpl implements LocalContextStack {
 		this.out = out;
 		this.context = context;
 		this.eventPublisher = eventPublisher;
-		this.rootLocalContext = new LocalContextImpl(null, "root", null, null, context, out, keywords);
+		this.rootLocalContext = new LocalContextImpl(null, ROOT_LOCAL_CONTEXT_NAME, null, null, context, out, keywords);
 		this.rootLocalContext.setGeneralOutputFormatter(defaultFormater);
 		this.localContextStack.push(this.rootLocalContext);
 	}
@@ -91,7 +91,7 @@ final class LocalContextStackImpl implements LocalContextStack {
 	}
 
 	public LocalContext findLocalContext(String name) {
-		Assert.assertNotEmpty(name, "不能查找空的变量区域名称!");
+		Assert.assertNotEmpty(name, "LocalContextStackImpl.context.name.required");
 
 		LocalContext result = null;
 		// 因LinkedStack使用LinkedList, 从头开始迭代快于倒序get()

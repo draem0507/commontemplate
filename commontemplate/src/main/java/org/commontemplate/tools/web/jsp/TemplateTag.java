@@ -7,6 +7,7 @@ import javax.servlet.jsp.tagext.BodyTagSupport;
 
 import org.commontemplate.core.Context;
 import org.commontemplate.tools.web.EngineHolder;
+import org.commontemplate.util.Assert;
 
 /**
  * 在JSP中内嵌CTL模板的Tag.
@@ -21,7 +22,7 @@ import org.commontemplate.tools.web.EngineHolder;
  *     $end
  * &lt;/ct:template&gt;
  * </pre>
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
@@ -32,11 +33,10 @@ public class TemplateTag extends BodyTagSupport {
 	public int doStartTag() throws JspException {
 		return EVAL_BODY_BUFFERED;
 	}
-	
+
 	public int doEndTag() throws JspException {
 		Context context = getContext();
-		if (context == null)
-			throw new NullPointerException("context == null");
+		Assert.assertNotNull(context, "TemplateTag.context.required");
 		try {
 			EngineHolder.getEngine().parseTemplate(bodyContent.getString()).render(context);
 		} finally {
@@ -44,7 +44,7 @@ public class TemplateTag extends BodyTagSupport {
 		}
 		return EVAL_PAGE;
 	}
-	
+
 	protected Context getContext() {
 		Context context = EngineHolder.getEngine().createContext(pageContext.getOut(), ((HttpServletRequest)pageContext.getRequest()).getLocale());
 		context.pushLocalContext("application", new JspMap(pageContext, PageContext.APPLICATION_SCOPE));
