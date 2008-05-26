@@ -117,15 +117,13 @@ public class ElseIfDirectiveHandlerTester extends TestCase {
 	 */
 	public void testDoRenderException() throws Exception{
 		
-		boolean expect = false;
-		
 		try {
 		
 			directiveHandler.doRender(context, "directiveName", null, null);
-		} catch (Exception e) {
-			expect = true;
+			fail("expect NullPointerException!");
+		} catch (java.lang.NullPointerException e) {
+
 		}
-		assertTrue(expect);
 	}
 	
 }

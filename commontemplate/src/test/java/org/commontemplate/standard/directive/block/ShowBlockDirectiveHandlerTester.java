@@ -63,16 +63,14 @@ public class ShowBlockDirectiveHandlerTester extends TestCase {
 	 * 结果<br>
 	 * 应该抛出异常。
 	 */
-	public void testDoRenderExpectException() {
-		
-		boolean expect = false;
+	public void testDoRenderExpectException() throws Exception{
+
 		try {
 			
 			showDirectiveHandler.doRender(context, null, null);
-		} catch (Exception e) {
-			expect = true;
+			fail("expect NullPointerException!");
+		} catch (java.lang.NullPointerException e) {
 		}
-		assertTrue(expect);
 	}
 	
 }
