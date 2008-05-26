@@ -16,6 +16,6 @@ public interface TypeResolver {
 	 * @param ch 输入的字节
 	 * @return 字节的类型, 对应StateMap的类型
 	 */
-	public int getType(char ch);
+	public int resolveType(char ch);
 
 }
