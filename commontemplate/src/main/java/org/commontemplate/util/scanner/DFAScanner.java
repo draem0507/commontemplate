@@ -61,7 +61,7 @@ public class DFAScanner implements Scanner {
 			}
 
 			buffer.append(ch); // 将字符加入缓存
-			int type = typeResolver.getType(ch); // 获取字符类型
+			int type = typeResolver.resolveType(ch); // 获取字符类型
 			state = stateMap.getNextState(state, type); // 从状态机图中取下一状态
 			if (state < 0) { // 负数表示接收状态
 				Accepter accepter = (Accepter)accepters.get(new Integer(state));

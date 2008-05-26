@@ -77,7 +77,7 @@ public class PatternTypeResolver implements TypeResolver {
 		}
 	}
 
-	public int getType(char ch) {
+	public int resolveType(char ch) {
 		if (types.containsKey(new Character(ch)))
 			return ((Integer)types.get(new Character(ch))).intValue();
 		for (Iterator iterator = scopes.iterator(); iterator.hasNext();) {
