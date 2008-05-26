@@ -3,9 +3,12 @@
  */
 package org.commontemplate.standard.directive.coat.attribute.jericho;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
-import au.id.jericho.lib.html.*;
+import au.id.jericho.lib.html.Attribute;
+import au.id.jericho.lib.html.Attributes;
 
 /**
  * @author GL
