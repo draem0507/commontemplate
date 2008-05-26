@@ -3,16 +3,14 @@
 		<title>${title}<title>
 	</head>
 	<body>
-	$#$breakpoint
-	$if{users != null && users.size > 0}
-	<table>
-		$for{user: users}
-		<tr>
+	$breakpoint
+	$#xxxxxxxxxxxxxxxxxxxxxxx
+	$*xxxxxxxxxxxxxxxxxxxxx*$
+	<table ct:if="users != null && users.size > 0">
+		<tr ct:for="user: users">
 			<td>${for.count}</td>
 			<td>${user.name}</td>
 		</tr>
-		$end
 	</table>
-	$end
 	</body>
 </html>

@@ -3,7 +3,7 @@ package org.commontemplate.config;
 import junit.framework.TestCase;
 
 public class SyntaxTester extends TestCase {
-	
+
 	public void testRightSyntax() {
 		Syntax syntax = new Syntax('$', '{', '}', '#', '*', '!', "end");
 		assertEquals('$', syntax.getDirectiveLeader());
@@ -22,7 +22,7 @@ public class SyntaxTester extends TestCase {
 		assertEquals('!', syntax.getNoParse());
 		assertEquals("end1", syntax.getEndDirectiveName());
 	}
-	
+
 	public void testRepeatSyntax() {
 		try {
 			new Syntax('$', '$', '}', '#', '*', '!', "end");
@@ -31,7 +31,7 @@ public class SyntaxTester extends TestCase {
 			// right
 		}
 	}
-	
+
 	public void testLetterSyntax() {
 		try {
 			new Syntax('a', '{', '}', '#', '*', '!', "end");
@@ -40,7 +40,7 @@ public class SyntaxTester extends TestCase {
 			// right
 		}
 	}
-	
+
 	public void testNumberSyntax() {
 		try {
 			new Syntax('1', '{', '}', '#', '*', '!', "end");
@@ -49,12 +49,12 @@ public class SyntaxTester extends TestCase {
 			// right
 		}
 	}
-	
+
 	public void testEmptyEndNameSyntax() {
 		try {
 			new Syntax('$', '{', '}', '#', '*', '!', "");
 			fail("传入空结束指令名时，应抛出异常!");
-		} catch (IllegalStateException e) {
+		} catch (IllegalArgumentException e) {
 			// right
 		}
 	}
