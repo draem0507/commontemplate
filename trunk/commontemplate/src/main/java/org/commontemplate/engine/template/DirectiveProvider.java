@@ -22,7 +22,7 @@ import org.commontemplate.util.scanner.Token;
  * @author liangfei0201@163.com
  *
  */
-final class DirectiveFactory {
+final class DirectiveProvider {
 
 	private final Syntax syntax;
 
@@ -34,7 +34,7 @@ final class DirectiveFactory {
 
 	private final List elementInterceptors;
 
-	DirectiveFactory(Syntax syntax, DirectiveHandlerProvider directiveHandlerProvider,
+	DirectiveProvider(Syntax syntax, DirectiveHandlerProvider directiveHandlerProvider,
 			ExpressionParser expressionParser, TextFilter textFilter, List elementInterceptors) {
 		this.syntax = syntax;
 		this.directiveHandlerProvider = directiveHandlerProvider;

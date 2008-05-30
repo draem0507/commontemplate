@@ -18,11 +18,11 @@ import org.commontemplate.util.scanner.Token;
  */
 final class ExpressionTranslator {
 
-	private final ExpressionFactory expressionFactory;
+	private final ExpressionProvider expressionFactory;
 
 	private final boolean functionAvailable;
 
-	ExpressionTranslator(ExpressionFactory expressionResolver, boolean functionAvailable) {
+	ExpressionTranslator(ExpressionProvider expressionResolver, boolean functionAvailable) {
 		this.expressionFactory = expressionResolver;
 		this.functionAvailable = functionAvailable;
 	}

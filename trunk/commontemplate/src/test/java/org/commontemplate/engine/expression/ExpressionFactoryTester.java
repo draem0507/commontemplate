@@ -3,7 +3,7 @@ package org.commontemplate.engine.expression;
 import org.commontemplate.config.Configuration;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.ParsingException;
-import org.commontemplate.engine.expression.ExpressionFactory;
+import org.commontemplate.engine.expression.ExpressionProvider;
 import org.commontemplate.tools.PropertiesConfigurationLoader;
 import org.commontemplate.util.Location;
 import org.commontemplate.util.Position;
@@ -13,11 +13,11 @@ import junit.framework.TestCase;
 
 public class ExpressionFactoryTester extends TestCase {
 
-	private ExpressionFactory expressionFactory;
+	private ExpressionProvider expressionFactory;
 
 	public void setUp() {
 		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		expressionFactory = new ExpressionFactory(config.getOperatorHandlerProvider(), config.getKeywords(), config.isFunctionAvailable());
+		expressionFactory = new ExpressionProvider(config.getOperatorHandlerProvider(), config.getKeywords(), config.isFunctionAvailable());
 	}
 
 	public void testNumberExpression() throws ParsingException {

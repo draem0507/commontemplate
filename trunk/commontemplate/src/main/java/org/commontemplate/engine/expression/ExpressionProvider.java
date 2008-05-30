@@ -16,7 +16,7 @@ import org.commontemplate.util.scanner.Token;
  * @author liangfei0201@163.com
  *
  */
-final class ExpressionFactory {
+final class ExpressionProvider {
 
 	private final OperatorHandlerProvider operatorHandlerProvider;
 
@@ -24,7 +24,7 @@ final class ExpressionFactory {
 
 	private final boolean functionAvailable;
 
-	ExpressionFactory(OperatorHandlerProvider operatorHandlerProvider, Keywords keywords, boolean functionAvailable) {
+	ExpressionProvider(OperatorHandlerProvider operatorHandlerProvider, Keywords keywords, boolean functionAvailable) {
 		this.operatorHandlerProvider = operatorHandlerProvider;
 		this.keywords = keywords;
 		this.functionAvailable = functionAvailable;

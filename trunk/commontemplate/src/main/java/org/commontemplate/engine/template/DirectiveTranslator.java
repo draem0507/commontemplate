@@ -16,9 +16,9 @@ import org.commontemplate.util.scanner.Token;
  */
 final class DirectiveTranslator {
 
-	private final DirectiveFactory directiveFactory;
+	private final DirectiveProvider directiveFactory;
 
-	DirectiveTranslator(DirectiveFactory directiveFactory) {
+	DirectiveTranslator(DirectiveProvider directiveFactory) {
 		this.directiveFactory = directiveFactory;
 	}
 

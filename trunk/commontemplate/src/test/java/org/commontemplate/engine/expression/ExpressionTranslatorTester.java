@@ -18,7 +18,7 @@ public class ExpressionTranslatorTester extends TestCase {
 
 	public void setUp() {
 		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		expressionTranslator = new ExpressionTranslator(new ExpressionFactory(config.getOperatorHandlerProvider(), config.getKeywords(), config.isFunctionAvailable()), false);
+		expressionTranslator = new ExpressionTranslator(new ExpressionProvider(config.getOperatorHandlerProvider(), config.getKeywords(), config.isFunctionAvailable()), false);
 	}
 
 	public void testExpression() throws ParsingException {
