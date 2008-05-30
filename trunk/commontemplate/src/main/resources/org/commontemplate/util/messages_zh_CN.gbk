@@ -230,3 +230,6 @@ HeaderMap.request.required=request不能为空!
 CookieMap.request.required=request不能为空!
 JspMap.page.context.required=pageContext不能为空!
 JspMap.invaild.scope=无效的Scope!
+
+StringAbbreviateFunctionHandler.parameter.invalid=String.abbreviate()参数必需为数字!
+StringAbbreviateFunctionHandler.parameter.countInvalid=String.abbreviate()不支持两个以上参数!
