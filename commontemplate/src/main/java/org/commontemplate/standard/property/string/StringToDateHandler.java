@@ -10,7 +10,7 @@ public class StringToDateHandler extends PropertyHandlerSupport {
 
 	public static final String DATE_FORMAT = "yyyy-MM-dd";
 
-	public Object getProperty(Object bean) throws Exception {
+	public Object doProperty(Object bean) throws Exception {
 		return new SimpleDateFormat(DATE_FORMAT).parse((String)bean);
 	}
 

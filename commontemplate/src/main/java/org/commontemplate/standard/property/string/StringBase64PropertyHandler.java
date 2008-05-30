@@ -7,7 +7,7 @@ public class StringBase64PropertyHandler extends PropertyHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	public Object getProperty(Object bean) throws Exception {
+	public Object doProperty(Object bean) throws Exception {
 		return BASE64.encode((String)bean);
 	}
 

@@ -50,7 +50,7 @@ public class ObjectFunctionOperatorHandler extends BinaryOperatorHandlerSupport 
 			for (Iterator iterator = functionHandlers.entrySet().iterator(); iterator.hasNext();) {
 				Entry entry = (Entry)iterator.next();
 				if (((FunctionMatcher)entry.getKey()).isMatch(leftOperand.getClass(), function.getName())) {
-					return ((FunctionHandler)entry.getValue()).handleFunction(leftOperand, function.getArguments());
+					return ((FunctionHandler)entry.getValue()).doFunction(leftOperand, function.getArguments());
 				}
 			}
 		}

@@ -11,7 +11,7 @@ public class DateCenturyHandler extends PropertyHandlerSupport {
 
 	private final Calendar calendar = Calendar.getInstance();
 
-	public Object getProperty(Object bean) throws Exception {
+	public Object doProperty(Object bean) throws Exception {
 		calendar.setTime((Date)bean);
 		int year = calendar.get(Calendar.YEAR);
 		return new Integer((year - year % 100) / 100);

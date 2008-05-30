@@ -20,7 +20,7 @@ public class NumberToChinesePropertyHandler extends PropertyHandlerSupport {
 
 	private static final String[] UNIT = {"","","","十", "百", "千", "万", "十", "百", "千", "亿", "十", "百", "千"};
 
-	public Object getProperty(Object bean) throws Exception {
+	public Object doProperty(Object bean) throws Exception {
 		BigDecimal bigdMoneyNumber = new BigDecimal(((Number) bean).doubleValue());
 
 		if (bigdMoneyNumber.intValue() == 0)

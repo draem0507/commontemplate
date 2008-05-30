@@ -2,6 +2,6 @@ package org.commontemplate.standard.property;
 
 public interface PropertyHandler {
 	
-	public Object getProperty(Object bean) throws Exception;
+	public Object doProperty(Object bean) throws Exception;
 
 }

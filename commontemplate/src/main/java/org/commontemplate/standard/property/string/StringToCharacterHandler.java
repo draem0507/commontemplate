@@ -7,7 +7,7 @@ public class StringToCharacterHandler extends PropertyHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	public Object getProperty(Object bean) throws Exception {
+	public Object doProperty(Object bean) throws Exception {
 		String s = (String)bean;
 		if (s.length() == 0)
 			return new Character('\0');

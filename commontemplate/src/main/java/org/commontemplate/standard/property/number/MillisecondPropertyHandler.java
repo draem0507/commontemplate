@@ -6,7 +6,7 @@ public class MillisecondPropertyHandler extends PropertyHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	public Object getProperty(Object bean) throws Exception {
+	public Object doProperty(Object bean) throws Exception {
 		return new DateField(DateField.MILLISECOND, ((Number)bean).intValue());
 	}
 

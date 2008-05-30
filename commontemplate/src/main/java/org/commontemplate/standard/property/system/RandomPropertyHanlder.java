@@ -4,7 +4,7 @@ import org.commontemplate.standard.property.StaticPropertyHandler;
 
 public class RandomPropertyHanlder implements StaticPropertyHandler {
 
-	public Object getProperty() throws Exception {
+	public Object doProperty() throws Exception {
 		return new Double(Math.random());
 	}
 

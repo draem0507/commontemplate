@@ -27,7 +27,7 @@ public class NumberToChineseCurrencyPropertyHandler extends
 	private static final String[] UNIT = new String[] { "分", "角", "圆", "拾", "佰",
 			"仟", "万", "拾", "佰", "仟", "亿", "拾", "佰", "仟" };
 
-	public Object getProperty(Object bean) throws Exception {
+	public Object doProperty(Object bean) throws Exception {
 
 		BigDecimal bigdMoneyNumber = new BigDecimal(((Number) bean).doubleValue());
 

@@ -36,7 +36,7 @@ public class StaticPropertyOperatorHandler extends UnaryOperatorHandlerSupport {
 		if (propertyHandlers != null) {
 			StaticPropertyHandler handler = (StaticPropertyHandler)propertyHandlers.get(property);
 			if (handler != null)
-				return handler.getProperty();
+				return handler.doProperty();
 		}
 		return null;
 	}
