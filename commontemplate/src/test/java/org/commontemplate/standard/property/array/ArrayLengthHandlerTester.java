@@ -20,7 +20,7 @@ public class ArrayLengthHandlerTester extends TestCase {
 
 	public void testGetProperty() throws Exception{
 		Object[] objs = new Object[3];
-		Integer length = (Integer)propertyHandler.getProperty(objs);
+		Integer length = (Integer)propertyHandler.doProperty(objs);
 		super.assertEquals(3, length.intValue());
 	}
 }

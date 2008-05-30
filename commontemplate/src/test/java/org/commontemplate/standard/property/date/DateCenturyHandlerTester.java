@@ -32,21 +32,21 @@ public class DateCenturyHandlerTester extends TestCase {
 		calendar.setTime(dt);
 
 		calendar.set(Calendar.YEAR, 2008);
-		assertEquals(new Integer(20), propertyHandler.getProperty(dt));
+		assertEquals(new Integer(20), propertyHandler.doProperty(dt));
 
 		calendar.set(Calendar.YEAR, 1979);
-		assertEquals(new Integer(19), propertyHandler.getProperty(calendar.getTime()));
+		assertEquals(new Integer(19), propertyHandler.doProperty(calendar.getTime()));
 
 		calendar.set(Calendar.YEAR, 2000);
-		assertEquals(new Integer(20), propertyHandler.getProperty(calendar.getTime()));
+		assertEquals(new Integer(20), propertyHandler.doProperty(calendar.getTime()));
 
 		calendar.set(Calendar.YEAR, 1900);
-		assertEquals(new Integer(19), propertyHandler.getProperty(calendar.getTime()));
+		assertEquals(new Integer(19), propertyHandler.doProperty(calendar.getTime()));
 
 		calendar.set(Calendar.YEAR, 800);
-		assertEquals(new Integer(8), propertyHandler.getProperty(calendar.getTime()));
+		assertEquals(new Integer(8), propertyHandler.doProperty(calendar.getTime()));
 
 		calendar.set(Calendar.YEAR, 60);
-		assertEquals(new Integer(0), propertyHandler.getProperty(calendar.getTime()));
+		assertEquals(new Integer(0), propertyHandler.doProperty(calendar.getTime()));
 	}
 }

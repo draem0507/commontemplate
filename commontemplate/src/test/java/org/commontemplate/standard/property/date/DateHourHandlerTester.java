@@ -31,9 +31,9 @@ public class DateHourHandlerTester extends TestCase {
 		calendar.setTime(dt);
 
 		calendar.set(Calendar.HOUR_OF_DAY, 23);
-		assertEquals(new Integer(23), propertyHandler.getProperty(calendar.getTime()));
+		assertEquals(new Integer(23), propertyHandler.doProperty(calendar.getTime()));
 
 		calendar.set(Calendar.HOUR_OF_DAY, 1);
-		assertEquals(new Integer(1), propertyHandler.getProperty(calendar.getTime()));
+		assertEquals(new Integer(1), propertyHandler.doProperty(calendar.getTime()));
 	}
 }

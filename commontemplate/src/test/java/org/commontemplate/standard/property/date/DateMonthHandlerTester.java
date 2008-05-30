@@ -33,6 +33,6 @@ public class DateMonthHandlerTester extends TestCase {
 
 		calendar.set(Calendar.MONTH, 11);
 
-		assertEquals(new Integer(11), propertyHandler.getProperty(calendar.getTime()));
+		assertEquals(new Integer(11), propertyHandler.doProperty(calendar.getTime()));
 	}
 }

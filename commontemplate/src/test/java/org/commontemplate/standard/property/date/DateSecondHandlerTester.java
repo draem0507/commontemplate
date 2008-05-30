@@ -32,7 +32,7 @@ public class DateSecondHandlerTester extends TestCase {
 
 		calendar.set(Calendar.SECOND, 59);
 
-		assertEquals(new Integer(59), propertyHandler.getProperty(calendar.getTime()));
+		assertEquals(new Integer(59), propertyHandler.doProperty(calendar.getTime()));
 
 	}
 }

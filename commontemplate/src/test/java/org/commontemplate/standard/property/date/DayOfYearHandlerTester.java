@@ -34,6 +34,6 @@ public class DayOfYearHandlerTester extends TestCase {
 		calendar.set(Calendar.MONDAY, Calendar.FEBRUARY);
 		calendar.set(Calendar.DAY_OF_MONTH, 29);
 
-		assertEquals(new Integer(60), propertyHandler.getProperty(calendar.getTime()));
+		assertEquals(new Integer(60), propertyHandler.doProperty(calendar.getTime()));
 	}
 }

@@ -32,6 +32,6 @@ public class DateYearHandlerTester extends TestCase {
 
 		calendar.set(Calendar.YEAR, 2007);
 
-		assertEquals(new Integer(2007), propertyHandler.getProperty(calendar.getTime()));
+		assertEquals(new Integer(2007), propertyHandler.doProperty(calendar.getTime()));
 	}
 }
