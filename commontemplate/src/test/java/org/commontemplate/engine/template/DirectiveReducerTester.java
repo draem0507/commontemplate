@@ -23,7 +23,7 @@ import org.commontemplate.util.scanner.ScanningException;
 public class DirectiveReducerTester extends TestCase {
 
 	private DirectiveTokenizer directiveTokenizer;
-	private DirectiveFactory directiveFactory;
+	private DirectiveProvider directiveFactory;
 	private DirectiveTranslator directiveTranslator;
 	private DirectiveReducer directiveReducer;
 
@@ -32,7 +32,7 @@ public class DirectiveReducerTester extends TestCase {
 
 		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
 		ExpressionParser expressionParser = new ExpressionEngine(config);
-		directiveFactory = new DirectiveFactory(config.getSyntax(),
+		directiveFactory = new DirectiveProvider(config.getSyntax(),
 				config.getDirectiveHandlerProvider(), expressionParser,
 				config.getTextFilter(), config.getRenderInterceptors());
 

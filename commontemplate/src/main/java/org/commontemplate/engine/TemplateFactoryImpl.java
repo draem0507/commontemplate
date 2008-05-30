@@ -1,17 +1,28 @@
 package org.commontemplate.engine;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.commontemplate.config.ReloadController;
 import org.commontemplate.config.Cache;
 import org.commontemplate.config.ResourceComparator;
+import org.commontemplate.core.BinaryOperator;
+import org.commontemplate.core.BlockDirective;
+import org.commontemplate.core.Comment;
+import org.commontemplate.core.Constant;
+import org.commontemplate.core.Directive;
 import org.commontemplate.core.Expression;
+import org.commontemplate.core.ExpressionBuilder;
 import org.commontemplate.core.ParsingException;
 import org.commontemplate.core.Template;
+import org.commontemplate.core.TemplateBudiler;
 import org.commontemplate.core.TemplateFactory;
 import org.commontemplate.core.TemplateParser;
 import org.commontemplate.core.Resource;
 import org.commontemplate.core.ResourceLoader;
+import org.commontemplate.core.Text;
+import org.commontemplate.core.UnaryOperator;
+import org.commontemplate.core.Variable;
 import org.commontemplate.util.Assert;
 import org.commontemplate.util.ResourceEntry;
 
@@ -153,6 +164,50 @@ final class TemplateFactoryImpl implements TemplateFactory {
 	public Template parseTemplate(Resource resource)
 			throws ParsingException, IOException {
 		return templateParser.parseTemplate(resource);
+	}
+
+	public BlockDirective createBlockDirective(String name,
+			Expression expression, List elements) {
+		return templateParser.createBlockDirective(name, expression, elements);
+	}
+
+	public Comment createComment(String comment) {
+		return templateParser.createComment(comment);
+	}
+
+	public Directive createDirective(String name, Expression expression) {
+		return templateParser.createDirective(name, expression);
+	}
+
+	public Text createText(String text) {
+		return templateParser.createText(text);
+	}
+
+	public ExpressionBuilder getExpressionBuilder() {
+		return templateParser.getExpressionBuilder();
+	}
+
+	public TemplateBudiler getTemplateBudiler() {
+		return templateParser.getTemplateBudiler();
+	}
+
+	public BinaryOperator createBinaryOperator(String operatorName,
+			Expression leftOprand, Expression rightOprand) {
+		return templateParser.createBinaryOperator(operatorName, leftOprand,
+				rightOprand);
+	}
+
+	public Constant createConstant(Object constantValue) {
+		return templateParser.createConstant(constantValue);
+	}
+
+	public UnaryOperator createUnaryOperator(String operatorName,
+			Expression oprand) {
+		return templateParser.createUnaryOperator(operatorName, oprand);
+	}
+
+	public Variable createVariable(String variableName) {
+		return templateParser.createVariable(variableName);
 	}
 
 }

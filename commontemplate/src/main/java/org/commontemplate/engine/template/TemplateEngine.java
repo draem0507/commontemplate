@@ -6,13 +6,23 @@ import java.util.List;
 
 import org.commontemplate.config.ResourceFilter;
 import org.commontemplate.config.TemplateConfiguration;
+import org.commontemplate.core.BinaryOperator;
 import org.commontemplate.core.BlockDirective;
+import org.commontemplate.core.Comment;
+import org.commontemplate.core.Constant;
+import org.commontemplate.core.Directive;
+import org.commontemplate.core.ElementFactory;
 import org.commontemplate.core.Expression;
+import org.commontemplate.core.ExpressionBuilder;
 import org.commontemplate.core.ExpressionParser;
 import org.commontemplate.core.ParsingException;
 import org.commontemplate.core.Resource;
 import org.commontemplate.core.Template;
+import org.commontemplate.core.TemplateBudiler;
 import org.commontemplate.core.TemplateParser;
+import org.commontemplate.core.Text;
+import org.commontemplate.core.UnaryOperator;
+import org.commontemplate.core.Variable;
 import org.commontemplate.engine.expression.ExpressionEngine;
 import org.commontemplate.util.Assert;
 import org.commontemplate.util.Location;
@@ -36,11 +46,13 @@ public final class TemplateEngine implements TemplateParser {
 
 	private final ResourceFilter resourceFilter;
 
+	private final ElementFactory elementFactory = new ElementFactoryImpl();
+
 	public TemplateEngine(TemplateConfiguration config) {
 		Assert.assertNotNull(config, "TemplateEngine.config.required");
 		expressionParser = new ExpressionEngine(config);
 		directiveTokenizer = new DirectiveTokenizer(config.getSyntax());
-		directiveTranslator = new DirectiveTranslator(new DirectiveFactory(
+		directiveTranslator = new DirectiveTranslator(new DirectiveProvider(
 				config.getSyntax(), config.getDirectiveHandlerProvider(),
 				expressionParser, config.getTextFilter(), config.getRenderInterceptors()));
 		directiveReducer = new DirectiveReducer();
@@ -94,6 +106,50 @@ public final class TemplateEngine implements TemplateParser {
 		} catch (IOException e) { // 因为是字符串模板，一般不会出现IOException
 			throw new RuntimeException(e);
 		}
+	}
+
+	public TemplateBudiler getTemplateBudiler() {
+		return new TemplateBudilerImpl();
+	}
+
+	public BinaryOperator createBinaryOperator(String operatorName,
+			Expression leftOprand, Expression rightOprand) {
+		return expressionParser.createBinaryOperator(operatorName, leftOprand,
+				rightOprand);
+	}
+
+	public Constant createConstant(Object constantValue) {
+		return expressionParser.createConstant(constantValue);
+	}
+
+	public UnaryOperator createUnaryOperator(String operatorName,
+			Expression oprand) {
+		return expressionParser.createUnaryOperator(operatorName, oprand);
+	}
+
+	public Variable createVariable(String variableName) {
+		return expressionParser.createVariable(variableName);
+	}
+
+	public ExpressionBuilder getExpressionBuilder() {
+		return expressionParser.getExpressionBuilder();
+	}
+
+	public BlockDirective createBlockDirective(String name,
+			Expression expression, List elements) {
+		return elementFactory.createBlockDirective(name, expression, elements);
+	}
+
+	public Comment createComment(String comment) {
+		return elementFactory.createComment(comment);
+	}
+
+	public Directive createDirective(String name, Expression expression) {
+		return elementFactory.createDirective(name, expression);
+	}
+
+	public Text createText(String text) {
+		return elementFactory.createText(text);
 	}
 
 }

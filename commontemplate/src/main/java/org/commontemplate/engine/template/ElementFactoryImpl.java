@@ -5,9 +5,11 @@ import java.util.List;
 import org.commontemplate.core.BlockDirective;
 import org.commontemplate.core.Comment;
 import org.commontemplate.core.Directive;
+import org.commontemplate.core.ElementFactory;
+import org.commontemplate.core.Expression;
 import org.commontemplate.core.Text;
 
-public class ElementFactory {
+class ElementFactoryImpl implements ElementFactory {
 
 	public Comment createComment(String comment) {
 		return null;
@@ -17,11 +19,11 @@ public class ElementFactory {
 		return null;
 	}
 
-	public Directive createDirective(String name, String expression) {
+	public Directive createDirective(String name, Expression expression) {
 		return null;
 	}
 
-	public BlockDirective createBlockDirective(String name, String expression, List elements) {
+	public BlockDirective createBlockDirective(String name, Expression expression, List elements) {
 		return null;
 	}
 

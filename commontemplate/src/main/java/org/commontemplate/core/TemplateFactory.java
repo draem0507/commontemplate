@@ -4,15 +4,15 @@ import java.io.IOException;
 
 /**
  * 模板工厂 <p/> (线程安全)
- * 
+ *
  * @author liangfei0201@163.com
- * 
+ *
  */
 public interface TemplateFactory extends ResourceLoader, TemplateParser {
 
 	/**
 	 * 通过名称获取模板. 使用默认编码加载
-	 * 
+	 *
 	 * @param name
 	 *            模板名称
 	 * @return 模板，(注：后验条件不返回null，不存在时抛异常)
@@ -26,7 +26,7 @@ public interface TemplateFactory extends ResourceLoader, TemplateParser {
 
 	/**
 	 * 通过名称获取模板. 并指定加载编码
-	 * 
+	 *
 	 * @param name
 	 *            模板名称
 	 * @param encoding
@@ -39,4 +39,5 @@ public interface TemplateFactory extends ResourceLoader, TemplateParser {
 	 */
 	public Template getTemplate(String name, String encoding)
 			throws IOException, ParsingException;
+
 }

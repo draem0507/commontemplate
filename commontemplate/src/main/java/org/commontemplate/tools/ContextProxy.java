@@ -3,15 +3,22 @@ package org.commontemplate.tools;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
+import org.commontemplate.core.BinaryOperator;
 import org.commontemplate.core.Block;
+import org.commontemplate.core.BlockDirective;
+import org.commontemplate.core.Comment;
+import org.commontemplate.core.Constant;
 import org.commontemplate.core.Context;
+import org.commontemplate.core.Directive;
 import org.commontemplate.core.Event;
 import org.commontemplate.core.EventListener;
 import org.commontemplate.core.Expression;
+import org.commontemplate.core.ExpressionBuilder;
 import org.commontemplate.core.GlobalContext;
 import org.commontemplate.core.LocalContext;
 import org.commontemplate.core.OutputFilter;
@@ -19,6 +26,10 @@ import org.commontemplate.core.OutputFormatter;
 import org.commontemplate.core.ParsingException;
 import org.commontemplate.core.Resource;
 import org.commontemplate.core.Template;
+import org.commontemplate.core.TemplateBudiler;
+import org.commontemplate.core.Text;
+import org.commontemplate.core.UnaryOperator;
+import org.commontemplate.core.Variable;
 import org.commontemplate.core.VariableException;
 
 /**
@@ -440,6 +451,50 @@ public abstract class ContextProxy extends Context {
 
 	public void unlockVariables() {
 		context.unlockVariables();
+	}
+
+	public BinaryOperator createBinaryOperator(String operatorName,
+			Expression leftOprand, Expression rightOprand) {
+		return context.createBinaryOperator(operatorName, leftOprand,
+				rightOprand);
+	}
+
+	public BlockDirective createBlockDirective(String name,
+			Expression expression, List elements) {
+		return context.createBlockDirective(name, expression, elements);
+	}
+
+	public Comment createComment(String comment) {
+		return context.createComment(comment);
+	}
+
+	public Constant createConstant(Object constantValue) {
+		return context.createConstant(constantValue);
+	}
+
+	public Directive createDirective(String name, Expression expression) {
+		return context.createDirective(name, expression);
+	}
+
+	public Text createText(String text) {
+		return context.createText(text);
+	}
+
+	public UnaryOperator createUnaryOperator(String operatorName,
+			Expression oprand) {
+		return context.createUnaryOperator(operatorName, oprand);
+	}
+
+	public Variable createVariable(String variableName) {
+		return context.createVariable(variableName);
+	}
+
+	public ExpressionBuilder getExpressionBuilder() {
+		return context.getExpressionBuilder();
+	}
+
+	public TemplateBudiler getTemplateBudiler() {
+		return context.getTemplateBudiler();
 	}
 
 }

@@ -3,18 +3,25 @@ package org.commontemplate.engine;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
 import org.commontemplate.config.Keywords;
 import org.commontemplate.config.TemplateNameFilter;
+import org.commontemplate.core.BinaryOperator;
 import org.commontemplate.core.Block;
+import org.commontemplate.core.BlockDirective;
+import org.commontemplate.core.Comment;
+import org.commontemplate.core.Constant;
 import org.commontemplate.core.Context;
+import org.commontemplate.core.Directive;
 import org.commontemplate.core.Event;
 import org.commontemplate.core.EventListener;
 import org.commontemplate.core.EventPublisher;
 import org.commontemplate.core.Expression;
+import org.commontemplate.core.ExpressionBuilder;
 import org.commontemplate.core.GlobalContext;
 import org.commontemplate.core.LocalContext;
 import org.commontemplate.core.LocalContextStack;
@@ -23,8 +30,12 @@ import org.commontemplate.core.OutputFormatter;
 import org.commontemplate.core.ParsingException;
 import org.commontemplate.core.Resource;
 import org.commontemplate.core.Template;
+import org.commontemplate.core.TemplateBudiler;
 import org.commontemplate.core.TemplateFactory;
 import org.commontemplate.core.TemplateStack;
+import org.commontemplate.core.Text;
+import org.commontemplate.core.UnaryOperator;
+import org.commontemplate.core.Variable;
 import org.commontemplate.core.VariableException;
 import org.commontemplate.util.Assert;
 
@@ -278,6 +289,50 @@ final class ContextImpl extends Context {
 	public Template parseTemplate(Resource resource)
 			throws ParsingException, IOException {
 		return templateFactory.parseTemplate(resource);
+	}
+
+	public BlockDirective createBlockDirective(String name,
+			Expression expression, List elements) {
+		return templateFactory.createBlockDirective(name, expression, elements);
+	}
+
+	public Comment createComment(String comment) {
+		return templateFactory.createComment(comment);
+	}
+
+	public Directive createDirective(String name, Expression expression) {
+		return templateFactory.createDirective(name, expression);
+	}
+
+	public Text createText(String text) {
+		return templateFactory.createText(text);
+	}
+
+	public ExpressionBuilder getExpressionBuilder() {
+		return templateFactory.getExpressionBuilder();
+	}
+
+	public TemplateBudiler getTemplateBudiler() {
+		return templateFactory.getTemplateBudiler();
+	}
+
+	public BinaryOperator createBinaryOperator(String operatorName,
+			Expression leftOprand, Expression rightOprand) {
+		return templateFactory.createBinaryOperator(operatorName, leftOprand,
+				rightOprand);
+	}
+
+	public Constant createConstant(Object constantValue) {
+		return templateFactory.createConstant(constantValue);
+	}
+
+	public UnaryOperator createUnaryOperator(String operatorName,
+			Expression oprand) {
+		return templateFactory.createUnaryOperator(operatorName, oprand);
+	}
+
+	public Variable createVariable(String variableName) {
+		return templateFactory.createVariable(variableName);
 	}
 
 	// 代理 栈顶的LocalContext --------------
