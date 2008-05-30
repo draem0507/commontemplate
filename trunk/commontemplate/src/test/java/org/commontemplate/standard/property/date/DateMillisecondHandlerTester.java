@@ -32,6 +32,6 @@ public class DateMillisecondHandlerTester extends TestCase {
 
 		calendar.set(Calendar.MILLISECOND, 100);
 
-		assertEquals(new Integer(100), propertyHandler.getProperty(calendar.getTime()));
+		assertEquals(new Integer(100), propertyHandler.doProperty(calendar.getTime()));
 	}
 }

@@ -13,12 +13,12 @@ public class ObjectToJsonPropertyHandlerTester extends TestCase {
 	}
 
 	public void testPrimitive() throws Exception {
-		String json = (String)propertyHandler.getProperty(new Integer(3));
+		String json = (String)propertyHandler.doProperty(new Integer(3));
 		super.assertEquals("3", json);
 	}
 
 	public void testBean() throws Exception {
-		String json = (String)propertyHandler.getProperty(new Bean("liangfei", 4, true));
+		String json = (String)propertyHandler.doProperty(new Bean("liangfei", 4, true));
 		super.assertEquals("{ok:true,name:\"liangfei\",count:4}", json);
 	}
 

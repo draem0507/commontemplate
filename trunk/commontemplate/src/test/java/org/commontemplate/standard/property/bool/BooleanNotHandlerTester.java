@@ -25,9 +25,9 @@ public class BooleanNotHandlerTester extends TestCase {
 		PropertyHandler propertyHandler = new BooleanNotHandler();
 		
 		assertEquals(Boolean.valueOf(true), 
-				(Boolean) propertyHandler.getProperty(new Boolean(false)));
+				(Boolean) propertyHandler.doProperty(new Boolean(false)));
 		
 		assertEquals(Boolean.valueOf(false), 
-				(Boolean) propertyHandler.getProperty(new Boolean(true)));
+				(Boolean) propertyHandler.doProperty(new Boolean(true)));
 	}
 }

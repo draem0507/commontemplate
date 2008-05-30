@@ -34,6 +34,6 @@ public class WeekOfMonthHandlerTester extends TestCase {
 		calendar.set(Calendar.MONTH, Calendar.MARCH);
 		calendar.set(Calendar.DAY_OF_MONTH, 14);
 
-		assertEquals(new Integer(3), propertyHandler.getProperty(calendar.getTime()));
+		assertEquals(new Integer(3), propertyHandler.doProperty(calendar.getTime()));
 	}
 }

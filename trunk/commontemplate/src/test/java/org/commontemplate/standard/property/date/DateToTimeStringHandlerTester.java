@@ -34,7 +34,7 @@ public class DateToTimeStringHandlerTester extends TestCase {
 		calendar.set(Calendar.MINUTE, 12);
 		calendar.set(Calendar.SECOND, 30);
 		
-		assertEquals("16:12:30", propertyHandler.getProperty(calendar.getTime()));
+		assertEquals("16:12:30", propertyHandler.doProperty(calendar.getTime()));
 		
 	}
 }

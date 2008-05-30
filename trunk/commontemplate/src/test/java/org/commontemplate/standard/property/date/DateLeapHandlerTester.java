@@ -32,18 +32,18 @@ public class DateLeapHandlerTester extends TestCase {
 		
 		calendar.set(Calendar.YEAR, 100);
 		assertEquals(Boolean.valueOf(false), 
-				propertyHandler.getProperty(calendar.getTime()));
+				propertyHandler.doProperty(calendar.getTime()));
 		
 		calendar.set(Calendar.YEAR, 1000);
 		assertEquals(Boolean.valueOf(false), 
-				propertyHandler.getProperty(calendar.getTime()));
+				propertyHandler.doProperty(calendar.getTime()));
 		
 		calendar.set(Calendar.YEAR, 2000);
 		assertEquals(Boolean.valueOf(true), 
-				propertyHandler.getProperty(calendar.getTime()));
+				propertyHandler.doProperty(calendar.getTime()));
 		
 		calendar.set(Calendar.YEAR, 2008);
 		assertEquals(Boolean.valueOf(true), 
-				propertyHandler.getProperty(calendar.getTime()));
+				propertyHandler.doProperty(calendar.getTime()));
 	}
 }

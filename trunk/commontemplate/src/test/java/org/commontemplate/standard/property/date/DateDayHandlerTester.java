@@ -33,7 +33,7 @@ public class DateDayHandlerTester extends TestCase {
 		for(int i = 1; i <= 12; i++) {
 
 			calendar.set(Calendar.DAY_OF_MONTH, i);
-			assertEquals(new Integer(i), propertyHandler.getProperty(calendar.getTime()));
+			assertEquals(new Integer(i), propertyHandler.doProperty(calendar.getTime()));
 		}
 
 	}

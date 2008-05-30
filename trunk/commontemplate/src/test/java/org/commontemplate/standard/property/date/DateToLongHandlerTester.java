@@ -31,6 +31,6 @@ public class DateToLongHandlerTester extends TestCase {
 		calendar.setTime(dt);
 
 		assertEquals(new Long(calendar.getTime().getTime()),
-				propertyHandler.getProperty(calendar.getTime()));
+				propertyHandler.doProperty(calendar.getTime()));
 	}
 }
