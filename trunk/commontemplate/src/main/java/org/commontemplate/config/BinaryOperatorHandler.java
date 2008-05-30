@@ -26,33 +26,6 @@ public abstract class BinaryOperatorHandler implements Serializable {
 			throws Exception;
 
 	/**
-	 * 是否符合结合律 (用于优化)
-	 *
-	 * @return 是否符合结合律
-	 */
-	public boolean isAssociative() {
-		return false;
-	}
-
-	/**
-	 * 是否符合交换律 (用于优化)
-	 *
-	 * @return 是否符合交换律
-	 */
-	public boolean isCommutative() {
-		return false;
-	}
-
-	/**
-	 * 从右至左结合操作符标识
-	 *
-	 * @return 是否从右至左结合
-	 */
-	public boolean isRightToLeft() {
-		return false;
-	}
-
-	/**
 	 * 二元操作符左操作数延迟求值 <p/> doEvaluate的leftOperand参数将会以LazyOperand的实例传入<br/>
 	 * 可以用((LazyOperand)leftOperand).evaluate()取真实值<br/>
 	 *
@@ -103,6 +76,33 @@ public abstract class BinaryOperatorHandler implements Serializable {
 	 * @return 函数是否字面化
 	 */
 	public boolean isRightOperandFunctioned() {
+		return false;
+	}
+
+	/**
+	 * 从右至左结合操作符标识
+	 *
+	 * @return 是否从右至左结合
+	 */
+	public boolean isRightToLeft() {
+		return false;
+	}
+
+	/**
+	 * 是否符合结合律 (用于优化)
+	 *
+	 * @return 是否符合结合律
+	 */
+	public boolean isAssociative() {
+		return false;
+	}
+
+	/**
+	 * 是否符合交换律 (用于优化)
+	 *
+	 * @return 是否符合交换律
+	 */
+	public boolean isCommutative() {
 		return false;
 	}
 
