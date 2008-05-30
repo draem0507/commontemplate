@@ -6,7 +6,7 @@ public class SystemPropertyHanlder implements StaticPropertyHandler {
 	
 	private static final SystemBean systemBean = new SystemBean();
 	
-	public Object getProperty() throws Exception {
+	public Object doProperty() throws Exception {
 		return systemBean;
 	}
 	

@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface FunctionHandler {
 	
-	public Object handleFunction(Object bean, List args) throws Exception;
+	public Object doFunction(Object bean, List args) throws Exception;
 
 }

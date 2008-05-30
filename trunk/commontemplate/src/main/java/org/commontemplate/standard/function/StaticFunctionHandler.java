@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface StaticFunctionHandler {
 	
-	public Object handleFunction(List args) throws Exception;
+	public Object doFunction(List args) throws Exception;
 	
 }

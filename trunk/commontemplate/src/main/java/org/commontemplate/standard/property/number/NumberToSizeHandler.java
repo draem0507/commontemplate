@@ -7,7 +7,7 @@ public class NumberToSizeHandler extends PropertyHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	public Object getProperty(Object bean) throws Exception {
+	public Object doProperty(Object bean) throws Exception {
 		float value = ((Number)bean).floatValue();
 		if (value < 0)
 			throw I18nExceptionFactory.createIllegalArgumentException("NumberToSizeHandler.size.error", new Object[]{new Float(value)});

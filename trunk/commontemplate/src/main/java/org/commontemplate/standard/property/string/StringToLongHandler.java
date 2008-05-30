@@ -6,7 +6,7 @@ public class StringToLongHandler extends PropertyHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	public Object getProperty(Object bean) throws Exception {
+	public Object doProperty(Object bean) throws Exception {
 		return new Long((String)bean);
 	}
 
