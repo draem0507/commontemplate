@@ -4,7 +4,7 @@ import org.commontemplate.core.Expression;
 import org.commontemplate.core.Template;
 import org.commontemplate.core.TemplateBudiler;
 
-class TemplateBudilerImpl implements TemplateBudiler {
+final class TemplateBudilerImpl implements TemplateBudiler {
 
 	public void addComment(String comment) {
 		// TODO Auto-generated method stub

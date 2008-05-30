@@ -7,7 +7,7 @@ import org.commontemplate.core.ExpressionFactory;
 import org.commontemplate.core.UnaryOperator;
 import org.commontemplate.core.Variable;
 
-public class ExpressionFactoryImpl implements ExpressionFactory {
+final class ExpressionFactoryImpl implements ExpressionFactory {
 
 	public BinaryOperator createBinaryOperator(String operatorName,
 			Expression leftOprand, Expression rightOprand) {

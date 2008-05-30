@@ -3,7 +3,7 @@ package org.commontemplate.engine.expression;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.ExpressionBuilder;
 
-public class ExpressionBuilderImpl implements ExpressionBuilder {
+final class ExpressionBuilderImpl implements ExpressionBuilder {
 
 	public Expression getExpression() {
 		// TODO Auto-generated method stub
