@@ -9,21 +9,26 @@ import org.commontemplate.core.ElementFactory;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.Text;
 
-class ElementFactoryImpl implements ElementFactory {
+final class ElementFactoryImpl implements ElementFactory {
 
-	public Comment createComment(String comment) {
+	public BlockDirective createBlockDirective(String name,
+			Expression expression, List elements) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public Text createText(String text) {
+	public Comment createComment(String comment) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public Directive createDirective(String name, Expression expression) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public BlockDirective createBlockDirective(String name, Expression expression, List elements) {
+	public Text createText(String text) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
