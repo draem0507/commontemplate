@@ -45,4 +45,13 @@ public interface ElementFactory {
 	 */
 	public BlockDirective createBlockDirective(String name, Expression expression, List elements);
 
+	/**
+	 * 创建模板
+	 *
+	 * @param name 模板名称
+	 * @param elements 模板元素
+	 * @return 模板
+	 */
+	public Template createTemplate(String name, List elements);
+
 }

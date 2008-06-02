@@ -1,5 +1,7 @@
 package org.commontemplate.engine.template;
 
+import java.io.IOException;
+
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.Template;
 import org.commontemplate.core.TemplateBudiler;
@@ -36,14 +38,20 @@ final class TemplateBudilerImpl implements TemplateBudiler {
 
 	}
 
-	public void beginTemplate(String templateName) {
-		// TODO Auto-generated method stub
+	private String templateName;
 
+	public void beginTemplate(String templateName) {
+		this.templateName = templateName;
 	}
 
-	public void endTemplate() {
-		// TODO Auto-generated method stub
+	private Template template;
 
+	public void endTemplate() {
+		try {
+			template = new TemplateImpl(null, null, null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
