@@ -135,6 +135,10 @@ public final class Engine implements Factory {
 		return templateFactory.getTemplateBudiler();
 	}
 
+	public Template createTemplate(String name, List elements) {
+		return templateFactory.createTemplate(name, elements);
+	}
+
 	public final Context createContext(Writer out) {
 		return contextFactory.createContext(out);
 	}

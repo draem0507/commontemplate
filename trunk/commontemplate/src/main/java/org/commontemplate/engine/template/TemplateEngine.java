@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
 
+import org.commontemplate.config.DirectiveHandlerProvider;
 import org.commontemplate.config.ResourceFilter;
 import org.commontemplate.config.TemplateConfiguration;
 import org.commontemplate.core.BinaryOperator;
@@ -46,17 +47,20 @@ public final class TemplateEngine implements TemplateParser {
 
 	private final ResourceFilter resourceFilter;
 
-	private final ElementFactory elementFactory = new ElementFactoryImpl();
+	private final ElementFactory elementFactory;
 
 	public TemplateEngine(TemplateConfiguration config) {
 		Assert.assertNotNull(config, "TemplateEngine.config.required");
+		DirectiveHandlerProvider directiveHandlerProvider = config.getDirectiveHandlerProvider();
+		List elementInterceptors = config.getRenderInterceptors();
 		expressionParser = new ExpressionEngine(config);
 		directiveTokenizer = new DirectiveTokenizer(config.getSyntax());
 		directiveTranslator = new DirectiveTranslator(new DirectiveProvider(
-				config.getSyntax(), config.getDirectiveHandlerProvider(),
-				expressionParser, config.getTextFilter(), config.getRenderInterceptors()));
+				config.getSyntax(), directiveHandlerProvider,
+				expressionParser, config.getTextFilter(), elementInterceptors));
 		directiveReducer = new DirectiveReducer();
 		resourceFilter = config.getResourceFilter();
+		elementFactory = new ElementFactoryImpl(directiveHandlerProvider, elementInterceptors);
 	}
 
 	private final BlockDirective parseDirective(Reader templateProvider) throws IOException, ParsingException {
@@ -150,6 +154,10 @@ public final class TemplateEngine implements TemplateParser {
 
 	public Text createText(String text) {
 		return elementFactory.createText(text);
+	}
+
+	public Template createTemplate(String name, List elements) {
+		return elementFactory.createTemplate(name, elements);
 	}
 
 }

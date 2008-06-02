@@ -335,6 +335,10 @@ final class ContextImpl extends Context {
 		return templateFactory.createVariable(variableName);
 	}
 
+	public Template createTemplate(String name, List elements) {
+		return templateFactory.createTemplate(name, elements);
+	}
+
 	// 代理 栈顶的LocalContext --------------
 
 	public LocalContext getSuperLocalContext() {

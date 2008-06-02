@@ -210,4 +210,8 @@ final class TemplateFactoryImpl implements TemplateFactory {
 		return templateParser.createVariable(variableName);
 	}
 
+	public Template createTemplate(String name, List elements) {
+		return templateParser.createTemplate(name, elements);
+	}
+
 }

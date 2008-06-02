@@ -497,4 +497,8 @@ public abstract class ContextProxy extends Context {
 		return context.getTemplateBudiler();
 	}
 
+	public Template createTemplate(String name, List elements) {
+		return context.createTemplate(name, elements);
+	}
+
 }

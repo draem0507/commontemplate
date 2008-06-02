@@ -233,3 +233,6 @@ JspMap.invaild.scope=无效的Scope!
 
 StringAbbreviateFunctionHandler.parameter.invalid=String.abbreviate()参数必需为数字!
 StringAbbreviateFunctionHandler.parameter.countInvalid=String.abbreviate()不支持两个以上参数!
+
+ExpressionFactoryImpl.no.such.binary.operator=未找到二元操作符:{0}
+ExpressionFactoryImpl.no.such.unary.operator=未找到一元操作符:{0}

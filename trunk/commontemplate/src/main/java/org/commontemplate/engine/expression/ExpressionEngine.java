@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.commontemplate.config.ExpressionConfiguration;
+import org.commontemplate.config.OperatorHandlerProvider;
 import org.commontemplate.core.BinaryOperator;
 import org.commontemplate.core.Constant;
 import org.commontemplate.core.Expression;
@@ -31,17 +32,19 @@ public final class ExpressionEngine implements ExpressionParser {
 
 	private final ExpressionReducer expressionReducer;
 
-	private final ExpressionFactory expressionFactory = new ExpressionFactoryImpl();
+	private final ExpressionFactory expressionFactory;
 
 	public ExpressionEngine(ExpressionConfiguration config) {
 		Assert.assertNotNull(config, "ExpressionEngine.config.required");
 		config.validate(); // 配置自验证
 
+		OperatorHandlerProvider operatorHandlerProvider = config.getOperatorHandlerProvider();
 		expressionTokenizer = new ExpressionTokenizer();
 		expressionTranslator = new ExpressionTranslator(new ExpressionProvider(
-				config.getOperatorHandlerProvider(), config.getKeywords(),
+				operatorHandlerProvider, config.getKeywords(),
 				config.isFunctionAvailable()), config.isFunctionAvailable());
 		expressionReducer = new ExpressionReducer();
+		expressionFactory = new ExpressionFactoryImpl(operatorHandlerProvider);
 	}
 
 	public final Expression parseExpression(String expressionText) throws ParsingException {

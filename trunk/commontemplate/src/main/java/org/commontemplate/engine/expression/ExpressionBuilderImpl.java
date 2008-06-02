@@ -5,9 +5,10 @@ import org.commontemplate.core.ExpressionBuilder;
 
 final class ExpressionBuilderImpl implements ExpressionBuilder {
 
+	private Expression result;
+
 	public Expression getExpression() {
-		// TODO Auto-generated method stub
-		return null;
+		return result;
 	}
 
 	public void addBinaryOperator(String operatorName) {
@@ -15,12 +16,12 @@ final class ExpressionBuilderImpl implements ExpressionBuilder {
 
 	}
 
-	public void addConstant(Object value) {
+	public void addUnaryOperator(String operatorName) {
 		// TODO Auto-generated method stub
 
 	}
 
-	public void addUnaryOperator(String operatorName) {
+	public void addConstant(Object value) {
 		// TODO Auto-generated method stub
 
 	}
