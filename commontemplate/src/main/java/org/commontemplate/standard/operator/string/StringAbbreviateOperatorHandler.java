@@ -13,7 +13,8 @@ public class StringAbbreviateOperatorHandler extends BinaryOperatorHandlerSuppor
 
 	public Object doEvaluate(Object leftOperand, Object rightOperand)
 			throws Exception {
-		String str = (String)leftOperand;
+				
+		String str = (String)leftOperand;		
 		int len = ((Number)rightOperand).intValue();
 		if (len <= 3) {
 			len = 4;
