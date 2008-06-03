@@ -2,10 +2,10 @@ package org.commontemplate.standard.function.string;
 
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.commontemplate.standard.function.FunctionHandlerSupport;
 import org.commontemplate.standard.operator.UnhandleException;
 import org.commontemplate.util.Assert;
+import org.commontemplate.util.StringUtils;
 
 public class StringAbbreviateFunctionHandler extends FunctionHandlerSupport {
 
@@ -21,7 +21,7 @@ public class StringAbbreviateFunctionHandler extends FunctionHandlerSupport {
 			if (len <= 3) {
 				len = 4;
 				// TODO 输出warning log, 提示用户， len 应该 >=4
-			}			
+			}
 			return StringUtils.abbreviate(str, len);
 		} else if (args.size() == 2) {
 			Assert.assertTrue(args.get(0) instanceof Number, "StringAbbreviateFunctionHandler.parameter.invalid");

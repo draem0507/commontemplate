@@ -5,7 +5,7 @@ import java.util.TimeZone;
 
 import org.commontemplate.core.OutputFormatter;
 import org.commontemplate.core.UnformattedException;
-import org.commontemplate.util.StringUtils;
+import org.commontemplate.util.StringCastUtils;
 
 /**
  * 数组格式化器
@@ -25,7 +25,7 @@ public class ArrayFormatter implements OutputFormatter, java.io.Serializable {
 
 	public String format(Object model, Locale locale, TimeZone timeZone)
 			throws UnformattedException {
-		return StringUtils.arrayToString(model, arraySeparator);
+		return StringCastUtils.arrayToString(model, arraySeparator);
 	}
 
 }
