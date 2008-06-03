@@ -1,7 +1,7 @@
 package org.commontemplate.standard.operator.string;
 
-import org.apache.commons.lang.StringUtils;
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
+import org.commontemplate.util.StringUtils;
 
 public class StringAbbreviateOperatorHandler extends BinaryOperatorHandlerSupport {
 
@@ -19,7 +19,7 @@ public class StringAbbreviateOperatorHandler extends BinaryOperatorHandlerSuppor
 		if (len <= 3) {
 			len = 4;
 			// TODO 输出warning log, 提示用户， len 应该 >=4
-		}	
+		}
 		return StringUtils.abbreviate(str, len);
 	}
 

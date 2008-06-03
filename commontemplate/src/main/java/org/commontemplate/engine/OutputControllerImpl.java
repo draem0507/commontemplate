@@ -14,7 +14,7 @@ import org.commontemplate.core.OutputController;
 import org.commontemplate.core.OutputFilter;
 import org.commontemplate.core.OutputFormatter;
 import org.commontemplate.core.UnformattedException;
-import org.commontemplate.util.StringUtils;
+import org.commontemplate.util.StringCastUtils;
 
 /**
  * 输出控制器实现
@@ -149,7 +149,7 @@ final class OutputControllerImpl implements OutputController {
 
 		public String format(Object model, Locale locale, TimeZone timeZone)
 				throws UnformattedException {
-			return model == null ? null : StringUtils.objectToString(model);
+			return model == null ? null : StringCastUtils.objectToString(model);
 		}
 		
 	};
