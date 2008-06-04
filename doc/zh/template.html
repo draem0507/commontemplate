@@ -451,7 +451,7 @@
 								<b>(3) 不解释块:</b> 将其包含的内容作为纯文本输出 <font color="green">(注: 可包含不合法的指令内容，自身不可嵌套，但可嵌套行注释和块注释等)</font><br/>
 								$!<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;no parse, eg: $if ... <br/>
-								!\$<br/>
+								!$<br/>
 								<b>(4) 通用结束指令:</b><br/>
 								$end<br/>
 								<br/>
@@ -463,7 +463,7 @@
 								国际化信息输出:<br/>
 								$msg{"home.title"}<br/>
 								$msg{"home.title", arg0, arg1}<br/>
-								<b>块指令：</b><font color="green">(注：用于注释版语法外套)</font><br/>
+								输出块指令：<font color="green">(注：与上面两个指令功能相同，用于注释版语法外套)</font><br/>
 								表达式结果输出：忽略指令内部块内容<br/>
 								$out{user.name} James $end<br/>
 								&lt;!--$out{user.name}--&gt; James &lt;!--$end--&gt;<br/>
@@ -501,16 +501,20 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;have no users...<br/>
 								$end<br/>
 								特殊迭代举例：<br/>
-								a. 简单次数迭代：$for{10}，迭代10次，不产生迭代项数据，但可以用状态信息${for.index}等<br/>
+								a. 简单次数迭代：$for{10}，迭代10次，不产生迭代项数据，但可以用状态信息${for.index}等，当次数小于或等于零时不迭代<br/>
 								b. 数字序列迭代：$for{num : 1..9}，$for{num : -2..5}，$for{num : 5..-2}<br/>
-								c. 子集合迭代：$for{item : list[0..2]}，迭代list中索引号从0到2的元素(包含边界)<br/>
+								c. 子集合迭代：$for{item : list[0..2]}，迭代list中索引号从0到2的元素(包含边界)，索引号越界时忽略<br/>
 								d. 过滤迭代：$for{item : list[=> item != 'xxx']}，过滤掉"xxx"项，参见"=&gt;"操作符使用<br/>
 								e. 排序迭代：$for{item : list orderby ("+property1", "-property2")}，$for{book : books orderby "+price"} 将books内的元素按price属性值升序排列后再迭代 (参见orderby操作符使用)<br/>
 								f. 非空选择迭代：$for{item : list1 || list2 || list3}，从左至右选第一个非空的集合进行迭代<br/>
 								g. 并行迭代：$for{item1 : list1, item2 : list2}, $for{i : (1..10), user : users}，多个集合并行取next值，以最长的集合作为结束，短集合自动补null值<br/>
 								<b>(4) 变量指令:</b><br/>
 								声明局部变量: <font color="green">(注：通常用于隐藏上级同名变量)</font><br/>
-								$var{name = "james"}<br/>
+								$local{name = "james"}<br/>
+								当前模板根级上下文变量定义<br/>
+								$root{name = "james"}<br/>
+								全局上下文变量定义<br/>
+								$global{name = "james"}<br/>
 								给最近区域的变量赋值: <font color="green">(注：若直到根区域均未找到相应变量，则在当前区域创建局部变量)</font><br/>
 								$set{name = "james"} <font color="green">(注：不能修改即有数据模型状态，也就是不能使用像：$set{user.name = "james"}的层级设值方式，以遵守模板无副作用契约，避免引入业务逻辑)</font><br/>
 								如果变量为空或未定义，则给其赋初始值: <br/>
@@ -531,6 +535,12 @@
 								显示文件的内容: <font color="green">(注：不解析其内容)</font><br/>
 								$display{"article.txt"}<br/>
 								$display{"article.txt", "UTF-8"}<br/>
+								抓取远程文件的内容: <font color="green">(注：只在Web环境下有效)</font><br/>
+								$snatch{"list.jsp"} 相对于当前页面路径目录<br/>
+								$snatch{"../list.jsp"} 相对于当前页面路径的上级目录<br/>
+								$snatch{"/list.jsp"} 相对于Web根目录<br/>
+								$snatch{"/list.jsp", 'UTF-8'} 指定编码<br/>
+								$snatch{"http://www.163.com"} 远程页面<br/>
 								<b>(6) 块指令:</b><br/>
 								Block块定义: <font color="green">(注: Block块在定义的位置不显示, 需通过show指令显示, 可以多次调用显示)</font><br/>
 								$block{"myblock"}<br/>
