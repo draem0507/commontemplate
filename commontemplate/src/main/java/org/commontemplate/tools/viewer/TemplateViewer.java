@@ -39,7 +39,7 @@ public class TemplateViewer {
 			generator.generate(data, sourcePath, targetPath);
 			Runtime.getRuntime().exec("cmd /c start "+ targetPath);
 		} catch (Exception e) {
-			e.printStackTrace(); // TODO 用Swing弹出错误信息
+			TemplateViewerUI.showException(e);
 		}
 	}
 
