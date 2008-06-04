@@ -50,10 +50,37 @@ public class TemplateViewer {
 				data = new HashMap();
 
 			generator.generate(data, sourcePath, targetPath);
-			Runtime.getRuntime().exec("cmd /c start "+ targetPath);
+			Runtime.getRuntime().exec("cmd /c start " + convertPath(targetPath));
 		} catch (Exception e) {
 			TemplateViewerUI.showException(e);
 		}
+	}
+
+	// 解决: 路径中包含空格时出错
+	// 如: 将C:\Documents and Settings\test.html 改成: C:\"Documents and Settings"\test.html
+	private String convertPath(String path) {
+		if (path != null) {
+			String[] tokens = path.split("[\\/|\\\\]");
+			if (tokens != null && tokens.length > 0) {
+				StringBuffer buf = new StringBuffer();
+				for (int i = 0, n = tokens.length; i < n; i ++) {
+					String token = tokens[i];
+					if (token != null && token.length() > 0) {
+						if (i != 0)
+							buf.append(File.separatorChar);
+						if (token.indexOf(' ') > -1) {
+							buf.append('\"');
+							buf.append(token);
+							buf.append('\"');
+						} else {
+							buf.append(token);
+						}
+					}
+				}
+				return buf.toString();
+			}
+		}
+		return path;
 	}
 
 	// 读取.xml文件, 组装成Map数据, 文件不存在时返回null
