@@ -13,8 +13,20 @@ import javax.swing.JTextArea;
 
 public class TemplateViewerUI {
 
+	/*static {
+		try {
+			// 设置swing样式为当前系统风格
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}*/
+
 	public static void showSettings() {
-		JFrame frame = new JFrame("Help");
+		JFrame frame = new JFrame("CommonTemplateViewer - Help");
+		/*frame.setIconImage(Toolkit.getDefaultToolkit().createImage(
+				TemplateViewerUI.class.getClassLoader().getResource(
+						"org/commontemplate/standard/directive/debugdebug/gif")));*/
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(800, 600);
 		Dimension scr = Toolkit.getDefaultToolkit().getScreenSize();
@@ -43,7 +55,10 @@ public class TemplateViewerUI {
 		e.printStackTrace(new PrintWriter(out));
 		String msg = out.getBuffer().toString();
 
-		JFrame frame = new JFrame("Exception");
+		JFrame frame = new JFrame("CommonTemplateViewer - Exception");
+		/*frame.setIconImage(Toolkit.getDefaultToolkit().createImage(
+				TemplateViewerUI.class.getClassLoader().getResource(
+						"org/commontemplate/standard/directive/debugdebug/gif")));*/
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(800, 600);
 		Dimension scr = Toolkit.getDefaultToolkit().getScreenSize();
