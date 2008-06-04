@@ -39,25 +39,25 @@ public class TemplateViewer {
 			generator.generate(data, sourcePath, targetPath);
 			Runtime.getRuntime().exec("cmd /c start "+ targetPath);
 		} catch (Exception e) {
-			e.printStackTrace();
+			e.printStackTrace(); // TODO 用Swing弹出错误信息
 		}
 	}
 
-	// 读取.json文件, 组装成Map数据
+	// 读取.json文件, 组装成Map数据, 文件不存在时返回null
 	private Map readJson(String dataPath) {
 		if (! new File(dataPath).exists())
 			return null;
 		return new HashMap(); // TODO 未读取
 	}
 
-	// 读取.xml文件, 组装成Map数据
+	// 读取.xml文件, 组装成Map数据, 文件不存在时返回null
 	private Map readXml(String dataPath) {
 		if (! new File(dataPath).exists())
 			return null;
 		return new HashMap(); // TODO 未读取
 	}
 
-	// 读取.properties文件, 组装成Map数据
+	// 读取.properties文件, 组装成Map数据, 文件不存在时返回null
 	private Map readProperties(String dataPath) {
 		if (! new File(dataPath).exists())
 			return null;
