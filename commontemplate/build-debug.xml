@@ -4,6 +4,7 @@
 
 	<property environment="env" />
 	<property name="app.name" value="Common Template Engine" />
+	<property name="mainclass" value="org.commontemplate.tools.viewer.Main" />
 	<property name="src" location="src/main/java" />
 	<property name="res" location="src/main/resources" />
 	<property name="build" location="build" />
@@ -44,6 +45,7 @@
 				<attribute name="Implementation-Title" value="${app.name}" />
 				<attribute name="Implementation-Version" value="${versionNumber}" />
 				<attribute name="Implementation-Vendor" value="${vendor}" />
+				<attribute name="Main-Class" value="${mainclass}" />
 			</manifest>
 		</jar>
 		<delete dir="${build}" failonerror="false" />
