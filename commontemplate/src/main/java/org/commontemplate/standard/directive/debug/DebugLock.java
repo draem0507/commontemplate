@@ -2,7 +2,7 @@ package org.commontemplate.standard.directive.debug;
 
 import org.commontemplate.util.Assert;
 
-final class DebugLock {
+public final class DebugLock {
 
 	public static final int STEPPING = 0;
 

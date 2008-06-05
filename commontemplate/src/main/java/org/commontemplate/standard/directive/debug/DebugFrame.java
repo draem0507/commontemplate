@@ -50,7 +50,7 @@ import org.commontemplate.util.TypeUtils;
 import org.commontemplate.util.swing.ImageFactory;
 import org.commontemplate.util.swing.TextPopupMenu;
 
-class DebugFrame implements ActionListener, WindowListener {
+public class DebugFrame implements ActionListener, WindowListener {
 
 	// ---- 实例管理 ----
 
@@ -118,7 +118,7 @@ class DebugFrame implements ActionListener, WindowListener {
 		frame = new JFrame(I18nMessages.getMessage("DebugFrame.title")
 				+ " (http://www.commontemplate.org)");
 		frame.setIconImage(getImage("debug.gif"));
-		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(800, 600);
 		Dimension scr = Toolkit.getDefaultToolkit().getScreenSize();
 		Dimension fra = frame.getSize();
