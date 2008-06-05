@@ -139,4 +139,21 @@ public final class TypeUtils {
 		}
 		return true;
 	}
+
+	public static Object parseValue(String str) {
+		if (str == null)
+			return null;
+		if ("true".equals(str))
+			return Boolean.TRUE;
+		if ("false".equals(str))
+			return Boolean.FALSE;
+		if (str.length() > 1 && str.charAt(0) == '\"' && str.charAt(str.length() - 1) == '\"')
+			return str.substring(1, str.length() - 1);
+		if (str.length() > 1 && str.charAt(0) == '\'' && str.charAt(str.length() - 1) == '\'')
+			return str.substring(1, str.length() - 1);
+		if (TypeUtils.isSignNumber(str))
+			return TypeUtils.parseSignNumber(str);
+		return str;
+	}
+
 }

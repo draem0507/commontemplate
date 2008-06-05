@@ -1,24 +1,25 @@
 package org.commontemplate.tools.viewer;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.TreeMap;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.commontemplate.util.TypeUtils;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import org.commontemplate.util.UrlCleaner;
 
 public class TemplateViewer {
 
-	private TemplateGenerator generator = new TemplateGenerator();
+	private final TemplateGenerator generator = new TemplateGenerator();
+
+	private final Map dataProviders = new TreeMap();
+
+	public TemplateViewer() {
+		super();
+		dataProviders.put("json", new JsonDataProvider());
+		dataProviders.put("properties", new PropertiesDataProvider());
+		dataProviders.put("xml", new XmlDataProvider());
+	}
 
 	public void view(String sourcePath) {
 		try {
@@ -29,131 +30,36 @@ public class TemplateViewer {
 				return ;
 
 			// 去除文件后缀
-			String sourceName;
+			String sourcePrefix;
 			int i = sourcePath.lastIndexOf('.');
 			if (i > -1) {
-				sourceName = sourcePath.substring(0, i);
+				sourcePrefix = sourcePath.substring(0, i + 1);
 			} else {
-				sourceName = sourcePath;
+				sourcePrefix = sourcePath + ".";
 			}
 
 			// 生成并打开html文件
-			String targetPath = sourceName + ".html";
+			String targetPath = sourcePrefix + "html";
 
-			// 读取数据
-			Map data = readXml(sourceName + ".xml");
-			if (data == null)
-				readJson(sourceName + ".json");
-			if (data == null)
-				readProperties(sourceName + ".properties");
-			if (data == null)
-				data = new HashMap();
+			Map data = getData(sourcePrefix);
 
 			generator.generate(data, sourcePath, targetPath);
-			Runtime.getRuntime().exec("cmd /c start " + convertPath(targetPath));
+			Runtime.getRuntime().exec("cmd /c start " + UrlCleaner.cleanWindowsPath(targetPath));
 		} catch (Exception e) {
 			TemplateViewerUI.showException(e);
 		}
 	}
 
-	// 解决: 路径中包含空格时出错
-	// 如: 将C:\Documents and Settings\test.html 改成: C:\"Documents and Settings"\test.html
-	private String convertPath(String path) {
-		if (path != null) {
-			String[] tokens = path.split("[\\/|\\\\]");
-			if (tokens != null && tokens.length > 0) {
-				StringBuffer buf = new StringBuffer();
-				for (int i = 0, n = tokens.length; i < n; i ++) {
-					String token = tokens[i];
-					if (token != null && token.length() > 0) {
-						if (i != 0)
-							buf.append(File.separatorChar);
-						if (token.indexOf(' ') > -1) {
-							buf.append('\"');
-							buf.append(token);
-							buf.append('\"');
-						} else {
-							buf.append(token);
-						}
-					}
-				}
-				return buf.toString();
-			}
+	private Map getData(String sourcePrefix) throws Exception {
+		for (Iterator iterator = dataProviders.entrySet().iterator(); iterator.hasNext();) {
+			Map.Entry entry = (Map.Entry)iterator.next();
+			String suffix = (String)entry.getKey();
+			DataProvider dataProvider = (DataProvider)entry.getValue();
+			Map data = dataProvider.getData(sourcePrefix + suffix);
+			if (data != null)
+				return data;
 		}
-		return path;
-	}
-
-	// 读取.xml文件, 组装成Map数据, 文件不存在时返回null
-	private Map readXml(String dataPath) throws Exception {
-		if (! new File(dataPath).exists())
-			return null;
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		factory.setIgnoringComments(true);
-		factory.setIgnoringElementContentWhitespace(true);
-		DocumentBuilder builder = factory.newDocumentBuilder();
-		Document document = builder.parse(new FileInputStream(new File(dataPath)));
-		Element root = document.getDocumentElement();
-		return (Map)buildXmlNode(root);
-	}
-
-	private Object buildXmlNode(Node node) {
-		Map map = new HashMap();
-		List list = new ArrayList();
-		Object value = null;
-		if (node.hasChildNodes()) {
-			NodeList children = node.getChildNodes();
-			if (children != null && children.getLength() > 0) {
-				for (int i = 0; i < children.getLength(); i ++) {
-					Node child = children.item(i);
-					if (child.getNodeType() == Node.ELEMENT_NODE) {
-						String name = child.getNodeName();
-						Object next = buildXmlNode(child);
-						if ("_".equals(name))
-							list.add(next);
-						else
-							map.put(name, next);
-					} else if (child.getNodeType() == Node.TEXT_NODE) {
-						value = parseValue(child.getNodeValue());
-					}
-				}
-			}
-		}
-		if (list.size() > 0)
-			return list;
-		else if (map.size() > 0)
-			return map;
-		else
-			return value;
-	}
-
-	// 读取.json文件, 组装成Map数据, 文件不存在时返回null
-	private Map readJson(String dataPath) throws Exception {
-		if (! new File(dataPath).exists())
-			return null;
-		return new HashMap(); // TODO 未读取
-	}
-
-	// 读取.properties文件, 组装成Map数据, 文件不存在时返回null
-	private Map readProperties(String dataPath) throws Exception {
-		if (! new File(dataPath).exists())
-			return null;
-		return new HashMap(); // TODO 未读取
-	}
-
-	private Object parseValue(String str) {
-		if (str == null)
-			return null;
-		if ("true".equals(str))
-			return Boolean.TRUE;
-		if ("false".equals(str))
-			return Boolean.FALSE;
-		if (str.length() > 1 && str.charAt(0) == '\"' && str.charAt(str.length() - 1) == '\"')
-			return str.substring(1, str.length() - 1);
-		if (str.length() > 1 && str.charAt(0) == '\'' && str.charAt(str.length() - 1) == '\'')
-			return str.substring(1, str.length() - 1);
-		if (TypeUtils.isSignNumber(str))
-			return TypeUtils.parseSignNumber(str);
-		return str;
+		return new HashMap();
 	}
 
 }

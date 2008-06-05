@@ -1,5 +1,6 @@
 package org.commontemplate.util;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -99,6 +100,34 @@ public class UrlCleaner {
 			}
 		}
 		return -1;
+	}
+
+
+	// 解决: 路径中包含空格时出错
+	// 如: 将C:\Documents and Settings\test.html 改成: C:\"Documents and Settings"\test.html
+	public static String cleanWindowsPath(String path) {
+		if (path != null) {
+			String[] tokens = path.split("[\\/|\\\\]");
+			if (tokens != null && tokens.length > 0) {
+				StringBuffer buf = new StringBuffer();
+				for (int i = 0, n = tokens.length; i < n; i ++) {
+					String token = tokens[i];
+					if (token != null && token.length() > 0) {
+						if (i != 0)
+							buf.append(File.separatorChar);
+						if (token.indexOf(' ') > -1) {
+							buf.append('\"');
+							buf.append(token);
+							buf.append('\"');
+						} else {
+							buf.append(token);
+						}
+					}
+				}
+				return buf.toString();
+			}
+		}
+		return path;
 	}
 
 }
