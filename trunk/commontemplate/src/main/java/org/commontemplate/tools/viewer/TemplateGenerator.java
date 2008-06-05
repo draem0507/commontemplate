@@ -18,7 +18,7 @@ public class TemplateGenerator {
 	private final Engine engine;
 
 	public TemplateGenerator() {
-		ConfigurationSettings config = PropertiesConfigurationLoader.loadStandardConfiguration();
+		ConfigurationSettings config = PropertiesConfigurationLoader.loadConfiguration(TemplateGenerator.class.getPackage().getName().replace('.', '/') + "/commontemplate.properties");
 		this.engine = new Engine(config);
 	}
 
