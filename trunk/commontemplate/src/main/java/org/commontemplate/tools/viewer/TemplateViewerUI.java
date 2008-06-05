@@ -10,23 +10,24 @@ import java.io.StringWriter;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.UIManager;
+
+import org.commontemplate.util.swing.ImageFactory;
 
 public class TemplateViewerUI {
 
-	/*static {
+	static {
 		try {
 			// 设置swing样式为当前系统风格
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}*/
+	}
 
 	public static void showSettings() {
 		JFrame frame = new JFrame("CommonTemplateViewer - Help");
-		/*frame.setIconImage(Toolkit.getDefaultToolkit().createImage(
-				TemplateViewerUI.class.getClassLoader().getResource(
-						"org/commontemplate/standard/directive/debugdebug/gif")));*/
+		frame.setIconImage(ImageFactory.getImage("org/commontemplate/standard/directive/debug/debug.gif"));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(800, 600);
 		Dimension scr = Toolkit.getDefaultToolkit().getScreenSize();
@@ -56,9 +57,7 @@ public class TemplateViewerUI {
 		String msg = out.getBuffer().toString();
 
 		JFrame frame = new JFrame("CommonTemplateViewer - Exception");
-		/*frame.setIconImage(Toolkit.getDefaultToolkit().createImage(
-				TemplateViewerUI.class.getClassLoader().getResource(
-						"org/commontemplate/standard/directive/debugdebug/gif")));*/
+		frame.setIconImage(ImageFactory.getImage("org/commontemplate/standard/directive/debug/debug.gif"));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(800, 600);
 		Dimension scr = Toolkit.getDefaultToolkit().getScreenSize();
