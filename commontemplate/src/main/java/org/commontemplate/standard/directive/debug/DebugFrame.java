@@ -3,6 +3,7 @@ package org.commontemplate.standard.directive.debug;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
@@ -17,7 +18,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
-import javax.swing.ImageIcon;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -46,6 +47,7 @@ import org.commontemplate.core.Template;
 import org.commontemplate.util.BeanUtils;
 import org.commontemplate.util.I18nMessages;
 import org.commontemplate.util.TypeUtils;
+import org.commontemplate.util.swing.ImageFactory;
 import org.commontemplate.util.swing.TextPopupMenu;
 
 class DebugFrame implements ActionListener, WindowListener {
@@ -79,6 +81,16 @@ class DebugFrame implements ActionListener, WindowListener {
 		}
 	}
 
+	private static final String ICON_PATH = DebugFrame.class.getPackage().getName().replace('.', '/') + "/";
+
+	private Image getImage(String icon) {
+		return ImageFactory.getImage(ICON_PATH + icon);
+	}
+
+	private Icon getIcon(String icon) {
+		return ImageFactory.getIcon(ICON_PATH + icon);
+	}
+
 	private final JFrame frame;
 
 	private JButton stepInto, stepOver, stepReturn, resume, terminate;
@@ -105,9 +117,7 @@ class DebugFrame implements ActionListener, WindowListener {
 	private DebugFrame() {
 		frame = new JFrame(I18nMessages.getMessage("DebugFrame.title")
 				+ " (http://www.commontemplate.org)");
-		frame.setIconImage(Toolkit.getDefaultToolkit().createImage(
-				DebugFrame.class.getClassLoader().getResource(
-						ICON_PATH + "debug.gif")));
+		frame.setIconImage(getImage("debug.gif"));
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.setSize(800, 600);
 		Dimension scr = Toolkit.getDefaultToolkit().getScreenSize();
@@ -127,20 +137,11 @@ class DebugFrame implements ActionListener, WindowListener {
 		frame.getContentPane().add(horizontalPane, BorderLayout.CENTER);
 	}
 
-	private static final String ICON_PATH = DebugFrame.class.getPackage()
-			.getName().replace('.', '/')
-			+ "/";
-
-	private ImageIcon getImageIcon(String icon) {
-		return new ImageIcon(DebugFrame.class.getClassLoader().getResource(
-				ICON_PATH + icon));
-	}
-
 	private JComponent createToolBar() {
 		JToolBar buttonPane = new JToolBar();
 		buttonPane.setMargin(new Insets(0, 10, 0, 0));
 
-		stepInto = new JButton(getImageIcon("stepinto.gif"));
+		stepInto = new JButton(getIcon("stepinto.gif"));
 		stepInto.setToolTipText(I18nMessages
 				.getMessage("DebugFrame.step.into.button")
 				+ " (ALT+F5)");
@@ -148,7 +149,7 @@ class DebugFrame implements ActionListener, WindowListener {
 		stepInto.addActionListener(this);
 		buttonPane.add(stepInto);
 
-		stepOver = new JButton(getImageIcon("stepover.gif"));
+		stepOver = new JButton(getIcon("stepover.gif"));
 		stepOver.setToolTipText(I18nMessages
 				.getMessage("DebugFrame.step.over.button")
 				+ " (ALT+F6)");
@@ -156,7 +157,7 @@ class DebugFrame implements ActionListener, WindowListener {
 		stepOver.addActionListener(this);
 		buttonPane.add(stepOver);
 
-		stepReturn = new JButton(getImageIcon("stepreturn.gif"));
+		stepReturn = new JButton(getIcon("stepreturn.gif"));
 		stepReturn.setToolTipText(I18nMessages
 				.getMessage("DebugFrame.step.return.button")
 				+ " (ALT+F7)");
@@ -164,7 +165,7 @@ class DebugFrame implements ActionListener, WindowListener {
 		stepReturn.addActionListener(this);
 		buttonPane.add(stepReturn);
 
-		resume = new JButton(getImageIcon("resume.gif"));
+		resume = new JButton(getIcon("resume.gif"));
 		resume.setToolTipText(I18nMessages
 				.getMessage("DebugFrame.resume.button")
 				+ " (ALT+F8)");
@@ -172,7 +173,7 @@ class DebugFrame implements ActionListener, WindowListener {
 		resume.addActionListener(this);
 		buttonPane.add(resume);
 
-		terminate = new JButton(getImageIcon("terminate.gif"));
+		terminate = new JButton(getIcon("terminate.gif"));
 		terminate.setToolTipText(I18nMessages
 				.getMessage("DebugFrame.terminate.button")
 				+ " (ALT+F9)");
@@ -186,27 +187,27 @@ class DebugFrame implements ActionListener, WindowListener {
 	private JComponent createTemplatePane() {
 		stepIntoItem = new JMenuItem(I18nMessages
 				.getMessage("DebugFrame.step.into.button")
-				+ " (ALT+F5)", getImageIcon("stepinto.gif"));
+				+ " (ALT+F5)", getIcon("stepinto.gif"));
 		stepIntoItem.addActionListener(this);
 
 		stepOverItem = new JMenuItem(I18nMessages
 				.getMessage("DebugFrame.step.over.button")
-				+ " (ALT+F6)", getImageIcon("stepover.gif"));
+				+ " (ALT+F6)", getIcon("stepover.gif"));
 		stepOverItem.addActionListener(this);
 
 		stepReturnItem = new JMenuItem(I18nMessages
 				.getMessage("DebugFrame.step.return.button")
-				+ " (ALT+F7)", getImageIcon("stepreturn.gif"));
+				+ " (ALT+F7)", getIcon("stepreturn.gif"));
 		stepReturnItem.addActionListener(this);
 
 		resumeItem = new JMenuItem(I18nMessages
 				.getMessage("DebugFrame.resume.button")
-				+ " (ALT+F8)", getImageIcon("resume.gif"));
+				+ " (ALT+F8)", getIcon("resume.gif"));
 		resumeItem.addActionListener(this);
 
 		terminateItem = new JMenuItem(I18nMessages
 				.getMessage("DebugFrame.terminate.button")
-				+ " (ALT+F9)", getImageIcon("terminate.gif"));
+				+ " (ALT+F9)", getIcon("terminate.gif"));
 		terminateItem.addActionListener(this);
 
 		final JMenuItem copyItem = new JMenuItem(I18nMessages

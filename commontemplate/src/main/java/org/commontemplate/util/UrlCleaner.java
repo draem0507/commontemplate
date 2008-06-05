@@ -102,8 +102,6 @@ public class UrlCleaner {
 		return -1;
 	}
 
-
-	// 解决: 路径中包含空格时出错
 	// 如: 将C:\Documents and Settings\test.html 改成: C:\"Documents and Settings"\test.html
 	public static String cleanWindowsPath(String path) {
 		if (path != null) {
