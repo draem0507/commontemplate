@@ -59,16 +59,12 @@ final class ElementRenditionImpl implements Rendition {
 	 * 执行渲染过程或调用上一拦截器
 	 */
 	public void doRender() {
-		try {
-			if (index < elementInterceptors.size()) {
-				RenderInterceptor elementInterceptor= (RenderInterceptor)elementInterceptors.get(index);
-				if (elementInterceptor != null) {
-					elementInterceptor.intercept(new ElementRenditionImpl(element, context, elementInterceptors, index + 1));
-					return;
-				}
+		if (index < elementInterceptors.size()) {
+			RenderInterceptor elementInterceptor= (RenderInterceptor)elementInterceptors.get(index);
+			if (elementInterceptor != null) {
+				elementInterceptor.intercept(new ElementRenditionImpl(element, context, elementInterceptors, index + 1));
+				return;
 			}
-		} catch (Throwable e) { // 不影响正常运行
-			//e.printStackTrace();
 		}
 		element.render(context);
 	}
