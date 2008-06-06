@@ -1,4 +1,4 @@
-DebugLock.invaild.status=错误的调试锁状态:{0}
+DebugFrame.invaild.status=错误的调试锁状态:{0}
 DebugFrame.title=CommonTemplate模板调试器
 DebugFrame.step.into.button=单步运行
 DebugFrame.step.over.button=单步块运行
