@@ -3,6 +3,8 @@ package org.commontemplate.standard.directive.debug;
 import org.commontemplate.config.RenderInterceptor;
 import org.commontemplate.config.Rendition;
 import org.commontemplate.core.BlockDirective;
+import org.commontemplate.core.Context;
+import org.commontemplate.core.Element;
 
 public class DebugInterceptor implements RenderInterceptor, java.io.Serializable {
 
@@ -13,48 +15,49 @@ public class DebugInterceptor implements RenderInterceptor, java.io.Serializable
 	public static final String STEP_OVER_KEY = "____STEP_OVER____";
 
 	public void intercept(Rendition rendition) {
-		try {
-			if (rendition.getContext().isDebug()
-				&& rendition.getContext().getRootLocalContext().getBooleanStatus(STEP_STATUS)
-				&& rendition.getContext().getProperty(STEP_OVER_KEY) != Boolean.TRUE) {
-				try {
-					rendition.getContext().getOut().flush();
-				} catch (Throwable e) { // 不影响正常运行
-					//e.printStackTrace();
-				}
-				final DebugLock lock = new DebugLock();
-				DebugFrame.showDebugFrame(rendition.getContext(), rendition.getElement(), lock);
-				synchronized (lock) {
+		Context context = rendition.getContext();
+		if (context.isDebug()
+			&& context.getRootLocalContext().getBooleanStatus(STEP_STATUS)
+			&& context.getProperty(STEP_OVER_KEY) != Boolean.TRUE) {
+			try {
+				context.getOut().flush();
+			} catch (Exception e) {
+				//e.printStackTrace();
+			}
+			DebugFrame lock = DebugFrame.getDebugFrame(context);
+			Element element= rendition.getElement();
+			lock.initDebugFrame(element);
+			synchronized (lock) {
+				while (lock.getStatus() == DebugFrame.STEPPING) { // 守护
 					try {
-						while (lock.getStatus() == DebugLock.STEPPING) // 守护
-							lock.wait(30000); // 中断当前线程, 进入调试界面
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+						lock.wait(); // 中断当前线程, 进入调试界面
+					} catch (Exception e) {
+						// e.printStackTrace();
 					}
 				}
-				if (lock.getStatus() == DebugLock.STEP_OVER) {
-					if (rendition.getElement() instanceof BlockDirective) {
-						rendition.getContext().pushLocalContext();
+				if (lock.getStatus() == DebugFrame.STEP_OVER) {
+					if (element instanceof BlockDirective) {
+						context.pushLocalContext();
 						try {
-							rendition.getContext().putProperty(STEP_OVER_KEY, Boolean.TRUE);
+							context.putProperty(STEP_OVER_KEY, Boolean.TRUE);
 							rendition.doRender();
+							return;
 						} finally {
-							rendition.getContext().popLocalContext();
+							context.popLocalContext();
 						}
-						return;
 					}
-				} else if (lock.getStatus() == DebugLock.STEP_RETURN) {
-					rendition.getContext().putProperty(STEP_OVER_KEY, Boolean.TRUE);
-				} else if (lock.getStatus() == DebugLock.RESUME) {
-					rendition.getContext().getRootLocalContext().setBooleanStatus(STEP_STATUS, false);
-				} else if (lock.getStatus() == DebugLock.TERMINATE) {
+				} else if (lock.getStatus() == DebugFrame.STEP_RETURN) {
+					context.putProperty(STEP_OVER_KEY, Boolean.TRUE);
+				} else if (lock.getStatus() == DebugFrame.RESUME) {
+					context.getRootLocalContext().setBooleanStatus(STEP_STATUS, false);
+				} else if (lock.getStatus() == DebugFrame.TERMINATE) {
 					throw new StopException();
 				}
+				rendition.doRender();
 			}
-		} catch (Throwable e) { // 不影响正常运行
-			//e.printStackTrace();
+		} else {
+			rendition.doRender();
 		}
-		rendition.doRender();
 	}
 
 }

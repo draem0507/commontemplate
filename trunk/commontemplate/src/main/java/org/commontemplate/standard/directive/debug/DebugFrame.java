@@ -15,6 +15,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -44,6 +45,7 @@ import org.commontemplate.core.BlockDirective;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.Element;
 import org.commontemplate.core.Template;
+import org.commontemplate.util.Assert;
 import org.commontemplate.util.BeanUtils;
 import org.commontemplate.util.I18nMessages;
 import org.commontemplate.util.TypeUtils;
@@ -54,18 +56,14 @@ public class DebugFrame implements ActionListener, WindowListener {
 
 	// ---- 实例管理 ----
 
-	public static void showDebugFrame(final Context context,
-			final Element element, final DebugLock lock) {
-		DebugFrame.getDebugFrame().initDebugFrame(context, element, lock);
-	}
+	private static Map frames = new HashMap();
 
-	private static ThreadLocal local = new ThreadLocal();
-
-	private static DebugFrame getDebugFrame() {
-		DebugFrame debugFrame = (DebugFrame) local.get();
+	public static synchronized DebugFrame getDebugFrame(Context context) {
+		Assert.assertNotNull(context);
+		DebugFrame debugFrame = (DebugFrame) frames.get(context);
 		if (debugFrame == null) {
-			debugFrame = new DebugFrame();
-			local.set(debugFrame);
+			debugFrame = new DebugFrame(context);
+			frames.put(context, debugFrame);
 		}
 		return debugFrame;
 	}
@@ -114,7 +112,10 @@ public class DebugFrame implements ActionListener, WindowListener {
 
 	private JPopupMenu templateViewMenu;
 
-	private DebugFrame() {
+	private final Context context;
+
+	private DebugFrame(Context context) {
+		this.context = context;
 		frame = new JFrame(I18nMessages.getMessage("DebugFrame.title")
 				+ " (http://www.commontemplate.org)");
 		frame.setIconImage(getImage("debug.gif"));
@@ -263,7 +264,7 @@ public class DebugFrame implements ActionListener, WindowListener {
 				if (me.getModifiers() == MouseEvent.META_MASK) {
 					int x = me.getX();
 					int y = me.getY();
-					boolean enableDebug = (lock != null);
+					boolean enableDebug = isDebugging();
 					stepIntoItem.setEnabled(enableDebug);
 					stepOverItem.setEnabled(enableDebug);
 					stepReturnItem.setEnabled(enableDebug);
@@ -447,11 +448,11 @@ public class DebugFrame implements ActionListener, WindowListener {
 
 	// ---- 动态结构 ----
 
-	private DebugLock lock;
-
-	private void initDebugFrame(final Context context, final Element element,
-			final DebugLock lock) {
-		this.lock = lock;
+	public void initDebugFrame(final Element element) {
+		Assert.assertNotNull(context);
+		Assert.assertNotNull(element);
+		releaseLock(DebugFrame.RESUME);
+		initStatus();
 		initTemplatePane(context.getCurrentTemplate(), element);
 		initContextPane(context);
 		openFrame();
@@ -495,9 +496,10 @@ public class DebugFrame implements ActionListener, WindowListener {
 	}
 
 	private String escapeHtml(String html) {
+		html = html.replaceAll("&", "&amp;");
 		html = html.replaceAll("<", "&lt;");
 		html = html.replaceAll(">", "&gt;");
-		html = html.replaceAll("\n", "<br>");
+		html = html.replaceAll("\n", "&nbsp;<br>");
 		html = html.replaceAll(" ", "&nbsp;");
 		html = html.replaceAll("\t", "&nbsp;&nbsp;&nbsp;&nbsp;");
 		return "<html>" + html + "</html>";
@@ -576,15 +578,15 @@ public class DebugFrame implements ActionListener, WindowListener {
 		}
 		int status;
 		if (button == stepInto || button == stepIntoItem) {
-			status = DebugLock.STEP_INTO;
+			status = DebugFrame.STEP_INTO;
 		} else if (button == stepOver || button == stepOverItem) {
-			status = DebugLock.STEP_OVER;
+			status = DebugFrame.STEP_OVER;
 		} else if (button == stepReturn || button == stepReturnItem) {
-			status = DebugLock.STEP_RETURN;
+			status = DebugFrame.STEP_RETURN;
 		} else if (button == resume || button == resumeItem) {
-			status = DebugLock.RESUME;
+			status = DebugFrame.RESUME;
 		} else {
-			status = DebugLock.TERMINATE;
+			status = DebugFrame.TERMINATE;
 		}
 		releaseLock(status);
 	}
@@ -608,7 +610,7 @@ public class DebugFrame implements ActionListener, WindowListener {
 	}
 
 	public void windowClosing(WindowEvent e) {
-		if (lock != null) {
+		if (isDebugging()) {
 			String title = I18nMessages.getMessage("DebugFrame.close.title");
 			String message = I18nMessages
 					.getMessage("DebugFrame.close.message");
@@ -621,7 +623,7 @@ public class DebugFrame implements ActionListener, WindowListener {
 					null, buttons, buttons[0]);
 			if (i == 0 || i == 1) {
 				closeFrame();
-				releaseLock(i == 0 ? DebugLock.RESUME : DebugLock.TERMINATE);
+				releaseLock(i == 0 ? DebugFrame.RESUME : DebugFrame.TERMINATE);
 			}
 		} else {
 			closeFrame();
@@ -656,19 +658,51 @@ public class DebugFrame implements ActionListener, WindowListener {
 	}
 
 	private void closeFrame() {
+		frames.remove(context);
 		disableToolbar();
 		frame.dispose();
-		local.set(null);
 	}
 
-	private void releaseLock(int status) {
-		if (lock != null) {
-			synchronized (lock) {
-				lock.setStatus(status);
-				lock.notifyAll();
+	private synchronized void releaseLock(int status) {
+		if (isDebugging()) {
+			try {
+				setStatus(status);
+				notifyAll();
+			} catch (Exception e) {
+				// e.printStackTrace();
 			}
-			lock = null;
 		}
+	}
+
+	public static final int STEPPING = 0;
+
+	public static final int STEP_OVER = 1;
+
+	public static final int STEP_INTO = 2;
+
+	public static final int STEP_RETURN = 3;
+
+	public static final int RESUME = 4;
+
+	public static final int TERMINATE = 5;
+
+	private int status = STEPPING;
+
+	public boolean isDebugging() {
+		return status == STEPPING;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void initStatus() {
+		this.status = STEPPING;
+	}
+
+	public void setStatus(int status) {
+		Assert.assertTrue(status >= STEP_OVER && status <= TERMINATE, "DebugFrame.invaild.status", new Object[]{new Integer(status)});
+		this.status = status;
 	}
 
 }
