@@ -6,7 +6,7 @@ package org.commontemplate.config;
  * @author liangfei0201@163.com
  *
  */
-public interface RenderInterceptor {
+public interface RenderingInterceptor {
 
 	/**
 	 * 拦截模块元素渲染过程

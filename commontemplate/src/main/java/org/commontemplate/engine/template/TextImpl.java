@@ -36,7 +36,7 @@ final class TextImpl extends Text {
 
 	public void render(Context context) throws RenderingException {
 		if (elementInterceptors != null && elementInterceptors.size() > 0)
-			new ElementRenditionImpl(new TextProxy(this), context, elementInterceptors).doRender();
+			new RenditionImpl(new TextProxy(this), context, elementInterceptors).doRender();
 		else
 			doRender(context);
 	}

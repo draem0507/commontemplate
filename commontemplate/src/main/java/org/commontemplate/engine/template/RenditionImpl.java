@@ -2,13 +2,13 @@ package org.commontemplate.engine.template;
 
 import java.util.List;
 
-import org.commontemplate.config.RenderInterceptor;
+import org.commontemplate.config.RenderingInterceptor;
 import org.commontemplate.config.Rendition;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.Element;
 import org.commontemplate.util.Assert;
 
-final class ElementRenditionImpl implements Rendition {
+final class RenditionImpl implements Rendition {
 
 	private final Element element;
 
@@ -18,7 +18,7 @@ final class ElementRenditionImpl implements Rendition {
 
 	private final int index;
 
-	ElementRenditionImpl(Element element, Context context, List elementInterceptors) {
+	RenditionImpl(Element element, Context context, List elementInterceptors) {
 		Assert.assertNotEmpty(elementInterceptors);
 		this.element = element;
 		this.context = context;
@@ -26,7 +26,7 @@ final class ElementRenditionImpl implements Rendition {
 		this.index = 0;
 	}
 
-	private ElementRenditionImpl(Element element, Context context, List elementInterceptors, int index) {
+	private RenditionImpl(Element element, Context context, List elementInterceptors, int index) {
 		this.element = element;
 		this.context = context;
 		this.elementInterceptors = elementInterceptors;
@@ -60,9 +60,9 @@ final class ElementRenditionImpl implements Rendition {
 	 */
 	public void doRender() {
 		if (index < elementInterceptors.size()) {
-			RenderInterceptor elementInterceptor= (RenderInterceptor)elementInterceptors.get(index);
+			RenderingInterceptor elementInterceptor= (RenderingInterceptor)elementInterceptors.get(index);
 			if (elementInterceptor != null) {
-				elementInterceptor.intercept(new ElementRenditionImpl(element, context, elementInterceptors, index + 1));
+				elementInterceptor.intercept(new RenditionImpl(element, context, elementInterceptors, index + 1));
 				return;
 			}
 		}

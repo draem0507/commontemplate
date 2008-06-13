@@ -44,7 +44,7 @@ final class DirectiveImpl extends Directive {
 
 	public void render(Context context) throws RenderingException {
 		if (elementInterceptors != null && elementInterceptors.size() > 0)
-			new ElementRenditionImpl(new DirectiveInterceptProxy(this), context, elementInterceptors).doRender();
+			new RenditionImpl(new DirectiveInterceptProxy(this), context, elementInterceptors).doRender();
 		else
 			doRender(context);
 	}
