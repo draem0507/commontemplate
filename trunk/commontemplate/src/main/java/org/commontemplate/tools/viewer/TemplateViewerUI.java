@@ -81,6 +81,7 @@ public class TemplateViewerUI {
 		frame.show();
 	}
 
+	/*
 	private static JFrame frame;
 
 	private static JTextArea area;
@@ -110,6 +111,6 @@ public class TemplateViewerUI {
 		}
 		frame.show();
 		area.append(msg + "\n");
-	}
+	}*/
 
 }
