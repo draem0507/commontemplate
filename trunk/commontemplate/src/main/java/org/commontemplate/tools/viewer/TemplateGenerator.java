@@ -21,15 +21,15 @@ public class TemplateGenerator {
 		this.engine = new Engine(config);
 	}
 
-	public void generate(Map data, String sourcePath, String targetPath) throws IOException {
+	public void generate(Map data, File sourceFile, File targetFile) throws IOException {
 		Writer writer = null;
 		try {
-			writer = new FileWriter(new File(targetPath));
+			writer = new FileWriter(targetFile);
 			Context context = null;
 			try {
 				context = engine.createContext(writer);
 				context.pushLocalContext(data);
-				Template template = engine.getTemplate(sourcePath);
+				Template template = engine.getTemplate(sourceFile.getCanonicalPath());
 				template.render(context);
 				writer.flush();
 				context.clear();
