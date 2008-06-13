@@ -1,12 +1,26 @@
 package org.commontemplate.util;
 
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 
 public class IOUtils {
-	
+
 	private IOUtils() {}
-	
+
+	public static String readToString(File file) throws IOException {
+		return readToString(new FileReader(file));
+	}
+
+	public static char[] readToChars(File file) throws IOException {
+		return readToChars(new FileReader(file));
+	}
+
+	public static byte[] readToBytes(File file) throws IOException {
+		return readToBytes(new FileReader(file));
+	}
+
 	public static String readToString(Reader reader) throws IOException {
 		StringBuffer buffer = new StringBuffer();
 		char[] buf = new char[8192];
@@ -16,7 +30,7 @@ public class IOUtils {
 		}
 		return buffer.toString();
 	}
-	
+
 	public static char[] readToChars(Reader reader) throws IOException {
 		StringBuffer buffer = new StringBuffer();
 		char[] buf = new char[8192];
@@ -29,7 +43,7 @@ public class IOUtils {
 		buffer.getChars(0, length, dst, 0);
 		return dst;
 	}
-	
+
 	public static byte[] readToBytes(Reader reader) throws IOException {
 		StringBuffer buffer = new StringBuffer();
 		char[] buf = new char[8192];
