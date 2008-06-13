@@ -1,0 +1,22 @@
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>gui</headerType>
+  <jar>F:\CommonTemplate\viewer\commontemplate.jar</jar>
+  <outfile>F:\CommonTemplate\viewer\CommonTemplateViewer.exe</outfile>
+  <errTitle></errTitle>
+  <cmdLine></cmdLine>
+  <chdir></chdir>
+  <priority>normal</priority>
+  <downloadUrl>http://java.com/download</downloadUrl>
+  <supportUrl></supportUrl>
+  <customProcName>true</customProcName>
+  <stayAlive>true</stayAlive>
+  <manifest></manifest>
+  <icon>F:\CommonTemplate\viewer\ctl48.ico</icon>
+  <jre>
+    <path></path>
+    <minVersion>1.4.2</minVersion>
+    <maxVersion></maxVersion>
+    <jdkPreference>preferJre</jdkPreference>
+  </jre>
+</launch4jConfig>
