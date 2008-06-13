@@ -29,9 +29,7 @@ public abstract class BlockDirectiveHandlerSupport extends BlockDirectiveHandler
 	 * @throws Exception
 	 *             处理过程中的任意异常都应向上抛出, 由引擎统一处理
 	 */
-	public void doRender(Context context, String directiveName,
-			Object param, List innerElements) throws Exception {
-
-	}
+	public abstract void doRender(Context context, String directiveName,
+			Object param, List innerElements) throws Exception;
 
 }

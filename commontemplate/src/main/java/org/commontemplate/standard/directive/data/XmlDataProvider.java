@@ -1,7 +1,6 @@
-package org.commontemplate.tools.viewer;
+package org.commontemplate.standard.directive.data;
 
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +21,7 @@ import org.w3c.dom.NodeList;
  * @author liangfei0201@163.com
  *
  */
-public class XmlDataProvider extends DataProviderSupport {
+public class XmlDataProvider extends InputStreamDataProvider {
 
 	public static final String OBJECT_TAG_NAME = "object";
 
@@ -30,13 +29,18 @@ public class XmlDataProvider extends DataProviderSupport {
 
 	public static final String NAME_ATTRIBUTE_NAME = "name";
 
+	public Map getData(String dataSource) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	// 读取.xml文件, 组装成Map数据, 文件不存在时返回null
-	protected Map getData(File dataFile) throws Exception {
+	public Map getData(InputStream dataInputStream) throws Exception {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		factory.setIgnoringComments(true);
 		factory.setIgnoringElementContentWhitespace(true);
 		DocumentBuilder builder = factory.newDocumentBuilder();
-		Document document = builder.parse(new FileInputStream(dataFile));
+		Document document = builder.parse(dataInputStream);
 		Element root = document.getDocumentElement();
 		if (! OBJECT_TAG_NAME.equals(root.getTagName()))
 			throw new IllegalStateException("XML数据格式错误, 根标签必需为<object>!");

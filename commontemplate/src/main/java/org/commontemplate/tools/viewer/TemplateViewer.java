@@ -1,25 +1,18 @@
 package org.commontemplate.tools.viewer;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.TreeMap;
 
+import org.commontemplate.standard.directive.data.DataProvider;
+import org.commontemplate.standard.directive.data.DataProviderManager;
 import org.commontemplate.util.UrlCleaner;
 
 public class TemplateViewer {
 
 	private final TemplateGenerator generator = new TemplateGenerator();
-
-	private final Map dataProviders = new TreeMap();
-
-	public TemplateViewer() {
-		super();
-		dataProviders.put("json", new JsonDataProvider());
-		dataProviders.put("properties", new PropertiesDataProvider());
-		dataProviders.put("xml", new XmlDataProvider());
-	}
 
 	public void view(String sourcePath) {
 		try {
@@ -51,13 +44,17 @@ public class TemplateViewer {
 	}
 
 	private Map getData(String sourcePrefix) throws Exception {
-		for (Iterator iterator = dataProviders.entrySet().iterator(); iterator.hasNext();) {
+		for (Iterator iterator = DataProviderManager.getDataProviderNames().iterator(); iterator.hasNext();) {
 			Map.Entry entry = (Map.Entry)iterator.next();
 			String suffix = (String)entry.getKey();
 			DataProvider dataProvider = (DataProvider)entry.getValue();
-			Map data = dataProvider.getData(sourcePrefix + suffix);
-			if (data != null)
-				return data;
+			String dataPath = sourcePrefix + suffix;
+			File file = new File(dataPath);
+			if (file.exists()) {
+				Map data = dataProvider.getData(file);
+				if (data != null)
+					return data;
+			}
 		}
 		return new HashMap();
 	}
