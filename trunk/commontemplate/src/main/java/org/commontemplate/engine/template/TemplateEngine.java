@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.commontemplate.config.DirectiveHandlerProvider;
 import org.commontemplate.config.ResourceFilter;
+import org.commontemplate.config.Syntax;
 import org.commontemplate.config.TemplateConfiguration;
 import org.commontemplate.core.BinaryOperator;
 import org.commontemplate.core.BlockDirective;
@@ -49,14 +50,21 @@ public final class TemplateEngine implements TemplateParser {
 
 	private final ElementFactory elementFactory;
 
+	private final Syntax syntax;
+
+	private final List elementInterceptors;
+
+	private final DirectiveHandlerProvider directiveHandlerProvider;
+
 	public TemplateEngine(TemplateConfiguration config) {
 		Assert.assertNotNull(config, "TemplateEngine.config.required");
-		DirectiveHandlerProvider directiveHandlerProvider = config.getDirectiveHandlerProvider();
-		List elementInterceptors = config.getRenderInterceptors();
+		directiveHandlerProvider = config.getDirectiveHandlerProvider();
+		syntax = config.getSyntax();
+		elementInterceptors = config.getRenderInterceptors();
 		expressionParser = new ExpressionEngine(config);
 		directiveTokenizer = new DirectiveTokenizer(config.getSyntax());
 		directiveTranslator = new DirectiveTranslator(new DirectiveProvider(
-				config.getSyntax(), directiveHandlerProvider,
+				syntax, directiveHandlerProvider,
 				expressionParser, config.getTextFilter(), elementInterceptors));
 		directiveReducer = new DirectiveReducer();
 		resourceFilter = config.getResourceFilter();
@@ -80,7 +88,7 @@ public final class TemplateEngine implements TemplateParser {
 		try {
 			return expressionParser.parseExpression(text);
 		} catch (ParsingException e) {
-			e.setResource(new AnonymousResource(text));
+			e.setResource(new ResourceImpl(text));
 			throw e;
 		}
 	}
@@ -104,7 +112,7 @@ public final class TemplateEngine implements TemplateParser {
 
 	public final Template parseTemplate(String template) throws ParsingException {
 		Assert.assertNotNull(template, "TemplateEngine.template.name.required");
-		Resource resource = new AnonymousResource(template);
+		Resource resource = new ResourceImpl(template);
 		try {
 			return parseTemplate(resource);
 		} catch (IOException e) { // 因为是字符串模板，一般不会出现IOException
@@ -113,7 +121,7 @@ public final class TemplateEngine implements TemplateParser {
 	}
 
 	public TemplateBudiler getTemplateBudiler() {
-		return new TemplateBudilerImpl();
+		return new TemplateBudilerImpl(syntax, directiveHandlerProvider, elementInterceptors);
 	}
 
 	public BinaryOperator createBinaryOperator(String operatorName,

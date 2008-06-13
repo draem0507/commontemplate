@@ -35,20 +35,24 @@ public class BinaryOperatorHandlerChain extends BinaryOperatorHandler {
 
 	public Object doEvaluate(Object leftOperand, Object rightOperand)
 			throws Exception {
+		UnhandleException exception = null;
 		for (Iterator iterator = binaryOperatorHandlers.iterator(); iterator.hasNext();) {
 			BinaryOperatorHandlerMatcher handler = (BinaryOperatorHandlerMatcher)iterator.next();
 			if (handler.isMatch(leftOperand, rightOperand)) {
 				try {
 					return handler.doEvaluate(leftOperand, rightOperand);
-				} catch (UnhandleException ue) {
-					// ignore, continue next
-				} catch (NullPointerException npe) {
+				} catch (NullPointerException e) {
 					return null;
+				} catch (UnhandleException e) {
+					exception = e;
+					// continue next handler
 				}
 			}
 		}
 		if (leftOperand == null || rightOperand == null) // 对null的默认处理
 			return null;
+		if (exception != null)
+			throw exception;
 		throw new UnhandleException("BinaryOperatorHandlerChain.unhandle.error",
 				new Object[]{ leftOperand.getClass().getName(),
 				rightOperand.getClass().getName(), leftOperand,

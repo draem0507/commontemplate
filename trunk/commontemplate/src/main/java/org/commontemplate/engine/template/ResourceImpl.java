@@ -8,18 +8,26 @@ import org.commontemplate.core.Resource;
 
 /**
  * 匿名模板源
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
-final class AnonymousResource extends Resource implements java.io.Serializable {
+final class ResourceImpl extends Resource implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
+	private final String templateName;
+
 	private final String template;
-	
-	AnonymousResource(String template) {
+
+	ResourceImpl(String template) {
 		this.template = template;
+		this.templateName = "";
+	}
+
+	ResourceImpl(String template, String templateName) {
+		this.template = template;
+		this.templateName = templateName;
 	}
 
 	public final String getEncoding() {
@@ -31,11 +39,11 @@ final class AnonymousResource extends Resource implements java.io.Serializable {
 	}
 
 	public final String getName() {
-		return "";
+		return templateName;
 	}
 
 	public final Reader getReader() throws IOException {
 		return new StringReader(template);
 	}
-	
+
 }

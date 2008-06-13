@@ -3,7 +3,13 @@ package org.commontemplate.engine.expression;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.ExpressionBuilder;
 
-final class ExpressionBuilderImpl implements ExpressionBuilder {
+/**
+ * 表达式构建器实现
+ *
+ * @author liangfei0201@163.com
+ *
+ */
+final class ExpressionBuilderImpl implements ExpressionBuilder { // TODO 未完成
 
 	private Expression result;
 

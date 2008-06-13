@@ -36,6 +36,7 @@ public class UnaryOperatorHandlerChain extends UnaryOperatorHandler {
 	}
 
 	public Object doEvaluate(Object operand) throws Exception {
+		UnhandleException exception = null;
 		for (Iterator iterator = unaryOperatorHandlers.iterator(); iterator.hasNext();) {
 			UnaryOperatorHandlerMatcher handler = (UnaryOperatorHandlerMatcher)iterator.next();
 			if (handler.isMatch(operand)) {
@@ -44,12 +45,15 @@ public class UnaryOperatorHandlerChain extends UnaryOperatorHandler {
 				} catch (NullPointerException e) {
 					return null;
 				} catch (UnhandleException e) {
-					// ignore, continue next
+					exception = e;
+					// continue next handler
 				}
 			}
 		}
 		if (operand == null) // 对null的默认处理
 			return null;
+		if (exception != null)
+			throw exception;
 		throw new UnhandleException("UnaryOperatorHandlerChain.unhandle.error",
 				new Object[]{operand.getClass().getName(), operand, unaryOperatorHandlers});
 	}

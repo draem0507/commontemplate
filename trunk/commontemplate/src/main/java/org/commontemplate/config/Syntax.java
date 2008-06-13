@@ -106,6 +106,10 @@ public final class Syntax implements java.io.Serializable {
 		return endDirectiveName;
 	}
 
+	public final String getEndDirective() {
+		return String.valueOf(getDirectiveLeader()) + getEndDirectiveName();
+	}
+
 	// Default Syntax ------------
 
 	public static final char DEFAULT_DIRECTIVE_LEADER = '$';
