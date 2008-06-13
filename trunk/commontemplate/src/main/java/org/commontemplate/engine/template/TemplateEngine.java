@@ -60,7 +60,7 @@ public final class TemplateEngine implements TemplateParser {
 		Assert.assertNotNull(config, "TemplateEngine.config.required");
 		directiveHandlerProvider = config.getDirectiveHandlerProvider();
 		syntax = config.getSyntax();
-		elementInterceptors = config.getRenderInterceptors();
+		elementInterceptors = config.getRenderingInterceptors();
 		expressionParser = new ExpressionEngine(config);
 		directiveTokenizer = new DirectiveTokenizer(config.getSyntax());
 		directiveTranslator = new DirectiveTranslator(new DirectiveProvider(

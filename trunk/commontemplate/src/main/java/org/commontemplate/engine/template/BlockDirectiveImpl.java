@@ -46,7 +46,7 @@ class BlockDirectiveImpl extends BlockDirectiveSupport {
 
 	public void render(Context context) throws RenderingException {
 		if (elementInterceptors != null && elementInterceptors.size() > 0)
-			new ElementRenditionImpl(new BlockDirectiveInterceptProxy(this), context, elementInterceptors).doRender();
+			new RenditionImpl(new BlockDirectiveInterceptProxy(this), context, elementInterceptors).doRender();
 		else
 			doRender(context);
 	}

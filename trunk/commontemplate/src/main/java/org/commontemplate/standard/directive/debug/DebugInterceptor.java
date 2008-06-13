@@ -1,12 +1,12 @@
 package org.commontemplate.standard.directive.debug;
 
-import org.commontemplate.config.RenderInterceptor;
+import org.commontemplate.config.RenderingInterceptor;
 import org.commontemplate.config.Rendition;
 import org.commontemplate.core.BlockDirective;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.Element;
 
-public class DebugInterceptor implements RenderInterceptor, java.io.Serializable {
+public class DebugInterceptor implements RenderingInterceptor, java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 
