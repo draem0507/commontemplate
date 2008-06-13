@@ -12,13 +12,13 @@ import org.commontemplate.util.Location;
  * @author liangfei0201@163.com
  *
  */
-final class TextProxy extends Text {
+final class TextInterceptProxy extends Text {
 
 	private static final long serialVersionUID = 3914348687967038468L;
 
 	private final TextImpl text;
 
-	TextProxy(TextImpl text) {
+	TextInterceptProxy(TextImpl text) {
 		this.text = text;
 	}
 
