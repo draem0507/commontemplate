@@ -47,11 +47,6 @@ public class XmlDataProvider extends InputStreamDataProvider {
 
 	public static final String NAME_ATTRIBUTE_NAME = "name";
 
-	public Map getData(String dataSource) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	// 读取.xml文件, 组装成Map数据, 文件不存在时返回null
 	public Map getData(InputStream dataInputStream) throws Exception {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
