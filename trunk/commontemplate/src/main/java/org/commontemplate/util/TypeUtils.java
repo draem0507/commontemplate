@@ -63,6 +63,17 @@ public final class TypeUtils {
 		return false;
 	}
 
+	public static boolean isInteger(final String name) {
+		if (name != null && name.length() > 0
+				&& name.matches("^[0-9]+$"))
+			return true;
+		return false;
+	}
+
+	public static Integer parseInteger(final String name) {
+		return new Integer(name);
+	}
+
 	public static boolean isSignNumber(final String name) {
 		if (name != null && name.length() > 0
 				&& name.charAt(0) >= '0' && name.charAt(0) <= '9')

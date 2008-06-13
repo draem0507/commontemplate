@@ -45,9 +45,8 @@ public class TemplateViewer {
 
 	private Map getData(String sourcePrefix) throws Exception {
 		for (Iterator iterator = DataProviderManager.getDataProviderNames().iterator(); iterator.hasNext();) {
-			Map.Entry entry = (Map.Entry)iterator.next();
-			String suffix = (String)entry.getKey();
-			DataProvider dataProvider = (DataProvider)entry.getValue();
+			String suffix = (String)iterator.next();
+			DataProvider dataProvider = (DataProvider)DataProviderManager.getDataProvider(suffix);
 			String dataPath = sourcePrefix + suffix;
 			File file = new File(dataPath);
 			if (file.exists()) {
