@@ -80,4 +80,36 @@ public class TemplateViewerUI {
 
 		frame.show();
 	}
+
+	private static JFrame frame;
+
+	private static JTextArea area;
+
+	public static void showMessage(String msg) {
+		if (frame == null) {
+			frame = new JFrame("CommonTemplateViewer - Message");
+			frame.setIconImage(ImageFactory.getImage("org/commontemplate/standard/directive/debug/debug.gif"));
+			frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+			frame.setSize(800, 600);
+			Dimension scr = Toolkit.getDefaultToolkit().getScreenSize();
+			Dimension fra = frame.getSize();
+			frame.setLocation((scr.width - fra.width) / 2,
+					(scr.height - fra.height) / 2);// 在屏幕居中显示
+			frame.getRootPane().setFocusable(true);
+			frame.getRootPane().setFocusCycleRoot(true);
+			frame.getContentPane().setLayout(new BorderLayout());
+
+			area = new JTextArea();
+			area.setEditable(false);
+			area.setBackground(Color.WHITE);
+			JScrollPane pane = new JScrollPane();
+			pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+			pane.getViewport().setView(area);
+			pane.getViewport().setBackground(Color.white);
+			frame.getContentPane().add(pane, BorderLayout.CENTER);
+		}
+		frame.show();
+		area.append(msg + "\n");
+	}
+
 }
