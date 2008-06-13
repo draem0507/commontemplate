@@ -13,7 +13,7 @@ import org.commontemplate.core.BlockDirective;
 import org.commontemplate.core.Comment;
 import org.commontemplate.core.Constant;
 import org.commontemplate.core.Directive;
-import org.commontemplate.core.ElementFactory;
+import org.commontemplate.core.TemplateElementFactory;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.ExpressionBuilder;
 import org.commontemplate.core.ExpressionParser;
@@ -48,7 +48,7 @@ public final class TemplateEngine implements TemplateParser {
 
 	private final ResourceFilter resourceFilter;
 
-	private final ElementFactory elementFactory;
+	private final TemplateElementFactory elementFactory;
 
 	private final Syntax syntax;
 
@@ -68,7 +68,7 @@ public final class TemplateEngine implements TemplateParser {
 				expressionParser, config.getTextFilter(), elementInterceptors));
 		directiveReducer = new DirectiveReducer();
 		resourceFilter = config.getResourceFilter();
-		elementFactory = new ElementFactoryImpl(directiveHandlerProvider, elementInterceptors);
+		elementFactory = new TemplateElementFactoryImpl(directiveHandlerProvider, elementInterceptors);
 	}
 
 	private final BlockDirective parseDirective(Reader templateProvider) throws IOException, ParsingException {
