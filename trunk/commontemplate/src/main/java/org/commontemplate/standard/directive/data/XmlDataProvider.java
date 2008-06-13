@@ -16,7 +16,25 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * XML测试数据供给器
+ * XML格式数据供给器, 如: <br/>
+ * <pre>
+ * &lt;object&gt;
+ *     &lt;object name="mail"&gt;
+ *         &lt;object name="from"&gt;xxx@xxx.com&lt;/object&gt;
+ *         &lt;object name="to"&gt;yyy@yyy.com&lt;/object&gt;
+ *     &lt;/object&gt;
+ *     &lt;array name="users"&gt;
+ *         &lt;object&gt;
+ *             &lt;object name="id"&gt;1&lt;/object&gt;
+ *             &lt;object name="name"&gt;james&lt;/object&gt;
+ *         &lt;/object&gt;
+ *         &lt;object&gt;
+ *             &lt;object name="id"&gt;2&lt;/object&gt;
+ *             &lt;object name="name"&gt;kent&lt;/object&gt;
+ *         &lt;/object&gt;
+ *     &lt;/array&gt;
+ * &lt;/object&gt;
+ * </pre>
  *
  * @author liangfei0201@163.com
  *

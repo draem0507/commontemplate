@@ -1,6 +1,7 @@
 package org.commontemplate.standard.directive.data;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.Map;
 
 public interface DataProvider {
@@ -9,4 +10,5 @@ public interface DataProvider {
 
 	Map getData(File dataFile) throws Exception;
 
+	Map getData(InputStream dataInputStream) throws Exception;
 }
