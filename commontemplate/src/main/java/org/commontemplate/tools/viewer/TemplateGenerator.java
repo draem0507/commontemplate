@@ -10,7 +10,6 @@ import org.commontemplate.core.Context;
 import org.commontemplate.core.Template;
 import org.commontemplate.engine.Engine;
 import org.commontemplate.standard.ConfigurationSettings;
-import org.commontemplate.standard.loader.FileResource;
 import org.commontemplate.tools.PropertiesConfigurationLoader;
 
 public class TemplateGenerator {
@@ -30,7 +29,7 @@ public class TemplateGenerator {
 			try {
 				context = engine.createContext(writer);
 				context.pushLocalContext(data);
-				Template template = engine.parseTemplate(new FileResource(new File(sourcePath), sourcePath, "UTF-8"));
+				Template template = engine.getTemplate(sourcePath);
 				template.render(context);
 				writer.flush();
 				context.clear();

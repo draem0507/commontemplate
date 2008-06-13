@@ -356,9 +356,11 @@ public class DebugFrame implements ActionListener, WindowListener {
 		});
 
 		contextTreePopupMenu = new JPopupMenu();
+		/* TODO 未实现，暂时屏蔽
 		contextTreePopupMenu.add(modifyItem);
 		contextTreePopupMenu.add(newItem);
 		contextTreePopupMenu.add(new JPopupMenu.Separator());
+		*/
 		contextTreePopupMenu.add(copyItem);
 		contextTreePopupMenu.add(copyAllItem);
 
