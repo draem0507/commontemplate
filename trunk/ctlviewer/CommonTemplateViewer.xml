@@ -1,8 +1,8 @@
 <launch4jConfig>
   <dontWrapJar>false</dontWrapJar>
   <headerType>gui</headerType>
-  <jar>F:\CommonTemplate\viewer\commontemplate.jar</jar>
-  <outfile>F:\CommonTemplate\viewer\CommonTemplateViewer.exe</outfile>
+  <jar>commontemplate.jar</jar>
+  <outfile>CommonTemplateViewer.exe</outfile>
   <errTitle></errTitle>
   <cmdLine></cmdLine>
   <chdir></chdir>
@@ -12,7 +12,7 @@
   <customProcName>true</customProcName>
   <stayAlive>true</stayAlive>
   <manifest></manifest>
-  <icon>F:\CommonTemplate\viewer\ctl48.ico</icon>
+  <icon>ctl48.ico</icon>
   <jre>
     <path></path>
     <minVersion>1.4.2</minVersion>
