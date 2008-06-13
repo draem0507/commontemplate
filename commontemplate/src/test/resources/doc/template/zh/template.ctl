@@ -223,12 +223,16 @@ $!
 								可以用context["区域名"]在指定范围内查找，如：${context["session"].loginUser}<br/>
 								另外，也可以用context["指令名"]查找最近的某个块指令区域内的变量，如：${context["for"].xxx} ${context["if"].xxx}<br/>
 								<br/>
-								<b>六. Html语法扩展</b><br/>
-								(1) &lt;!--$name{expression}--&gt; 注释指令<br/>
-								(2) &lt;table ct:if="users != null && users.size &gt; 0"&gt;...&lt;table&gt; 属性指令, (只能用于块指令)<br/>
+								<b>六. HTML语法扩展</b><br/>
+								<b>(1) 注释版语法外套</b><br/>
+								自动去除指令两边的HTML注释符，如：
+								&lt;!--$指令{表达式}--&gt;<br/>
+								<b>(2) 属性版语法外套</b><br/>
+								自动将名称空间为“ct:”的HTML标签属性转换成指令，如：<br/>
+								&lt;table ct:if="users != null && users.size &gt; 0"&gt;...&lt;table&gt; (只能用于块指令)<br/>
 								<br/>
 								<b>七. 举例:</b><br/>
-								(1) 标准指令:<br/>
+								<b>(1) 标准语法：</b><br/>
 <font color="#3f7f5f">&lt;html&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;body&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$if{users&nbsp;!=&nbsp;null&nbsp;&amp;&amp;&nbsp;users.size&nbsp;&gt;&nbsp;0}<br/>
@@ -244,8 +248,7 @@ $!
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$end<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;/body&gt;</font><br/>
 <font color="#3f7f5f">&lt;/html&gt;</font><br/>
-								<br/>
-								(2) 注释版语法外套:<br/>
+								<b>(2) 注释版语法外套：</b><br/>
 <font color="#3f7f5f">&lt;html&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;body&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f5fbf">&lt;!--$if{users&nbsp;!=&nbsp;null&nbsp;&amp;&amp;&nbsp;users.size&nbsp;&gt;&nbsp;0}--&gt;</font><br/>
@@ -261,8 +264,7 @@ $!
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f5fbf">&lt;!--$end--&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;/body&gt;</font><br/>
 <font color="#3f7f5f">&lt;/html&gt;</font><br/>
-								<br/>
-								(3) 属性版语法外套:<br/>
+								<b>(3) 属性版语法外套：</b><br/>
 <font color="#3f7f5f">&lt;html&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;body&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;table&nbsp;<font color="#7f0055">ct:if</font><font color="#000000">=</font><font color="#2a00ff">"users&nbsp;!=&nbsp;null&nbsp;&amp;&amp;&nbsp;users.size&nbsp;&gt;&nbsp;0"</font>&nbsp;<font color="#7f0055">border</font><font color="#000000">=</font><font color="#2a00ff">"1"</font>&gt;</font><br/>

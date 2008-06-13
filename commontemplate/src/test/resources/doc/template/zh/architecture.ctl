@@ -2,7 +2,7 @@
 	<!--$overzone{"content"}-->
 $!
 								<b>一. 包结构设计说明</b><br/>
-								<b>设计原则：</b><br/>
+								<b>包设计原则：</b><br/>
 								<b>高内聚：</b><br/>
 								重用发布等价原则(REP)： 包的重用粒度应该与可发布粒度相同，可发布是指可单独打成组件包(jar)，并且组件包能符合开闭原则(OCP)。<br/>
 								共同重用原则(CRP)： 包中的类应该有同样的重用可能性，也就是紧密协作的类应该放在一个包。<br/>
@@ -10,41 +10,38 @@ $!
 								<b>低耦合：</b><br/>
 								无环依赖原则(ADP)： 包之间不出现相互依赖和循环依赖，这是最基本应做到的。<br/>
 								稳定依赖原则(SDP)： 被依赖的包应该总是比依赖者更稳定，也就是不要让一个稳定的包依赖于不稳定包。<br/>
-								稳定抽象原则(SAP)： 越稳定的包应该越抽象。 <font color="green">(注：参见此节后面的计算方式)</font><br/>
+								稳定抽象原则(SAP)： 越稳定的包应该越抽象，稳定的包不抽象将导致扩展性极差，抽象的包不稳定将导致其依赖包跟随变化。 <br/>
+								<font color="green">(注：稳定性和抽象性，请参见此节后面的计算方式)</font><br/>
 								<br/>
 								<b>CommonTemplate总体包结构：</b><br/>
-								<b>(0) util包 (通用工具包)</b><br/>
+								<b>(1) util包 (通用工具包)</b><br/>
 								<font color="gray">位置：</font>org.commontemplate.util及其子包<br/>
 								<font color="gray">职责定义：</font>相当于java.util的扩展，实现一些其它通用功能，它只依赖于JDK，不依赖于CommonTemplate引擎。<br/>
 								<font color="green">(注：以下包都依赖于JDK相关包及上面的util包，不再说明)</font><br/>
-								<b>(1) core包 (核心API包)</b><br/>
+								<b>(2) core包 (核心模型包)</b> <font color="green">(Application Programming Interface(API))</font><br/>
 								<font color="gray">位置：</font>org.commontemplate.core及其子包<br/>
 								<font color="gray">职责定义：</font>模板语言的API包，定义模板各元素间的关系，资源管理接口等，全部为接口或抽象类，围绕Template和Context展开。<br/>
-								<font color="gray">入口类：</font>org.commontemplate.core.Factory<br/>
-								<b>(2) engine包 (引擎实现包)</b><br/>
+								<font color="gray">中心类：</font>org.commontemplate.core.Factory<br/>
+								<b>(3) engine包 (引擎实现包)</b><br/>
 								<font color="gray">位置：</font>org.commontemplate.engine及其子包<br/>
 								<font color="gray">职责定义：</font>模板引擎的实现，处理模板加载解析等，实现core包的所有接口，此包隐藏实现细节，只暴露Engine类，便于后期优化，Engine实现了core包的Factory，core包的其它相关接口都可以通过接口间导航获取。<br/>
+								<font color="gray">中心类：</font>org.commontemplate.engine.Engine<br/>
 								<font color="gray">依赖于：</font>core包, config包<br/>
-								<font color="gray">入口类：</font>org.commontemplate.engine.Engine<br/>
-								<b>(3) config包 (配置SPI包)</b><br/>
+								<b>(4) config包 (配置接口包)</b> <font color="green">(Service Provide Interface(SPI))</font><br/>
 								<font color="gray">位置：</font>org.commontemplate.config及其子包<br/>
 								<font color="gray">职责定义：</font>留给第三方的扩展接口，以Configuration接口为中心，Configuration定义了engine包所需配置的getXXX()方法，但不包括setXXX()等，因为SPI不应限制实现类的注册方式。<br/>
+								<font color="gray">中心类：</font>org.commontemplate.config.Configuration<br/>
 								<font color="gray">依赖于：</font>core包<br/>
-								<font color="gray">入口类：</font>org.commontemplate.config.Configuration<br/>
-								<b>(4) standard包 (标准参考配置实现包)</b><br/>
+								<b>(5) standard包 (标准参考配置实现包)</b><br/>
 								<font color="gray">位置：</font>org.commontemplate.standard及其子包<br/>
 								<font color="gray">职责定义：</font>config包的标准参考实现，包括指令及操作符等语法的定义相关配置，并提供Configuration相应的setXXX, addXXX等注册方法类。<br/>
+								<font color="gray">中心类：</font>org.commontemplate.standard.ConfigurationSettings<br/>
 								<font color="gray">依赖于：</font>core包, config包<br/>
-								<font color="gray">入口类：</font>org.commontemplate.standard.ConfigurationSettings<br/>
-								<b>(5) ext包 (扩展配置实现包)</b><br/>
-								<font color="gray">位置：</font>org.commontemplate.ext及其子包<br/>
-								<font color="gray">职责定义：</font>config包的扩展实现，用于特定场景的实现，以及第三方适配实现等。<br/>
-								<font color="gray">依赖于：</font>core包, config包, standard包<br/>
-								<b>(6) tools包 (Client使用工具包)</b><br/>
+								<b>(6) tools包 (简化使用工具包)</b> <font color="green">(Client Facade)</font><br/>
 								<font color="gray">位置：</font>org.commontemplate.tools及其子包<br/>
 								<font color="gray">职责定义：</font>一些常用的客户端工具以及与其它框架集成相关类，这些已不属于CommonTemplate引擎的范围内，只是为了方便用户使用而提供。<br/>
+								<font color="gray">中心类：</font>org.commontemplate.standard.PropertiesConfigurationLoader<br/>
 								<font color="gray">依赖于：</font>core包, engine包, config包, standard包<br/>
-								<font color="gray">入口类：</font>org.commontemplate.standard.PropertiesConfigurationLoader<br/>
 								<br/>
 								<b>总体包结构图如下：</b> <font color="green">(注：隐抑了继承包相同于被继承包的依赖关系)</font><br/>
 								<img src="../images/uml/package.gif"/><br/>
@@ -90,9 +87,9 @@ $!
 								<b>核心包设计图如下：</b> <font color="green">(注：省略了Element对Context和Expression对VariableResolver的依赖关系)</font><br/>
 								<img src="../images/uml/core.gif" /><br/>
 								四色原型概要[Coad95-97]<br/>
-								红色：moment-interval (瞬时状态，会话)<br/>
-								黄色：role (主动域，操作者，服务等)<br/>
-								绿色：party, place or thing (被动域，实体，值对象等)<br/>
+								红色：moment-interval (瞬时状态，会话等)<br/>
+								黄色：role (主动域，角色，操作者，服务等)<br/>
+								绿色：party, place or thing (被动域，成分，事物，实体，值对象等)<br/>
 								蓝色：catalog-entry-like description (分类或入口标识)<br/>
 								<br/>
 								<b>三. 引擎包设计说明</b><br/>
@@ -102,7 +99,7 @@ $!
 								(1) 通常都直接用Engine，它提供所有功能，包括解析器和Context资源管理等。<br/>
 								(2) 如果使用第三方实现的Context(通常用在与其它模板工具适配时)，则可以只用TemplateEngine，提供模板解析功能。<br/>
 								(3) 如果只用表达式功能(通常是作为动态表达式求值工具时)，则可以只用ExpressionEnine，提供表达式解析功能。<br/>
-								<b>引擎包设计图如下：</b><br/>
+								<b>引擎包设计图如下：</b> <font color="green">(注：同时列出了engine与core及config的关系)</font><br/>
 								<img src="../images/uml/engine.gif" border="0"/><br/>
 								<br/>
 								<b>四. 配置包设计说明</b><br/>
