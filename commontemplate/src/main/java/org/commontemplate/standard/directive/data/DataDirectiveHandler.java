@@ -26,7 +26,7 @@ public class DataDirectiveHandler extends BlockDirectiveHandlerSupport {
 		context.removeOutputFilter();
 		String dataSource = bufferedFilter.getBuffered();
 		Map data = dataProvider.getData(dataSource);
-		context.putAllVariables(data);
+		context.getSuperLocalContext().putAllVariables(data);
 	}
 
 }
