@@ -38,8 +38,9 @@ public class DocumentGenerator {
 
 		Menu leftMenu = new Menu("menu.left")
 				.addChild(
-						new Menu("menu.documents").addChild(
-								new Menu("menu.overview", "index.html"))
+						new Menu("menu.documents")
+								.addChild(
+										new Menu("menu.overview", "index.html"))
 								.addChild(
 										new Menu("menu.template",
 												"template.html"))
@@ -59,15 +60,37 @@ public class DocumentGenerator {
 										new Menu("menu.api",
 												"api.html"))
 								.addChild(
+										new Menu("menu.debug",
+												"debug.html"))
+								.addChild(
+										new Menu("menu.viewer",
+												"viewer.html"))
+								.addChild(
+										new Menu("menu.editor",
+												"editor.html"))
+								.addChild(
 										new Menu("menu.faq",
 												"faq.html"))
+						)
+				.addChild(
+						new Menu("menu.development")
 								.addChild(
 										new Menu("menu.architecture",
 												"architecture.html"))
+								.addChild(
+										new Menu("menu.criterion",
+												"criterion.html"))
+								.addChild(
+										new Menu("menu.planning",
+												"planning.html"))
+								.addChild(
+										new Menu("menu.requirement",
+												"requirement.html"))
 						)
 				.addChild(
-						new Menu("menu.resources").addChild(
-								new Menu("menu.downloads", "downloads.html"))
+						new Menu("menu.resources")
+								.addChild(
+										new Menu("menu.downloads", "downloads.html"))
 								.addChild(
 										new Menu("menu.license",
 												"../resources/license.txt"))
@@ -77,8 +100,6 @@ public class DocumentGenerator {
 								.addChild(
 										new Menu("menu.dependency",
 												"dependency.html"))
-								.addChild(
-										new Menu("menu.debug", "debug.html"))
 								.addChild(
 										new Menu("menu.uml", "uml.html"))
 								.addChild(
@@ -173,8 +194,8 @@ public class DocumentGenerator {
 	public static void main(String[] args) {
 		DocumentGenerator generator = new DocumentGenerator("doc/template/", "doc/");
 		generator.generateAll(new String[]{"index", "template", "expression",
-				"config", "integration", "extension", "architecture",
-				"develop", "api", "faq", "downloads", "dependency", "debug",
+				"config", "integration", "extension", "api",
+				"debug", "viewer", "editor", "faq", "architecture", "criterion", "planning", "requirement", "downloads", "dependency",
 				"uml", "about", "news", "join", "demo_extends"});
 	}
 
