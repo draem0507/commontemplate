@@ -3,6 +3,8 @@ package org.commontemplate.util;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
 
 public class IOUtils {
@@ -19,6 +21,18 @@ public class IOUtils {
 
 	public static byte[] readToBytes(File file) throws IOException {
 		return readToBytes(new FileReader(file));
+	}
+
+	public static String readToString(InputStream inputStream) throws IOException {
+		return readToString(new InputStreamReader(inputStream));
+	}
+
+	public static char[] readToChars(InputStream inputStream) throws IOException {
+		return readToChars(new InputStreamReader(inputStream));
+	}
+
+	public static byte[] readToBytes(InputStream inputStream) throws IOException {
+		return readToBytes(new InputStreamReader(inputStream));
 	}
 
 	public static String readToString(Reader reader) throws IOException {
