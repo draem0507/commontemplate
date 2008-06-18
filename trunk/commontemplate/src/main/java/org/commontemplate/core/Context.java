@@ -1,11 +1,14 @@
 package org.commontemplate.core;
 
+import java.io.Serializable;
 import java.io.Writer;
 import java.util.Locale;
 import java.util.TimeZone;
 
 /**
- * 模板上下文, 状态维护及外部访问接口. <p/> (非线程安全,使用时应为每个线程创建独立的上下文)
+ * 模板上下文, 状态维护及外部访问接口.
+ * <p/> (非线程安全,使用时应为每个线程创建独立的上下文)
+ * <p/> (序列化后, 将抛弃Writer, 只作为数据容器传递, 反序列化后, 不可再用output()等方法)
  *
  * @see org.commontemplate.core.ContextFactory
  * @see org.commontemplate.core.Factory
@@ -14,7 +17,7 @@ import java.util.TimeZone;
  */
 public abstract class Context extends LocalContext
 			implements LocalContextStack, TemplateStack,
-			TemplateFactory, EventPublisher {
+			TemplateFactory, EventPublisher, Serializable {
 
 	/**
 	 * 以当前上下文构造条件重建新的上下文 (共享Writer,不共享数据)

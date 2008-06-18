@@ -47,6 +47,8 @@ import org.commontemplate.util.Assert;
  */
 final class ContextImpl extends Context {
 
+	private static final long serialVersionUID = 1L;
+
 	ContextImpl(GlobalContext globalContext, Writer out,
 			Locale locale, TimeZone timeZone,
 			TemplateFactory templateFactory, TemplateNameFilter templateNameFilter, OutputFormatter defaultFormater,
@@ -92,7 +94,7 @@ final class ContextImpl extends Context {
 		return globalContext;
 	}
 
-	private final Writer out;
+	private transient final Writer out;
 
 	public Writer getOut() {
 		return out;

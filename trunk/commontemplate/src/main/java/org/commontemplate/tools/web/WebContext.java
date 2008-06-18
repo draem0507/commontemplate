@@ -16,13 +16,15 @@ import org.commontemplate.tools.ContextProxy;
  */
 public class WebContext extends ContextProxy {
 
+	private static final long serialVersionUID = 1L;
+
 	public static final String REQUEST_KEY = "request";
 
 	public static final String RESPONSE_KEY = "response";
 
-	private HttpServletRequest request;
+	private transient HttpServletRequest request;
 
-	private HttpServletResponse response;
+	private transient HttpServletResponse response;
 
 	public WebContext(Context context,
 			HttpServletRequest request,

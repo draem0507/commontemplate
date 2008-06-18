@@ -27,6 +27,10 @@ public class TextPopupMenu extends JPopupMenu {
 
 	public static void bindCopy(final JTextComponent textComponent) {
 		final TextPopupMenu menu = new TextPopupMenu();
+		bindCopy(textComponent, menu);
+	}
+
+	public static void bindCopy(final JTextComponent textComponent, final TextPopupMenu menu) {
 		final JMenuItem copyItem = new JMenuItem(I18nMessages.getMessage("TextPopupMenu.copy.menu.item"));
 		final JMenuItem copyAllItem = new JMenuItem(I18nMessages.getMessage("TextPopupMenu.copy.all.menu.item"));
 		menu.add(copyItem)
