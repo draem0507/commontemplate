@@ -9,7 +9,7 @@ import org.commontemplate.standard.debug.DebugListener;
  * @author liangfei0201@163.com
  *
  */
-public class CommadDebugger implements DebugListener {
+public class CommandDebugger implements DebugListener {
 
 	public void onSuspended(DebugEvent event) {
 		// TODO Auto-generated method stub
