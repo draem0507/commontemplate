@@ -14,4 +14,8 @@ public abstract class BlockDirective extends Directive implements Block {
 		return TYPE;
 	}
 
+	public String getSource() {
+		return getSignature();
+	}
+
 }

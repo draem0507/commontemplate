@@ -19,6 +19,10 @@ public abstract class Element implements Node, Serializable {
 	 */
 	public abstract Location getLocation();
 
+	public String getSource() {
+		return getCanonicalForm();
+	}
+
 	/**
 	 * 获取指令签名信息, 只包含"$xxx{yyy}", 不包含内部块信息等.
 	 *

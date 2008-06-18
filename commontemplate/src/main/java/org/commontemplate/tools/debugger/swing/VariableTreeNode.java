@@ -1,4 +1,4 @@
-package org.commontemplate.standard.directive.debug;
+package org.commontemplate.tools.debugger.swing;
 
 import java.util.Map;
 

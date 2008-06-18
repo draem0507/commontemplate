@@ -1,14 +1,18 @@
 package org.commontemplate.standard.directive.debug;
 
-import org.commontemplate.standard.directive.DirectiveHandlerSupport;
+import org.commontemplate.config.DirectiveHandler;
 import org.commontemplate.core.Context;
+import org.commontemplate.core.Directive;
+import org.commontemplate.standard.debug.Breakpoint;
+import org.commontemplate.standard.debug.DebugManager;
 
-public class BreakpointDirectiveHandler extends DirectiveHandlerSupport {
+public class BreakpointDirectiveHandler extends DirectiveHandler {
 
 	private static final long serialVersionUID = 1L;
 
-	public void doRender(Context context, String directiveName, Object param) throws Exception {
-		context.getRootLocalContext().setBooleanStatus(DebugInterceptor.STEP_STATUS, true);
+	public void doRender(Context context, Directive directive) throws Exception {
+		Breakpoint breakpoint = new Breakpoint(context.getCurrentTemplate().getName(), directive.getLocation().getBegin().getRow());
+		DebugManager.getInstance().addBreakpoint(breakpoint);
 	}
 
 }

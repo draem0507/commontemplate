@@ -28,12 +28,12 @@ final class DirectiveTokenizer {
 	private static final int R = Tokenizer.ERROR;
 
 	// 指令语法状态机图
-	// 列表示输入字符的类型, 对应types, 比types多一列表示"其它"类型
+	// 列表示输入字符的类型, 对应types[], 比types[]多一列表示"其它"类型
 	// 行表示状态
 	// 行列交点表示: 在该状态时, 遇到某类型的字符时, 切换到的下一状态(数组行号)
 	// E/B/L/N表示接收前面经过的字符为一个片断, R表示错误状态(这些状态均为负数)
-	private static final int states[][] = {
-					/* 0.空格, 1.\, 2.$, 3.字母, 4.{, 5.}, 6.!, 7.*, 8.#, 9.\n, 10.", 11.', 12.`, 13.其它 */
+	private static final int states[][] = { // TODO 允许指令名称为纯符号
+					// 0.空格, 1.\, 2.$, 3.字母, 4.{, 5.}, 6.!, 7.*, 8.#, 9.\n, 10.", 11.', 12.`, 13.其它
 		/* 0.起始    */ { 9, 1, 2, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9}, // 初始状态或上一片断刚接收完成状态
 		/* 1.转义    */ { 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9}, // $符转义
 		/* 2.指令    */ { 2, R, R, 3, 5, R, 6, 7, 8, R, R, R, R, R}, // 指令前导符识别
@@ -57,10 +57,10 @@ final class DirectiveTokenizer {
 	private final Tokenizer tokenizer;
 
 	DirectiveTokenizer(Syntax syntax) { // 支持可配置语法
-		// 状态机输入类型，对应状态机图的列
+		// 状态机输入类型，对应状态机图states[][]的列
 		// 类型中: "|" 表示 "或", "-" 表示 "到"
 		// 按位置识别, "|"和"-"本身不需要转义, 如: "a-z|||-"表示"a"字符到"z"字符或"|"字符或"-"字符
-		final String[] types = {
+		final String types[] = {
 			// 0.空格, 1.\, 2.$, 3.字母, 4.{, 5.}, 6.!, 7.*, 8.#, 9.\n, 10.", 11.', 12.`
 			" |\t|\r|\f", "\\", String.valueOf(syntax.getDirectiveLeader()),
 			"0-9|_|a-z|A-Z", String.valueOf(syntax.getExpressionBegin()),

@@ -1,4 +1,4 @@
-package org.commontemplate.tools.viewer;
+package org.commontemplate.tools.exe;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -14,7 +14,7 @@ import javax.swing.UIManager;
 
 import org.commontemplate.util.swing.ImageFactory;
 
-public class TemplateViewerUI {
+public class MainUI {
 
 	static {
 		try {
@@ -27,7 +27,7 @@ public class TemplateViewerUI {
 
 	public static void showSettings() {
 		JFrame frame = new JFrame("CommonTemplateViewer - Help");
-		frame.setIconImage(ImageFactory.getImage("org/commontemplate/standard/directive/debug/debug.gif"));
+		frame.setIconImage(ImageFactory.getImage("org/commontemplate/tools/debugger/swing/debug.gif"));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(800, 600);
 		Dimension scr = Toolkit.getDefaultToolkit().getScreenSize();
@@ -48,7 +48,7 @@ public class TemplateViewerUI {
 		pane.getViewport().setBackground(Color.white);
 		frame.getContentPane().add(pane, BorderLayout.CENTER);
 
-		frame.show();
+		frame.setVisible(true);
 	}
 
 	public static void showException(Exception e) {
@@ -57,7 +57,7 @@ public class TemplateViewerUI {
 		String msg = out.getBuffer().toString();
 
 		JFrame frame = new JFrame("CommonTemplateViewer - Exception");
-		frame.setIconImage(ImageFactory.getImage("org/commontemplate/standard/directive/debug/debug.gif"));
+		frame.setIconImage(ImageFactory.getImage("org/commontemplate/tools/debugger/swing/debug.gif"));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(800, 600);
 		Dimension scr = Toolkit.getDefaultToolkit().getScreenSize();
@@ -77,8 +77,7 @@ public class TemplateViewerUI {
 		pane.getViewport().setView(area);
 		pane.getViewport().setBackground(Color.white);
 		frame.getContentPane().add(pane, BorderLayout.CENTER);
-
-		frame.show();
+		frame.setVisible(true);
 	}
 
 	/*
@@ -89,7 +88,7 @@ public class TemplateViewerUI {
 	public static void showMessage(String msg) {
 		if (frame == null) {
 			frame = new JFrame("CommonTemplateViewer - Message");
-			frame.setIconImage(ImageFactory.getImage("org/commontemplate/standard/directive/debug/debug.gif"));
+			frame.setIconImage(ImageFactory.getImage("org/commontemplate/tools/debugger/swing/debug.gif"));
 			frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 			frame.setSize(800, 600);
 			Dimension scr = Toolkit.getDefaultToolkit().getScreenSize();
