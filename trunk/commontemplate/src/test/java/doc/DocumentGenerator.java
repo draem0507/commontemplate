@@ -115,7 +115,7 @@ public class DocumentGenerator {
 								.addChild(new Menu("menu.news", "news.html"))
 								.addChild(
 										new Menu("menu.forums",
-												"http://forum.commontemplate.org"))
+												"http://forum.commontemplate.org/index.php/index.php"))
 								.addChild(
 										new Menu("menu.wiki",
 												"http://code.google.com/p/commontemplate/w/list"))
@@ -133,7 +133,7 @@ public class DocumentGenerator {
 		Menu topMenu = new Menu("menu.top").addChild(
 				new Menu("menu.downloads", "downloads.html")).addChild(
 				new Menu("menu.news", "news.html")).addChild(
-				new Menu("menu.forums", "http://forum.commontemplate.org")).addChild(
+				new Menu("menu.forums", "http://forum.commontemplate.org/index.php")).addChild(
 				new Menu("menu.about.us", "about.html"));
 		model.put("topMenus", topMenu.getChildren());
 
