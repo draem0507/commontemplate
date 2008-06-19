@@ -101,7 +101,7 @@
 								论坛由RedSaga提供支持:<br/>
 								<table>
 									<tr>
-										<td width="64" height="24" align="center" style="background-color: #003399;"><a target="_blank" href="http://forum.commontemplate.org" style="color: #FFFFFF; font-weight: bold;">论坛</a></td>
+										<td width="64" height="24" align="center" style="background-color: #003399;"><a target="_blank" href="http://forum.commontemplate.org/index.php" style="color: #FFFFFF; font-weight: bold;">论坛</a></td>
 									</tr>
 								</table>
 	<!--$end-->
