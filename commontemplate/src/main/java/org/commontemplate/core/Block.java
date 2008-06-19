@@ -3,7 +3,7 @@ package org.commontemplate.core;
 import java.util.List;
 
 /**
- * 模板块
+ * 块(拥有子节点的)节点.
  *
  * @author liangfei0201@163.com
  *
