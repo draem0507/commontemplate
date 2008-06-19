@@ -7,9 +7,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
-import org.commontemplate.config.CacheException;
 import org.commontemplate.config.Cache;
+import org.commontemplate.config.CacheException;
 import org.commontemplate.util.Assert;
 
 /**
@@ -109,12 +111,6 @@ public class DiskSerialCache implements Cache {
 		this.memoryCache = memoryCache;
 	}
 
-	private String replacer;
-
-	public void setPathSeparatorReplacer(String replacer) {
-		this.replacer = replacer;
-	}
-
 	private File getCacheFile(Object key) {
 		String name = String.valueOf(key);
 		if (prefix != null)
@@ -124,21 +120,12 @@ public class DiskSerialCache implements Cache {
 		return new File(getDirectory(), replacePath(name));
 	}
 
-	private static final String DEFAULT_REPLACER = "_-";
-
 	private String replacePath(String path) {
-		String r = replacer;
-		if (r == null)
-			r = DEFAULT_REPLACER;
-		StringBuffer buffer = new StringBuffer();
-		for (int i = 0, n = path.length(); i < n; i ++) {
-			char ch = path.charAt(i);
-			if (ch == '/' || ch == '\\')
-				buffer.append(r);
-			else
-				buffer.append(ch);
+		try {
+			return URLEncoder.encode(path, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			throw new CacheException(e);
 		}
-		return buffer.toString();
 	}
 
 	public Object get(Object key) throws CacheException {
