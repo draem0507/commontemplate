@@ -34,11 +34,13 @@ public final class ExpressionEngine implements ExpressionParser {
 
 	private final ExpressionFactory expressionFactory;
 
+	private final OperatorHandlerProvider operatorHandlerProvider;
+
 	public ExpressionEngine(ExpressionConfiguration config) {
 		Assert.assertNotNull(config, "ExpressionEngine.config.required");
 		config.validate(); // 配置自验证
 
-		OperatorHandlerProvider operatorHandlerProvider = config.getOperatorHandlerProvider();
+		operatorHandlerProvider = config.getOperatorHandlerProvider();
 		expressionTokenizer = new ExpressionTokenizer();
 		expressionTranslator = new ExpressionTranslator(new ExpressionProvider(
 				operatorHandlerProvider, config.getKeywords(),
@@ -82,7 +84,7 @@ public final class ExpressionEngine implements ExpressionParser {
 	}
 
 	public ExpressionBuilder getExpressionBuilder() {
-		return new ExpressionBuilderImpl();
+		return new ExpressionBuilderImpl(operatorHandlerProvider);
 	}
 
 }
