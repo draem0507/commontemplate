@@ -36,8 +36,8 @@ public interface TemplateParser extends ExpressionParser, TemplateElementFactory
 
 	/**
 	 * 获取模块构建器
-	 * @param templateName TODO
 	 *
+	 * @param templateName 模板名称
 	 * @return 模块构建器
 	 */
 	public TemplateBudiler getTemplateBudiler(String templateName);
