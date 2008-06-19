@@ -138,11 +138,7 @@ final class TemplateFactoryImpl implements TemplateFactory {
 	}
 
 	private String filterName(String name) {
-		if (name == null)
-			throw new java.lang.NullPointerException("TemplateFactoryImpl.template.name.required");
-		name = name.trim();
-		if (name.length() == 0)
-			throw new java.lang.NullPointerException("TemplateFactoryImpl.template.name.required");
+		Assert.assertNotEmpty(name, "TemplateFactoryImpl.template.name.required");
 		char leader = name.charAt(0);
 		if (leader != '/' && leader != '\\')
 			name = "/" + name;
