@@ -314,8 +314,8 @@ final class ContextImpl extends Context {
 		return templateFactory.getExpressionBuilder();
 	}
 
-	public TemplateBudiler getTemplateBudiler() {
-		return templateFactory.getTemplateBudiler();
+	public TemplateBudiler getTemplateBudiler(String templateName) {
+		return templateFactory.getTemplateBudiler(templateName);
 	}
 
 	public BinaryOperator createBinaryOperator(String operatorName,

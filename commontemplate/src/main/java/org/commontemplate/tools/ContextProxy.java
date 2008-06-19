@@ -493,8 +493,8 @@ public abstract class ContextProxy extends Context {
 		return context.getExpressionBuilder();
 	}
 
-	public TemplateBudiler getTemplateBudiler() {
-		return context.getTemplateBudiler();
+	public TemplateBudiler getTemplateBudiler(String templateName) {
+		return context.getTemplateBudiler(templateName);
 	}
 
 	public Template createTemplate(String name, List elements) {

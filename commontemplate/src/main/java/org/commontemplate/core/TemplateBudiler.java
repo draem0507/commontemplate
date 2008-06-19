@@ -17,18 +17,6 @@ public interface TemplateBudiler {
 	public Template getTemplate();
 
 	/**
-	 * 开始模板
-	 *
-	 * @param templateName 模板名称
-	 */
-	public void beginTemplate(String templateName);
-
-	/**
-	 * 结束模板
-	 */
-	public void endTemplate();
-
-	/**
 	 * 开始块指令
 	 *
 	 * @param directiveName 指令名

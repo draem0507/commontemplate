@@ -131,8 +131,8 @@ public final class Engine implements Factory {
 		return templateFactory.getExpressionBuilder();
 	}
 
-	public TemplateBudiler getTemplateBudiler() {
-		return templateFactory.getTemplateBudiler();
+	public TemplateBudiler getTemplateBudiler(String templateName) {
+		return templateFactory.getTemplateBudiler(templateName);
 	}
 
 	public Template createTemplate(String name, List elements) {
