@@ -1,7 +1,7 @@
 package org.commontemplate.core;
 
 /**
- * 渲染接口
+ * 模板与模板元素的共同抽象,渲染接口.
  *
  * @author liangfei0201@163.com
  *
@@ -20,7 +20,7 @@ public interface Node extends Visitable {
 	 *
 	 * @return 模板/元素的标准组成
 	 */
-	public abstract String getCanonicalForm();
+	public abstract String getSource();
 
 	/**
 	 * 模板/模板元素渲染接口

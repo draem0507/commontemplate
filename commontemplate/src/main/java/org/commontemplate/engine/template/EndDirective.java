@@ -4,6 +4,7 @@ import org.commontemplate.core.Context;
 import org.commontemplate.core.Directive;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.RenderingException;
+import org.commontemplate.core.Template;
 import org.commontemplate.core.Visitor;
 import org.commontemplate.util.I18nExceptionFactory;
 import org.commontemplate.util.Location;
@@ -34,7 +35,7 @@ final class EndDirective extends Directive {
 		return null;
 	}
 
-	public String getCanonicalForm() {
+	public String getSource() {
 		return "$end";
 	}
 
@@ -48,6 +49,10 @@ final class EndDirective extends Directive {
 
 	public String getSignature() {
 		return "$end";
+	}
+
+	public Template getTemplate() {
+		return null;
 	}
 
 }

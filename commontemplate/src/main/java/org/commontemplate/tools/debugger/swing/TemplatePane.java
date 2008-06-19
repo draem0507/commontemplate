@@ -67,7 +67,7 @@ public class TemplatePane extends JPanel {
 		elementText = elementText.replaceAll("\t", "\\\\t");
 		elementText = elementText.replaceAll("\f", "\\\\f");
 		elementText = elementText.replaceAll("\b", "\\\\b");
-		elementBox.setText(element.getType() + ": " + elementText);
+		elementBox.setText(elementText);
 	}
 
 	public synchronized void removeElement() {

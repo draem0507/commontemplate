@@ -43,7 +43,7 @@ abstract class BlockDirectiveSupport extends BlockDirective implements java.io.S
 		StringBuffer buf = new StringBuffer();
 		for (int i = 0, n = elements.size(); i < n; i ++) {
 			Element directive = (Element)elements.get(i);
-			buf.append(directive.getCanonicalForm());
+			buf.append(directive.getSource());
 		}
 		return buf.toString();
 	}

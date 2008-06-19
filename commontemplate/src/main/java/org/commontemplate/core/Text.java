@@ -10,12 +10,6 @@ import java.io.IOException;
  */
 public abstract class Text extends Content {
 
-	public static final String TYPE = "Text";
-
-	public String getType() {
-		return TYPE;
-	}
-
 	// 语义的默认实现
 	public void render(Context context) throws RenderingException {
 		try {

@@ -2,6 +2,7 @@ package org.commontemplate.engine.template;
 
 import org.commontemplate.core.Context;
 import org.commontemplate.core.RenderingException;
+import org.commontemplate.core.Template;
 import org.commontemplate.core.Text;
 import org.commontemplate.core.Visitor;
 import org.commontemplate.util.Location;
@@ -30,8 +31,12 @@ final class TextInterceptProxy extends Text {
 		return text.equals(obj);
 	}
 
-	public String getCanonicalForm() {
-		return text.getCanonicalForm();
+	public Template getTemplate() {
+		return text.getTemplate();
+	}
+
+	public String getSource() {
+		return text.getSource();
 	}
 
 	public Location getLocation() {
