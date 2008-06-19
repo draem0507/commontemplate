@@ -1,8 +1,6 @@
 package org.commontemplate.core;
 
-import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * 基础上下文，提供仿Map注册接口
@@ -10,7 +8,7 @@ import java.util.Set;
  * @author liangfei0201@163.com
  *
  */
-public abstract class BaseContext implements Storage, Map {
+public abstract class BaseContext implements Storage {
 
 	/**
 	 * 清空上下文, 此动作将清空该上下文持有的所有数据.
@@ -122,53 +120,4 @@ public abstract class BaseContext implements Storage, Map {
 		put(key, new Double(value));
 	}
 
-	public Object put(Object key, Object value) {
-		// TODO Auto-generated method stub
-		return value;
-	}
-
-	public boolean containsKey(Object key) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public boolean containsValue(Object value) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public Set entrySet() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Object get(Object key) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public Set keySet() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Object remove(Object key) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public Collection values() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
