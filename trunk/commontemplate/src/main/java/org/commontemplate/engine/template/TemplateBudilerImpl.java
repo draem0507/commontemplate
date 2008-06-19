@@ -1,7 +1,6 @@
 package org.commontemplate.engine.template;
 
 import java.io.IOException;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +17,9 @@ import org.commontemplate.core.TemplateBudiler;
  * @author liangfei0201@163.com
  *
  */
-final class TemplateBudilerImpl implements TemplateBudiler { // TODO 未完成
+final class TemplateBudilerImpl implements TemplateBudiler {
+
+	private final String templateName;
 
 	private final Syntax syntax;
 
@@ -26,13 +27,14 @@ final class TemplateBudilerImpl implements TemplateBudiler { // TODO 未完成
 
 	private final List elementInterceptors;
 
-	TemplateBudilerImpl(Syntax syntax, DirectiveHandlerProvider directiveHandlerProvider, List elementInterceptors) {
+	private final DirectiveReducer directiveReducer = new DirectiveReducer();
+
+	TemplateBudilerImpl(String templateName, Syntax syntax, DirectiveHandlerProvider directiveHandlerProvider, List elementInterceptors) {
+		this.templateName = templateName;
 		this.syntax = syntax;
 		this.directiveHandlerProvider = directiveHandlerProvider;
 		this.elementInterceptors = elementInterceptors;
 	}
-
-	private BlockDirectiveSupport blockDirective = new RootBlockDirectiveImpl();
 
 	private List elements = new ArrayList();
 
@@ -52,12 +54,12 @@ final class TemplateBudilerImpl implements TemplateBudiler { // TODO 未完成
 	}
 
 	public Template getTemplate() {
-		return template;
-	}
-
-	public void endBlockDirective() {
-		// TODO Auto-generated method stub
-
+		RootBlockDirectiveImpl rootBlockDirective = directiveReducer.reduce(elements);
+		try {
+			return new TemplateImpl(new ResourceImpl("", templateName), rootBlockDirective);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public void beginBlockDirective(String directiveName, Expression expression) {
@@ -67,20 +69,8 @@ final class TemplateBudilerImpl implements TemplateBudiler { // TODO 未完成
 				+ expression.toString() + String.valueOf(syntax.getExpressionEnd()), syntax.getEndDirective(), elementInterceptors));
 	}
 
-	private String templateName;
-
-	public void beginTemplate(String templateName) {
-		this.templateName = templateName;
-	}
-
-	private Template template;
-
-	public void endTemplate() {
-		try {
-			template = new TemplateImpl(new StringReader(""), new ResourceImpl("", templateName), blockDirective);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public void endBlockDirective() {
+		elements.add(EndDirective.END_DIRECTIVE);
 	}
 
 }

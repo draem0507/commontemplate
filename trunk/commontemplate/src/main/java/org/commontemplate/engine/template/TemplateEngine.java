@@ -120,8 +120,8 @@ public final class TemplateEngine implements TemplateParser {
 		}
 	}
 
-	public TemplateBudiler getTemplateBudiler() {
-		return new TemplateBudilerImpl(syntax, directiveHandlerProvider, elementInterceptors);
+	public TemplateBudiler getTemplateBudiler(String templateName) {
+		return new TemplateBudilerImpl(templateName, syntax, directiveHandlerProvider, elementInterceptors);
 	}
 
 	public BinaryOperator createBinaryOperator(String operatorName,

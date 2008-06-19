@@ -37,6 +37,10 @@ final class TemplateImpl extends Template implements Serializable {
 
 	private final char[] data;
 
+	TemplateImpl(Resource resource, BlockDirective rootDirective) throws IOException {
+		this(resource == null ? null : resource.getReader(), resource, rootDirective);
+	}
+
 	TemplateImpl(Reader reader, Resource resource, BlockDirective rootDirective) throws IOException {
 		Assert.assertNotNull(resource, "TemplateImpl.resource.required");
 		Assert.assertNotNull(rootDirective, "TemplateImpl.elements.required");

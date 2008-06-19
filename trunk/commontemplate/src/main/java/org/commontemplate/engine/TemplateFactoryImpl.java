@@ -187,8 +187,8 @@ final class TemplateFactoryImpl implements TemplateFactory {
 		return templateParser.getExpressionBuilder();
 	}
 
-	public TemplateBudiler getTemplateBudiler() {
-		return templateParser.getTemplateBudiler();
+	public TemplateBudiler getTemplateBudiler(String templateName) {
+		return templateParser.getTemplateBudiler(templateName);
 	}
 
 	public BinaryOperator createBinaryOperator(String operatorName,
