@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.commontemplate.core.Context;
 import org.commontemplate.core.RenderingException;
+import org.commontemplate.core.Template;
 import org.commontemplate.core.Text;
 import org.commontemplate.core.Visitor;
 import org.commontemplate.util.Location;
@@ -53,7 +54,7 @@ final class TextImpl extends Text {
 		return name;
 	}
 
-	public String getCanonicalForm() {
+	public String getSource() {
 		return getValue();
 	}
 
@@ -71,6 +72,16 @@ final class TextImpl extends Text {
 
 	public String getSignature() {
 		return "";
+	}
+
+	private Template template;
+
+	public Template getTemplate() {
+		return template;
+	}
+
+	void setTemplate(Template template) {
+		this.template = template;
 	}
 
 }

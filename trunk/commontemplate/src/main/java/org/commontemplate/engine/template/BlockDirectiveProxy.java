@@ -6,6 +6,7 @@ import org.commontemplate.core.BlockDirective;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.RenderingException;
+import org.commontemplate.core.Template;
 import org.commontemplate.core.Visitor;
 import org.commontemplate.util.I18nExceptionFactory;
 import org.commontemplate.util.Location;
@@ -30,8 +31,8 @@ class BlockDirectiveProxy extends BlockDirective {
 		blockDirective.accept(visitor);
 	}
 
-	public String getCanonicalForm() {
-		return blockDirective.getCanonicalForm();
+	public String getSource() {
+		return blockDirective.getSource();
 	}
 
 	public List getElements() {
@@ -50,10 +51,6 @@ class BlockDirectiveProxy extends BlockDirective {
 		return blockDirective.getName();
 	}
 
-	public String getSignature() {
-		return blockDirective.getSignature();
-	}
-
 	public void render(Context context) throws RenderingException {
 		throw I18nExceptionFactory.createUnsupportedOperationException("BlockDirectiveProxy.cycle.render", new Object[]{getName()});
 	}
@@ -68,6 +65,10 @@ class BlockDirectiveProxy extends BlockDirective {
 
 	public String toString() {
 		return blockDirective.toString();
+	}
+
+	public Template getTemplate() {
+		return blockDirective.getTemplate();
 	}
 
 }

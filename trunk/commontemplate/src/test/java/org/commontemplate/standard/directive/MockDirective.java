@@ -6,6 +6,7 @@ import java.io.Writer;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.Element;
 import org.commontemplate.core.RenderingException;
+import org.commontemplate.core.Template;
 import org.commontemplate.core.Visitor;
 import org.commontemplate.util.Location;
 /**
@@ -56,12 +57,12 @@ public class MockDirective extends Element{
 	 *
 	 * @return 模板元素的标准组成
 	 */
-	public String getCanonicalForm() {
+	public String getSource() {
 		return null;
 	}
 
 	public String getSignature() {
-		return getCanonicalForm();
+		return getSource();
 	}
 
 	/**
@@ -70,7 +71,7 @@ public class MockDirective extends Element{
 	 * @return 模板元素的标准组成
 	 */
 	public String toString() {
-		return getCanonicalForm();
+		return getSource();
 	}
 
 	/**
@@ -86,8 +87,8 @@ public class MockDirective extends Element{
 		this.name = name;
 	}
 
-	public String getType() {
-		return "Mock";
+	public Template getTemplate() {
+		return null;
 	}
 
 }

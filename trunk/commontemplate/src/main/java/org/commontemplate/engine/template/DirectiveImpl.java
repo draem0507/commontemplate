@@ -8,6 +8,7 @@ import org.commontemplate.core.Directive;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.IgnoreException;
 import org.commontemplate.core.RenderingException;
+import org.commontemplate.core.Template;
 import org.commontemplate.core.Visitor;
 import org.commontemplate.util.Location;
 
@@ -80,12 +81,22 @@ final class DirectiveImpl extends Directive {
 		return expression;
 	}
 
-	public String getCanonicalForm() {
+	public String getSource() {
 		return prototype;
 	}
 
 	public String getSignature() {
 		return prototype;
+	}
+
+	private Template template;
+
+	public Template getTemplate() {
+		return template;
+	}
+
+	void setTemplate(Template template) {
+		this.template = template;
 	}
 
 }

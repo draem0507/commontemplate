@@ -13,29 +13,18 @@ import org.commontemplate.util.Location;
 public abstract class Element implements Node, Serializable {
 
 	/**
+	 * 获取元素所属模板
+	 *
+	 * @return 模板
+	 */
+	public abstract Template getTemplate();
+
+	/**
 	 * 获取模板元素在模板中的位置
 	 *
 	 * @return 元素在模板中的位置
 	 */
 	public abstract Location getLocation();
-
-	public String getSource() {
-		return getCanonicalForm();
-	}
-
-	/**
-	 * 获取指令签名信息, 只包含"$xxx{yyy}", 不包含内部块信息等.
-	 *
-	 * @return 指令签名信息
-	 */
-	public abstract String getSignature();
-
-	/**
-	 * 获取元素类型
-	 *
-	 * @return 元素类型
-	 */
-	public abstract String getType();
 
 	/**
 	 * 返回模板元素的标准组成, 同getCanonicalForm()
@@ -43,7 +32,7 @@ public abstract class Element implements Node, Serializable {
 	 * @return 模板元素的标准组成
 	 */
 	public String toString() {
-		return getCanonicalForm();
+		return getSource();
 	}
 
 }

@@ -1,6 +1,7 @@
 package org.commontemplate.engine.template;
 
 import org.commontemplate.core.Comment;
+import org.commontemplate.core.Template;
 import org.commontemplate.core.Visitor;
 import org.commontemplate.util.Location;
 
@@ -29,7 +30,7 @@ final class CommentImpl extends Comment {
 		this.prototype = prototype;
 	}
 
-	public String getCanonicalForm() {
+	public String getSource() {
 		return prototype;
 	}
 
@@ -51,6 +52,16 @@ final class CommentImpl extends Comment {
 
 	public String getSignature() {
 		return prototype.substring(0,2);
+	}
+
+	private Template template;
+
+	public Template getTemplate() {
+		return template;
+	}
+
+	void setTemplate(Template template) {
+		this.template = template;
 	}
 
 }
