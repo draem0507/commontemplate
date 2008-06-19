@@ -41,7 +41,8 @@ public class DebugInterceptor implements RenderingInterceptor, Serializable {
 		final Template template = context.getCurrentTemplate();
 		final Element element = rendition.getElement();
 		// 判断是否需要单步运行
-		if (! debugManager.isDebugListenerEmpty() // 前置条件：调试器存在
+		if (template != null && // FIXME 待解决,template不应该为空
+				! debugManager.isDebugListenerEmpty() // 前置条件：调试器存在
 				&& context.isDebug() // 前置条件：配置中开启了调试模式
 					&& ((context.getRootLocalContext().getBooleanStatus(STEP_STATUS) // 运行在调试状态中
 							&& context.getProperty(STEP_OVER_KEY) != Boolean.TRUE) // 非跳跃状态
