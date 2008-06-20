@@ -2,6 +2,7 @@
 	<!--$overzone{"content"}-->
 								<b>1. $msg{'page.debug.breakpoint'}:</b><br/>
 								$msg{'page.debug.breakpoint.directive'}<br/>
+								$msg{'page.debug.breakpoint.swing'}<br/>
 								<br/>
 								<b>2. $msg{'page.debug.buttons'}:</b><br/>
 								<img src="../images/debug/stepinto.gif" /> $msg{'page.debug.shortcut.key'}:"ALT + F5", $msg{'page.debug.buttons.step.into'}<br/>
