@@ -30,15 +30,15 @@ public class PositionTester extends TestCase {
 		Position newPos = pos.offset(offsetPos);
 
 		assertEquals(0, pos.getOffset());
-		assertEquals(0, pos.getRow());
+		assertEquals(0, pos.getLine());
 		assertEquals(0, pos.getColumn());
 
 		assertEquals(1, offsetPos.getOffset());
-		assertEquals(2, offsetPos.getRow());
+		assertEquals(2, offsetPos.getLine());
 		assertEquals(3, offsetPos.getColumn());
 
 		assertEquals(1, newPos.getOffset());
-		assertEquals(2, newPos.getRow());
+		assertEquals(2, newPos.getLine());
 		assertEquals(3, newPos.getColumn());
 	}
 

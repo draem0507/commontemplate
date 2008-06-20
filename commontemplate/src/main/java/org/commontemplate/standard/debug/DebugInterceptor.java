@@ -112,8 +112,8 @@ public class DebugInterceptor implements RenderingInterceptor, Serializable {
 		for (Iterator iterator = breakpoints.iterator(); iterator.hasNext();) {
 			Breakpoint breakpoint = (Breakpoint) iterator.next();
 			if (templateName.equals(breakpoint.getTemplateName())
-					&& location.getBegin().getRow() <= breakpoint.getLine()
-					&& location.getEnd().getRow() >= breakpoint.getLine()) {
+					&& location.getBegin().getLine() <= breakpoint.getLine()
+					&& location.getEnd().getLine() >= breakpoint.getLine()) {
 				return true;
 			}
 		}

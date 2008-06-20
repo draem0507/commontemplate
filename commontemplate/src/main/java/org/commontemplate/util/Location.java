@@ -47,7 +47,7 @@ public final class Location implements Serializable {
 		Assert.assertNotNull(begin);
 		Assert.assertNotNull(end);
 		// 不变式，同行Position，offset差值等于column之差.
-		if (begin.getRow() == end.getRow())
+		if (begin.getLine() == end.getLine())
 			Assert.assertTrue(end.getOffset() - begin.getOffset() == end.getColumn() - begin.getColumn());
 		this.begin = begin;
 		this.end = end;

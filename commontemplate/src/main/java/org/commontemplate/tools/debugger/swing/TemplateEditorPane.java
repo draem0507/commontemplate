@@ -179,7 +179,7 @@ public class TemplateEditorPane extends JTextArea implements Border {
 		Insets margin = super.getMargin();
 		int height = getRowHeight();
 		int width = getColumnWidth();
-		int row = element.getLocation().getBegin().getRow();
+		int row = element.getLocation().getBegin().getLine();
 		int col = element.getLocation().getBegin().getColumn();
 		return new Rectangle(width * col + margin.left, height * row + margin.right, width, height);
 	}
