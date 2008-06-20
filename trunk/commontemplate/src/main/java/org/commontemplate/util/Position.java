@@ -18,14 +18,14 @@ public final class Position implements Serializable {
 
 	private final int offset;
 
-	private final int row;
+	private final int line;
 
 	private final int column;
 
-	public Position(int offset, int row, int column) {
+	public Position(int offset, int line, int column) {
 		super();
 		this.offset = offset;
-		this.row = row;
+		this.line = line;
 		this.column = column;
 	}
 
@@ -43,8 +43,8 @@ public final class Position implements Serializable {
 	 *
 	 * @return 位置行
 	 */
-	public int getRow() {
-		return row;
+	public int getLine() {
+		return line;
 	}
 
 	/**
@@ -63,7 +63,7 @@ public final class Position implements Serializable {
 	 * @return 偏移结果
 	 */
 	public Position offset(Position pos) {
-		return new Position(this.offset + pos.offset, this.row + pos.row, this.column + pos.column);
+		return new Position(this.offset + pos.offset, this.line + pos.line, this.column + pos.column);
 	}
 
 	public int hashCode() {
@@ -71,7 +71,7 @@ public final class Position implements Serializable {
 		int result = 1;
 		result = prime * result + column;
 		result = prime * result + offset;
-		result = prime * result + row;
+		result = prime * result + line;
 		return result;
 	}
 
@@ -87,13 +87,13 @@ public final class Position implements Serializable {
 			return false;
 		if (offset != other.offset)
 			return false;
-		if (row != other.row)
+		if (line != other.line)
 			return false;
 		return true;
 	}
 
 	public String toString() {
-		return "(pos:" + offset + " row:" + (row + 1) + " col:" + column + ")";
+		return "(pos:" + offset + " row:" + (line + 1) + " col:" + column + ")";
 	}
 
 }

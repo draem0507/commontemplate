@@ -55,7 +55,7 @@ public final class Token {
 			endColumn = beginPosition.getColumn() + message.length();
 		else
 			endColumn = message.length() - last - 1;
-		int endRow = beginPosition.getRow() + lines;
+		int endRow = beginPosition.getLine() + lines;
 		endPosition = new Position(beginPosition.getOffset() + message.length(), endRow, endColumn);
 		location = new Location(beginPosition, endPosition);
 	}
@@ -149,7 +149,7 @@ public final class Token {
 		if (start < 0 || start > message.length() || end > message.length())
 			throw new java.lang.ArrayIndexOutOfBoundsException(start);
 		String sub = message.substring(start, end);
-		int row = beginPosition.getRow();
+		int row = beginPosition.getLine();
 		int col = beginPosition.getColumn();
 		if (start > 0) {
 			// 计算起始行
