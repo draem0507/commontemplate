@@ -99,10 +99,10 @@ public class BeanUtils {
 		Assert.assertNotNull(clazz, "BeanUtils.class.required");
 		Assert.assertNotNull(methodName, "BeanUtils.property.required");
 		try {
-			return searchPublicMethod(clazz.getInterfaces(), methodName);
+			return searchPublicMethod(clazz.getSuperclass(), methodName);
 		} catch (NoSuchMethodException e1) {
 			try {
-				return searchPublicMethod(clazz.getClasses(), methodName);
+				return searchPublicMethod(clazz.getInterfaces(), methodName);
 			} catch (NoSuchMethodException e2) {
 				return clazz.getMethod(methodName, new Class[0]);
 			}
@@ -114,20 +114,40 @@ public class BeanUtils {
 		if (classes != null && classes.length > 0) {
 			for (int i = 0, n = classes.length; i < n; i ++) {
 				Class cls = classes[i];
-				if ((cls.getModifiers() & Modifier.PUBLIC) == 1) { // 首先保证类是公开的
-					try {
-						Method method = cls.getMethod(methodName, new Class[0]);
-						if ((method.getModifiers() & Modifier.PUBLIC) == 1
-								&& (method.getParameterTypes() == null
-										|| method.getParameterTypes().length == 0)) // 再保证方法是公开的
-							return method;
-					} catch (NoSuchMethodException e) {
-						// ignore, continue
-					}
+				try {
+					return searchPublicMethod(cls, methodName);
+				} catch (NoSuchMethodException e) {
+					// ignore, continue
 				}
 			}
 		}
 		throw new NoSuchMethodException(); // 未找到方法
+	}
+
+	// 查找公开的方法 (辅助方法)
+	private static Method searchPublicMethod(Class cls, String methodName) throws NoSuchMethodException, SecurityException {
+		if (cls != null) {
+			if ((cls.getModifiers() & Modifier.PUBLIC) == 1) { // 首先保证类是公开的
+				Method method = cls.getMethod(methodName, new Class[0]);
+				if ((method.getModifiers() & Modifier.PUBLIC) == 1
+						&& (method.getParameterTypes() == null
+								|| method.getParameterTypes().length == 0)) // 再保证方法是公开的
+					return method;
+			}
+		}
+		throw new NoSuchMethodException(); // 未找到方法
+	}
+
+	private static Class getPublicClass(Class clazz) throws SecurityException {
+		if (clazz == null)
+			return null;
+		if (isPublic(clazz))
+			return clazz;
+		return getPublicClass(clazz.getSuperclass());
+	}
+
+	private static boolean isPublic(Class clazz) {
+		return (clazz.getModifiers() & Modifier.PUBLIC) == 1;
 	}
 
 	/**
