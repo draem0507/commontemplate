@@ -65,8 +65,6 @@ final class TemplateImpl extends Template implements Serializable {
 		context.pushTemplate(this);
 		try {
 			rootDirective.render(context);
-		} catch (RenderingException e) {
-			throw new RenderingException(this, context, e.getElement().getLocation(), e);
 		} finally {
 			context.popTemplate();
 		}
