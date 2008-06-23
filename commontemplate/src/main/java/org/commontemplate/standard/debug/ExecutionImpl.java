@@ -148,6 +148,8 @@ final class ExecutionImpl implements Execution, Comparable {
 	}
 
 	public int compareTo(Object o) {
+		if (! (o instanceof ExecutionImpl))
+			return -1;
 		ExecutionImpl e = ((ExecutionImpl)o);
 		if (this.threadName == null && e.threadName == null)
 			return 0;

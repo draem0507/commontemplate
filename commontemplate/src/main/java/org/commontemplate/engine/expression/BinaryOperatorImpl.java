@@ -114,7 +114,7 @@ final class BinaryOperatorImpl extends BinaryOperator {
 		return rightOperandNamed;
 	}
 
-	public boolean isRightOperandFunctioned() {
+	boolean isRightOperandFunctioned() {
 		return rightOperandFunctioned;
 	}
 

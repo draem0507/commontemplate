@@ -13,7 +13,7 @@ public class ImageFactory {
 		try {
 			return ImageIO.read(ImageFactory.class.getClassLoader().getResourceAsStream(url));
 		} catch (Exception e) {
-			// return null;
+			// return new BufferedImage(16, 16, BufferedImage.TYPE_INT_RGB);
 		}
 		return new BufferedImage(16, 16, BufferedImage.TYPE_INT_RGB);
 	}

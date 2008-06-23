@@ -14,6 +14,7 @@ import org.commontemplate.core.Template;
 import org.commontemplate.core.Visitor;
 import org.commontemplate.util.Assert;
 import org.commontemplate.util.IOUtils;
+import org.commontemplate.util.Location;
 
 /**
  * 模板实现
@@ -27,7 +28,7 @@ final class TemplateImpl extends Template implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private final BlockDirective rootDirective;
+	private BlockDirective rootDirective;
 
 	private final String name;
 
@@ -49,6 +50,10 @@ final class TemplateImpl extends Template implements Serializable {
 		this.encoding = resource.getEncoding();
 		this.lastModified = resource.getLastModified();
 		this.data = IOUtils.readToChars(reader);
+		this.rootDirective = rootDirective;
+	}
+
+	void setRootDirective(BlockDirective rootDirective) {
 		this.rootDirective = rootDirective;
 	}
 
@@ -92,14 +97,48 @@ final class TemplateImpl extends Template implements Serializable {
 		return new String(data);
 	}
 
-	private Template template;
-
-	public Template getTemplate() {
-		return template;
+	public String getSource(Location location) {
+		if (location == null)
+			return "";
+		return getSource(location.getBegin().getOffset(), location.getEnd().getOffset());
 	}
 
-	void setTemplate(Template template) {
-		this.template = template;
+	public String getLineSource(int beginLine, int endLine) {
+		if (endLine <= beginLine)
+			return "";
+		int count = 0;
+		int begin = 0;
+		int end = 0;
+		for (int i = 0, n = data.length; i < n; i ++) {
+			if (data[i] == '\n')
+				count ++;
+			if (count == beginLine)
+				begin = i;
+			if (count == endLine) {
+				end = i;
+				break;
+			}
+		}
+		return getSource(begin, end);
+	}
+
+	public String getLineSource(Location location) {
+		if (location == null)
+			return "";
+		return getLineSource(location.getBegin().getLine(), location.getEnd().getLine());
+	}
+
+	public String getSource(int begin, int end) {
+		if (begin < 0)
+			begin = 0;
+		if (end > data.length)
+			end = data.length;
+		if (end <= begin)
+			return "";
+		int len = end - begin;
+		char[] block = new char[len];
+		System.arraycopy(data, begin, block, 0, len);
+		return new String(block);
 	}
 
 }

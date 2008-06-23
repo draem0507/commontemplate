@@ -17,7 +17,7 @@ public class TemplateNameRelativer implements TemplateNameFilter {
 	public String filter(String templateName, String currentTemplateName) throws InvalidTemplateNameException {
 		try {
 			if (templateName == null)
-				throw new InvalidTemplateNameException(templateName, "TemplateNameRelativer.template.name.required");
+				throw new InvalidTemplateNameException(null, "TemplateNameRelativer.template.name.required");
 			templateName = templateName.replace('\\', '/');
 			currentTemplateName = currentTemplateName.replace('\\', '/');
 			/*char leader = name.charAt(0);
