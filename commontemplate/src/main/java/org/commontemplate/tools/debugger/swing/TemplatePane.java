@@ -61,13 +61,15 @@ public class TemplatePane extends JPanel {
 
 	public synchronized void setElement(Element element) {
 		editor.setElement(element);
-		String elementText = element.getSource();
-		elementText = elementText.replaceAll("\n", "\\\\n");
-		elementText = elementText.replaceAll("\r", "\\\\r");
-		elementText = elementText.replaceAll("\t", "\\\\t");
-		elementText = elementText.replaceAll("\f", "\\\\f");
-		elementText = elementText.replaceAll("\b", "\\\\b");
-		elementBox.setText(elementText);
+		if (element != null) {
+			String elementText = element.getSource();
+			elementText = elementText.replaceAll("\n", "\\\\n");
+			elementText = elementText.replaceAll("\r", "\\\\r");
+			elementText = elementText.replaceAll("\t", "\\\\t");
+			elementText = elementText.replaceAll("\f", "\\\\f");
+			elementText = elementText.replaceAll("\b", "\\\\b");
+			elementBox.setText(element.getType() + ": " + elementText);
+		}
 	}
 
 	public synchronized void removeElement() {

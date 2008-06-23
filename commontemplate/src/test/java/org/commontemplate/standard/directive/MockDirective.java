@@ -14,7 +14,7 @@ import org.commontemplate.util.Location;
  * @author YanRong
  *
  */
-public class MockDirective extends Element{
+public class MockDirective extends Element {
 
 	private static final long serialVersionUID = 1L;
 
@@ -89,6 +89,10 @@ public class MockDirective extends Element{
 
 	public Template getTemplate() {
 		return null;
+	}
+
+	public String getType() {
+		return "MockDirective";
 	}
 
 }

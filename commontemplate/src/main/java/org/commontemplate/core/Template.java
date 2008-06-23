@@ -16,6 +16,12 @@ import org.commontemplate.util.Location;
  */
 public abstract class Template extends Resource implements Block, Serializable {
 
+	public static final String TYPE = "Template";
+
+	public String getType() {
+		return TYPE;
+	}
+
 	/**
 	 * 获取指定位置的模板源代码
 	 *
