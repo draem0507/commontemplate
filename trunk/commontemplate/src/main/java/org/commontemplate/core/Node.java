@@ -23,6 +23,13 @@ public interface Node extends Visitable {
 	public abstract String getSource();
 
 	/**
+	 * 获取节点类型
+	 *
+	 * @return 节点类型
+	 */
+	public abstract String getType();
+
+	/**
 	 * 模板/模板元素渲染接口
 	 *
 	 * @param context

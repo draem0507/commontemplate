@@ -117,7 +117,7 @@ public class BeanUtilsTester extends TestCase {
 		}
 	}
 
-	private class DataInnerImpl implements Data {
+	private static class DataInnerImpl implements Data {
 		public String getName() {
 			return "bb";
 		}
