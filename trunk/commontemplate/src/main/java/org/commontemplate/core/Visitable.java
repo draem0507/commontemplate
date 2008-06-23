@@ -13,6 +13,6 @@ public interface Visitable {
 	 *
 	 * @param visitor 访问者
 	 */
-	public void accept(Visitor visitor);
+	public void accept(Visitor visitor); // TODO 待考虑是否用返回值控制访问方式
 
 }
