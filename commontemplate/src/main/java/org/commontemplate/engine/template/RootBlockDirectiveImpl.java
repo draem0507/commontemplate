@@ -69,6 +69,18 @@ final class RootBlockDirectiveImpl extends BlockDirectiveSupport {
 
 	void setTemplate(Template template) {
 		this.template = template;
+		List directives = getElements();
+		for (int i = 0, n = directives.size(); i < n; i ++) {
+			Element directive = (Element)directives.get(i);
+			if (directive instanceof BlockDirectiveImpl)
+				((BlockDirectiveImpl)directive).setTemplate(template);
+			else if (directive instanceof DirectiveImpl)
+				((DirectiveImpl)directive).setTemplate(template);
+			else if (directive instanceof TextImpl)
+				((TextImpl)directive).setTemplate(template);
+			else if (directive instanceof CommentImpl)
+				((CommentImpl)directive).setTemplate(template);
+		}
 	}
 
 }
