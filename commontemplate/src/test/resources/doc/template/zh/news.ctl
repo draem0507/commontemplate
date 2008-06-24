@@ -4,7 +4,7 @@ $!
 								<b>0.8.4 版本发布！(2008-06-24)</b> <a href="download.html">下载...</a><br/>
 								采用Jericho实现属性语法外套.<br/>
 								加强各DriectiveHandler的单元测试.<br/>
-								修复不解释块"$! !$"状态机图的BUG, 并全面整理状态机图.<br/>
+								修复不解释块"$! !$!\$$!"状态机图的BUG, 并全面整理状态机图.<br/>
 								完成Debug拦截器, 实现单步执行.<br/>
 								完成Debug单步调试窗口, 参见: <a href="debug.html">调试窗口说明...</html><br/>
 								完成查看器功能, 参见: <a href="viewer.html">查看器说明...</html><br/>
