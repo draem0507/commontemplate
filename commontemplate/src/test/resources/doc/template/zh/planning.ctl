@@ -1,7 +1,505 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
-	<!--$overzone{"content"}-->
-								<b>1. ...</b><br/>
-								<br/>
-								<br/>
-	<!--$end-->
+<!--$overzone{"content"}-->
+$!
+									<table border="1" align="center"
+										style="border-style: solid; border-collapse: collapse; border-width: 1px; border-color: #000000;">
+										<tr style="background-color: #DBEEF3;">
+											<td>序号</td>
+											<td>任务描述</td>
+											<td>类型</td>
+											<td>工作量</td>
+											<td>紧急性</td>
+											<td>重要性</td>
+											<td>创建时间</td>
+											<td>完成状态</td>
+										</tr>
+										<tr>
+											<td>1</td>
+											<td>异常国际化, 将所有异常信息用统一的工具类管理, 并配置到properties文件中.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>出错位置信息准确性, 当抛出异常时, 应显示准确的出错元素在模板中的行列位置, 并显示出错位置附件的模板内容.</td>
+											<td>BUG</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>3</td>
+											<td>错误信息友好性, 抛出来的异常信息应有助于解决错误, 不应该出现底层的无意义信息, 可以通过故意写错模板内容等方式来测试.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>4</td>
+											<td>Context是否应去掉MessageSource和Logger，它们不是共享功能，可直接注册到相应指令中?</td>
+											<td>疑问</td>
+											<td>小</td>
+											<td>低</td>
+											<td>低</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>5</td>
+											<td>对象存储加一个不分级控制的存储空间. 此存储空间在单一Context内有效(非全局),
+											但不受LocalContext栈的隔离.</td>
+											<td>优化</td>
+											<td>小</td>
+											<td>中</td>
+											<td>中</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>6</td>
+											<td>类元静态函数/属性的调用, 在没有类实例的情况下, 怎么表示类元. 如:
+											${&com.xxx.XxxUtils.xxx()}, 这里假设用&作为前导一元操作符,并且其isOperandNamed()为true,
+											求值结果为包实例, 然后重载点号操作符, 直到找到类元.</td>
+											<td>需求</td>
+											<td>中</td>
+											<td>高</td>
+											<td>高</td>
+											<td>2008-2-12</td>
+											<td>完成</td>
+										</tr>
+										<tr>
+											<td>7</td>
+											<td>测试JspTagLib的集成方案, 尤其是对上下级关联的Tag测试.</td>
+											<td>测试</td>
+											<td>中</td>
+											<td>高</td>
+											<td>高</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>8</td>
+											<td>加入对jsp2.1的taglib支持, 主要是EL的转变</td>
+											<td>需求</td>
+											<td>中</td>
+											<td>低</td>
+											<td>低</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>9</td>
+											<td>指令单元测试, 完善边界值测试, 提高测试覆盖率.</td>
+											<td>测试</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>10</td>
+											<td>操作符单元测试, 操作符的个数比较多. 急需测试.</td>
+											<td>测试</td>
+											<td>大</td>
+											<td>高</td>
+											<td>高</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>11</td>
+											<td>操作符重构, 操作符的分包, 命名等都不是很规范, 应尽快做一次全面重构.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>高</td>
+											<td>高</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>12</td>
+											<td>操作符优先级调整及测试, 现在的优先级排列还需斟酌.</td>
+											<td>优化</td>
+											<td>小</td>
+											<td>高</td>
+											<td>高</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>13</td>
+											<td>写一个验证性论坛, 用CT做全部页面, 用CT做代码生成, 用CT做SQL拼接模板. 并做压力测试.</td>
+											<td>集成</td>
+											<td>大</td>
+											<td>低</td>
+											<td>高</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>14</td>
+											<td>写一个Ant脚本, 自动提取EL相关类打成jar包</td>
+											<td>集成</td>
+											<td>中</td>
+											<td>低</td>
+											<td>低</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>15</td>
+											<td>使用Maven发布</td>
+											<td>集成</td>
+											<td>中</td>
+											<td>低</td>
+											<td>低</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>16</td>
+											<td>全面检查序列化, 任何接口都不应继承Serializable, 但要保证整个模板树都是可序列化的.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>低</td>
+											<td>中</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>17</td>
+											<td>完成.Net版的基础实现, 先从Java版导过去, 再重构. 工作量比较大.</td>
+											<td>需求</td>
+											<td>大</td>
+											<td>低</td>
+											<td>高</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>18</td>
+											<td>使用Spring作为配置工具. 通过<beans>配置完成ConfigurationSettings的组装.
+											可以写一个转换器, 从现有的properies配置转换过去.</td>
+											<td>需求</td>
+											<td>大</td>
+											<td>低</td>
+											<td>低</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>19</td>
+											<td>不同类型对比时，自动转换类型, 如:char与string对比时, int与float对比时,
+											int与string对比时等.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+											<td>2008-2-12</td>
+											<td>部分完成</td>
+										</tr>
+										<tr>
+											<td>20</td>
+											<td>实现XSLT解析, Velocity和FreeMarker都支持对XSLT的解析, CT也考虑实现, 但延后.</td>
+											<td>需求</td>
+											<td>大</td>
+											<td>低</td>
+											<td>低</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>21</td>
+											<td>Html标签属性语法外套优化, 主要是对不合法html标签的容错性的良好支持. 此功能可单独提取,
+											作为Velocity和FreeMarker等的扩展.</td>
+											<td>需求</td>
+											<td>大</td>
+											<td>中</td>
+											<td>高</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>22</td>
+											<td>"完成与AntTask的集成, 可用于代码生成等, 实现:org.commontemplate.tools.ant.TemplateTask"</td>
+											<td>需求</td>
+											<td>小</td>
+											<td>低</td>
+											<td>中</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>23</td>
+											<td>"实现热加载国际化信息:org.commontemplate.standard.i18n.ReloadablePropertiesResourceBundleProvider"</td>
+											<td>需求</td>
+											<td>小</td>
+											<td>低</td>
+											<td>低</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>24</td>
+											<td>实现国际化信息与struts2的集成, 也就是可分包, 分级放置properties文件,
+											而不是单一的properties文件, 并保证集成的简便性, 如需要, 可重构ResourceBundleProvider接口.</td>
+											<td>需求</td>
+											<td>中</td>
+											<td>低</td>
+											<td>高</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>25</td>
+											<td>写Eclipse/NetBeans的编辑器插件, 可在某Html编辑器插件的基础上扩展. 完成高亮显示, 自动提示.</td>
+											<td>需求</td>
+											<td>大</td>
+											<td>低</td>
+											<td>高</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>26</td>
+											<td>写CommonTemplate.exe, 类似notepad, 可双击打开.ct和.ctl结尾的模板文件(注册表关联),
+											并调用$test指令所提供的数据进行显示(可调用IE显示).</td>
+											<td>需求</td>
+											<td>大</td>
+											<td>低</td>
+											<td>中</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>27</td>
+											<td>"完成properties高亮显示的html过滤, 通用在内容中加入<font color=""""></font>实现:org.commontemplate.standard.directive.filter.highlight.PropertiesCodeFilter"</td>
+											<td>需求</td>
+											<td>小</td>
+											<td>低</td>
+											<td>低</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>28</td>
+											<td>"完成JS中特殊符的转码.org.commontemplate.standard.directive.filter.escape.JavaScriptEscapeFilter"</td>
+											<td>需求</td>
+											<td>小</td>
+											<td>低</td>
+											<td>低</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>29</td>
+											<td>"将StringSequence实现List接口:org.commontemplate.standard.operator.sequence.StringSequence"</td>
+											<td>需求</td>
+											<td>小</td>
+											<td>低</td>
+											<td>中</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>30</td>
+											<td>完成网站的英文版</td>
+											<td>文档</td>
+											<td>大</td>
+											<td>低</td>
+											<td>中</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>31</td>
+											<td>扩展指南页面内容未同步更新</td>
+											<td>文档</td>
+											<td>中</td>
+											<td>低</td>
+											<td>中</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>32</td>
+											<td>ExpressionConfigurationSettings是否应与ConfigurationSettings合并?</td>
+											<td>疑问</td>
+											<td>小</td>
+											<td>低</td>
+											<td>低</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>33</td>
+											<td>StandardConfiguration重构, 加入: static StandardConfiguration
+											loadStandardConfiguration()</td>
+											<td>优化</td>
+											<td>小</td>
+											<td>低</td>
+											<td>低</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>34</td>
+											<td>是否应默认开启函数调用? 如果开启应可以用AOP的方式禁止调用某些有返回值函数，如：remove*, delete*</td>
+											<td>疑问</td>
+											<td>小</td>
+											<td>低</td>
+											<td>低</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>35</td>
+											<td>代码生成时, 自动去掉块指令所在的空白行. 如: 模板通常会将$if和$end等放在单独的行中,
+											生成的文本会在指令位置出现空白行, 应实现一过滤器, 自动去掉该空白行.</td>
+											<td>需求</td>
+											<td>中</td>
+											<td>低</td>
+											<td>中</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>36</td>
+											<td>重构异常, 分析ParsingException, RenderingException,
+											EvaluationException等的关系.</td>
+											<td>优化</td>
+											<td>小</td>
+											<td>低</td>
+											<td>中</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>37</td>
+											<td>缓存更新方式, 抽取策略接口, 加入Job线程定时更新缓存策略.</td>
+											<td>优化</td>
+											<td>小</td>
+											<td>低</td>
+											<td>中</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>38</td>
+											<td>将表达式中与Java相同的和不相同的分开描述.</td>
+											<td>文档</td>
+											<td>小</td>
+											<td>低</td>
+											<td>中</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>39</td>
+											<td>拆分util包到子包, 如: standard.util, 尽可能缩小根目录的util包?</td>
+											<td>疑问</td>
+											<td>小</td>
+											<td>低</td>
+											<td>中</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>40</td>
+											<td>"用多线程(多核CPU)模拟并发获取模板, 测试并发."</td>
+											<td>测试</td>
+											<td>中</td>
+											<td>低</td>
+											<td>中</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>41</td>
+											<td>通过跟踪内存栈, 记录模板编译后占用内存大小, 以及模板源内容大小, 给出测试结果Excel对照表 .</td>
+											<td>测试</td>
+											<td>中</td>
+											<td>低</td>
+											<td>中</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>42</td>
+											<td>"通过函数扩展或属性扩展实现:四舍五入round, 绝对值abs, 最大值max, 最小值min, 平均值avg 等等"</td>
+											<td>需求</td>
+											<td>小</td>
+											<td>低</td>
+											<td>低</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>43</td>
+											<td>是否应支持switch case, while等?</td>
+											<td>疑问</td>
+											<td>小</td>
+											<td>低</td>
+											<td>低</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>44</td>
+											<td>是否应支持变量别名引用alias?</td>
+											<td>疑问</td>
+											<td>小</td>
+											<td>低</td>
+											<td>低</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>45</td>
+											<td>已有字符串重复操作符, 如：str * 2 变成两str，是否扩展到list * 2, map * 2等?</td>
+											<td>疑问</td>
+											<td>小</td>
+											<td>低</td>
+											<td>低</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>46</td>
+											<td>"String 操作符未实现功能: split, replace, indexOf, lastIndexOf等.另外,应加入以某个char为分割符的前后段,如: ""xxx.txt"".suffixOf(""."")返回txt""xxx.txt"".prefixOf(""."")返回xxx相似的lastSuffixOf(), lastPrefixOf()"</td>
+											<td>需求</td>
+											<td>中</td>
+											<td>低</td>
+											<td>中</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+										<tr>
+											<td>47</td>
+											<td>加强模板测试, 在test/integration/template/目录下放一个xxx.ctl, 写入模板,
+											在test/integration/result/目录下放同名的模板结果,
+											运行test/integration.TemplateTester可以进行自动测试. 另外,
+											模板结果的获取可以通过integration.OutTester得到,
+											它将读取模板文件test/integration/out.ctl的内容, 并将解析结果输出到控制台.</td>
+											<td>测试</td>
+											<td>大</td>
+											<td>中</td>
+											<td>中</td>
+											<td>2008-2-12</td>
+											<td>未完成</td>
+										</tr>
+									</table>
+									<br/>
+!$
+<!--$end-->
 <!--$end-->
