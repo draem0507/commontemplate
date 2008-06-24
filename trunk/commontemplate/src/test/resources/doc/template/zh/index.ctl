@@ -92,7 +92,7 @@
 								下载服务由GoogleCode支持:<br/>
 								<table>
 									<tr>
-										<td width="64" height="24" align="center" style="background-color: #003399;"><a href="download.html" style="color: #FFFFFF; font-weight: bold;">下载</a></td>
+										<td width="64" height="24" align="center" style="background-color: #003399;"><a href="downloads.html" style="color: #FFFFFF; font-weight: bold;">下载</a></td>
 									</tr>
 								</table>
 								<br/>

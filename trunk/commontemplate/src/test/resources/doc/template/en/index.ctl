@@ -15,7 +15,7 @@ $!
 								Download from <a target="_blank" href="http://sourceforge.net">SourceForge</a> platform:<br/>
 								<table>
 									<tr>
-										<td width="64" height="24" align="center" style="background-color: #003399;"><a href="download.html" style="color: #FFFFFF; font-weight: bold;">Download</a></td>
+										<td width="64" height="24" align="center" style="background-color: #003399;"><a href="downloads.html" style="color: #FFFFFF; font-weight: bold;">Download</a></td>
 									</tr>
 								</table>
 								<br/>
