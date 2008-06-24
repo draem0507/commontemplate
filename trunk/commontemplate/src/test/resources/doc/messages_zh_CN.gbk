@@ -84,6 +84,7 @@ page.about.project.tools=使用以下开源工具开发
 page.debug.breakpoint=断点设置
 page.debug.breakpoint.directive=当引擎遇到$breakpoint指令时，自动在指令所在行设置断点
 page.debug.breakpoint.swing=在调试窗口模板内容面板左边的行号上双击，或右键菜单添加断点
+page.debug.breakpoint.trigger=当运行的指令处于断点位置，将自动挂起，并弹出调试窗口
 page.debug.buttons=调试窗口按钮说明
 page.debug.shortcut.key=快捷键
 page.debug.buttons.step.into="Step Into"，单步运行，如果为块指令则<b>进入</b>其内部指令。
