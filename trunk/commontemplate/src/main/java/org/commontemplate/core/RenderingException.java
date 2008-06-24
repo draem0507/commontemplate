@@ -51,57 +51,15 @@ public class RenderingException extends I18nRuntimeException {
 		this.location = location;
 	}
 
-	public RenderingException(Template template, Context context,
-			Location location, String message, Throwable cause) {
-		super(message, cause);
-		this.template = template;
-		this.context = context;
-		this.location = location;
-	}
-
-	public RenderingException(Template template, Context context,
-			Location location, String message) {
-		super(message);
-		this.template = template;
-		this.context = context;
-		this.location = location;
-	}
-
-	public RenderingException(Template template, Context context,
-			Location location, Throwable cause) {
-		super(cause);
-		this.template = template;
-		this.context = context;
-		this.location = location;
-	}
-
-	public RenderingException(Template template, Context context,
-			Location location) {
-		super();
-		this.template = template;
-		this.context = context;
-		this.location = location;
-	}
-
-	private Template template;
-
 	/**
 	 * 获取出错的模板
 	 *
 	 * @return 出错的模板
 	 */
 	public Template getTemplate() {
-		return template;
-	}
-
-	/**
-	 * 设置出错的模板
-	 *
-	 * @param template
-	 *            出错的模板
-	 */
-	public void setTemplate(Template template) {
-		this.template = template;
+		if (element == null)
+			return null;
+		return element.getTemplate();
 	}
 
 	private Element element;
