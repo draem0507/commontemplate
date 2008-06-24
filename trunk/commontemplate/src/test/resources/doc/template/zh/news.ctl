@@ -1,6 +1,31 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
 	<!--$overzone{"content"}-->
 $!
+								<b>0.8.4 版本发布！(2008-06-24)</b> <a href="download.html">下载...</a><br/>
+								采用Jericho实现属性语法外套.<br/>
+								加强各DriectiveHandler的单元测试.<br/>
+								修复不解释块"$! !$"状态机图的BUG, 并全面整理状态机图.<br/>
+								完成Debug拦截器, 实现单步执行.<br/>
+								完成Debug单步调试窗口, 参见: <a href="debug.html">调试窗口说明...</html><br/>
+								完成查看器功能, 参见: <a href="viewer.html">查看器说明...</html><br/>
+								完成$snatch指令的实现, $snatch{"../list.jsp"}, $snatch{"/list.jsp", 'UTF-8'}, $snatch{"http://www.163.com"}<br/>
+								修复当$break, $continue 没有表达式时的处理, 即: 支持 $if{xxx} $break $end, 不再需要写成 $if{xxx} $break{true} $end.<br/>
+								修改VariableStorage为弱检查方式, 去掉DefiendException和UndefiendException.<br/>
+								将VariableResolver的lookupVariable改成getVariable, 隐藏实现方式意图.<br/>
+								将MessageSource和Logger移出core包, 放入standard包中实现.<br/>
+								Context加入各属性的setter方法, 以及EventListener添加方法等.<br/>
+								增加数字转换为中文: 如: ${123.toChinese} 输出: 一百二十三<br/>
+								增加数字转换为中文货币: 如: ${123.toChineseCurrency} 输出: 壹佰贰拾叁圆整<br/>
+								增加Boolean.toInteger, false为0, true为1,<br/>
+								增加Number.toBoolean, 0为flase, 非0为true,<br/>
+								增加String.toBoolean, 如: ${"true".toBoolean}<br/>
+								修改"行注释指令", 使其保留换行符, 如: $#xxx \n yyy 将输出: \n yyy<br/>
+								支持无穷数, 用"*"号表示无穷数, 如: ${users[2..*]}<br/>
+								完成异常国际化重构, 将所有异常信息放入国际化配置中.<br/>
+								增加字符串abbreviate操作, 如: ${"abcdefghijk" % 6} 或者 ${'abcdefghijk'.abbreviate(6)}, 输出: abc...<br/>
+								core包增加ExpressionFactory, ExpressionBuilder, TemplateElementFactory, TemplateBuidler, 使第三方工具能脱离模板解析过程构建模板.<br/>
+								Element增加getTemplate(),获取元素所在模板的引用.<br/>
+								<br/>
 								<b>0.8.3 版本发布！(2008-03-30)</b> <a href="download.html">下载...</a><br/>
 								此版本新功能较少, 主要为加强测试与BUG修复. <br/>
 								将操作符类型重载处理方式从职责链模式改成配置分派模式.<br/>
