@@ -71,11 +71,11 @@ public final class TemplateEngine implements TemplateParser {
 		elementFactory = new TemplateElementFactoryImpl(directiveHandlerProvider, elementInterceptors);
 	}
 
-	private final BlockDirective parseDirective(Reader templateProvider) throws IOException, ParsingException {
+	private final RootBlockDirectiveImpl parseDirective(Reader templateProvider) throws IOException, ParsingException {
 		try {
 			List tokens = directiveTokenizer.split(templateProvider);
 			List directives = directiveTranslator.translate(tokens);
-			BlockDirective root = directiveReducer.reduce(directives);
+			RootBlockDirectiveImpl root = directiveReducer.reduce(directives);
 			return root;
 		} catch (ParsingException e) {
 			throw e;

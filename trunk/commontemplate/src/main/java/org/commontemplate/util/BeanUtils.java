@@ -99,7 +99,7 @@ public class BeanUtils {
 		Assert.assertNotNull(clazz, "BeanUtils.class.required");
 		Assert.assertNotNull(methodName, "BeanUtils.property.required");
 		try {
-			return searchPublicMethod(clazz.getSuperclass(), methodName);
+			return searchPublicMethod(getPublicClass(clazz), methodName);
 		} catch (NoSuchMethodException e1) {
 			try {
 				return searchPublicMethod(clazz.getInterfaces(), methodName);

@@ -6,7 +6,6 @@ import java.io.Reader;
 import java.io.Serializable;
 import java.util.List;
 
-import org.commontemplate.core.BlockDirective;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Resource;
@@ -28,7 +27,7 @@ final class TemplateImpl extends Template implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private BlockDirective rootDirective;
+	private final RootBlockDirectiveImpl rootDirective;
 
 	private final String name;
 
@@ -38,11 +37,11 @@ final class TemplateImpl extends Template implements Serializable {
 
 	private final char[] data;
 
-	TemplateImpl(Resource resource, BlockDirective rootDirective) throws IOException {
+	TemplateImpl(Resource resource, RootBlockDirectiveImpl rootDirective) throws IOException {
 		this(resource == null ? null : resource.getReader(), resource, rootDirective);
 	}
 
-	TemplateImpl(Reader reader, Resource resource, BlockDirective rootDirective) throws IOException {
+	TemplateImpl(Reader reader, Resource resource, RootBlockDirectiveImpl rootDirective) throws IOException {
 		Assert.assertNotNull(resource, "TemplateImpl.resource.required");
 		Assert.assertNotNull(rootDirective, "TemplateImpl.elements.required");
 
@@ -51,10 +50,7 @@ final class TemplateImpl extends Template implements Serializable {
 		this.lastModified = resource.getLastModified();
 		this.data = IOUtils.readToChars(reader);
 		this.rootDirective = rootDirective;
-	}
-
-	void setRootDirective(BlockDirective rootDirective) {
-		this.rootDirective = rootDirective;
+		this.rootDirective.setTemplate(this);
 	}
 
 	public final List getElements() {
