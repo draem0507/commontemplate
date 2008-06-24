@@ -1,5 +1,8 @@
 package org.commontemplate.core;
 
+import java.io.PrintStream;
+import java.io.PrintWriter;
+
 import org.commontemplate.util.I18nRuntimeException;
 import org.commontemplate.util.Location;
 
@@ -93,6 +96,27 @@ public class RenderingException extends I18nRuntimeException {
 	 */
 	public Context getContext() {
 		return context;
+	}
+
+	public void printStackTrace(PrintStream s) {
+		// printStackTrace(new PrintWriter(new OutputStreamWriter(s)));
+		s.println();
+		Template template = getTemplate();
+		if (template != null)
+			s.println("[commontemplate] Error Template Name: " + template.getName());
+		s.println("[commontemplate] Error Template Location: " + location);
+		s.println("[commontemplate] Error Message: " + getMessage());
+		super.printStackTrace(s);
+	}
+
+	public void printStackTrace(PrintWriter s) {
+		s.println();
+		Template template = getTemplate();
+		if (template != null)
+			s.println("[commontemplate] Error Template Name: " + template.getName());
+		s.println("[commontemplate] Error Template Location: " + location);
+		s.println("[commontemplate] Error Message: " + getMessage());
+		super.printStackTrace(s);
 	}
 
 }
