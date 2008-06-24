@@ -77,7 +77,8 @@ public class ParsingException extends I18nRuntimeException {
 	public void printStackTrace(PrintStream s) {
 		// printStackTrace(new PrintWriter(new OutputStreamWriter(s)));
 		s.println();
-		s.println("[commontemplate] Error Template Name: " + resource.getName());
+		if (resource != null)
+			s.println("[commontemplate] Error Template Name: " + resource.getName());
 		s.println("[commontemplate] Error Template Location: " + location);
 		s.println("[commontemplate] Error Message: " + getMessage());
 		super.printStackTrace(s);
@@ -85,7 +86,8 @@ public class ParsingException extends I18nRuntimeException {
 
 	public void printStackTrace(PrintWriter s) {
 		s.println();
-		s.println("[commontemplate] Error Template Name: " + resource.getName());
+		if (resource != null)
+			s.println("[commontemplate] Error Template Name: " + resource.getName());
 		s.println("[commontemplate] Error Template Location: " + location);
 		s.println("[commontemplate] Error Message: " + getMessage());
 		super.printStackTrace(s);
