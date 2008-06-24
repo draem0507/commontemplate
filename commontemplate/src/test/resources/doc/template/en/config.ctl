@@ -38,8 +38,8 @@ memoryCache=<font color="#2a00ff">org.commontemplate.standard.cache.LruCache()</
 <font color="#3f7f5f">#memoryCache=org.commontemplate.standard.cache.WeakCache()</font><br/>
 <font color="#3f7f5f">#memoryCache=org.commontemplate.standard.cache.SoftCache()</font><br/>
 <font color="#3f7f5f">#memoryCache=org.commontemplate.standard.cache.StrongCache()</font><br/>
-<font color="#3f7f5f">#memoryCache=org.commontemplate.ext.cache.OSCache()</font><br/>
-<font color="#3f7f5f">#memoryCache=org.commontemplate.ext.cache.EHCache()</font><br/>
+<font color="#3f7f5f">#memoryCache=org.commontemplate.standard.cache.OSCache()</font><br/>
+<font color="#3f7f5f">#memoryCache=org.commontemplate.standard.cache.EHCache()</font><br/>
 <br/>
 memoryCache.maxSize=<font color="#2a00ff">1000</font><br/>
 !$

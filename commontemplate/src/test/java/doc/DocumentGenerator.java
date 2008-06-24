@@ -60,6 +60,9 @@ public class DocumentGenerator {
 										new Menu("menu.api",
 												"api.html"))
 								.addChild(
+										new Menu("menu.dependency",
+												"dependency.html"))
+								.addChild(
 										new Menu("menu.debug",
 												"debug.html"))
 								.addChild(
@@ -97,9 +100,6 @@ public class DocumentGenerator {
 								.addChild(
 										new Menu("menu.changes.log",
 												"news.html"))
-								.addChild(
-										new Menu("menu.dependency",
-												"dependency.html"))
 								.addChild(
 										new Menu("menu.uml", "uml.html"))
 								.addChild(
@@ -194,8 +194,8 @@ public class DocumentGenerator {
 	public static void main(String[] args) {
 		DocumentGenerator generator = new DocumentGenerator("doc/template/", "doc/");
 		generator.generateAll(new String[]{"index", "template", "expression",
-				"config", "integration", "extension", "api",
-				"debug", "viewer", "editor", "faq", "architecture", "criterion", "planning", "requirement", "downloads", "dependency",
+				"config", "integration", "extension", "api", "dependency",
+				"debug", "viewer", "editor", "faq", "architecture", "criterion", "planning", "requirement", "downloads",
 				"uml", "about", "news", "join", "demo_extends"});
 	}
 

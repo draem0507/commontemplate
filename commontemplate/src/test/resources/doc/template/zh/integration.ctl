@@ -39,7 +39,7 @@ $!
 								<br/>
 								<b>(2) 与Struts集成</b><br/>
 								同上面配置好Servlet，在Struts中直接forward到相应.ctl页面<br/>
-								(注：与Struts的集成方案请参见下载列表中：commontemplate-example.zip 内的 ct_struts.war) <a href="download.html">下载&gt;&gt;</a><br/>
+								(注：与Struts的集成方案请参见下载列表中：commontemplate-example.zip 内的 ct_struts.war) <a href="downloads.html">下载&gt;&gt;</a><br/>
 								配置web.xml:<br/>
 								<font color="#3f7f5f">&lt;?xml&nbsp;<font color="#7f0055">version</font><font color="#000000">=</font><font color="#2a00ff">"1.0"</font>&nbsp;<font color="#7f0055">encoding</font><font color="#000000">=</font><font color="#2a00ff">"UTF-8"</font>?&gt;</font><br/>
 <font color="#3f7f5f">&lt;web-app&nbsp;<font color="#7f0055">version</font><font color="#000000">=</font><font color="#2a00ff">"2.4"</font>&nbsp;<br/>
@@ -117,7 +117,7 @@ $!
 								<img src="../images/frame/mvc.gif" alt="CommonTemplate In MVC" /><br/>
 								<br/>
 								<b>(3) 与SpringMVC集成</b><br/>
-								(注：与SpringMVC的集成方案请参见下载列表中：commontemplate-example.zip 内的 ct_springmvc.war)  <a href="download.html">下载&gt;&gt;</a><br/>
+								(注：与SpringMVC的集成方案请参见下载列表中：commontemplate-example.zip 内的 ct_springmvc.war)  <a href="downloads.html">下载&gt;&gt;</a><br/>
 								配置web.xml:<br/>
 <font color="#3f5fbf">&lt;!--&nbsp;Spring容器初始化配置&nbsp;--&gt;</font><br/>
 <font color="#3f7f5f">&lt;context-param&gt;</font><br/>
@@ -220,7 +220,7 @@ $!
 <font color="#3f7f5f">&lt;/xwork&gt;</font><br/>
 								<br/>
 								<b>(5) 与Struts2集成</b><br/>
-								(注：与Struts2的集成方案请参见下载列表中：commontemplate-example.zip 内的 ct_struts2.war)  <a href="download.html">下载&gt;&gt;</a><br/>
+								(注：与Struts2的集成方案请参见下载列表中：commontemplate-example.zip 内的 ct_struts2.war)  <a href="downloads.html">下载&gt;&gt;</a><br/>
 								配置web.xml:<br/>
 <font color="#3f5fbf">&lt;!--&nbsp;模板引擎初始化配置&nbsp;--&gt;</font><br/>
 <font color="#3f7f5f">&lt;listener&gt;</font><br/>
@@ -284,7 +284,7 @@ $!
 								<b>(2) 与CommonsLogging/Log4J集成</b><br/>
 								配置commontemplate.properties:<br/>
 								@extends=<font color="#2a00ff">org/commontemplate/tools/web/commontemplate.properties</font><br/>
-								logger=<font color="#2a00ff">org.commontemplate.ext.log.CommonsLogging()</font><br/>
+								logger=<font color="#2a00ff">org.commontemplate.standard.log.CommonsLogging()</font><br/>
 								<br/>
 								配置commons-logging.properties:<br/>
 								logger=<font color="#2a00ff">org.apache.commons.logging.impl.Log4JLogger</font><br/>
@@ -299,7 +299,7 @@ $!
 								<b>(3) 与OSCache集成</b><br/>
 								配置commontemplate.properties:<br/>
 								@extends=<font color="#2a00ff">org/commontemplate/tools/web/commontemplate.properties</font><br/>
-								templateCache=<font color="#2a00ff">org.commontemplate.ext.cache.OSCache()</font><br/>
+								templateCache=<font color="#2a00ff">org.commontemplate.standard.cache.OSCache()</font><br/>
 								<br/>
 								oscache.properties:<br/>
 								cache.algorithm=<font color="#2a00ff">com.opensymphony.oscache.base.algorithm.LRUCache</font><br/>
@@ -308,7 +308,7 @@ $!
 								<b>(4) 与EHCache集成</b><br/>
 								配置commontemplate.properties:<br/>
 								@extends=<font color="#2a00ff">org/commontemplate/tools/web/commontemplate.properties</font><br/>
-								templateCache=<font color="#2a00ff">org.commontemplate.ext.cache.EHCache()</font><br/>
+								templateCache=<font color="#2a00ff">org.commontemplate.standard.cache.EHCache()</font><br/>
 								<br/>
 								配置ehcache.xml:<br/>
 								<font color="#3f7f5f">&lt;ehcache&gt;</font><br/>
@@ -324,7 +324,7 @@ $!
 								<br/>
 								<b>(5) 与TagLib集成</b><br/>
 								配置commontemplate.properties:<br/>
-								directive{textfield}=<font color="#2a00ff">org.commontemplate.ext.directive.taglib.TagLineDirectiveAdapter()</font><br/>
+								directive{textfield}=<font color="#2a00ff">org.commontemplate.standard.directive.taglib.TagLineDirectiveAdapter()</font><br/>
 								directive{textfield}.tagClassName=<font color="#2a00ff">org.apache.struts2.views.jsp.ui.TextFieldTag</font><br/>
 !$
 	<!--$end-->
