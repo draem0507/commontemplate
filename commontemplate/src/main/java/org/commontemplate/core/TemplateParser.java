@@ -8,7 +8,7 @@ import java.io.IOException;
  * @author liangfei0201@163.com
  *
  */
-public interface TemplateParser extends ExpressionParser, TemplateElementFactory {
+public interface TemplateParser extends ExpressionParser, ElementFactory {
 
 	/**
 	 * 将模板源解析为模板

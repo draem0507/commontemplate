@@ -8,7 +8,7 @@ import java.util.List;
  * @author liangfei0201@163.com
  *
  */
-public interface TemplateElementFactory {
+public interface ElementFactory {
 
 	/**
 	 * 创建注释
