@@ -10,19 +10,19 @@ import org.commontemplate.config.MiddleBlockDirectiveHandler;
 import org.commontemplate.core.BlockDirective;
 import org.commontemplate.core.Comment;
 import org.commontemplate.core.Directive;
-import org.commontemplate.core.TemplateElementFactory;
+import org.commontemplate.core.ElementFactory;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.Template;
 import org.commontemplate.core.Text;
 import org.commontemplate.util.Assert;
 
-final class TemplateElementFactoryImpl implements TemplateElementFactory {
+final class ElementFactoryImpl implements ElementFactory {
 
 	private final DirectiveHandlerProvider directiveHandlerProvider;
 
 	private final List elementInterceptors;
 
-	public TemplateElementFactoryImpl(DirectiveHandlerProvider directiveHandlerProvider, List elementInterceptors) {
+	public ElementFactoryImpl(DirectiveHandlerProvider directiveHandlerProvider, List elementInterceptors) {
 		this.directiveHandlerProvider = directiveHandlerProvider;
 		this.elementInterceptors = elementInterceptors;
 	}

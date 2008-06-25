@@ -1,5 +1,8 @@
 package org.commontemplate.standard.property.bean;
 
+import java.util.Arrays;
+import java.util.List;
+
 import junit.framework.TestCase;
 
 import org.commontemplate.standard.property.PropertyHandler;
@@ -19,7 +22,10 @@ public class ObjectToJsonPropertyHandlerTester extends TestCase {
 
 	public void testBean() throws Exception {
 		String json = (String)propertyHandler.doProperty(new Bean("liangfei", 4, true));
-		super.assertEquals("{ok:true,name:\"liangfei\",count:4}", json);
+		List args = Arrays.asList(json.substring(1, json.length() - 1).split("\\,"));
+		super.assertTrue(args.contains("ok:true"));
+		super.assertTrue(args.contains("name:\"liangfei\""));
+		super.assertTrue(args.contains("count:4"));
 	}
 
 }
