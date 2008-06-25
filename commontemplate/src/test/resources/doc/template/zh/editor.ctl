@@ -9,7 +9,11 @@
 								(2) 直接下载编辑器插件包，解压到Eclipse的安装目录<br/>
 								<br/>
 								<b>3. 界面截图</b><br/>
-								...<br/>
+								(1) 指令辅助：<br/>
+								<img src="../images/editor/editor_assistant.gif" border="0" /><br/>
+								<br/>
+								(2) 指令高亮：<br/>
+								<img src="../images/editor/editor_highlight.gif" border="0" /><br/>
 								<br/>
 	<!--$end-->
 <!--$end-->
