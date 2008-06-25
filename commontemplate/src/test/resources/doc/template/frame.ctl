@@ -155,7 +155,7 @@
 					<table border="0" cellpadding="0" cellspacing="0">
 						<tr>
 							<td>
-								$msg{'frame.copyright'} <a href="about_us.html">$msg{'frame.commonTemplate.team'}</a>
+								$msg{'frame.copyright'} <a href="about.html">$msg{'frame.commonTemplate.team'}</a>
 							</td>
 							<td width="100" align="right">
 								<a href="http://www.commontemplate.org"><img src="../images/logo.gif" border="0" /></a>
