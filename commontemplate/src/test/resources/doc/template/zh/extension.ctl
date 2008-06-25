@@ -231,6 +231,15 @@ $!
 								sequence&lt;weekDays&gt;=Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday<br/>
 								参考实现：<br/>
 								org.commontemplate.standard.operator.sequence包下相关类<br/>
+								<br/>
+								<b>16. 数据加载类型扩展</b> <font color="green">(该扩展用于为"$data"指令提供数据)</font><br/>
+								相关接口和基类：<br/>
+								org.commontemplate.standard.directive.data.DataProvider<br/>
+								org.commontemplate.standard.directive.data.InputStreamDataProvider<br/>
+								org.commontemplate.standard.directive.data.StringDataProvider<br/>
+								配置方法：<br/>
+								dataProvider{xxx}=com.xxx.XXXDataProvider<br/>
+								<br/>
 !$
 	<!--$end-->
 <!--$end-->

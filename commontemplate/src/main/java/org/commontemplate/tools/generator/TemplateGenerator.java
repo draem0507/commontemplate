@@ -13,15 +13,24 @@ import org.commontemplate.core.Template;
 import org.commontemplate.engine.Engine;
 import org.commontemplate.standard.ConfigurationSettings;
 import org.commontemplate.standard.directive.data.DataProvider;
-import org.commontemplate.standard.directive.data.DataProviderManager;
 import org.commontemplate.tools.PropertiesConfigurationLoader;
+import org.commontemplate.tools.bean.BeanFactory;
+import org.commontemplate.tools.bean.PropertiesBeanFactory;
 
 public class TemplateGenerator {
+
+	private final BeanFactory beanFactory;
+
+	private final Map dataProviders;
+
+	private final ConfigurationSettings config;
 
 	private final Engine engine;
 
 	public TemplateGenerator() {
-		ConfigurationSettings config = PropertiesConfigurationLoader.loadConfiguration(TemplateGenerator.class.getPackage().getName().replace('.', '/') + "/commontemplate.properties");
+		this.beanFactory = new PropertiesBeanFactory(TemplateGenerator.class.getPackage().getName().replace('.', '/') + "/commontemplate.properties");
+		this.dataProviders = (Map)beanFactory.getBean("dataProviders");
+		this.config = PropertiesConfigurationLoader.loadConfiguration(beanFactory);
 		this.engine = new Engine(config);
 	}
 
@@ -67,14 +76,19 @@ public class TemplateGenerator {
 	}
 
 	private Map getData(File sourceFile) throws Exception {
-		for (Iterator iterator = DataProviderManager.getDataProviderNames().iterator(); iterator.hasNext();) {
-			String suffix = (String)iterator.next();
-			DataProvider dataProvider = (DataProvider)DataProviderManager.getDataProvider(suffix);
-			File file = getFile(sourceFile, suffix);
-			if (file.exists()) {
-				Map data = dataProvider.getData(file);
-				if (data != null)
-					return data;
+		if (dataProviders != null) {
+			for (Iterator iterator = dataProviders.entrySet().iterator(); iterator.hasNext();) {
+				Map.Entry entry = (Map.Entry)iterator.next();
+				String suffix = (String)entry.getKey();
+				DataProvider dataProvider = (DataProvider)entry.getValue();
+				if (suffix != null && dataProvider != null) {
+					File file = getFile(sourceFile, suffix);
+					if (file.exists()) {
+						Map data = dataProvider.getData(file);
+						if (data != null)
+							return data;
+					}
+				}
 			}
 		}
 		return new HashMap();
