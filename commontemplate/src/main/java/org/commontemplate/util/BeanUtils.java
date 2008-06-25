@@ -8,7 +8,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-
 /**
  * Bean属性工具类.<br/>
  * Hack:
@@ -39,7 +38,7 @@ public class BeanUtils {
 			return null;
 		try {
 			try {
-				return getClassGetter(object.getClass(), property).invoke(object, new Object[0]);
+				return getPublicGetter(object.getClass(), property).invoke(object, new Object[0]);
 			} catch (NoSuchMethodException e) {
 				return object.getClass().getField(property).get(object);
 			}
@@ -64,22 +63,22 @@ public class BeanUtils {
 	 * @return 属性Getter方法
 	 * @throws NoSuchMethodException Getter不存时抛出
 	 */
-	private static Method getClassGetter(Class clazz, String property) throws NoSuchMethodException, SecurityException {
+	private static Method getPublicGetter(Class clazz, String property) throws NoSuchMethodException, SecurityException {
 		Assert.assertNotNull(clazz, "BeanUtils.class.required");
 		Assert.assertNotEmpty(property, "BeanUtils.property.required");
 		property = property.trim();
 		String upper = property.substring(0, 1).toUpperCase() + property.substring(1);
 		try {
-			Method getter = getClassMethod(clazz, "get" + upper);
+			Method getter = getPublicMethod(clazz, "get" + upper);
 			Assert.assertTrue(getter.getReturnType() != Void.class, "BeanUtils.getter.return.void");
 			return getter;
 		} catch (NoSuchMethodException e1) {
 			try {
-				Method getter = getClassMethod(clazz, "is" + upper);
+				Method getter = getPublicMethod(clazz, "is" + upper);
 				Assert.assertTrue(getter.getReturnType() != Void.class, "BeanUtils.getter.return.void");
 				return getter;
 			} catch (NoSuchMethodException e2) {
-				Method getter = getClassMethod(clazz, property);
+				Method getter = getPublicMethod(clazz, property);
 				Assert.assertTrue(getter.getReturnType() != Void.class, "BeanUtils.getter.return.void");
 				return getter;
 			}
@@ -95,7 +94,7 @@ public class BeanUtils {
 	 * @throws NoSuchMethodException
 	 * @throws SecurityException
 	 */
-	private static Method getClassMethod(Class clazz, String methodName) throws NoSuchMethodException, SecurityException {
+	private static Method getPublicMethod(Class clazz, String methodName) throws NoSuchMethodException, SecurityException {
 		Assert.assertNotNull(clazz, "BeanUtils.class.required");
 		Assert.assertNotNull(methodName, "BeanUtils.property.required");
 		try {
@@ -107,6 +106,18 @@ public class BeanUtils {
 				return clazz.getMethod(methodName, new Class[0]);
 			}
 		}
+	}
+
+	private static Class getPublicClass(Class clazz) throws SecurityException {
+		if (clazz == null)
+			return null;
+		if (isPublicClass(clazz))
+			return clazz;
+		return getPublicClass(clazz.getSuperclass());
+	}
+
+	private static boolean isPublicClass(Class clazz) {
+		return (clazz.getModifiers() & Modifier.PUBLIC) == 1;
 	}
 
 	// 查找公开的方法 (辅助方法)
@@ -126,28 +137,14 @@ public class BeanUtils {
 
 	// 查找公开的方法 (辅助方法)
 	private static Method searchPublicMethod(Class cls, String methodName) throws NoSuchMethodException, SecurityException {
-		if (cls != null) {
-			if ((cls.getModifiers() & Modifier.PUBLIC) == 1) { // 首先保证类是公开的
-				Method method = cls.getMethod(methodName, new Class[0]);
-				if ((method.getModifiers() & Modifier.PUBLIC) == 1
-						&& (method.getParameterTypes() == null
-								|| method.getParameterTypes().length == 0)) // 再保证方法是公开的
-					return method;
-			}
+		if (cls != null && (cls.getModifiers() & Modifier.PUBLIC) == 1) { // 首先保证类是公开的
+			Method method = cls.getMethod(methodName, new Class[0]);
+			if ((method.getModifiers() & Modifier.PUBLIC) == 1
+					&& (method.getParameterTypes() == null
+							|| method.getParameterTypes().length == 0)) // 再保证方法是公开的
+				return method;
 		}
 		throw new NoSuchMethodException(); // 未找到方法
-	}
-
-	private static Class getPublicClass(Class clazz) throws SecurityException {
-		if (clazz == null)
-			return null;
-		if (isPublic(clazz))
-			return clazz;
-		return getPublicClass(clazz.getSuperclass());
-	}
-
-	private static boolean isPublic(Class clazz) {
-		return (clazz.getModifiers() & Modifier.PUBLIC) == 1;
 	}
 
 	/**
@@ -166,7 +163,7 @@ public class BeanUtils {
 			return null;
 		Map map = new HashMap();
 		try {
-			for (Iterator iterator = getPropertyMethods(object.getClass()).entrySet().iterator(); iterator.hasNext();) {
+			for (Iterator iterator = getPublicPropertyMethods(object.getClass()).entrySet().iterator(); iterator.hasNext();) {
 				Map.Entry entry = (Map.Entry)iterator.next();
 				map.put(entry.getKey(), ((Method)entry.getValue()).invoke(object, new Object[0]));
 			}
@@ -187,7 +184,7 @@ public class BeanUtils {
 	public static Set getPropertyNames(Class clazz) {
 		try {
 			if (clazz != null)
-				return getPropertyMethods(clazz).keySet();
+				return getPublicPropertyMethods(clazz).keySet();
 		} catch (SecurityException e) {
 			// ignore
 		} catch (IllegalArgumentException e) {
@@ -202,46 +199,42 @@ public class BeanUtils {
 		return null;
 	}
 
-	private static Map getPropertyMethods(Class clazz) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
-		Map map = new HashMap();
-		if (clazz != null) {
-			if ((clazz.getModifiers() & Modifier.PUBLIC) == 1) { // 首先保证类是公开的
-				Method[] methods = clazz.getMethods();
-				for (int i = 0, n = methods.length; i < n; i ++) {
-					Method method = methods[i];
-					if ((method.getModifiers() & Modifier.PUBLIC) == 1 // 再保证函数是公开的
-							&& method.getDeclaringClass() != Object.class
-							&& (method.getParameterTypes() == null
-									|| method.getParameterTypes().length == 0)) {
-						String property = method.getName();
-						if (property.startsWith("get")) {
-							property = property.substring(3);
-							String lower = property.substring(0, 1).toLowerCase() + property.substring(1);
-							map.put(lower, method);
-						} else if (property.startsWith("is")) {
-							property = property.substring(2);
-							String lower = property.substring(0, 1).toLowerCase() + property.substring(1);
-							map.put(lower, method);
-						}
-					}
-				}
-			} else { // 如果当前类不是公开的, 查找其父类与接口
-				map.putAll(searchPropertyMethods(clazz.getInterfaces()));
-				map.putAll(searchPropertyMethods(clazz.getClasses()));
+	private static Map getPublicPropertyMethods(Class clazz) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+		Map map = searchPublicPropertyMethods(getPublicClass(clazz));
+		Class[] classes = clazz.getInterfaces();
+		if (classes != null && classes.length > 0) {
+			for (int i = 0, n = classes.length; i < n; i ++) {
+				Class cls = classes[i];
+				map.putAll(searchPublicPropertyMethods(cls));
 			}
 		}
 		return map;
 	}
 
-	private static Map searchPropertyMethods(Class[] classes) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
-		Map all = new HashMap();
-		if (classes != null && classes.length > 0) {
-			for (int i = 0, n = classes.length; i < n; i ++) {
-				Class clazz = classes[i];
-				all.putAll(getPropertyMethods(clazz));
+	private static Map searchPublicPropertyMethods(Class cls) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+		Map map = new HashMap();
+		if (cls != null && isPublicClass(cls)) { // 首先保证类是公开的
+			Method[] methods = cls.getMethods();
+			for (int i = 0, n = methods.length; i < n; i ++) {
+				Method method = methods[i];
+				if ((method.getModifiers() & Modifier.PUBLIC) == 1 // 再保证函数是公开的
+						&& method.getDeclaringClass() != Object.class
+						&& (method.getParameterTypes() == null
+								|| method.getParameterTypes().length == 0)) {
+					String property = method.getName();
+					if (property.startsWith("get")) {
+						property = property.substring(3);
+						String lower = property.substring(0, 1).toLowerCase() + property.substring(1);
+						map.put(lower, method);
+					} else if (property.startsWith("is")) {
+						property = property.substring(2);
+						String lower = property.substring(0, 1).toLowerCase() + property.substring(1);
+						map.put(lower, method);
+					}
+				}
 			}
 		}
-		return all;
+		return map;
 	}
 
 	/**
@@ -257,7 +250,7 @@ public class BeanUtils {
 			return null;
 		try {
 			try {
-				return getClassGetter(clazz, property).invoke(null, new Object[0]);
+				return getPublicGetter(clazz, property).invoke(null, new Object[0]);
 			} catch (NoSuchMethodException e) {
 				return clazz.getField(property).get(null);
 			}
