@@ -51,10 +51,6 @@ public class TemplateServlet extends HttpServlet {
 		response.flushBuffer();
 	}
 
-	protected Locale getLocale(HttpServletRequest request) throws ServletException, IOException {
-		return request.getLocale();
-	}
-
 	public static final String INCLUDE_PATH_INFO = "javax.servlet.include.path_info";
 
 	public static final String INCLUDE_SERVLET_PATH = "javax.servlet.include.servlet_path";
@@ -73,6 +69,10 @@ public class TemplateServlet extends HttpServlet {
 
 	protected String getTemplateEncoding(HttpServletRequest request) throws ServletException, IOException {
 		return null;
+	}
+
+	protected Locale getLocale(HttpServletRequest request) throws ServletException, IOException {
+		return request.getLocale();
 	}
 
 }
