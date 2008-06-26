@@ -43,7 +43,7 @@ public class TemplateResult extends StrutsResultSupport {
 	}
 
 	protected String getTemplatePath(String location, ActionInvocation invocation) throws Exception {
-		return null;
+		return location;
 	}
 
 	protected String getTemplateEncoding(String location, ActionInvocation invocation) throws Exception {
