@@ -55,6 +55,9 @@ public class TemplateServlet extends HttpServlet {
 
 	public static final String INCLUDE_SERVLET_PATH = "javax.servlet.include.servlet_path";
 
+	/**
+	 * 子类可通过覆写该函数重设模板路径的获取规则
+	 */
 	protected String getTemplatePath(HttpServletRequest request) throws ServletException, IOException {
 		String path = null;
         path = (String) request.getAttribute(INCLUDE_PATH_INFO);
@@ -67,10 +70,16 @@ public class TemplateServlet extends HttpServlet {
         return path;
 	}
 
+	/**
+	 * 子类可通过覆写该函数重设模板加载编码
+	 */
 	protected String getTemplateEncoding(HttpServletRequest request) throws ServletException, IOException {
 		return null;
 	}
 
+	/**
+	 * 子类可通过覆写该函数重设国际化地区
+	 */
 	protected Locale getLocale(HttpServletRequest request) throws ServletException, IOException {
 		return request.getLocale();
 	}
