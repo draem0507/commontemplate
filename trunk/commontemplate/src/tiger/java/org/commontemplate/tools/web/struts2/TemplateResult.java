@@ -42,14 +42,23 @@ public class TemplateResult extends StrutsResultSupport {
 				invocation.getAction());
 	}
 
+	/**
+	 * 子类可通过覆写该函数重设模板路径的获取规则
+	 */
 	protected String getTemplatePath(String location, ActionInvocation invocation) throws Exception {
 		return location;
 	}
 
+	/**
+	 * 子类可通过覆写该函数重设模板加载编码
+	 */
 	protected String getTemplateEncoding(String location, ActionInvocation invocation) throws Exception {
 		return null;
 	}
 
+	/**
+	 * 子类可通过覆写该函数重设国际化地区
+	 */
 	protected Locale getLocale(ActionInvocation invocation) throws Exception {
         if (invocation.getAction() instanceof LocaleProvider) {
         	return ((LocaleProvider) invocation.getAction()).getLocale();
