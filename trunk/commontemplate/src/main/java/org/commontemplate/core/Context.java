@@ -8,7 +8,7 @@ import java.util.TimeZone;
 /**
  * 模板上下文, 状态维护及外部访问接口.
  * <p/> (非线程安全,使用时应为每个线程创建独立的上下文)
- * <p/> (序列化后, 将抛弃Writer, 只作为数据容器传递, 反序列化后, 不可再用output()等方法)
+ * <p/> (序列化后, 将抛弃Writer, 只作为数据容器传递, 反序列化后, 不可再用getOut()与output()等方法)
  *
  * @see org.commontemplate.core.ContextFactory
  * @see org.commontemplate.core.Factory
@@ -34,8 +34,10 @@ public abstract class Context extends LocalContext
 	public abstract GlobalContext getGlobalContext();
 
 	/**
-	 * 获取当前上下文的输出端
+	 * 获取当前上下文的输出端.
+	 * 如果从输出端直接输出将绕过所有<code>OutputFilter</code>与<code>OutputFormatter</code>.
 	 *
+	 * @see org.commontemplate.core.OutputController#output(Object)
 	 * @return 输出端
 	 */
 	public abstract Writer getOut();
