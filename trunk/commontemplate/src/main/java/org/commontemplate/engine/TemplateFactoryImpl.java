@@ -3,8 +3,8 @@ package org.commontemplate.engine;
 import java.io.IOException;
 import java.util.List;
 
-import org.commontemplate.config.ReloadController;
 import org.commontemplate.config.Cache;
+import org.commontemplate.config.ReloadController;
 import org.commontemplate.config.ResourceComparator;
 import org.commontemplate.core.BinaryOperator;
 import org.commontemplate.core.BlockDirective;
@@ -14,17 +14,18 @@ import org.commontemplate.core.Directive;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.ExpressionBuilder;
 import org.commontemplate.core.ParsingException;
+import org.commontemplate.core.Resource;
+import org.commontemplate.core.ResourceLoader;
 import org.commontemplate.core.Template;
 import org.commontemplate.core.TemplateBudiler;
 import org.commontemplate.core.TemplateFactory;
 import org.commontemplate.core.TemplateParser;
-import org.commontemplate.core.Resource;
-import org.commontemplate.core.ResourceLoader;
 import org.commontemplate.core.Text;
 import org.commontemplate.core.UnaryOperator;
 import org.commontemplate.core.Variable;
 import org.commontemplate.util.Assert;
 import org.commontemplate.util.ResourceEntry;
+import org.commontemplate.util.UrlCleaner;
 
 /**
  * 模板工厂实现
@@ -137,12 +138,9 @@ final class TemplateFactoryImpl implements TemplateFactory {
 		return resourceLoader.loadResource(filterName(name), encoding);
 	}
 
-	private String filterName(String name) {
+	private String filterName(String name) throws IOException {
 		Assert.assertNotEmpty(name, "TemplateFactoryImpl.template.name.required");
-		char leader = name.charAt(0);
-		if (leader != '/' && leader != '\\')
-			name = "/" + name;
-		return name;
+		return UrlCleaner.clean(name);
 	}
 
 	// 代理TemplateParser ----
