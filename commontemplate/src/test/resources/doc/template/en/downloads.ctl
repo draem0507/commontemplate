@@ -25,17 +25,6 @@ $!
 									</tr>
 								</table>
 								<br/>
-								<b>4. Compiler</b><br/>
-								<table border="0" cellpadding="2" cellspacing="0">
-									<tr>
-										<td><a href="http://java.sun.com/j2se/1.4.2/downloads.html" target="_blank"><img src="../images/javase.gif" border="0" width="88" height="31" /></a></td>
-										<td>JavaSE: <a href="http://java.sun.com/j2se/1.4.2/downloads.html" target="_blank">http://java.sun.com/j2se/1.4.2/downloads.html</a></td>
-									</tr>
-									<tr>
-										<td><a href="http://ant.apache.org/bindownload.cgi" target="_blank"><img src="../images/ant.gif" border="0" width="88" height="31" /></a></td>
-										<td>Apache Ant: <a href="http://ant.apache.org/bindownload.cgi" target="_blank">http://ant.apache.org/bindownload.cgi</a></td>
-									</tr>
-								</table>
 !$
 	<!--$end-->
 <!--$end-->

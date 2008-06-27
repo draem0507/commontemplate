@@ -77,6 +77,14 @@
 										<td><a href="http://findbugs.sourceforge.net" target="_blank"><img src="../images/jdepend.gif" border="0" width="88" height="31" /></a></td>
 										<td>Jdepend4eclipse: <a href="http://andrei.gmxhome.de/jdepend4eclipse" target="_blank">http://andrei.gmxhome.de/jdepend4eclipse</a></td>
 									</tr>
+									<tr>
+										<td><a href="http://launch4j.sourceforge.net" target="_blank"><img src="../images/launch4j.gif" border="0" width="88" height="31" /></a></td>
+										<td>Launch4j: <a href="http://launch4j.sourceforge.net" target="_blank">http://launch4j.sourceforge.net</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://nsis.sourceforge.net" target="_blank"><img src="../images/nsis.gif" border="0" width="88" height="31" /></a></td>
+										<td>NSIS: <a href="http://nsis.sourceforge.net" target="_blank">http://nsis.sourceforge.net</a></td>
+									</tr>
 								</table>
 	<!--$end-->
 <!--$end-->
