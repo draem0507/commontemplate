@@ -24,12 +24,10 @@ globalContext.defineVariable(<font color="#2a00ff">"name"</font>, <font color="#
 <br/>
 <font color="#3f7f5f">// define data </font><br/>
 Map model = ... <br/>
-Appendable output = ... <br/>
-Locale locale = ... <br/>
-TimeZone timeZone = ... <br/>
+Writer out = ... <br/>
 <br/>
 <font color="#3f7f5f">// setting context</font><br/>
-Context context = factory.createContext(output, locale, timeZone);<br/>
+Context context = factory.createContext(out);<br/>
 context.defineAllVariables(model); <br/>
 context.defineVariable(<font color="#2a00ff">"name"</font>, <font color="#2a00ff">"value"</font>); <br/>
 ... <br/>
@@ -40,8 +38,8 @@ template.render(context); <br/>
 <br/>
 <font color="#3f7f5f">// clean (try finally) </font><br/>
 context.clear(); <br/>
-output.flush(); <br/>
-output.close(); <br/>
+out.flush(); <br/>
+out.close(); <br/>
 !$
 	<!--$end-->
 <!--$end-->

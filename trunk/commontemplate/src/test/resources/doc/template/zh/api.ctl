@@ -27,8 +27,8 @@ Map model = ... <br/>
 Writer out = ... <br/>
 <br/>
 <font color="#3f7f5f">// 创建上下文 (Context非线程安全，应为每次执行创建新的Context)</font><br/>
-<font color="#3f7f5f">// 注：国际化信息传入可用factory.createContext(output, locale, timeZone);</font><br/>
-Context context = engine.createContext(output);<br/>
+<font color="#3f7f5f">// 注：国际化信息传入可用factory.createContext(out, locale, timeZone);</font><br/>
+Context context = engine.createContext(out);<br/>
 context.putAll(model); <br/>
 context.put(<font color="#2a00ff">"name"</font>, <font color="#2a00ff">"value"</font>); <br/>
 ... <br/>
@@ -39,8 +39,8 @@ template.render(context); <br/>
 <br/>
 <font color="#3f7f5f">// 清理上下文及输出(最好放在finally块中) </font><br/>
 context.clear(); <br/>
-output.flush(); <br/>
-output.close(); <br/>
+out.flush(); <br/>
+out.close(); <br/>
 								<br/>
 								<b>关系图如下：</b><br/>
 								<img src="../images/uml/api.gif"/><br/>
