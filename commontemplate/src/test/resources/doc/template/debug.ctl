@@ -20,5 +20,11 @@
 								$msg{'page.debug.snapshot.text'}:<br/>
 								<img src="../images/debug/debug_text.gif" /><br/>
 								<br/>
+								$msg{'page.debug.snapshot.breakpoint'}:<br/>
+								<img src="../images/debug/debug_breakpoint.gif" /><br/>
+								<br/>
+								$msg{'page.debug.snapshot.resume'}:<br/>
+								<img src="../images/debug/debug_resume.gif" /><br/>
+								<br/>
 	<!--$end-->
 <!--$end-->
