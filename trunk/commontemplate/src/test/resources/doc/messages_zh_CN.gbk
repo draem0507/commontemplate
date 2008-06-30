@@ -96,3 +96,5 @@ page.debug.buttons.terminate="Terminate"，<b>终止</b>运行。
 page.debug.snapshot=调试窗口截图
 page.debug.snapshot.directive=运行到指令时
 page.debug.snapshot.text=运行到文本时
+page.debug.snapshot.breakpoint=添加断点
+page.debug.snapshot.resume=运行到断点
