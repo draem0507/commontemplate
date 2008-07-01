@@ -15,11 +15,21 @@ public interface DebugListener {
 	 */
 	void onSuspended(DebugEvent event);
 
+	void onStepIntoed(DebugEvent event);
+
+	void onStepOvered(DebugEvent event);
+
+	void onStepReturned(DebugEvent event);
+
 	/**
 	 * 当挂起的过程恢复运行时触发
 	 *
 	 * @param event 调试事件信息
 	 */
-	void onExecuted(DebugEvent event);
+	void onResumed(DebugEvent event);
+
+	void onResumeAlled(DebugEvent event);
+
+	void onTerminated(DebugEvent event);
 
 }
