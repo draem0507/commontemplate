@@ -70,7 +70,8 @@ public class DebugInterceptor implements RenderingInterceptor, Serializable {
 						context.pushLocalContext();
 						try {
 							context.putProperty(STEP_OVER_KEY, Boolean.TRUE);
-							rendition.doRender();
+							rendition.doRender(); // 注：doRender必需在wait恢复之后运行
+							debugManager.removeSuspendedExecution(execution); // 移除挂起过程
 							return;
 						} finally {
 							context.popLocalContext();
@@ -90,8 +91,7 @@ public class DebugInterceptor implements RenderingInterceptor, Serializable {
 					context.getRootLocalContext().setBooleanStatus(STEP_STATUS, true);
 				}
 				rendition.doRender(); // 注：doRender必需在wait恢复之后运行
-				// 移除挂起过程
-				debugManager.removeSuspendedExecution(execution);
+				debugManager.removeSuspendedExecution(execution); // 移除挂起过程
 			}
 		} else {
 			// 正常运行
@@ -101,13 +101,21 @@ public class DebugInterceptor implements RenderingInterceptor, Serializable {
 
 	private boolean isBreakpoint(String templateName, Location location) {
 		final DebugManager debugManager = DebugManager.getInstance();
-		Collection breakpoints = debugManager.getBreakpoints();
+		final Collection breakpoints = debugManager.getBreakpoints();
 		for (Iterator iterator = breakpoints.iterator(); iterator.hasNext();) {
 			Breakpoint breakpoint = (Breakpoint) iterator.next();
 			if (templateName.equals(breakpoint.getTemplateName())
 					&& location.getBegin().getLine() <= breakpoint.getLine()
 					&& location.getEnd().getLine() >= breakpoint.getLine()) {
-				return true;
+				int line = breakpoint.getLine();
+				int beginLine = location.getBegin().getLine();
+				int endLine = location.getEnd().getLine();
+				if (endLine > beginLine
+						&& location.getEnd().getColumn() == 0) {
+					endLine --;
+				}
+				if (beginLine <= line && endLine >= line)
+					return true;
 			}
 		}
 		return false;
