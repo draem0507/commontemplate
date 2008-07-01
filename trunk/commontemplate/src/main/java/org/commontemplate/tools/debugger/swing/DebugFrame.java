@@ -55,7 +55,7 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 	static {
 		try {
 			// 启用图形UI
-			System.setProperty("java.awt.headless", "ture");
+			// System.setProperty("java.awt.headless", "ture");
 			// 设置swing样式为当前系统风格
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
