@@ -98,14 +98,13 @@ public class DebugInterceptor implements RenderingInterceptor, Serializable {
 		}
 	}
 
+	// 判断模板位置是否为处于断点
 	private boolean isBreakpoint(String templateName, Location location) {
 		final DebugManager debugManager = DebugManager.getInstance();
 		final Collection breakpoints = debugManager.getBreakpoints();
 		for (Iterator iterator = breakpoints.iterator(); iterator.hasNext();) {
 			Breakpoint breakpoint = (Breakpoint) iterator.next();
-			if (templateName.equals(breakpoint.getTemplateName())
-					&& location.getBegin().getLine() <= breakpoint.getLine()
-					&& location.getEnd().getLine() >= breakpoint.getLine()) {
+			if (templateName.equals(breakpoint.getTemplateName())) {
 				int line = breakpoint.getLine();
 				int beginLine = location.getBegin().getLine();
 				int endLine = location.getEnd().getLine();
