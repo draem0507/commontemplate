@@ -63,7 +63,8 @@ public class DebugInterceptor implements RenderingInterceptor, Serializable {
 						 // 忽略意外中断, 恢复挂起状态
 					}
 				}
-				debugManager.removeSuspendedExecution(execution); // 移除挂起过程
+				// 移除挂起过程
+				debugManager.removeSuspendedExecution(execution);
 				// 设置运行状态
 				if (execution.getStatus() == ExecutionImpl.STEP_OVER) {
 					context.getRootLocalContext().setBooleanStatus(STEP_STATUS, true);
