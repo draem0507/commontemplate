@@ -1,6 +1,5 @@
 package org.commontemplate.standard.debug;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
@@ -49,12 +48,6 @@ public class DebugInterceptor implements RenderingInterceptor, Serializable {
 					|| (! context.getRootLocalContext().getBooleanStatus(STEP_STATUS) // 运行在非调试状态中
 							&& ! context.getRootLocalContext().getBooleanStatus(BREAKPOINT_OVER_STATUS)
 							&& isBreakpoint(template.getName(), element.getLocation())))) { // 当前模板元素在断点位置
-			try {
-				// 清理未输出的缓存
-				context.getOut().flush();
-			} catch (IOException e) {
-				// 忽略IO读写异常, 不阻断运行
-			}
 			// 构造执行过程封装体
 			final ExecutionImpl execution = new ExecutionImpl(rendition, Thread.currentThread().getName());
 			// 挂起
