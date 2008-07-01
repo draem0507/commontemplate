@@ -86,20 +86,21 @@ final class LocalContextStackImpl implements LocalContextStack {
 
 	public LocalContext getCurrentLocalContext() {
 		if (localContextStack.isEmpty())
-			return null;
+			return rootLocalContext;
 		return (LocalContext)localContextStack.peek();
 	}
 
 	public LocalContext findLocalContext(String name) {
 		Assert.assertNotEmpty(name, "LocalContextStackImpl.context.name.required");
-
 		LocalContext result = null;
 		// 因LinkedStack使用LinkedList, 从头开始迭代快于倒序get()
-		for (Iterator iterator = localContextStack.iterator(); iterator.hasNext();) {
-			LocalContext localContext = (LocalContext)iterator.next();
-			if (localContext != null
-					&& name.equals(localContext.getLocalContextName()))
-				result = localContext;
+		if (! localContextStack.isEmpty()) {
+			for (Iterator iterator = localContextStack.iterator(); iterator.hasNext();) {
+				LocalContext localContext = (LocalContext)iterator.next();
+				if (localContext != null
+						&& name.equals(localContext.getLocalContextName()))
+					result = localContext;
+			}
 		}
 		return result;
 	}

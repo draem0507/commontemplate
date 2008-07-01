@@ -40,33 +40,16 @@ final class ExecutionImpl implements Execution, Comparable {
 
 	public static final int TERMINATE = 6;
 
+	// 以当前类实例锁，锁定此状态的修改
 	private int status = SUSPENDED;
 
-	public int getStatus() {
+	public synchronized int getStatus() {
 		return status;
 	}
 
-	private void setStatus(int status) {
+	private synchronized void setStatus(int status) {
 		Assert.assertTrue(status >= STEP_INTO && status <= TERMINATE, "DebugFrame.invaild.status", new Object[]{new Integer(status)});
 		this.status = status;
-	}
-
-	/**
-	 * 获取被挂起的上下文
-	 *
-	 * @return 上下文
-	 */
-	public Context getContext() {
-		return context;
-	}
-
-	/**
-	 * 获取被挂起时正在运行的模板元素
-	 *
-	 * @return 模板元素
-	 */
-	public Element getElement() {
-		return element;
 	}
 
 	/**
@@ -136,6 +119,24 @@ final class ExecutionImpl implements Execution, Comparable {
 			setStatus(TERMINATE);
 			this.notifyAll();
 		}
+	}
+
+	/**
+	 * 获取被挂起的上下文
+	 *
+	 * @return 上下文
+	 */
+	public Context getContext() {
+		return context;
+	}
+
+	/**
+	 * 获取被挂起时正在运行的模板元素
+	 *
+	 * @return 模板元素
+	 */
+	public Element getElement() {
+		return element;
 	}
 
 	/**

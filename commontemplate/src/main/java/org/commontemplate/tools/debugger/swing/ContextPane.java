@@ -20,16 +20,18 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTree;
+import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
+import javax.swing.event.TreeWillExpandListener;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.ExpandVetoException;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import org.commontemplate.core.Context;
 import org.commontemplate.util.BeanUtils;
 import org.commontemplate.util.I18nMessages;
-import org.commontemplate.util.TypeUtils;
 import org.commontemplate.util.swing.TextPopupMenu;
 
 public class ContextPane extends JSplitPane {
@@ -143,6 +145,27 @@ public class ContextPane extends JSplitPane {
 		contextTree = new JTree();
 		contextTree.getSelectionModel().setSelectionMode(
 				TreeSelectionModel.SINGLE_TREE_SELECTION);
+		contextTree.addTreeWillExpandListener(new TreeWillExpandListener(){
+
+			public void treeWillCollapse(TreeExpansionEvent event)
+					throws ExpandVetoException {
+				// TODO Auto-generated method stub
+
+			}
+
+			public void treeWillExpand(TreeExpansionEvent event)
+					throws ExpandVetoException {
+				TreePath path = event.getPath();
+				if (path != null) {
+					VariableTreeNode node = (VariableTreeNode) path
+							.getLastPathComponent();
+					if (node != null) {
+						buildContextTree(node);
+					}
+				}
+			}
+
+		});
 		contextTree.addTreeSelectionListener(new TreeSelectionListener() {
 			public void valueChanged(TreeSelectionEvent e) {
 				TreePath path = contextTree.getSelectionPath();
@@ -202,12 +225,17 @@ public class ContextPane extends JSplitPane {
 
 
 	public void initContextPane(Context context) {
-		VariableTreeNode root = new VariableTreeNode("variables", context);
-		buildContextTree(root, context.getExistedVariables());
+		if (context == null)
+			return;
+		VariableTreeNode root = new VariableTreeNode("variables", context.getExistedVariables());
+		buildContextTree(root);
 		contextTree.setModel(new DefaultTreeModel(root));
 	}
 
-	private void buildContextTree(VariableTreeNode root, Object obj) {
+	private void buildContextTree(VariableTreeNode root) {
+		if (root == null)
+			return;
+		Object obj = root.getValue();
 		if (obj == null) {
 			return;
 		} else if (obj.getClass().isArray()) {
@@ -217,9 +245,6 @@ public class ContextPane extends JSplitPane {
 				Object value = arr[i];
 				VariableTreeNode thisNode = new VariableTreeNode(name, value);
 				root.add(thisNode);
-				if (value != null && !TypeUtils.isPrimitive(value.getClass())) {
-					buildContextTree(thisNode, value);
-				}
 			}
 		} else if (obj instanceof Collection) {
 			Collection coll = (Collection) obj;
@@ -229,9 +254,6 @@ public class ContextPane extends JSplitPane {
 				Object value = iterator.next();
 				VariableTreeNode thisNode = new VariableTreeNode(name, value);
 				root.add(thisNode);
-				if (value != null && !TypeUtils.isPrimitive(value.getClass())) {
-					buildContextTree(thisNode, value);
-				}
 				i++;
 			}
 		} else if (obj instanceof Map) {
@@ -243,9 +265,6 @@ public class ContextPane extends JSplitPane {
 				Object value = entry.getValue();
 				VariableTreeNode thisNode = new VariableTreeNode(name, value);
 				root.add(thisNode);
-				if (value != null && !TypeUtils.isPrimitive(value.getClass())) {
-					buildContextTree(thisNode, value);
-				}
 			}
 		} else {
 			Map map = BeanUtils.getProperties(obj);
@@ -256,9 +275,6 @@ public class ContextPane extends JSplitPane {
 				Object value = entry.getValue();
 				VariableTreeNode thisNode = new VariableTreeNode(name, value);
 				root.add(thisNode);
-				if (value != null && !TypeUtils.isPrimitive(value.getClass())) {
-					buildContextTree(thisNode, value);
-				}
 			}
 		}
 	}
