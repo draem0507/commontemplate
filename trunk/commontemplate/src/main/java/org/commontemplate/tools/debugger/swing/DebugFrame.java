@@ -12,11 +12,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
+import java.util.Vector;
 
 import javax.swing.Icon;
 import javax.swing.JButton;
@@ -28,23 +24,16 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
-import javax.swing.JTree;
 import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
 
-import org.commontemplate.standard.debug.Breakpoint;
-import org.commontemplate.standard.debug.BreakpointEvent;
-import org.commontemplate.standard.debug.BreakpointListener;
-import org.commontemplate.standard.debug.DebugManager;
 import org.commontemplate.standard.debug.Execution;
 import org.commontemplate.util.I18nMessages;
 import org.commontemplate.util.swing.ImageFactory;
 
-public class DebugFrame implements ActionListener, ListSelectionListener, WindowListener, BreakpointListener {
+public class DebugFrame implements ActionListener, WindowListener, ListSelectionListener {
 
 	private static DebugFrame debugFrame;
 
@@ -66,6 +55,8 @@ public class DebugFrame implements ActionListener, ListSelectionListener, Window
 
 	static {
 		try {
+			// 启用图形UI
+			System.setProperty("java.awt.headless", "ture");
 			// 设置swing样式为当前系统风格
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
@@ -93,9 +84,7 @@ public class DebugFrame implements ActionListener, ListSelectionListener, Window
 
 	private JList executionList;
 
-	private JTree breakpointTree;
-
-	private LinkedList executions = new LinkedList();
+	private final Vector executions = new Vector();
 
 	private Execution execution;
 
@@ -116,7 +105,7 @@ public class DebugFrame implements ActionListener, ListSelectionListener, Window
 
 		JTabbedPane tabPanel = new JTabbedPane();
 		tabPanel.add("Threads", createExecutionPane());
-		tabPanel.add("Breakpoints", createBreakpointPane());
+		tabPanel.add("Breakpoints", new BreakpointPane());
 
 		JSplitPane horizontalPane = new JSplitPane(
 				JSplitPane.HORIZONTAL_SPLIT,
@@ -201,72 +190,30 @@ public class DebugFrame implements ActionListener, ListSelectionListener, Window
 		return executionBox;
 	}
 
-	private JComponent createBreakpointPane() {
-		breakpointTree = new JTree();
-		JScrollPane breakpointBox = new JScrollPane();
-		breakpointBox.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		breakpointBox.getViewport().setView(breakpointTree);
-		breakpointBox.getViewport().setBackground(Color.white);
-		buildBreakpointTree();
-		DebugManager.getInstance().addBreakpointListener(this);
-		return breakpointBox;
-	}
-
-	public void onBreakpointAdded(BreakpointEvent event) {
-		buildBreakpointTree();
-	}
-
-	public void onBreakpointRemoved(BreakpointEvent event) {
-		buildBreakpointTree();
-	}
-
-	private void buildBreakpointTree() {
-		Map map = new TreeMap();
-		for (Iterator iterator = DebugManager.getInstance().getBreakpoints().iterator();iterator.hasNext();) {
-			Breakpoint breakpoint = (Breakpoint)iterator.next();
-			Set set = (Set)map.get(breakpoint.getTemplateName());
-			if (set == null) {
-				set = new TreeSet();
-				map.put(breakpoint.getTemplateName(), set);
-			}
-			set.add(new Integer(breakpoint.getLine()));
-		}
-
-		DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("breakpoints");
-		for (Iterator mapIterator = map.entrySet().iterator(); mapIterator.hasNext();) {
-			Map.Entry entry = (Map.Entry)mapIterator.next();
-			DefaultMutableTreeNode templateNode = new DefaultMutableTreeNode(entry.getKey());
-			rootNode.add(templateNode);
-			for (Iterator setIterator = ((Set)entry.getValue()).iterator(); setIterator.hasNext();) {
-				Integer line = (Integer)setIterator.next();
-				DefaultMutableTreeNode lineNode = new DefaultMutableTreeNode("line: " + (line.intValue() + 1));
-				templateNode.add(lineNode);
-			}
-		}
-		breakpointTree.setModel(new DefaultTreeModel(rootNode));
-	}
-
 	// ---- 动态结构 ----
 
 	public void addExecution(Execution execution) {
 		if (execution == null)
 			return;
-		executions.addFirst(execution);
-		buildExecutionList();
 		initDebugFrame(execution);
-		executionList.removeListSelectionListener(this);
-		if (executionList.getSelectedIndex() < 0)
-			executionList.setSelectedIndex(0);
-		executionList.addListSelectionListener(this);
+		synchronized (executions) {
+			if (! executions.contains(execution)) {
+				executions.add(execution);
+				executionList.setListData(executions);
+			}
+			executionList.removeListSelectionListener(this);
+			if (executionList.getSelectedIndex() < 0)
+				executionList.setSelectedValue(execution, true);
+			executionList.addListSelectionListener(this);
+		}
+
 	}
 
 	public void removeExecution(Execution execution) {
-		executions.remove(execution);
-		buildExecutionList();
-	}
-
-	private void buildExecutionList() {
-		executionList.setListData(executions.toArray());
+		synchronized (executions) {
+			executions.remove(execution);
+			executionList.setListData(executions);
+		}
 	}
 
 	private void initDebugFrame(Execution execution) {
@@ -276,6 +223,7 @@ public class DebugFrame implements ActionListener, ListSelectionListener, Window
 		} else {
 			this.execution = execution;
 			enableToolbar();
+			frame.setVisible(true);
 		}
 	}
 
@@ -373,14 +321,7 @@ public class DebugFrame implements ActionListener, ListSelectionListener, Window
 
 	private synchronized void closeFrame() {
 		disableToolbar(); // 防止重复点击
-		DebugManager.getInstance().removeBreakpointListener(this);
-		executionList.removeListSelectionListener(this);
-		stepInto.removeActionListener(this);
-		stepOver.removeActionListener(this);
-		stepReturn.removeActionListener(this);
-		resume.removeActionListener(this);
-		resumeAll.removeActionListener(this);
-		terminate.removeActionListener(this);
+		executions.clear();
 		removeDebugFrame();
 		frame.dispose();
 	}

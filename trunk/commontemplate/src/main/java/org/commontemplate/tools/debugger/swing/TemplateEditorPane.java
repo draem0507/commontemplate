@@ -143,6 +143,8 @@ public class TemplateEditorPane extends JTextArea implements Border {
 	}
 
 	public void setTemplate(Template template) {
+		if (template == null)
+			return;
 		this.template = template;
 		setText(template.getSource());
 	}

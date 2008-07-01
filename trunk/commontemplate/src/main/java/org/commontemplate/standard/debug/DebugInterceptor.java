@@ -70,8 +70,6 @@ public class DebugInterceptor implements RenderingInterceptor, Serializable {
 						 // 忽略意外中断, 恢复挂起状态
 					}
 				}
-				// 移除挂起过程
-				debugManager.removeSuspendedExecution(execution);
 				// 设置运行状态
 				if (execution.getStatus() == ExecutionImpl.STEP_OVER) {
 					context.getRootLocalContext().setBooleanStatus(STEP_STATUS, true);
@@ -99,6 +97,8 @@ public class DebugInterceptor implements RenderingInterceptor, Serializable {
 					context.getRootLocalContext().setBooleanStatus(STEP_STATUS, true);
 				}
 				rendition.doRender(); // 注：doRender必需在wait恢复之后运行
+				// 移除挂起过程
+				debugManager.removeSuspendedExecution(execution);
 			}
 		} else {
 			// 正常运行

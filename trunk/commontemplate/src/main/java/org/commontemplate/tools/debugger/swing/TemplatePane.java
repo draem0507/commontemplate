@@ -51,8 +51,10 @@ public class TemplatePane extends JPanel {
 
 	public synchronized void setTemplate(Template template) {
 		editor.setTemplate(template);
-		templateNameBox.setText(template.getEncoding() + ": "
-				+ template.getName());
+		if (template != null) {
+			templateNameBox.setText(template.getEncoding() + ": "
+					+ template.getName());
+		}
 	}
 
 	public synchronized Element getElement() {

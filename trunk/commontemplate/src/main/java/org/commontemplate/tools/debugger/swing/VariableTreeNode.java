@@ -40,10 +40,16 @@ class VariableTreeNode extends DefaultMutableTreeNode {
 
 	public void appendChild(String name, Object value) {
 		if (value instanceof VariableStorage) {
-			((VariableStorage)value).putVariable(name, value);
+			((VariableStorage) value).putVariable(name, value);
 		} else if (value instanceof Map) {
-			((Map)value).put(name, value);
+			((Map) value).put(name, value);
 		}
+	}
+
+	public boolean isLeaf() {
+		return (value == null || value.getClass().isPrimitive()
+				|| value instanceof Boolean || value instanceof Character
+				|| value instanceof Number || value instanceof String);
 	}
 
 	public boolean isModifiable() {
@@ -63,10 +69,10 @@ class VariableTreeNode extends DefaultMutableTreeNode {
 			return name;
 		level += 1;
 		StringBuffer buf = new StringBuffer();
-		for (int i = 0; i < getChildCount(); i ++) {
+		for (int i = 0; i < getChildCount(); i++) {
 			VariableTreeNode child = (VariableTreeNode) getChildAt(i);
 			buf.append('\n');
-			for (int j = 0; j < level; j ++) {
+			for (int j = 0; j < level; j++) {
 				buf.append('\t');
 			}
 			buf.append(child.getAllName(level));
