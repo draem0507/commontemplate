@@ -1,7 +1,7 @@
 package org.commontemplate.tools.debugger.rmi;
 
 import org.commontemplate.standard.debug.DebugEvent;
-import org.commontemplate.standard.debug.DebugListener;
+import org.commontemplate.standard.debug.DebugListenerAdapter;
 
 /**
  * RMI远程调试器
@@ -9,14 +9,14 @@ import org.commontemplate.standard.debug.DebugListener;
  * @author liangfei0201@163.com
  *
  */
-public class RmiDebugger implements DebugListener {
+public class RmiDebugger extends DebugListenerAdapter {
 
 	public void onSuspended(DebugEvent event) {
 		// TODO Auto-generated method stub
 
 	}
 
-	public void onExecuted(DebugEvent event) {
+	public void onResumed(DebugEvent event) {
 		// TODO Auto-generated method stub
 
 	}

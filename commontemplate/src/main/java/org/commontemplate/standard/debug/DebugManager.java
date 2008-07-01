@@ -253,7 +253,7 @@ public final class DebugManager {
 	 */
 	public void removeSuspendedExecution(Execution execution) {
 		suspendedExecutions.remove(execution);
-		executionExecuted(execution);
+		executionExecuted((ExecutionImpl)execution);
 	}
 
 	// 发布挂起事件
@@ -266,11 +266,23 @@ public final class DebugManager {
 	}
 
 	// 发布恢复运行事件
-	private void executionExecuted(Execution execution) {
+	private void executionExecuted(ExecutionImpl execution) {
 		DebugEvent event = new DebugEvent(this, execution);
 		for (Iterator iterator = debugListeners.iterator(); iterator.hasNext();) {
 			DebugListener debugListener = (DebugListener)iterator.next();
-			debugListener.onExecuted(event);
+			int s = execution.getStatus();
+			if (s == ExecutionImpl.STEP_INTO)
+				debugListener.onStepIntoed(event);
+			else if (s == ExecutionImpl.STEP_OVER)
+				debugListener.onStepOvered(event);
+			else if (s == ExecutionImpl.STEP_RETURN)
+				debugListener.onStepReturned(event);
+			else if (s == ExecutionImpl.RESUME)
+				debugListener.onResumed(event);
+			else if (s == ExecutionImpl.RESUME_ALL)
+				debugListener.onResumeAlled(event);
+			else if (s == ExecutionImpl.TERMINATE)
+				debugListener.onTerminated(event);
 		}
 	}
 

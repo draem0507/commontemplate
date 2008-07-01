@@ -1,7 +1,7 @@
 package org.commontemplate.tools.debugger.swing;
 
 import org.commontemplate.standard.debug.DebugEvent;
-import org.commontemplate.standard.debug.DebugListener;
+import org.commontemplate.standard.debug.DebugListenerAdapter;
 
 /**
  * Swing界面调试器
@@ -9,13 +9,13 @@ import org.commontemplate.standard.debug.DebugListener;
  * @author liangfei0201@163.com
  *
  */
-public class SwingDebugger implements DebugListener {
+public class SwingDebugger extends DebugListenerAdapter {
 
 	public void onSuspended(DebugEvent event) {
 		DebugFrame.createDebugFrame().addExecution(event.getExecution());
 	}
 
-	public void onExecuted(DebugEvent event) {
+	public void onResumed(DebugEvent event) {
 		DebugFrame debugFrame = DebugFrame.getDebugFrame();
 		if (debugFrame != null)
 			debugFrame.removeExecution(event.getExecution());
