@@ -82,6 +82,10 @@ class BlockDirectiveImpl extends BlockDirectiveSupport {
 	}
 
 	public String getSource() {
+		return prototype;
+	}
+
+	public String getCanonicalForm() {
 		return prototype + getCanonicalFormAll() + endPrototype;
 	}
 

@@ -50,10 +50,10 @@ public class TemplatePane extends JPanel {
 	}
 
 	public synchronized void setTemplate(Template template) {
-		editor.setTemplate(template);
 		if (template != null) {
 			templateNameBox.setText(template.getEncoding() + ": "
 					+ template.getName());
+			editor.setTemplate(template);
 		}
 	}
 
@@ -62,8 +62,10 @@ public class TemplatePane extends JPanel {
 	}
 
 	public synchronized void setElement(Element element) {
-		editor.setElement(element);
 		if (element != null) {
+			Template template = element.getTemplate();
+			if (template != null)
+				setTemplate(template);
 			String elementText = element.getSource();
 			elementText = elementText.replaceAll("\n", "\\\\n");
 			elementText = elementText.replaceAll("\r", "\\\\r");
@@ -71,6 +73,7 @@ public class TemplatePane extends JPanel {
 			elementText = elementText.replaceAll("\f", "\\\\f");
 			elementText = elementText.replaceAll("\b", "\\\\b");
 			elementBox.setText(element.getType() + ": " + elementText);
+			editor.setElement(element);
 		}
 	}
 

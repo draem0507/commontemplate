@@ -66,7 +66,7 @@ final class DirectiveProvider {
 			} else if (trim.charAt(1) == syntax.getLineComment()) { // 行注释指令
 				if (trim.length() > 2
 						&& trim.charAt(2) == syntax.getLineComment()) // 运行期保留
-					return new CommentImpl(String.valueOf(syntax.getLineComment()), token.getLocation(), message.substring(3), trim);
+					return new CommentImpl(String.valueOf(syntax.getLineComment()), token.getLocation(), message.substring(3), trim, elementInterceptors);
 				return null;
 			} else if (trim.charAt(1) == syntax.getBlockComment()) { // 块注释指令
 				if (trim.length() < 4
@@ -75,7 +75,7 @@ final class DirectiveProvider {
 					throw new ParsingException(token.getLocation(), "DirectiveFactory.block.comment.error", new Object[]{String.valueOf(syntax.getDirectiveLeader()), String.valueOf(syntax.getBlockComment())});
 				if (trim.length() > 4
 						&& trim.charAt(2) == syntax.getBlockComment()) // 运行期保留
-					return new CommentImpl(String.valueOf(syntax.getBlockComment()), token.getLocation(), message.substring(3, message.length() - 2), trim);
+					return new CommentImpl(String.valueOf(syntax.getBlockComment()), token.getLocation(), message.substring(3, message.length() - 2), trim, elementInterceptors);
 				return null;
 			} else { //指令
 				return parseDirective(token, trim);
