@@ -42,7 +42,7 @@ final class ElementFactoryImpl implements ElementFactory {
 	}
 
 	public Comment createComment(String comment) {
-		return new CommentImpl("*", null, comment, comment);
+		return new CommentImpl("*", null, comment, comment, elementInterceptors);
 	}
 
 	public Text createText(String text) {

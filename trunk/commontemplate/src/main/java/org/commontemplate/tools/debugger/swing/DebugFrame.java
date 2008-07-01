@@ -11,12 +11,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.util.Iterator;
-import java.util.Vector;
+import java.util.Enumeration;
 
+import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -78,13 +77,13 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 
 	private final TemplatePane templatePane = new TemplatePane();
 
-	private ContextPane contextPane = new ContextPane();
+	private final ContextPane contextPane = new ContextPane();
 
-	private JButton stepInto, stepOver, stepReturn, resume, resumeAll, terminate;
+	private final JButton stepInto, stepOver, stepReturn, resume, resumeAll, terminate;
 
-	private JList executionList;
+	private final DefaultListModel executionModel = new DefaultListModel();
 
-	private final Vector executions = new Vector();
+	private final JList executionList = new JList(executionModel);
 
 	private Execution execution;
 
@@ -103,8 +102,16 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 		frame.getContentPane().setLayout(new BorderLayout());
 		frame.addWindowListener(this);
 
+
+		executionList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		executionList.addListSelectionListener(this);
+		JScrollPane executionBox = new JScrollPane();
+		executionBox.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		executionBox.getViewport().setView(executionList);
+		executionBox.getViewport().setBackground(Color.white);
+
 		JTabbedPane tabPanel = new JTabbedPane();
-		tabPanel.add("Threads", createExecutionPane());
+		tabPanel.add("Threads", executionBox);
 		tabPanel.add("Breakpoints", new BreakpointPane());
 
 		JSplitPane horizontalPane = new JSplitPane(
@@ -119,12 +126,6 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 		verticalPane.setDividerLocation(100);
 		verticalPane.setOneTouchExpandable(true);
 
-		frame.getContentPane().add(createToolBar(), BorderLayout.NORTH);
-		frame.getContentPane().add(verticalPane, BorderLayout.CENTER);
-		frame.setVisible(true);
-	}
-
-	private JComponent createToolBar() {
 		JToolBar buttonPane = new JToolBar();
 		buttonPane.setMargin(new Insets(0, 10, 0, 0));
 
@@ -176,43 +177,28 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 		terminate.addActionListener(this);
 		buttonPane.add(terminate);
 
-		return buttonPane;
-	}
-
-	private JComponent createExecutionPane() {
-		executionList = new JList();
-		executionList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		executionList.addListSelectionListener(this);
-		JScrollPane executionBox = new JScrollPane();
-		executionBox.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		executionBox.getViewport().setView(executionList);
-		executionBox.getViewport().setBackground(Color.white);
-		return executionBox;
+		frame.getContentPane().add(buttonPane, BorderLayout.NORTH);
+		frame.getContentPane().add(verticalPane, BorderLayout.CENTER);
+		frame.setVisible(true);
 	}
 
 	// ---- 动态结构 ----
 
-	public void addExecution(Execution execution) {
+	public void addExecution(final Execution execution) {
 		if (execution == null)
 			return;
-		initDebugFrame(execution);
-		synchronized (executions) {
-			if (! executions.contains(execution)) {
-				executions.add(execution);
-				executionList.setListData(executions);
+		synchronized (executionModel) {
+			if (executionModel.indexOf(execution) < 0) {
+				executionModel.addElement(execution);
+				if (executionList.getSelectedIndex() < 0)
+					executionList.setSelectedValue(execution, true);
 			}
-			executionList.removeListSelectionListener(this);
-			if (executionList.getSelectedIndex() < 0)
-				executionList.setSelectedValue(execution, true);
-			executionList.addListSelectionListener(this);
 		}
-
 	}
 
-	public void removeExecution(Execution execution) {
-		synchronized (executions) {
-			executions.remove(execution);
-			executionList.setListData(executions);
+	public void removeExecution(final Execution execution) {
+		synchronized (executionModel) {
+			executionModel.removeElement(execution);
 		}
 	}
 
@@ -232,18 +218,21 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 	public void actionPerformed(ActionEvent e) {
 		Object button = e.getSource();
 		disableToolbar();
-		if (button == stepInto) {
-			execution.stepInto();
-		} else if (button == stepOver) {
-			execution.stepOver();
-		} else if (button == stepReturn) {
-			execution.stepReturn();
-		} else if (button == resume) {
-			execution.resume();
-		} else if (button == resumeAll) {
-			execution.resumeAll();
-		}  else {
-			execution.terminate();
+		if (execution != null) {
+			if (button == stepInto) {
+				execution.stepInto();
+			} else if (button == stepOver) {
+				execution.stepOver();
+			} else if (button == stepReturn) {
+				execution.stepReturn();
+			} else if (button == resume) {
+				execution.resume();
+			} else if (button == resumeAll) {
+				execution.resumeAll();
+			}  else {
+				execution.terminate();
+			}
+			removeExecution(execution);
 		}
 	}
 
@@ -266,7 +255,7 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 	}
 
 	public void windowClosing(WindowEvent e) {
-		if (executions.size() != 0) {
+		if (executionModel.size() != 0) {
 			String title = I18nMessages.getMessage("DebugFrame.close.title");
 			String message = I18nMessages
 					.getMessage("DebugFrame.close.message");
@@ -278,17 +267,24 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 					JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
 					null, buttons, buttons[0]);
 			if (ch == 0 || ch == 1) {
-				closeFrame();
-				for (Iterator iterator = executions.iterator(); iterator.hasNext();) {
-					Execution exec = (Execution)iterator.next();
+				disableToolbar();
+				for (Enumeration enumeration = executionModel.elements(); enumeration.hasMoreElements();) {
+					Execution exec = (Execution)enumeration.nextElement();
 					if (ch == 0)
 						exec.resumeAll();
 					else
 						exec.terminate();
+					removeExecution(exec);
 				}
+				executionModel.clear();
+				removeDebugFrame();
+				frame.dispose();
 			}
 		} else {
-			closeFrame();
+			disableToolbar();
+			executionModel.clear();
+			removeDebugFrame();
+			frame.dispose();
 		}
 	}
 
@@ -303,7 +299,6 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 		resume.setEnabled(true);
 		resumeAll.setEnabled(true);
 		terminate.setEnabled(true);
-		templatePane.setTemplate(execution.getContext().getCurrentTemplate());
 		templatePane.setElement(execution.getElement());
 		contextPane.initContextPane(execution.getContext());
 	}
@@ -317,13 +312,6 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 		terminate.setEnabled(false);
 		contextPane.clearContextPane();
 		templatePane.removeElement();
-	}
-
-	private synchronized void closeFrame() {
-		disableToolbar(); // 防止重复点击
-		executions.clear();
-		removeDebugFrame();
-		frame.dispose();
 	}
 
 }

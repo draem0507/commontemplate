@@ -39,7 +39,7 @@ final class TemplateBudilerImpl implements TemplateBudiler {
 	private List elements = new ArrayList();
 
 	public void addComment(String comment) {
-		elements.add(new CommentImpl(String.valueOf(syntax.getBlockComment()), null, comment, comment));
+		elements.add(new CommentImpl(String.valueOf(syntax.getBlockComment()), null, comment, comment, elementInterceptors));
 	}
 
 	public void addDirective(String directiveName, Expression expression) {

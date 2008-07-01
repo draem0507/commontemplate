@@ -1,6 +1,10 @@
 package org.commontemplate.engine.template;
 
+import java.util.List;
+
 import org.commontemplate.core.Comment;
+import org.commontemplate.core.Context;
+import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Template;
 import org.commontemplate.core.Visitor;
 import org.commontemplate.util.Location;
@@ -23,11 +27,19 @@ final class CommentImpl extends Comment {
 
 	private final String prototype;
 
-	CommentImpl(String name, Location location, String comment, String prototype) {
+	private final List elementInterceptors;
+
+	CommentImpl(String name, Location location, String comment, String prototype, List elementInterceptors) {
 		this.name = name;
 		this.location = location;
 		this.comment = comment;
 		this.prototype = prototype;
+		this.elementInterceptors = elementInterceptors;
+	}
+
+	public void render(Context context) throws RenderingException {
+		if (elementInterceptors != null && elementInterceptors.size() > 0)
+			new RenditionImpl(new CommentInterceptProxy(this), context, elementInterceptors).doRender();
 	}
 
 	public String getSource() {
