@@ -8,6 +8,7 @@
 								(1)下载CommonTemplateSetup.exe <a href="downloads.html">下载...</a><br/>
 								(2)双击CommonTemplateSetup.exe，按向导完成安装，安装后，将自动关联*.ctl文件<br/>
 								(3)在*.ctl文件上双击打开，或右键菜单中选“CommonTemplate”打开<br/>
+								<img src="../images/viewer/open_with.gif" alt="Open With CommonTemplate"/><br/>
 								<br/>
 								<b>3. 数据查找</b><br/>
 								(1)内部数据供给块指令：\$data{"xml"}...\$end，指令内部放数据表示内容，内置支持xml,json,properties,ymal等数据格式。<a href="extension.html">扩展...</a><br/>

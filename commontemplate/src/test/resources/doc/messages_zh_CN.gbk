@@ -5,7 +5,7 @@ frame.commonTemplate.team=CommonTemplate 开发小组
 frame.translate=翻译
 
 menu.documents=文档
-menu.overview=概览
+menu.overview=首页概览
 menu.template=模板指南
 menu.expression=表达式指南
 menu.integration=集成指南
