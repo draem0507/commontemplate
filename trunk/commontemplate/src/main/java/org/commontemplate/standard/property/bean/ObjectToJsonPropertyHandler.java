@@ -7,8 +7,16 @@ import java.util.Map;
 
 import org.commontemplate.standard.property.PropertyHandlerSupport;
 import org.commontemplate.util.BeanUtils;
+import org.commontemplate.util.JavaScriptUtils;
 import org.commontemplate.util.TypeUtils;
 
+/**
+ * 对象转JSON数据格式
+ *
+ * @author liangfei0201@163.com
+ * @author 陈志强
+ *
+ */
 public class ObjectToJsonPropertyHandler extends PropertyHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
@@ -75,12 +83,12 @@ public class ObjectToJsonPropertyHandler extends PropertyHandlerSupport {
 	private String filterName(Object property) throws Exception {
 		if (TypeUtils.isNamed(String.valueOf(property)))
 			return String.valueOf(property);
-		return "\"" + property + "\"";
+		return "\"" + JavaScriptUtils.javaScriptEscape(property.toString()) + "\"";
 	}
 
 	private String filterValue(Object property) throws Exception {
 		if (property instanceof CharSequence)
-			return "\"" + property + "\"";
+			return "\"" + JavaScriptUtils.javaScriptEscape(property.toString()) + "\"";
 		return String.valueOf(property);
 	}
 
