@@ -12,20 +12,20 @@ import org.commontemplate.tools.bean.ResourceLoader;
 
 /**
  * Properties配置加载器
- * 
+ *
  * @see org.commontemplate.tools.bean.PropertiesBeanFactory
  * @author liangfei0201@163.com
  *
  */
 public final class PropertiesConfigurationLoader {
-	
+
 	private PropertiesConfigurationLoader() {}
 
 	/**
 	 * 配置Bean的名称
 	 */
 	public static final String CONFIG_BEAN_NAME = "commontemplate";
-	
+
 	/**
 	 * 标准配置路径
 	 */
@@ -33,13 +33,13 @@ public final class PropertiesConfigurationLoader {
 
 	/**
 	 * 载入标准配置
-	 * 
+	 *
 	 * @return 配置
 	 */
 	public static ConfigurationSettings loadStandardConfiguration() {
-		return PropertiesConfigurationLoader.loadConfiguration(STANDARD_CONFIG_PATH, new ClassLoaderResourceLoader(ConfigurationSettings.class.getClassLoader()));
+		return loadConfiguration(STANDARD_CONFIG_PATH, new ClassLoaderResourceLoader(ConfigurationSettings.class.getClassLoader()));
 	}
-	
+
 	/**
 	 * 载入Properties配置
 	 * @param propertiesPath 配置文件的路径，在未设置ResourceLoader时默认在Classpath中查找
@@ -50,7 +50,7 @@ public final class PropertiesConfigurationLoader {
 	public static ConfigurationSettings loadConfiguration(String propertiesPath) {
 		return loadConfiguration(new PropertiesBeanFactory(propertiesPath));
 	}
-	
+
 	/**
 	 * 载入Properties配置
 	 * @param propertiesPath 配置文件的路径
@@ -62,7 +62,7 @@ public final class PropertiesConfigurationLoader {
 	public static ConfigurationSettings loadConfiguration(String propertiesPath, ResourceLoader resourceLoader) {
 		return loadConfiguration(new PropertiesBeanFactory(propertiesPath, resourceLoader));
 	}
-	
+
 	/**
 	 * 载入Properties配置
 	 * @param propertiesPath 配置文件的路径
@@ -74,7 +74,7 @@ public final class PropertiesConfigurationLoader {
 	public static ConfigurationSettings loadConfiguration(String propertiesPath, Map variables) {
 		return loadConfiguration(new PropertiesBeanFactory(propertiesPath, variables));
 	}
-	
+
 	/**
 	 * 载入Properties配置
 	 * @param propertiesPath 配置文件的路径
@@ -87,7 +87,7 @@ public final class PropertiesConfigurationLoader {
 	public static ConfigurationSettings loadConfiguration(String propertiesPath, ResourceLoader resourceLoader, Map variables) {
 		return loadConfiguration(new PropertiesBeanFactory(propertiesPath, resourceLoader, variables));
 	}
-	
+
 	/**
 	 * 载入Properties配置
 	 * @param properties 配置
@@ -100,10 +100,10 @@ public final class PropertiesConfigurationLoader {
 	public static ConfigurationSettings loadConfiguration(Properties properties, ResourceLoader resourceLoader, Map variables) {
 		return loadConfiguration(new PropertiesBeanFactory(properties, resourceLoader, variables));
 	}
-	
+
 	/**
 	 * 载入Properties配置
-	 * 
+	 *
 	 * @param beanFactory Bean工厂
 	 * @return 配置
 	 */
@@ -115,14 +115,14 @@ public final class PropertiesConfigurationLoader {
 	 * 标准表达式配置路径
 	 */
 	public static final String STANDARD_EXPRESSION_CONFIG_PATH = "org/commontemplate/tools/commontemplate-expression.properties";
-	
+
 	/**
 	 * 载入标准表达式配置
-	 * 
+	 *
 	 * @return 表达式配置
 	 */
 	public static ExpressionConfigurationSettings loadStandardExpressionConfiguration() {
-		return PropertiesConfigurationLoader.loadExpressionConfiguration(STANDARD_EXPRESSION_CONFIG_PATH, new ClassLoaderResourceLoader(ExpressionConfigurationSettings.class.getClassLoader()));
+		return loadExpressionConfiguration(STANDARD_EXPRESSION_CONFIG_PATH, new ClassLoaderResourceLoader(ExpressionConfigurationSettings.class.getClassLoader()));
 	}
 
 	/**
@@ -188,7 +188,7 @@ public final class PropertiesConfigurationLoader {
 
 	/**
 	 * 载入Properties表达式配置
-	 * 
+	 *
 	 * @param beanFactory Bean工厂
 	 * @return 表达式配置
 	 */
