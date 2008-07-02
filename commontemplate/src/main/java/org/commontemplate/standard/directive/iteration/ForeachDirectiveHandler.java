@@ -59,6 +59,7 @@ public class ForeachDirectiveHandler extends BlockDirectiveHandlerSupport {
 		}
 	}
 
+	// 简单数字迭代
 	private boolean simpleForeach(Context context, int count, List elements) {
 		if (count <= 0) // count小于0, 不进行迭代.
 			return false;
@@ -79,6 +80,7 @@ public class ForeachDirectiveHandler extends BlockDirectiveHandlerSupport {
 		return true;
 	}
 
+	// 常规迭代
 	private boolean normalForeach(Context context, Entry entry, List elements) {
 		String itemName = String.valueOf(entry.getKey());
 		Collection collection = getCollection(entry.getValue());
@@ -104,27 +106,28 @@ public class ForeachDirectiveHandler extends BlockDirectiveHandlerSupport {
 		return true;
 	}
 
+	// 并行迭代
 	private boolean parallelForeach(Context context, Map map, List elements) {
 		int max = 0;
 		Map iters = new HashMap(map.size());
 		for (Iterator iterator = map.entrySet().iterator(); iterator.hasNext();) {
 			Map.Entry entry = (Map.Entry)iterator.next();
-			Collection coll = getCollection(entry.getValue());
-			String itemName = String.valueOf(entry.getKey());
-			context.putNullVariable(itemName);
-			iters.put(itemName, coll.iterator());
-			if (coll.size() > max) {
-				max = coll.size();
+			Collection collection = getCollection(entry.getValue());
+			if (collection != null && collection.size() > 0) {
+				String itemName = String.valueOf(entry.getKey());
+				context.putNullVariable(itemName);
+				iters.put(itemName, collection.iterator());
+				if (collection.size() > max) {
+					max = collection.size();
+				}
 			}
 		}
 		if (max == 0)
 			return false;
-
 		ForeachStatus status = new ForeachStatus(max);
 		context.putVariable(statusName, status);
 		for (int i = 0; i < max; i ++) {
 			context.setVariable(statusName, status);
-
 			for (Iterator iterator = iters.entrySet().iterator(); iterator.hasNext();) {
 				Map.Entry entry = (Map.Entry)iterator.next();
 				String itemName = (String)entry.getKey();
@@ -135,7 +138,6 @@ public class ForeachDirectiveHandler extends BlockDirectiveHandlerSupport {
 					context.setVariable(itemName, null);
 				}
 			}
-
 			try {
 				DirectiveUtils.renderAll(elements, context);
 				status.increment();
@@ -150,6 +152,12 @@ public class ForeachDirectiveHandler extends BlockDirectiveHandlerSupport {
 
 	}
 
+	/**
+	 * 子类可覆写子函数供给迭代数据
+	 *
+	 * @param data 原始数据
+	 * @return 迭代集合
+	 */
 	protected Collection getCollection(Object data) {
 		if (data == null)
 			return null;
