@@ -11,7 +11,7 @@ import org.commontemplate.util.JavaScriptUtils;
 import org.commontemplate.util.TypeUtils;
 
 /**
- * 对象转JSON数据格式
+ * 对象转JSON数据格式串
  *
  * @author liangfei0201@163.com
  * @author 陈志强
