@@ -1,0 +1,1051 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC
+	"-//SPRING//DTD BEAN//EN"
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	<bean id="commontemplate" class="org.commontemplate.standard.ConfigurationSettings">
+		<property name="defaultOutputFormatter" ref="defaultOutputFormatter" />
+		<property name="directiveHandlerProvider" ref="directiveHandlerProvider" />
+		<property name="syntaxSetting" value="${}#*!end" />
+		<property name="templateCache" ref="templateCache" />
+		<property name="reloadController" ref="reloadController" />
+		<property name="resourceComparator" ref="resourceComparator" />
+		<property name="resourceLoader" ref="resourceLoader" />
+		<property name="resourceFilter" ref="resourceFilter" />
+		<property name="textFilter" ref="textFilter" />
+		<property name="renderingInterceptors" ref="renderingInterceptors" />
+		<property name="eventListener" ref="eventListener" />
+		<property name="templateNameFilter" ref="templateNameFilter" />
+		<property name="keywordsSetting" value="null,true,false,this,super,context" />
+		<property name="functionAvailable" value="true" />
+		<property name="operatorHandlerProvider" ref="operatorHandlerProvider" />
+	</bean>
+
+	<bean id="templateCache" class="org.commontemplate.standard.cache.LruCache">
+		<property name="maxSize" value="1000" />
+	</bean>
+
+	<bean id="reloadController" class="org.commontemplate.standard.reload.IntervalReloadController">
+		<property name="modificationCheckInterval" value="3000"/>
+	</bean>
+
+	<bean id="resourceComparator" class="org.commontemplate.standard.reload.ResourceLastModifiedComparator"/>
+
+	<bean id="resourceLoader" class="org.commontemplate.standard.loader.ClasspathResourceLoader">
+		<property name="defaultEncoding" value="UTF-8"/>
+		<property name="virtualDirectory" value=""/>
+	</bean>
+
+	<bean id="resourceFilter" class="org.commontemplate.standard.filter.ResourceFilterChain"/>
+	<bean id="textFilter" class="org.commontemplate.standard.filter.TextFilterChain"/>
+	<bean id="renderingInterceptors" class="org.commontemplate.standard.debug.DebugInterceptor"/>
+	<bean id="eventListener" class="org.commontemplate.standard.listener.EventListenerChain"/>
+
+	<bean id="templateNameFilter" class="org.commontemplate.standard.filter.TemplateNameFilterChain">
+		<property name="templateNameFilters">
+			<list>
+				<bean class="org.commontemplate.standard.filter.TemplateNameRelativer"/>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="defaultOutputFormatter" class="org.commontemplate.standard.format.DefaultOutputFormatter">
+		<property name="nullValue" value="" />
+		<property name="arraySeparator" value="," />
+		<property name="dateFormat" value="yyyy-MM-dd HH:mm:ss" />
+		<property name="numberFormat" value="###0.###" />
+	</bean>
+
+	<bean id="commontemplateMessageSource" class="org.commontemplate.standard.i18n.ResourceBundleMessageSource">
+		<property name="resourceBundleProvider">
+			<bean class="org.commontemplate.standard.i18n.PropertiesResourceBundleProvider">
+				<property name="basename" value="org/commontemplate/tools/messages" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="directiveHandlerProvider" class="org.commontemplate.standard.directive.StandardDirectiveHandlerProvider">
+		<property name="defaultLineDirectiveHandler">
+			<bean class="org.commontemplate.standard.directive.macro.MacroDefaultLineDirectiveHandler"/>
+		</property>
+		<property name="defaultBlockDirectiveHandler">
+			<bean class="org.commontemplate.standard.directive.macro.MacroDefaultBlockDirectiveHandler"/>
+		</property>
+		<property name="defaultBlockDirectiveRegex" value=".*_block"/>
+
+		<property name="directiveHandlers">
+			<map>
+				<entry key="">
+					<bean class="org.commontemplate.standard.directive.output.OutputDirectiveHandler"/>
+				</entry>
+				<entry key="out">
+					<bean class="org.commontemplate.standard.directive.output.OutputStartDirectiveHandler"/>
+				</entry>
+				<entry key="msg">
+					<bean class="org.commontemplate.standard.directive.output.I18nMessageDirectiveHandler">
+						<property name="messageSource" ref="commontemplateMessageSource" />
+					</bean>
+				</entry>
+				<entry key="message">
+					<bean class="org.commontemplate.standard.directive.output.I18nMessageStartDirectiveHandler">
+						<property name="messageSource" ref="commontemplateMessageSource" />
+					</bean>
+				</entry>
+				<entry key="if">
+					<bean class="org.commontemplate.standard.directive.condition.IfDirectiveHandler"/>
+				</entry>
+				<entry key="elseif">
+					<bean class="org.commontemplate.standard.directive.condition.ElseIfDirectiveHandler"/>
+				</entry>
+				<entry key="else">
+					<bean class="org.commontemplate.standard.directive.condition.ElseDirectiveHandler"/>
+				</entry>
+				<entry key="for">
+					<bean class="org.commontemplate.standard.directive.iteration.ForeachDirectiveHandler">
+						<property name="statusName" value="for" />
+					</bean>
+				</entry>
+				<entry key="forelse">
+					<bean class="org.commontemplate.standard.directive.iteration.ForeachElseDirectiveHandler"/>
+				</entry>
+				<entry key="break">
+					<bean class="org.commontemplate.standard.directive.iteration.BreakDirectiveHandler"/>
+				</entry>
+				<entry key="continue">
+					<bean class="org.commontemplate.standard.directive.iteration.ContinueDirectiveHandler"/>
+				</entry>
+				<entry key="cycle">
+					<bean class="org.commontemplate.standard.directive.iteration.CycleDirectiveHandler"/>
+				</entry>
+				<entry key="set">
+					<bean class="org.commontemplate.standard.directive.variable.VariableAssignDirectiveHandler"/>
+				</entry>
+				<entry key="init">
+					<bean class="org.commontemplate.standard.directive.variable.VariableInitializeDirectiveHandler"/>
+				</entry>
+				<entry key="var">
+					<bean class="org.commontemplate.standard.directive.variable.VariableDefineDirectiveHandler"/>
+				</entry>
+				<entry key="local">
+					<bean class="org.commontemplate.standard.directive.variable.VariableDefineDirectiveHandler"/>
+				</entry>
+				<entry key="global">
+					<bean class="org.commontemplate.standard.directive.variable.GlobalAssignDirectiveHandler"/>
+				</entry>
+				<entry key="root">
+					<bean class="org.commontemplate.standard.directive.variable.RootAssignDirectiveHandler"/>
+				</entry>
+				<entry key="macro">
+					<bean class="org.commontemplate.standard.directive.macro.MacroDirectiveHandler"/>
+				</entry>
+				<entry key="inner">
+					<bean class="org.commontemplate.standard.directive.macro.InnerDirectiveHandler"/>
+				</entry>
+				<entry key="import">
+					<bean class="org.commontemplate.standard.directive.macro.ImportAsMacroDirectiveHandler"/>
+				</entry>
+				<entry key="include">
+					<bean class="org.commontemplate.standard.directive.include.IncludeTemplateDirectiveHandler"/>
+				</entry>
+				<entry key="embed">
+					<bean class="org.commontemplate.standard.directive.include.EmbedTemplateDirectiveHandler"/>
+				</entry>
+				<entry key="display">
+					<bean class="org.commontemplate.standard.directive.include.DisplayFileDirectiveHandler"/>
+				</entry>
+				<entry key="block">
+					<bean class="org.commontemplate.standard.directive.block.BlockDefineDirectiveHandler"/>
+				</entry>
+				<entry key="show">
+					<bean class="org.commontemplate.standard.directive.block.ShowBlockDirectiveHandler"/>
+				</entry>
+				<entry key="using">
+					<bean class="org.commontemplate.standard.directive.block.UsingAsMacroDirectiveHandler"/>
+				</entry>
+				<entry key="eval">
+					<bean class="org.commontemplate.standard.directive.eval.EvaluateDirectiveHandler"/>
+				</entry>
+				<entry key="exec">
+					<bean class="org.commontemplate.standard.directive.eval.ExecuteDirectiveHandler"/>
+				</entry>
+				<entry key="zone">
+					<bean class="org.commontemplate.standard.directive.extend.ZoneDirectiveHandler"/>
+				</entry>
+				<entry key="extends">
+					<bean class="org.commontemplate.standard.directive.extend.ExtendDirectiveHandler"/>
+				</entry>
+				<entry key="overzone">
+					<bean class="org.commontemplate.standard.directive.extend.OverZoneDirectiveHandler"/>
+				</entry>
+				<entry key="superzone">
+					<bean class="org.commontemplate.standard.directive.extend.SuperZoneDirectiveHandler"/>
+				</entry>
+				<entry key="time">
+					<bean class="org.commontemplate.standard.directive.debug.TimeDirectiveHandler"/>
+				</entry>
+				<entry key="stop">
+					<bean class="org.commontemplate.standard.directive.debug.StopDirectiveHandler"/>
+				</entry>
+				<entry key="breakpoint">
+					<bean class="org.commontemplate.standard.directive.debug.BreakpointDirectiveHandler"/>
+				</entry>
+				<entry key="filter">
+					<bean class="org.commontemplate.standard.directive.filter.FilterDirectiveHandler">
+						<property name="valueName" value="value" />
+					</bean>
+				</entry>
+				<entry key="filterAll">
+					<bean class="org.commontemplate.standard.directive.filter.FilterAllDirectiveHandler">
+						<property name="valueName" value="value" />
+					</bean>
+				</entry>
+				<entry key="compress">
+					<bean class="org.commontemplate.standard.directive.filter.compress.CompressSpaceDirectiveHandler"/>
+				</entry>
+				<entry key="escape">
+					<bean class="org.commontemplate.standard.directive.filter.escape.EscapeDirectiveHandler">
+						<property name="filters">
+							<map>
+								<entry key="html">
+									<bean class="org.commontemplate.standard.directive.filter.escape.HtmlEscapeFilter"/>
+								</entry>
+								<entry key="js">
+									<bean class="org.commontemplate.standard.directive.filter.escape.JavaScriptEscapeFilter"/>
+								</entry>
+								<entry key="url">
+									<bean class="org.commontemplate.standard.directive.filter.escape.UrlEscapeFilter"/>
+								</entry>
+								<entry key="base64">
+									<bean class="org.commontemplate.standard.directive.filter.escape.Base64EscapeFilter"/>
+								</entry>
+								<entry key="data">
+									<bean class="org.commontemplate.standard.directive.data.DataDirectiveHandler"/>
+								</entry>
+							</map>
+						</property>
+					</bean>
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<bean id="operatorHandlerProvider" class="org.commontemplate.standard.operator.StandardOperatorHandlerProvider">
+		<property name="unaryOperatorHandlers">
+			<map>
+				<entry key="@">
+					<bean class="org.commontemplate.standard.operator.UnaryOperatorHandlerChain">
+						<property name="unaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.string.NotEscapeStringOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="!">
+					<bean class="org.commontemplate.standard.operator.UnaryOperatorHandlerChain">
+						<property name="unaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.bool.BooleanNotOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="~">
+					<bean class="org.commontemplate.standard.operator.UnaryOperatorHandlerChain">
+						<property name="unaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.number.BitNotOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="&amp;">
+					<bean class="org.commontemplate.standard.operator.UnaryOperatorHandlerChain">
+						<property name="operandNamed" value="true"/>
+						<property name="unaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.object.ClassPackageOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="=>">
+					<bean class="org.commontemplate.standard.operator.UnaryOperatorHandlerChain">
+						<property name="operandLazy" value="true"/>
+						<property name="unaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.collection.FilterOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="?">
+					<bean class="org.commontemplate.standard.operator.UnaryOperatorHandlerChain">
+						<property name="unaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.collection.MapPresenceOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.collection.CollectionPresenceOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.string.StringPresenceOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.object.ObjectPresenceOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="\">
+					<bean class="org.commontemplate.standard.operator.UnaryOperatorHandlerChain">
+						<property name="unaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.context.VariableOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="+">
+					<bean class="org.commontemplate.standard.operator.UnaryOperatorHandlerChain">
+						<property name="unaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.number.NumberPositiveOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="-">
+					<bean class="org.commontemplate.standard.operator.UnaryOperatorHandlerChain">
+						<property name="unaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.number.NumberNegativeOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.string.StringReverseOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.collection.ListReverseOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.collection.ArrayReverseOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="[">
+					<bean class="org.commontemplate.standard.operator.UnaryOperatorHandlerChain">
+						<property name="unaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.collection.ToCollectionOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key=".">
+					<bean class="org.commontemplate.standard.operator.UnaryOperatorHandlerChain">
+						<property name="operandNamed" value="true"/>
+						<property name="operandFunctioned" value="true"/>
+						<property name="unaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.context.StaticFunctionOperatorHandler"></bean>
+								<bean class="org.commontemplate.standard.operator.context.StaticPropertyOperatorHandler">
+									<property name="staticPropertyHandlers">
+										<map>
+											<entry key="system">
+												<bean class="org.commontemplate.standard.property.system.SystemPropertyHanlder"/>
+											</entry>
+											<entry key="engine">
+												<bean class="org.commontemplate.standard.property.system.EnginePropertyHanlder"/>
+											</entry>
+											<entry key="now">
+												<bean class="org.commontemplate.standard.property.system.NowPropertyHanlder"/>
+											</entry>
+											<entry key="random">
+												<bean class="org.commontemplate.standard.property.system.RandomPropertyHanlder"/>
+											</entry>
+											<entry key="uuid">
+												<bean class="org.commontemplate.standard.property.system.UuidPropertyHandler"/>
+											</entry>
+										</map>
+									</property>
+								</bean>
+							</list>
+						</property>
+					</bean>
+				</entry>
+			</map>
+		</property>
+
+
+		<property name="binaryOperatorHandlers">
+			<map>
+				<entry key="~">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.string.StringMatchOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.collection.ContainOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="!~">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.string.StringNotMatchOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.collection.NotContainOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="instanceof">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.object.InstanceofOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="or">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="associative" value="true"/>
+						<property name="commutative" value="true"/>
+						<property name="rightOperandLazy" value="true"/>
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.bool.BooleanOrOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="||">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="associative" value="true"/>
+						<property name="commutative" value="true"/>
+						<property name="rightOperandLazy" value="true"/>
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.bool.BooleanOrOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="and">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="associative" value="true"/>
+						<property name="commutative" value="true"/>
+						<property name="rightOperandLazy" value="true"/>
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.bool.BooleanAndOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="&amp;&amp;">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="associative" value="true"/>
+						<property name="commutative" value="true"/>
+						<property name="rightOperandLazy" value="true"/>
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.bool.BooleanAndOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="xor">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="associative" value="true"/>
+						<property name="commutative" value="true"/>
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.bool.BooleanXorOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.number.BitXorOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="^">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="associative" value="true"/>
+						<property name="commutative" value="true"/>
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.bool.BooleanXorOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.number.BitXorOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="|">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="associative" value="true"/>
+						<property name="commutative" value="true"/>
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.number.BitOrOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="&amp;">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="associative" value="true"/>
+						<property name="commutative" value="true"/>
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.number.BitAndOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key=">>">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.number.BitRightShiftOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="&lt;&lt;">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.number.BitLeftShiftOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key=">>>">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.number.BitUnsignedShiftOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="?">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="rightOperandLazy" value="true"/>
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.bool.BooleanSelectOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key=":">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="leftOperandNamed" value="true"/>
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.bool.SelectorEntryOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.collection.LiteralEntryOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="=">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="leftOperandNamed" value="true"/>
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.collection.LiteralEntryOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="=>">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="leftOperandNamed" value="true"/>
+						<property name="rightOperandLazy" value="true"/>
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.collection.FilterEntryOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="eq">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.compare.EqualsOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="==">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.compare.EqualsOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="ne">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.compare.NotEqualsOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="!=">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.compare.NotEqualsOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="gt">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.compare.GreaterThanOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key=">">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.compare.GreaterThanOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="ge">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.compare.GreaterEqualOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key=">=">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.compare.GreaterEqualOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="lt">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.compare.LessThanOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="&lt;">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.compare.LessThanOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="le">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.compare.LessEqualOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="&lt;=">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.compare.LessEqualOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="cmp">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.compare.CompareOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="&lt;=>">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.compare.CompareOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="~=">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.number.NumberApproximateEqualsOperatorHanlder"/>
+								<bean class="org.commontemplate.standard.operator.date.DateIgnoreTimeEqualsOperatorHanlder"/>
+								<bean class="org.commontemplate.standard.operator.string.StringIngoreCaseEqualsOperatorHanlder"/>
+								<bean class="org.commontemplate.standard.operator.compare.ApproximateEqualsOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="^=">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.string.StringStartsWithOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="$=">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.string.StringEndsWithOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="*=">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.string.StringContainsWithOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="+">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="associative" value="true"/>
+						<property name="commutative" value="true"/>
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.date.DateFieldAddOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.number.NumberAddOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.collection.ListAddOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.collection.MapAddOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.string.StringConcatenateOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="-">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="associative" value="true"/>
+						<property name="commutative" value="true"/>
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.date.DateFieldSubtractOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.number.NumberSubtractOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="*">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="associative" value="true"/>
+						<property name="commutative" value="true"/>
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.number.NumberMultiplyOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.string.StringRepeatOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.string.StringRepeat2OperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="**">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="associative" value="true"/>
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.number.NumberPowerOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="/">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="associative" value="true"/>
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.number.NumberDivideOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="%">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="associative" value="true"/>
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.number.NumberModulusOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.string.StringAbbreviateOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key=",">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.collection.LiteralListOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="..">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.sequence.IntegerSequenceOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.sequence.StringSequenceOperatorHandler">
+									<property name="sequences">
+										<set>
+											<value>Spring,Summer,Autumn,Winter</value>
+											<value>January,February,March,April,May,June,July,August,September,October,November,December</value>
+											<value>Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday</value>
+										</set>
+									</property>
+								</bean>
+								<bean class="org.commontemplate.standard.operator.sequence.CharacterSequenceOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="orderby">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.collection.OrderByPropertyOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.collection.OrderByPropertiesOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="#">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.date.DateFormatOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.number.NumberFormatOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key="[">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.collection.ListSubFilterOperatorHandler">
+									<property name="itemName" value="item"/>
+									<property name="indexName" value="index"/>
+									<property name="sizeName" value="size"/>
+									<property name="countName" value="count"/>
+								</bean>
+								<bean class="org.commontemplate.standard.operator.collection.MapSubFilterOperatorHandler">
+									<property name="entryName" value="entry"/>
+									<property name="indexName" value="index"/>
+									<property name="sizeName" value="size"/>
+									<property name="countName" value="count"/>
+								</bean>
+								<ref bean="objectPropertyOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.context.ScopesGetterOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.context.LocalContextGetterOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.collection.MapSelectorOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.collection.MapGetterOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.collection.ArraySelectorOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.collection.ArrayGetterOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.collection.ArraySubOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.collection.ListSelectorOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.collection.ListMultiSelectorOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.collection.ListGetterOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.collection.ListSubOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.string.StringCharAtOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.string.CharSequenceSubOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+				<entry key=".">
+					<bean class="org.commontemplate.standard.operator.BinaryOperatorHandlerChain">
+						<property name="rightOperandNamed" value="true"/>
+						<property name="rightOperandFunctioned" value="true"/>
+						<property name="binaryOperatorHandlers">
+							<list>
+								<bean class="org.commontemplate.standard.operator.object.ObjectFunctionOperatorHandler">
+									<property name="functionHandlers">
+										<map>
+										<entry key="java.lang.String.abbreviate">
+											<bean class="org.commontemplate.standard.function.string.StringAbbreviateFunctionHandler"/>
+										</entry>
+										</map>
+									</property>
+								</bean>
+								<ref bean="objectPropertyOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.context.ScopesGetterOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.context.LocalContextGetterOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.collection.MapGetterOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.object.PackageDotOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.object.ClassStaticPropertyOperatorHandler"/>
+								<bean class="org.commontemplate.standard.operator.object.ClassStaticFunctionOperatorHandler"/>
+							</list>
+						</property>
+					</bean>
+				</entry>
+			</map>
+		</property>
+
+		<property name="unaryOperatorPrioritys">
+			<map>
+				<entry key="~"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="2000"/></bean></entry>
+				<entry key="?"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="2000"/></bean></entry>
+				<entry key="!"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="2000"/></bean></entry>
+				<entry key="+"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="2000"/></bean></entry>
+				<entry key="-"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="2000"/></bean></entry>
+				<entry key="."><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="3000"/></bean></entry>
+				<entry key="&amp;"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="3000"/></bean></entry>
+				<entry key="["><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="3000"/></bean></entry>
+				<entry key="\"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="3000"/></bean></entry>
+				<entry key="=>"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="50"/></bean></entry>
+			</map>
+		</property>
+		<property name="binaryOperatorPrioritys">
+			<map>
+				<entry key="=>"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="50"/></bean></entry>
+				<entry key=","><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="100"/></bean></entry>
+				<entry key="="><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="200"/></bean></entry>
+				<entry key=":"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="300"/></bean></entry>
+				<entry key="?"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="400"/></bean></entry>
+				<entry key="~"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="500"/></bean></entry>
+				<entry key="!~"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="500"/></bean></entry>
+				<entry key="#"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="500"/></bean></entry>
+				<entry key="|"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="600"/></bean></entry>
+				<entry key="xor"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="600"/></bean></entry>
+				<entry key="^"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="600"/></bean></entry>
+				<entry key="&amp;"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="650"/></bean></entry>
+				<entry key=">>"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="650"/></bean></entry>
+				<entry key="&lt;&lt;"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="650"/></bean></entry>
+				<entry key=">>>"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="650"/></bean></entry>
+				<entry key="or"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="700"/></bean></entry>
+				<entry key="||"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="700"/></bean></entry>
+				<entry key="and"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="800"/></bean></entry>
+				<entry key="&amp;&amp;"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="800"/></bean></entry>
+				<entry key="eq"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="900"/></bean></entry>
+				<entry key="=="><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="900"/></bean></entry>
+				<entry key="ne"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="900"/></bean></entry>
+				<entry key="!="><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="900"/></bean></entry>
+				<entry key="~="><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="900"/></bean></entry>
+				<entry key="^="><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="900"/></bean></entry>
+				<entry key="$="><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="900"/></bean></entry>
+				<entry key="*="><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="900"/></bean></entry>
+				<entry key="cmp"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="1000"/></bean></entry>
+				<entry key="&lt;=>"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="1000"/></bean></entry>
+				<entry key="le"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="1000"/></bean></entry>
+				<entry key="&lt;="><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="1000"/></bean></entry>
+				<entry key="ge"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="1000"/></bean></entry>
+				<entry key=">="><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="1000"/></bean></entry>
+				<entry key="lt"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="1000"/></bean></entry>
+				<entry key="&lt;"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="1000"/></bean></entry>
+				<entry key="gt"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="1000"/></bean></entry>
+				<entry key=">"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="1000"/></bean></entry>
+				<entry key="instanceof"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="1050"/></bean></entry>
+				<entry key="orderby"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="1080"/></bean></entry>
+				<entry key=".."><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="1100"/></bean></entry>
+				<entry key="+"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="1200"/></bean></entry>
+				<entry key="-"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="1200"/></bean></entry>
+				<entry key="*"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="1300"/></bean></entry>
+				<entry key="/"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="1300"/></bean></entry>
+				<entry key="%"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="1300"/></bean></entry>
+				<entry key="**"><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="1400"/></bean></entry>
+				<entry key="["><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="2100"/></bean></entry>
+				<entry key="."><bean class="java.lang.Integer"><constructor-arg type="java.lang.String" value="2100"/></bean></entry>
+			</map>
+		</property>
+
+		<property name="functionPriority" value="5000" />
+	</bean>
+
+	<bean id="objectPropertyOperatorHandler" class="org.commontemplate.standard.operator.object.ObjectPropertyOperatorHandler">
+		<property name="propertyHandlers">
+			<map>
+				<entry key="java.lang.Object[].size"><bean class="org.commontemplate.standard.property.array.ArrayLengthHandler"/></entry>
+				<entry key="java.lang.Object[].length"><bean class="org.commontemplate.standard.property.array.ArrayLengthHandler"/></entry>
+				<entry key="java.lang.Object.toJson"><bean class="org.commontemplate.standard.property.bean.ObjectToJsonPropertyHandler"/></entry>
+				<entry key="java.lang.Object.toXml"><bean class="org.commontemplate.standard.property.bean.ObjectToXmlPropertyHandler"/></entry>
+				<entry key="java.lang.Boolean.not"><bean class="org.commontemplate.standard.property.bool.BooleanNotHandler"/></entry>
+				<entry key="java.lang.Boolean.toInteger"><bean class="org.commontemplate.standard.property.bool.BooleanToIntegerHandler"/></entry>
+				<entry key="java.lang.String.capital"><bean class="org.commontemplate.standard.property.string.StringCapitalHandler"/></entry>
+				<entry key="java.lang.String.toBoolean"><bean class="org.commontemplate.standard.property.string.StringToBooleanHandler"/></entry>
+				<entry key="java.lang.String.toCharacter"><bean class="org.commontemplate.standard.property.string.StringToCharacterHandler"/></entry>
+				<entry key="java.lang.String.toByte"><bean class="org.commontemplate.standard.property.string.StringToByteHandler"/></entry>
+				<entry key="java.lang.String.toShort"><bean class="org.commontemplate.standard.property.string.StringToShortHandler"/></entry>
+				<entry key="java.lang.String.toInteger"><bean class="org.commontemplate.standard.property.string.StringToIntegerHandler"/></entry>
+				<entry key="java.lang.String.toLong"><bean class="org.commontemplate.standard.property.string.StringToLongHandler"/></entry>
+				<entry key="java.lang.String.toFloat"><bean class="org.commontemplate.standard.property.string.StringToFloatHandler"/></entry>
+				<entry key="java.lang.String.toDouble"><bean class="org.commontemplate.standard.property.string.StringToDoubleHandler"/></entry>
+				<entry key="java.lang.String.toDate"><bean class="org.commontemplate.standard.property.string.StringToDateHandler"/></entry>
+				<entry key="java.lang.String.toTime"><bean class="org.commontemplate.standard.property.string.StringToTimeHandler"/></entry>
+				<entry key="java.lang.String.toDateTime"><bean class="org.commontemplate.standard.property.string.StringToDateTimeHandler"/></entry>
+				<entry key="java.lang.String.md5Code"><bean class="org.commontemplate.standard.property.string.StringMd5PropertyHandler"/></entry>
+				<entry key="java.lang.String.shaCode"><bean class="org.commontemplate.standard.property.string.StringShaPropertyHandler"/></entry>
+				<entry key="java.lang.String.base64Code"><bean class="org.commontemplate.standard.property.string.StringBase64PropertyHandler"/></entry>
+				<entry key="java.lang.String.escapeHtml"><bean class="org.commontemplate.standard.property.string.StringEscapeHtmlHandler"/></entry>
+				<entry key="java.lang.String.escapeXml"><bean class="org.commontemplate.standard.property.string.StringEscapeXmlHandler"/></entry>
+				<entry key="java.lang.String.escapeUrl"><bean class="org.commontemplate.standard.property.string.StringEscapeUrlHandler"/></entry>
+				<entry key="java.lang.String.escapeJs"><bean class="org.commontemplate.standard.property.string.StringEscapeJsHandler"/></entry>
+				<entry key="java.util.Date.era"><bean class="org.commontemplate.standard.property.date.DateEraHandler"/></entry>
+				<entry key="java.util.Date.century"><bean class="org.commontemplate.standard.property.date.DateCenturyHandler"/></entry>
+				<entry key="java.util.Date.year"><bean class="org.commontemplate.standard.property.date.DateYearHandler"/></entry>
+				<entry key="java.util.Date.month"><bean class="org.commontemplate.standard.property.date.DateMonthHandler"/></entry>
+				<entry key="java.util.Date.week"><bean class="org.commontemplate.standard.property.date.DateWeekHandler"/></entry>
+				<entry key="java.util.Date.day"><bean class="org.commontemplate.standard.property.date.DateDayHandler"/></entry>
+				<entry key="java.util.Date.hour"><bean class="org.commontemplate.standard.property.date.DateHourHandler"/></entry>
+				<entry key="java.util.Date.minute"><bean class="org.commontemplate.standard.property.date.DateMinuteHandler"/></entry>
+				<entry key="java.util.Date.second"><bean class="org.commontemplate.standard.property.date.DateSecondHandler"/></entry>
+				<entry key="java.util.Date.millisecond"><bean class="org.commontemplate.standard.property.date.DateMillisecondHandler"/></entry>
+				<entry key="java.util.Date.dayOfYear"><bean class="org.commontemplate.standard.property.date.DayOfYearHandler"/></entry>
+				<entry key="java.util.Date.weekOfMonth"><bean class="org.commontemplate.standard.property.date.WeekOfMonthHandler"/></entry>
+				<entry key="java.util.Date.weekOfYear"><bean class="org.commontemplate.standard.property.date.WeekOfYearHandler"/></entry>
+				<entry key="java.util.Date.timezone"><bean class="org.commontemplate.standard.property.date.DateTimezoneHandler"/></entry>
+				<entry key="java.util.Date.leap"><bean class="org.commontemplate.standard.property.date.DateLeapHandler"/></entry>
+				<entry key="java.util.Date.toDateString"><bean class="org.commontemplate.standard.property.date.DateToDateStringHandler"/></entry>
+				<entry key="java.util.Date.toTimeString"><bean class="org.commontemplate.standard.property.date.DateToTimeStringHandler"/></entry>
+				<entry key="java.util.Date.toDateTimeString"><bean class="org.commontemplate.standard.property.date.DateToDateTimeStringHandler"/></entry>
+				<entry key="java.util.Date.toLong"><bean class="org.commontemplate.standard.property.date.DateToLongHandler"/></entry>
+				<entry key="java.lang.Number.toBoolean"><bean class="org.commontemplate.standard.property.number.NumberToBooleanHandler"/></entry>
+				<entry key="java.lang.Number.toByte"><bean class="org.commontemplate.standard.property.number.NumberToBytePropertyHandler"/></entry>
+				<entry key="java.lang.Number.toShort"><bean class="org.commontemplate.standard.property.number.NumberToShortPropertyHandler"/></entry>
+				<entry key="java.lang.Number.toInteger"><bean class="org.commontemplate.standard.property.number.NumberToIntegerPropertyHandler"/></entry>
+				<entry key="java.lang.Number.toLong"><bean class="org.commontemplate.standard.property.number.NumberToLongPropertyHandler"/></entry>
+				<entry key="java.lang.Number.toFloat"><bean class="org.commontemplate.standard.property.number.NumberToFloatPropertyHandler"/></entry>
+				<entry key="java.lang.Number.toDouble"><bean class="org.commontemplate.standard.property.number.NumberToDoublePropertyHandler"/></entry>
+				<entry key="java.lang.Number.toSize"><bean class="org.commontemplate.standard.property.number.NumberToSizeHandler"/></entry>
+				<entry key="java.lang.Number.toChinese"><bean class="org.commontemplate.standard.property.number.NumberToChinesePropertyHandler"/></entry>
+				<entry key="java.lang.Number.toChineseCurrency"><bean class="org.commontemplate.standard.property.number.NumberToChineseCurrencyPropertyHandler"/></entry>
+				<entry key="java.lang.Number.toDate"><bean class="org.commontemplate.standard.property.number.LongToDateHandler"/></entry>
+				<entry key="java.lang.Number.year"><bean class="org.commontemplate.standard.property.number.YearPropertyHandler"/></entry>
+				<entry key="java.lang.Number.month"><bean class="org.commontemplate.standard.property.number.MonthPropertyHandler"/></entry>
+				<entry key="java.lang.Number.week"><bean class="org.commontemplate.standard.property.number.WeekPropertyHandler"/></entry>
+				<entry key="java.lang.Number.day"><bean class="org.commontemplate.standard.property.number.DayPropertyHandler"/></entry>
+				<entry key="java.lang.Number.hour"><bean class="org.commontemplate.standard.property.number.HourPropertyHandler"/></entry>
+				<entry key="java.lang.Number.minute"><bean class="org.commontemplate.standard.property.number.MinutePropertyHandler"/></entry>
+				<entry key="java.lang.Number.second"><bean class="org.commontemplate.standard.property.number.SecondPropertyHandler"/></entry>
+				<entry key="java.lang.Number.millisecond"><bean class="org.commontemplate.standard.property.number.MillisecondPropertyHandler"/></entry>
+			</map>
+		</property>
+	</bean>
+
+</beans>
