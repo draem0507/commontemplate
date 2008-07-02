@@ -82,6 +82,8 @@ Section -Post
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "Publisher" "${PRODUCT_PUBLISHER}"
   WriteRegStr HKCR "ctlfile\DefaultIcon" "" "$INSTDIR\CommonTemplate.exe"
   WriteRegStr HKCR "ctlfile\shell\open\command" "" "$INSTDIR\CommonTemplate.exe %1"
+  WriteRegStr HKCR "ctlfile\shell\edit" "" "Edit"
+  WriteRegStr HKCR "ctlfile\shell\edit\command" "" "$WINDIR\notepad.exe %1"
   WriteRegStr HKCR "ctlfile\shell\view" "" "CommonTemplate"
   WriteRegStr HKCR "ctlfile\shell\view\command" "" "$INSTDIR\CommonTemplate.exe %1"
   WriteRegStr HKCR ".ctl" "" "ctlfile"
