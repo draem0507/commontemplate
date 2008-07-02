@@ -150,7 +150,7 @@ public class ForeachDirectiveHandler extends BlockDirectiveHandlerSupport {
 
 	}
 
-	private Collection getCollection(Object data) {
+	protected Collection getCollection(Object data) {
 		if (data == null)
 			return null;
 		if (data instanceof Collection)
