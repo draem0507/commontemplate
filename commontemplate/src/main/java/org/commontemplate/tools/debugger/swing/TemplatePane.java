@@ -11,6 +11,12 @@ import org.commontemplate.core.Element;
 import org.commontemplate.core.Template;
 import org.commontemplate.util.swing.TextPopupMenu;
 
+/**
+ * 模板面板
+ *
+ * @author liangfei0201@163.com
+ *
+ */
 public class TemplatePane extends JPanel {
 
 	private static final long serialVersionUID = 1L;
