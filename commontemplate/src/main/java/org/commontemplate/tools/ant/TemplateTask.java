@@ -18,7 +18,7 @@ import org.commontemplate.tools.bean.FileResourceLoader;
  * <p/>
  * 使用如:<br/>
  * <pre>
- * &lt;taskdef resource="org/commontemplate/tools/ant/commontemplate-tasks.properties" classpath="commontemplate.jar"/&gt;
+ * &lt;taskdef resource="org/commontemplate/tools/ant/tasks.properties" classpath="commontemplate.jar"/&gt;
  * &lt;commontemplate destdir="${bin}" config="F:/commontemplate.properties"&gt;
  *     &lt;fileset dir="${src}"&gt;
  *         &lt;include name="** / *.java" /&gt;
