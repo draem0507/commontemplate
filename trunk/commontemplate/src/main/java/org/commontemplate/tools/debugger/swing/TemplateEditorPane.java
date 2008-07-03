@@ -30,7 +30,15 @@ import org.commontemplate.standard.debug.DebugManager;
 import org.commontemplate.util.I18nMessages;
 import org.commontemplate.util.swing.ImageFactory;
 
+/**
+ * 模板编辑面板
+ *
+ * @author liangfei0201@163.com
+ *
+ */
 public class TemplateEditorPane extends JTextArea implements Border {
+
+	// TODO 未监听BreakpointEvent在有断点去除时更新
 
 	private static final long serialVersionUID = 1L;
 

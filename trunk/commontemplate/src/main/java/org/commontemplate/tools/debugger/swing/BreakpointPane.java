@@ -17,7 +17,15 @@ import org.commontemplate.standard.debug.BreakpointEvent;
 import org.commontemplate.standard.debug.BreakpointListener;
 import org.commontemplate.standard.debug.DebugManager;
 
+/**
+ * 断点面板，显示所以已注册的断点
+ *
+ * @author liangfei0201@163.com
+ *
+ */
 public class BreakpointPane extends JScrollPane implements BreakpointListener {
+
+	// TODO 未实现断点的删除/禁用等功能, 以及复制功能
 
 	private static final long serialVersionUID = 1L;
 

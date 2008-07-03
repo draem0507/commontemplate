@@ -6,6 +6,12 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.commontemplate.core.VariableStorage;
 
+/**
+ * 变量节点
+ *
+ * @author liangfei0201@163.com
+ *
+ */
 class VariableTreeNode extends DefaultMutableTreeNode {
 
 	private static final long serialVersionUID = 5248571865408340124L;
