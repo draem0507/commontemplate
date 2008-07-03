@@ -3,6 +3,7 @@ package org.commontemplate.engine.template;
 import java.util.List;
 
 import org.commontemplate.config.BlockDirectiveHandler;
+import org.commontemplate.core.BlockDirective;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.Element;
 import org.commontemplate.core.Expression;
@@ -36,6 +37,10 @@ class BlockDirectiveImpl extends BlockDirectiveSupport {
 
 	private final List elementInterceptors;
 
+	private final BlockDirective handleProxy;
+
+	private final BlockDirective interceptProxy;
+
 	BlockDirectiveImpl(String name, Location location, Expression expression, BlockDirectiveHandler startDirectiveHandler, String prototype, String endPrototype, List elementInterceptors) {
 		this.name = name;
 		this.prototype = prototype;
@@ -44,20 +49,21 @@ class BlockDirectiveImpl extends BlockDirectiveSupport {
 		this.startDirectiveHandler = startDirectiveHandler;
 		this.endPrototype = endPrototype;
 		this.elementInterceptors = elementInterceptors;
+		this.handleProxy = new BlockDirectiveProxy(this);
+		this.interceptProxy = new BlockDirectiveInterceptProxy(this);
 	}
 
 	public void render(Context context) throws RenderingException {
 		if (elementInterceptors != null && elementInterceptors.size() > 0)
-			new RenditionImpl(new BlockDirectiveInterceptProxy(this), context, elementInterceptors).doRender();
+			new RenditionImpl(interceptProxy, context, elementInterceptors).doRender();
 		else
 			doRender(context);
 	}
 
 	void doRender(Context context) throws RenderingException {
-		BlockDirectiveProxy proxy = new BlockDirectiveProxy(this);
-		context.pushLocalContext(proxy);
+		context.pushLocalContext(handleProxy);
 		try {
-			startDirectiveHandler.doRender(context, proxy);
+			startDirectiveHandler.doRender(context, handleProxy);
 		} catch (RenderingException e) {
 			throw e;
 		} catch (IgnoreException e) {

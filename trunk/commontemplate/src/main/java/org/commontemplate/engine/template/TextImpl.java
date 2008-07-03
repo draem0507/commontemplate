@@ -28,16 +28,19 @@ final class TextImpl extends Text {
 
 	private final List elementInterceptors;
 
+	private final Text proxy;
+
 	TextImpl(String name, Location location, String text, List elementInterceptors) {
 		this.name = name;
 		this.location = location;
 		this.text = text;
 		this.elementInterceptors = elementInterceptors;
+		this.proxy = new TextInterceptProxy(this);
 	}
 
 	public void render(Context context) throws RenderingException {
 		if (elementInterceptors != null && elementInterceptors.size() > 0)
-			new RenditionImpl(new TextInterceptProxy(this), context, elementInterceptors).doRender();
+			new RenditionImpl(proxy, context, elementInterceptors).doRender();
 		else
 			doRender(context);
 	}
