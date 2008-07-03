@@ -90,7 +90,8 @@
 								......<br/>
 								<br/>
 								<b>五、怎么下载CommonTemplate?</b><br/>
-								下载服务由<a href="http://code.google.com" target="_blank">GoogleCode</a>支持:<br/>
+								包括：版本发行，每日构建，源码控制等。<br/>
+								下载服务由<a href="http://code.google.com" target="_blank">GoogleCode</a>提供支持:<br/>
 								<table>
 									<tr>
 										<td width="64" height="24" align="center" style="background-color: #003399;"><a href="downloads.html" style="color: #FFFFFF; font-weight: bold;">下载</a></td>
@@ -98,8 +99,8 @@
 								</table>
 								<br/>
 								<b>六、交流社区</b><br/>
-								如果您有任何疑问或建议，请移步到论坛发帖，我们将尽快答复，谢谢。<br/>
-								论坛由<a href="http://www.redsaga.com" target="_blank">RedSaga</a>提供支持:<br/>
+								如果您有任何疑问或建议，请移步到论坛发帖，我们将尽快答复。<br/>
+								论坛服务由<a href="http://www.redsaga.com" target="_blank">RedSaga</a>提供支持:<br/>
 								<table>
 									<tr>
 										<td width="64" height="24" align="center" style="background-color: #003399;"><a target="_blank" href="http://forum.commontemplate.org/index.php" style="color: #FFFFFF; font-weight: bold;">论坛</a></td>
