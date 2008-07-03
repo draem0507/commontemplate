@@ -23,7 +23,7 @@ final class MiddleBlockDirectiveImpl extends BlockDirectiveImpl {
 		this.prototype = prototype;
 	}
 
-	public String getSource() {
+	public String getCanonicalForm() {
 		return prototype + getCanonicalFormAll();
 	}
 
