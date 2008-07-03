@@ -29,17 +29,20 @@ final class CommentImpl extends Comment {
 
 	private final List elementInterceptors;
 
+	private final Comment proxy;
+
 	CommentImpl(String name, Location location, String comment, String prototype, List elementInterceptors) {
 		this.name = name;
 		this.location = location;
 		this.comment = comment;
 		this.prototype = prototype;
 		this.elementInterceptors = elementInterceptors;
+		this.proxy = new CommentInterceptProxy(this);
 	}
 
 	public void render(Context context) throws RenderingException {
 		if (elementInterceptors != null && elementInterceptors.size() > 0)
-			new RenditionImpl(new CommentInterceptProxy(this), context, elementInterceptors).doRender();
+			new RenditionImpl(proxy, context, elementInterceptors).doRender();
 	}
 
 	public String getSource() {
