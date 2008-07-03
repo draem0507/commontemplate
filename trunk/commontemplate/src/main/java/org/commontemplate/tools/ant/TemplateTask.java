@@ -38,11 +38,18 @@ public class TemplateTask extends Task {
 	    filesets.add(fileset);
 	}
 
-	// commontemplate.properties配置文件
-	private String config;
+	// 配置文件路径(commontemplate.properties)
+	private String configpath;
 
-	public void setConfig(String config) {
-		this.config = config;
+	public void setConfigpath(String configpath) {
+		this.configpath = configpath;
+	}
+
+	// 配置类 (实现org.commontemplate.config.Configuration接口的类)
+	private String configclass;
+
+	public void setConfigclass(String configclass) {
+		this.configclass = configclass;
 	}
 
 	// 源文件夹
@@ -59,8 +66,22 @@ public class TemplateTask extends Task {
 		this.destdir = destdir;
 	}
 
+	// 目标文件扩展名
+	private String extension;
+
+	public void setExtension(String extension) {
+		this.extension = extension;
+	}
+
+	// 输出编码
+	private String outputencoding;
+
+	public void setOutputencoding(String outputencoding) {
+		this.outputencoding = outputencoding;
+	}
+
 	public void execute() throws BuildException {
-		ConfigurationSettings settings = PropertiesConfigurationLoader.loadConfiguration(config, new FileResourceLoader());
+		ConfigurationSettings settings = PropertiesConfigurationLoader.loadConfiguration(configpath, new FileResourceLoader());
 		Engine engine = new Engine(settings);
 		for (Iterator iterator = filesets.iterator(); iterator.hasNext();) {
 	        FileSet fs = (FileSet) iterator.next();
