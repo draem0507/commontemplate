@@ -21,9 +21,9 @@ class BlockDirectiveProxy extends BlockDirective {
 
 	private static final long serialVersionUID = 3260814916076018094L;
 
-	private final BlockDirective blockDirective;
+	private final BlockDirectiveImpl blockDirective;
 
-	BlockDirectiveProxy(BlockDirective blockDirective) {
+	BlockDirectiveProxy(BlockDirectiveImpl blockDirective) {
 		this.blockDirective = blockDirective;
 	}
 
@@ -69,6 +69,10 @@ class BlockDirectiveProxy extends BlockDirective {
 
 	public Template getTemplate() {
 		return blockDirective.getTemplate();
+	}
+
+	BlockDirectiveImpl getTarget() {
+		return blockDirective;
 	}
 
 }

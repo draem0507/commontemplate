@@ -19,9 +19,9 @@ class DirectiveProxy extends Directive {
 
 	private static final long serialVersionUID = 2605840464184974573L;
 
-	private final Directive directive;
+	private final DirectiveImpl directive;
 
-	DirectiveProxy(Directive directive) {
+	DirectiveProxy(DirectiveImpl directive) {
 		this.directive = directive;
 	}
 
@@ -63,6 +63,10 @@ class DirectiveProxy extends Directive {
 
 	public Template getTemplate() {
 		return directive.getTemplate();
+	}
+
+	DirectiveImpl getTarget() {
+		return directive;
 	}
 
 }

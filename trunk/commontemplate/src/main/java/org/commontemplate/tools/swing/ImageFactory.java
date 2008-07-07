@@ -1,4 +1,4 @@
-package org.commontemplate.util.swing;
+package org.commontemplate.tools.swing;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;

@@ -40,6 +40,15 @@ public abstract class Resource {
 	public abstract String getEncoding();
 
 	/**
+	 * 获取模板的内容长度
+	 *
+	 * @return 内容长度
+	 */
+	public long getLength() {
+		return 0;
+	}
+
+	/**
 	 * 未知修改时间
 	 */
 	public static final long UNKOWN_MODIFIED = -1;

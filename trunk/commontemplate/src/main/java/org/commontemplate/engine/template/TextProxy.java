@@ -5,6 +5,7 @@ import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Template;
 import org.commontemplate.core.Text;
 import org.commontemplate.core.Visitor;
+import org.commontemplate.util.I18nExceptionFactory;
 import org.commontemplate.util.Location;
 
 /**
@@ -13,13 +14,13 @@ import org.commontemplate.util.Location;
  * @author liangfei0201@163.com
  *
  */
-final class TextInterceptProxy extends Text {
+final class TextProxy extends Text {
 
 	private static final long serialVersionUID = 3914348687967038468L;
 
 	private final TextImpl text;
 
-	TextInterceptProxy(TextImpl text) {
+	TextProxy(TextImpl text) {
 		this.text = text;
 	}
 
@@ -64,7 +65,11 @@ final class TextInterceptProxy extends Text {
 	}
 
 	public void render(Context context) throws RenderingException {
-		text.doRender(context); // 绕过拦截器
+		throw I18nExceptionFactory.createUnsupportedOperationException("TextProxy.cycle.render", new Object[]{getValue()});
+	}
+
+	TextImpl getTarget() {
+		return text;
 	}
 
 }
