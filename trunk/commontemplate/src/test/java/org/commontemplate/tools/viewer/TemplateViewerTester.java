@@ -18,7 +18,7 @@ public class TemplateViewerTester {
 			}
 		}).start();*/
 		try {
-			viewer.view(new File("C:\\Documents and Settings\\lf\\桌面\\test\\test_yaml.ctl"));
+			viewer.view(new File("C:\\Documents and Settings\\lf\\桌面\\test\\test_xml.ctl"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

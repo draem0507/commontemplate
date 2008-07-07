@@ -15,6 +15,8 @@ DebugFrame.modify.variable.menu.item=修改变量值
 DebugFrame.new.variable.menu.item=新建子变量
 DebugFrame.copy.menu.item=复制
 DebugFrame.copy.all.menu.item=全部复制
+DebugFrame.copy.node.menu.item=复制节点
+TemplateEditorPane.properties.menu.item=属性
 TemplatePane.toggle.breakpoint.menu.item=添加断点
 TemplatePane.disable.breakpoint.menu.item=取消断点
 TextPopupMenu.copy.menu.item=复制
@@ -101,6 +103,8 @@ GlobalVariableStorageImpl.variable.type.error=变量名必需为String类型!
 LocalContextStackImpl.context.name.required=不能查找空的变量区域名称!
 BlockDirectiveProxy.cycle.render=不能在指令处理过程内回调render,否则将死循环调用.请检测查指令:{0}
 DirectiveProxy.cycle.render=不能在指令处理过程内回调render,否则将死循环调用.请检测查指令:{0}
+TextProxy.cycle.render=不能在文本处理过程内回调render,否则将死循环调用.请检测查文件:{0}
+CommentProxy.cycle.render=不能在注释处理过程内回调render,否则将死循环调用.请检测查注释:{0}
 EndDirective.unsupported.error=end指令为结束标识, 不应出现在指令树中, 也不应被执行!
 ExpressionFactory.function.forbidden="禁止调用函数! 函数名:{0} (配置项functionAvailable=false)"
 ExpressionFactory.invaild.unary.operator.name={0}为非法的一元运算符或名称！
