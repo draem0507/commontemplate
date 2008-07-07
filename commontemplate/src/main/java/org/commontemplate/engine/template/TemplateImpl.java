@@ -97,6 +97,25 @@ final class TemplateImpl extends Template implements Serializable {
 		return getSource(location.getBegin().getOffset(), location.getEnd().getOffset());
 	}
 
+	public String getSource(int begin, int end) {
+		if (begin < 0)
+			begin = 0;
+		if (end > data.length)
+			end = data.length;
+		if (end <= begin)
+			return "";
+		int len = end - begin;
+		char[] block = new char[len];
+		System.arraycopy(data, begin, block, 0, len);
+		return new String(block);
+	}
+
+	public String getLineSource(Location location) {
+		if (location == null)
+			return "";
+		return getLineSource(location.getBegin().getLine(), location.getEnd().getLine());
+	}
+
 	public String getLineSource(int beginLine, int endLine) {
 		if (endLine <= beginLine)
 			return "";
@@ -116,23 +135,8 @@ final class TemplateImpl extends Template implements Serializable {
 		return getSource(begin, end);
 	}
 
-	public String getLineSource(Location location) {
-		if (location == null)
-			return "";
-		return getLineSource(location.getBegin().getLine(), location.getEnd().getLine());
-	}
-
-	public String getSource(int begin, int end) {
-		if (begin < 0)
-			begin = 0;
-		if (end > data.length)
-			end = data.length;
-		if (end <= begin)
-			return "";
-		int len = end - begin;
-		char[] block = new char[len];
-		System.arraycopy(data, begin, block, 0, len);
-		return new String(block);
+	public long getLength() {
+		return data.length;
 	}
 
 }

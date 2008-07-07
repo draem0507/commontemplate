@@ -12,7 +12,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
 
-import org.commontemplate.util.swing.ImageFactory;
+import org.commontemplate.tools.swing.CommonTemplateFrame;
 
 public class MainUI {
 
@@ -28,8 +28,8 @@ public class MainUI {
 	}
 
 	public static void showSettings() {
-		JFrame frame = new JFrame("CommonTemplateViewer - Help");
-		frame.setIconImage(ImageFactory.getImage("org/commontemplate/tools/debugger/swing/debug.gif"));
+		CommonTemplateFrame frame = new CommonTemplateFrame();
+		frame.setTitle("CommonTemplateViewer - Help");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(800, 600);
 		Dimension scr = Toolkit.getDefaultToolkit().getScreenSize();
@@ -58,8 +58,8 @@ public class MainUI {
 		e.printStackTrace(new PrintWriter(out));
 		String msg = out.getBuffer().toString();
 
-		JFrame frame = new JFrame("CommonTemplateViewer - Exception");
-		frame.setIconImage(ImageFactory.getImage("org/commontemplate/tools/debugger/swing/debug.gif"));
+		CommonTemplateFrame frame = new CommonTemplateFrame();
+		frame.setTitle("CommonTemplateViewer - Exception");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(800, 600);
 		Dimension scr = Toolkit.getDefaultToolkit().getScreenSize();

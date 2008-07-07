@@ -59,14 +59,28 @@ final class RenditionImpl implements Rendition {
 	 * 执行渲染过程或调用上一拦截器
 	 */
 	public void doRender() {
-		if (index < elementInterceptors.size()) {
-			RenderingInterceptor elementInterceptor= (RenderingInterceptor)elementInterceptors.get(index);
-			if (elementInterceptor != null) {
-				elementInterceptor.intercept(new RenditionImpl(element, context, elementInterceptors, index + 1));
-				return;
+		// 查找下一个不为空的拦截器
+		RenderingInterceptor elementInterceptor = null;
+		int i = index;
+		if (elementInterceptors != null) {
+			while (elementInterceptor == null && i < elementInterceptors.size()) {
+				elementInterceptor = (RenderingInterceptor)elementInterceptors.get(i);
+				i ++;
 			}
 		}
-		element.render(context);
+		// 如果存在下一个不为空的拦截器， 则执行它
+		if (elementInterceptor != null) {
+			elementInterceptor.intercept(new RenditionImpl(element, context, elementInterceptors, i));
+		} else { // 否则运行正常逻辑
+			if (element instanceof BlockDirectiveProxy)
+				((BlockDirectiveProxy)element).getTarget().doRender(context);
+			else if (element instanceof DirectiveProxy)
+				((DirectiveProxy)element).getTarget().doRender(context);
+			else if (element instanceof TextProxy)
+				((TextProxy)element).getTarget().doRender(context);
+			else if (element instanceof CommentProxy)
+				((CommentProxy)element).getTarget().doRender(context);
+		}
 	}
 
 }

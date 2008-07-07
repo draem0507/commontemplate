@@ -35,7 +35,7 @@ final class TextImpl extends Text {
 		this.location = location;
 		this.text = text;
 		this.elementInterceptors = elementInterceptors;
-		this.proxy = new TextInterceptProxy(this);
+		this.proxy = new TextProxy(this);
 	}
 
 	public void render(Context context) throws RenderingException {

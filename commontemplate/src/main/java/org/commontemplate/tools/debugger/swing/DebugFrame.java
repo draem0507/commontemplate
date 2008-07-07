@@ -3,7 +3,6 @@ package org.commontemplate.tools.debugger.swing;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -29,8 +28,9 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.commontemplate.standard.debug.Execution;
+import org.commontemplate.tools.swing.CommonTemplateFrame;
+import org.commontemplate.tools.swing.ImageFactory;
 import org.commontemplate.util.I18nMessages;
-import org.commontemplate.util.swing.ImageFactory;
 
 public class DebugFrame implements ActionListener, WindowListener, ListSelectionListener {
 
@@ -65,17 +65,13 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 
 	private static final String ICON_PATH = DebugFrame.class.getPackage().getName().replace('.', '/') + "/";
 
-	private Image getImage(String icon) {
-		return ImageFactory.getImage(ICON_PATH + icon);
-	}
-
 	private Icon getIcon(String icon) {
 		return ImageFactory.getIcon(ICON_PATH + icon);
 	}
 
-	private final JFrame frame;
+	private final CommonTemplateFrame frame = new CommonTemplateFrame();
 
-	private final TemplatePane templatePane = new TemplatePane();
+	private final TemplatePane templatePane = new TemplatePane(frame);
 
 	private final ContextPane contextPane = new ContextPane();
 
@@ -88,9 +84,7 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 	private Execution execution;
 
 	public DebugFrame() {
-		frame = new JFrame(I18nMessages.getMessage("DebugFrame.title")
-				+ " (http://www.commontemplate.org)");
-		frame.setIconImage(getImage("debug.gif"));
+		frame.setTitle(I18nMessages.getMessage("DebugFrame.title"));
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.setSize(800, 600);
 		Dimension scr = Toolkit.getDefaultToolkit().getScreenSize();
@@ -101,7 +95,6 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 		frame.getRootPane().setFocusCycleRoot(true);
 		frame.getContentPane().setLayout(new BorderLayout());
 		frame.addWindowListener(this);
-
 
 		executionList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		executionList.addListSelectionListener(this);

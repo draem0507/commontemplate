@@ -5,15 +5,16 @@ import org.commontemplate.core.Context;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Template;
 import org.commontemplate.core.Visitor;
+import org.commontemplate.util.I18nExceptionFactory;
 import org.commontemplate.util.Location;
 
-public class CommentInterceptProxy extends Comment {
+final class CommentProxy extends Comment {
 
 	private static final long serialVersionUID = 1L;
 
 	private final CommentImpl comment;
 
-	public CommentInterceptProxy(CommentImpl comment) {
+	public CommentProxy(CommentImpl comment) {
 		super();
 		this.comment = comment;
 	}
@@ -59,11 +60,15 @@ public class CommentInterceptProxy extends Comment {
 	}
 
 	public void render(Context context) throws RenderingException {
-		// 绕过拦截器
+		throw I18nExceptionFactory.createUnsupportedOperationException("CommentProxy.cycle.render", new Object[]{getValue()});
 	}
 
 	public String toString() {
 		return comment.toString();
+	}
+
+	CommentImpl getTarget() {
+		return comment;
 	}
 
 }

@@ -37,9 +37,7 @@ class BlockDirectiveImpl extends BlockDirectiveSupport {
 
 	private final List elementInterceptors;
 
-	private final BlockDirective handleProxy;
-
-	private final BlockDirective interceptProxy;
+	private final BlockDirective proxy;
 
 	BlockDirectiveImpl(String name, Location location, Expression expression, BlockDirectiveHandler startDirectiveHandler, String prototype, String endPrototype, List elementInterceptors) {
 		this.name = name;
@@ -49,21 +47,20 @@ class BlockDirectiveImpl extends BlockDirectiveSupport {
 		this.startDirectiveHandler = startDirectiveHandler;
 		this.endPrototype = endPrototype;
 		this.elementInterceptors = elementInterceptors;
-		this.handleProxy = new BlockDirectiveProxy(this);
-		this.interceptProxy = new BlockDirectiveInterceptProxy(this);
+		this.proxy = new BlockDirectiveProxy(this);
 	}
 
 	public void render(Context context) throws RenderingException {
 		if (elementInterceptors != null && elementInterceptors.size() > 0)
-			new RenditionImpl(interceptProxy, context, elementInterceptors).doRender();
+			new RenditionImpl(proxy, context, elementInterceptors).doRender();
 		else
 			doRender(context);
 	}
 
 	void doRender(Context context) throws RenderingException {
-		context.pushLocalContext(handleProxy);
+		context.pushLocalContext(proxy);
 		try {
-			startDirectiveHandler.doRender(context, handleProxy);
+			startDirectiveHandler.doRender(context, proxy);
 		} catch (RenderingException e) {
 			throw e;
 		} catch (IgnoreException e) {

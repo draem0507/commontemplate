@@ -34,9 +34,7 @@ final class DirectiveImpl extends Directive {
 
 	private final List elementInterceptors;
 
-	private final Directive handleProxy;
-
-	private final Directive interceptProxy;
+	private final Directive proxy;
 
 	DirectiveImpl(String name, Location location, Expression expression, DirectiveHandler directiveHandler, String prototype, List elementInterceptors) {
 		this.name = name;
@@ -45,20 +43,19 @@ final class DirectiveImpl extends Directive {
 		this.expression = expression;
 		this.directiveHandler = directiveHandler;
 		this.elementInterceptors = elementInterceptors;
-		this.handleProxy = new DirectiveProxy(this);
-		this.interceptProxy = new DirectiveInterceptProxy(this);
+		this.proxy = new DirectiveProxy(this);
 	}
 
 	public void render(Context context) throws RenderingException {
 		if (elementInterceptors != null && elementInterceptors.size() > 0)
-			new RenditionImpl(interceptProxy, context, elementInterceptors).doRender();
+			new RenditionImpl(proxy, context, elementInterceptors).doRender();
 		else
 			doRender(context);
 	}
 
 	void doRender(Context context) throws RenderingException {
 		try {
-			directiveHandler.doRender(context, handleProxy);
+			directiveHandler.doRender(context, proxy);
 		} catch (RenderingException e) {
 			throw e;
 		} catch (IgnoreException e) {

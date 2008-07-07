@@ -37,12 +37,16 @@ final class CommentImpl extends Comment {
 		this.comment = comment;
 		this.prototype = prototype;
 		this.elementInterceptors = elementInterceptors;
-		this.proxy = new CommentInterceptProxy(this);
+		this.proxy = new CommentProxy(this);
 	}
 
 	public void render(Context context) throws RenderingException {
 		if (elementInterceptors != null && elementInterceptors.size() > 0)
 			new RenditionImpl(proxy, context, elementInterceptors).doRender();
+	}
+
+	void doRender(Context context) throws RenderingException {
+		// DO NOTHING
 	}
 
 	public String getSource() {
