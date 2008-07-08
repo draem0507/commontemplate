@@ -1,6 +1,6 @@
 package org.commontemplate.standard.operator.bool;
 
-import org.commontemplate.util.Assert;
+import org.commontemplate.util.I18nExceptionFactory;
 
 /**
  * 选择器缓存信息
@@ -28,8 +28,7 @@ public final class Selector {
 	}
 
 	public String toString() {
-		Assert.fail("Selector.condition.expression.error");
-		return null;
+		throw I18nExceptionFactory.createIllegalStateException("Selector.condition.expression.error");
 	}
 
 }
