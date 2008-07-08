@@ -15,3 +15,6 @@ $set{b : "yy"}
 $set{c : true}
 ${c ? a : b}
 ${! c ? a : b}
+${null ? null : null}
+${null ? "a" : "b"}
+${null ? null : "b"}

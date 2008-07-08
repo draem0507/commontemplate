@@ -1,2 +1,1 @@
-$breakpoint
-aaaa
+${null ? "a" : "b"}
