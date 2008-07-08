@@ -16,7 +16,7 @@ public class BooleanSelectOperatorHandler extends BinaryOperatorHandlerSupport {
 	private static final long serialVersionUID = 1L;
 
 	public BooleanSelectOperatorHandler() {
-		super(Object.class, LazyOperand.class);
+		super(Object.class, LazyOperand.class, true);
 	}
 
 	public Object doEvaluate(Object leftOperand, Object rightOperand)
