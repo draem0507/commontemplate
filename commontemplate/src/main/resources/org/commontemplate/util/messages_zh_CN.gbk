@@ -6,6 +6,7 @@ DebugFrame.step.return.button=单步跳出
 DebugFrame.resume.button=恢复运行到下一断点
 DebugFrame.resume.all.button=恢复运行并跳过所有断点
 DebugFrame.terminate.button=终止运行
+DebugFrame.flush.button=刷新缓存
 DebugFrame.close.title=关闭窗口
 DebugFrame.close.message=调试未完成，模板运行过程被挂起，请选择：
 DebugFrame.close.resume=恢复运行

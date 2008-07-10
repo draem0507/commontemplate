@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.Enumeration;
 
 import javax.swing.DefaultListModel;
@@ -19,14 +21,15 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
-import javax.swing.UIManager;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.commontemplate.core.Context;
 import org.commontemplate.standard.debug.Execution;
 import org.commontemplate.tools.swing.CommonTemplateFrame;
 import org.commontemplate.tools.swing.ImageFactory;
@@ -51,17 +54,6 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 	}
 
 	// ---- 静态结构 ----
-
-	static {
-		try {
-			// 启用图形UI
-			// System.setProperty("java.awt.headless", "ture");
-			// 设置swing样式为当前系统风格
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	private static final String ICON_PATH = DebugFrame.class.getPackage().getName().replace('.', '/') + "/";
 
@@ -169,6 +161,33 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 		terminate.setMnemonic(KeyEvent.VK_F10);
 		terminate.addActionListener(this);
 		buttonPane.add(terminate);
+
+		JToolBar.Separator s = new JToolBar.Separator();
+		s.setOrientation(JSeparator.VERTICAL);
+		buttonPane.add(s);
+
+		JButton flush = new JButton(getIcon("flush.gif"));
+		flush.setToolTipText(I18nMessages
+				.getMessage("DebugFrame.flush.button"));
+		flush.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (execution != null) {
+					Context context = execution.getContext();
+					if (context != null) {
+						Writer out = context.getOut();
+						if (out != null) {
+							try {
+								out.flush();
+							} catch (IOException ioe) {
+								ioe.printStackTrace();
+								// ignore
+							}
+						}
+					}
+				}
+			}
+		});
+		buttonPane.add(flush);
 
 		frame.getContentPane().add(buttonPane, BorderLayout.NORTH);
 		frame.getContentPane().add(verticalPane, BorderLayout.CENTER);

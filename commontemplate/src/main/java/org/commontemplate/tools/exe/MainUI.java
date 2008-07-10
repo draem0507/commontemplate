@@ -10,22 +10,10 @@ import java.io.StringWriter;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.UIManager;
 
 import org.commontemplate.tools.swing.CommonTemplateFrame;
 
 public class MainUI {
-
-	static {
-		try {
-			// 启用图形UI
-			// System.setProperty("java.awt.headless", "ture");
-			// 设置swing样式为当前系统风格
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	public static void showSettings() {
 		CommonTemplateFrame frame = new CommonTemplateFrame();
