@@ -3,10 +3,22 @@ package org.commontemplate.tools.swing;
 import java.awt.GraphicsConfiguration;
 
 import javax.swing.JFrame;
+import javax.swing.UIManager;
 
 public class CommonTemplateFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+
+	static {
+		try {
+			// 启用图形UI
+			// System.setProperty("java.awt.headless", "ture");
+			// 设置swing样式为当前系统风格
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	public CommonTemplateFrame() {
 		super();
