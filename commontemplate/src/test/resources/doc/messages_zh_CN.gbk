@@ -73,6 +73,8 @@ page.about.developer.yananay=严荣
 page.about.developer.guileen=桂林
 page.about.open.design.group=开源设计组
 page.about.qq.group=QQ群
+page.about.contributor.list=贡献者名单
+page.about.contributor.andrew.chen=陈志强
 page.about.project.logo=项目LOGO
 page.about.link.code=链接代码
 page.about.link.effect=链接效果
@@ -80,6 +82,9 @@ page.about.copy=复制
 page.about.copy.prompt=链接代码已复制到您的剪贴板上！
 page.about.project.support=感谢以下站点提供平台支持
 page.about.project.tools=使用以下开源工具开发
+
+page.join.contact.msg=如果你想加入开发或帮助翻译文档，请联系：
+page.join.desc=发邮件或消息时，请注明来意。<br/><br/>相信我们能够成为挚友，互相学习，共同进步！
 
 page.debug.breakpoint=断点设置
 page.debug.breakpoint.directive=当引擎遇到$breakpoint指令时，自动在指令所在行设置断点

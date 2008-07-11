@@ -2,28 +2,41 @@
 	<!--$overzone{"content"}-->
 								<b>1. $msg{'page.about.developer.team'}</b> <a href="join.html">$msg{'page.about.join.develop'}...</a><br/>
 								<b>$msg{'page.about.developer.liangfei'}</b><br/>
-								Email/MSN: <img src="../images/mail_lf.gif" border="0" /><br/>
+								Email/MSN: <img src="../images/mail/mail_lf.gif" border="0" /><br/>
 								QQ: 229056138<br/>
 								Blog: <a href="http://javatar.javaeye.com/" target="_blank">http://javatar.javaeye.com</a><br/>
 								<br/>
 								<b>$msg{'page.about.developer.yananay'}</b><br/>
-								Email: <img src="../images/mail_yr.gif" border="0" /><br/>
+								Email: <img src="../images/mail/mail_yr.gif" border="0" /><br/>
 								Blog: <a href="http://yananay.javaeye.com/" target="_blank">http://yananay.javaeye.com</a><br/>
 								<br/>
 								<b>$msg{'page.about.developer.guileen'}</b><br/>
-								Email/MSN: <img src="../images/mail_gl.gif" border="0" /><br/>
+								Email/MSN: <img src="../images/mail/mail_gl.gif" border="0" /><br/>
 								Blog: <a href="http://jasongreen.javaeye.com/" target="_blank">http://jasongreen.javaeye.com</a><br/>
 								<br/>
 								<b>$msg{'page.about.open.design.group'}</b><br/>
 								$msg{'page.about.qq.group'}: 38918204<br/>
 								<br/>
-								<b>2. $msg{'page.about.project.logo'}</b><br/>
+								<b>2. $msg{'page.about.contributor.list'}</b><br/>
+								<b>Saro</b><br/>
+								Blog: <a href="http://saro.javaeye.com/" target="_blank">http://saro.javaeye.com</a><br/>
+								<br/>
+								<b>Keel</b><br/>
+								Blog: <a href="http://keel.javaeye.com/" target="_blank">http://keel.javaeye.com</a><br/>
+								<br/>
+								<b>James Li</b><br/>
+								Email: <img src="../images/mail/mail_jl.gif" border="0" /><br/>
+								<br/>
+								<b>$msg{"page.about.contributor.andrew.chen"}</b><br/>
+								Email: <img src="../images/mail/mail_czq.gif" border="0" /><br/>
+								<br/>
+								<b>3. $msg{'page.about.project.logo'}</b><br/>
 								$msg{'page.about.link.code'}:<br/>
 								<textarea id="txtLink" row="3" col="60" readonly="readonly">&lt;a href="http://www.commontemplate.org" target="_blank"&gt;&lt;img src="http://www.commontemplate.org/images/logo.gif" border="0" width="88" height="31" /&gt;&lt;/a&gt;</textarea><input type="button" value="$msg{'page.about.copy'}" onclick="clipboardData.setData('text',document.getElementById('txtLink').value);alert('$msg{'page.about.copy.prompt'}');" /><br/>
 								$msg{'page.about.link.effect'}:<br/>
 								<a href="http://www.commontemplate.org" target="_blank"><img src="../images/logo.gif" border="0" width="88" height="31" /></a><br/>
 								<br/>
-								<b>3. $msg{'page.about.project.support'}</b><br/>
+								<b>4. $msg{'page.about.project.support'}</b><br/>
 								<table border="0" cellpadding="2" cellspacing="0">
 									<tr>
 										<td height="31"><a href="http://sourceforge.net/" target="_blank"><img src="../images/sourceforge.jpg" border="0" width="88" height="31" /></a></td>
@@ -47,7 +60,7 @@
 									</tr>
 								</table>
 								<br/>
-								<b>4. $msg{'page.about.project.tools'}</b><br/>
+								<b>5. $msg{'page.about.project.tools'}</b><br/>
 								<table border="0" cellpadding="2" cellspacing="0">
 									<tr>
 										<td><a href="http://www.eclipse.org" target="_blank"><img src="../images/eclipse.jpg" border="0" width="88" height="31" /></a></td>
