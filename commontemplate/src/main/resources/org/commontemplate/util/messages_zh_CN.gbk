@@ -72,6 +72,7 @@ ClassUtils.class.name.required=类名不能为空！
 ClassUtils.method.no.such="无法访问{0}的{1}方法！"
 FastWriter.buffer.size.negative=buffer size不能小于0!
 
+DirectiveReducer.block.directive.excrescent.end=多余的结束指令! 可能是块指令名称写错引起。
 DirectiveReducer.block.directive.without.end=有块指令未结束!
 DirectiveFactory.miss.parenthesis=大括号不匹配，状态机有错！
 DirectiveFactory.escape.error=语法解析错误, 转义符不成对!

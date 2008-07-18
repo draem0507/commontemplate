@@ -34,11 +34,16 @@ final class DirectiveReducer {
 		for (int i = 0, n = directives.size(); i < n; i ++) {
 			Element directive = (Element)directives.get(i);
 			// 弹栈
-			if (directive == EndDirective.END_DIRECTIVE || directive instanceof MiddleBlockDirectiveImpl)
+			if (directive == EndDirective.END_DIRECTIVE
+					|| directive instanceof MiddleBlockDirectiveImpl) {
+				Assert.assertFalse(directiveStack.isEmpty(), "DirectiveReducer.block.directive.excrescent.end");
 				((BlockDirectiveEntry) directiveStack.pop()).popDirective();
+			}
 			// 设置树
-			if (directive != EndDirective.END_DIRECTIVE) // 排除EndDirective
+			if (directive != EndDirective.END_DIRECTIVE) { // 排除EndDirective
+				Assert.assertFalse(directiveStack.isEmpty(), "DirectiveReducer.block.directive.excrescent.end");
 				((BlockDirectiveEntry) directiveStack.peek()).appendInnerDirective(directive);
+			}
 			// 压栈
 			if (directive instanceof BlockDirective)
 				directiveStack.push(new BlockDirectiveEntry((BlockDirective) directive));
