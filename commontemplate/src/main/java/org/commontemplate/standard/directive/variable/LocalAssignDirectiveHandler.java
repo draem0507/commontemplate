@@ -11,7 +11,7 @@ public class LocalAssignDirectiveHandler extends DirectiveHandlerSupport {
 
 	public void doRender(Context context, String directiveName, Object param) throws Exception {
 		Entry model = (Entry)param;
-		String var = model.getKey().toString();
+		String var = String.valueOf(model.getKey());
 		Object value = model.getValue();
 		context.putVariable(var, value);
 	}
