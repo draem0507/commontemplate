@@ -1,7 +1,7 @@
 <launch4jConfig>
   <dontWrapJar>false</dontWrapJar>
   <headerType>gui</headerType>
-  <jar>commontemplate.jar</jar>
+  <jar>commontemplate-SNAPSHOT.jar</jar>
   <outfile>CommonTemplate.exe</outfile>
   <errTitle></errTitle>
   <cmdLine></cmdLine>
@@ -20,7 +20,7 @@
     <jdkPreference>preferJre</jdkPreference>
   </jre>
   <splash>
-    <file>F:\CommonTemplate\google\trunk\ctlviewer\banner.bmp</file>
+    <file>banner.bmp</file>
     <waitForWindow>true</waitForWindow>
     <timeout>60</timeout>
     <timeoutErr>true</timeoutErr>
