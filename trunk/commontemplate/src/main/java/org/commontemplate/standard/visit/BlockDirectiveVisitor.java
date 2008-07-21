@@ -18,15 +18,15 @@ import org.commontemplate.util.Assert;
  * @author liangfei0201@163.com
  *
  */
-public class ElementsVisitor implements Visitor {
+public class BlockDirectiveVisitor implements Visitor {
 
 	private final String type;
 
 	private final String name;
 
-	private List elements;
+	private BlockDirective blockDirective;
 
-	public ElementsVisitor(String type, String name) {
+	public BlockDirectiveVisitor(String type, String name) {
 		Assert.assertNotNull(type, "ElementsVisitor.type.required");
 		Assert.assertNotNull(name, "ElementsVisitor.name.required");
 		this.type = type;
@@ -39,33 +39,48 @@ public class ElementsVisitor implements Visitor {
 			if (type.equals(blockDirective.getName())) {
 				Expression expression = blockDirective.getExpression();
 				if (expression != null && name.equals(expression.evaluate(null))) {
-					elements = blockDirective.getElements();
+					this.blockDirective = blockDirective;
 					throw new BreakVisitException();
 				}
 			}
 		}
 	}
 
-	public List getElements() {
-		return elements;
+	public BlockDirective getBlockDirective() {
+		return blockDirective;
 	}
 
 	/**
-	 * 查找模板元素
+	 * 查找模板指令
+	 *
+	 * @param node 模板
+	 * @param type 块指令类型名
+	 * @param name 块名
+	 * @return 块指令;
+	 */
+	public static BlockDirective findBlockDirective(Visitable node, String type, String name) {
+		BlockDirectiveVisitor visitor = new BlockDirectiveVisitor(type, name);
+		try {
+			node.accept(visitor);
+		} catch (BreakVisitException e) {
+			// ignore
+		}
+		return visitor.getBlockDirective();
+	}
+
+	/**
+	 * 查找模板指令内部元素
 	 *
 	 * @param node 模板
 	 * @param type 块指令类型名
 	 * @param name 块名
 	 * @return 块指令的内部元素集;
 	 */
-	public static List findElements(Visitable node, String type, String name) {
-		ElementsVisitor visitor = new ElementsVisitor(type, name);
-		try {
-			node.accept(visitor);
-		} catch (BreakVisitException e) {
-			// ignore
-		}
-		return visitor.getElements();
+	public static List findInnerElements(Visitable node, String type, String name) {
+		BlockDirective blockDirective = findBlockDirective(node, type, name);
+		if (blockDirective == null)
+			return null;
+		return blockDirective.getElements();
 	}
 
 }

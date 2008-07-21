@@ -24,6 +24,8 @@ public class MacroDefaultBlockDirectiveHandler extends BlockDirectiveHandlerSupp
 			newContext.putAllVariables(variables);
 		try {
 			DirectiveUtils.renderAll(macro, newContext);
+		} catch (ReturnException e) {
+			// ignore
 		} finally {
 			newContext.clear();
 		}

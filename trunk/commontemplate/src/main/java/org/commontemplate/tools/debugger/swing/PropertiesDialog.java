@@ -117,12 +117,12 @@ public class PropertiesDialog extends JDialog {
 		elementPanel.add(txtElementLocation);
 
 		JTabbedPane tabPane = new JTabbedPane();
-		tabPane.setBounds(10, 10, 340, 390);
+		tabPane.setBounds(5, 5, 350, 400);
 		tabPane.add("Template", templatePanel);
 		tabPane.add("Element", elementPanel);
 
 		JButton btnOK = new JButton("OK");
-		btnOK.setBounds(290, 410, 60, 24);
+		btnOK.setBounds(295, 412, 60, 24);
 		btnOK.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PropertiesDialog.this.setVisible(false);

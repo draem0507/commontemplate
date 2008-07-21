@@ -3,11 +3,11 @@ package org.commontemplate.standard.directive.macro;
 import java.util.List;
 import java.util.Map;
 
+import org.commontemplate.core.Context;
+import org.commontemplate.standard.directive.DirectiveHandlerSupport;
 import org.commontemplate.standard.directive.DirectiveUtils;
 import org.commontemplate.standard.directive.ParameterUtils;
-import org.commontemplate.standard.directive.DirectiveHandlerSupport;
 import org.commontemplate.util.Assert;
-import org.commontemplate.core.Context;
 
 /**
  * 动态指令处理器
@@ -28,6 +28,8 @@ public class MacroDefaultLineDirectiveHandler extends DirectiveHandlerSupport {
 			newContext.pushLocalContext(model);
 		try {
 			DirectiveUtils.renderAll(macro, newContext);
+		} catch (ReturnException e) {
+			// ignore
 		} finally {
 			newContext.clear();
 		}

@@ -35,15 +35,15 @@ public class PropertiesDataProvider extends InputStreamDataProvider {
 			Object value = TypeUtils.parseValue((String)entry.getValue());
 			String[] tokens = StringUtils.split(key, '.');
 			if (tokens == null || tokens.length == 0)
-				throw new RuntimeException("变量名不能为空!");
+				throw new RuntimeException("变量名不能为空!"); // TODO 未国际化
 			Object parent = map;
 			for (int i = 0, n = tokens.length; i < n; i ++) {
 				String token = tokens[i];
 				if (token == null || token.length() == 0)
-					throw new RuntimeException("变量名中不能有连续的\".\"点号!");
+					throw new RuntimeException("变量名中不能有连续的\".\"点号!"); // TODO 未国际化
 				if (TypeUtils.isInteger(token)) {
 					if (! (parent instanceof List))
-						throw new RuntimeException("数组下标与对象属性不能同级! 请检查: " + key);
+						throw new RuntimeException("数组下标与对象属性不能同级! 请检查: " + key); // TODO 未国际化
 					List parentList = (List)parent;
 					int index = TypeUtils.parseInteger(token).intValue();
 					if (i == n - 1) { // 最后一节
@@ -78,9 +78,9 @@ public class PropertiesDataProvider extends InputStreamDataProvider {
 					}
 				} else {
 					if (! TypeUtils.isNamed(token))
-						throw new RuntimeException("对象属性名不能为: " + token);
+						throw new RuntimeException("对象属性名不能为: " + token); // TODO 未国际化
 					if (! (parent instanceof Map))
-						throw new RuntimeException("对象属性与数组下标不能同级! 请检查: " + key);
+						throw new RuntimeException("对象属性与数组下标不能同级! 请检查: " + key); // TODO 未国际化
 					Map parentMap = (Map)parent;
 					if (i == n - 1) { // 最后一节
 						parentMap.put(token, value);
