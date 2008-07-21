@@ -160,7 +160,7 @@ $!
 								&nbsp;&nbsp;&nbsp;&nbsp;回调调用者的内部块<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;$inner{param3: "value3"}<br/>
 								$end<br/>
-								导入模板文件中所有的宏:<br/>
+								导入模板文件中所有的宏: <font color="red">(注：0.8.5版本不兼容改动, $using指令代替原有$import指令, $import重新实现)</font><br/>
 								$import{"mymacro.ctl"}<br/>
 								$import{my : "mymacro.ctl"} <font color="green">(注：调用时需带上"前缀_", 如：$my_button{xxx})</font><br/>
 								导入模板文件中指定的宏:<br/>

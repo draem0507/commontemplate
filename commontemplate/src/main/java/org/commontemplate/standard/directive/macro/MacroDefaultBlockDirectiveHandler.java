@@ -18,16 +18,14 @@ public class MacroDefaultBlockDirectiveHandler extends BlockDirectiveHandlerSupp
 		Map variables = ParameterUtils.getParameters(param);
 		List macro = (List)context.getProperty(MacroDirectiveHandler.MACRO_TYPE, name);
 		Assert.assertNotNull(macro, "MacroDefaultBlockDirectiveHandler.invaild.macro.name", new Object[]{name});
-		Context newContext = context.createContext();
-		newContext.putProperty(InnerDirectiveHandler.INNER_BLOCK, innerElements);
-		if (variables.size() > 0)
-			newContext.putAllVariables(variables);
+		context.pushLocalContext(variables);
+		context.putProperty(InnerDirectiveHandler.INNER_BLOCK, innerElements);
 		try {
-			DirectiveUtils.renderAll(macro, newContext);
+			DirectiveUtils.renderAll(macro, context);
 		} catch (ReturnException e) {
 			// ignore
 		} finally {
-			newContext.clear();
+			context.popLocalContext();
 		}
 	}
 

@@ -23,15 +23,14 @@ public class MacroDefaultLineDirectiveHandler extends DirectiveHandlerSupport {
 		Map model = ParameterUtils.getParameters(param);
 		List macro = (List)context.getProperty(MacroDirectiveHandler.MACRO_TYPE, name);
 		Assert.assertNotNull(macro, "MacroDefaultLineDirectiveHandler.invaild.macro.name", new Object[]{name});
-		Context newContext = context.createContext();
-		if (model.size() > 0)
-			newContext.pushLocalContext(model);
+		context.pushLocalContext(model);
+		context.putProperty(InnerDirectiveHandler.INNER_BLOCK, null);
 		try {
-			DirectiveUtils.renderAll(macro, newContext);
+			DirectiveUtils.renderAll(macro, context);
 		} catch (ReturnException e) {
 			// ignore
 		} finally {
-			newContext.clear();
+			context.popLocalContext();
 		}
 	}
 
