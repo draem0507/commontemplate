@@ -171,7 +171,7 @@ $!
 								$using{mymacro_block : "mymacro_block.ctl"}<br/>
 								使用模板文件中的宏作为宏:<br/>
 								$using{button : "mymacro.ctl#button"} <font color="green">(注：#后为macro的名称, 参见$macro指令)</font><br/>
-								宏调用方式: <font color="green">(注：宏调用在新的上下文中执行，<b>不能</b>访问当前上下文的变量，<b>可以</b>传参)</font><br/>
+								宏调用方式: <font color="green">(注：宏调用<b>可以</b>传参，也<b>可以</b>访问当前上下文的变量)</font><br/>
 								$mymacro{param1: "value1", param2: "value2"}<br/>
 								$mymacro_block{param1: "value1", param2: "value2"} <font color="green">(注：以"_block"结尾的指令表示块指令)</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
