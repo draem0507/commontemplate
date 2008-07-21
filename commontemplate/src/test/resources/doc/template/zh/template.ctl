@@ -142,8 +142,8 @@ $!
 								$snatch{"/list.jsp", 'UTF-8'} 指定编码<br/>
 								$snatch{"http://www.163.com"} 远程页面<br/>
 								<b>(7) 块指令:</b><br/>
-								Block块定义: <font color="green">(注: Block块在定义的位置不显示, 需通过show指令显示, 可以多次调用显示)</font><br/>
-								$block{"myblock"}<br/>
+								Block块定义: <font color="green">(注: block块主要用于传递, 其存放在变量栈中, 所以可以像其它变量一样传递到宏或其它模板中)</font><br/>
+								$block{"myblock"} <font color="green">(注: block块在定义的位置不显示, 需通过show指令显示, 可以多次调用显示, 也可以传递到其它宏或模板中再show)</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
 								显示Block块:<br/>
