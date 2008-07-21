@@ -3,7 +3,7 @@
   <groupId>org.commontemplate</groupId>
   <artifactId>commontemplate</artifactId>
   <name>Commontemplate Module</name>
-  <version>0.8.3</version>
+  <version>0.8.4</version>
   <build>
     <resources>
       <resource>
