@@ -1,6 +1,6 @@
 package org.commontemplate.standard.operator.context;
 
-import org.commontemplate.core.LocalContext;
+import org.commontemplate.core.VariableStorage;
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 
 /**
@@ -15,11 +15,11 @@ public class LocalContextGetterOperatorHandler extends BinaryOperatorHandlerSupp
 	private static final long serialVersionUID = 1L;
 
 	public LocalContextGetterOperatorHandler() {
-		super(LocalContext.class, String.class);
+		super(VariableStorage.class, String.class);
 	}
 
 	public Object doEvaluate(Object leftOperand, Object rightOperand) throws Exception {
-		return ((LocalContext)leftOperand).getVariable((String)rightOperand);
+		return ((VariableStorage)leftOperand).getVariable((String)rightOperand);
 	}
 
 }
