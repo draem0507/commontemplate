@@ -72,6 +72,7 @@ ClassUtils.class.name.required=类名不能为空！
 ClassUtils.method.no.such="无法访问{0}的{1}方法！"
 FastWriter.buffer.size.negative=buffer size不能小于0!
 
+DirectiveReducer.block.directive.invaild.end=结束指令的参数名"{0}"与相应块指令名"{1}"不一致!
 DirectiveReducer.block.directive.excrescent.end=多余的结束指令! 可能是块指令名称写错引起。
 DirectiveReducer.block.directive.without.end=有块指令未结束!
 DirectiveFactory.miss.parenthesis=大括号不匹配，状态机有错！
@@ -201,7 +202,6 @@ BlockDefineDirectiveHandler.parameter.required=$block 指令必需指定块定义名称! 如
 BlockDefineDirectiveHandler.parameter.type.error=$block 块名称必需为字符串!
 ShowBlockDirectiveHandler.parameter.required=$show 指令必需指定块定义名称! 如: $show{"blockName"}
 ShowBlockDirectiveHandler.parameter.type.error=$show 块名称必需为字符串!
-UsingAsMacroDirectiveHandler.parameter.error=$using 指令必需指定宏名称与块名称的对应关系! 如: $using{macroName: "blockName"}
 Cycle.items.required=循环项不能为空!
 ForeachDirectiveHandler.status.name.required=状态名称不能为空！
 ForeachDirectiveHandler.parameter.error=for指令参数错误!
