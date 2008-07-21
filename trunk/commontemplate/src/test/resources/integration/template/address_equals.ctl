@@ -1,0 +1,16 @@
+1.${true === true}
+2.${true !== true}
+3.${1 === 1}
+4.${1 !== 1}
+5.${users === users}
+6.${users !== users}
+7.${users[0] === users[0]}
+8.${users[0] !== users[0]}
+9.${users[0] === users[1]}
+10.${users[0] !== users[1]}
+11.${users[0].name === users[0].name}
+12.${users[0].name !== users[0].name}
+13.${users[0].name === users[1].name}
+14.${users[0].name !== users[1].name}
+15.${"aa" === "aa"}
+16.${"aa" !== "aa"}

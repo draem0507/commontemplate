@@ -1,7 +1,7 @@
-aaaa
-$block{"myblock"}
-thanks ${name}
+$using{welcome : "../included/welcome.mm"}
+$welcome{name:"liangfei"}
+----
+$using{welcome_block : "../included/welcome.mm"}
+$welcome_block{name:"liangfei"}
+	xx
 $end
-$using{thank: "myblock"}
-$thank{name:"liangfei"}
-$thank{name:"bobo"}

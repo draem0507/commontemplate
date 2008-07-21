@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 import org.commontemplate.core.Context;
 import org.commontemplate.engine.Engine;
 import org.commontemplate.standard.directive.macro.MacroDirectiveHandler;
+import org.commontemplate.standard.directive.macro.UsingAsMacroDirectiveHandler;
 import org.commontemplate.tools.PropertiesConfigurationLoader;
 
 import junit.framework.TestCase;

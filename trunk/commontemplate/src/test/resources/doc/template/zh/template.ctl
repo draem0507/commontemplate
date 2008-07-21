@@ -35,11 +35,12 @@ $!
 								&nbsp;&nbsp;&nbsp;&nbsp;no parse, eg: $if ... <br/>
 								!$!\$$!<br/>
 								<b>(4) 通用结束指令:</b><br/>
-								$end<br/>
+								$end 或者 $end{"if"}<br/>
+								<font color="green">(注: 参数表示被结束块指令的名称, 编译时将进行检查(不匹配将抛出异常), 没有参数表示自动匹配)</font><br/>
 								<br/>
 								<b>四. 标准指令:</b><br/>
 								<b>(1) 输出指令:</b><br/>
-								表达式结果输出: <font color="green">(注：指令名为空的指令)</font><br/>
+								表达式结果输出: <font color="green">(注：此指令为指令名为空的指令)</font><br/>
 								${user.name}<br/>
 								${user.coins + 100}<br/>
 								国际化信息输出:<br/>
@@ -55,13 +56,17 @@ $!
 								$message{"home.title"} welcome $end<br/>
 								&lt;!--$message{"home.title"}--&gt; welcome &lt;!--$end--&gt;<br/>
 								<b>(2) 条件指令:</b><br/>
-								$if{user.name == "james"} <font color="green">(注：可以判断空对象，$if{user}等价于$if{user != null})</font><br/>
+								$if{user.name == "james"}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$elseif{ user.name == "kent"}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$else<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
+								其中，if和elseif指令均可以直接判断null和empty对象，如：<br/>
+								$if{user} 等价于 $if{user != null}<br/>
+								$if{list} 等价于 $if{list != null && list.size > 0}<br/>
+								$if{string} 等价于 $if{string != null && string.length > 0}<br/>
 								<b>(3) 迭代指令:</b><br/>
 								定义循环显示项:<br/>
 								$cycle{color: ("red", "blue", "green")}<br/>
@@ -83,37 +88,50 @@ $!
 								&nbsp;&nbsp;&nbsp;&nbsp;have no users...<br/>
 								$end<br/>
 								特殊迭代举例：<br/>
-								a. 简单次数迭代：$for{10}，迭代10次，不产生迭代项数据，但可以用状态信息${for.index}等，当次数小于或等于零时不迭代<br/>
-								b. 数字序列迭代：$for{num : 1..9}，$for{num : -2..5}，$for{num : 5..-2}<br/>
-								c. 子集合迭代：$for{item : list[0..2]}，迭代list中索引号从0到2的元素(包含边界)，索引号越界时忽略<br/>
-								d. 过滤迭代：$for{item : list[=> item != 'xxx']}，过滤掉"xxx"项，参见"=&gt;"操作符使用<br/>
-								e. 排序迭代：$for{item : list orderby ("+property1", "-property2")}，$for{book : books orderby "+price"} 将books内的元素按price属性值升序排列后再迭代 (参见orderby操作符使用)<br/>
-								f. 非空选择迭代：$for{item : list1 || list2 || list3}，从左至右选第一个非空的集合进行迭代<br/>
-								g. 并行迭代：$for{item1 : list1, item2 : list2}, $for{i : (1..10), user : users}，多个集合并行取next值，以最长的集合作为结束，短集合自动补null值<br/>
+								<b>a.</b> 简单次数迭代：$for{10}，迭代10次，不产生迭代项数据，但可以用状态信息${for.index}等，当次数小于或等于零时不迭代<br/>
+								<b>b.</b> 并行迭代：$for{item1 : list1, item2 : list2}，$for{i : (1..10), user : users}，多个集合并行取next值，以最长的集合作为结束，短集合自动补null值<br/>
+								<b>c.</b> 数字序列迭代：$for{num : 1..9}，$for{num : -2..5}，$for{num : 5..-2}<br/>
+								<b>d.</b> 子集合迭代：$for{item : list[0..2]}，迭代list中索引号从0到2的元素(包含边界)，索引号越界时忽略，也可以用$for{item : list[2..*]}表示直到列表结束<br/>
+								<b>e.</b> 过滤迭代：$for{item : list[=> item != 'xxx']}，$for{user : users[u => u.name != 'guest']}，过滤掉用户名为"guest"的用户，参见"=&gt;"操作符使用<br/>
+								<b>f.</b> 排序迭代：$for{item : list orderby ("+property1", "-property2")}，$for{book : books orderby "+price"} 将books内的元素按price属性值升序排列后再迭代 (参见orderby操作符使用)<br/>
+								<b>g.</b> 非空选择迭代：$for{item : list1 || list2 || list3}，从左至右选第一个非空的集合进行迭代<br/>
 								<b>(4) 变量指令:</b><br/>
 								声明局部变量: <font color="green">(注：通常用于隐藏上级同名变量)</font><br/>
 								$local{name = "james"}<br/>
-								当前模板根级上下文变量定义<br/>
+								当前模板根级上下文变量定义: <br/>
 								$root{name = "james"}<br/>
-								全局上下文变量定义<br/>
+								全局上下文变量定义: <br/>
 								$global{name = "james"}<br/>
+								任意区间变量定义: <br/>
+								$var{session -&gt; name = "james"}<br/>
+								$var{global -&gt; name = "james"}<br/>
+								$var{name = "james"} <font color="green">(注：不指定区间时，与$local相同)</font><br/>
 								给最近区域的变量赋值: <font color="green">(注：若直到根区域均未找到相应变量，则在当前区域创建局部变量)</font><br/>
 								$set{name = "james"} <font color="green">(注：不能修改即有数据模型状态，也就是不能使用像：$set{user.name = "james"}的层级设值方式，以遵守模板无副作用契约，避免引入业务逻辑)</font><br/>
 								如果变量为空或未定义，则给其赋初始值: <br/>
 								$init{name = "guest"}<br/>
-								<b>(5) 包含指令:</b><br/>
+								<b>(5) 数据指令:</b><br/>
+								数据块：<br/>
+								$data{"xml"}<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+								$end<br/>
+								装载外部数据：<br/>
+								$load{"xxx.xml"} <font color="green">(注：根据文件扩展名识别类型)</font><br/>
+								$load{xml: "xxx.xml"} <br/>
+								<font color="green">(注：内置支持xml,json,properties,yaml等数据格式，并且数据格式是可扩展的)</font> <a href="viewer.html">格式说明...</a><br/>
+								<b>(6) 包含指令:</b><br/>
 								内嵌其它模板: <font color="green">(注：被内嵌的文件<b>可以</b>访问当前上下文的变量，<b>不可以</b>传参)</font><br/>
 								$embed{"common.ctl"}<br/>
 								$embed{"common.ctl", "UTF-8"}<br/>
 								内嵌其它模板的一部分: <font color="green">(注：#后为zone的名称, 参见$zone指令)</font><br/>
-								$embed{"common.ctl#zone"}<br/>
+								$embed{"common.ctl#body"}<br/>
 								包含其它模板的输出: <font color="green">(注：只包含输出，被包含的文件在新的上下文中执行，<b>不能</b>访问当前上下文的变量，<b>可以</b>传参)</font><br/>
 								$include{"common.ctl"}<br/>
 								$include{"common.ctl", "UTF-8"}<br/>
 								$include{"common.ctl", (param1: "value1", param2: "value2")}<br/>
 								$include{"common.ctl", "UTF-8", (param1: "value1", param2: "value2")}<br/>
 								包含其它模板的一部分: <font color="green">(注：#后为zone的名称, 参见$zone指令)</font><br/>
-								$include{"common.ctl#zone"}<br/>
+								$include{"common.ctl#body"}<br/>
 								显示文件的内容: <font color="green">(注：不解析其内容)</font><br/>
 								$display{"article.txt"}<br/>
 								$display{"article.txt", "UTF-8"}<br/>
@@ -123,16 +141,18 @@ $!
 								$snatch{"/list.jsp"} 相对于Web根目录<br/>
 								$snatch{"/list.jsp", 'UTF-8'} 指定编码<br/>
 								$snatch{"http://www.163.com"} 远程页面<br/>
-								<b>(6) 块指令:</b><br/>
+								<b>(7) 块指令:</b><br/>
 								Block块定义: <font color="green">(注: Block块在定义的位置不显示, 需通过show指令显示, 可以多次调用显示)</font><br/>
 								$block{"myblock"}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
 								显示Block块:<br/>
 								$show{"myblock"}<br/>
-								<b>(7) 宏指令:</b><br/>
+								<b>(8) 宏指令:</b><br/>
 								宏定义:<br/>
 								$macro{"mymacro"}<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;$return{name == null}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
 								$macro{"mymacro_block"} <font color="green">(注：以"_block"结尾的指令表示块指令，可以通过inner指令回调其内部块)</font><br/>
@@ -140,20 +160,23 @@ $!
 								&nbsp;&nbsp;&nbsp;&nbsp;回调调用者的内部块<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;$inner{param3: "value3"}<br/>
 								$end<br/>
-								导入模板文件作为宏:<br/>
-								$import{mymacro : "mymacro.ctl"}<br/>
-								$import{mymacro_block : "mymacro.ctl"}<br/>
-								导入模板文件中的宏作为宏: <font color="green">(注：#号后面是宏的名称, 参见$macro指令)</font><br/>
-								$import{mymacro : "mymacro.ctl#mymacro"}<br/>
-								使用Block块作为宏:<br/>
-								$using{mymacro : "myblock"}<br/>
-								$using{mymacro_block : "myblock"}<br/>
+								导入模板文件中所有的宏:<br/>
+								$import{"mymacro.ctl"}<br/>
+								$import{my : "mymacro.ctl"} <font color="green">(注：调用时需带上"前缀_", 如：$my_button{xxx})</font><br/>
+								导入模板文件中指定的宏:<br/>
+								$import{"mymacro.ctl#button"} <font color="green">(注：#后为macro的名称, 参见$macro指令)</font><br/>
+								$import{my : "mymacro.ctl#button"}<br/>
+								使用模板文件作为宏:<br/>
+								$using{mymacro : "mymacro.ctl"}<br/>
+								$using{mymacro_block : "mymacro_block.ctl"}<br/>
+								使用模板文件中的宏作为宏:<br/>
+								$using{button : "mymacro.ctl#button"} <font color="green">(注：#后为macro的名称, 参见$macro指令)</font><br/>
 								宏调用方式: <font color="green">(注：宏调用在新的上下文中执行，<b>不能</b>访问当前上下文的变量，<b>可以</b>传参)</font><br/>
 								$mymacro{param1: "value1", param2: "value2"}<br/>
 								$mymacro_block{param1: "value1", param2: "value2"} <font color="green">(注：以"_block"结尾的指令表示块指令)</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
-								<b>(8) 继承指令:</b> <font color="green">(注：通常用于布局layout)</font> <a href="demo_extends.html">示例&gt;&gt;</a><br/>
+								<b>(9) 继承指令:</b> <font color="green">(注：通常用于布局layout)</font> <a href="demo_extends.html">示例&gt;&gt;</a><br/>
 								模板块区域定义: <font color="green">(注：在父模板中)</font><br/>
 								$zone{"myzone"}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
@@ -167,12 +190,12 @@ $!
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;$end<br/>
 								$end<br/>
-								<b>(9) 动态指令:</b><br/>
+								<b>(10) 动态指令:</b><br/>
 								动态执行模板:<br/>
 								$exec{templateString}<br/>
 								动态表达式求值:<br/>
 								$eval{expressionString}<br/>
-								<b>(10) 过滤指令:</b><br/>
+								<b>(11) 过滤指令:</b><br/>
 								输出过滤指令:  <font color="green">(注：只过滤动态内容，不过滤文本块)</font><br/>
 								$filter{x => "&lt;b&gt;" + x.escapeHtml + "&lt;/b&gt;"} <font color="green">(注：缺省名称为value，如：$filter{=> value.escapeHtml})</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
@@ -199,7 +222,7 @@ $!
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
 								-->
-								<b>(11) 调试指令:</b><br/>
+								<b>(12) 调试指令:</b><br/>
 								停止页面解析：<br/>
 								$stop<br/>
 								性能监测：(记录其内部块的运行时间，并将时间存入全局的变量中)<br/>
@@ -213,7 +236,7 @@ $!
 								$log{info: "info messages..."}<br/>
 								$log{warn: "warn messages..."}<br/>
 								$log{error: "error messages..."}<br/>
-								单步调试断点：(运行时遇到此指令将弹出单步调试对话框) <a href="debug.html">更多...</a><br/>
+								单步调试断点：(此指令将在其所在行设置断点) <a href="debug.html">更多...</a><br/>
 								$breakpoint<br/>
 								<br/>
 								<b>五. 变量区间:</b><br/>

@@ -23,10 +23,10 @@ $!
 										<tr>
 											<td>独立使用CTL快速构建小型应用, 不与MVC集成和调用JavaBean.</td>
 											<td>使用</td>
-											<td>中</td>
+											<td>低</td>
 											<td>较差</td>
 											<td>&nbsp;</td>
-											<td>"提供Servlet直接映射ctl提供模板脚本支持"</td>
+											<td>提供Servlet直接映射ctl提供模板脚本支持</td>
 										</tr>
 										<tr>
 											<td>在代码生成器中使用</td>
@@ -34,7 +34,7 @@ $!
 											<td>高</td>
 											<td>较差</td>
 											<td>&nbsp;</td>
-											<td>"提供指令空白行自动去除支持与Ant集成, 实现相关Task类, 便于通过build生成代码."</td>
+											<td>提供指令空白行自动去除支持与Ant集成, 实现相关Task类, 便于通过build生成代码.</td>
 										</tr>
 										<tr>
 											<td>只使用EL表达式</td>
