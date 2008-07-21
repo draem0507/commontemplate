@@ -11,8 +11,10 @@
 								<img src="../images/viewer/open_with.gif" alt="Open With CommonTemplate"/><br/>
 								<br/>
 								<b>3. 数据查找</b><br/>
-								(1)内部数据供给块指令：\$data{"xml"}...\$end，指令内部放数据表示内容，内置支持xml,json,properties,ymal等数据格式。<a href="extension.html">扩展...</a><br/>
-								(2)同名数据文件加载：如打开test.ctl，将搜索同目录的test.xml, test.json, test.properties, test.yaml等数据文件并加载<br/>
+								(1)同名数据文件加载：如打开test.ctl，将搜索同目录的test.xml, test.json, test.properties, test.yaml等数据文件并加载<br/>
+								(2)内部数据供给块指令：\$data{"xml"}...\$end，指令内部放数据表示内容<br/>
+								(3)外部数据加载指令：\$load{xml: "test.xml"} 或者 \$load{"test.xml"} 通过文件扩展名识别类型<br/>
+								内置支持xml,json,properties,ymal等数据格式。<a href="extension.html">扩展...</a><br/>
 								<br/>
 								<b>4. 数据格式</b><br/>
 								<b>(1)XML数据格式:</b><br/>

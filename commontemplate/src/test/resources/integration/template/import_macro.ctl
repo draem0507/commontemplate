@@ -1,2 +1,2 @@
-$import{mybutton: "../included/macro.ctl#button"}
-$mybutton{name: "submit", value: "ok"}
+$import{"../included/macro.ctl#button"}
+$button{name: "submit", value: "ok"}

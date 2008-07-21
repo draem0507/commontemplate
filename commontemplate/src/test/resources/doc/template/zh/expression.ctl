@@ -7,7 +7,7 @@ $!
 								<br/>
 								<b>二. 特殊表达式符号:</b><br/>
 								<b>1. () 括号：</b>加强优先级<br/>
-								<b>2. " ' ` 引号：</b>字符串表示符，字符串中转义符"\"，与Java中使用方式相同 <font color="green">(注：除了双引号，单引号，还加入了反单引号，便于多层嵌套)</font><br/>
+								<b>2. " ' ` 三种引号：</b>字符串表示符，字符串中转义符"\"，与Java中使用方式相同 <font color="green">(注：除了双引号，单引号，还加入了反单引号，便于多层嵌套)</font><br/>
 								<b>3. 数字：</b>以0-9开头表示数字<br/>
 								以0x开头的为16进制数字，如：0xF5A7<br/>
 								以0开头的整数为8进制数字，如：07<br/>
@@ -26,7 +26,7 @@ $!
 								[ ] 方括号, 索引属性, 如: ${user["name"]} ${user[nameVar]}<br/>
 								一元 & 类或包名前缀, 如: ${&com.xxx.XxxUtils.xxx} ${&XxxUtils.xxx}<br/>
 								instanceof 类型判断，如：${user1 instanceof "com.xxx.User"}<br/>
-								== 值相等比较，名称符eq, 如: ${user1 == user2} ${user1 eq user2}<font color="green">(注：相近类型如char与string,int与long等对比时，会自动转换类型)</font></br>
+								== 值相等比较，名称符eq, 如: ${user1 == user2} ${user1 eq user2}<font color="green">(注：相近类型如char与string,int与long等对比时，将自动转换类型)</font></br>
 								!= 值不相等比较，名称符ne, 如: ${user1 != user2} ${user1 ne user2}<br/>
 								<!--
 								? 一元问号，判断对象是否存在, 如: $if{ ? obj} $if{ ! ? obj} <font color="green">(注：如果是String或集合，还会判断其length和size是否为0)</font></br>

@@ -63,6 +63,12 @@ public class DocumentGenerator {
 										new Menu("menu.dependency",
 												"dependency.html"))
 								.addChild(
+										new Menu("menu.faq",
+												"faq.html"))
+						)
+				.addChild(
+						new Menu("menu.tools")
+								.addChild(
 										new Menu("menu.debug",
 												"debug.html"))
 								.addChild(
@@ -72,8 +78,11 @@ public class DocumentGenerator {
 										new Menu("menu.editor",
 												"editor.html"))
 								.addChild(
-										new Menu("menu.faq",
-												"faq.html"))
+										new Menu("menu.code",
+												"code.html"))
+								.addChild(
+										new Menu("menu.ant",
+												"ant.html"))
 						)
 				.addChild(
 						new Menu("menu.development")
@@ -112,7 +121,6 @@ public class DocumentGenerator {
 								.addChild(
 										new Menu("menu.developer.team",
 												"about.html"))
-								.addChild(new Menu("menu.news", "news.html"))
 								.addChild(
 										new Menu("menu.forums",
 												"http://forum.commontemplate.org/index.php/index.php"))
@@ -195,7 +203,7 @@ public class DocumentGenerator {
 		DocumentGenerator generator = new DocumentGenerator("doc/template/", "doc/");
 		generator.generateAll(new String[]{"index", "template", "expression",
 				"config", "integration", "extension", "api", "dependency",
-				"debug", "viewer", "editor", "faq", "architecture", "criterion", "planning", "requirement", "downloads",
+				"debug", "viewer", "editor", "code", "ant", "faq", "architecture", "criterion", "planning", "requirement", "downloads",
 				"uml", "about", "news", "join", "demo_extends"});
 	}
 

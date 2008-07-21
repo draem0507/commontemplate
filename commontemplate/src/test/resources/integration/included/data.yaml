@@ -1,0 +1,8 @@
+mail:
+  from: "xxx@xxx.com"
+  to: "yyy@yyy.com"
+employees:
+  - id: 1
+    name: james
+  - id: 2
+    name: kent

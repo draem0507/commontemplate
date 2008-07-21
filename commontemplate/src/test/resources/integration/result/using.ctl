@@ -1,8 +1,5 @@
-aaaa
 
+liangfei, welcome to meteor
+----
 
-
-thanks liangfei
-
-
-thanks bobo
+liangfei, welcome to meteor

@@ -2,6 +2,40 @@
 	<!--$overzone{"content"}-->
 $!
 								<b>一. Properties 配置</b><br/>
+								<b>配置规则：</b><br/>
+								整个standard包的所有配置类全部留有setter注入接口，任何支持setter方式的IoC容器均可以完成配置。<br/>
+								默认采用内置的IoC容器初始化配置，详细请参考：org.commontemplate.util.PropertiesBeanFactory。<br/>
+								使用properties文件作为配置，所需遵循java.util.Properties的所有规则，如：# ! = :等符号需转义等。<br/>
+								<b>(1) 基本类型：</b>(与Java相似)<br/>
+								null, true, false为关键字<br/>
+								以数字开头的为Number，识别后缀L,F,D,S<br/>
+								以单引号括起的为Character<br/>
+								以双引号括起的为String，如果非特殊串，双引号可省<br/>
+								<b>(2) 引用：</b><br/>
+								以$开头表示引用配置项<br/>
+								<b>(3) 类和对象：</b><br/>
+								以.class结尾表示相应Class类元<br/>
+								以()结尾表示创建Instance，并以Instance的key加点号作为前缀，查找并注入其属性<br/>
+								以.static结尾表示通过静态字段获取Instance<br/>
+								以().static结尾表示通过静态工厂方法获取Instance，并以Instance的key加点号作为前缀，查找并注入其属性<br/>
+								<b>(4) 集合：</b><br/>
+								以&lt;&gt;结尾表示Set，并以&lt;&gt;前的名称查找Set的项<br/>
+								以[]结尾表示List，并以[]前的名称查找List的项<br/>
+								以{}结尾表示Map，并以{}前的名称查找Map的项<br/>
+								<b>(5) 配置继承：</b><br/>
+								@extends=parent1.properties,parent2.properties<br/>
+								<br/>
+								<b>使用方法：</b><br/>
+								PropertiesConfigurationLoader.loadConfiguration("xxx.properties"); // 在Classpath中查找<br/>
+								PropertiesConfigurationLoader.loadConfiguration("xxx.properties", resourceLoader); // 指定资源加载器<br/>
+								<br/>
+								<b>标准配置参考：</b><br/>
+								org/commontemplate/tools/commontemplate.properties<br/>
+								org/commontemplate/tools/context.properties<br/>
+								org/commontemplate/tools/template.properties<br/>
+								org/commontemplate/tools/directive.properties<br/>
+								org/commontemplate/tools/expression.properties<br/>
+								<br/>
 								<b>配置示例：</b><br/>
 <font color="#3f7f5f"># 继承标准web配置</font><br/>
 @extends=<font color="#2a00ff">org/commontemplate/tools/web/commontemplate.properties</font><br/>
@@ -71,60 +105,43 @@ memoryCache.maxSize=<font color="#2a00ff">1000</font><br/>
 <font color="#3f7f5f"># 响应内容类型, 不设置默认为text/html</font><br/>
 response.contentType=<font color="#2a00ff">text/html</font><br/>
 								<br/>
-								<b>特殊配置说明：</b><br/>
-								(1) 非web应用，如代码生成器等，可以设置：<br/>
+								<b>一些其它配置说明：</b><br/>
+								<b>(1)</b> 非web应用，如代码生成器等，可以设置：<br/>
 								@extends=<font color="#2a00ff">org/commontemplate/tools/commontemplate.properties</font><br/>
-								(2) 如果需去掉磁盘缓存，通常用于已在OSCache/EHCache中配置磁盘缓存，可以设置：<br/>
+								<b>(2)</b> 如果需去掉磁盘缓存，通常用于已在OSCache/EHCache中配置磁盘缓存，可以设置：<br/>
 								templateCache=<font color="#2a00ff">$memoryCache</font><br/>
-								(3) 如果需将缓存放在非web应用目录，可以设置：<br/>
+								<b>(3)</b> 如果需将缓存放在非web应用目录，可以设置：<br/>
 								diskCache.rootDirectory=<font color="#2a00ff">C:/xxx/</font><br/>
-								(3) 默认是禁止函数调用的，若需要开启，可以设置：<br/>
+								<b>(4)</b> 默认是禁止函数调用的，若需要开启，可以设置：<br/>
 								functionAvailable=<font color="#2a00ff">true</font><br/>
-								<br/>
-								<b>Web配置查找顺序：</b><br/>
-								1.首先查找web.xml中的context-param配置：commontemplate-config参数所指的路径。如：<br/>
-<font color="#3f7f5f">&lt;context-param&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;param-name&gt;</font>commontemplate-config<font color="#3f7f5f">&lt;/param-name&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;param-value&gt;</font>/WEB-INF/commontemplate.properties<font color="#3f7f5f">&lt;/param-value&gt;</font><br/>
-<font color="#3f7f5f">&lt;/context-param&gt;</font><br/>
-								(注：如果配置路径以 / 开头则表示在web应用目录下，否则在ClassPath下查找)<br/>
-								2.如果未配置，则查找默认WEB-INF路径：/WEB-INF/commontemplate.properties<br/>
-								3.如果WEB-INF中没有，则查找ClassPath根目录：commontemplate.properties<br/>
-								4.如果ClassPath根目录也没有，则使用标准配置：org/commontemplate/tools/web/commontemplate.properties<br/>
-								<br/>
-								<b>配置规则：</b><br/>
-								整个standard包的所有配置类全部留有setter注入接口，任何支持setter方式的IoC容器均可以完成配置。<br/>
-								默认采用内置的IoC容器初始化配置，详细请参考：org.commontemplate.util.PropertiesBeanFactory。<br/>
-								使用properties文件作为配置，所需遵循java.util.Properties的所有规则，如：# ! = :等符号需转义等。<br/>
-								<b>(1) 基本类型：</b>(与Java相似)<br/>
-								null, true, false为关键字<br/>
-								以数字开头的为Number，识别后缀L,F,D,S<br/>
-								以单引号括起的为Character<br/>
-								以双引号括起的为String，如果非特殊串，双引号可省<br/>
-								<b>(2) 引用：</b><br/>
-								以$开头表示引用配置项<br/>
-								<b>(3) 类和对象：</b><br/>
-								以.class结尾表示相应Class类元<br/>
-								以()结尾表示创建Instance，并以Instance的key加点号作为前缀，查找并注入其属性<br/>
-								以.static结尾表示通过静态字段获取Instance<br/>
-								以().static结尾表示通过静态工厂方法获取Instance，并以Instance的key加点号作为前缀，查找并注入其属性<br/>
-								<b>(4) 集合：</b><br/>
-								以&lt;&gt;结尾表示Set，并以&lt;&gt;前的名称查找Set的项<br/>
-								以[]结尾表示List，并以[]前的名称查找List的项<br/>
-								以{}结尾表示Map，并以{}前的名称查找Map的项<br/>
-								<b>(5) 配置继承：</b><br/>
-								@extends=parent1.properties,parent2.properties<br/>
-								<br/>
-								<b>使用方法：</b><br/>
-								PropertiesConfigurationLoader.loadConfiguration("xxx.properties"); // 在Classpath中查找<br/>
-								PropertiesConfigurationLoader.loadConfiguration("xxx.properties", resourceLoader); // 指定资源加载器<br/>
-								<br/>
-								<b>标准配置参考：</b><br/>
-								org/commontemplate/tools/commontemplate.properties<br/>
-								org/commontemplate/tools/context.properties<br/>
-								org/commontemplate/tools/template.properties<br/>
-								org/commontemplate/tools/directive.properties<br/>
-								org/commontemplate/tools/expression.properties<br/>
+								<b>(5)</b> 使用CommonsLogging/Log4J作为日志输出端，可以设置：<br/>
+								logger=<font color="#2a00ff">org.commontemplate.standard.log.CommonsLogging()</font><br/>
+								当然，你可能还需要配置commons-logging.properties:<br/>
+								logger=<font color="#2a00ff">org.apache.commons.logging.impl.Log4JLogger</font><br/>
+								以及配置log4j.properties:<br/>
+								log4j.rootLogger=<font color="#2a00ff">DEBUG,stdout</font><br/>
+								log4j.appender.stdout=<font color="#2a00ff">org.apache.log4j.ConsoleAppender</font><br/>
+								log4j.appender.stdout.layout=<font color="#2a00ff">org.apache.log4j.PatternLayout</font><br/>
+								log4j.appender.stdout.layout.ConversionPattern=<font color="#2a00ff">%-5p [%d] %C - %m\n</font><br/>
+								log4j.logger.CommonTemplate=<font color="#2a00ff">DEBUG</font><br/>
+								<b>(6)</b> 若需使用OSCache作为缓存方案，可以设置：<br/>
+								templateCache=<font color="#2a00ff">org.commontemplate.standard.cache.OSCache()</font><br/>
+								当然，你可能还需要配置oscache.properties:<br/>
+								cache.algorithm=<font color="#2a00ff">com.opensymphony.oscache.base.algorithm.LRUCache</font><br/>
+								cache.capacity=<font color="#2a00ff">1000</font><br/>
+								<b>(7)</b> 若需使用EHCache作为缓存方案，可以设置：<br/>
+								templateCache=<font color="#2a00ff">org.commontemplate.standard.cache.EHCache()</font><br/>
+								当然，你可能还需要配置ehcache.xml:<br/>
+								<font color="#3f7f5f">&lt;ehcache&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;diskStore&nbsp;<font color="#7f0055">path</font><font color="#000000">=</font><font color="#2a00ff">"java.io.tmpdir"</font>&nbsp;/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;defaultCache&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055">maxElementsInMemory</font><font color="#000000">=</font><font color="#2a00ff">"10000"</font>&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055">eternal</font><font color="#000000">=</font><font color="#2a00ff">"false"</font>&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055">timeToIdleSeconds</font><font color="#000000">=</font><font color="#2a00ff">"120"</font>&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055">timeToLiveSeconds</font><font color="#000000">=</font><font color="#2a00ff">"120"</font>&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055">overflowToDisk</font><font color="#000000">=</font><font color="#2a00ff">"true"</font>&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;/&gt;</font><br/>
+<font color="#3f7f5f">&lt;/ehcache&gt;</font><br/>
 								<br/>
 								<b>二. Spring 配置</b><br/>
 								Spring的使用请参见：<a href="http://www.springframework.org">http://www.springframework.org</a><br/>
