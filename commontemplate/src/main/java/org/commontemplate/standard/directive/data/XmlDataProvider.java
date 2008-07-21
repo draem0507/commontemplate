@@ -56,7 +56,7 @@ public class XmlDataProvider extends InputStreamDataProvider {
 		Document document = builder.parse(dataInputStream);
 		Element root = document.getDocumentElement();
 		if (! OBJECT_TAG_NAME.equals(root.getTagName()))
-			throw new IllegalStateException("XML数据格式错误, 根标签必需为<object>!");
+			throw new IllegalStateException("XML数据格式错误, 根标签必需为<object>!"); // TODO 未国际化
 		Object data = buildElement(root);
 		if (data instanceof Map)
 			return (Map) data;
@@ -70,7 +70,7 @@ public class XmlDataProvider extends InputStreamDataProvider {
 		} else if (ARRAY_TAG_NAME.equals(element.getTagName())) {
 			return buildArray(element);
 		} else {
-			throw new IllegalStateException("XML数据格式错误, 只支持<object>和<array>两个标签!");
+			throw new IllegalStateException("XML数据格式错误, 只支持<object>和<array>两个标签!"); // TODO 未国际化
 		}
 	}
 
@@ -87,7 +87,7 @@ public class XmlDataProvider extends InputStreamDataProvider {
 						Element childElement = (Element)child;
 						String name = childElement.getAttribute(NAME_ATTRIBUTE_NAME);
 						if (name == null || name.length() == 0)
-							throw new IllegalStateException("XML数据格式错误, <object>标签的内部元素name属性不能为空!");
+							throw new IllegalStateException("XML数据格式错误, <object>标签的内部元素name属性不能为空!"); // TODO 未国际化
 						map.put(name, buildElement(childElement));
 					} else if (child.getNodeType() == Node.TEXT_NODE) {
 						value = TypeUtils.parseValue(child.getNodeValue());

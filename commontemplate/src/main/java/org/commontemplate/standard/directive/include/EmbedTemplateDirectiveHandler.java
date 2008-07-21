@@ -6,7 +6,7 @@ import org.commontemplate.standard.directive.DirectiveHandlerSupport;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.Template;
 import org.commontemplate.standard.directive.DirectiveUtils;
-import org.commontemplate.standard.visit.ElementsVisitor;
+import org.commontemplate.standard.visit.BlockDirectiveVisitor;
 import org.commontemplate.util.Assert;
 
 /**
@@ -49,7 +49,7 @@ public class EmbedTemplateDirectiveHandler extends DirectiveHandlerSupport {
 				new Object[]{templateName, context.getCurrentTemplate()});
 		Template template = context.getTemplate(templateName, templateEncoding); // assert(template != null);
 		if (zoneName != null && zoneName.length() > 0) {
-			List elements = ElementsVisitor.findElements(template, "zone", zoneName);
+			List elements = BlockDirectiveVisitor.findInnerElements(template, "zone", zoneName);
 			Assert.assertNotEmpty(elements, "EmbedTemplateDirectiveHandler.template.zone.not.found", new Object[]{templateName, zoneName});
 			DirectiveUtils.renderAll(elements, context);
 		} else {

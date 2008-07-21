@@ -7,7 +7,7 @@ import org.commontemplate.core.OutputFilter;
 public class XmlCodeFilter implements OutputFilter, Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	// private String textColor = "#000000";
 
 	private String commentColor = "#3f5fbf";

@@ -19,9 +19,17 @@ final class EndDirective extends Directive {
 
 	private static final long serialVersionUID = 1L;
 
-	static final EndDirective END_DIRECTIVE = new EndDirective();
+	static final EndDirective END_DIRECTIVE = new EndDirective(null);
 
-	private EndDirective() {}
+	private final String blockDirectiveName;
+
+	EndDirective(String blockDirectiveName) {
+		this.blockDirectiveName = blockDirectiveName;
+	}
+
+	String getBlockDirectiveName() {
+		return blockDirectiveName;
+	}
 
 	public void render(Context context) throws RenderingException {
 		throw I18nExceptionFactory.createUnsupportedOperationException("EndDirective.unsupported.error");

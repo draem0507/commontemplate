@@ -5,25 +5,43 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.commontemplate.standard.directive.DirectiveHandlerSupport;
+import org.commontemplate.core.BlockDirective;
 import org.commontemplate.core.Context;
+import org.commontemplate.core.Expression;
 import org.commontemplate.core.Template;
-import org.commontemplate.standard.visit.ElementsVisitor;
+import org.commontemplate.standard.directive.DirectiveHandlerSupport;
+import org.commontemplate.standard.visit.BlockDirectiveVisitor;
+import org.commontemplate.standard.visit.BlockDirectivesVisitor;
 
 /**
- * 导入模板作为宏.
+ * 导入模板中的所有宏.
  *
  * @author liangfei0201@163.com
  *
  */
 public class ImportAsMacroDirectiveHandler extends DirectiveHandlerSupport {
 
-	// TODO 宏全导入: $import{"xxx.ctl#*"}, 以及导入前缀设置: $import{prefix: "xxx.ctl#*"}
-
 	private static final long serialVersionUID = 1L;
 
+	private String prefixSeparator;
+
+	public void setPrefixSeparator(String prefixSeparator) {
+		this.prefixSeparator = prefixSeparator;
+	}
+
+	private static final String DEFAULT_MACRO_DIRECTIVE_NAME = "macro";
+
+	private String macroDirectiveName;
+
+	public void setMacroDirectiveName(String macroDirectiveName) {
+		this.macroDirectiveName = macroDirectiveName;
+	}
+
 	public void doRender(Context context, String directiveName, Object param) throws Exception {
-		if (param instanceof Entry) {
+		if (param instanceof String) {
+			String str = (String)param;
+			importMacro(context, null, str);
+		} else if (param instanceof Entry) {
 			Entry entry = (Entry)param;
 			importMacro(context, entry.getKey().toString(), (String)entry.getValue());
 		} else if (param instanceof Map) {
@@ -34,7 +52,9 @@ public class ImportAsMacroDirectiveHandler extends DirectiveHandlerSupport {
 		}
 	}
 
-	private void importMacro(Context context, String macroName, String templateName) throws Exception {
+	private void importMacro(Context context, String prefix, String templateName) throws Exception {
+		if (prefix != null && prefixSeparator != null)
+			prefix = prefix + prefixSeparator;
 		String zoneName = null;
 		int index = templateName.indexOf('#');
 		if (index >= 0) {
@@ -42,13 +62,28 @@ public class ImportAsMacroDirectiveHandler extends DirectiveHandlerSupport {
 			templateName = templateName.substring(0, index);
 		}
 		Template template = context.getTemplate(templateName);
-		List elements = null;
-		if (zoneName != null && zoneName.length() > 0) {
-			elements = ElementsVisitor.findElements(template, "macro", zoneName);
-		} else {
-			elements = template.getElements();
+		if (zoneName != null && zoneName.length() > 0) { // 导入指定的宏
+			List elements = BlockDirectiveVisitor.findInnerElements(template, "macro", zoneName);
+			String macroName = zoneName;
+			if (prefix != null)
+				macroName = prefix + macroName;
+			context.putProperty(MacroDirectiveHandler.MACRO_TYPE, macroName, elements);
+		} else { // 导入所有宏
+			List blockDirectives = BlockDirectivesVisitor.findBlockDirectives(template, (macroDirectiveName == null ? DEFAULT_MACRO_DIRECTIVE_NAME : macroDirectiveName));
+			for (Iterator iterator = blockDirectives.iterator(); iterator.hasNext();) {
+				BlockDirective blockDirective = (BlockDirective) iterator.next();
+				Expression expression = blockDirective.getExpression();
+				if (expression != null) {
+					Object obj = expression.evaluate(context);
+					if (obj != null) {
+						String macroName = String.valueOf(obj);
+						if (prefix != null)
+							macroName = prefix + macroName;
+						context.putProperty(MacroDirectiveHandler.MACRO_TYPE, macroName, blockDirective.getElements());
+					}
+				}
+			}
 		}
-		context.putProperty(MacroDirectiveHandler.MACRO_TYPE, macroName, elements);
 	}
 
 }

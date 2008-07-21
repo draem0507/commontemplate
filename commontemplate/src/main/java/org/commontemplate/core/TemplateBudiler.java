@@ -30,6 +30,13 @@ public interface TemplateBudiler {
 	public void endBlockDirective();
 
 	/**
+	 * 结束块指令, 并验证指令名
+	 *
+	 * @param directiveName 指令名
+	 */
+	public void endBlockDirective(String directiveName);
+
+	/**
 	 * 添加指令
 	 *
 	 * @param directiveName 指令名

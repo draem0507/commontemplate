@@ -33,14 +33,22 @@ final class DirectiveReducer {
 		directiveStack.push(new BlockDirectiveEntry(rootDirective));
 		for (int i = 0, n = directives.size(); i < n; i ++) {
 			Element directive = (Element)directives.get(i);
+			if (directive == null)
+				continue;
 			// 弹栈
-			if (directive == EndDirective.END_DIRECTIVE
+			if (directive instanceof EndDirective
 					|| directive instanceof MiddleBlockDirectiveImpl) {
 				Assert.assertFalse(directiveStack.isEmpty(), "DirectiveReducer.block.directive.excrescent.end");
-				((BlockDirectiveEntry) directiveStack.pop()).popDirective();
+				BlockDirective blockDirective = ((BlockDirectiveEntry) directiveStack.pop()).popDirective();
+				if (directive instanceof EndDirective) {
+					String blockDirectiveName = ((EndDirective)directive).getBlockDirectiveName();
+					if (blockDirectiveName != null) {
+						Assert.assertTrue(blockDirectiveName.equals(blockDirective.getName()), "DirectiveReducer.block.directive.invaild.end", new Object[]{blockDirectiveName, blockDirective.getName()});
+					}
+				}
 			}
 			// 设置树
-			if (directive != EndDirective.END_DIRECTIVE) { // 排除EndDirective
+			if (! (directive instanceof EndDirective)) { // 排除EndDirective
 				Assert.assertFalse(directiveStack.isEmpty(), "DirectiveReducer.block.directive.excrescent.end");
 				((BlockDirectiveEntry) directiveStack.peek()).appendInnerDirective(directive);
 			}
@@ -68,7 +76,7 @@ final class DirectiveReducer {
 			this.elements.add(innerDirective);
 		}
 
-		Element popDirective() {
+		BlockDirective popDirective() {
 			((BlockDirectiveSupport)blockDirective).setElements(elements);
 			return blockDirective;
 		}

@@ -73,4 +73,8 @@ final class TemplateBudilerImpl implements TemplateBudiler {
 		elements.add(EndDirective.END_DIRECTIVE);
 	}
 
+	public void endBlockDirective(String directiveName) {
+		elements.add(new EndDirective(directiveName));
+	}
+
 }

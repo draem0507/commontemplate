@@ -141,8 +141,14 @@ final class DirectiveProvider {
 
 	private Element resolveDirective(Token token, String name, Expression expression) throws ParsingException {
 		// 结束指令
-		if (syntax.getEndDirectiveName().equals(name))
+		if (syntax.getEndDirectiveName().equals(name)) {
+			if (expression != null) {
+				Object obj = expression.evaluate(null);
+				if (obj != null && obj instanceof String)
+					return new EndDirective((String)obj);
+			}
 			return EndDirective.END_DIRECTIVE;
+		}
 		// SPI指令
 		DirectiveHandler handler = directiveHandlerProvider.getDirectiveHandler(name);
 		if (handler == null)
