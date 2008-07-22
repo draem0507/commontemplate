@@ -113,19 +113,21 @@ $!
 								<b>g.</b> 排序迭代：$for{item : list orderby ("+property1", "-property2")}，$for{book : books orderby "+price"} 将books内的元素按price属性值升序排列后再迭代 (参见orderby操作符使用)<br/>
 								<b>h.</b> 非空选择迭代：$for{item : list1 || list2 || list3}，从左至右选第一个非空的集合进行迭代<br/>
 								<b>(4) 变量指令:</b><br/>
-								声明局部变量: <font color="green">(注：通常用于隐藏上级同名变量)</font><br/>
-								$local{name = "james"}<br/>
-								当前模板根级上下文变量定义: <br/>
-								$root{name = "james"}<br/>
-								全局上下文变量定义: <br/>
-								$global{name = "james"}<br/>
-								任意区间变量定义: <br/>
+								变量定义:<br/>
+								局部变量定义<br/>
+								$var{name = "james"} <font color="green">(注：通常用于隐藏上级同名变量)</font><br/>
+								在上一级上下文定义变量<br/>
 								$var{super -&gt; name = "james"}<br/>
+								在根级上下文定义变量<br/>
+								$var{root -&gt; name = "james"}<br/>
+								在指定上下文定义变量<br/>
 								$var{session -&gt; name = "james"}<br/>
-								$var{global -&gt; name = "james"} <font color="green">(注：与$global相同)</font><br/>
-								$var{root -&gt; name = "james"} <font color="green">(注：与$root相同)</font><br/>
-								$var{local -&gt; name = "james"} <font color="green">(注：与$local相同)</font><br/>
-								$var{name = "james"} <font color="green">(注：等价于$var{local -> name = "james"})</font><br/>
+								在全局上下文定义变量(整个引擎内共享)<br/>
+								$var{global -&gt; name = "james"}<br/>
+								语义相同指令: <font color="green">(注：为保持统一，不建议使用)</font><br/>
+								$local{name = "james"} 等价于 $var{name = "james"}<br/>
+								$root{name = "james"} 等价于 $var{root -> name = "james"}<br/>
+								$global{name = "james"} 等价于 $var{global -> name = "james"}<br/>
 								给最近区域的变量赋值: <font color="green">(注：若直到根区域均未找到相应变量，则在当前区域创建局部变量)</font><br/>
 								$set{name = "james"} <font color="green">(注：不能修改即有数据模型状态，也就是不能使用像：$set{user.name = "james"}的层级设值方式，以遵守模板无副作用契约，避免引入业务逻辑)</font><br/>
 								如果变量为空或未定义，则给其赋初始值: <br/>
