@@ -98,14 +98,14 @@ public class ForeachDirectiveHandler extends BlockDirectiveHandlerSupport {
 		Collection collection = getCollection(entry.getValue());
 		if (collection == null || collection.size() == 0)
 			return false;
-		exeForeach(context, elements, collection, itemName, childrenName);
+		exeForeach(context, elements, itemName, childrenName, collection, 0);
 		return true;
 	}
 
-	private void exeForeach(Context context, List elements, Collection collection, String itemName, String childrenName) {
+	private void exeForeach(Context context, List elements, String itemName, String childrenName, Collection collection, int level) {
 		if (collection == null || collection.size() == 0)
 			return;
-		ForeachStatus status = new ForeachStatus(collection.size());
+		ForeachStatus status = new ForeachStatus(collection.size(), level);
 		context.putNullVariable(itemName);
 		context.putVariable(statusName, status);
 		for (Iterator items = collection.iterator(); items.hasNext();) {
@@ -119,7 +119,7 @@ public class ForeachDirectiveHandler extends BlockDirectiveHandlerSupport {
 					if (children != null) {
 						context.pushLocalContext();
 						try {
-							exeForeach(context, elements, children, itemName, childrenName);
+							exeForeach(context, elements, itemName, childrenName, children, level + 1);
 						} finally {
 							context.popLocalContext();
 						}
