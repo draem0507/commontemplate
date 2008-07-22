@@ -12,12 +12,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.commontemplate.standard.directive.BlockDirectiveHandlerSupport;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.EvaluationException;
 import org.commontemplate.core.RenderingException;
+import org.commontemplate.standard.directive.BlockDirectiveHandlerSupport;
 import org.commontemplate.standard.directive.DirectiveUtils;
+import org.commontemplate.standard.operator.string.NamePair;
 import org.commontemplate.util.Assert;
+import org.commontemplate.util.BeanUtils;
 
 /**
  * 集合循环迭代指令.
@@ -82,10 +84,27 @@ public class ForeachDirectiveHandler extends BlockDirectiveHandlerSupport {
 
 	// 常规迭代
 	private boolean normalForeach(Context context, Entry entry, List elements) {
-		String itemName = String.valueOf(entry.getKey());
+		Object key = entry.getKey();
+		String itemName;
+		String childrenName;
+		if (key instanceof NamePair) {
+			NamePair pair = (NamePair)key;
+			itemName = pair.getLeftName();
+			childrenName = pair.getRightName();
+		} else {
+			itemName = String.valueOf(key);
+			childrenName = null;
+		}
 		Collection collection = getCollection(entry.getValue());
 		if (collection == null || collection.size() == 0)
 			return false;
+		exeForeach(context, elements, collection, itemName, childrenName);
+		return true;
+	}
+
+	private void exeForeach(Context context, List elements, Collection collection, String itemName, String childrenName) {
+		if (collection == null || collection.size() == 0)
+			return;
 		ForeachStatus status = new ForeachStatus(collection.size());
 		context.putNullVariable(itemName);
 		context.putVariable(statusName, status);
@@ -95,6 +114,17 @@ public class ForeachDirectiveHandler extends BlockDirectiveHandlerSupport {
 			context.setVariable(statusName, status);
 			try {
 				DirectiveUtils.renderAll(elements, context);
+				if (childrenName != null) {
+					Collection children = getChildren(item, childrenName);
+					if (children != null) {
+						context.pushLocalContext();
+						try {
+							exeForeach(context, elements, children, itemName, childrenName);
+						} finally {
+							context.popLocalContext();
+						}
+					}
+				}
 				status.increment();
 			} catch (ContinueException ex) {
 				status.increment();
@@ -103,7 +133,10 @@ public class ForeachDirectiveHandler extends BlockDirectiveHandlerSupport {
 				break;
 			}
 		}
-		return true;
+	}
+
+	protected Collection getChildren(Object item, String childrenName) {
+		return getCollection(BeanUtils.getProperty(item, childrenName));
 	}
 
 	// 并行迭代
@@ -126,7 +159,7 @@ public class ForeachDirectiveHandler extends BlockDirectiveHandlerSupport {
 			return false;
 		ForeachStatus status = new ForeachStatus(max);
 		context.putVariable(statusName, status);
-		for (int i = 0; i < max; i ++) {
+		for (int i = 0; i < max; i ++) { // TODO 并行迭代未实现递归迭代
 			context.setVariable(statusName, status);
 			for (Iterator iterator = iters.entrySet().iterator(); iterator.hasNext();) {
 				Map.Entry entry = (Map.Entry)iterator.next();

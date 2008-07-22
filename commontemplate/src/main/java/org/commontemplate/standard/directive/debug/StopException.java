@@ -10,4 +10,8 @@ public class StopException extends IgnoreException {
 		super();
 	}
 
+	public StopException(String msg) {
+		super(msg);
+	}
+
 }

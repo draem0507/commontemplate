@@ -102,12 +102,13 @@ $!
 								$end<br/>
 								特殊迭代举例：<br/>
 								<b>a.</b> 简单次数迭代：$for{10}，迭代10次，不产生迭代项数据，但可以用状态信息${for.index}等，当次数小于或等于零时不迭代<br/>
-								<b>b.</b> 并行迭代：$for{item1 : list1, item2 : list2}，$for{i : (1..10), user : users}，多个集合并行取next值，以最长的集合作为结束，短集合自动补null值<br/>
-								<b>c.</b> 数字序列迭代：$for{num : 1..9}，$for{num : -2..5}，$for{num : 5..-2}<br/>
-								<b>d.</b> 子集合迭代：$for{item : list[0..2]}，迭代list中索引号从0到2的元素(包含边界)，索引号越界时忽略，也可以用$for{item : list[2..*]}表示直到列表结束<br/>
-								<b>e.</b> 过滤迭代：$for{item : list[=> item != 'xxx']}，$for{user : users[u => u.name != 'guest']}，过滤掉用户名为"guest"的用户，参见"=&gt;"操作符使用<br/>
-								<b>f.</b> 排序迭代：$for{item : list orderby ("+property1", "-property2")}，$for{book : books orderby "+price"} 将books内的元素按price属性值升序排列后再迭代 (参见orderby操作符使用)<br/>
-								<b>g.</b> 非空选择迭代：$for{item : list1 || list2 || list3}，从左至右选第一个非空的集合进行迭代<br/>
+								<b>b.</b> 递归迭代：$for{menu -> children : menus}，递归迭代menu的children属性，直到为空，通常用于输出树结构。<br/>
+								<b>c.</b> 并行迭代：$for{item1 : list1, item2 : list2}，$for{i : (1..10), user : users}，多个集合并行取next值，以最长的集合作为结束，短集合自动补null值<br/>
+								<b>d.</b> 数字序列迭代：$for{num : 1..9}，$for{num : -2..5}，$for{num : 5..-2}<br/>
+								<b>e.</b> 子集合迭代：$for{item : list[0..2]}，迭代list中索引号从0到2的元素(包含边界)，索引号越界时忽略，也可以用$for{item : list[2..*]}表示直到列表结束<br/>
+								<b>f.</b> 过滤迭代：$for{item : list[=> item != 'xxx']}，$for{user : users[u => u.name != 'guest']}，过滤掉用户名为"guest"的用户，参见"=&gt;"操作符使用<br/>
+								<b>g.</b> 排序迭代：$for{item : list orderby ("+property1", "-property2")}，$for{book : books orderby "+price"} 将books内的元素按price属性值升序排列后再迭代 (参见orderby操作符使用)<br/>
+								<b>h.</b> 非空选择迭代：$for{item : list1 || list2 || list3}，从左至右选第一个非空的集合进行迭代<br/>
 								<b>(4) 变量指令:</b><br/>
 								声明局部变量: <font color="green">(注：通常用于隐藏上级同名变量)</font><br/>
 								$local{name = "james"}<br/>
@@ -242,6 +243,8 @@ $!
 								<b>(12) 调试指令:</b><br/>
 								停止页面解析：<br/>
 								$stop<br/>
+								停止页面解析, 并标明原因：<br/>
+								$stop{"reason"}<br/>
 								性能监测：(记录其内部块的运行时间，并将时间存入全局的变量中)<br/>
 								$time{"xxxTime"} 或者 $time:xxxTime<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
