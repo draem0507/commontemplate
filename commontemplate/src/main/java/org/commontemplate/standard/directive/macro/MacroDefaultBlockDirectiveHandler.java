@@ -7,13 +7,14 @@ import org.commontemplate.core.Context;
 import org.commontemplate.standard.directive.BlockDirectiveHandlerSupport;
 import org.commontemplate.standard.directive.DirectiveUtils;
 import org.commontemplate.standard.directive.ParameterUtils;
+import org.commontemplate.standard.directive.StandardDirectiveHandlerProvider;
 import org.commontemplate.util.Assert;
 
 public class MacroDefaultBlockDirectiveHandler extends BlockDirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	private String defaultBlockDirectiveSuffix = ".block";
+	private String defaultBlockDirectiveSuffix = StandardDirectiveHandlerProvider.DEFAULT_BLOCK_DIRECTIVE_SUFFIX;
 
 	public void setDefaultBlockDirectiveSuffix(String defaultBlockDirectiveSuffix) {
 		this.defaultBlockDirectiveSuffix = defaultBlockDirectiveSuffix;

@@ -28,7 +28,9 @@ public class StandardDirectiveHandlerProvider implements DirectiveHandlerProvide
 		this.defaultBlockDirectiveHandler = defaultBlockDirectiveHandler;
 	}
 
-	private String defaultBlockDirectiveSuffix = ".block";
+	public static final String DEFAULT_BLOCK_DIRECTIVE_SUFFIX = ".begin";
+
+	private String defaultBlockDirectiveSuffix = DEFAULT_BLOCK_DIRECTIVE_SUFFIX;
 
 	public void setDefaultBlockDirectiveSuffix(String defaultBlockDirectiveSuffix) {
 		this.defaultBlockDirectiveSuffix = defaultBlockDirectiveSuffix;
