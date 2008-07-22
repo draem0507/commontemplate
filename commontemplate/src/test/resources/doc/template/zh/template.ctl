@@ -165,7 +165,7 @@ $!
 								$snatch{"/list.jsp", 'UTF-8'} 指定编码<br/>
 								$snatch{"http://www.163.com"} 远程页面<br/>
 								<b>(8) 宏指令:</b><br/>
-								<font color="red">(注：0.8.5版本对宏指令进行不兼容改动，宏调用方式改为可访问上下文，块指令调用后缀改成.block，$using指令代替原有$import指令，$import指令重新实现)</font><br/>
+								<font color="red">(注：0.8.5版本对宏指令进行不兼容改动，宏调用方式改为可访问上下文，块指令调用后缀由"_block"改成".begin"，$using指令代替原有$import指令，$import指令重新实现)</font><br/>
 								宏定义:<br/>
 								$macro{"button"} 或者 $macro:button<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
@@ -178,7 +178,7 @@ $!
 								宏的行指令(Line)方式调用: <font color="green">(注：宏调用<b>可以</b>传参，也<b>可以</b>访问当前上下文的变量)</font><br/>
 								$button{param1: "value1", param2: "value2"}<br/>
 								宏的块指令(Block)方式调用:<br/>
-								$button.block{param1: "value1", param2: "value2"} <font color="green">(注：以".block"结尾表示块指令调用)</font><br/>
+								$button.begin{param1: "value1", param2: "value2"} <font color="green">(注：以".begin"结尾表示块指令调用)</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
 								导入模板文件中所有的宏: <br/>
