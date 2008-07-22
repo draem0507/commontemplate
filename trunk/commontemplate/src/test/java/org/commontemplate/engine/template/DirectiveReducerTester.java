@@ -9,7 +9,6 @@ import junit.framework.TestCase;
 import org.commontemplate.config.Configuration;
 import org.commontemplate.config.Syntax;
 import org.commontemplate.core.BlockDirective;
-import org.commontemplate.core.ExpressionParser;
 import org.commontemplate.engine.expression.ExpressionEngine;
 import org.commontemplate.tools.PropertiesConfigurationLoader;
 import org.commontemplate.util.scanner.ScanningException;
@@ -31,7 +30,7 @@ public class DirectiveReducerTester extends TestCase {
 		directiveTokenizer = new DirectiveTokenizer(Syntax.DEFAULT);
 
 		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		ExpressionParser expressionParser = new ExpressionEngine(config);
+		ExpressionEngine expressionParser = new ExpressionEngine(config);
 		directiveFactory = new DirectiveProvider(config.getSyntax(),
 				config.getDirectiveHandlerProvider(), expressionParser,
 				config.getTextFilter(), config.getRenderingInterceptors());

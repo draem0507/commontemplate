@@ -2,18 +2,16 @@ package org.commontemplate.engine.template;
 
 import java.io.IOException;
 
+import junit.framework.TestCase;
+
 import org.commontemplate.config.Configuration;
 import org.commontemplate.core.Element;
-import org.commontemplate.core.ExpressionParser;
 import org.commontemplate.core.ParsingException;
 import org.commontemplate.engine.expression.ExpressionEngine;
-import org.commontemplate.engine.template.DirectiveProvider;
 import org.commontemplate.tools.PropertiesConfigurationLoader;
 import org.commontemplate.util.Location;
 import org.commontemplate.util.Position;
 import org.commontemplate.util.scanner.Token;
-
-import junit.framework.TestCase;
 
 public class DirectiveFactoryTester extends TestCase {
 
@@ -21,7 +19,7 @@ public class DirectiveFactoryTester extends TestCase {
 
 	public void setUp() {
 		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		ExpressionParser expressionParser = new ExpressionEngine(config);
+		ExpressionEngine expressionParser = new ExpressionEngine(config);
 		directiveFactory = new DirectiveProvider(config.getSyntax(), config.getDirectiveHandlerProvider(), expressionParser, config.getTextFilter(), config.getRenderingInterceptors());
 	}
 

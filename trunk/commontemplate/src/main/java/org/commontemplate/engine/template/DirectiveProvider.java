@@ -11,8 +11,8 @@ import org.commontemplate.config.Syntax;
 import org.commontemplate.config.TextFilter;
 import org.commontemplate.core.Element;
 import org.commontemplate.core.Expression;
-import org.commontemplate.core.ExpressionParser;
 import org.commontemplate.core.ParsingException;
+import org.commontemplate.engine.expression.ExpressionEngine;
 import org.commontemplate.util.Assert;
 import org.commontemplate.util.scanner.Token;
 
@@ -28,17 +28,17 @@ final class DirectiveProvider {
 
 	private final DirectiveHandlerProvider directiveHandlerProvider;
 
-	private final ExpressionParser expressionParser;
+	private final ExpressionEngine expressionEngine;
 
 	private final TextFilter textFilter;
 
 	private final List elementInterceptors;
 
 	DirectiveProvider(Syntax syntax, DirectiveHandlerProvider directiveHandlerProvider,
-			ExpressionParser expressionParser, TextFilter textFilter, List elementInterceptors) {
+			ExpressionEngine expressionParser, TextFilter textFilter, List elementInterceptors) {
 		this.syntax = syntax;
 		this.directiveHandlerProvider = directiveHandlerProvider;
-		this.expressionParser = expressionParser;
+		this.expressionEngine = expressionParser;
 		this.textFilter = textFilter;
 		this.elementInterceptors = elementInterceptors;
 	}
@@ -131,10 +131,17 @@ final class DirectiveProvider {
 			Assert.assertTrue(message.charAt(message.length() - 1) == syntax.getExpressionEnd(), "DirectiveFactory.miss.parenthesis");
 			name = message.substring(1, i);
 			String expressionText = message.substring(i + 1, message.length() - 1);
-			expression = expressionParser.parseExpression(expressionText.trim());
+			expression = expressionEngine.parseExpression(expressionText.trim());
 		} else {
-			name = message.substring(1, message.length());
-			expression = expressionParser.parseExpression(null);
+			int j = message.indexOf(syntax.getNameSeparator());
+			if (j > -1) {
+				name = message.substring(1, j);
+				String param = message.substring(j + 1);
+				expression = expressionEngine.createConstant(param.trim());
+			} else {
+				name = message.substring(1, message.length());
+				expression = expressionEngine.parseExpression(null);
+			}
 		}
 		return resolveDirective(token, name.trim(), expression);
 	}

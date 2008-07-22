@@ -28,10 +28,10 @@ public class StandardDirectiveHandlerProvider implements DirectiveHandlerProvide
 		this.defaultBlockDirectiveHandler = defaultBlockDirectiveHandler;
 	}
 
-	private String defaultBlockDirectiveRegex = ".*_block";
+	private String defaultBlockDirectiveSuffix = ".block";
 
-	public void setDefaultBlockDirectiveRegex(String defaultBlockDirectiveRegex) {
-		this.defaultBlockDirectiveRegex = defaultBlockDirectiveRegex;
+	public void setDefaultBlockDirectiveSuffix(String defaultBlockDirectiveSuffix) {
+		this.defaultBlockDirectiveSuffix = defaultBlockDirectiveSuffix;
 	}
 
 	public DirectiveHandler getDirectiveHandler(String name) {
@@ -40,7 +40,7 @@ public class StandardDirectiveHandlerProvider implements DirectiveHandlerProvide
 			return directiveHandler;
 
 		if (name != null && name.length() > 0
-				&& name.matches(defaultBlockDirectiveRegex))
+				&& name.endsWith(defaultBlockDirectiveSuffix))
 			return defaultBlockDirectiveHandler;
 
 		return defaultDirectiveHandler;

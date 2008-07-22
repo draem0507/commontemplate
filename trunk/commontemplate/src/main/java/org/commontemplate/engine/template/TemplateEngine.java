@@ -16,7 +16,6 @@ import org.commontemplate.core.Directive;
 import org.commontemplate.core.ElementFactory;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.ExpressionBuilder;
-import org.commontemplate.core.ExpressionParser;
 import org.commontemplate.core.ParsingException;
 import org.commontemplate.core.Resource;
 import org.commontemplate.core.Template;
@@ -38,7 +37,7 @@ import org.commontemplate.util.scanner.ScanningException;
  */
 public final class TemplateEngine implements TemplateParser {
 
-	private final ExpressionParser expressionParser;
+	private final ExpressionEngine expressionParser;
 
 	private final DirectiveTokenizer directiveTokenizer;
 
