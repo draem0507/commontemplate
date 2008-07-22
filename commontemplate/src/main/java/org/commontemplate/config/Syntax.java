@@ -16,6 +16,8 @@ public final class Syntax implements java.io.Serializable {
 
 	private final char directiveLeader;
 
+	private final char nameSeparator;
+
 	private final char expressionBegin;
 
 	private final char expressionEnd;
@@ -34,6 +36,7 @@ public final class Syntax implements java.io.Serializable {
 	 * 定义指令语法及特殊指令
 	 *
 	 * @param leader
+	 * @param nameSeparator
 	 * @param expressionBegin
 	 * @param expressionEnd
 	 * @param lineComment
@@ -41,13 +44,14 @@ public final class Syntax implements java.io.Serializable {
 	 * @param noParse
 	 * @param endDirectiveName
 	 */
-	public Syntax(char leader, char expressionBegin, char expressionEnd,
+	public Syntax(char leader, char nameSeparator, char expressionBegin, char expressionEnd,
 			char lineComment, char blockComment, char noParse,
 			String endDirectiveName) {
 		Assert.assertNotEmpty(endDirectiveName, "结束指令名不能为空!");
-		assertMutex(new char[] { leader, expressionBegin, expressionEnd,
+		assertMutex(new char[] { leader, nameSeparator, expressionBegin, expressionEnd,
 				noParse, lineComment, blockComment });
 		this.directiveLeader = leader;
+		this.nameSeparator = nameSeparator;
 		this.expressionBegin = expressionBegin;
 		this.expressionEnd = expressionEnd;
 		this.noParse = noParse;
@@ -60,14 +64,15 @@ public final class Syntax implements java.io.Serializable {
 		int n = chs.length;
 
 		for (int i = 0; i < n; i++) {
-			if (chs[i] > (char) 127 || (chs[i] >= '0' && chs[i] <= '9')
+			if (chs[i] > (char) 127
+					|| (chs[i] >= '0' && chs[i] <= '9' || chs[i] == '.')
 					|| chs[i] == '_' || (chs[i] >= 'a' && chs[i] <= 'z')
 					|| (chs[i] >= 'A' && chs[i] <= 'Z') || chs[i] == ' '
 					|| chs[i] == '\t' || chs[i] == '\n' || chs[i] == '\r'
 					|| chs[i] == '\\' || chs[i] == '\"' || chs[i] == '\''
 					|| chs[i] == '`')
 				throw new IllegalArgumentException(
-						"语法中特征字符必需为符号，而不能是字母，数字，引号，空白，转义符等！错误发生在出现非法符号："
+						"语法中特征字符必需为符号，而不能是字母，下划线，点号，数字，引号，空白，转义符等！错误发生在出现非法符号："
 								+ chs[i]);
 
 			for (int j = i + 1; j < n; j++) {
@@ -80,6 +85,10 @@ public final class Syntax implements java.io.Serializable {
 
 	public final char getDirectiveLeader() {
 		return directiveLeader;
+	}
+
+	public char getNameSeparator() {
+		return nameSeparator;
 	}
 
 	public final char getExpressionBegin() {
@@ -114,6 +123,8 @@ public final class Syntax implements java.io.Serializable {
 
 	public static final char DEFAULT_DIRECTIVE_LEADER = '$';
 
+	public static final char DEFAULT_NAME_SEPARATOR = ':';
+
 	public static final char DEFAULT_EXPRESSION_BEGIN = '{';
 
 	public static final char DEFAULT_EXPRESSION_END = '}';
@@ -126,7 +137,8 @@ public final class Syntax implements java.io.Serializable {
 
 	public static final String DEFAULT_END_DIRECTIVE_NAME = "end";
 
-	public static final Syntax DEFAULT = new Syntax(DEFAULT_DIRECTIVE_LEADER,
+	public static final Syntax DEFAULT = new Syntax(
+			DEFAULT_DIRECTIVE_LEADER, DEFAULT_NAME_SEPARATOR,
 			DEFAULT_EXPRESSION_BEGIN, DEFAULT_EXPRESSION_END,
 			DEFAULT_LINE_COMMENT, DEFAULT_BLOCK_COMMENT, DEFAULT_NO_PARSE,
 			DEFAULT_END_DIRECTIVE_NAME);

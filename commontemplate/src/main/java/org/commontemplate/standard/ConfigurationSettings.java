@@ -141,13 +141,14 @@ public class ConfigurationSettings extends Configuration {
 
 		value = value.trim();
 		char leader = value.length() > 0 ? value.charAt(0) : Syntax.DEFAULT_DIRECTIVE_LEADER;
-		char expressionBegin = value.length() > 1 ? value.charAt(1) : Syntax.DEFAULT_EXPRESSION_BEGIN;
-		char expressionEnd = value.length() > 2 ? value.charAt(2) : Syntax.DEFAULT_EXPRESSION_END;
-		char lineComment = value.length() > 3 ? value.charAt(3) : Syntax.DEFAULT_LINE_COMMENT;
-		char blockComment = value.length() > 4 ? value.charAt(4) : Syntax.DEFAULT_BLOCK_COMMENT;
-		char noParse = value.length() > 5 ? value.charAt(5) : Syntax.DEFAULT_NO_PARSE;
-		String endDirectiveName = value.length() > 6 ? value.substring(6) : Syntax.DEFAULT_END_DIRECTIVE_NAME;
-		setSyntax(new Syntax(leader, expressionBegin, expressionEnd, lineComment, blockComment, noParse, endDirectiveName));
+		char nameSeparator = value.length() > 1 ? value.charAt(1) : Syntax.DEFAULT_NAME_SEPARATOR;
+		char expressionBegin = value.length() > 2 ? value.charAt(2) : Syntax.DEFAULT_EXPRESSION_BEGIN;
+		char expressionEnd = value.length() > 3 ? value.charAt(3) : Syntax.DEFAULT_EXPRESSION_END;
+		char lineComment = value.length() > 4 ? value.charAt(4) : Syntax.DEFAULT_LINE_COMMENT;
+		char blockComment = value.length() > 5 ? value.charAt(5) : Syntax.DEFAULT_BLOCK_COMMENT;
+		char noParse = value.length() > 6 ? value.charAt(6) : Syntax.DEFAULT_NO_PARSE;
+		String endDirectiveName = value.length() > 7 ? value.substring(7) : Syntax.DEFAULT_END_DIRECTIVE_NAME;
+		setSyntax(new Syntax(leader, nameSeparator, expressionBegin, expressionEnd, lineComment, blockComment, noParse, endDirectiveName));
 	}
 
 	// 指令处理器 -------------
