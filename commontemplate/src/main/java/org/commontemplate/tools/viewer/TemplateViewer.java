@@ -3,7 +3,7 @@ package org.commontemplate.tools.viewer;
 import java.io.File;
 
 import org.commontemplate.tools.generator.TemplateGenerator;
-import org.commontemplate.util.UrlCleaner;
+import org.commontemplate.util.UrlUtils;
 
 public class TemplateViewer {
 
@@ -15,7 +15,7 @@ public class TemplateViewer {
 
 	public void view(File sourceFile) throws Exception {
 		String target = generator.generate(sourceFile);
-		Runtime.getRuntime().exec("cmd /c start " + UrlCleaner.cleanWindowsPath(target));
+		Runtime.getRuntime().exec("cmd /c start " + UrlUtils.cleanWindowsPath(target));
 	}
 
 }

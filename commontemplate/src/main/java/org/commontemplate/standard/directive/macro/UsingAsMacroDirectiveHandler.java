@@ -9,7 +9,7 @@ import org.commontemplate.core.Context;
 import org.commontemplate.core.Template;
 import org.commontemplate.standard.directive.DirectiveHandlerSupport;
 import org.commontemplate.standard.visit.BlockDirectiveVisitor;
-import org.commontemplate.util.UrlCleaner;
+import org.commontemplate.util.UrlUtils;
 
 /**
  * 使用模板作为宏.
@@ -59,7 +59,7 @@ public class UsingAsMacroDirectiveHandler extends DirectiveHandlerSupport {
 		} else {
 			elements = template.getElements();
 			if (macroName == null)
-				macroName = UrlCleaner.getSimpleName(templateName);
+				macroName = UrlUtils.getSimpleName(templateName);
 		}
 		context.putProperty(MacroDirectiveHandler.MACRO_TYPE, macroName, elements);
 	}

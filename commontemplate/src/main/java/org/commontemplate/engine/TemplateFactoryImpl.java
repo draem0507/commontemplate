@@ -25,7 +25,7 @@ import org.commontemplate.core.UnaryOperator;
 import org.commontemplate.core.Variable;
 import org.commontemplate.util.Assert;
 import org.commontemplate.util.ResourceEntry;
-import org.commontemplate.util.UrlCleaner;
+import org.commontemplate.util.UrlUtils;
 
 /**
  * 模板工厂实现
@@ -141,7 +141,7 @@ final class TemplateFactoryImpl implements TemplateFactory {
 
 	private String filterName(String name) throws IOException {
 		Assert.assertNotEmpty(name, "TemplateFactoryImpl.template.name.required");
-		return UrlCleaner.clean(name);
+		return UrlUtils.cleanUrl(name);
 	}
 
 	// 代理TemplateParser ----
