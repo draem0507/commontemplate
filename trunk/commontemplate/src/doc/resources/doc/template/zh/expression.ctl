@@ -170,6 +170,9 @@ $!
 								escapeXml XML转码, 如:  ${"&lt;book&gt;&lt;book&gt;".escapeXml}<br/>
 								escapeUrl URL转码, 如:  ${"http://xxx.com?xx=xx&yy=yy".escapeUrl}<br/>
 								escapeJs JS转码, 如:  ${"\"\n\"".escapeJs}<br/>
+								toCamelNaming 转为骆驼命名, 如：${"user_name".toCamelNaming} 输出：userName<br/>
+								toCapitalNaming 转为大写命名, 如：${"user_name".toCapitalNaming} 输出：UserName<br/>
+								toUnderlineNaming 转为下划线命名, 如：${"userName".toUnderlineNaming} 或 ${"UserName".toUnderlineNaming} 均输出：user_name<br/>
 								<b>(4) 日期(Date):</b><br/>
 								year, month, day, hour, minute, second, millisecond 时间各个部分取值, 如: ${createDate.day} ${createDate.hour}<br/>
 								week 星期几， 如: ${createDate.week}<br/>
