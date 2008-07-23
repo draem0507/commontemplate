@@ -1,3 +1,1 @@
-$for{m -> children : menu}
-${"-" * for.level}${m.name}
-$end
+${.now} ${.random} ${.uuid} ${.system.currentTimeMillis} ${.system.properties["user.dir"]} ${.engine.versionNumber} ${.engine.releaseDate} ${.engine.vendor}

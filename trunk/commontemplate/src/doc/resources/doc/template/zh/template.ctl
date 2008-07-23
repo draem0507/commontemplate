@@ -5,12 +5,13 @@ $!
 								整个模板语言只有一个语法规则：<br/>
 								<b>$指令名{<a href="expression.html">参数表达式</a>}</b><br/>
 								<font color="green">(注：指令名只能包含字母，下划线，数字，点号)</font><br/>
-								<font color="green">(注：指令名或参数表达式均可以为空，但不可以同时为空，参数表达式为空时，大括号可省)</font><br/>
+								<font color="green">(注：指令名或参数表达式均可以为空，参数表达式为空时，大括号可省)</font><br/>
 								<br/>
 								简化语法规则：<font color="green">(注：从0.8.5版本开始)</font><br/>
 								<b>$指令名:参数名</b><br/>
 								等价于：<br/>
 								$指令名{"参数名"}<br/>
+								<font color="green">(注：参数名与指令名一样，只能包含字母，下划线，数字，点号)</font><br/>
 								如：<br/>
 								$end:if 等价于 $end{"if"}<br/>
 								$data:xml 等价于 $data{"xml"}<br/>
@@ -20,15 +21,22 @@ $!
 								$time:xxx 等价于 $time{"xxx"}<br/>
 								<br/>
 								<b>二. 特殊符转义:</b><br/>
-								<b>(1) 使用 \$ 转义，输出非指令 $ 符</b><br/>
+								<b>(1) \ 为转义符，\\ 取消转义(或自转义)</b><br/>
+								<font color="green">(注：未处于转义位置的斜杠不作任何处理，以避免模板中到处使用双斜杠)</font><br/>
+								<b>(2) 使用 \$ 转义指令前导符</b><br/>
 								如：“\${name}”输出“${name}”<br/>
-								<b>(2) 使用 \\ 取消转义，输出非转义 \ 符</b><br/>
-								如：“\\${name}”输出“\value”<br/>
-								“\\\${name}”等价于“\\”+“\${name}”的组合，输出“\” + “${name}”，即“\${name}”<br/>
-								“\\\\${name}”等价于“\\”+“\\”+“${name}”的组合，输出“\” + “\” +  “value”，即“\\value”<br/>
-								<font color="green">(注：这里的“\”都是指紧挨在“$”前的“\”，未紧挨在“$”前的任意“\”均不作任何处理，以避免模板中到处使用双斜杠)</font><br/>
+								如：“\\${name}”输出“\value” <font color="green">(注：前导符未被转义)</font><br/>
+								如：“\\\${name}”输出“\${name}”<br/>
+								<b>(3) 使用 \\\!$ 转义不解释块结束符</b><br/>
+								如：“$!aaa\\\!$bbb\!$”输出“aaa\!$bbb”<br/>
+								如：“$!aaa\\\\\!$”输出“aaa\” <font color="green">(注：结束符未被转义)</font><br/>
+								如：“$!aaa\\\\\\\!$bbb\!$”输出“aaa\\\!$bbb”<br/>
+								<b>(4) 使用 \*$ 转义注释块结束符</b><br/>
+								如：“$*aaa\*$bbb*$” 注释内容为“aaa*$bbb”<br/>
+								如：“$*aaa\\*$” 注释内容为“aaa\” <font color="green">(注：结束符未被转义)</font><br/>
+								如：“$*aaa\\\*$bbb*$” 注释内容为“aaa\*$bbb”<br/>
 								<br/>
-								<b>三. 特殊指令: </b><br/>
+								<b>三. 编译指令: </b><br/>
 								<b>(1) 行注释:</b> 忽略其后同一行的内容 <font color="green">(注: 可注释不合法的指令内容)</font><br/>
 								运行期不保留: <font color="green">(注: 编译后即抛弃)</font><br/>
 								$# line comment ...<br/>
@@ -46,7 +54,7 @@ $!
 								<b>(3) 不解释块:</b> 将其包含的内容作为纯文本输出 <font color="green">(注: 可包含不合法的指令内容，自身不可嵌套，但可嵌套行注释和块注释等)</font><br/>
 								$!<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;no parse, eg: $if ... <br/>
-								!$!\$$!<br/>
+								\!$<br/>
 								<b>(4) 通用结束指令:</b><br/>
 								$end 或者 $end{"if"} 或者 $end:if<br/>
 								<font color="green">(注: 参数表示被结束块指令的名称, 编译时将进行检查(不匹配将抛出异常), 没有参数表示自动匹配)</font><br/>
@@ -124,10 +132,12 @@ $!
 								$var{session -&gt; name = "james"}<br/>
 								在全局上下文定义变量(整个引擎内共享)<br/>
 								$var{global -&gt; name = "james"}<br/>
+								<!--
 								语义相同指令: <font color="green">(注：为保持统一，不建议使用)</font><br/>
 								$local{name = "james"} 等价于 $var{name = "james"}<br/>
 								$root{name = "james"} 等价于 $var{root -> name = "james"}<br/>
 								$global{name = "james"} 等价于 $var{global -> name = "james"}<br/>
+								-->
 								给最近区域的变量赋值: <font color="green">(注：若直到根区域均未找到相应变量，则在当前区域创建局部变量)</font><br/>
 								$set{name = "james"} <font color="green">(注：不能修改即有数据模型状态，也就是不能使用像：$set{user.name = "james"}的层级设值方式，以遵守模板无副作用契约，避免引入业务逻辑)</font><br/>
 								如果变量为空或未定义，则给其赋初始值: <br/>
@@ -148,42 +158,21 @@ $!
 								$load{"xxx.xml"} <font color="green">(注：根据文件扩展名识别类型)</font><br/>
 								$load{xml: "xxx.xml"} <br/>
 								<font color="green">(注：内置支持xml,json,properties,yaml等数据格式，并且数据格式是可扩展的)</font> <a href="viewer.html">格式说明...</a><br/>
-								<b>(7) 包含指令:</b><br/>
-								内嵌其它模板: <font color="green">(注：被内嵌的文件<b>可以</b>访问当前上下文的变量，<b>不可以</b>传参)</font><br/>
-								$embed{"common.ctl"}<br/>
-								$embed{"common.ctl", "UTF-8"}<br/>
-								内嵌其它模板的一部分: <font color="green">(注：#后为zone的名称, 参见$zone指令)</font><br/>
-								$embed{"common.ctl#body"}<br/>
-								包含其它模板的输出: <font color="green">(注：只包含输出，被包含的文件在新的上下文中执行，<b>不能</b>访问当前上下文的变量，<b>可以</b>传参)</font><br/>
-								$include{"common.ctl"}<br/>
-								$include{"common.ctl", "UTF-8"}<br/>
-								$include{"common.ctl", (param1: "value1", param2: "value2")}<br/>
-								$include{"common.ctl", "UTF-8", (param1: "value1", param2: "value2")}<br/>
-								包含其它模板的一部分: <font color="green">(注：#后为zone的名称, 参见$zone指令)</font><br/>
-								$include{"common.ctl#body"}<br/>
-								显示文件的内容: <font color="green">(注：不解析其内容)</font><br/>
-								$display{"article.txt"}<br/>
-								$display{"article.txt", "UTF-8"}<br/>
-								抓取远程文件的内容: <font color="green">(注：只在Web环境下有效)</font><br/>
-								$snatch{"list.jsp"} 相对于当前页面路径目录<br/>
-								$snatch{"../list.jsp"} 相对于当前页面路径的上级目录<br/>
-								$snatch{"/list.jsp"} 相对于Web根目录<br/>
-								$snatch{"/list.jsp", 'UTF-8'} 指定编码<br/>
-								$snatch{"http://www.163.com"} 远程页面<br/>
-								<b>(8) 宏指令:</b><br/>
-								<font color="red">(注：0.8.5版本对宏指令进行不兼容改动，宏调用方式改为可访问上下文，块指令调用后缀由"_block"改成".begin"，$using指令代替原有$import指令，$import指令重新实现)</font><br/>
+								<b>(7) 宏指令:</b><br/>
+								<font color="red">(注：0.8.5版本不兼容改动，块指令调用后缀默认值由"_block"改成".begin"(可配置)，$using指令代替原有$import指令，$import指令重新实现)</font><br/>
 								宏定义:<br/>
 								$macro{"button"} 或者 $macro:button<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;回调调用者的内部块，如果为行指令方式调用，则inner为空<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;$inner{param3: "value3"}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;表达式结果为真时，中断宏调用<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;$return{name == null}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
-								宏的行指令(Line)方式调用: <font color="green">(注：宏调用<b>可以</b>传参，也<b>可以</b>访问当前上下文的变量)</font><br/>
+								宏的行指令方式调用: <font color="green">(注：宏调用既<b>可以</b>传参，也<b>可以</b>访问当前上下文的变量)</font><br/>
 								$button{param1: "value1", param2: "value2"}<br/>
-								宏的块指令(Block)方式调用:<br/>
+								宏的块指令方式调用:<br/>
 								$button.begin{param1: "value1", param2: "value2"} <font color="green">(注：以".begin"结尾表示块指令调用)</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
@@ -199,20 +188,42 @@ $!
 								$using{button : "button.ctl"}<br/>
 								使用模板文件中的宏作为宏:<br/>
 								$using{button : "mymacro.ctl#button"} <font color="green">(注：#后为macro的名称, 参见$macro指令)</font><br/>
-								<b>(9) 继承指令:</b> <font color="green">(注：通常用于布局layout)</font> <a href="demo_extends.html">示例&gt;&gt;</a><br/>
-								模板块区域定义: <font color="green">(注：在父模板中)</font><br/>
+								<b>(8) 继承指令:</b> <font color="green">(注：通常用于布局layout)</font> <a href="demo_extends.html">示例&gt;&gt;</a><br/>
+								模板区域定义: <font color="green">(注：在父模板中)</font><br/>
 								$zone{"body"} 或者 $zone:body<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
 								继承模板: <font color="green">(注：在子模板中)</font><br/>
 								$extends{"super.ctl"}<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;覆盖父模板块:<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;覆盖父模板区域:<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;$overzone{"body"}<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;调用父模板块:<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;调用被覆盖的父模板区域:<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$superzone<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;$end<br/>
 								$end<br/>
+								<b>(9) 包含指令:</b><br/>
+								内嵌其它模板: <font color="green">(注：被内嵌的文件，<b>可以</b>访问当前上下文的变量，<b>不可以</b>传参)</font><br/>
+								$embed{"common.ctl"}<br/>
+								$embed{"common.ctl", "UTF-8"}<br/>
+								内嵌其它模板的一部分: <font color="green">(注：#后为zone的名称, 参见$zone指令)</font><br/>
+								$embed{"common.ctl#body"}<br/>
+								包含其它模板的输出: <font color="green">(注：只包含输出，<b>不可以</b>访问当前上下文的变量，<b>可以</b>传参)</font><br/>
+								$include{"common.ctl"}<br/>
+								$include{"common.ctl", "UTF-8"}<br/>
+								$include{"common.ctl", (param1: "value1", param2: "value2")}<br/>
+								$include{"common.ctl", "UTF-8", (param1: "value1", param2: "value2")}<br/>
+								包含其它模板的一部分: <font color="green">(注：#后为zone的名称, 参见$zone指令)</font><br/>
+								$include{"common.ctl#body"}<br/>
+								显示文件的内容: <font color="green">(注：不解析其内容)</font><br/>
+								$display{"article.txt"}<br/>
+								$display{"article.txt", "UTF-8"}<br/>
+								抓取远程文件的内容: <font color="green">(注：只在Web环境下有效)</font><br/>
+								$snatch{"list.jsp"} 相对于当前页面路径目录<br/>
+								$snatch{"../list.jsp"} 相对于当前页面路径的上级目录<br/>
+								$snatch{"/list.jsp"} 相对于Web根目录<br/>
+								$snatch{"/list.jsp", 'UTF-8'} 指定编码<br/>
+								$snatch{"http://www.163.com"} 远程页面<br/>
 								<b>(10) 动态指令:</b><br/>
 								动态执行模板:<br/>
 								$exec{templateString}<br/>

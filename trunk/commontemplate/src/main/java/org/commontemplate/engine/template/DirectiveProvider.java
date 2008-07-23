@@ -62,7 +62,9 @@ final class DirectiveProvider {
 						|| trim.charAt(trim.length() - 2) != syntax.getNoParse()
 						|| trim.charAt(trim.length() - 1) != syntax.getDirectiveLeader())
 					throw new ParsingException(token.getLocation(), "DirectiveFactory.no.parse.error", new Object[]{String.valueOf(syntax.getDirectiveLeader()), String.valueOf(syntax.getNoParse())});
-				return parseText(String.valueOf(syntax.getNoParse()), token, message.substring(2, message.length() - 2));
+				String value = message.substring(2, message.length() - 2);
+				value = cleanInnerEscape(value, String.valueOf(syntax.getNoParse()) + String.valueOf(syntax.getDirectiveLeader()));
+				return parseText(String.valueOf(syntax.getNoParse()), token, value);
 			} else if (trim.charAt(1) == syntax.getLineComment()) { // 行注释指令
 				if (trim.length() > 2
 						&& trim.charAt(2) == syntax.getLineComment()) // 运行期保留
@@ -74,14 +76,17 @@ final class DirectiveProvider {
 						|| trim.charAt(trim.length() - 1) != syntax.getDirectiveLeader())
 					throw new ParsingException(token.getLocation(), "DirectiveFactory.block.comment.error", new Object[]{String.valueOf(syntax.getDirectiveLeader()), String.valueOf(syntax.getBlockComment())});
 				if (trim.length() > 4
-						&& trim.charAt(2) == syntax.getBlockComment()) // 运行期保留
-					return new CommentImpl(String.valueOf(syntax.getBlockComment()), token.getLocation(), message.substring(3, message.length() - 2), trim, elementInterceptors);
+						&& trim.charAt(2) == syntax.getBlockComment()) { // 运行期保留
+					String value = message.substring(3, message.length() - 2);
+					value = cleanInnerEscape(value, String.valueOf(syntax.getBlockComment()) + String.valueOf(syntax.getDirectiveLeader()));
+					return new CommentImpl(String.valueOf(syntax.getBlockComment()), token.getLocation(), value, trim, elementInterceptors);
+				}
 				return null;
 			} else { //指令
 				return parseDirective(token, trim);
 			}
 		} else { // 文本
-			return parseText("text", token, cleanEscape(message, isLast)); // 这里不能用trim, 需保留空格
+			return parseText("text", token, cleanOuterEscape(message, isLast)); // 这里不能用trim, 需保留空格
 		}
 	}
 
@@ -91,7 +96,76 @@ final class DirectiveProvider {
 		return new TextImpl(name, token.getLocation(), message, elementInterceptors);
 	}
 
-	String cleanEscape(String text, boolean isLast) {
+	/**
+	 * 清除文本块内转义符.
+	 * 单数斜线：将"\!$"转成"!$", 将"\\\\\!$"转成"\\!$".
+	 *         将"\*$"转成"*$", 将"\\\\\*$"转成"\\*$".
+	 * 双数斜线：最后的自转义斜线.
+	 * 如：$!aaa\\!$，因为双斜线自转义了，所以结束符有效，留下内容块："aaa\\"
+	 *
+	 * @param text 文本内容
+	 * @param sign 被转义的标记, 如: !$ 或 *$
+	 * @return 清除转义符的内容
+	 */
+	String cleanInnerEscape(String text, String sign) {
+		if (text == null || sign == null
+				|| text.length() == 0 || sign.length() == 0
+				|| text.length() <= sign.length())
+			return text;
+		// 首先将自转义斜线减半(双数斜线)
+		int last = countInnerLastSlash(text, text.length());
+		if (last > 0) {
+			Assert.assertTrue(last % 2 == 0, "DirectiveFactory.escape.error");
+			text = text.substring(0, text.length() - (last / 2));
+		}
+		// 再将转义符斜线减半(单数斜线)
+		int pre = 0;
+		int cur = 0;
+		StringBuffer buf = new StringBuffer();
+		while (cur < text.length()) {
+			int loc = text.indexOf(sign, cur);
+			if (loc < 0) {
+				buf.append(text.substring(cur));
+				break;
+			} else {
+				pre = cur;
+				cur = loc + sign.length();
+				int count = countInnerLastSlash(text, loc);
+				Assert.assertTrue(count % 2 != 0, "DirectiveFactory.escape.error");
+				int del = (count - 1) / 2 + 1;
+				if (loc - del > pre)
+					buf.append(text.substring(pre, loc - del));
+				buf.append(sign);
+			}
+		}
+		return buf.toString();
+	}
+
+	// 统计text在loc之前的斜线个数
+	int countInnerLastSlash(String text, int loc) {
+		int count = 0;
+		for (int i = loc - 1; i >= 0; i --) {
+			char ch = text.charAt(i);
+			if (ch == '\\')
+				count ++;
+			else
+				break;
+		}
+		return count;
+	}
+
+	/**
+	 * 清除文本块外转义符.
+	 * 单数斜线：将"\$if"转成"$if", 将"\\\$if"转成"\$if".
+	 * 双数斜线：将除模板最后一个的文本块"aaa\\"转成"aaa\", 将"aaa\\\\"转成"aaa\\".
+	 * 如：aaa\\$if, 因为双斜线自转义了，所以$if被解析成为指令，而留下的文本块则为“aaa\\”.
+	 * 但如果文本块是模板的最后一个元素，则不需要转义，因为后面不可能再有指令。
+	 *
+	 * @param text 文本块
+	 * @param isLast 是否为模板的最后一个元素
+	 * @return 清除转义符的内容
+	 */
+	String cleanOuterEscape(String text, boolean isLast) {
 		if (text == null || text.length() < 2)
 			return text;
 		StringBuffer buf = new StringBuffer();
@@ -99,7 +173,7 @@ final class DirectiveProvider {
 			char ch = text.charAt(i);
 			if (text.charAt(i) == syntax.getDirectiveLeader()
 					|| (! isLast && i == n - 1 && ch == '\\')) {
-				int count = countLastSlash(buf);
+				int count = countOuterLastSlash(buf);
 				Assert.assertTrue(count % 2 != 0, "DirectiveFactory.escape.error");
 				int del = (count - 1) / 2 + 1;
 				buf.delete(buf.length() - del, buf.length()); // 怱略反斜杠
@@ -109,9 +183,8 @@ final class DirectiveProvider {
 		return buf.toString();
 	}
 
-	int countLastSlash(StringBuffer buf) {
-		if (buf == null || buf.length() == 0)
-			return 0;
+	// 统计buf最后的斜线个数
+	int countOuterLastSlash(StringBuffer buf) {
 		int count = 0;
 		for (int i = buf.length() - 1; i >= 0; i --) {
 			if (buf.charAt(i) == '\\') {
