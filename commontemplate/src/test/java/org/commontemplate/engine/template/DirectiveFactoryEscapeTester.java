@@ -24,6 +24,7 @@ public class DirectiveFactoryEscapeTester extends TestCase {
 	}
 
 	public void testUnCleanNoParseEscape() {
+		super.assertEquals("\\", directiveFactory.cleanInnerEscape("\\\\", "!$"));
 		super.assertEquals("aaa!$bbb\\", directiveFactory.cleanInnerEscape("aaa\\!$bbb\\\\", "!$"));
 		super.assertEquals("aaa\\!$bbb\\\\", directiveFactory.cleanInnerEscape("aaa\\\\\\!$bbb\\\\\\\\", "!$"));
 		super.assertEquals("aaa\\\\!$bbb\\\\\\", directiveFactory.cleanInnerEscape("aaa\\\\\\\\\\!$bbb\\\\\\\\\\\\", "!$"));
