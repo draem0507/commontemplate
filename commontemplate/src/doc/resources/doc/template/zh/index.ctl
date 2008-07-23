@@ -84,7 +84,7 @@
 								(2) break及continue支持：\$break{for.count > 5} 条件与指令合并以避免冗长的语句：\$if {for.count > 5} \$break \$end<br/>
 								(3) lambda表达式过滤器：\${users[u => u.name != 'guest']} 返回名称不为guest的users子集<br/>
 								(4) 日期字段加减法 \${user.registerDate + 3.year} 年份加3，其中year为数字的外部扩展属性(OpenClass)<br/>
-								(5) ~= 约等于号：\${"aa" ~= "AA"} 字符串忽略大小写比较，并忽略两端空格<br/>
+								(5) ~= 约等于号：\${"aa" ~= "AA"} 字符串忽略大小写比较<br/>
 								(6) Boolean运算符支持非空判断：\${user1 || user2 || user3} 从左至右返回第一个不为空的user对象<br/>
 								(7) # 格式化操作符, 如: \${date # "yyyy-MM-dd"} \${num # "##0.###"}<br/>
 								......<br/>

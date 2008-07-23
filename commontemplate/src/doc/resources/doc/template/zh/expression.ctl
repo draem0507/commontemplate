@@ -12,7 +12,9 @@ $!
 								以0x开头的为16进制数字，如：0xF5A7<br/>
 								以0开头的整数为8进制数字，如：07<br/>
 								后缀B/b, S/s, I/i, L/l, F/f, D/d，分别表示Byte, Short, Integer, Long, Float, Double<br/>
-								无点号缺省为Integer，有点号缺省为Double<br/>
+								没有后缀的数字，无点号缺省为Integer，有点号缺省为Double<br/>
+								E表示10的n次方，也就是科学计数法，如：1.25E3 等于 1250<br/>
+								* 星号代表无穷数，如：${list[2..*]} <font color="green">(注：星号不可以作为一元操作符)</font><br/>
 								<b>4. 关键字：</b>表示特殊值 <font color="green">(注：不可以作为变量名)</font><br/>
 								null 空值<br/>
 								true, false 布尔值<br/>
@@ -23,23 +25,25 @@ $!
 								<b>三. 标准操作符:</b><br/>
 								<b>(1) 对象(Object)：</b><br/>
 								. 点号, 属性取值, 如: ${user.name}<br/>
-								[ ] 方括号, 索引属性, 如: ${user["name"]} ${user[nameVar]}<br/>
-								一元 & 类或包名前缀, 如: ${&com.xxx.XxxUtils.xxx} ${&XxxUtils.xxx}<br/>
+								[ ] 方括号, 索引属性, 如: ${user["name"]} ${user[variable]}<br/>
+								& 一元与号，包名或类名前缀, 如: ${&com.xxx.AppConstant.PREFIX} 或者 ${&AppConstant.PREFIX}<br/>
 								instanceof 类型判断，如：${user1 instanceof "com.xxx.User"}<br/>
-								== 值相等比较，名称符eq, 如: ${user1 == user2} ${user1 eq user2}<font color="green">(注：相近类型如char与string,int与long等对比时，将自动转换类型)</font></br>
-								!= 值不相等比较，名称符ne, 如: ${user1 != user2} ${user1 ne user2}<br/>
-								<!--
-								? 一元问号，判断对象是否存在, 如: $if{ ? obj} $if{ ! ? obj} <font color="green">(注：如果是String或集合，还会判断其length和size是否为0)</font></br>
-								-->
+								== 值相等比较，名称符eq，如: ${user1 == user2} ${user1 eq user2}<font color="green">(注：相近类型如char与string,int与long等对比时，将自动转换类型)</font></br>
+								!= 值不相等比较，名称符ne，如: ${user1 != user2} ${user1 ne user2}<br/>
+								=== 内存地址相等比较，名称符aeq，如: ${user1 === user2} ${user1 aeq user2}<br/>
+								!== 内存地址不相等比较，名称符ane，如: ${user1 !== user2} ${user1 ane user2}<br/>
 								<b>(2) 布尔值(Boolean)：</b><br/>
 								&& 逻辑与，名称符and, 如: ${user1.agree && user2.agree} ${user1.agree and user2.agree}<br/>
 								|| 逻辑或，名称符or, 如: ${user1.agree || user2.agree} ${user1.agree or user2.agree} $for{user : (users1 || users2 || users3} <font color="green">(注：对非Boolean值对象，将返回非null对象，与JavaScript规则相同)</font><br/>
 								^ 逻辑异或，名称符xor, 如: ${user1.agree ^ user2.agree} ${user1.agree xor user2.agree}<br/>
 								!  逻辑非, 如: ${! user1.agree}<br/>
 								?: 逻辑选择, 如: ${user1.agree ? "yes" : "no"}<br/>
+								<!--
+								? 一元问号，判断对象是否存在, 如: $if{ ? obj} $if{ ! ? obj} <font color="green">(注：如果是String或集合，还会判断其length和size是否为0)</font></br>
+								-->
 								<b>(3) 数字(Number)：</b><br/>
-								+  正数，如：${3 * +2} ${+user1.coins}<br/>
-								-  负数, 如: ${3 * -2} ${-user1.coins}<br/>
+								+  一元加号，正数，如：${3 * +2} ${+user1.coins}<br/>
+								-  一元减号，负数, 如: ${3 * -2} ${-user1.coins}<br/>
 								+  加法运算, 如: ${user1.coins + 3.2D}<br/>
 								-  减法运算, 如: ${user1.coins - user2.coins}<br/>
 								*  乘法运算, 如: ${user.coins * 2}<br/>
@@ -61,16 +65,16 @@ $!
 								~= 数字近似值等于比较, 如: ${user1.coins ~= user2.coins}<br/>
 								#  数字格式化, 如: ${user1.coins # "###,##0.###"}<br/>
 								<b>(4) 字符串(String)：</b><br/>
-								+  两个字符串相连, 非字符将调用其toString, 如: ${user.firstname + user.lastname}<br/>
-								*  字符串重复, 如: ${"aaa" * 3} ${3 * "aaa"}<br/>
-								- 将String倒序, 如: ${-str}<br/>
-								@ 输出不转义地址串, 如: ${@"C:\native\user\file.txt"}<br/>
+								+ 加号，两个字符串相连, 非字符将调用其toString, 如: ${user.firstname + user.lastname}<br/>
+								* 乘号，字符串重复, 如: ${"aaa" * 3} ${3 * "aaa"}<br/>
+								- 一元减号，将String倒序, 如: ${- str}<br/>
+								@ 地址符，输出不转义地址串, 如: ${@"C:\native\user\file.txt"}<br/>
 								&gt;  字符串大于比较, 如: $if{user1.name &gt; user2.name}<br/>
 								&lt;  字符串小于比较, 如: $if{user1.name &lt; user2.name}<br/>
 								&gt;= 字符串大于等于比较, 如: $if{user1.name &gt;= user2.name}<br/>
 								&lt;= 字符串小于等于比较, 如: $if{user1.name &lt;= user2.name}<br/>
 								&lt;=&gt; 字符串大小全比较，0表示相等，1表示大于，-1表示小于, 如: ${user1.name &lt;=&gt; user2.name}<br/>
-								~= 字符串忽略大小写比较，并且忽略两端空格, 如: ${"aa" ~= "AA"} $if{user1.name ~= user2.name}<br/>
+								~= 字符串忽略大小写比较，如: ${"aa" ~= "AA"} $if{user1.name ~= user2.name}<br/>
 								^= 字符串是否以另一字符串开头，也就是startsWith, 如: ${"abcd" ^= "ab"} $if{user1.name ^= "james"}<br/>
 								$= 字符串是否以另一字符串结尾，也就是endsWith, 如: ${"abcd" $= "cd"} $if{user1.name $= "lee"}<br/>
 								*= 字符串是否包含另一字符串，也就是containsWith, 如: ${"abcd" *= "bc"} $if{user1.name *= "lee"}<br/>
@@ -91,11 +95,13 @@ $!
 								<span style="color: green;">注：${String[0..2]}会将String看成char[&nbsp;]使用，数组或List下标为负数时表示倒数：${list[-1]}，取list的倒数第一个元素</span><br/>
 								[ ] 方括号, Map索引, 如: ${map["key"]} ${map[keyVar]}，同样可以用${map.key}，但点号优先查getter属性，方括优先查entry键值对，如：${map.size}和${map["size"]}，如果map中有size的entry，则返回结果可能不一样。<br/>
 								[prop=value] 属性索引，List如：${users[name="james"].coins}将从列表中返回第一个属性"name"值为"james"的user对象，也可以是多个属性${users[name="james",role="admin"]}，Map如：${map[value="james"].key}通过value查key，${map[key="james"].value}与${map["james"]}等价<br/>
-								=> 筛选过滤器，隐含状态信息index,size,count，index为当前项索引号，size为集合大小，count为已接收数，List缺省变量名为item，如：${list[=> item ~ "[0-9]+" && count < 3]}  ${users[u => u.name != 'guest']}，Map缺省变量名为entry，如：${map[=> entry.key != 'xxx' && count < 3]} ${map[x => x.key != 'xxx']}<br/>
-								.. 双点号, 表示序列(Sequence), 如: ${1..5} $for{seq : 1..5} $for{weekDay : "Sunday".."Saturday"}<br/>
-								,  逗号, 表示列表(List), 如: ${1,2,5,7} $for{seq : (1,2,5,7)}<br/>
-								:  冒号, 表示键值对(Entry), 如: ${user.nameVar : "james"} ${name : "james"} <br/>
+								=> 推导符号，表示筛选过滤器(lambda表达式)，隐含状态信息index,size,count，index为当前项索引号，size为集合大小，count为已接收数，List缺省变量名为item，如：${list[=> item ~ "[0-9]+" && count < 3]}  ${users[u => u.name != 'guest']}，Map缺省变量名为entry，如：${map[=> entry.key != 'xxx' && count < 3]} ${map[x => x.key != 'xxx']}<br/>
+								-&gt; 箭头号, 表示层级名称，左右参数均为名称串，用于需要多个层级名称的指令中，如：$var{global -&gt; user = "james"} $for{menu -&gt; children : menus}<br/>
+								:  冒号，表示键值对(Entry)，如：${name : "james"} ${user.name : "james"} <br/>
 								<span style="color: green;">注：entry采用JSON的设计风格，因为key通常是字符串，而非变量，所以当key为无引号名称时，将会作为字符串处理，而不是变量取值，如果要用变量作为key，在key前加反斜杠: ${\name : "james"}，另请注意：${user.name : "james"}会取user.name变量的值作为key, 因为点号先运算.</span><br/>
+								=  等号，与冒号功能相同，表示键值对(Entry)，但优先级更低(其它操作符均先于它运行)，如：${xxx = aa:bb,cc:dd}，可以不需要括号。<br/>
+								.. 双点号, 表示序列(Sequence), 如: ${1..5} $for{num : 1..5} $for{weekDay : "Sunday".."Saturday"}<br/>
+								,  逗号, 表示列表(List), 如: ${1,2,5,7} $for{num : (1,2,5,7)}<br/>
 								:, 冒号加逗号, 表示哈希表(Map), 如: ${a : 1, b: 2, c : 7} $for{rel : (a : 1, b: 2, c : 7)}<br>
 								[ ] 一元方括号, 转换成集合, 将Object转成List, 将Entry转成Map,  如: $for{num : [100]} $for{num : [name:value]}<br/>
 								<span style="color: green;">注：如果[ ]中已经是List或Map, 则将保持不变, 相当于( ), 如: $for{num : [20,50,100]} $for{num : [name1:value1, name2:value2]}</span><br/>
@@ -105,9 +111,9 @@ $!
 								!~ 判断集合内是否没有匹配项，如：$if{state !~ (1, 2, 4)} $if{user1 !~ users}<br/>
 								orderby 按属性排序，+号升序(可省)，-号降序， 如: $for{book : books orderby ("-price","+title","author")}<br/>
 								<b>(7) 系统(System)：</b><br/>
-								. 一元点号，取系统属性，如：${.now} $if{user.timeLimit &gt;= .now} ${.random} ${.uuid} ${.system.currentTimeMillis} ${.system.properties["user.dir"]} ${.engine.versionNumber} ${.engine.releaseDate} ${.engine.vendor} <br/>
+								. 一元点号，取系统属性，如：${.now} ${.random} ${.uuid} ${.system.currentTimeMillis} ${.system.properties["user.dir"]} ${.engine.versionNumber} ${.engine.releaseDate} ${.engine.vendor} <br/>
 								<br/>
-								<b>七. 操作符结合律及优先级</b><br/>
+								<b>四. 操作符结合律及优先级</b><br/>
 								<b>结合律：</b><font color="green">(注：可以用括号改变结合)</font><br/>
 								优先级高的先结合，<br/>
 								一元操作符之间总是从右到左结合，<br/>
@@ -134,7 +140,7 @@ $!
 									".", "[ ]"<br/>
 									一元：".", "[ ]", "\"<br/>
 								<br/>
-								<b>四. 属性扩展</b><br/>
+								<b>五. 属性扩展</b><br/>
 								<font color="green">(注：无参数有返回值函数可以直接作为属性，如：trim, toString, size等，下面不再列出)</font><br/>
 								<b>(1) 空值(Null):</b><br/>
 								toString 转为String类型，如：null.toString 返回"null"字符串<br/>
@@ -180,10 +186,10 @@ $!
 								toLong 计算机时间, 即相对于1970-01-01 00:00:00.000的毫秒数, 如: ${createDate.toLong}<br/>
 								<b>(5) 数字(Number):</b><br/>
 								toDate 以相对于1970-01-01 00:00:00.000的毫秒数转换为Date, 如: ${9999999.toDate}<br/>
-								toSize 根据大小显示Bytes,KB,MB等单位, 如: ${917.toSize}(输出：917Bytes) ${(11 * 1024).toSize}(输出：11KB)<br/>
 								year, month, week, day, hour, minute, second, millisecond，分别表示转换为年，月，周，日，时，分，秒，毫秒等数字单位，如：${createDate + 3.day}<br/>
 								toByte, toShort, toInteger, toLong, toFloat, toDouble 类型间转换, 如: ${3L.toFloat}<br/>
 								toBoolean 0为false, 非0为true, 如: ${1.toBoolean} 输出：true<br/>
+								toSize 根据大小显示Bytes,KB,MB等单位, 如: ${917.toSize}(输出：917Bytes) ${(11 * 1024).toSize}(输出：11KB)<br/>
 								toChinese 数字转中文, 如: ${123.toChinese} 输出：一百二十三<br/>
 								toChineseCurrency 数字转中文货币, 如: ${123.toChineseCurrency} 输出：壹佰贰拾叁圆整<br/>
 								<b>(6) 布尔值(Boolean):</b><br/>
@@ -192,7 +198,10 @@ $!
 								<b>(7) 数组(Array):</b><br/>
 								size 数组长度，保持与List统一，如：${arr.size}<br/>
 								<br/>
-								<b>五. 序列扩展</b><br/>
+								<b>六. 函数扩展</b><br/>
+								......<br/>
+								<br/>
+								<b>七. 序列扩展</b><br/>
 								(1) 数字: ${1 .. 20} ${20 .. -12}<br/>
 								(2) 字母: ${'a' .. 'z'} ${'z' .. 'a'} ${'A' .. 'Z'} ${'b' .. 'k'}<br/>
 								(3) 季度: ${"Spring" .. "Winter"}<br/>
