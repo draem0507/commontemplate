@@ -9,7 +9,7 @@ $!
 									</tr>
 								</table>
 								<br/>
-								<b>2. Nightly builds</b> (0.8.5-pre)<br/>
+								<b>2. Nightly builds</b> (0.8.5-dev)<br/>
 								<table border="0" cellpadding="2" cellspacing="0">
 									<tr>
 										<td height="31"><a target="_blank" href="http://commontemplate.googlecode.com/svn/trunk/commontemplate/dist" target="_blank"><img src="../images/google_code.gif" border="0" width="88" height="31" /></a></td>
