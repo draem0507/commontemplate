@@ -4,6 +4,6 @@ ${'b'..'k'}
 ${'g'..'a'}
 ${"Spring".."Winter"}
 ${"December".."March"}
-$for{num : 1..6}
+$for{num : (1..6)}
 ${num}
 $end

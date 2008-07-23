@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
+import org.commontemplate.standard.operator.sequence.Sequence;
 
 /**
  * 字面列表操作符: ","<br/>
@@ -28,8 +29,15 @@ public class LiteralListOperatorHandler extends BinaryOperatorHandlerSupport {
 			if (leftOperand instanceof Map){
 				Map literalMap = (Map)leftOperand;
 				Entry literalEntry = (Entry)rightOperand;
-				literalMap.put(literalEntry.getKey(), literalEntry.getValue());
-				return literalMap;
+				try {
+					literalMap.put(literalEntry.getKey(), literalEntry.getValue());
+					return literalMap;
+				} catch (UnsupportedOperationException e) { // 当Map不支持put方法时，即unmodified
+					Map newMap = new HashMap();
+					newMap.putAll(literalMap);
+					newMap.put(literalEntry.getKey(), literalEntry.getValue());
+					return newMap;
+				}
 			} else if (leftOperand instanceof Entry) {
 				Map literalMap = new HashMap();
 				Entry leftEntry = (Entry)leftOperand;
@@ -40,10 +48,18 @@ public class LiteralListOperatorHandler extends BinaryOperatorHandlerSupport {
 			}
 		}
 
-		if (leftOperand instanceof List) {
+		if (leftOperand instanceof List
+				&& ! (leftOperand instanceof Sequence)) { // 序列除外
 			List literalList = (List)leftOperand;
-			literalList.add(rightOperand);
-			return literalList;
+			try {
+				literalList.add(rightOperand);
+				return literalList;
+			} catch (UnsupportedOperationException e) { // 当集合不支持add方法时，即unmodified
+				List newList = new ArrayList();
+				newList.addAll(literalList);
+				newList.add(rightOperand);
+				return newList;
+			}
 		}
 
 		List literalList = new ArrayList();
