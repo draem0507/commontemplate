@@ -187,8 +187,10 @@ $!
 								$import{my : "mymacro.ctl#button"} <font color="green">(注：调用时需带上"名称空间.", 如：$my.button{xxx})</font><br/>
 								使用模板文件作为宏:<br/>
 								$using{button : "button.ctl"}<br/>
+								$using{"button.ctl"} <font color="green">(注：将使用文件名作为宏的名称)</font><br/>
 								使用模板文件中的宏作为宏:<br/>
 								$using{button : "mymacro.ctl#button"} <font color="green">(注：#后为macro的名称, 参见$macro指令)</font><br/>
+								$using{"mymacro.ctl#button"} <font color="green">(注：将使用原始宏的名称(#号后的名称)作为宏的名称)</font><br/>
 								<b>(8) 继承指令:</b> <font color="green">(注：通常用于布局layout)</font> <a href="demo_extends.html">示例&gt;&gt;</a><br/>
 								模板区域定义: <font color="green">(注：在父模板中)</font><br/>
 								$zone{"body"} 或者 $zone:body<br/>

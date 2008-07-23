@@ -9,6 +9,7 @@ import org.commontemplate.core.Context;
 import org.commontemplate.core.Template;
 import org.commontemplate.standard.directive.DirectiveHandlerSupport;
 import org.commontemplate.standard.visit.BlockDirectiveVisitor;
+import org.commontemplate.util.UrlCleaner;
 
 /**
  * 使用模板作为宏.
@@ -29,7 +30,9 @@ public class UsingAsMacroDirectiveHandler extends DirectiveHandlerSupport {
 	}
 
 	public void doRender(Context context, String directiveName, Object param) throws Exception {
-		if (param instanceof Entry) {
+		if (param instanceof String) {
+			usingMacro(context, null, (String)param);
+		} else if (param instanceof Entry) {
 			Entry entry = (Entry)param;
 			usingMacro(context, entry.getKey().toString(), (String)entry.getValue());
 		} else if (param instanceof Map) {
@@ -51,8 +54,12 @@ public class UsingAsMacroDirectiveHandler extends DirectiveHandlerSupport {
 		List elements = null;
 		if (zoneName != null && zoneName.length() > 0) {
 			elements = BlockDirectiveVisitor.findInnerElements(template, (macroDirectiveName == null ? DEFAULT_MACRO_DIRECTIVE_NAME : macroDirectiveName), zoneName);
+			if (macroName == null)
+				macroName = zoneName;
 		} else {
 			elements = template.getElements();
+			if (macroName == null)
+				macroName = UrlCleaner.getSimpleName(templateName);
 		}
 		context.putProperty(MacroDirectiveHandler.MACRO_TYPE, macroName, elements);
 	}
