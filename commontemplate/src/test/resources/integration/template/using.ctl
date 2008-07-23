@@ -2,6 +2,6 @@ $using{welcome : "../included/welcome.mm"}
 $welcome{name:"liangfei"}
 ----
 
-$welcome.begin{name:"liangfei"}
+$welcome.block{name:"liangfei"}
 	xx
 $end
