@@ -240,6 +240,12 @@ $!
 								配置方法：<br/>
 								dataProvider{xxx}=com.xxx.XXXDataProvider<br/>
 								<br/>
+								<b>16. 代码着色扩展</b> <font color="green">(该扩展用于为"$code"指令提供过滤器)</font><br/>
+								相关接口和基类：<br/>
+								org.commontemplate.core.OutputFilter<br/>
+								配置方法：<br/>
+								code{xxx}=com.xxx.XXXCodeFilter<br/>
+								<br/>
 !$
 	<!--$end-->
 <!--$end-->
