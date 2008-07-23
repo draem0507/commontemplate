@@ -15,7 +15,7 @@ import java.util.ListIterator;
  * @author liangfei0201@163.com
  *
  */
-public class StringSequence implements List, Serializable {
+public class StringSequence implements Sequence, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -25,7 +25,7 @@ public class StringSequence implements List, Serializable {
 
 	private final boolean ignoreCase;
 
-	public StringSequence(String sequence, boolean cycle, boolean ignoreCase) {		
+	public StringSequence(String sequence, boolean cycle, boolean ignoreCase) {
 		this(sequence.split("\\,"), cycle, ignoreCase);
 	}
 
@@ -34,24 +34,24 @@ public class StringSequence implements List, Serializable {
 	}
 
 	public StringSequence(List sequence, boolean cycle, boolean ignoreCase) {
-		
+
 		// Arrays.asList 得到的List是Unmodify的，所以这个地方处理一下。
 		List list;
 		try {
 			list = (List) sequence.getClass().newInstance();
 		} catch (Exception e) {
-			
+
 			list = new ArrayList();
 		}
 		// 循环增加。因为如果构造函数传入一个 "" , sequence.split("\\,")
 		// 方法仍然给分割成一个数组。
 		for(int i = 0, m = sequence.size(); i < m; i++) {
-			
+
 			if(!"".equals(sequence.get(i))) {
 				list.add(sequence.get(i));
 			}
 		}
-		
+
 		this.sequence = list;
 		this.cycle = cycle;
 		this.ignoreCase = ignoreCase;
@@ -76,11 +76,11 @@ public class StringSequence implements List, Serializable {
 	public List getSequence(String begin, String end) {
 		int beginIndex = indexOf(begin);
 		int endIndex = indexOf(end);
-		
+
 		if(beginIndex == -1 || endIndex == -1) {
 			return Arrays.asList(new String[0]);
 		}
-		
+
 		if (beginIndex <= endIndex)
 			return unmodifyList(sequence.subList(beginIndex, endIndex + 1));
 		if (cycle)
@@ -127,9 +127,9 @@ public class StringSequence implements List, Serializable {
 	private List unmodifyList(List list) {
 		return java.util.Collections.unmodifiableList(list);
 	}
-	
+
 	public void add(int index, Object element) {
-		
+
 		sequence.add(index, element);
 	}
 

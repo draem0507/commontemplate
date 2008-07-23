@@ -12,7 +12,7 @@ import java.util.ListIterator;
  * @author liangfei0201@163.com
  *
  */
-public class IntegerSequence implements List, Serializable {
+public class IntegerSequence implements Sequence, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
