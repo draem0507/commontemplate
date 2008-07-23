@@ -11,7 +11,7 @@ import java.util.LinkedList;
  * @author liangfei0201@163.com
  *
  */
-public class UrlCleaner {
+public class UrlUtils {
 
 	public static final String PROTOCOL_SEPARATOR = "://";
 
@@ -34,7 +34,7 @@ public class UrlCleaner {
 	 * @throws NullPointerException
 	 *             传入path为空时抛出
 	 */
-	public static String clean(String url) throws MalformedURLException {
+	public static String cleanUrl(String url) throws MalformedURLException {
 		if (url == null)
 			throw new MalformedURLException("url == null!");
 

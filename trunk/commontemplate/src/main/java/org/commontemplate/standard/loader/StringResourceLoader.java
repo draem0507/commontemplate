@@ -8,7 +8,7 @@ import java.util.Map;
 import org.commontemplate.core.Resource;
 import org.commontemplate.core.ResourceLoader;
 import org.commontemplate.util.Assert;
-import org.commontemplate.util.UrlCleaner;
+import org.commontemplate.util.UrlUtils;
 
 /**
  * 字符串模板源加载器
@@ -32,7 +32,7 @@ public class StringResourceLoader implements ResourceLoader {
 		Assert.assertNotEmpty(name, "StringResourceLoader.template.name.required");
 		Assert.assertNotEmpty(source, "StringResourceLoader.template.source.required");
 		try {
-			name = UrlCleaner.clean(name);
+			name = UrlUtils.cleanUrl(name);
 		} catch (MalformedURLException e) {
 			throw new RuntimeException(e); // TODO 异常待定义
 		}

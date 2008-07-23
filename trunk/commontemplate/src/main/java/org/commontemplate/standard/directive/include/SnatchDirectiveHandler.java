@@ -15,7 +15,7 @@ import org.commontemplate.standard.directive.DirectiveHandlerSupport;
 import org.commontemplate.tools.web.WebContext;
 import org.commontemplate.util.I18nExceptionFactory;
 import org.commontemplate.util.I18nMessages;
-import org.commontemplate.util.UrlCleaner;
+import org.commontemplate.util.UrlUtils;
 
 /**
  * 抓取网络页面
@@ -81,20 +81,20 @@ public class SnatchDirectiveHandler extends DirectiveHandlerSupport {
 	private String parseUrl(Context context, String url)
 			throws MalformedURLException {
 		if (url != null && url.length() > 0
-				&& url.indexOf(UrlCleaner.PROTOCOL_SEPARATOR) == -1) {
+				&& url.indexOf(UrlUtils.PROTOCOL_SEPARATOR) == -1) {
 			if (context instanceof WebContext) {
 				HttpServletRequest request = ((WebContext) context)
 						.getRequest();
 				if (request != null) {
 					String root;
-					if (url.charAt(0) == UrlCleaner.PATH_SEPARATOR_CHAR) {
+					if (url.charAt(0) == UrlUtils.PATH_SEPARATOR_CHAR) {
 						root = getRoot(request.getRequestURL().toString(),
 								request.getContextPath());
 					} else {
-						root = UrlCleaner.getDirectoryName(request.getRequestURL()
+						root = UrlUtils.getDirectoryName(request.getRequestURL()
 								.toString());
 					}
-					return UrlCleaner.clean(root + url);
+					return UrlUtils.cleanUrl(root + url);
 				}
 			}
 		}
@@ -102,7 +102,7 @@ public class SnatchDirectiveHandler extends DirectiveHandlerSupport {
 	}
 
 	private String getRoot(String url, String context) {
-		int idx = UrlCleaner.getDomainIndex(url);
+		int idx = UrlUtils.getDomainIndex(url);
 		if (idx > 0)
 			return url.substring(0, idx
 					+ (context == null ? 0 : context.length()));
