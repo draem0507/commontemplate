@@ -61,4 +61,20 @@ public class UrlCleanerTester extends TestCase {
 		}
 	}
 
+	public void testFileName() throws Exception {
+		assertEquals("aa", UrlCleaner.getFileName("aa"));
+		assertEquals("aa.txt", UrlCleaner.getFileName("aa.txt"));
+		assertEquals("aa", UrlCleaner.getFileName("/aa"));
+		assertEquals("aa.txt", UrlCleaner.getFileName("/aa.txt"));
+		assertEquals("bb.txt", UrlCleaner.getFileName("/aa/bb.txt"));
+	}
+
+	public void testSimpleName() throws Exception {
+		assertEquals("aa", UrlCleaner.getSimpleName("aa"));
+		assertEquals("aa", UrlCleaner.getSimpleName("aa.txt"));
+		assertEquals("aa", UrlCleaner.getSimpleName("/aa"));
+		assertEquals("aa", UrlCleaner.getSimpleName("/aa.txt"));
+		assertEquals("bb", UrlCleaner.getSimpleName("/aa/bb.txt"));
+	}
+
 }

@@ -25,7 +25,7 @@ public class TemplateNameRelativer implements TemplateNameFilter {
 				name = "/" + name;*/
 			if (templateName.trim().charAt(0) == UrlCleaner.PATH_SEPARATOR_CHAR) // 根目录开头，不添加当前路径
 				return UrlCleaner.clean(templateName);
-			return UrlCleaner.clean(UrlCleaner.getDirectory(currentTemplateName) + templateName);
+			return UrlCleaner.clean(UrlCleaner.getDirectoryName(currentTemplateName) + templateName);
 		} catch (MalformedURLException e) {
 			throw new InvalidTemplateNameException(e.getMessage());
 		}

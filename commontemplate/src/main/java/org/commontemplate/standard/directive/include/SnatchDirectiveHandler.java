@@ -91,7 +91,7 @@ public class SnatchDirectiveHandler extends DirectiveHandlerSupport {
 						root = getRoot(request.getRequestURL().toString(),
 								request.getContextPath());
 					} else {
-						root = UrlCleaner.getDirectory(request.getRequestURL()
+						root = UrlCleaner.getDirectoryName(request.getRequestURL()
 								.toString());
 					}
 					return UrlCleaner.clean(root + url);

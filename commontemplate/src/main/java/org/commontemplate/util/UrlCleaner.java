@@ -38,13 +38,14 @@ public class UrlCleaner {
 		if (url == null)
 			throw new MalformedURLException("url == null!");
 
-
 		String domain = "";
 		int idx = getDomainIndex(url);
 		if (idx > 0) {
 			domain = url.substring(0, idx);
 			url = url.substring(idx);
 		}
+
+		url = url.replace('\\', PATH_SEPARATOR_CHAR);
 
 		String[] tokens = url.split(PATH_SEPARATOR);
 		LinkedList list = new LinkedList();
@@ -72,13 +73,42 @@ public class UrlCleaner {
 	 * @param url 路径
 	 * @return 去掉文件名的路径
 	 */
-	public static String getDirectory(String url) {
+	public static String getDirectoryName(String url) {
 		if (url != null) {
 			int idx = url.lastIndexOf(PATH_SEPARATOR_CHAR);
 			if (idx >= 0)
 				return url.substring(0, idx + 1);
 		}
 		return PATH_SEPARATOR;
+	}
+
+	/**
+	 * 获取文件名称，不包含目录的名称。
+	 *
+	 * @param url 路径
+	 * @return 文件名称
+	 */
+	public static String getFileName(String url) {
+		if (url == null)
+			return null;
+		int begin = url.lastIndexOf(PATH_SEPARATOR_CHAR);
+		return url.substring(begin + 1);
+	}
+
+	/**
+	 * 获取最简名称，不包含目录和后缀的名称。
+	 *
+	 * @param url 路径
+	 * @return 最简名称
+	 */
+	public static String getSimpleName(String url) {
+		if (url == null)
+			return null;
+		int begin = url.lastIndexOf(PATH_SEPARATOR_CHAR);
+		int end = url.lastIndexOf(".");
+		if (end < 0)
+			end = url.length();
+		return url.substring(begin + 1, end);
 	}
 
 	/**
