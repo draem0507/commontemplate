@@ -247,7 +247,7 @@ $!
 								$escape{"html", "js", "url", "base64"}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
-								代码着色:<br/>
+								代码着色: <font color="green">(注: 内置支持java,xml,html,properties,ini等格式，可扩展)</font> <a href="extension.html">扩展...</a><br/>
 								$code{"java"} 或者 $code:java<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
