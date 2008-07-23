@@ -108,9 +108,8 @@ final class DirectiveProvider {
 	 * @return 清除转义符的内容
 	 */
 	String cleanInnerEscape(String text, String sign) {
-		if (text == null || sign == null
-				|| text.length() == 0 || sign.length() == 0
-				|| text.length() <= sign.length())
+		if (text == null || text.length() == 0
+				|| sign == null || sign.length() == 0)
 			return text;
 		// 首先将自转义斜线减半(双数斜线)
 		int last = countInnerLastSlash(text, text.length());
