@@ -12,10 +12,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.commontemplate.config.BlockDirectiveHandler;
+import org.commontemplate.core.BlockDirective;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.EvaluationException;
 import org.commontemplate.core.RenderingException;
-import org.commontemplate.standard.directive.BlockDirectiveHandlerSupport;
 import org.commontemplate.standard.directive.DirectiveUtils;
 import org.commontemplate.standard.operator.string.NamePair;
 import org.commontemplate.util.Assert;
@@ -27,7 +28,7 @@ import org.commontemplate.util.BeanUtils;
  * @author liangfei0201@163.com
  *
  */
-public class ForeachDirectiveHandler extends BlockDirectiveHandlerSupport {
+public class ForeachDirectiveHandler extends BlockDirectiveHandler {
 
 	private static final long serialVersionUID = 1L;
 
@@ -40,6 +41,14 @@ public class ForeachDirectiveHandler extends BlockDirectiveHandlerSupport {
 
 	// 条件状态位，用于传递整个For链是否已经为迭代过
 	public static final String FOR_STATUS = "for.status";
+
+	public void doRender(Context context, BlockDirective directive) throws Exception {
+		Assert.assertNotNull(directive.getExpression(), "ForeachDirectiveHandler.expression.is.null");
+		doRender(context, directive.getName(),
+				directive.getExpression() == null
+					? null : directive.getExpression().evaluate(context),
+				directive.getElements());
+	}
 
 	public void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
 		boolean isSuccess = doForeach(context, param, innerElements);
