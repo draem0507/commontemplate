@@ -26,11 +26,13 @@ import org.commontemplate.util.scanner.ScanningException;
  */
 public final class ExpressionEngine implements ExpressionParser {
 
-	private final ExpressionTokenizer expressionTokenizer;
+	private final ExpressionTokenizer expressionTokenizer = new ExpressionTokenizer();
 
 	private final ExpressionTranslator expressionTranslator;
 
-	private final ExpressionReducer expressionReducer;
+	// private final ExpressionOptimizer expressionOptimizer = new ExpressionOptimizer();
+
+	private final ExpressionReducer expressionReducer = new ExpressionReducer();
 
 	private final ExpressionFactory expressionFactory;
 
@@ -41,11 +43,9 @@ public final class ExpressionEngine implements ExpressionParser {
 		config.validate(); // 配置自验证
 
 		operatorHandlerProvider = config.getOperatorHandlerProvider();
-		expressionTokenizer = new ExpressionTokenizer();
 		expressionTranslator = new ExpressionTranslator(new ExpressionProvider(
 				operatorHandlerProvider, config.getKeywords(),
 				config.isFunctionAvailable()), config.isFunctionAvailable());
-		expressionReducer = new ExpressionReducer();
 		expressionFactory = new ExpressionFactoryImpl(operatorHandlerProvider);
 	}
 
@@ -53,6 +53,7 @@ public final class ExpressionEngine implements ExpressionParser {
 		try {
 			List tokens = expressionTokenizer.split(expressionText);
 			List expressions = expressionTranslator.translate(tokens);
+			// expressions = expressionOptimizer.preOptimizeExpression(expressions);
 			Expression root = expressionReducer.reduce(expressions);
 			return root;
 		} catch (ParsingException e) {
