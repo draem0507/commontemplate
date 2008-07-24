@@ -36,7 +36,7 @@ final class ExpressionReducer {
 	Expression reduce(List expressions) {
 		if (expressions == null || expressions.size() == 0)
 			return null;
-		expressions = preOptimizeExpression(expressions); // 此优化算法待测试
+		// expressions = preOptimizeExpression(expressions); // 此优化算法待测试
 		ReduceStack expressionStack = new ReduceStack();
 		for (int i = 0, n = expressions.size(); i < n; i++) {
 			Expression expression = (Expression) expressions.get(i);
@@ -214,6 +214,8 @@ final class ExpressionReducer {
 
 	// --------- YanRong: 以下为四则运算预优化处理 --------
 
+	// FIXME ${.15 - .12} 错误输出0.14 应该输出0.03
+
 	/**
 	 * 预优化表达式，原则是常量的计算进行优化。<br>
 	 * a*(1+2+b) 优化成 a*(3+b)<br>
@@ -225,7 +227,7 @@ final class ExpressionReducer {
 	 *            表达式的列表
 	 * @return 优化后的表达式列表
 	 */
-	private List preOptimizeExpression(List expressions) {
+	protected List preOptimizeExpression(List expressions) {
 
 		// 表达式对象
 		Expression expression;
