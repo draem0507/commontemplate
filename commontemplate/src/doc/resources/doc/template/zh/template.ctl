@@ -179,12 +179,11 @@ $!
 								$end<br/>
 								导入模板文件中所有的宏: <br/>
 								$import{"mymacro.ctl"}<br/>
-								导入模板文件中所有的宏, 并指定名称空间: <br/>
-								$import{my : "mymacro.ctl"} <font color="green">(注：调用时需带上"名称空间.", 如：$my.button{xxx})</font><br/>
 								导入模板文件中指定的宏:<br/>
 								$import{"mymacro.ctl#button"} <font color="green">(注：#后为macro的名称, 参见$macro指令)</font><br/>
-								导入模板文件中指定的宏, 并指定名称空间:<br/>
-								$import{my : "mymacro.ctl#button"} <font color="green">(注：调用时需带上"名称空间.", 如：$my.button{xxx})</font><br/>
+								导入宏到指定名称空间: <br/>
+								$import{my : "mymacro.ctl"} <font color="green">(注：调用时需带上"名称空间.", 如：$my.button{xxx})</font><br/>
+								$import{my : "mymacro.ctl#button"} <font color="green">(注：同一名称空间下的宏之间调用, 不需要带名称空间)</font><br/>
 								使用模板文件作为宏:<br/>
 								$using{button : "button.ctl"}<br/>
 								$using{"button.ctl"} <font color="green">(注：将使用文件名作为宏的名称)</font><br/>
