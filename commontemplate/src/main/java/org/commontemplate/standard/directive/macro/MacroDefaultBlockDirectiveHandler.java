@@ -1,12 +1,9 @@
 package org.commontemplate.standard.directive.macro;
 
 import java.util.List;
-import java.util.Map;
 
 import org.commontemplate.core.Context;
 import org.commontemplate.standard.directive.BlockDirectiveHandlerSupport;
-import org.commontemplate.standard.directive.DirectiveUtils;
-import org.commontemplate.standard.directive.ParameterUtils;
 import org.commontemplate.standard.directive.StandardDirectiveHandlerProvider;
 import org.commontemplate.util.Assert;
 
@@ -25,18 +22,12 @@ public class MacroDefaultBlockDirectiveHandler extends BlockDirectiveHandlerSupp
 		Assert.assertNotNull(name);
 		if (defaultBlockDirectiveSuffix != null && name.endsWith(defaultBlockDirectiveSuffix))
 			name = name.substring(0, name.length() - defaultBlockDirectiveSuffix.length());
-		List macro = (List)context.getProperty(MacroDirectiveHandler.MACRO_TYPE, name);
+		String namespace = (String)context.getProperty(Macro.NAMESPACE_TYPE);
+		if (namespace != null)
+			name = namespace + name;
+		Macro macro = (Macro)context.getProperty(MacroDirectiveHandler.MACRO_TYPE, name);
 		Assert.assertNotNull(macro, "MacroDefaultBlockDirectiveHandler.invaild.macro.name", new Object[]{name});
-		Map variables = ParameterUtils.getParameters(param);
-		context.pushLocalContext(variables);
-		context.putProperty(InnerDirectiveHandler.INNER_BLOCK, innerElements);
-		try {
-			DirectiveUtils.renderAll(macro, context);
-		} catch (ReturnException e) {
-			// ignore
-		} finally {
-			context.popLocalContext();
-		}
+		macro.render(context, param, innerElements);
 	}
 
 }

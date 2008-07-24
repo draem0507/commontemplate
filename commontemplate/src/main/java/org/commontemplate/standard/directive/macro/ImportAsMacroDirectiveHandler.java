@@ -23,10 +23,10 @@ public class ImportAsMacroDirectiveHandler extends DirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	private String prefixSeparator;
+	private String namespaceSeparator;
 
-	public void setPrefixSeparator(String prefixSeparator) {
-		this.prefixSeparator = prefixSeparator;
+	public void setNamespaceSeparator(String namespaceSeparator) {
+		this.namespaceSeparator = namespaceSeparator;
 	}
 
 	private static final String DEFAULT_MACRO_DIRECTIVE_NAME = "macro";
@@ -52,9 +52,9 @@ public class ImportAsMacroDirectiveHandler extends DirectiveHandlerSupport {
 		}
 	}
 
-	private void importMacro(Context context, String prefix, String templateName) throws Exception {
-		if (prefix != null && prefixSeparator != null)
-			prefix = prefix + prefixSeparator;
+	private void importMacro(Context context, String namespace, String templateName) throws Exception {
+		if (namespace != null && namespaceSeparator != null)
+			namespace = namespace + namespaceSeparator;
 		String zoneName = null;
 		int index = templateName.indexOf('#');
 		if (index >= 0) {
@@ -65,9 +65,9 @@ public class ImportAsMacroDirectiveHandler extends DirectiveHandlerSupport {
 		if (zoneName != null && zoneName.length() > 0) { // 导入指定的宏
 			List elements = BlockDirectiveVisitor.findInnerElements(template, "macro", zoneName);
 			String macroName = zoneName;
-			if (prefix != null)
-				macroName = prefix + macroName;
-			context.putProperty(MacroDirectiveHandler.MACRO_TYPE, macroName, elements);
+			if (namespace != null)
+				macroName = namespace + macroName;
+			context.putProperty(MacroDirectiveHandler.MACRO_TYPE, macroName, new Macro(elements, macroName, namespace));
 		} else { // 导入所有宏
 			List blockDirectives = BlockDirectivesVisitor.findBlockDirectives(template, (macroDirectiveName == null ? DEFAULT_MACRO_DIRECTIVE_NAME : macroDirectiveName));
 			for (Iterator iterator = blockDirectives.iterator(); iterator.hasNext();) {
@@ -77,9 +77,9 @@ public class ImportAsMacroDirectiveHandler extends DirectiveHandlerSupport {
 					Object obj = expression.evaluate(context);
 					if (obj != null) {
 						String macroName = String.valueOf(obj);
-						if (prefix != null)
-							macroName = prefix + macroName;
-						context.putProperty(MacroDirectiveHandler.MACRO_TYPE, macroName, blockDirective.getElements());
+						if (namespace != null)
+							macroName = namespace + macroName;
+						context.putProperty(MacroDirectiveHandler.MACRO_TYPE, macroName, new Macro(blockDirective.getElements(), macroName, namespace));
 					}
 				}
 			}

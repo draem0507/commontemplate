@@ -14,7 +14,7 @@ public class MacroDirectiveHandler extends BlockDirectiveHandlerSupport {
 
 	public void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
 		String var = (String)param;
-		context.getSuperLocalContext().putProperty(MACRO_TYPE, var, innerElements);
+		context.getSuperLocalContext().putProperty(MACRO_TYPE, var, new Macro(innerElements, var));
 	}
 
 }

@@ -61,7 +61,7 @@ public class UsingAsMacroDirectiveHandler extends DirectiveHandlerSupport {
 			if (macroName == null)
 				macroName = UrlUtils.getSimpleName(templateName);
 		}
-		context.putProperty(MacroDirectiveHandler.MACRO_TYPE, macroName, elements);
+		context.putProperty(MacroDirectiveHandler.MACRO_TYPE, macroName, new Macro(elements, macroName));
 	}
 
 }
