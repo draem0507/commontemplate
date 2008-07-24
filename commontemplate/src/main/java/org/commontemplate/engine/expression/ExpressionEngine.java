@@ -53,7 +53,7 @@ public final class ExpressionEngine implements ExpressionParser {
 		try {
 			List tokens = expressionTokenizer.split(expressionText);
 			List expressions = expressionTranslator.translate(tokens);
-			// expressions = expressionOptimizer.preOptimizeExpression(expressions);
+			// expressions = expressionOptimizer.optimize(expressions);
 			Expression root = expressionReducer.reduce(expressions);
 			return root;
 		} catch (ParsingException e) {

@@ -31,7 +31,7 @@ final class ExpressionOptimizer {
 	 *            表达式的列表
 	 * @return 优化后的表达式列表
 	 */
-	List preOptimizeExpression(List expressions) {
+	List optimize(List expressions) {
 
 		// 表达式对象
 		Expression expression;
