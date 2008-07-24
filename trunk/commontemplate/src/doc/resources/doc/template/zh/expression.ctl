@@ -13,6 +13,7 @@ $!
 								以0开头的整数为8进制数字，如：07<br/>
 								后缀B/b, S/s, I/i, L/l, F/f, D/d，分别表示Byte, Short, Integer, Long, Float, Double<br/>
 								没有后缀的数字，无点号缺省为Integer，有点号缺省为Double<br/>
+								.12 等价于 0.12<br/>
 								E表示10的n次方，也就是科学计数法，如：1.25E3 等于 1250<br/>
 								* 星号代表无穷数，如：${list[2..*]} <font color="green">(注：星号不可以作为一元操作符)</font><br/>
 								<b>4. 关键字：</b>表示特殊值 <font color="green">(注：不可以作为变量名)</font><br/>
