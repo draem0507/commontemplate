@@ -84,6 +84,9 @@ public class RenderingException extends I18nRuntimeException {
 	 * @return 出错位置
 	 */
 	public Location getLocation() {
+		if (location == null
+				&& element != null)
+			return element.getLocation();
 		return location;
 	}
 

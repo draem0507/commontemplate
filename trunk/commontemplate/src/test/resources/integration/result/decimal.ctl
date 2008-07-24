@@ -1,0 +1,9 @@
+0.12
+0.12
+0.12
+0.52
+0.03
+0.03
+java.lang.Double
+java.lang.Float
+java.lang.Double
