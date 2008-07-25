@@ -7,10 +7,10 @@ import org.commontemplate.standard.operator.BinaryOperatorHandlerTester;
  * @author YanRong
  *
  */
-public class StringIngoreCaseEqualsOperatorHanlderTester extends BinaryOperatorHandlerTester {
+public class StringIngoreCaseEqualsOperatorHandlerTester extends BinaryOperatorHandlerTester {
 
 	protected BinaryOperatorHandler newBinaryOperatorHandler() {
-		return new StringIngoreCaseEqualsOperatorHanlder();
+		return new StringIgnoreCaseEqualsOperatorHandler();
 	}
 	
 	/**

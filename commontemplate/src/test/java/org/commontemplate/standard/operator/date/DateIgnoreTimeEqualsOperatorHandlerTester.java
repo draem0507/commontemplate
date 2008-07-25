@@ -10,10 +10,10 @@ import org.commontemplate.standard.operator.BinaryOperatorHandlerTester;
  * @author YanRong
  *
  */
-public class DateIgnoreTimeEqualsOperatorHanlderTester extends BinaryOperatorHandlerTester {
+public class DateIgnoreTimeEqualsOperatorHandlerTester extends BinaryOperatorHandlerTester {
 
 	protected BinaryOperatorHandler newBinaryOperatorHandler() {
-		return new DateIgnoreTimeEqualsOperatorHanlder();
+		return new DateIgnoreTimeEqualsOperatorHandler();
 	}
 	
 	/**

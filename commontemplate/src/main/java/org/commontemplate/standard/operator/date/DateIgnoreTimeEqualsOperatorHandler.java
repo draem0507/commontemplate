@@ -12,15 +12,20 @@ import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
  * @author liangfei0201@163.com
  *
  */
-public class DateIgnoreTimeEqualsOperatorHanlder extends BinaryOperatorHandlerSupport {
+public class DateIgnoreTimeEqualsOperatorHandler extends BinaryOperatorHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	public DateIgnoreTimeEqualsOperatorHanlder() {
-		super(Date.class, Date.class);
+	public DateIgnoreTimeEqualsOperatorHandler() {
+		super(Date.class, Date.class, true);
 	}
 
 	public Object doEvaluate(Object leftOperand, Object rightOperand) throws Exception {
+		if (leftOperand == null && rightOperand == null)
+			return Boolean.TRUE;
+		if (leftOperand == null || rightOperand == null)
+			return Boolean.FALSE;
+
 		Date leftDate = (Date)leftOperand;
 		Date rightDate = (Date)rightOperand;
 

@@ -10,7 +10,7 @@ import org.commontemplate.standard.operator.BinaryOperatorHandlerTester;
 public class StringRepeat2OperatorHandlerTester extends BinaryOperatorHandlerTester {
 
 	protected BinaryOperatorHandler newBinaryOperatorHandler() {
-		return new StringRepeat2OperatorHandler();
+		return new StringRepeatIntegerOperatorHandler();
 	}
 	
 	/**

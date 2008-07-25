@@ -1,0 +1,12 @@
+${null/null}
+${null/"abc"}
+${"abc"/null}
+${"aaa.bbb.ccc"/"."}
+${".aaa.bbb.ccc"/"."}
+${"aaa.bbb.ccc.."/"."}
+${".aaa.bbb.ccc."/"."}
+${"...aaa.bbb.ccc"/"."}
+${"aaa.bbb.ccc..."/"."}
+${"...aaa...bbb.ccc..."/"."}
+${"...aaa...bbb.ccc..."/"..."}
+${"...abc...abc.abc..."/"abc"}

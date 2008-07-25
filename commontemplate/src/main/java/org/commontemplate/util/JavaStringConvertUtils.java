@@ -1,10 +1,10 @@
 package org.commontemplate.util;
 
 /**
- * 字符转义符转换工具类
+ * 字符转义符转换工具类.
  * <p/>
  * 声明：引用于<code>java.util.Properties</code>
- *
+ * @author sun.com
  */
 public final class JavaStringConvertUtils {
 

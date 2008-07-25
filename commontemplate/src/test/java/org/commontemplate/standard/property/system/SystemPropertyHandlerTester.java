@@ -11,7 +11,7 @@ import junit.framework.TestCase;
  * @author YanRong
  *
  */
-public class SystemPropertyHanlderTester extends TestCase {
+public class SystemPropertyHandlerTester extends TestCase {
 
 	OperatorHandlerProvider operatorHandlerProvider;
 

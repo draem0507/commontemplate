@@ -1,13 +1,13 @@
 package org.commontemplate.standard.property.system;
 
+import java.util.Date;
+
 import org.commontemplate.standard.property.StaticPropertyHandler;
 
-public class SystemPropertyHanlder implements StaticPropertyHandler {
-	
-	private static final SystemBean systemBean = new SystemBean();
-	
+public class NowPropertyHandler implements StaticPropertyHandler {
+
 	public Object doProperty() throws Exception {
-		return systemBean;
+		return new Date();
 	}
-	
+
 }

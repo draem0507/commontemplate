@@ -9,11 +9,11 @@ import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
  * @author liangfei0201@163.com
  *
  */
-public class StringRepeat2OperatorHandler extends BinaryOperatorHandlerSupport {
+public class StringRepeatIntegerOperatorHandler extends BinaryOperatorHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	public StringRepeat2OperatorHandler() {
+	public StringRepeatIntegerOperatorHandler() {
 		super(Integer.class, String.class);
 	}
 
