@@ -128,13 +128,11 @@ public class ClassUtils {
 	// 判断两个参数列表类型是否相似
 	private static boolean isLikeClasses(Class[] cs1, Class[] cs2) {
 		for (int j = 0, m = cs1.length; j < m; j ++) {
-			Class c1 = cs1[j];
+			Class c1 = cs1[j]; // 前面已作判断，c1, c2都不为空
 			Class c2 = cs2[j];
 			if (c1 == c2)
 				continue;
-			if (c1 == null || c2 == null)
-				continue;
-			if (c1 == Object.class || c2 == Object.class)
+			if (c1 == Object.class)
 				continue;
 			if (c1.isAssignableFrom(c2))
 				continue;
@@ -168,6 +166,8 @@ public class ClassUtils {
 		signature.append("(");
 		if (types.length > 0) {
 			for (int i = 0, n = types.length; i < n; i ++) {
+				if (i != 0)
+					signature.append(", ");
 				signature.append(types[i].getName());
 			}
 		}
