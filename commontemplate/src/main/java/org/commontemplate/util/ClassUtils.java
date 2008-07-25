@@ -130,19 +130,35 @@ public class ClassUtils {
 		for (int j = 0, m = cs1.length; j < m; j ++) {
 			Class c1 = cs1[j];
 			Class c2 = cs2[j];
-			if (! (c1 == c2 || (c1.isPrimitive()
-					&& ((c1 == Boolean.TYPE && c2 == Boolean.class)
-							|| (c1 == Byte.TYPE && c2 == Byte.class)
-							|| (c1 == Character.TYPE && c2 == Character.class)
-							|| (c1 == Short.TYPE && c2 == Short.class)
-							|| (c1 == Integer.TYPE && c2 == Integer.class)
-							|| (c1 == Long.TYPE && c2 == Long.class)
-							|| (c1 == Float.TYPE && c2 == Float.class)
-							|| (c1 == Double.TYPE && c2 == Double.class))))) {
-				return false;
+			if (c1 == null || c2 == null)
+				continue;
+			if (c1 == c2)
+				continue;
+			if (c1.isAssignableFrom(c2))
+				continue;
+			if (c1 == Object.class || c2 == Object.class)
+				continue;
+			if (c1.isPrimitive() && primitiveLike(c1, c2)) {
+				continue;
 			}
+			if (c2.isPrimitive() && primitiveLike(c2, c1)) {
+				continue;
+			}
+			return false;
 		}
 		return true;
+	}
+
+	// 判断基
+	private static boolean primitiveLike(Class c1, Class c2) {
+		return (c1 == Boolean.TYPE && c2 == Boolean.class)
+				|| (c1 == Byte.TYPE && c2 == Byte.class)
+				|| (c1 == Character.TYPE && c2 == Character.class)
+				|| (c1 == Short.TYPE && c2 == Short.class)
+				|| (c1 == Integer.TYPE && c2 == Integer.class)
+				|| (c1 == Long.TYPE && c2 == Long.class)
+				|| (c1 == Float.TYPE && c2 == Float.class)
+				|| (c1 == Double.TYPE && c2 == Double.class);
 	}
 
 	// 获取函数签名
