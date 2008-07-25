@@ -206,7 +206,7 @@ $!
 								toCapitalNaming 转为大写命名, 如：${"user_name".toCapitalNaming} 输出：UserName<br/>
 								toUnderlineNaming 转为下划线命名, 如：${"userName".toUnderlineNaming} 或 ${"UserName".toUnderlineNaming} 均输出：user_name<br/>
 								toAscii 转为ASCII码, 如：${"中国".toAscii} 均输出：\u4E2D\u56FD<br/>
-								swapCase <br/>
+								swapCase 交换大小写, 把串中大写的改小写, 小写的改为大写. 如：${"ABCdef".swapCase} 输出：abcDEF<br/>
 								<b>(4) 日期(Date):</b><br/>
 								year, month, day, hour, minute, second, millisecond 时间各个部分取值, 如: ${createDate.day} ${createDate.hour}<br/>
 								week 星期几， 如: ${createDate.week}<br/>
