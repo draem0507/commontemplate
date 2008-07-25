@@ -149,7 +149,7 @@ public class ClassUtils {
 		return true;
 	}
 
-	// 判断基
+	// 判断基本类型是否相似
 	private static boolean primitiveLike(Class c1, Class c2) {
 		return (c1 == Boolean.TYPE && c2 == Boolean.class)
 				|| (c1 == Byte.TYPE && c2 == Byte.class)
