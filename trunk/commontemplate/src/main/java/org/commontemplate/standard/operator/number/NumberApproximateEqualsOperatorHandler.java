@@ -9,15 +9,19 @@ import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
  * @author liangfei0201@163.com
  *
  */
-public class NumberApproximateEqualsOperatorHanlder extends BinaryOperatorHandlerSupport {
+public class NumberApproximateEqualsOperatorHandler extends BinaryOperatorHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	public NumberApproximateEqualsOperatorHanlder() {
-		super(Number.class, Number.class);
+	public NumberApproximateEqualsOperatorHandler() {
+		super(Number.class, Number.class, true);
 	}
 
 	public Object doEvaluate(Object leftOperand, Object rightOperand) throws Exception {
+		if (leftOperand == null && rightOperand == null)
+			return Boolean.TRUE;
+		if (leftOperand == null || rightOperand == null)
+			return Boolean.FALSE;
 		return Boolean.valueOf(((Number)leftOperand).intValue() == ((Number)rightOperand).intValue());
 	}
 

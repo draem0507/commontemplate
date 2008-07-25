@@ -7,10 +7,10 @@ import org.commontemplate.standard.operator.BinaryOperatorHandlerTester;
  * @author YanRong
  *
  */
-public class NumberApproximateEqualsOperatorHanlderTester extends BinaryOperatorHandlerTester {
+public class NumberApproximateEqualsOperatorHandlerTester extends BinaryOperatorHandlerTester {
 
 	protected BinaryOperatorHandler newBinaryOperatorHandler() {
-		return new NumberApproximateEqualsOperatorHanlder();
+		return new NumberApproximateEqualsOperatorHandler();
 	}
 	
 	/**

@@ -49,7 +49,7 @@ $!
 								-  减法运算, 如: ${user1.coins - user2.coins}<br/>
 								*  乘法运算, 如: ${user.coins * 2}<br/>
 								/  除法运算, 如: ${user.coins / 2}<br/>
-								%  求模运算, 如: ${user.coins % 2}<br/>
+								%  求模/求余运算, 如: ${user.coins % 2}<br/>
 								**  求幂次方运算, 如: ${2 ** 2 ** 3}<br/>
 								| 按位与运算，如: ${128 | 256}<br/>
 								& 按位或运算，如: ${128 & 2}<br/>
@@ -63,24 +63,36 @@ $!
 								&gt;= 数字大于等于比较，名称符ge, 如: ${user1.coins &gt;= user2.coins} ${user1.coins ge user2.coins}<br/>
 								&lt;= 数字小于等于比较，名称符le, 如: ${user1.coins &lt;= user2.coins} ${user1.coins le user2.coins}<br/>
 								&lt;=&gt; 数字大小全比较，名称符cmp，0表示相等，1表示大于，-1表示小于, 如: ${user1.coins &lt;=&gt; user2.coins} ${user1.coins cmp user2.coins}<br/>
-								~= 数字近似值等于比较, 如: ${user1.coins ~= user2.coins}<br/>
+								~= 数字近似值等于比较(任何数字类型只比较intValue相等), 如: ${user1.coins ~= user2.coins}<br/>
 								#  数字格式化, 如: ${user1.coins # "###,##0.###"}<br/>
 								<b>(4) 字符串(String)：</b><br/>
+								[ ] 方括号，字符索引，如：${"abcdefg"[1..2]} 输出：bc <font color="green">(注：可以将String看成char[]数组)</font><br/>
 								+ 加号，两个字符串相连, 非字符将调用其toString, 如: ${user.firstname + user.lastname}<br/>
-								* 乘号，字符串重复, 如: ${"aaa" * 3} ${3 * "aaa"}<br/>
+								- 减号, 过滤字符串, 如: ${"ab.cd.ef" - "."} 输出：abcdef<br/>
+								* 乘号，字符串重复, 如: ${"abc" * 3} 或者 ${3 * "abc"} 输出：abcabcabc<br/>
+								/ 除号, 字符串分割, 并忽略空段, 如：${"aaa.bbb.ccc" / "."} 输出数组：[aaa, bbb, ccc]<br/>
+								% 截余/缩略, 如: ${"abcdefghijklmn" % 10} 输出：abcdefg...<br/>
 								- 一元减号，将String倒序, 如: ${- str}<br/>
 								@ 地址符，输出不转义地址串, 如: ${@"C:\native\user\file.txt"}<br/>
+								~ 字符串正则表达式匹配, 如: $if{code ~ "^[0-9]+$"}<br/>
+								!~ 字符串正则表达式不匹配, 如: $if{code !~ "^[0-9]+$"}<br/>
 								&gt;  字符串大于比较, 如: $if{user1.name &gt; user2.name}<br/>
 								&lt;  字符串小于比较, 如: $if{user1.name &lt; user2.name}<br/>
 								&gt;= 字符串大于等于比较, 如: $if{user1.name &gt;= user2.name}<br/>
 								&lt;= 字符串小于等于比较, 如: $if{user1.name &lt;= user2.name}<br/>
 								&lt;=&gt; 字符串大小全比较，0表示相等，1表示大于，-1表示小于, 如: ${user1.name &lt;=&gt; user2.name}<br/>
 								~= 字符串忽略大小写比较，如: ${"aa" ~= "AA"} $if{user1.name ~= user2.name}<br/>
+								<font color="green">(注：以下操作符中，^ 代表开头，$ 代表结尾，来源于正则表达式)</font><br/>
 								^= 字符串是否以另一字符串开头，也就是startsWith, 如: ${"abcd" ^= "ab"} $if{user1.name ^= "james"}<br/>
 								$= 字符串是否以另一字符串结尾，也就是endsWith, 如: ${"abcd" $= "cd"} $if{user1.name $= "lee"}<br/>
 								*= 字符串是否包含另一字符串，也就是containsWith, 如: ${"abcd" *= "bc"} $if{user1.name *= "lee"}<br/>
-								~ 字符串正则表达式匹配, 如: $if{code ~ "^[0-9]+$"}<br/>
-								!~ 字符串正则表达式不匹配, 如: $if{code !~ "^[0-9]+$"}<br/>
+								^~ (忽略大小写比较)字符串是否以另一字符串开头，也就是startsWith, 如: ${"abcd" ^~ "ab"} $if{user1.name ^~ "james"}<br/>
+								$~ (忽略大小写比较)字符串是否以另一字符串结尾，也就是endsWith, 如: ${"abcd" $~ "cd"} $if{user1.name $~ "lee"}<br/>
+								*~ (忽略大小写比较)字符串是否包含另一字符串，也就是containsWith, 如: ${"abcd" *~ "bc"} $if{user1.name *~ "lee"}<br/>
+								^- 截取前缀，如：${"note.txt" ^- "."} 输出：note<br/>
+								$- 截取后缀，如：${"note.txt" $- "."} 输出：txt<br/>
+								^* 从最前开始匹配子串所在位置，也就是indexOf，如：${"aaa.bbb.ccc" ^* "."} 输出：3<br/>
+								$* 从最后开始匹配子串所在位置，也就是lastIndexOf，如：${"aaa.bbb.ccc" $* "."} 输出：7<br/>
 								<b>(5) 日期(Date)：</b><br/>
 								+  日期年数后推, 如: ${user.registerDate + 3.year} <font color="green">(注：参见数字属性扩展)</font><br/>
 								-  日期年数前推, 如: ${user.registerDate - 3.year}<br/>
@@ -95,7 +107,7 @@ $!
 								[ ] 方括号, 数组或List下标，如:  ${list[1]} ${list[1..3]} ${list[1,2,4]} ${string[1..3]}<br/>
 								<span style="color: green;">注：${String[0..2]}会将String看成char[&nbsp;]使用，数组或List下标为负数时表示倒数：${list[-1]}，取list的倒数第一个元素</span><br/>
 								[ ] 方括号, Map索引, 如: ${map["key"]} ${map[keyVar]}，同样可以用${map.key}，但点号优先查getter属性，方括优先查entry键值对，如：${map.size}和${map["size"]}，如果map中有size的entry，则返回结果可能不一样。<br/>
-								[prop=value] 属性索引，List如：${users[name="james"].coins}将从列表中返回第一个属性"name"值为"james"的user对象，也可以是多个属性${users[name="james",role="admin"]}，Map如：${map[value="james"].key}通过value查key，${map[key="james"].value}与${map["james"]}等价<br/>
+								[prop:value] 属性索引，List如：${users[name:"james"].coins}将从列表中返回第一个属性"name"值为"james"的user对象，也可以是多个属性${users[name:"james",role:"admin"]}，Map如：${map[value:"james"].key}通过value查key，${map[key:"james"].value}与${map["james"]}等价<br/>
 								=> 推导符号，表示筛选过滤器(lambda表达式)，隐含状态信息index,size,count，index为当前项索引号，size为集合大小，count为已接收数，List缺省变量名为item，如：${list[=> item ~ "[0-9]+" && count < 3]}  ${users[u => u.name != 'guest']}，Map缺省变量名为entry，如：${map[=> entry.key != 'xxx' && count < 3]} ${map[x => x.key != 'xxx']}<br/>
 								-&gt; 箭头号, 表示层级名称，左右参数均为名称串，用于需要多个层级名称的指令中，如：$var{global -&gt; user = "james"} $for{menu -&gt; children : menus}<br/>
 								:  冒号，表示键值对(Entry)，如：${name : "james"} ${user.name : "james"} <br/>
@@ -122,25 +134,30 @@ $!
 								同优先级的二元操作符从左到右结合。<br/>
 								<b>优先级：</b><font color="green">(注：括号的优先级总是最高)</font><br/>
 								操作符优先级从低到高依次为：<br/>
-									一元："=>"<br/>
+									"=>"<br/>
 									"="<br/>
 									".."<br/>
 									","<br/>
 									":"<br/>
-									"?:"<br/>
+									"?"<br/>
 									"~", "!~"<br/>
 									"#"<br/>
-									"|", "&", "&gt;&gt;", "&lt;&lt;", "&gt;&gt;&gt;"<br/>
-									"^" "||"<br/>
+									"|", "^"<br/>
+									"&", "&gt;&gt;", "&lt;&lt;", "&gt;&gt;&gt;"<br/>
+									"||"<br/>
 									"&&"<br/>
-									"==" "!=" "~="<br/>
-									"&lt;="  "&gt;=" "&lt;" "&gt;"<br/>
-									"+" "-"<br/>
-									"*" "/" "%"<br/>
+									"==", "!=", "~=", "^=", "$=", "*=", "^~", "$~", "*~"<br/>
+									"&lt;", "&gt;", "&lt;=", "&gt;=", "&lt;=&gt;"<br/>
+									"instanceof"<br/>
+									"orderby"<br/>
+									"^-", "$-", "^*", "$*"<br/>
+									"+", "-"<br/>
+									"*", "/", "%"<br/>
 									"**"<br/>
 									一元："+", "-", "!", "~", "?"<br/>
-									".", "[ ]"<br/>
-									一元：".", "[ ]", "\"<br/>
+									".", "[ ]", "-&gt;"<br/>
+									一元：".", "[ ]", "\", "&"<br/>
+									"( )"<br/>
 								<br/>
 								<b>五. 属性扩展</b><br/>
 								<font color="green">(注：无参数有返回值函数可以直接作为属性，如：trim, toString, size等，下面不再列出)</font><br/>

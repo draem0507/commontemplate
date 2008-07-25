@@ -7,11 +7,11 @@ import org.commontemplate.tools.PropertiesConfigurationLoader;
 
 import junit.framework.TestCase;
 /**
- * 对RandomPropertyHanlder的测试。
+ * EnginePropertyHanlder 的测试。
  * @author YanRong
  *
  */
-public class RandomPropertyHanlderTester extends TestCase {
+public class EnginePropertyHandlerTester extends TestCase {
 
 	OperatorHandlerProvider operatorHandlerProvider;
 
@@ -22,21 +22,21 @@ public class RandomPropertyHanlderTester extends TestCase {
 		operatorHandlerProvider = config.getOperatorHandlerProvider();
 	}
 	/**
-	 * 对RandomPropertyHanlder的测试。<br>
+	 * 对EnginePropertyHanlder的测试。<br>
 	 * @condition
 	 * 条件<br>
-	 * 得到 RandomPropertyHanlder。
+	 * 得到 EnginePropertyHanlder。
 	 * @result
 	 * 结果<br>
-	 * 得到一个Double对象的随机数。
+	 * 得到EngineBean这个对象。
 	 * @throws Exception
 	 */
 	public void testDoEvaluate() throws Exception{
 		
 		UnaryOperatorHandler handler = operatorHandlerProvider.getUnaryOperatorHandler(".");
-		Object obj = handler.doEvaluate("random");
+		Object obj = handler.doEvaluate("engine");
 		
-		assertTrue(obj instanceof Double);
+		assertTrue(obj instanceof EngineBean);
 		
 	}
 }

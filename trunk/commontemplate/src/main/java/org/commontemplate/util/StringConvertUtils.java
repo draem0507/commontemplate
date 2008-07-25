@@ -2,16 +2,17 @@ package org.commontemplate.util;
 
 /**
  * 模板字符串转义符转换工具类, 在Java的基础上忽略不识别转义.
+ * 使得revertLiteral可以完整的还原convertLiteral的字符串.
  *
  * @see org.commontemplate.util.JavaStringConvertUtils
+ * @author liangfei0201@163.com
  */
 public final class StringConvertUtils {
 
 	private StringConvertUtils() {}
 
 	/**
-	 * Converts encoded &#92;uxxxx to unicode chars and changes special saved
-	 * chars to their original forms
+	 * 反斜杠转义字符，转义：\n \r \t \f \\uXXXX \\\\等字符，并忽略不识别的转义，如：\x
 	 */
 	public static String convertLiteral(String theString) {
 
@@ -19,14 +20,15 @@ public final class StringConvertUtils {
 		int len = theString.length();
 		StringBuffer outBuffer = new StringBuffer(len);
 
-		for (int x = 0; x < len;) {
-			aChar = theString.charAt(x ++);
+		for (int x = 0; x < len; x ++) {
+			aChar = theString.charAt(x);
 			if (aChar == '\\') {
 				if (x < len - 1) {
-					aChar = theString.charAt(x++);
+					x ++;
+					aChar = theString.charAt(x);
 					if (aChar == 'u') { // 读取unicode
-						if (x < len - 5) {
-							char[] unicode = new char[]{theString.charAt(x), theString.charAt(x + 1), theString.charAt(x + 2), theString.charAt(x + 3)};
+						if (x < len - 4) {
+							char[] unicode = new char[]{theString.charAt(x + 1), theString.charAt(x + 2), theString.charAt(x + 3), theString.charAt(x + 4)};
 							if (isUnicode(unicode)) {
 								outBuffer.append(toUnicode(unicode));
 								x += 4;
@@ -47,6 +49,8 @@ public final class StringConvertUtils {
 							outBuffer.append('\n');
 						else if (aChar == 'f')
 							outBuffer.append('\f');
+						else if (aChar == '\\')
+							outBuffer.append('\\');
 						else {
 							outBuffer.append('\\');
 							outBuffer.append(aChar);
@@ -65,8 +69,7 @@ public final class StringConvertUtils {
 	private static final String specialSaveChars = " \t\r\n\f";
 
 	/**
-	 * Converts unicodes to encoded &#92;uxxxx and writes out any of the
-	 * characters in specialSaveChars with a preceding slash
+	 * 还原反斜杠转义
 	 */
 	public static String revertLiteral(String theString) {
 		int len = theString.length();

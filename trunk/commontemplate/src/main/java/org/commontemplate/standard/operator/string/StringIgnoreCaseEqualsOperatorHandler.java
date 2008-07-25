@@ -9,15 +9,19 @@ import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
  * @author liangfei0201@163.com
  *
  */
-public class StringIngoreCaseEqualsOperatorHanlder extends BinaryOperatorHandlerSupport {
+public class StringIgnoreCaseEqualsOperatorHandler extends BinaryOperatorHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	public StringIngoreCaseEqualsOperatorHanlder() {
-		super(String.class, String.class);
+	public StringIgnoreCaseEqualsOperatorHandler() {
+		super(String.class, String.class, true);
 	}
 
 	public Object doEvaluate(Object leftOperand, Object rightOperand) throws Exception {
+		if (leftOperand == null && rightOperand == null)
+			return Boolean.TRUE;
+		if (leftOperand == null || rightOperand == null)
+			return Boolean.FALSE;
 		return Boolean.valueOf((((String)leftOperand)).trim().equalsIgnoreCase(((String)rightOperand).trim()));
 	}
 
