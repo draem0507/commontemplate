@@ -118,7 +118,7 @@ $!
 								=  等号，与冒号功能相同，表示键值对(Entry)，但优先级更低(其它操作符均先于它运行)，如：${xxx = aa:bb,cc:dd}，可以不需要括号。<br/>
 								.. 双点号, 表示序列(Sequence), 如: ${1..5} $for{num : 1..5} $for{weekDay : "Sunday".."Saturday"}<br/>
 								,  逗号, 表示列表(List), 如: ${1,2,5,7} $for{num : (1,2,5,7)}<br/>
-								<font color="green">(注：序列和列表可以合并使用，如：${1,3..6,9} 输出展开式列表：[1,3,4,5,6,9]，而：${1,(3..6),9} 输出两级列表：[1,[3,4,5,6],9])</font><br/>
+								<font color="green">(注：序列和列表可以合并使用，如：${1,3..6,9} 输出展开式列表：[1,3,4,5,6,9]，而：${1,(3..6),9} 或者 ${1,[3..6],9} 输出两级列表：[1,[3,4,5,6],9])</font><br/>
 								:, 冒号加逗号, 表示哈希表(Map), 如: ${a : 1, b: 2, c : 7} $for{rel : (a : 1, b: 2, c : 7)}<br>
 								[ ] 一元方括号, 转换成集合, 将Object转成List, 将Entry转成Map,  如: $for{num : [100]} $for{num : [name:value]}<br/>
 								<span style="color: green;">注：如果[ ]中已经是List或Map, 则将保持不变, 相当于( ), 如: $for{num : [20,50,100]} $for{num : [name1:value1, name2:value2]}</span><br/>
@@ -162,8 +162,17 @@ $!
 									一元：".", "[ ]", "\", "&"<br/>
 									"( )"<br/>
 								<br/>
-								<b>五. 属性扩展</b><br/>
-								<font color="green">(注：无参数有返回值函数可以直接作为属性，如：trim, toString, size等，下面不再列出)</font><br/>
+								<b>五. 对象属性及扩展属性</b><br/>
+								<b>属性调用格式</b><br/>
+								${对象.属性}<br/>
+								<b>属性查找顺序</b><br/>
+								以${obj.XXX}为例<br/>
+								(1) 首先查找obj类型的外部扩展属性(可覆盖原有属性) <font color="green">(注：参见下一节)</font><br/>
+								(2) 再查找obj.getXXX()函数<br/>
+								(3) 再查找obj.XXX()函数<br/>
+								(4) 再查找obj.XXX属性(包括静态属性)<br/>
+								<b>标准扩展属性</b> <a href="extension.html">扩展...</a><br/>
+								<font color="green">(注：根据上面的规则，没有参数，但有返回值的函数，可以直接作为属性，如：toString, hashCode, trim, toUpperCase, size等，下面不再列出)</font><br/>
 								<b>(1) 空值(Null):</b><br/>
 								toString 转为String类型，如：null.toString 返回"null"字符串<br/>
 								null的其它任意属性都返回null，如：null.xxx 返回null<br/>
@@ -173,7 +182,8 @@ $!
 								toJson 输出JSON格式的字符串表示，如：${user.toJson}, ${map.toJson}<br/>
 								toXml 输出XML格式的字符串表示，如：${user.toXml}, ${map.toXml}<br/>
 								<b>(3) 字符串(String):</b><br/>
-								capital 首字母大写, eg: ${"james".capital} (输出：James)<br/>
+								capitalize 首字母大写, eg: ${"james".capitalize} (输出：James)<br/>
+								uncapitalize 首字母大写, eg: ${"James".uncapitalize} (输出：james)<br/>
 								toDate 以yyyy-MM-dd格式转换为Date, 如:  $if{now &gt; "2007-01-01".toDate}<br/>
 								toTime 以HH:mm:ss格式转换为Date, 如:  ${"22:10:15".toTime}<br/>
 								toDateTime 以yyyy-MM-dd HH:mm:ss格式转换为Date, 如:  $if{now &gt; "2007-01-01 23:10:05".toDateTime}<br/>
@@ -195,6 +205,8 @@ $!
 								toCamelNaming 转为骆驼命名, 如：${"user_name".toCamelNaming} 输出：userName<br/>
 								toCapitalNaming 转为大写命名, 如：${"user_name".toCapitalNaming} 输出：UserName<br/>
 								toUnderlineNaming 转为下划线命名, 如：${"userName".toUnderlineNaming} 或 ${"UserName".toUnderlineNaming} 均输出：user_name<br/>
+								toAscii 转为ASCII码, 如：${"中国".toAscii} 均输出：\u4E2D\u56FD<br/>
+								swapCase <br/>
 								<b>(4) 日期(Date):</b><br/>
 								year, month, day, hour, minute, second, millisecond 时间各个部分取值, 如: ${createDate.day} ${createDate.hour}<br/>
 								week 星期几， 如: ${createDate.week}<br/>
@@ -223,7 +235,12 @@ $!
 								<b>(7) 数组(Array):</b><br/>
 								size 数组长度，保持与List统一，如：${arr.size}<br/>
 								<br/>
-								<b>六. 函数扩展</b><br/>
+								<b>六. 对象函数及扩展函数</b><br/>
+								<b>函数调用格式</b><br/>
+								${对象.函数(参数1, 参数2)}<br/>
+								<font color="green">(注：不允许调用返回类型为void的函数)</font><br/>
+								<font color="green">(注：如果是没有参数的函数，建议采用属性方式调用，也就是省略括号，如：${str.trim}，而不是${str.trim()})</font><br/>
+								<b>标准扩展函数</b> <a href="extension.html">扩展...</a><br/>
 								......<br/>
 								<br/>
 								<b>七. 序列扩展</b><br/>
