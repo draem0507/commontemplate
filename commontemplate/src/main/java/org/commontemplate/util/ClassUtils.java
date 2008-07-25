@@ -130,9 +130,9 @@ public class ClassUtils {
 		for (int j = 0, m = cs1.length; j < m; j ++) {
 			Class c1 = cs1[j];
 			Class c2 = cs2[j];
-			if (c1 == null || c2 == null)
-				continue;
 			if (c1 == c2)
+				continue;
+			if (c1 == null || c2 == null)
 				continue;
 			if (c1 == Object.class || c2 == Object.class)
 				continue;
