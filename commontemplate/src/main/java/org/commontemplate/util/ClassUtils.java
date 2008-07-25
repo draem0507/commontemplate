@@ -138,12 +138,12 @@ public class ClassUtils {
 				continue;
 			if (c1.isAssignableFrom(c2))
 				continue;
-			if (c1.isPrimitive() && isLikePrimitiveClass(c1, c2)) {
+			if (c1.isPrimitive()
+					&& isLikePrimitiveClass(c1, c2))
 				continue;
-			}
-			if (c2.isPrimitive() && isLikePrimitiveClass(c2, c1)) {
+			if (c2.isPrimitive()
+					&& isLikePrimitiveClass(c2, c1))
 				continue;
-			}
 			return false;
 		}
 		return true;
