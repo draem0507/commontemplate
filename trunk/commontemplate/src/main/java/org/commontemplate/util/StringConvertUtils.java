@@ -12,7 +12,7 @@ public final class StringConvertUtils {
 	private StringConvertUtils() {}
 
 	/**
-	 * 反斜杠转义字符，转义：\n \r \t \f \\uXXXX \\\\等字符，并忽略不识别的转义，如：\x
+	 * 反斜杠转义字符，转义：\" \' \n \r \t \f \b \\uXXXX \\\\等字符，并忽略不识别的转义，如：\x
 	 */
 	public static String convertLiteral(String theString) {
 
@@ -49,6 +49,12 @@ public final class StringConvertUtils {
 							outBuffer.append('\n');
 						else if (aChar == 'f')
 							outBuffer.append('\f');
+						else if (aChar == 'b')
+							outBuffer.append('\b');
+						else if (aChar == '\"')
+							outBuffer.append('\"');
+						else if (aChar == '\'')
+							outBuffer.append('\'');
 						else if (aChar == '\\')
 							outBuffer.append('\\');
 						else {
@@ -66,7 +72,7 @@ public final class StringConvertUtils {
 		return outBuffer.toString();
 	}
 
-	private static final String specialSaveChars = " \t\r\n\f";
+	private static final String specialSaveChars = "\t\r\n\f\b";
 
 	/**
 	 * 还原反斜杠转义
@@ -82,17 +88,21 @@ public final class StringConvertUtils {
 				outBuffer.append('\\');
 				outBuffer.append('t');
 				break;
-			case '\n':
-				outBuffer.append('\\');
-				outBuffer.append('n');
-				break;
 			case '\r':
 				outBuffer.append('\\');
 				outBuffer.append('r');
 				break;
+			case '\n':
+				outBuffer.append('\\');
+				outBuffer.append('n');
+				break;
 			case '\f':
 				outBuffer.append('\\');
 				outBuffer.append('f');
+				break;
+			case '\b':
+				outBuffer.append('\\');
+				outBuffer.append('b');
 				break;
 			default:
 				if ((aChar < 0x0020) || (aChar > 0x007e)) {

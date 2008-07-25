@@ -7,7 +7,9 @@ $!
 								<br/>
 								<b>二. 特殊表达式符号:</b><br/>
 								<b>1. () 括号：</b>加强优先级<br/>
-								<b>2. " ' ` 三种引号：</b>字符串表示符，字符串中转义符"\"，与Java中使用方式相同 <font color="green">(注：除了双引号，单引号，还加入了反单引号，便于多层嵌套)</font><br/>
+								<b>2. " ' ` 三种引号：</b>字符串表示符，字符串中转义符"\"，与Java中使用方式类似<br/>
+								<font color="green">(注：除了双引号，单引号，还加入了反单引号，便于多层嵌套)</font><br/>
+								<font color="green">(注：与Java不同的是忽略不识别的转义字符，如：${"\x"} 输出两个字符：\x)</font><br/>
 								<b>3. 数字：</b>以0-9开头表示数字<br/>
 								以0x开头的为16进制数字，如：0xF5A7<br/>
 								以0开头的整数为8进制数字，如：07<br/>
@@ -73,7 +75,7 @@ $!
 								/ 除号, 字符串分割, 并忽略空段, 如：${"aaa.bbb.ccc" / "."} 输出数组：[aaa, bbb, ccc]<br/>
 								% 截余/缩略, 如: ${"abcdefghijklmn" % 10} 输出：abcdefg...<br/>
 								- 一元减号，将String倒序, 如: ${- str}<br/>
-								@ 地址符，输出不转义地址串, 如: ${@"C:\native\user\file.txt"}<br/>
+								@ 地址符，输出不转义地址串(只保持转义引号和反斜线), 如: ${@"C:\native\user\file.txt"}<br/>
 								~ 字符串正则表达式匹配, 如: $if{code ~ "^[0-9]+$"}<br/>
 								!~ 字符串正则表达式不匹配, 如: $if{code !~ "^[0-9]+$"}<br/>
 								&gt;  字符串大于比较, 如: $if{user1.name &gt; user2.name}<br/>
@@ -82,17 +84,18 @@ $!
 								&lt;= 字符串小于等于比较, 如: $if{user1.name &lt;= user2.name}<br/>
 								&lt;=&gt; 字符串大小全比较，0表示相等，1表示大于，-1表示小于, 如: ${user1.name &lt;=&gt; user2.name}<br/>
 								~= 字符串忽略大小写比较，如: ${"aa" ~= "AA"} $if{user1.name ~= user2.name}<br/>
-								<font color="green">(注：以下操作符中，^ 代表开头，$ 代表结尾，来源于正则表达式)</font><br/>
+								<font color="green">(注：以下操作符中，^ 代表开头，$ 代表结尾，* 代表全串匹配，来源于正则表达式)</font><br/>
 								^= 字符串是否以另一字符串开头，也就是startsWith, 如: ${"abcd" ^= "ab"} $if{user1.name ^= "james"}<br/>
 								$= 字符串是否以另一字符串结尾，也就是endsWith, 如: ${"abcd" $= "cd"} $if{user1.name $= "lee"}<br/>
 								*= 字符串是否包含另一字符串，也就是containsWith, 如: ${"abcd" *= "bc"} $if{user1.name *= "lee"}<br/>
 								^~ (忽略大小写比较)字符串是否以另一字符串开头，也就是startsWith, 如: ${"abcd" ^~ "ab"} $if{user1.name ^~ "james"}<br/>
 								$~ (忽略大小写比较)字符串是否以另一字符串结尾，也就是endsWith, 如: ${"abcd" $~ "cd"} $if{user1.name $~ "lee"}<br/>
 								*~ (忽略大小写比较)字符串是否包含另一字符串，也就是containsWith, 如: ${"abcd" *~ "bc"} $if{user1.name *~ "lee"}<br/>
+								^? 从最前开始匹配子串所在位置，也就是indexOf，如：${"aaa.bbb.ccc" ^* "."} 输出：3<br/>
+								$? 从最后开始匹配子串所在位置，也就是lastIndexOf，如：${"aaa.bbb.ccc" $* "."} 输出：7<br/>
+								*? 整个字符串中匹配子串的个数，如：${"xxxabcxxxabcxxx" *? "abc"} 输出：2<br/>
 								^- 截取前缀，如：${"note.txt" ^- "."} 输出：note<br/>
 								$- 截取后缀，如：${"note.txt" $- "."} 输出：txt<br/>
-								^* 从最前开始匹配子串所在位置，也就是indexOf，如：${"aaa.bbb.ccc" ^* "."} 输出：3<br/>
-								$* 从最后开始匹配子串所在位置，也就是lastIndexOf，如：${"aaa.bbb.ccc" $* "."} 输出：7<br/>
 								<b>(5) 日期(Date)：</b><br/>
 								+  日期年数后推, 如: ${user.registerDate + 3.year} <font color="green">(注：参见数字属性扩展)</font><br/>
 								-  日期年数前推, 如: ${user.registerDate - 3.year}<br/>
@@ -140,17 +143,17 @@ $!
 									","<br/>
 									":"<br/>
 									"?"<br/>
-									"~", "!~"<br/>
 									"#"<br/>
-									"|", "^"<br/>
-									"&", "&gt;&gt;", "&lt;&lt;", "&gt;&gt;&gt;"<br/>
 									"||"<br/>
 									"&&"<br/>
-									"==", "!=", "~=", "^=", "$=", "*=", "^~", "$~", "*~"<br/>
-									"&lt;", "&gt;", "&lt;=", "&gt;=", "&lt;=&gt;"<br/>
-									"instanceof"<br/>
+									"|"<br/>
+									"^"<br/>
+									"&"<br/>
+									"==", "!=", "~=", "~", "!~", "^=", "$=", "*=", "^~", "$~", "*~"<br/>
+									"&lt;", "&gt;", "&lt;=", "&gt;=", "&lt;=&gt;", "instanceof"<br/>
+									"&gt;&gt;", "&lt;&lt;", "&gt;&gt;&gt;"<br/>
 									"orderby"<br/>
-									"^-", "$-", "^*", "$*"<br/>
+									"^?", "$?", "*?", "^-", "$-"<br/>
 									"+", "-"<br/>
 									"*", "/", "%"<br/>
 									"**"<br/>

@@ -79,6 +79,14 @@ public final class JavaStringConvertUtils {
 						aChar = '\n';
 					else if (aChar == 'f')
 						aChar = '\f';
+					else if (aChar == 'b')
+						aChar = '\b';
+					else if (aChar == '\\')
+						aChar = '\\';
+					else if (aChar == '\"')
+						aChar = '\"';
+					else if (aChar == '\'')
+						aChar = '\'';
 					outBuffer.append(aChar);
 				}
 			} else
@@ -87,7 +95,7 @@ public final class JavaStringConvertUtils {
 		return outBuffer.toString();
 	}
 
-	private static final String specialSaveChars = " \t\r\n\f";
+	private static final String specialSaveChars = " \t\r\n\f\b";
 
 	/**
 	 * Converts unicodes to encoded &#92;uxxxx and writes out any of the
@@ -100,25 +108,29 @@ public final class JavaStringConvertUtils {
 		for (int x = 0; x < len; x++) {
 			char aChar = theString.charAt(x);
 			switch (aChar) {
-			case '\\':
-				outBuffer.append('\\');
-				outBuffer.append('\\');
-				break;
 			case '\t':
 				outBuffer.append('\\');
 				outBuffer.append('t');
-				break;
-			case '\n':
-				outBuffer.append('\\');
-				outBuffer.append('n');
 				break;
 			case '\r':
 				outBuffer.append('\\');
 				outBuffer.append('r');
 				break;
+			case '\n':
+				outBuffer.append('\\');
+				outBuffer.append('n');
+				break;
 			case '\f':
 				outBuffer.append('\\');
 				outBuffer.append('f');
+				break;
+			case '\b':
+				outBuffer.append('\\');
+				outBuffer.append('b');
+				break;
+			case '\\':
+				outBuffer.append('\\');
+				outBuffer.append('\\');
 				break;
 			default:
 				if ((aChar < 0x0020) || (aChar > 0x007e)) {
