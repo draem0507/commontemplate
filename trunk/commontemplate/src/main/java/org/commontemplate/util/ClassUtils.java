@@ -134,9 +134,9 @@ public class ClassUtils {
 				continue;
 			if (c1 == c2)
 				continue;
-			if (c1.isAssignableFrom(c2))
-				continue;
 			if (c1 == Object.class || c2 == Object.class)
+				continue;
+			if (c1.isAssignableFrom(c2))
 				continue;
 			if (c1.isPrimitive() && primitiveLike(c1, c2)) {
 				continue;
