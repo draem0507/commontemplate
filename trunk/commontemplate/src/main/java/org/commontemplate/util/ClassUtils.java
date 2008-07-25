@@ -118,7 +118,7 @@ public class ClassUtils {
 			if (methods[i].getName().equals(name)
 					&& methods[i].getParameterTypes().length == types.length) {
 				Class[] paramTypes = methods[i].getParameterTypes();
-				if (typeLikes(paramTypes, types))
+				if (isLikeClasses(paramTypes, types))
 					return methods[i];
 			}
 		}
@@ -126,7 +126,7 @@ public class ClassUtils {
 	}
 
 	// 判断两个参数列表类型是否相似
-	private static boolean typeLikes(Class[] cs1, Class[] cs2) {
+	private static boolean isLikeClasses(Class[] cs1, Class[] cs2) {
 		for (int j = 0, m = cs1.length; j < m; j ++) {
 			Class c1 = cs1[j];
 			Class c2 = cs2[j];
@@ -138,10 +138,10 @@ public class ClassUtils {
 				continue;
 			if (c1.isAssignableFrom(c2))
 				continue;
-			if (c1.isPrimitive() && primitiveLike(c1, c2)) {
+			if (c1.isPrimitive() && isLikePrimitiveClass(c1, c2)) {
 				continue;
 			}
-			if (c2.isPrimitive() && primitiveLike(c2, c1)) {
+			if (c2.isPrimitive() && isLikePrimitiveClass(c2, c1)) {
 				continue;
 			}
 			return false;
@@ -150,7 +150,7 @@ public class ClassUtils {
 	}
 
 	// 判断基本类型是否相似
-	private static boolean primitiveLike(Class c1, Class c2) {
+	private static boolean isLikePrimitiveClass(Class c1, Class c2) {
 		return (c1 == Boolean.TYPE && c2 == Boolean.class)
 				|| (c1 == Byte.TYPE && c2 == Byte.class)
 				|| (c1 == Character.TYPE && c2 == Character.class)
