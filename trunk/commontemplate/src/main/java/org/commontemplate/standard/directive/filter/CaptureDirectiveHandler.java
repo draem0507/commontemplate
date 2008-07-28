@@ -29,7 +29,7 @@ public class CaptureDirectiveHandler extends BlockDirectiveHandlerSupport {
 		DirectiveUtils.renderAll(innerElements, context);
 		context.removeOutputFilter();
 		String value = bufferedFilter.getBuffered();
-		context.putVariable(var, value);
+		context.getSuperLocalContext().putVariable(var, value);
 	}
 
 }
