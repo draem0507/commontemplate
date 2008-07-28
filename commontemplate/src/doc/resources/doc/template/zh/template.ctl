@@ -240,6 +240,10 @@ $!
 								$filterAll{x => x.escapeHtml} <font color="green">(注：缺省名称为value，如：$filterAll{=> value.escapeHtml})</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end <br/>
+								捕获输出指令: <font color="green">(注：捕获指令内部块输出内容到指定变量)</font><br/>
+								$capture{"xxx"} 或者 $capture:xxx<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+								$end <br/>
 								忽略输出指令: <font color="green">(注：执行内部指令，但忽略输出)</font><br/>
 								$ignore<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
