@@ -5,8 +5,9 @@ import java.util.List;
 import org.commontemplate.core.BlockDirective;
 import org.commontemplate.core.BreakVisitException;
 import org.commontemplate.core.Expression;
+import org.commontemplate.core.FilteredVisitor;
+import org.commontemplate.core.Template;
 import org.commontemplate.core.Visitable;
-import org.commontemplate.core.Visitor;
 import org.commontemplate.util.Assert;
 
 /**
@@ -18,7 +19,7 @@ import org.commontemplate.util.Assert;
  * @author liangfei0201@163.com
  *
  */
-public class BlockDirectiveVisitor implements Visitor {
+public class BlockDirectiveVisitor implements FilteredVisitor {
 
 	private final String type;
 
@@ -31,6 +32,10 @@ public class BlockDirectiveVisitor implements Visitor {
 		Assert.assertNotNull(name, "ElementsVisitor.name.required");
 		this.type = type;
 		this.name = name;
+	}
+
+	public boolean isVisit(Visitable node) {
+		return (node instanceof BlockDirective || node instanceof Template);
 	}
 
 	public void visit(Visitable node) throws BreakVisitException {

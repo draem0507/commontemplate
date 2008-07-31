@@ -3,6 +3,7 @@ package org.commontemplate.standard.visit;
 import org.commontemplate.core.BreakVisitException;
 import org.commontemplate.core.Element;
 import org.commontemplate.core.FilteredVisitor;
+import org.commontemplate.core.Template;
 import org.commontemplate.core.Visitable;
 
 /**
@@ -14,12 +15,13 @@ import org.commontemplate.core.Visitable;
 public abstract class ElementVisitor implements FilteredVisitor {
 
 	public boolean isVisit(Visitable node) {
-		return (node instanceof Element);
+		return (node instanceof Element || node instanceof Template);
 	}
 
 	// 接口适配
 	public final void visit(Visitable node) throws BreakVisitException {
-		visit((Element)node);
+		if (node instanceof Element)
+			visit((Element)node);
 	}
 
 	/**

@@ -1,5 +1,6 @@
 package org.commontemplate.engine.template;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.commontemplate.config.MiddleBlockDirectiveHandler;
@@ -23,7 +24,7 @@ final class MiddleBlockDirectiveImpl extends BlockDirectiveImpl {
 		this.prototype = prototype;
 	}
 
-	public String getCanonicalForm() {
+	public String getCanonicalForm() throws IOException {
 		return prototype + getCanonicalFormAll();
 	}
 

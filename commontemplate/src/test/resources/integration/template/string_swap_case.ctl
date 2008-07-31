@@ -1,5 +1,5 @@
-${null.swapCase}
-${"".swapCase}
-${"A".swapCase}
-${"a".swapCase}
-${"ABCdef".swapCase}
+${null.toSwapCase}
+${"".toSwapCase}
+${"A".toSwapCase}
+${"a".toSwapCase}
+${"ABCdef".toSwapCase}

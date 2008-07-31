@@ -1,5 +1,6 @@
 package org.commontemplate.core;
 
+import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 
@@ -79,7 +80,15 @@ public class ParsingException extends I18nRuntimeException {
 		s.println();
 		if (resource != null)
 			s.println("[commontemplate] Error Template Name: " + resource.getName());
-		s.println("[commontemplate] Error Template Location: " + location);
+		if (location != null)
+			s.println("[commontemplate] Error Template Location: " + location);
+		if (resource != null && location != null) {
+			try {
+				s.println("[commontemplate] Error Template Block: " + resource.getSource(location));
+			} catch (IOException e) {
+				// ignore
+			}
+		}
 		s.println("[commontemplate] Error Message: " + getMessage());
 		super.printStackTrace(s);
 	}
@@ -88,7 +97,15 @@ public class ParsingException extends I18nRuntimeException {
 		s.println();
 		if (resource != null)
 			s.println("[commontemplate] Error Template Name: " + resource.getName());
-		s.println("[commontemplate] Error Template Location: " + location);
+		if (location != null)
+			s.println("[commontemplate] Error Template Location: " + location);
+		if (resource != null && location != null) {
+			try {
+				s.println("[commontemplate] Error Template Block: " + resource.getSource(location));
+			} catch (IOException e) {
+				// ignore
+			}
+		}
 		s.println("[commontemplate] Error Message: " + getMessage());
 		super.printStackTrace(s);
 	}

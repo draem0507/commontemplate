@@ -79,11 +79,11 @@ $!
 								<b>(2) Context域</b> (会话域)<br/>
 								<font color="gray">范围：</font>包括Context, GlobalContext, LocalContext等。<br/>
 								<font color="gray">职责定义：</font>Context域负责状态及外部资源的管理。<br/>
-								<font color="gray">线程安全性：</font>Context域是非线程安全，应该为每次执行创建新的实例(即在线程栈内使用)。<br/>
+								<font color="gray">线程安全性：</font>Context域是非线程安全的，应该为每次执行创建新的实例(即在线程栈内使用)。<br/>
 								<b>(3) Factory域</b> (服务域)<br/>
 								<font color="gray">范围：</font>包括Factory, ContextFactory, TemplateFactory等。<br/>
 								<font color="gray">职责定义：</font>Factory域负责管理Template域和Context域的生命周期。<br/>
-								<font color="gray">线程安全性：</font>Factory域是线程安全的(内部同步)，可单例重用。<br/>
+								<font color="gray">线程安全性：</font>Factory域是线程安全的(内部同步)，可单实例重用。<br/>
 								<b>核心包设计图如下：</b> <font color="green">(注：省略了Element对Context和Expression对VariableResolver的依赖关系)</font><br/>
 								<img src="../images/uml/core.gif" /><br/>
 								四色原型概要[Coad95-97]<br/>

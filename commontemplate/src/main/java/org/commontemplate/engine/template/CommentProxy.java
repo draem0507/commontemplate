@@ -1,5 +1,7 @@
 package org.commontemplate.engine.template;
 
+import java.io.IOException;
+
 import org.commontemplate.core.Comment;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.RenderingException;
@@ -39,7 +41,7 @@ final class CommentProxy extends Comment {
 		return comment.getSignature();
 	}
 
-	public String getSource() {
+	public String getSource() throws IOException {
 		return comment.getSource();
 	}
 

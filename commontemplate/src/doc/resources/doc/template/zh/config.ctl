@@ -4,25 +4,26 @@ $!
 								<b>一. Properties 配置</b><br/>
 								<b>配置规则：</b><br/>
 								整个standard包的所有配置类全部留有setter注入接口，任何支持setter方式的IoC容器均可以完成配置。<br/>
-								默认采用内置的IoC容器初始化配置，详细请参考：org.commontemplate.util.PropertiesBeanFactory。<br/>
-								使用properties文件作为配置，所需遵循java.util.Properties的所有规则，如：# ! = :等符号需转义等。<br/>
+								默认采用内置的IoC容器初始化配置，详细请参考：org.commontemplate.tools.bean.PropertiesBeanFactory。<br/>
+								使用properties文件作为配置，所以需遵循java.util.Properties的所有规则，如：# ! = :等符号需转义等。<br/>
 								<b>(1) 基本类型：</b>(与Java相似)<br/>
 								null, true, false为关键字<br/>
 								以数字开头的为Number，识别后缀L,F,D,S<br/>
 								以单引号括起的为Character<br/>
 								以双引号括起的为String，如果非特殊串，双引号可省<br/>
 								<b>(2) 引用：</b><br/>
-								以$开头表示引用配置项<br/>
+								以$开头表示引用其它配置项<br/>
 								<b>(3) 类和对象：</b><br/>
 								以.class结尾表示相应Class类元<br/>
-								以()结尾表示创建Instance，并以Instance的key加点号作为前缀，查找并注入其属性<br/>
-								以.static结尾表示通过静态字段获取Instance<br/>
-								以().static结尾表示通过静态工厂方法获取Instance，并以Instance的key加点号作为前缀，查找并注入其属性<br/>
+								以()结尾表示创建实例，并以实例的key加点号作为前缀，查找并注入其属性<br/>
+								以.static结尾表示通过静态字段获取实例<br/>
+								以().static结尾表示通过静态工厂方法获取实例，并以实例的key加点号作为前缀，查找并注入其属性<br/>
 								<b>(4) 集合：</b><br/>
 								以&lt;&gt;结尾表示Set，并以&lt;&gt;前的名称查找Set的项<br/>
 								以[]结尾表示List，并以[]前的名称查找List的项<br/>
 								以{}结尾表示Map，并以{}前的名称查找Map的项<br/>
 								<b>(5) 配置继承：</b><br/>
+								继承其它配置内容，并用当前配置内容中的相同项覆盖被继承和内容，如：<br/>
 								@extends=parent1.properties,parent2.properties<br/>
 								<br/>
 								<b>使用方法：</b><br/>
@@ -40,8 +41,8 @@ $!
 <font color="#3f7f5f"># 继承标准web配置</font><br/>
 @extends=<font color="#2a00ff">org/commontemplate/tools/web/commontemplate.properties</font><br/>
 <br/>
-<font color="#3f7f5f"># 非调试模式将隐藏部分不重要的异常信息</font><br/>
-debugMode=<font color="#2a00ff">false</font><br/>
+<font color="#3f7f5f"># 调试模式在遇到断点时将挂起线程单步运行，非调试模式将隐藏部分不重要的异常信息</font><br/>
+debug=<font color="#2a00ff">false</font><br/>
 <br/>
 <font color="#3f7f5f"># 国际化信息基名，规则同java.util.ResourceBundle，</font><br/>
 <font color="#3f7f5f"># 如：假设基名为xxx/yyy，用户地区为zh_CN，</font><br/>
@@ -105,7 +106,7 @@ memoryCache.maxSize=<font color="#2a00ff">1000</font><br/>
 <font color="#3f7f5f"># 响应内容类型, 不设置默认为text/html</font><br/>
 response.contentType=<font color="#2a00ff">text/html</font><br/>
 								<br/>
-								<b>一些其它配置说明：</b><br/>
+								<b>部分配置说明：</b><br/>
 								<b>(1)</b> 非web应用，如代码生成器等，可以设置：<br/>
 								@extends=<font color="#2a00ff">org/commontemplate/tools/commontemplate.properties</font><br/>
 								<b>(2)</b> 如果需去掉磁盘缓存，通常用于已在OSCache/EHCache中配置磁盘缓存，可以设置：<br/>

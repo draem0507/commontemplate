@@ -22,11 +22,4 @@ public abstract class LocalContext extends BaseContext implements OutputControll
 	 */
 	public abstract String getLocalContextName();
 
-	/**
-	 * 获取局部上下文所属块指令, 如果为块指令上下文, 则返回其指令代理, 否则返回空.
-	 *
-	 * @return 上下文块指令
-	 */
-	public abstract Block getLocalContextBlock();
-
 }

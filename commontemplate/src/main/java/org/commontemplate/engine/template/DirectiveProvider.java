@@ -14,6 +14,7 @@ import org.commontemplate.core.Expression;
 import org.commontemplate.core.ParsingException;
 import org.commontemplate.engine.expression.ExpressionEngine;
 import org.commontemplate.util.Assert;
+import org.commontemplate.util.Location;
 import org.commontemplate.util.scanner.Token;
 
 /**
@@ -86,7 +87,7 @@ final class DirectiveProvider {
 				return parseDirective(token, trim);
 			}
 		} else { // 文本
-			return parseText("text", token, cleanOuterEscape(message, isLast)); // 这里不能用trim, 需保留空格
+			return parseText(null, token, cleanOuterEscape(message, isLast)); // 这里不能用trim, 需保留空格
 		}
 	}
 
@@ -197,13 +198,15 @@ final class DirectiveProvider {
 
 	private Element parseDirective(Token token, String message) throws ParsingException {
 		String name;
-		Expression expression;
+		Expression expression = null;
 		int i = message.indexOf(syntax.getExpressionBegin());
 		if (i > -1) {
 			Assert.assertTrue(message.charAt(message.length() - 1) == syntax.getExpressionEnd(), "DirectiveFactory.miss.parenthesis");
 			name = message.substring(1, i);
 			String expressionText = message.substring(i + 1, message.length() - 1);
-			expression = expressionEngine.parseExpression(expressionText.trim());
+			if (expressionText != null && expressionText.length() > 0)
+				expression = parseExpression(expressionText.trim(),
+						token.subToken(i + 1, message.length() - 1).getLocation());
 		} else {
 			int j = message.indexOf(syntax.getNameSeparator());
 			if (j > -1) {
@@ -212,10 +215,19 @@ final class DirectiveProvider {
 				expression = expressionEngine.createConstant(param.trim());
 			} else {
 				name = message.substring(1, message.length());
-				expression = expressionEngine.parseExpression(null);
 			}
 		}
 		return resolveDirective(token, name.trim(), expression);
+	}
+
+	private Expression parseExpression(String expr, Location location) throws ParsingException {
+		try {
+			return expressionEngine.parseExpression(expr);
+		} catch (ParsingException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new ParsingException(location, e);
+		}
 	}
 
 	private Element resolveDirective(Token token, String name, Expression expression) throws ParsingException {

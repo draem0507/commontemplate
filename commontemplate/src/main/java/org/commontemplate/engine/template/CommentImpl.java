@@ -1,9 +1,11 @@
 package org.commontemplate.engine.template;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.commontemplate.core.Comment;
 import org.commontemplate.core.Context;
+import org.commontemplate.core.FilteredVisitor;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Template;
 import org.commontemplate.core.Visitor;
@@ -49,7 +51,7 @@ final class CommentImpl extends Comment {
 		// DO NOTHING
 	}
 
-	public String getSource() {
+	public String getSource() throws IOException {
 		return prototype;
 	}
 
@@ -62,6 +64,9 @@ final class CommentImpl extends Comment {
 	}
 
 	public void accept(Visitor visitor) {
+		if (visitor instanceof FilteredVisitor
+				&& ! ((FilteredVisitor)visitor).isVisit(this))
+			return;
 		visitor.visit(this);
 	}
 

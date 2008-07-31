@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.commontemplate.config.Keywords;
-import org.commontemplate.core.Block;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.EventPublisher;
 import org.commontemplate.core.LocalContext;
@@ -36,7 +35,7 @@ final class LocalContextStackImpl implements LocalContextStack {
 		this.out = out;
 		this.context = context;
 		this.eventPublisher = eventPublisher;
-		this.rootLocalContext = new LocalContextImpl(null, ROOT_LOCAL_CONTEXT_NAME, null, null, context, out, keywords);
+		this.rootLocalContext = new LocalContextImpl(null, ROOT_LOCAL_CONTEXT_NAME, null, context, out, keywords);
 		this.rootLocalContext.setGeneralOutputFormatter(defaultFormater);
 		this.localContextStack.push(this.rootLocalContext);
 	}
@@ -52,28 +51,20 @@ final class LocalContextStackImpl implements LocalContextStack {
 	}
 
 	public void pushLocalContext() {
-		pushLocalContext(null, null, null);
+		pushLocalContext(null, null);
 	}
 
 	public void pushLocalContext(String name) {
-		pushLocalContext(name, null, null);
-	}
-
-	public void pushLocalContext(Block block) {
-		pushLocalContext(block == null ? null : block.getName(), block, null);
+		pushLocalContext(name, null);
 	}
 
 	public void pushLocalContext(Map variablesContainer) {
-		pushLocalContext(null, null, variablesContainer);
+		pushLocalContext(null, variablesContainer);
 	}
 
 	public void pushLocalContext(String name, Map variablesContainer) {
-		pushLocalContext(name, null, variablesContainer);
-	}
-
-	private void pushLocalContext(String name, Block block, Map variablesContainer) {
 		LocalContext previous = getCurrentLocalContext();
-		LocalContext localContext = new LocalContextImpl(previous, name, block, variablesContainer, context, out, keywords);
+		LocalContext localContext = new LocalContextImpl(previous, name, variablesContainer, context, out, keywords);
 		localContextStack.push(localContext);
 		eventPublisher.publishEvent(new LocalContextPushedEvent(this, previous, localContext));
 	}

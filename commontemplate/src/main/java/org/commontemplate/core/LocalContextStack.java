@@ -25,14 +25,6 @@ public interface LocalContextStack {
 	public void pushLocalContext(String name);
 
 	/**
-	 * 创建局部模板块上下文
-	 *
-	 * @param block
-	 *            模板块
-	 */
-	public void pushLocalContext(Block block);
-
-	/**
 	 * 创建局部上下文，并指定变量容器
 	 *
 	 * @param variablesContainer

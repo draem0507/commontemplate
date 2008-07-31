@@ -7,6 +7,7 @@ import org.commontemplate.config.BinaryOperatorHandler;
 import org.commontemplate.core.BinaryOperator;
 import org.commontemplate.core.EvaluationException;
 import org.commontemplate.core.Expression;
+import org.commontemplate.core.FilteredVisitor;
 import org.commontemplate.core.VariableResolver;
 import org.commontemplate.core.Visitor;
 import org.commontemplate.util.Assert;
@@ -133,6 +134,9 @@ final class BinaryOperatorImpl extends BinaryOperator {
 	}
 
 	public void accept(Visitor visitor) {
+		if (visitor instanceof FilteredVisitor
+				&& ! ((FilteredVisitor)visitor).isVisit(this))
+			return;
 		visitor.visit(this);
 		getLeftOperand().accept(visitor);
 		getRightOperand().accept(visitor);

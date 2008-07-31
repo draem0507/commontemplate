@@ -1,5 +1,6 @@
 package org.commontemplate.engine.template;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.commontemplate.config.BlockDirectiveHandler;
@@ -7,6 +8,7 @@ import org.commontemplate.core.BlockDirective;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.Element;
 import org.commontemplate.core.Expression;
+import org.commontemplate.core.FilteredVisitor;
 import org.commontemplate.core.IgnoreException;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Template;
@@ -58,7 +60,7 @@ class BlockDirectiveImpl extends BlockDirectiveSupport {
 	}
 
 	void doRender(Context context) throws RenderingException {
-		context.pushLocalContext(proxy);
+		context.pushLocalContext(name);
 		try {
 			startDirectiveHandler.doRender(context, proxy);
 		} catch (RenderingException e) {
@@ -84,15 +86,18 @@ class BlockDirectiveImpl extends BlockDirectiveSupport {
 		return expression;
 	}
 
-	public String getSource() {
+	public String getSource() throws IOException {
 		return prototype;
 	}
 
-	public String getCanonicalForm() {
+	public String getCanonicalForm() throws IOException {
 		return prototype + getCanonicalFormAll() + endPrototype;
 	}
 
 	public void accept(Visitor visitor) {
+		if (visitor instanceof FilteredVisitor
+				&& ! ((FilteredVisitor)visitor).isVisit(this))
+			return;
 		visitor.visit(this);
 		acceptExpression(visitor);
 		acceptAll(visitor);

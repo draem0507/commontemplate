@@ -1,5 +1,6 @@
 package org.commontemplate.core;
 
+import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 
@@ -46,25 +47,6 @@ public class RenderingException extends I18nRuntimeException {
 		this.element = element;
 	}
 
-	public RenderingException(Element element, Context context,
-			Location location, String message, Throwable cause) {
-		super(message, cause);
-		this.element = element;
-		this.context = context;
-		this.location = location;
-	}
-
-	/**
-	 * 获取出错的模板
-	 *
-	 * @return 出错的模板
-	 */
-	public Template getTemplate() {
-		if (element == null)
-			return null;
-		return element.getTemplate();
-	}
-
 	private Element element;
 
 	/**
@@ -76,18 +58,26 @@ public class RenderingException extends I18nRuntimeException {
 		return element;
 	}
 
-	private Location location;
-
 	/**
 	 * 获取出错位置
 	 *
 	 * @return 出错位置
 	 */
 	public Location getLocation() {
-		if (location == null
-				&& element != null)
-			return element.getLocation();
-		return location;
+		if (element == null)
+			return null;
+		return element.getLocation();
+	}
+
+	/**
+	 * 获取出错的模板
+	 *
+	 * @return 出错的模板
+	 */
+	public Template getTemplate() {
+		if (element == null)
+			return null;
+		return element.getTemplate();
 	}
 
 	private Context context;
@@ -106,9 +96,14 @@ public class RenderingException extends I18nRuntimeException {
 		s.println();
 		Template template = getTemplate();
 		if (template != null)
-			s.println("[commontemplate] Error Template Name: " + template.getName());
-		s.println("[commontemplate] Error Template Location: " + location);
-		s.println("[commontemplate] Error Message: " + getMessage());
+			s.println("[commontemplate] Error Template Name: " + template.getName()); // TODO 未国际化
+		try {
+			s.println("[commontemplate] Error Element Source: " + getElement().getSource()); // TODO 未国际化
+		} catch (IOException e) {
+			// ignore
+		}
+		s.println("[commontemplate] Error Element Location: " + getLocation()); // TODO 未国际化
+		s.println("[commontemplate] Error Message: " + getMessage()); // TODO 未国际化
 		super.printStackTrace(s);
 	}
 
@@ -116,9 +111,14 @@ public class RenderingException extends I18nRuntimeException {
 		s.println();
 		Template template = getTemplate();
 		if (template != null)
-			s.println("[commontemplate] Error Template Name: " + template.getName());
-		s.println("[commontemplate] Error Template Location: " + location);
-		s.println("[commontemplate] Error Message: " + getMessage());
+			s.println("[commontemplate] Error Template Name: " + template.getName()); // TODO 未国际化
+		try {
+			s.println("[commontemplate] Error Element Source: " + getElement().getSource()); // TODO 未国际化
+		} catch (IOException e) {
+			// ignore
+		}
+		s.println("[commontemplate] Error Element Location: " + getLocation()); // TODO 未国际化
+		s.println("[commontemplate] Error Message: " + getMessage()); // TODO 未国际化
 		super.printStackTrace(s);
 	}
 

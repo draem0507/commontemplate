@@ -1,5 +1,7 @@
 package org.commontemplate.core;
 
+import java.io.IOException;
+
 /**
  * 模板与模板元素的共同抽象,渲染接口.
  *
@@ -19,8 +21,9 @@ public interface Node extends Visitable {
 	 * 获取模板/元素的标准组成
 	 *
 	 * @return 模板/元素的标准组成
+	 * @throws IOException TODO
 	 */
-	public abstract String getSource();
+	public abstract String getSource() throws IOException;
 
 	/**
 	 * 获取节点类型

@@ -7,7 +7,7 @@ $!
 								<font color="green">(注：指令名只能包含字母，下划线，数字，点号)</font><br/>
 								<font color="green">(注：指令名或参数表达式均可以为空，参数表达式为空时，大括号可省)</font><br/>
 								<br/>
-								简化语法规则：<font color="green">(注：从0.8.5版本开始)</font><br/>
+								简化语法规则：<font color="green">(注：通常用于名词性定义指令，从0.8.5版本开始支持)</font><br/>
 								<b>$指令名:参数名</b><br/>
 								等价于：<br/>
 								$指令名{"参数名"}<br/>
@@ -15,7 +15,7 @@ $!
 								如：<br/>
 								$end:if 等价于 $end{"if"}<br/>
 								$data:xml 等价于 $data{"xml"}<br/>
-								$block:search 等价于 $block{"search"}<br/>
+								$block:form 等价于 $block{"form"}<br/>
 								$macro:button 等价于 $macro{"button"}<br/>
 								$zone:body 等价于 $zone{"body"}<br/>
 								$code:java 等价于 $code{"java"}<br/>
@@ -133,12 +133,9 @@ $!
 								$var{session -&gt; name = "james"}<br/>
 								在全局上下文定义变量(整个引擎内共享)<br/>
 								$var{global -&gt; name = "james"}<br/>
-								<!--
-								语义相同指令: <font color="green">(注：为保持统一，不建议使用)</font><br/>
-								$local{name = "james"} 等价于 $var{name = "james"}<br/>
+								常见上下文简化指令:<br/>
 								$root{name = "james"} 等价于 $var{root -> name = "james"}<br/>
 								$global{name = "james"} 等价于 $var{global -> name = "james"}<br/>
-								-->
 								给最近区域的变量赋值: <font color="green">(注：若直到根区域均未找到相应变量，则在当前区域创建局部变量)</font><br/>
 								$set{name = "james"} <font color="green">(注：不能修改即有数据模型状态，也就是不能使用像：$set{user.name = "james"}的层级设值方式，以遵守模板无副作用契约，避免引入业务逻辑)</font><br/>
 								如果变量为空或未定义，则给其赋初始值: <br/>
@@ -148,9 +145,10 @@ $!
 								$block{"myblock"} 或者 $block:myblock<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
-								显示块变量: (执行块变量所指模板块)<br/>
+								显示块变量: <font color="green">(注：执行块变量所指模板块，模板块可以通过变量传递到其它模板中再show)</font><br/>
 								$show{"myblock"}<br/>
 								<b>(6) 数据指令:</b><br/>
+								<font color="green">(注：内置支持xml,json,properties,yaml等数据格式，并且数据格式是可扩展的)</font> <a href="viewer.html">格式说明...</a><br/>
 								数据块：<br/>
 								$data{"xml"} 或者 $data:xml<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
@@ -158,9 +156,8 @@ $!
 								装载外部数据：<br/>
 								$load{"xxx.xml"} <font color="green">(注：根据文件扩展名识别类型)</font><br/>
 								$load{xml: "xxx.xml"} <br/>
-								<font color="green">(注：内置支持xml,json,properties,yaml等数据格式，并且数据格式是可扩展的)</font> <a href="viewer.html">格式说明...</a><br/>
 								<b>(7) 宏指令:</b><br/>
-								<font color="red">(注：0.8.5版本不兼容改动，块指令调用后缀默认值由"_block"改成".block"(可配置)，$using指令代替原有$import指令，$import指令重新实现)</font><br/>
+								<font color="red">(注：0.8.5版本不兼容改动，$using指令代替原有$import指令，$import指令重新实现，块指令调用后缀默认值由"_block"改成".block"(可配置))</font><br/>
 								宏定义:<br/>
 								$macro{"button"} 或者 $macro:button<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
@@ -256,24 +253,22 @@ $!
 								$escape{"html", "js", "url", "base64"}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
-								代码着色: <font color="green">(注: 内置支持java,xml,html,properties,ini等格式，可扩展)</font> <a href="extension.html">扩展...</a><br/>
+								代码HTML着色: <font color="green">(注: 内置支持java,xml,html,properties,ini等格式，可扩展)</font> <a href="extension.html">扩展...</a><br/>
 								$code{"java"} 或者 $code:java<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
-								关键字加亮:<br/>
+								关键字HTML加亮:<br/>
 								$keyword{"word1", "word2"}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
 								<b>(12) 调试指令:</b><br/>
 								停止页面解析：<br/>
 								$stop<br/>
-								停止页面解析, 并标明原因：<br/>
-								$stop{"reason"}<br/>
-								性能监测：(记录其内部块的运行时间，并将时间存入全局的变量中)<br/>
-								$time{"xxxTime"} 或者 $time:xxxTime<br/>
+								$stop{loginUser == null} <font color="green">(注: 表达式结果为真时停止页面解析)</font><br/>
+								性能监测：(记录其内部块的运行时间，并将时间存入变量中)<br/>
+								$time{"xxx"} 或者 $time:xxx<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
-								above block spend time: ${xxxTime} ms<br/>
 								调试日志：<br/>
 								$log{"debug messages..."}<br/>
 								$log{debug: "debug messages..."}<br/>
@@ -292,11 +287,15 @@ $!
 								<br/>
 								<b>六. HTML语法扩展</b><br/>
 								<b>(1) 注释版语法外套</b><br/>
-								自动去除指令两边的HTML注释符，如：
-								&lt;!--$指令{表达式}--&gt;<br/>
+								编译模板时自动去除指令两边的HTML注释符，如：<br/>
+								&lt;!--$指令{表达式}--&gt; <font color="green">(注: 注释符与指令间不能有空格)</font><br/>
+								<font color="green">注: 此语法外套在web版(即@extends=org/commontemplate/tools<b>/web/</b>commontemplate.properties)配置中默认开启，否则需配置：<br/>
+								textFilters[100]=org.commontemplate.standard.coat.comment.CommentSyntaxCoatFilter()</font><br/>
 								<b>(2) 属性版语法外套</b><br/>
 								自动将名称空间为“ct:”的HTML标签属性转换成指令，如：<br/>
-								&lt;table ct:if="users != null && users.size &gt; 0"&gt;...&lt;table&gt; (只能用于块指令)<br/>
+								&lt;table ct:if="users != null && users.size &gt; 0"&gt;...&lt;table&gt; <font color="green">(注: 只能用于块指令)</font><br/>
+								<font color="green">注: 此语法外套因解析HTML语法，有性能损耗，所以未默认开启，需自行配置：<br/>
+								resourceFilters[100]=org.commontemplate.standard.coat.attribute.jericho.JerichoAttributeCoatFilter()</font><br/>
 								<br/>
 								<b>七. 举例:</b><br/>
 								<b>(1) 标准语法：</b><br/>

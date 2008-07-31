@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.TimeZone;
 
 import org.commontemplate.core.BinaryOperator;
-import org.commontemplate.core.Block;
 import org.commontemplate.core.BlockDirective;
 import org.commontemplate.core.Comment;
 import org.commontemplate.core.Constant;
@@ -117,10 +116,6 @@ public abstract class ContextProxy extends Context {
 
 	public boolean getBooleanStatus(String name) {
 		return context.getBooleanStatus(name);
-	}
-
-	public Block getLocalContextBlock() {
-		return context.getLocalContextBlock();
 	}
 
 	public LocalContext getCurrentLocalContext() {
@@ -278,10 +273,6 @@ public abstract class ContextProxy extends Context {
 
 	public void pushLocalContext() {
 		context.pushLocalContext();
-	}
-
-	public void pushLocalContext(Block block) {
-		context.pushLocalContext(block);
 	}
 
 	public void pushLocalContext(Map variablesContainer) {

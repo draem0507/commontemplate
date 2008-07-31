@@ -1,5 +1,6 @@
 package org.commontemplate.core;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import org.commontemplate.util.Location;
@@ -32,7 +33,11 @@ public abstract class Element implements Node, Serializable {
 	 * @return 模板元素的标准组成
 	 */
 	public String toString() {
-		return getSource();
+		try {
+			return getSource();
+		} catch (IOException e) {
+			return "ERROR:" + e.getMessage();
+		}
 	}
 
 }

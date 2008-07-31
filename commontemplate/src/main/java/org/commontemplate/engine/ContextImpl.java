@@ -11,7 +11,6 @@ import java.util.TimeZone;
 import org.commontemplate.config.Keywords;
 import org.commontemplate.config.TemplateNameFilter;
 import org.commontemplate.core.BinaryOperator;
-import org.commontemplate.core.Block;
 import org.commontemplate.core.BlockDirective;
 import org.commontemplate.core.Comment;
 import org.commontemplate.core.Constant;
@@ -238,10 +237,6 @@ final class ContextImpl extends Context {
 		localContextStack.pushLocalContext(name, variablesContainer);
 	}
 
-	public void pushLocalContext(Block block) {
-		localContextStack.pushLocalContext(block);
-	}
-
 	// 代理 TemplateFactory -----------
 
 	private final TemplateFactory templateFactory;
@@ -349,10 +344,6 @@ final class ContextImpl extends Context {
 
 	public String getLocalContextName() {
 		return getCurrentLocalContext().getLocalContextName();
-	}
-
-	public Block getLocalContextBlock() {
-		return getCurrentLocalContext().getLocalContextBlock();
 	}
 
 	// 代理 OutputController ------

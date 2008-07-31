@@ -30,7 +30,7 @@ public final class ExpressionEngine implements ExpressionParser {
 
 	private final ExpressionTranslator expressionTranslator;
 
-	// private final ExpressionOptimizer expressionOptimizer = new ExpressionOptimizer();
+	// private final ExpressionOptimizer expressionOptimizer = new ExpressionOptimizer(); // TODO 此优化方案待测试
 
 	private final ExpressionReducer expressionReducer = new ExpressionReducer();
 
@@ -53,7 +53,7 @@ public final class ExpressionEngine implements ExpressionParser {
 		try {
 			List tokens = expressionTokenizer.split(expressionText);
 			List expressions = expressionTranslator.translate(tokens);
-			// expressions = expressionOptimizer.optimize(expressions);
+			// expressions = expressionOptimizer.optimize(expressions); // TODO 此优化方案待测试
 			Expression root = expressionReducer.reduce(expressions);
 			return root;
 		} catch (ParsingException e) {
