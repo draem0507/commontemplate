@@ -35,6 +35,10 @@ final class GlobalPropertyStorageImpl implements PropertyStorage {
 		defaultObjectContainer.remove(name);
 	}
 
+	public Map getProperties() {
+		return defaultObjectContainer;
+	}
+
 	// 对象分类管理 ------------
 
 	private final Map objectContainers = new HashMap();

@@ -137,8 +137,8 @@ final class LocalContextImpl extends LocalContext {
 		statusStorage.setBooleanStatus(name, value);
 	}
 
-	public void clearStatus() {
-		statusStorage.clearStatus();
+	public void clearStatuses() {
+		statusStorage.clearStatuses();
 	}
 
 	public Object getStatus(String name) {
@@ -151,6 +151,10 @@ final class LocalContextImpl extends LocalContext {
 
 	public void setStatus(String name, Object value) {
 		statusStorage.setStatus(name, value);
+	}
+
+	public Map getStatuses() {
+		return statusStorage.getStatuses();
 	}
 
 	// 对象管理 --------------
@@ -175,6 +179,10 @@ final class LocalContextImpl extends LocalContext {
 
 	public void putProperty(String type, String name, Object value) {
 		propertyStorage.putProperty(type, name, value);
+	}
+
+	public Map getProperties() {
+		return propertyStorage.getProperties();
 	}
 
 	public void removeProperty(String type, String name) {

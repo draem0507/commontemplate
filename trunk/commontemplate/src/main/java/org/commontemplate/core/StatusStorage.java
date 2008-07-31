@@ -1,5 +1,7 @@
 package org.commontemplate.core;
 
+import java.util.Map;
+
 /**
  * 状态管理器.
  * <p/>
@@ -58,8 +60,15 @@ public interface StatusStorage {
 	public void removeStatus(String name);
 
 	/**
+	 * 获取所有状态
+	 *
+	 * @return 所有状态
+	 */
+	public Map getStatuses();
+
+	/**
 	 * 清除所有状态
 	 */
-	public void clearStatus();
+	public void clearStatuses();
 
 }

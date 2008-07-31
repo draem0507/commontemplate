@@ -47,8 +47,12 @@ final class LocalStatusStorageImpl implements StatusStorage {
 		}
 	}
 
-	public void clearStatus() {
+	public void clearStatuses() {
 		statusContainer.clear();
+	}
+
+	public Map getStatuses() {
+		return statusContainer;
 	}
 
 	public boolean getBooleanStatus(String name) {

@@ -117,8 +117,12 @@ final class GlobalContextImpl extends GlobalContext {
 		statusStorage.setBooleanStatus(name, value);
 	}
 
-	public void clearStatus() {
-		statusStorage.clearStatus();
+	public void clearStatuses() {
+		statusStorage.clearStatuses();
+	}
+
+	public Map getStatuses() {
+		return statusStorage.getStatuses();
 	}
 
 	public Object getStatus(String name) {
@@ -167,6 +171,10 @@ final class GlobalContextImpl extends GlobalContext {
 
 	public Map getProperties(String type) {
 		return propertyStorage.getProperties(type);
+	}
+
+	public Map getProperties() {
+		return propertyStorage.getProperties();
 	}
 
 }

@@ -42,6 +42,15 @@ public interface PropertyStorage {
 	 */
 	public void removeProperty(String name);
 
+	/**
+	 * 获取所有属性值
+	 *
+	 * @param type
+	 *            分类
+	 * @return 对象值
+	 */
+	public Map getProperties();
+
 	// 对象分类管理 ----
 
 	/**

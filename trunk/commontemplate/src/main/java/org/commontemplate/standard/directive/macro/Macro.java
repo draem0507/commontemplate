@@ -24,6 +24,14 @@ public final class Macro {
 
 	private final List elements;
 
+	public Macro(Macro macro, String namespace) {
+		this(macro.elements, nullToEmpty(namespace) + macro.name, nullToEmpty(namespace) + nullToEmpty(macro.namespace));
+	}
+
+	private static String nullToEmpty(String str) {
+		return str == null ? "" : str;
+	}
+
 	public Macro(List elements, String name) {
 		this(elements, name, null);
 	}

@@ -44,6 +44,10 @@ final class LocalPropertyStorageImpl implements PropertyStorage {
 		defaultObjectContainer.remove(name);
 	}
 
+	public Map getProperties() {
+		return defaultObjectContainer;
+	}
+
 	private final Map objectContainers = new HashMap();
 
 	private Map getObjectContainer(String type) {

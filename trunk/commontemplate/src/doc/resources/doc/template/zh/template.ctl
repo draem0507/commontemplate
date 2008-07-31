@@ -174,13 +174,10 @@ $!
 								$button.block{param1: "value1", param2: "value2"} <font color="green">(注：以".block"结尾表示块指令调用)</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
-								导入模板文件中所有的宏: <br/>
+								导入模板文件中所有的宏: <font color="green">(注：在新的上下文执行导入的模板, 并忽略输出, 从执行后的上下文取出所定义的宏, 所以包括$import和$embed的宏)</font><br/>
 								$import{"mymacro.ctl"}<br/>
-								导入模板文件中指定的宏:<br/>
-								$import{"mymacro.ctl#button"} <font color="green">(注：#后为macro的名称, 参见$macro指令)</font><br/>
-								导入宏到指定名称空间: <br/>
 								$import{my : "mymacro.ctl"} <font color="green">(注：调用时需带上"名称空间.", 如：$my.button{xxx})</font><br/>
-								$import{my : "mymacro.ctl#button"} <font color="green">(注：同一名称空间下的宏之间调用, 不需要带名称空间)</font><br/>
+								<font color="green">(注：如果以a为名称空间导入a.ctl，而a.ctl中又以b为名称空间导入b.ctl，且b.ctl中有一个button宏，则可以使用$a.b.button进行调用)</font><br/>
 								使用模板文件作为宏:<br/>
 								$using{button : "button.ctl"}<br/>
 								$using{"button.ctl"} <font color="green">(注：将使用文件名作为宏的名称)</font><br/>

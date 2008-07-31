@@ -1,0 +1,6 @@
+<project name="express" package="com.xxx">
+	<entity name="User">
+		<property name="username" type="java.lang.String"/>
+		<property name="password" type="java.lang.String"/>
+	</entity>
+</project>
