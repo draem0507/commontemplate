@@ -530,4 +530,8 @@ final class ContextImpl extends Context {
 		getCurrentLocalContext().removeProperty(name);
 	}
 
+	public Map getProperties(String type) {
+		return getCurrentLocalContext().getProperties(type);
+	}
+
 }

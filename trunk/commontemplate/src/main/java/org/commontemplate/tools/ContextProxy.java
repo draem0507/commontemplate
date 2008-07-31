@@ -41,6 +41,10 @@ public abstract class ContextProxy extends Context {
 
 	protected final Context context;
 
+	public Map getProperties(String type) {
+		return context.getProperties(type);
+	}
+
 	public ContextProxy(Context context) {
 		this.context = context;
 	}
