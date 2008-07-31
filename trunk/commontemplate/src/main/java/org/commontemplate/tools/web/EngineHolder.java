@@ -203,7 +203,7 @@ public final class EngineHolder {
 
 	// 检查是否已初始化完成
 	private static final void checkInitialized() throws NullPointerException {
-		Assert.assertNotNull(engine, "EngineHolder.not.initialized");
+		Assert.assertNotNull(engine, "EngineHolder.not.initialized", new Object[]{EngineInitializeListener.class.getName()});
 	}
 
 	/**
