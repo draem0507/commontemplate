@@ -174,7 +174,7 @@ $!
 								$button.block{param1: "value1", param2: "value2"} <font color="green">(注：以".block"结尾表示块指令调用)</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
-								导入模板文件中所有的宏: <font color="green">(注：在新的上下文执行导入的模板, 并忽略输出, 从执行后的上下文取出所定义的宏, 所以包括$import和$embed的宏)</font><br/>
+								导入模板文件中所有的宏: <font color="green">(注：在新的上下文执行导入的模板, 并忽略输出, 从执行后的上下文取出所定义的宏, 包括层级$import和$embed的宏)</font><br/>
 								$import{"mymacro.ctl"}<br/>
 								$import{my : "mymacro.ctl"} <font color="green">(注：调用时需带上"名称空间.", 如：$my.button{xxx})</font><br/>
 								<font color="green">(注：如果以a为名称空间导入a.ctl，而a.ctl中又以b为名称空间导入b.ctl，且b.ctl中有一个button宏，则可以使用$a.b.button进行调用)</font><br/>
