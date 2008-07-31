@@ -496,8 +496,12 @@ final class ContextImpl extends Context {
 		getCurrentLocalContext().removeStatus(index);
 	}
 
-	public void clearStatus() {
-		getCurrentLocalContext().clearStatus();
+	public Map getStatuses() {
+		return getCurrentLocalContext().getStatuses();
+	}
+
+	public void clearStatuses() {
+		getCurrentLocalContext().clearStatuses();
 	}
 
 	// 代理 ObjectStorage -------------
@@ -532,6 +536,10 @@ final class ContextImpl extends Context {
 
 	public Map getProperties(String type) {
 		return getCurrentLocalContext().getProperties(type);
+	}
+
+	public Map getProperties() {
+		return getCurrentLocalContext().getProperties();
 	}
 
 }

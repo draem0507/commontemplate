@@ -15,7 +15,7 @@ public abstract class BaseContext implements Storage {
 	 */
 	public void clear() {
 		clearVariables();
-		clearStatus();
+		clearStatuses();
 		clearProperties();
 	}
 

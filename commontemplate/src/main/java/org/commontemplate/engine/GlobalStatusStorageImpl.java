@@ -32,7 +32,11 @@ final class GlobalStatusStorageImpl implements StatusStorage {
 		statusContainer.remove(index);
 	}
 
-	public synchronized void clearStatus() {
+	public Map getStatuses() {
+		return statusContainer;
+	}
+
+	public synchronized void clearStatuses() {
 		statusContainer.clear();
 	}
 

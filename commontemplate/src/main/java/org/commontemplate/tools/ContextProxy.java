@@ -41,6 +41,14 @@ public abstract class ContextProxy extends Context {
 
 	protected final Context context;
 
+	public Map getProperties() {
+		return context.getProperties();
+	}
+
+	public Map getStatuses() {
+		return context.getStatuses();
+	}
+
 	public Map getProperties(String type) {
 		return context.getProperties(type);
 	}
@@ -82,8 +90,8 @@ public abstract class ContextProxy extends Context {
 		context.clearProperties();
 	}
 
-	public void clearStatus() {
-		context.clearStatus();
+	public void clearStatuses() {
+		context.clearStatuses();
 	}
 
 	public void clearTemplates() {
