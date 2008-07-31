@@ -135,34 +135,38 @@ final class GlobalContextImpl extends GlobalContext {
 
 	// 对象管理 ------------
 
-	private final PropertyStorage objectStorage = new GlobalPropertyStorageImpl();
+	private final PropertyStorage propertyStorage = new GlobalPropertyStorageImpl();
 
 	public void clearProperties() {
-		objectStorage.clearProperties();
+		propertyStorage.clearProperties();
 	}
 
 	public Object getProperty(String type, String name) {
-		return objectStorage.getProperty(type, name);
+		return propertyStorage.getProperty(type, name);
 	}
 
 	public Object getProperty(String name) {
-		return objectStorage.getProperty(name);
+		return propertyStorage.getProperty(name);
 	}
 
 	public void putProperty(String name, Object value) {
-		objectStorage.putProperty(name, value);
+		propertyStorage.putProperty(name, value);
 	}
 
 	public void putProperty(String type, String name, Object value) {
-		objectStorage.putProperty(type, name, value);
+		propertyStorage.putProperty(type, name, value);
 	}
 
 	public void removeProperty(String type, String name) {
-		objectStorage.removeProperty(type, name);
+		propertyStorage.removeProperty(type, name);
 	}
 
 	public void removeProperty(String name) {
-		objectStorage.removeProperty(name);
+		propertyStorage.removeProperty(name);
+	}
+
+	public Map getProperties(String type) {
+		return propertyStorage.getProperties(type);
 	}
 
 }

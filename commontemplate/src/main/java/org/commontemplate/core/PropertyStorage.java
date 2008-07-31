@@ -1,5 +1,7 @@
 package org.commontemplate.core;
 
+import java.util.Map;
+
 /**
  * 指令间内部属性存储器.
  * <p/>
@@ -74,6 +76,15 @@ public interface PropertyStorage {
 	 *            对象名称
 	 */
 	public void removeProperty(String type, String name);
+
+	/**
+	 * 获取所有属性值
+	 *
+	 * @param type
+	 *            分类
+	 * @return 对象值
+	 */
+	public Map getProperties(String type);
 
 	/**
 	 * 清除所有对象及分类对象

@@ -8,21 +8,21 @@ import org.commontemplate.core.PropertyStorage;
 
 /**
  * 全局对象存储器实现
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
 final class GlobalPropertyStorageImpl implements PropertyStorage {
-	
+
 	private final Map defaultObjectContainer = new HashMap();
-	
+
 	GlobalPropertyStorageImpl() {
-		
+
 	}
 
 	public synchronized Object getProperty(String name) {
 		Object o = defaultObjectContainer.get(name);
-		if (o != null) 
+		if (o != null)
 			return o;
 		return null;
 	}
@@ -34,9 +34,9 @@ final class GlobalPropertyStorageImpl implements PropertyStorage {
 	public synchronized void removeProperty(String name) {
 		defaultObjectContainer.remove(name);
 	}
-	
+
 	// 对象分类管理 ------------
-	
+
 	private final Map objectContainers = new HashMap();
 
 	private synchronized Map getObjectContainer(String type) {
@@ -66,4 +66,9 @@ final class GlobalPropertyStorageImpl implements PropertyStorage {
 			((Map)iterator.next()).clear();
 		objectContainers.clear();
 	}
+
+	public synchronized Map getProperties(String type) {
+		return getObjectContainer(type);
+	}
+
 }

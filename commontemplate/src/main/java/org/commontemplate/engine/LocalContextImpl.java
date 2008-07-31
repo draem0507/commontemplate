@@ -37,7 +37,7 @@ final class LocalContextImpl extends LocalContext {
 		this.localContextName = localContextName;
 		variableStorage = new LocalVariableStorageImpl(superLocalContext, variablesContainer, context, keywords);
 		statusStorage = new LocalStatusStorageImpl(context);
-		objectStorage = new LocalPropertyStorageImpl(superLocalContext, context);
+		propertyStorage = new LocalPropertyStorageImpl(superLocalContext, context);
 		outputController = new OutputControllerImpl(superLocalContext, context, out);
 	}
 
@@ -155,34 +155,38 @@ final class LocalContextImpl extends LocalContext {
 
 	// 对象管理 --------------
 
-	private final PropertyStorage objectStorage;
+	private final PropertyStorage propertyStorage;
 
 	public void clearProperties() {
-		objectStorage.clearProperties();
+		propertyStorage.clearProperties();
 	}
 
 	public Object getProperty(String type, String name) {
-		return objectStorage.getProperty(type, name);
+		return propertyStorage.getProperty(type, name);
 	}
 
 	public Object getProperty(String name) {
-		return objectStorage.getProperty(name);
+		return propertyStorage.getProperty(name);
 	}
 
 	public void putProperty(String name, Object value) {
-		objectStorage.putProperty(name, value);
+		propertyStorage.putProperty(name, value);
 	}
 
 	public void putProperty(String type, String name, Object value) {
-		objectStorage.putProperty(type, name, value);
+		propertyStorage.putProperty(type, name, value);
 	}
 
 	public void removeProperty(String type, String name) {
-		objectStorage.removeProperty(type, name);
+		propertyStorage.removeProperty(type, name);
 	}
 
 	public void removeProperty(String name) {
-		objectStorage.removeProperty(name);
+		propertyStorage.removeProperty(name);
+	}
+
+	public Map getProperties(String type) {
+		return propertyStorage.getProperties(type);
 	}
 
 	public Map getExistedVariables() {

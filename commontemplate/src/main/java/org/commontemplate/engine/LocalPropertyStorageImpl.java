@@ -10,7 +10,7 @@ import org.commontemplate.core.PropertyStorage;
 
 /**
  * 局部对象存储器实现
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
@@ -19,7 +19,7 @@ final class LocalPropertyStorageImpl implements PropertyStorage {
 	private final LocalContext superLocalContext;
 
 	private final Context context;
-	
+
 	LocalPropertyStorageImpl(LocalContext superLocalContext, Context context) {
 		this.superLocalContext = superLocalContext;
 		this.context = context;
@@ -29,9 +29,9 @@ final class LocalPropertyStorageImpl implements PropertyStorage {
 
 	public Object getProperty(String name) {
 		Object o = defaultObjectContainer.get(name);
-		if (o != null) 
+		if (o != null)
 			return o;
-		if (superLocalContext != null) 
+		if (superLocalContext != null)
 			return superLocalContext.getProperty(name);
 		return context.getGlobalContext().getProperty(name);
 	}
@@ -45,7 +45,7 @@ final class LocalPropertyStorageImpl implements PropertyStorage {
 	}
 
 	private final Map objectContainers = new HashMap();
-	
+
 	private Map getObjectContainer(String type) {
 		Map objectContainer = (Map)objectContainers.get(type);
 		if (objectContainer == null) {
@@ -57,9 +57,9 @@ final class LocalPropertyStorageImpl implements PropertyStorage {
 
 	public Object getProperty(String type, String name) {
 		Object o = getObjectContainer(type).get(name);
-		if (o != null) 
+		if (o != null)
 			return o;
-		if (superLocalContext != null) 
+		if (superLocalContext != null)
 			return superLocalContext.getProperty(type, name);
 		return context.getGlobalContext().getProperty(type, name);
 	}
@@ -78,6 +78,10 @@ final class LocalPropertyStorageImpl implements PropertyStorage {
 			((Map)iterator.next()).clear();
 		}
 		objectContainers.clear();
+	}
+
+	public synchronized Map getProperties(String type) {
+		return getObjectContainer(type);
 	}
 
 }
