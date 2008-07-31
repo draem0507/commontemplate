@@ -5,7 +5,6 @@ import java.io.Writer;
 import java.util.Map;
 
 import org.commontemplate.config.Keywords;
-import org.commontemplate.core.Block;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.LocalContext;
 import org.commontemplate.core.OutputController;
@@ -29,16 +28,13 @@ final class LocalContextImpl extends LocalContext {
 
 	private final String localContextName;
 
-	private final Block block;
-
 	LocalContextImpl(LocalContext superLocalContext,
-			String localContextName, Block block, Map variablesContainer, Context context, Writer out, Keywords keywords) {
+			String localContextName, Map variablesContainer, Context context, Writer out, Keywords keywords) {
 		Assert.assertNotNull(context);
 		Assert.assertNotNull(keywords);
 
 		this.superLocalContext = superLocalContext;
 		this.localContextName = localContextName;
-		this.block = block;
 		variableStorage = new LocalVariableStorageImpl(superLocalContext, variablesContainer, context, keywords);
 		statusStorage = new LocalStatusStorageImpl(context);
 		objectStorage = new LocalPropertyStorageImpl(superLocalContext, context);
@@ -253,10 +249,6 @@ final class LocalContextImpl extends LocalContext {
 	public void clear() {
 		super.clear();
 		clearOutputFormatters();
-	}
-
-	public Block getLocalContextBlock() {
-		return block;
 	}
 
 }

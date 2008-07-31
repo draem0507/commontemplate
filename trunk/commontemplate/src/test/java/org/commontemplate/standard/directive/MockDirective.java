@@ -57,12 +57,8 @@ public class MockDirective extends Element {
 	 *
 	 * @return 模板元素的标准组成
 	 */
-	public String getSource() {
+	public String getSource() throws IOException {
 		return null;
-	}
-
-	public String getSignature() {
-		return getSource();
 	}
 
 	/**
@@ -71,7 +67,11 @@ public class MockDirective extends Element {
 	 * @return 模板元素的标准组成
 	 */
 	public String toString() {
-		return getSource();
+		try {
+			return getSource();
+		} catch (IOException e) {
+			return "ERROR:" + e.getMessage();
+		}
 	}
 
 	/**

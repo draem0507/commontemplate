@@ -1,5 +1,7 @@
 package org.commontemplate.engine.template;
 
+import java.io.IOException;
+
 import org.commontemplate.core.Context;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Template;
@@ -36,7 +38,7 @@ final class TextProxy extends Text {
 		return text.getTemplate();
 	}
 
-	public String getSource() {
+	public String getSource() throws IOException {
 		return text.getSource();
 	}
 

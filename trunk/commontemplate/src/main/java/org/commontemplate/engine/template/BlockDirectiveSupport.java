@@ -1,5 +1,6 @@
 package org.commontemplate.engine.template;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
@@ -39,7 +40,7 @@ abstract class BlockDirectiveSupport extends BlockDirective implements java.io.S
 		}
 	}
 
-	protected String getCanonicalFormAll() {
+	protected String getCanonicalFormAll() throws IOException {
 		StringBuffer buf = new StringBuffer();
 		for (int i = 0, n = elements.size(); i < n; i ++) {
 			Element directive = (Element)elements.get(i);

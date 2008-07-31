@@ -1,11 +1,13 @@
 package org.commontemplate.engine.template;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.commontemplate.config.DirectiveHandler;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.Directive;
 import org.commontemplate.core.Expression;
+import org.commontemplate.core.FilteredVisitor;
 import org.commontemplate.core.IgnoreException;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Template;
@@ -66,6 +68,9 @@ final class DirectiveImpl extends Directive {
 	}
 
 	public void accept(Visitor visitor) {
+		if (visitor instanceof FilteredVisitor
+				&& ! ((FilteredVisitor)visitor).isVisit(this))
+			return;
 		visitor.visit(this);
 		Expression expression = getExpression();
 		if (expression != null)
@@ -84,7 +89,7 @@ final class DirectiveImpl extends Directive {
 		return expression;
 	}
 
-	public String getSource() {
+	public String getSource() throws IOException {
 		return prototype;
 	}
 

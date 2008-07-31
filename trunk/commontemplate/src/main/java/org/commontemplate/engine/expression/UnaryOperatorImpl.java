@@ -6,6 +6,7 @@ import java.util.List;
 import org.commontemplate.config.UnaryOperatorHandler;
 import org.commontemplate.core.EvaluationException;
 import org.commontemplate.core.Expression;
+import org.commontemplate.core.FilteredVisitor;
 import org.commontemplate.core.UnaryOperator;
 import org.commontemplate.core.VariableResolver;
 import org.commontemplate.core.Visitor;
@@ -99,6 +100,9 @@ final class UnaryOperatorImpl extends UnaryOperator {
 	}
 
 	public void accept(Visitor visitor) {
+		if (visitor instanceof FilteredVisitor
+				&& ! ((FilteredVisitor)visitor).isVisit(this))
+			return;
 		visitor.visit(this);
 		getOperand().accept(visitor);
 	}

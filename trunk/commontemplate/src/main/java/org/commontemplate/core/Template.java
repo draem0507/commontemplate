@@ -1,8 +1,7 @@
 package org.commontemplate.core;
 
 import java.io.Serializable;
-
-import org.commontemplate.util.Location;
+import java.util.List;
 
 /**
  * 模板接口.
@@ -14,7 +13,7 @@ import org.commontemplate.util.Location;
  * @author liangfei0201@163.com
  *
  */
-public abstract class Template extends Resource implements Block, Serializable {
+public abstract class Template extends Resource implements Node, Serializable {
 
 	public static final String TYPE = "Template";
 
@@ -23,37 +22,10 @@ public abstract class Template extends Resource implements Block, Serializable {
 	}
 
 	/**
-	 * 获取指定位置的模板源代码
+	 * 获取模板/块组成元素
 	 *
-	 * @param location 模板位置
-	 * @return 模板源代码
+	 * @return 模板/块组成元素, 类型: List&lt;Element&gt;
 	 */
-	public abstract String getSource(Location location);
-
-	/**
-	 * 获取指定位置的模板源代码
-	 *
-	 * @param beginOffset 模板起始位置
-	 * @param endOffset 模板结束位置
-	 * @return 模板源代码
-	 */
-	public abstract String getSource(int beginOffset, int endOffset);
-
-	/**
-	 * 获取位置所在行的源代码
-	 *
-	 * @param location 位置
-	 * @return 模板源代码
-	 */
-	public abstract String getLineSource(Location location);
-
-	/**
-	 * 获取位置所在行的源代码
-	 *
-	 * @param beginLine 模板起始位置
-	 * @param endLine 模板结束位置
-	 * @return 模板源代码
-	 */
-	public abstract String getLineSource(int beginLine, int endLine);
+	public abstract List getElements();
 
 }

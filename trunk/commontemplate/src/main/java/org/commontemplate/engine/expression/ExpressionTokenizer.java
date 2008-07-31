@@ -1,7 +1,6 @@
 package org.commontemplate.engine.expression;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.commontemplate.util.scanner.ScanningException;
@@ -66,8 +65,9 @@ final class ExpressionTokenizer {
 	 * @return 表达式片断, 类型: List&lt;Token&gt;
 	 */
 	List split(String expressionText) throws IOException, ScanningException {
-		if (expressionText == null || expressionText.length() == 0)
-			return new ArrayList(0);
+		if (expressionText == null
+				|| expressionText.length() == 0)
+			return null;
 		return tokenizer.split(expressionText);
 	}
 

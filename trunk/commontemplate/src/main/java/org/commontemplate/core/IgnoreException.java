@@ -14,8 +14,4 @@ public class IgnoreException extends RuntimeException {
 		super();
 	}
 
-	public IgnoreException(String msg) {
-		super(msg);
-	}
-
 }

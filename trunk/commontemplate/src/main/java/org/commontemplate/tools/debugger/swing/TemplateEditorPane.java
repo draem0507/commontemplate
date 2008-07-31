@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -154,7 +155,11 @@ public class TemplateEditorPane extends JTextArea implements Border, BreakpointL
 		if (template == null)
 			return;
 		this.template = template;
-		setText(template.getSource());
+		try {
+			setText(template.getSource());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private Element element;

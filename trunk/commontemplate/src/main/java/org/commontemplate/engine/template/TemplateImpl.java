@@ -7,13 +7,13 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.commontemplate.core.Context;
+import org.commontemplate.core.FilteredVisitor;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Resource;
 import org.commontemplate.core.Template;
 import org.commontemplate.core.Visitor;
 import org.commontemplate.util.Assert;
 import org.commontemplate.util.IOUtils;
-import org.commontemplate.util.Location;
 
 /**
  * 模板实现
@@ -67,6 +67,9 @@ final class TemplateImpl extends Template implements Serializable {
 	}
 
 	public final void accept(Visitor visitor) {
+		if (visitor instanceof FilteredVisitor
+				&& ! ((FilteredVisitor)visitor).isVisit(this))
+			return;
 		visitor.visit(this);
 		rootDirective.accept(visitor);
 	}
@@ -87,14 +90,8 @@ final class TemplateImpl extends Template implements Serializable {
 		return new CharArrayReader(data);
 	}
 
-	public final String getSource() {
+	public final String getSource() throws IOException {
 		return new String(data);
-	}
-
-	public String getSource(Location location) {
-		if (location == null)
-			return "";
-		return getSource(location.getBegin().getOffset(), location.getEnd().getOffset());
 	}
 
 	public String getSource(int begin, int end) {
@@ -108,12 +105,6 @@ final class TemplateImpl extends Template implements Serializable {
 		char[] block = new char[len];
 		System.arraycopy(data, begin, block, 0, len);
 		return new String(block);
-	}
-
-	public String getLineSource(Location location) {
-		if (location == null)
-			return "";
-		return getLineSource(location.getBegin().getLine(), location.getEnd().getLine());
 	}
 
 	public String getLineSource(int beginLine, int endLine) {

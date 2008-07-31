@@ -35,9 +35,9 @@ final class ExpressionTranslator {
 	 * @throws ParsingException 解析出错时抛出
 	 */
 	List translate(final List tokens) throws ParsingException {
-		if (tokens == null || tokens.size() == 0)
+		if (tokens == null
+				|| tokens.size() == 0)
 			return null;
-
 		List expressions = new ArrayList(tokens.size());
 		for (int i = 0, n = tokens.size(); i < n; i ++) {
 			Token token = (Token)tokens.get(i);

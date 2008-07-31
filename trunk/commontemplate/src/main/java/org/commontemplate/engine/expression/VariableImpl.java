@@ -1,12 +1,13 @@
 package org.commontemplate.engine.expression;
 
+import org.commontemplate.core.FilteredVisitor;
 import org.commontemplate.core.Variable;
 import org.commontemplate.core.Visitor;
 import org.commontemplate.util.Location;
 
 /**
  * 变量实现类
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
@@ -15,7 +16,7 @@ final class VariableImpl extends Variable {
 	private static final long serialVersionUID = 1L;
 
 	private final String name;
-	
+
 	private final Location location;
 
 	VariableImpl(String name, Location location) {
@@ -34,9 +35,12 @@ final class VariableImpl extends Variable {
 	public Location getLocation() {
 		return location;
 	}
-	
+
 	public void accept(Visitor visitor) {
+		if (visitor instanceof FilteredVisitor
+				&& ! ((FilteredVisitor)visitor).isVisit(this))
+			return;
 		visitor.visit(this);
 	}
-	
+
 }

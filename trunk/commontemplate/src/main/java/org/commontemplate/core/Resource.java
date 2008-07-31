@@ -1,9 +1,11 @@
 package org.commontemplate.core;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 
 import org.commontemplate.util.IOUtils;
+import org.commontemplate.util.Location;
 
 /**
  * 模板源
@@ -17,7 +19,7 @@ import org.commontemplate.util.IOUtils;
 public abstract class Resource {
 
 	/**
-	 * 获取模板读取器
+	 * 获取模板读取器, 此方法可重复调用.
 	 *
 	 * @return 模板读取器
 	 * @throws IOException
@@ -64,12 +66,106 @@ public abstract class Resource {
 	 * 获取原始内容
 	 *
 	 * @return 原始内容
+	 * @throws IOException TODO
+	 * @throws IOException
 	 */
-	public String getSource() {
+	public String getSource() throws IOException {
+		return IOUtils.readToString(getReader());
+	}
+
+	/**
+	 * 获取指定位置的模板源代码
+	 *
+	 * @param location 模板位置
+	 * @return 模板源代码
+	 * @throws IOException
+	 */
+	public String getSource(Location location) throws IOException {
+		if (location == null)
+			return "";
+		return getSource(location.getBegin().getOffset(), location.getEnd().getOffset());
+	}
+
+	/**
+	 * 获取指定位置的模板源代码
+	 *
+	 * @param beginOffset 模板起始位置
+	 * @param endOffset 模板结束位置
+	 * @return 模板源代码
+	 * @throws IOException
+	 */
+	public String getSource(int beginOffset, int endOffset) throws IOException {
+		if (beginOffset < 0)
+			beginOffset = 0;
+		if (endOffset <= beginOffset)
+			return "";
+		int offset = endOffset - beginOffset;
+		Reader reader = null;
 		try {
-			return IOUtils.readToString(getReader());
-		} catch (IOException e) {
-			throw new RuntimeException(e);
+			reader = getReader();
+			reader.skip(beginOffset);
+			StringBuffer buf = new StringBuffer();
+			char[] cbuf = new char[4096];
+			int len;
+			while ((len = reader.read(cbuf)) != -1) {
+				if (len >= offset - buf.length()) {
+					buf.append(cbuf, 0, offset - buf.length());
+					break;
+				} else {
+					buf.append(cbuf, 0, len);
+				}
+			}
+			return buf.toString();
+		} finally {
+			if (reader != null)
+				reader.close();
+		}
+	}
+
+	/**
+	 * 获取位置所在行的源代码
+	 *
+	 * @param location 位置
+	 * @return 模板源代码
+	 * @throws IOException
+	 */
+	public String getLineSource(Location location) throws IOException {
+		if (location == null)
+			return "";
+		return getSource(location.getBegin().getLine(), location.getEnd().getLine());
+	}
+
+	/**
+	 * 获取位置所在行的源代码
+	 *
+	 * @param beginLine 模板起始位置
+	 * @param endLine 模板结束位置
+	 * @return 模板源代码
+	 * @throws IOException
+	 */
+	public String getLineSource(int beginLine, int endLine) throws IOException {
+		if (beginLine < 0)
+			beginLine = 0;
+		if (endLine <= beginLine)
+			return "";
+		BufferedReader reader = null;
+		try {
+			reader = new BufferedReader(getReader());
+			StringBuffer buf = new StringBuffer();
+			String str;
+			int line = 0;
+			do {
+				str = reader.readLine();
+				line ++;
+				if (line > endLine)
+					break;
+				if (line >= beginLine)
+					buf.append(str);
+			} while (str != null);
+			return buf.toString();
+		} finally {
+			if (reader != null)
+				reader.close();
 		}
 	}
 
@@ -79,7 +175,11 @@ public abstract class Resource {
 	 * @return 模板源内容
 	 */
 	public String toString() {
-		return getSource();
+		try {
+			return getSource();
+		} catch (IOException e) {
+			return "ERROR:" + e.getMessage();
+		}
 	}
 
 }

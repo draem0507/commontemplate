@@ -33,7 +33,8 @@ final class ExpressionReducer {
 	 * @return 表达式树的根表达式
 	 */
 	Expression reduce(List expressions) {
-		if (expressions == null || expressions.size() == 0)
+		if (expressions == null
+				|| expressions.size() == 0)
 			return null;
 		ReduceStack expressionStack = new ReduceStack();
 		for (int i = 0, n = expressions.size(); i < n; i++) {
@@ -130,13 +131,19 @@ final class ExpressionReducer {
 			// 从参数栈弹出所需参数组装操作表达式
 			if (operator instanceof BinaryOperator) {
 				BinaryOperator binaryOperator = (BinaryOperator) operator;
+				if (parameterStack.isEmpty())
+					throw I18nExceptionFactory.createIllegalStateException("ExpressionReducer.operator.miss.parameter");
 				Expression rightParameter = (Expression) parameterStack.pop(); // 调整参数顺序
+				if (parameterStack.isEmpty())
+					throw I18nExceptionFactory.createIllegalStateException("ExpressionReducer.operator.miss.parameter");
 				Expression leftParameter = (Expression) parameterStack.pop();
 				parameterStack.push(populateBinaryOperator(
 						(BinaryOperatorImpl) binaryOperator, leftParameter,
 						rightParameter)); // 将组装好的表达式作为参数压入
 			} else if (operator instanceof UnaryOperator) {
 				UnaryOperator unaryOperator = (UnaryOperator) operator;
+				if (parameterStack.isEmpty())
+					throw I18nExceptionFactory.createIllegalStateException("ExpressionReducer.operator.miss.parameter");
 				Expression parameter = (Expression) parameterStack.pop();
 				parameterStack.push(populateUnaryOperator(
 						(UnaryOperatorImpl) unaryOperator, parameter)); // 将组装好的表达式作为参数压入
