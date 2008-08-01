@@ -79,7 +79,7 @@ $!
 								/ 除号, 字符串分割, 并忽略空段, 如：${"aaa.bbb.ccc" / "."} 输出数组：[aaa, bbb, ccc]<br/>
 								% 截余/缩略, 如: ${"abcdefghijklmn" % 10} 输出：abcdefg...<br/>
 								- 一元减号，将String倒序, 如: ${- str}<br/>
-								@ 地址符，输出不转义地址串(只保持转义引号和反斜线), 如: ${@"C:\native\user\file.txt"}<br/>
+								@ 地址符，输出不转义地址串(不转义字母，只转义引号和反斜线), 如: ${@"C:\native\user\file.txt"}<br/>
 								~ 字符串正则表达式匹配, 如: $if{code ~ "^[0-9]+$"}<br/>
 								!~ 字符串正则表达式不匹配, 如: $if{code !~ "^[0-9]+$"}<br/>
 								&gt;  字符串大于比较, 如: $if{user1.name &gt; user2.name}<br/>
