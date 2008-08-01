@@ -14,27 +14,19 @@ public class StringRightPadFunctionHandler extends FunctionHandlerSupport {
 	public Object doFunction(Object bean, List args) throws Exception {
 		String str = (String)bean;
 		if (args == null || args.size() == 0) {
-			return "";
+			throw new UnhandleException("StringRightPadFunctionHandler.parameter.required");
 		} if (args.size() == 1) {
-			Assert.assertTrue(args.get(0) instanceof Number, "StringAbbreviateFunctionHandler.parameter.invalid");
+			Assert.assertTrue(args.get(0) instanceof Number, "StringRightPadFunctionHandler.parameter.invalid");
 			int len = ((Number)args.get(0)).intValue();
-			if (len <= 3) {
-				len = 4;
-				// TODO 输出warning log, 提示用户， len 应该 >=4
-			}
-			return StringUtils.abbreviate(str, len);
+			return StringUtils.rightPad(str, len);
 		} else if (args.size() == 2) {
-			Assert.assertTrue(args.get(0) instanceof Number, "StringAbbreviateFunctionHandler.parameter.invalid");
-			Assert.assertTrue(args.get(1) instanceof Number, "StringAbbreviateFunctionHandler.parameter.invalid");
-			int offset = ((Number)args.get(0)).intValue();
-			int len = ((Number)args.get(1)).intValue();
-			if (len <= 3) {
-				len = 4;
-				// TODO 输出warning log, 提示用户， len 应该 >=4
-			}
-			return StringUtils.abbreviate(str, offset, len);
+			Assert.assertTrue(args.get(0) instanceof Number, "StringRightPadFunctionHandler.parameter.invalid");
+			Assert.assertTrue(args.get(1) instanceof String, "StringRightPadFunctionHandler.parameter.invalid");
+			int len = ((Number)args.get(0)).intValue();
+			String rep = (String)args.get(0);
+			return StringUtils.rightPad(str, len, rep);
 		} else {
-			throw new UnhandleException("StringAbbreviateFunctionHandler.parameter.countInvalid");
+			throw new UnhandleException("StringRightPadFunctionHandler.parameter.countInvalid");
 		}
 	}
 

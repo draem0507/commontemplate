@@ -249,6 +249,14 @@ JspMap.invaild.scope=无效的Scope!
 
 StringAbbreviateFunctionHandler.parameter.invalid=String.abbreviate()参数必需为数字!
 StringAbbreviateFunctionHandler.parameter.countInvalid=String.abbreviate()不支持两个以上参数!
+StringLeftPadFunctionHandler.parameter.required=String.leftPad()必需有参数!
+StringLeftPadFunctionHandler.parameter.invalid=String.leftPad()参数类型错误!
+StringLeftPadFunctionHandler.parameter.countInvalid=String.leftPad()不支持两个以上参数!
+StringRightPadFunctionHandler.parameter.required=String.rightPad()必需有参数!
+StringRightPadFunctionHandler.parameter.invalid=String.rightPad()参数类型错误!
+StringRightPadFunctionHandler.parameter.countInvalid=String.rightPad()不支持两个以上参数!
+StringReplaceFunctionHandler.parameter.invalid=String.replace()参数必需为字符串!
+StringReplaceFunctionHandler.parameter.countInvalid=String.replace()必需为两个参数!
 
 ExpressionFactoryImpl.no.such.binary.operator=未找到二元操作符:{0}
 ExpressionFactoryImpl.no.such.unary.operator=未找到一元操作符:{0}

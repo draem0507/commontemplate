@@ -1,18 +1,7 @@
 package org.commontemplate.tools.ant;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.taskdefs.MatchingTask;
-import org.apache.tools.ant.types.FileSet;
-import org.commontemplate.engine.Engine;
-import org.commontemplate.standard.ConfigurationSettings;
-import org.commontemplate.tools.PropertiesConfigurationLoader;
-import org.commontemplate.tools.bean.FileResourceLoader;
 
 /**
  * 模板生成ANT任务.
@@ -173,7 +162,7 @@ import org.commontemplate.tools.bean.FileResourceLoader;
 public class TemplateTask extends MatchingTask {
 
 	// 源文件集
-	private List filesets = new ArrayList();
+	/*private List filesets = new ArrayList();
 
 	public void addFileset(FileSet fileset) {
 	    filesets.add(fileset);
@@ -226,10 +215,10 @@ public class TemplateTask extends MatchingTask {
 
 	public void setOutputencoding(String outputencoding) {
 		this.outputencoding = outputencoding;
-	}
+	}*/
 
 	public void execute() throws BuildException {
-		ConfigurationSettings settings = PropertiesConfigurationLoader.loadConfiguration(configfile.getAbsolutePath(), new FileResourceLoader());
+		/*ConfigurationSettings settings = PropertiesConfigurationLoader.loadConfiguration(configfile.getAbsolutePath(), new FileResourceLoader());
 		Engine engine = new Engine(settings);
 		for (Iterator iterator = filesets.iterator(); iterator.hasNext();) {
 	        FileSet fs = (FileSet) iterator.next();
@@ -237,7 +226,7 @@ public class TemplateTask extends MatchingTask {
 	        String[] includedFiles = ds.getIncludedFiles();
 	        String[] excludedFiles = ds.getExcludedFiles();
 	        // TODO 未完成
-	    }
+	    }*/
 	}
 
 }

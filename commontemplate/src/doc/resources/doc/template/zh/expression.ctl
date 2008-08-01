@@ -242,7 +242,15 @@ $!
 								<font color="green">(注：不允许调用返回类型为void的函数)</font><br/>
 								<font color="green">(注：如果是没有参数的函数，建议采用属性方式调用，也就是省略括号，如：${str.trim}，而不是${str.trim()})</font><br/>
 								<b>标准扩展函数</b> <a href="extension.html">扩展...</a><br/>
-								......<br/>
+								<font color="green">(注：根据上面的规则，有返回值的函数，可以直接调用，如：replaceAll, substring等，下面不再列出)</font><br/>
+								<b>(1) 字符串(String):</b><br/>
+								replace(String, String) 替换，如：${"a-b-c".replace('-', '.')} 输出：a.b.c <font color="green">(注：重载了JRE1.4中String原有replace函数，使其支持字符串替换)</font><br/>
+								abbreviate(int) 缩略，如：${"abcdefghijk".abbreviate(6)} 输出：abc... <font color="green">(注：参数必需大于3)</font><br/>
+								abbreviate(int, int) 从偏移位置开始缩略，如：${"abcdefghijk".abbreviate(2, 6)} 输出：cde... <br/>
+								leftPad(int, String) 左填充对齐，如：${"123".leftPad(6, '0')} 输出：000123 <br/>
+								leftPad(int) 以空格左填充对齐，如：${"123".leftPad(6)} 输出：□□□123 <br/>
+								rightPad(int, String) 右填充对齐，如：${"123".rightPad(6, '-')} 输出：123--- <br/>
+								rightPad(int) 以空格右填充对齐，如：${"123".rightPad(6)} 输出：123□□□ <br/>
 								<br/>
 								<b>七. 序列扩展</b><br/>
 								(1) 数字: ${1 .. 20} ${20 .. -12}<br/>
