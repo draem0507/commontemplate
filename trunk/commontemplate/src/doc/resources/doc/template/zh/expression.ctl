@@ -174,8 +174,9 @@ $!
 								以${obj.XXX}为例<br/>
 								(1) 首先查找obj类型的外部扩展属性(可覆盖原有属性) <font color="green">(注：参见下一节)</font><br/>
 								(2) 再查找obj.getXXX()函数<br/>
-								(3) 再查找obj.XXX()函数<br/>
-								(4) 再查找obj.XXX属性(包括静态属性)<br/>
+								(3) 再查找obj.isXXX()函数<br/>
+								(4) 再查找obj.XXX()函数<br/>
+								(5) 再查找obj.XXX属性(包括静态属性)<br/>
 								<b>标准扩展属性</b> <a href="extension.html">扩展...</a><br/>
 								<font color="green">(注：根据上面的规则，没有参数，但有返回值的函数，可以直接作为属性，如：toString, hashCode, trim, toUpperCase, size等，下面不再列出)</font><br/>
 								<b>(1) 空值(Null):</b><br/>
