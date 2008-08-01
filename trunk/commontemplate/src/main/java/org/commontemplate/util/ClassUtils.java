@@ -113,6 +113,7 @@ public class ClassUtils {
 
 	// 获取相似方法
 	private static Method getLikeMethod(Class clazz, String name, Class[] types) throws NoSuchMethodException {
+		// TODO 未进行String转char, int转long的处理
 		Method[] methods = clazz.getMethods();
 		for (int i = 0, n = methods.length; i < n; i ++) {
 			if (methods[i].getName().equals(name)
