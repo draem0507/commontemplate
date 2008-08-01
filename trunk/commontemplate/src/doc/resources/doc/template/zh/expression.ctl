@@ -67,6 +67,10 @@ $!
 								&lt;=&gt; 数字大小全比较，名称符cmp，0表示相等，1表示大于，-1表示小于, 如: ${user1.coins &lt;=&gt; user2.coins} ${user1.coins cmp user2.coins}<br/>
 								~= 数字近似值等于比较(任何数字类型只比较intValue相等), 如: ${user1.coins ~= user2.coins}<br/>
 								#  数字格式化, 如: ${user1.coins # "###,##0.###"}<br/>
+								max 取最大值, 如: ${max(1,5,3)} 输出：5<br/>
+								min 取最小值, 如: ${min(1,5,3)} 输出：1<br/>
+								sum 求和, 如: ${sum(1,5,3)} 输出：9<br/>
+								avg 求平均值, 如: ${avg(1,5,3)} 输出：3<br/>
 								<b>(4) 字符串(String)：</b><br/>
 								[ ] 方括号，字符索引，如：${"abcdefg"[1..2]} 输出：bc <font color="green">(注：可以将String看成char[]数组)</font><br/>
 								+ 加号，两个字符串相连, 非字符将调用其toString, 如: ${user.firstname + user.lastname}<br/>
