@@ -43,9 +43,15 @@ final class ExpressionTranslator {
 			Token token = (Token)tokens.get(i);
 
 			// 在连续的两个括号之间加null，即：() 变成 (null)
-			if (i > 1 && ("(".equals(((Token)tokens.get(i - 1)).getMessage().trim()) || "[".equals(((Token)tokens.get(i - 1)).getMessage().trim()))
-					&& (")".equals(token.getMessage().trim()) || "]".equals(token.getMessage().trim()))) {
-				appendExpression(expressions, new Token("null", Position.ZERO), false);
+			if (i > 0) {
+				String pre = ((Token)tokens.get(i - 1)).getMessage().trim();
+				String cur = token.getMessage().trim();
+				if ("(".equals(pre)
+							|| "[".equals(pre)
+						&& (")".equals(cur)
+							|| "]".equals(cur))) {
+					appendExpression(expressions, new Token("null", Position.ZERO), false);
+				}
 			}
 
 			// 处理函数

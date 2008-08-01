@@ -115,7 +115,7 @@ $!
 								-&gt; 箭头号, 表示层级名称，左右参数均为名称串，用于需要多个层级名称的指令中，如：$var{global -&gt; user = "james"} $for{menu -&gt; children : menus}<br/>
 								:  冒号，表示键值对(Entry)，如：${name : "james"} ${user.name : "james"} <br/>
 								<span style="color: green;">注：entry采用JSON的设计风格，因为key通常是字符串，而非变量，所以当key为无引号名称时，将会作为字符串处理，而不是变量取值，如果要用变量作为key，在key前加反斜杠: ${\name : "james"}，另请注意：${user.name : "james"}会取user.name变量的值作为key, 因为点号先运算.</span><br/>
-								=  等号，与冒号功能相同，表示键值对(Entry)，但优先级更低(其它操作符均先于它运行)，如：${xxx = aa:bb,cc:dd}，可以不需要括号。<br/>
+								=  等号，与冒号功能相同，表示键值对(Entry)，但优先级更低(其它操作符均先于它运行)，如：$set{xxx = aa:bb,cc:dd}，可以不需要括号。<br/>
 								.. 双点号, 表示序列(Sequence), 如: ${1..5} $for{num : 1..5} $for{weekDay : "Sunday".."Saturday"}<br/>
 								,  逗号, 表示列表(List), 如: ${1,2,5,7} $for{num : (1,2,5,7)}<br/>
 								<font color="green">(注：序列和列表可以合并使用，如：${1,3..6,9} 输出展开式列表：[1,3,4,5,6,9]，而：${1,(3..6),9} 或者 ${1,[3..6],9} 输出两级列表：[1,[3,4,5,6],9])</font><br/>
@@ -123,6 +123,7 @@ $!
 								[ ] 一元方括号, 转换成集合, 将Object转成List, 将Entry转成Map,  如: $for{num : [100]} $for{num : [name:value]}<br/>
 								<span style="color: green;">注：如果[ ]中已经是List或Map, 则将保持不变, 相当于( ), 如: $for{num : [20,50,100]} $for{num : [name1:value1, name2:value2]}</span><br/>
 								+ 加号，两个List或Map相连, 如: ${items + ("a","b")}<br/>
+								* 乘号，重复集合内容, 如: ${["a","b"] * 2} 输出：[a, b, a, b]<br/>
 								- 一元减号，将List或Array倒序, 如: ${-items}<br/>
 								~ 判断集合内是否有匹配项，如：$if{state ~ (1, 2, 4)} $if{user1 ~ users}<br/>
 								!~ 判断集合内是否没有匹配项，如：$if{state !~ (1, 2, 4)} $if{user1 !~ users}<br/>
