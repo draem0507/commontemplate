@@ -22,10 +22,12 @@ public class ToCollectionOperatorHandler extends UnaryOperatorHandlerSupport {
 	private static final long serialVersionUID = 1L;
 
 	public ToCollectionOperatorHandler() {
-		super(Object.class);
+		super(Object.class, true);
 	}
 
 	public Object doEvaluate(Object operand) throws Exception {
+		if (operand == null)
+			return new ArrayList(0);
 		Object model = operand;
 		if (model instanceof List
 				|| model instanceof Map) {
