@@ -7,7 +7,17 @@ public class FloatToCeilingIntegerPropertyHandler extends PropertyHandlerSupport
 	private static final long serialVersionUID = 1L;
 
 	public Object doProperty(Object bean) throws Exception {
-		return new Integer(((Float)bean).intValue()); // FIXME 未实现向上取整
+		Float value = (Float)bean;
+		float f = value.floatValue();
+		int i = value.intValue();
+		if (f - i != 0) {
+			if (f > 0) {
+				i ++;
+			} else {
+				i --;
+			}
+		}
+		return new Integer(i);
 	}
 
 }

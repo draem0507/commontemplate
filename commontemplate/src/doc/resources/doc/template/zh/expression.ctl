@@ -235,6 +235,15 @@ $!
 								toSize 根据大小显示Bytes,KB,MB等单位, 如: ${917.toSize}(输出：917Bytes) ${(11 * 1024).toSize}(输出：11KB)<br/>
 								toChinese 数字转中文, 如: ${123.toChinese} 输出：一百二十三<br/>
 								toChineseCurrency 数字转中文货币, 如: ${123.toChineseCurrency} 输出：壹佰贰拾叁圆整<br/>
+								abs 取绝对值, 如: ${(-10).abs} 输出：10<br/>
+								sign 取符号, 如: ${(-10).sign} 输出：-1<br/>
+								positive 是否为正数(非负数), 如: ${(-10).positive} 输出：false<br/>
+								negative 是否为负数, 如: ${(-10).negative} 输出：true<br/>
+								toBinaryString 十进制整型转为二进制串，如: ${12.toBinaryString} 输出：1100<br/>
+								toOctalString 十进制整型转为八进制串，如: ${12.toOctalString} 输出：14<br/>
+								toHexString 十进制整型转为十六进制串，如: ${12.toHexString} 输出：c<br/>
+								toCeilingInteger 浮点型向上取整，如: ${12.3.toCeilingInteger} 输出：13<br/>
+								toFloorInteger 浮点型向下取整，如: ${12.3.toFloorInteger} 输出：12<br/>
 								<b>(6) 布尔值(Boolean):</b><br/>
 								not 取反, 如: ${true.not} ${user.allow.not}<br/>
 								toInteger false为0, true为1, 如: ${true.toInteger} 输出：1<br/>

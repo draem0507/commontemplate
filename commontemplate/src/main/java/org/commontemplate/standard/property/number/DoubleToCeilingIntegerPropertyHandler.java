@@ -7,7 +7,17 @@ public class DoubleToCeilingIntegerPropertyHandler extends PropertyHandlerSuppor
 	private static final long serialVersionUID = 1L;
 
 	public Object doProperty(Object bean) throws Exception {
-		return new Integer(((Double)bean).intValue()); // FIXME 未实现向上取整
+		Double value = (Double)bean;
+		double d = value.doubleValue();
+		int i = value.intValue();
+		if (d - i != 0) {
+			if (d > 0) {
+				i ++;
+			} else {
+				i --;
+			}
+		}
+		return new Integer(i);
 	}
 
 }
