@@ -18,20 +18,16 @@ public class StringAbbreviateFunctionHandler extends FunctionHandlerSupport {
 		} if (args.size() == 1) {
 			Assert.assertTrue(args.get(0) instanceof Number, "StringAbbreviateFunctionHandler.parameter.invalid");
 			int len = ((Number)args.get(0)).intValue();
-			if (len <= 3) {
+			if (len <= 3)
 				len = 4;
-				// TODO 输出warning log, 提示用户， len 应该 >=4
-			}
 			return StringUtils.abbreviate(str, len);
 		} else if (args.size() == 2) {
 			Assert.assertTrue(args.get(0) instanceof Number, "StringAbbreviateFunctionHandler.parameter.invalid");
 			Assert.assertTrue(args.get(1) instanceof Number, "StringAbbreviateFunctionHandler.parameter.invalid");
 			int offset = ((Number)args.get(0)).intValue();
 			int len = ((Number)args.get(1)).intValue();
-			if (len <= 3) {
+			if (len <= 3)
 				len = 4;
-				// TODO 输出warning log, 提示用户， len 应该 >=4
-			}
 			return StringUtils.abbreviate(str, offset, len);
 		} else {
 			throw new UnhandleException("StringAbbreviateFunctionHandler.parameter.countInvalid");
