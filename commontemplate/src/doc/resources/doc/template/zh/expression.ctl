@@ -241,6 +241,11 @@ $!
 								${对象.函数(参数1, 参数2)}<br/>
 								<font color="green">(注：不允许调用返回类型为void的函数)</font><br/>
 								<font color="green">(注：如果是没有参数的函数，建议采用属性方式调用，也就是省略括号，如：${str.trim}，而不是${str.trim()})</font><br/>
+								<b>函数查找顺序</b><br/>
+								以${obj.XXX(123)}为例<br/>
+								(1) 首先查找obj类型的外部扩展函数(可覆盖原有函数) <font color="green">(注：参见下一节)</font><br/>
+								(2) 再查找参数类型匹配的函数obj.XXX(Integer)<br/>
+								(3) 再查找参数类型相近的函数obj.XXX(int)<br/>
 								<b>标准扩展函数</b> <a href="extension.html">扩展...</a><br/>
 								<font color="green">(注：根据上面的规则，有返回值的函数，可以直接调用，如：replaceAll, substring, split等，下面不再列出)</font><br/>
 								<b>(1) 字符串(String):</b><br/>
