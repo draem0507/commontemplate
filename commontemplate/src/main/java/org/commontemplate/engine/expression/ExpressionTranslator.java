@@ -46,10 +46,8 @@ final class ExpressionTranslator {
 			if (i > 0) {
 				String pre = ((Token)tokens.get(i - 1)).getMessage().trim();
 				String cur = token.getMessage().trim();
-				if ("(".equals(pre)
-							|| "[".equals(pre)
-						&& (")".equals(cur)
-							|| "]".equals(cur))) {
+				if (("(".equals(pre) && (")".equals(cur))
+							|| ("[".equals(pre) && "]".equals(cur)))) {
 					appendExpression(expressions, new Token("null", Position.ZERO), false);
 				}
 			}

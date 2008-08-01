@@ -6,14 +6,12 @@ import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 import org.commontemplate.standard.operator.sequence.IntegerSequence;
 
 /**
- * 数字下标操作符基类<br/>
+ * 数字下标二元操作符基类
  *
  * @author liangfei0201@163.com
  *
  */
 public abstract class IndexedBinaryOperatorHandlerSupport extends BinaryOperatorHandlerSupport {
-
-	private static final long serialVersionUID = 1L;
 
 	public IndexedBinaryOperatorHandlerSupport(Class leftOperandClass) {
 		super(leftOperandClass, List.class);
