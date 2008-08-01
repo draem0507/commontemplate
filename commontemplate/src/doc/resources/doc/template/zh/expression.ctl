@@ -214,6 +214,10 @@ $!
 								toUnderlineNaming 转为下划线命名, 如：${"userName".toUnderlineNaming} 输出：user_name<br/>
 								toAscii 将Unicode码转为ASCII码表示, 如：${"中国".toAscii} 输出：\u4E2D\u56FD<br/>
 								toUnicode 将ASCII码转为Unicode码表示, 如：${"\u4E2D\u56FD".toUnicode} 输出：中国<br/>
+								empty 是否为空字符串, 如：${"".empty} 输出：true<br/>
+								whitespace 是否为空白字符串, 如：${" ".whitespace} 输出：true<br/>
+								naming 是否为命名字符串, 如：${"abc".naming} 输出：true<br/>
+								number 是否为数字字符串, 如：${"123".number} 输出：true<br/>
 								<b>(4) 日期(Date):</b><br/>
 								year, month, day, hour, minute, second, millisecond 时间各个部分取值, 如: ${createDate.day} ${createDate.hour}<br/>
 								week 星期几， 如: ${createDate.week}<br/>
