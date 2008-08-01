@@ -58,9 +58,11 @@ public class ImportAsMacroDirectiveHandler extends DirectiveHandlerSupport {
 				Map.Entry entry = (Map.Entry)iterator.next();
 				String macroName = (String)entry.getKey();
 				Macro macro = (Macro)entry.getValue();
-				if (namespace != null)
+				if (namespace != null) {
 					macroName = namespace + macroName;
-				context.putProperty(MacroDirectiveHandler.MACRO_TYPE, macroName, new Macro(macro, namespace));
+					macro = new Macro(macro, namespace);
+				}
+				context.putProperty(MacroDirectiveHandler.MACRO_TYPE, macroName, macro);
 			}
 		} finally {
 			newContext.clear();
