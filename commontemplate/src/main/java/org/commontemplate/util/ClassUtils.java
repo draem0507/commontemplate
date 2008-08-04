@@ -1,5 +1,6 @@
 package org.commontemplate.util;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -42,6 +43,61 @@ public class ClassUtils {
 		if (className.endsWith("[]"))
 			className = "[L" + className.substring(0, className.length() - 2) + ";";
 		return Class.forName(className);
+	}
+
+	/**
+	 * 执行类方法
+	 *
+	 * @param obj 类实例
+	 * @param name 方法名
+	 * @param args 方法参数
+	 * @return 方法返回值
+	 * @throws NoSuchMethodException 方法不存在时抛出
+	 */
+	public static Object invokeConstructor(Class clazz, Object[] args) throws NoSuchMethodException {
+		if (clazz == null)
+			return null;
+		try {
+			Constructor constructor = getConstructor(clazz, args);
+			return constructor.newInstance(args);
+		} catch (IllegalArgumentException e) {
+			throw new NoSuchMethodException(e.getMessage());
+		} catch (InstantiationException e) {
+			throw new NoSuchMethodException(e.getMessage());
+		} catch (IllegalAccessException e) {
+			throw new NoSuchMethodException(e.getMessage());
+		} catch (InvocationTargetException e) {
+			throw new NoSuchMethodException(e.getMessage());
+		}
+	}
+
+	public static Constructor getConstructor(Class clazz, Object[] args) throws NoSuchMethodException {
+		if (args == null)
+			args = new Object[0];
+		Class[] types = new Class[args.length];
+		for (int i = 0, n = args.length; i < n; i ++) {
+			types[i] = (args[i] == null ? Object.class : args[i].getClass());
+		}
+		try {
+			return clazz.getConstructor(types);
+		} catch (NoSuchMethodException e) {
+			return getLikeConstructor(clazz, types);
+		}
+	}
+
+	// 获取相似方法
+	private static Constructor getLikeConstructor(Class clazz, Class[] types) throws NoSuchMethodException {
+		// TODO 未进行String转char, int转long的处理
+		Constructor[] constructors = clazz.getConstructors();
+		for (int i = 0, n = constructors.length; i < n; i ++) {
+			Constructor constructor = constructors[i];
+			Class[] paramTypes = constructor.getParameterTypes();
+			if (paramTypes.length == types.length) {
+				if (isLikeClasses(paramTypes, types))
+					return constructor;
+			}
+		}
+		throw I18nExceptionFactory.createNoSuchMethodException("ClassUtils.constructor.no.such", new Object[]{clazz.getName(), getSignature(clazz.getName(), types)});
 	}
 
 	/**
@@ -97,7 +153,7 @@ public class ClassUtils {
 	}
 
 	// 获取方法
-	private static Method getMethod(Class clazz, String name, Object[] args) throws NoSuchMethodException {
+	public static Method getMethod(Class clazz, String name, Object[] args) throws NoSuchMethodException {
 		if (args == null)
 			args = new Object[0];
 		Class[] types = new Class[args.length];
@@ -116,11 +172,12 @@ public class ClassUtils {
 		// TODO 未进行String转char, int转long的处理
 		Method[] methods = clazz.getMethods();
 		for (int i = 0, n = methods.length; i < n; i ++) {
-			if (methods[i].getName().equals(name)
-					&& methods[i].getParameterTypes().length == types.length) {
-				Class[] paramTypes = methods[i].getParameterTypes();
+			Method method = methods[i];
+			Class[] paramTypes = method.getParameterTypes();
+			if (method.getName().equals(name)
+					&& paramTypes.length == types.length) {
 				if (isLikeClasses(paramTypes, types))
-					return methods[i];
+					return method;
 			}
 		}
 		throw I18nExceptionFactory.createNoSuchMethodException("ClassUtils.method.no.such", new Object[]{clazz.getName(), getSignature(name, types)});
@@ -131,21 +188,31 @@ public class ClassUtils {
 		for (int j = 0, m = cs1.length; j < m; j ++) {
 			Class c1 = cs1[j]; // 前面已作判断，c1, c2都不为空
 			Class c2 = cs2[j];
-			if (c1 == c2)
-				continue;
-			if (c1 == Object.class)
-				continue;
-			if (c1.isAssignableFrom(c2))
-				continue;
-			if (c1.isPrimitive()
-					&& isLikePrimitiveClass(c1, c2))
-				continue;
-			if (c2.isPrimitive()
-					&& isLikePrimitiveClass(c2, c1))
-				continue;
-			return false;
+			if (! isLikeClass(c1, c2))
+				return false;
 		}
 		return true;
+	}
+
+	// 判断两个参数列表类型是否相似
+	private static boolean isLikeClass(Class c1, Class c2) {
+		if (c1 == c2)
+			return true;
+		if (c1 == Object.class)
+			return true;
+		if (c2 == null)
+			return true;
+		if (c1 == null)
+			return false;
+		if (c1.isAssignableFrom(c2))
+			return true;
+		if (c1.isPrimitive()
+				&& isLikePrimitiveClass(c1, c2))
+			return true;
+		if (c2.isPrimitive()
+				&& isLikePrimitiveClass(c2, c1))
+			return true;
+		return false;
 	}
 
 	// 判断基本类型是否相似

@@ -52,7 +52,7 @@ public class ForeachDirectiveHandler extends BlockDirectiveHandler {
 
 	public void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
 		boolean isSuccess = doForeach(context, param, innerElements);
-		context.getSuperLocalContext().setStatus(FOR_STATUS, Boolean.valueOf(isSuccess));
+		context.getParentLocalContext().setStatus(FOR_STATUS, Boolean.valueOf(isSuccess));
 	}
 
 	private boolean doForeach(Context context, Object param, List elements) throws RenderingException, EvaluationException, IOException {

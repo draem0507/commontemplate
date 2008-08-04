@@ -10,11 +10,11 @@ import org.commontemplate.standard.operator.UnhandleException;
  * @author liangfei0201@163.com
  *
  */
-public class InstanceofOperatorHandler extends BinaryOperatorHandlerSupport {
+public class InstanceofStringOperatorHandler extends BinaryOperatorHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	public InstanceofOperatorHandler() {
+	public InstanceofStringOperatorHandler() {
 		super(Object.class, String.class);
 	}
 

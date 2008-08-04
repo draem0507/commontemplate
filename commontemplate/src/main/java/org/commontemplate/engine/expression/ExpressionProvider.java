@@ -55,6 +55,10 @@ final class ExpressionProvider {
 		if (TypeUtils.isString(name))
 			return new ConstantImpl(StringConvertUtils.convertLiteral(name.substring(1, name.length() - 1)), token.getLocation());
 
+		// 非转义字符串
+		if (TypeUtils.isNoEscapeString(name))
+			return new ConstantImpl(name.substring(1, name.length() - 1), token.getLocation());
+
 		// 数字
 		if (TypeUtils.isNumber(name))
 			return new ConstantImpl(NumberUtils.parseNumber(name), token.getLocation());

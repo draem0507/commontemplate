@@ -7,14 +7,15 @@ import org.commontemplate.core.Context;
 
 /**
  * 模板区域重写指令, 覆盖父模板的相应区域, 用于<code>ExtendDirectiveHandler</code>内部
- * 
+ *
+ * @see org.commontemplate.standard.directive.extend.ExtendDirectiveHandler
  * @author liangfei0201@163.com
  *
  */
 public class OverZoneDirectiveHandler extends BlockDirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	public void doRender(Context context, String directiveName,
 			Object param, List innerElements)
 			throws Exception {
@@ -22,7 +23,7 @@ public class OverZoneDirectiveHandler extends BlockDirectiveHandlerSupport {
 		Zone childZone = (Zone)context.getProperty(ZoneDirectiveHandler.ZONE_TYPE, zoneName);
 		Zone innerZone = new Zone(innerElements);
 		if (childZone == null) {
-			context.getSuperLocalContext().putProperty(ZoneDirectiveHandler.ZONE_TYPE, zoneName, innerZone);
+			context.getParentLocalContext().putProperty(ZoneDirectiveHandler.ZONE_TYPE, zoneName, innerZone);
 		} else {
 			childZone.setSuperZone(innerZone);
 		}

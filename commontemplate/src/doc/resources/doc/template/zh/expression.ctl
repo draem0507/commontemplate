@@ -6,10 +6,14 @@ $!
 								(2) 支持Java所有表达式<br/>
 								<br/>
 								<b>二. 特殊表达式符号:</b><br/>
-								<b>1. () 括号：</b>加强优先级<br/>
-								<b>2. " ' ` 三种引号：</b>字符串表示符，字符串中转义符"\"，与Java中使用方式类似<br/>
-								<font color="green">(注：除了双引号，单引号，还加入了反单引号，便于多层嵌套)</font><br/>
-								<font color="green">(注：与Java不同的是忽略不识别的转义字符，如：${"\x"} 输出两个字符：\x)</font><br/>
+								<b>1. 括号：</b>() 用于加强优先级<br/>
+								<b>2. 字符串：</b>" ' ` (三种)引号<br/>
+								其中，单双引号使用与Java相似<br/>
+								字符串中转义符反斜线(\)，支持\b, \t, \n, \f, \r, \uXXXX, \", \', \\<br/>
+								与Java不同点：<br/>
+								引号允许多行字符串<br/>
+								忽略不识别的转义字符，如：${"\h"} 输出两个字符：\h<br/>
+								增加反单引号(`)表示不转义串，内容不能包含反单引号本身，通常用于输出Windows地址，如：${`C:\native\user\file.txt`}<br/>
 								<b>3. 数字：</b>以0-9开头表示数字<br/>
 								以0x开头的为16进制数字，如：0xF5A7<br/>
 								以0开头的整数为8进制数字，如：07<br/>
@@ -29,8 +33,10 @@ $!
 								<b>(1) 对象(Object)：</b><br/>
 								. 点号, 属性取值, 如: ${user.name}<br/>
 								[ ] 方括号, 索引属性, 如: ${user["name"]} ${user[variable]}<br/>
-								& 一元与号，包名或类名前缀, 如: ${&com.xxx.AppConstant.PREFIX} 或者 ${&AppConstant.PREFIX}<br/>
-								instanceof 类型判断，如：${user1 instanceof "com.xxx.User"}<br/>
+								$ 一元美元符号，创建类实例, 如: ${$com.xxx.User(1, "james")} 或 ${$com.xxx.User(id: 1, name: "james")} 或 ${$com.xxx.User()} 或 ${$com.xxx.User}<br/>
+								<font color="green">(注：参数若为List则传入构造函数, 若为Map则调用无参构造函数, 然后调用setXXX()初始化属性)</font><br/>
+								& 一元与号，包名或类名前缀, 如: ${&com.xxx.AppConstant.PREFIX} 或 ${&com.xxx.AppUtils.calc(xxx)}<br/>
+								is 或 instanceof，类型判断，如：${user1 is &com.xxx.User} 或 ${user1 is "com.xxx.User"} 或 ${user1 instanceof &com.xxx.User} 或 ${user1 instanceof "com.xxx.User"}<br/>
 								== 值相等比较，名称符eq，如: ${user1 == user2} ${user1 eq user2}<font color="green">(注：相近类型如char与string,int与long等对比时，将自动转换类型)</font></br>
 								!= 值不相等比较，名称符ne，如: ${user1 != user2} ${user1 ne user2}<br/>
 								=== 内存地址相等比较，名称符aeq，如: ${user1 === user2} ${user1 aeq user2}<br/>
@@ -79,7 +85,6 @@ $!
 								/ 除号, 字符串分割, 并忽略空段, 如：${"aaa.bbb.ccc" / "."} 输出数组：[aaa, bbb, ccc]<br/>
 								% 截余/缩略, 如: ${"abcdefghijklmn" % 10} 输出：abcdefg...<br/>
 								- 一元减号，将String倒序, 如: ${- str}<br/>
-								@ 地址符，输出不转义地址串(不转义字母，只转义引号和反斜线), 如: ${@"C:\native\user\file.txt"}<br/>
 								~ 字符串正则表达式匹配, 如: $if{code ~ "^[0-9]+$"}<br/>
 								!~ 字符串正则表达式不匹配, 如: $if{code !~ "^[0-9]+$"}<br/>
 								&gt;  字符串大于比较, 如: $if{user1.name &gt; user2.name}<br/>
@@ -118,7 +123,7 @@ $!
 								=> 推导符号，表示筛选过滤器(lambda表达式)，隐含状态信息index,size,count，index为当前项索引号，size为集合大小，count为已接收数，List缺省变量名为item，如：${list[=> item ~ "[0-9]+" && count < 3]}  ${users[u => u.name != 'guest']}，Map缺省变量名为entry，如：${map[=> entry.key != 'xxx' && count < 3]} ${map[x => x.key != 'xxx']}<br/>
 								-&gt; 箭头号, 表示层级名称，左右参数均为名称串，用于需要多个层级名称的指令中，如：$var{global -&gt; user = "james"} $for{menu -&gt; children : menus}<br/>
 								:  冒号，表示键值对(Entry)，如：${name : "james"} ${user.name : "james"} <br/>
-								<span style="color: green;">注：entry采用JSON的设计风格，因为key通常是字符串，而非变量，所以当key为无引号名称时，将会作为字符串处理，而不是变量取值，如果要用变量作为key，在key前加反斜杠: ${\name : "james"}，另请注意：${user.name : "james"}会取user.name变量的值作为key, 因为点号先运算.</span><br/>
+								<span style="color: green;">注：entry采用JSON的设计风格，因为key通常是字符串，而非变量，所以当key为无引号名称时，将会作为字符串处理，而不是变量取值，如果要用变量作为key，在key前加反斜线: ${\name : "james"}，另请注意：${user.name : "james"}会取user.name变量的值作为key, 因为点号先运算.</span><br/>
 								=  等号，与冒号功能相同，表示键值对(Entry)，但优先级更低(其它操作符均先于它运行)，如：$set{xxx = aa:bb,cc:dd}，可以不需要括号。<br/>
 								.. 双点号, 表示序列(Sequence), 如: ${1..5} $for{num : 1..5} $for{weekDay : "Sunday".."Saturday"}<br/>
 								,  逗号, 表示列表(List), 如: ${1,2,5,7} $for{num : (1,2,5,7)}<br/>
@@ -155,7 +160,7 @@ $!
 									"^"<br/>
 									"&"<br/>
 									"==", "!=", "~=", "~", "!~", "^=", "$=", "*=", "^~", "$~", "*~"<br/>
-									"&lt;", "&gt;", "&lt;=", "&gt;=", "&lt;=&gt;", "instanceof"<br/>
+									"&lt;", "&gt;", "&lt;=", "&gt;=", "&lt;=&gt;", "is", "instanceof"<br/>
 									"&gt;&gt;", "&lt;&lt;", "&gt;&gt;&gt;"<br/>
 									"orderby"<br/>
 									"^?", "$?", "*?", "^-", "$-"<br/>
@@ -164,7 +169,7 @@ $!
 									"**"<br/>
 									一元："+", "-", "!", "~", "?"<br/>
 									".", "[ ]", "-&gt;"<br/>
-									一元：".", "[ ]", "\", "&"<br/>
+									一元：".", "[ ]", "\", "&", "$"<br/>
 									"( )"<br/>
 								<br/>
 								<b>五. 对象属性及扩展属性</b><br/>
@@ -259,7 +264,7 @@ $!
 								<b>函数调用格式</b><br/>
 								${对象.函数(参数1, 参数2)}<br/>
 								<font color="green">(注：不允许调用返回类型为void的函数)</font><br/>
-								<font color="green">(注：如果是没有参数的函数，建议采用属性方式调用，也就是省略括号，如：${str.trim}，而不是${str.trim()})</font><br/>
+								<font color="green">(注：如果是没有参数的函数，建议采用属性方式调用，也就是省略括号，如：${obj.toString}，而不是${obj.toString()})</font><br/>
 								<b>函数查找顺序</b><br/>
 								以${obj.XXX(123)}为例<br/>
 								(1) 首先查找obj类型的外部扩展函数(可覆盖原有函数) <font color="green">(注：参见下一节)</font><br/>

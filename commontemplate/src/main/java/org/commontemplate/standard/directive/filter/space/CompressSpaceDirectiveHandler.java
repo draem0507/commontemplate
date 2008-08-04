@@ -1,35 +1,32 @@
-package org.commontemplate.standard.directive.filter;
+package org.commontemplate.standard.directive.filter.space;
 
 import java.util.List;
 
 import org.commontemplate.core.Context;
+import org.commontemplate.core.OutputFilter;
 import org.commontemplate.standard.directive.BlockDirectiveHandlerSupport;
 import org.commontemplate.standard.directive.DirectiveUtils;
 import org.commontemplate.standard.filter.BufferedFilter;
-import org.commontemplate.util.Assert;
 
 /**
- * 捕获内部块输出，保存到指定的变量中。如：
- * $capture{"xxx"}
- *     ...
- * $end
+ * 空格压缩指令, 将连续的多空格压缩成单个.
  *
  * @author liangfei0201@163.com
  *
  */
-public class CaptureDirectiveHandler extends BlockDirectiveHandlerSupport {
+public class CompressSpaceDirectiveHandler extends BlockDirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
+	private static final OutputFilter spaceFilter = new CompressSpaceFilter();
+
 	public void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
-		Assert.assertTrue(param instanceof String);
-		String var = (String)param;
 		BufferedFilter bufferedFilter = new BufferedFilter();
 		context.setOutputFilter(bufferedFilter);
 		DirectiveUtils.renderAll(innerElements, context);
 		context.removeOutputFilter();
-		String value = bufferedFilter.getBuffered();
-		context.getParentLocalContext().putVariable(var, value);
+		context.output(spaceFilter.filter(bufferedFilter.getBuffered()));
 	}
 
 }
+

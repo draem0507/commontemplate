@@ -48,13 +48,13 @@ public class ElseIfDirectiveHandlerTester extends TestCase {
 		innerElements.add(new MockDirective("b"));
 		innerElements.add(new MockDirective("c"));
 		
-		context.getSuperLocalContext().setStatus(IfDirectiveHandler.IF_STATUS, Boolean.valueOf(false));
+		context.getParentLocalContext().setStatus(IfDirectiveHandler.IF_STATUS, Boolean.valueOf(false));
 		
 		directiveHandler.doRender(context, "directiveName", Boolean.TRUE, innerElements);
 		Writer out = context.getOut();
 		assertEquals("abc", out.toString());
 		
-		assertTrue(((Boolean)context.getSuperLocalContext().getStatus(IfDirectiveHandler.IF_STATUS)).booleanValue());
+		assertTrue(((Boolean)context.getParentLocalContext().getStatus(IfDirectiveHandler.IF_STATUS)).booleanValue());
 	}
 	
 	/**
@@ -73,13 +73,13 @@ public class ElseIfDirectiveHandlerTester extends TestCase {
 		innerElements.add(new MockDirective("b"));
 		innerElements.add(new MockDirective("c"));
 		
-		context.getSuperLocalContext().setStatus(IfDirectiveHandler.IF_STATUS, Boolean.valueOf(false));
+		context.getParentLocalContext().setStatus(IfDirectiveHandler.IF_STATUS, Boolean.valueOf(false));
 		
 		directiveHandler.doRender(context, "directiveName", Boolean.FALSE, innerElements);
 		Writer out = context.getOut();
 		assertEquals("", out.toString());
 		
-		assertFalse(((Boolean)context.getSuperLocalContext().getStatus(IfDirectiveHandler.IF_STATUS)).booleanValue());
+		assertFalse(((Boolean)context.getParentLocalContext().getStatus(IfDirectiveHandler.IF_STATUS)).booleanValue());
 	}
 	
 	/**
@@ -98,13 +98,13 @@ public class ElseIfDirectiveHandlerTester extends TestCase {
 		innerElements.add(new MockDirective("b"));
 		innerElements.add(new MockDirective("c"));
 		
-		context.getSuperLocalContext().setStatus(IfDirectiveHandler.IF_STATUS, Boolean.valueOf(true));
+		context.getParentLocalContext().setStatus(IfDirectiveHandler.IF_STATUS, Boolean.valueOf(true));
 		
 		directiveHandler.doRender(context, "directiveName", Boolean.TRUE, innerElements);
 		Writer out = context.getOut();
 		assertEquals("", out.toString());
 		
-		assertTrue(((Boolean)context.getSuperLocalContext().getStatus(IfDirectiveHandler.IF_STATUS)).booleanValue());
+		assertTrue(((Boolean)context.getParentLocalContext().getStatus(IfDirectiveHandler.IF_STATUS)).booleanValue());
 	}
 	
 	/**

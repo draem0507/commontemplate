@@ -22,7 +22,7 @@ public class BlockDefineDirectiveHandler extends BlockDirectiveHandlerSupport {
 		Assert.assertNotNull(param, "BlockDefineDirectiveHandler.parameter.required");
 		Assert.assertTrue(param instanceof String, "BlockDefineDirectiveHandler.parameter.type.error");
 		String var = (String)param;
-		context.getSuperLocalContext().putProperty(BLOCK_TYPE, var, innerElements);
+		context.getParentLocalContext().putProperty(BLOCK_TYPE, var, innerElements);
 	}
 
 }

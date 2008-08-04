@@ -1,8 +1,5 @@
 package org.commontemplate.engine.expression;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.commontemplate.config.UnaryOperatorHandler;
 import org.commontemplate.util.Function;
 
@@ -23,16 +20,7 @@ final class FunctionUnaryOperatorHandler extends UnaryOperatorHandler {
 	}
 
 	public Object doEvaluate(Object operand) throws Exception {
-		List args = null;
-		if (operand == null) {
-			args = new ArrayList(0);
-		} else if (operand instanceof List) {
-			args = (List)operand;
-		} else {
-			args = new ArrayList(1);
-			args.add(operand);
-		}
-		return new Function(name, args);
+		return new Function(name, operand);
 	}
 
 }

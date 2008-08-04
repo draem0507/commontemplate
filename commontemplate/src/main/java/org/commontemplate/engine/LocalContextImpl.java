@@ -24,25 +24,25 @@ import org.commontemplate.util.Assert;
  */
 final class LocalContextImpl extends LocalContext {
 
-	private final LocalContext superLocalContext;
+	private final LocalContext parentLocalContext;
 
 	private final String localContextName;
 
-	LocalContextImpl(LocalContext superLocalContext,
+	LocalContextImpl(LocalContext parentLocalContext,
 			String localContextName, Map variablesContainer, Context context, Writer out, Keywords keywords) {
 		Assert.assertNotNull(context);
 		Assert.assertNotNull(keywords);
 
-		this.superLocalContext = superLocalContext;
+		this.parentLocalContext = parentLocalContext;
 		this.localContextName = localContextName;
-		variableStorage = new LocalVariableStorageImpl(superLocalContext, variablesContainer, context, keywords);
+		variableStorage = new LocalVariableStorageImpl(parentLocalContext, variablesContainer, context, keywords);
 		statusStorage = new LocalStatusStorageImpl(context);
-		propertyStorage = new LocalPropertyStorageImpl(superLocalContext, context);
-		outputController = new OutputControllerImpl(superLocalContext, context, out);
+		propertyStorage = new LocalPropertyStorageImpl(parentLocalContext, context);
+		outputController = new OutputControllerImpl(parentLocalContext, context, out);
 	}
 
-	public LocalContext getSuperLocalContext() {
-		return superLocalContext;
+	public LocalContext getParentLocalContext() {
+		return parentLocalContext;
 	}
 
 	public String getLocalContextName() {

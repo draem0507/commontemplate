@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.Template;
 import org.commontemplate.standard.directive.DirectiveHandlerSupport;
-import org.commontemplate.standard.filter.BufferedFilter;
+import org.commontemplate.standard.filter.IgnoreOutputFilter;
 import org.commontemplate.util.Assert;
 
 /**
@@ -49,8 +49,7 @@ public class ImportAsMacroDirectiveHandler extends DirectiveHandlerSupport {
 		Template template = context.getTemplate(templateName);
 		Context newContext = context.createContext();
 		try {
-			BufferedFilter bufferedFilter = new BufferedFilter();
-			newContext.setOutputFilter(bufferedFilter);
+			newContext.setOutputFilter(IgnoreOutputFilter.getInstance());
 			template.render(newContext);
 			newContext.removeOutputFilter();
 			Map macros = newContext.getProperties(MacroDirectiveHandler.MACRO_TYPE);

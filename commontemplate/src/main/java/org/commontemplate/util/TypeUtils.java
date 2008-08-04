@@ -49,8 +49,22 @@ public final class TypeUtils {
 		if (t.length() < 2) {
 			return false;
 		}
-		if (t.startsWith("\"") || t.startsWith("\'") || t.startsWith("`")) {
+		if (t.startsWith("\"") || t.startsWith("\'")) {
 			Assert.assertTrue(t.endsWith(t.substring(0, 1)));
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean isNoEscapeString(final String name) {
+		if (name == null)
+			return false;
+		String t = name.trim();
+		if (t.length() < 2) {
+			return false;
+		}
+		if (t.startsWith("`")) {
+			Assert.assertTrue(t.endsWith("`"));
 			return true;
 		}
 		return false;

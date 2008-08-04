@@ -1,7 +1,7 @@
 package org.commontemplate.standard.property.string;
 
 import org.commontemplate.standard.property.PropertyHandlerSupport;
-import org.commontemplate.util.JavaStringConvertUtils;
+import org.commontemplate.util.StringConvertUtils;
 
 public class StringToAsciiPropertyHandler extends PropertyHandlerSupport {
 
@@ -9,7 +9,7 @@ public class StringToAsciiPropertyHandler extends PropertyHandlerSupport {
 
 	public Object doProperty(Object bean) throws Exception {
 		String str = (String)bean;
-		return JavaStringConvertUtils.revertLiteral(str);
+		return StringConvertUtils.revertLiteral(str);
 	}
 
 }
