@@ -11,7 +11,9 @@ import org.commontemplate.core.Template;
 import org.commontemplate.engine.Engine;
 
 /**
- * 模板求值工具
+ * 模板求值工具.
+ * <br/>
+ * 只用于一次性模板解析用, 每次都重新加载配置, 装配引擎, 解析模板, 性能较差.
  *
  * <p/>
  * 使用示例:
