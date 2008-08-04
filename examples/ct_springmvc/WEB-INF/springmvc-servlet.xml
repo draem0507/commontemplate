@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" 
+	"http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+	<bean id="viewResolver" class="org.commontemplate.tools.web.spring.CommonTemplateViewResolver">
+		<property name="suffix" value=".ctl"/>
+		<property name="contentType" value="text/html; charset=UTF-8" />
+	</bean>
+	<bean id="defaultHandlerMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
+	<bean name="/list.do" class="com.xxx.web.spring.UserListController">
+		<property name="successView" value="list"/>
+	</bean>
+	<bean name="/view.do" class="com.xxx.web.spring.UserViewController">
+		<property name="successView" value="view"/>
+	</bean>
+</beans>

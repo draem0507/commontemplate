@@ -1,0 +1,12 @@
+
+app.title=CommonTemplate与Spring集成示例
+back=返回
+
+user.view=用户信息查看
+user.list=用户列表
+user.id.title=用户ID
+user.name.title=用户名
+user.email.title=邮箱
+user.balance.title=余额
+user.balance.unit=元
+user.creationDate.title=注册时间
