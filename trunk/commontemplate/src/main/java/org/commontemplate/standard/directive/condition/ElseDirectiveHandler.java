@@ -18,10 +18,10 @@ public class ElseDirectiveHandler extends MiddleBlockDirectiveHandlerSupport {
 	private static final long serialVersionUID = 1L;
 
 	public void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
-		Assert.assertNotNull(context.getSuperLocalContext().getStatus(IfDirectiveHandler.IF_STATUS), "ElseDirectiveHandler.location.error");
-		if (! ((Boolean)context.getSuperLocalContext().getStatus(IfDirectiveHandler.IF_STATUS)).booleanValue())
+		Assert.assertNotNull(context.getParentLocalContext().getStatus(IfDirectiveHandler.IF_STATUS), "ElseDirectiveHandler.location.error");
+		if (! ((Boolean)context.getParentLocalContext().getStatus(IfDirectiveHandler.IF_STATUS)).booleanValue())
 			DirectiveUtils.renderAll(innerElements, context);
-		context.getSuperLocalContext().removeStatus(IfDirectiveHandler.IF_STATUS);
+		context.getParentLocalContext().removeStatus(IfDirectiveHandler.IF_STATUS);
 	}
 
 }

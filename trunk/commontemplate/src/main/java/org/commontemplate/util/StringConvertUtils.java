@@ -2,9 +2,9 @@ package org.commontemplate.util;
 
 /**
  * 模板字符串转义符转换工具类, 在Java的基础上忽略不识别转义.
- * 使得revertLiteral可以完整的还原convertLiteral的字符串.
+ * <p>
+ * 声明：借鉴于<code>java.util.Properties</code>
  *
- * @see org.commontemplate.util.JavaStringConvertUtils
  * @author liangfei0201@163.com
  */
 public final class StringConvertUtils {
@@ -12,7 +12,7 @@ public final class StringConvertUtils {
 	private StringConvertUtils() {}
 
 	/**
-	 * 反斜杠转义字符，转义：\" \' \n \r \t \f \b \\uXXXX \\\\等字符，并忽略不识别的转义，如：\x
+	 * 反斜杠转义字符，转义：\n \r \t \f \b \u1234 \" \' \\等字符，并忽略不识别的转义，如：\h
 	 */
 	public static String convertLiteral(String theString) {
 

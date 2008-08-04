@@ -338,8 +338,8 @@ final class ContextImpl extends Context {
 
 	// 代理 栈顶的LocalContext --------------
 
-	public LocalContext getSuperLocalContext() {
-		return getCurrentLocalContext().getSuperLocalContext();
+	public LocalContext getParentLocalContext() {
+		return getCurrentLocalContext().getParentLocalContext();
 	}
 
 	public String getLocalContextName() {

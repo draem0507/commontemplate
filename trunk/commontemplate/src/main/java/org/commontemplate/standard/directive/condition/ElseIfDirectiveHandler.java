@@ -28,11 +28,11 @@ public class ElseIfDirectiveHandler extends MiddleBlockDirectiveHandler {
 	}
 
 	public void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
-		Assert.assertNotNull(context.getSuperLocalContext().getStatus(IfDirectiveHandler.IF_STATUS), "ElseIfDirectiveHandler.location.error");
-		if (! ((Boolean)context.getSuperLocalContext().getStatus(IfDirectiveHandler.IF_STATUS)).booleanValue()
+		Assert.assertNotNull(context.getParentLocalContext().getStatus(IfDirectiveHandler.IF_STATUS), "ElseIfDirectiveHandler.location.error");
+		if (! ((Boolean)context.getParentLocalContext().getStatus(IfDirectiveHandler.IF_STATUS)).booleanValue()
 				&& TypeUtils.isTrue(param)) {
 			DirectiveUtils.renderAll(innerElements, context);
-			context.getSuperLocalContext().setStatus(IfDirectiveHandler.IF_STATUS, Boolean.TRUE);
+			context.getParentLocalContext().setStatus(IfDirectiveHandler.IF_STATUS, Boolean.TRUE);
 		}
 	}
 

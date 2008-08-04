@@ -186,8 +186,8 @@ public abstract class ContextProxy extends Context {
 		return context.getStatus(name);
 	}
 
-	public LocalContext getSuperLocalContext() {
-		return context.getSuperLocalContext();
+	public LocalContext getParentLocalContext() {
+		return context.getParentLocalContext();
 	}
 
 	public Template getTemplate(String name, String encoding)

@@ -31,7 +31,7 @@ public class VariableDefineDirectiveHandler extends DirectiveHandlerSupport {
 				} else if ("root".equals(scope)) {
 					context.getRootLocalContext().putVariable(var, value);
 				} else if ("super".equals(scope)) {
-					context.getSuperLocalContext().putVariable(var, value);
+					context.getParentLocalContext().putVariable(var, value);
 				} else if ("local".equals(scope) || "this".equals(scope)) {
 					context.putVariable(var, value);
 				} else {

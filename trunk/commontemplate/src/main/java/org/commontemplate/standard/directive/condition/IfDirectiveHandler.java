@@ -36,7 +36,7 @@ public class IfDirectiveHandler extends BlockDirectiveHandler {
 		boolean condition = TypeUtils.isTrue(param);
 		if (condition)
 			DirectiveUtils.renderAll(innerElements, context);
-		LocalContext superLocalContext = context.getSuperLocalContext();
+		LocalContext superLocalContext = context.getParentLocalContext();
 		superLocalContext.setStatus(IF_STATUS, Boolean.valueOf(condition));
 	}
 

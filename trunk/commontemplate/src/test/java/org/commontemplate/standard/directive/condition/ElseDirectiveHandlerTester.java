@@ -47,14 +47,14 @@ public class ElseDirectiveHandlerTester extends TestCase {
 		innerElements.add(new MockDirective("b"));
 		innerElements.add(new MockDirective("c"));
 		
-		context.getSuperLocalContext().setStatus(IfDirectiveHandler.IF_STATUS, Boolean.valueOf(false));
+		context.getParentLocalContext().setStatus(IfDirectiveHandler.IF_STATUS, Boolean.valueOf(false));
 		
 		directiveHandler.doRender(context, "directiveName", null, innerElements);
 		
 		Writer out = context.getOut();
 		assertEquals("abc", out.toString());
 		
-		assertNull(context.getSuperLocalContext().getStatus(IfDirectiveHandler.IF_STATUS));
+		assertNull(context.getParentLocalContext().getStatus(IfDirectiveHandler.IF_STATUS));
 		
 	}
 	
@@ -73,14 +73,14 @@ public class ElseDirectiveHandlerTester extends TestCase {
 		innerElements.add(new MockDirective("b"));
 		innerElements.add(new MockDirective("c"));
 		
-		context.getSuperLocalContext().setStatus(IfDirectiveHandler.IF_STATUS, Boolean.valueOf(true));
+		context.getParentLocalContext().setStatus(IfDirectiveHandler.IF_STATUS, Boolean.valueOf(true));
 		
 		directiveHandler.doRender(context, "directiveName", null, innerElements);
 		
 		Writer out = context.getOut();
 		assertEquals("", out.toString());
 		
-		assertNull(context.getSuperLocalContext().getStatus(IfDirectiveHandler.IF_STATUS));
+		assertNull(context.getParentLocalContext().getStatus(IfDirectiveHandler.IF_STATUS));
 		
 	}
 	

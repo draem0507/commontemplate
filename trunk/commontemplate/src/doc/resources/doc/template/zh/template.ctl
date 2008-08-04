@@ -23,7 +23,7 @@ $!
 								<br/>
 								<b>二. 特殊符转义:</b><br/>
 								<b>(1) \ 为转义符，\\ 取消转义(或自转义)</b><br/>
-								<font color="green">(注：未处于转义位置的斜杠不作任何处理，以避免模板中到处使用双斜杠)</font><br/>
+								<font color="green">(注：未处于转义位置的斜线不作任何处理，以避免模板中到处使用双斜线)</font><br/>
 								<b>(2) 使用 \$ 转义指令前导符</b><br/>
 								如：“\${name}”输出“${name}”<br/>
 								如：“\\${name}”输出“\value” <font color="green">(注：前导符未被转义)</font><br/>
@@ -68,7 +68,7 @@ $!
 								国际化信息输出:<br/>
 								$msg{"home.title"}<br/>
 								$msg{"home.title", arg0, arg1}<br/>
-								输出块指令：<font color="green">(注：与上面两个指令功能相同，用于注释版语法外套)</font><br/>
+								块指令：<font color="green">(注：与上面两个指令功能相同，用于注释版语法外套)</font><br/>
 								表达式结果输出：忽略指令内部块内容<br/>
 								$out{user.name} James $end<br/>
 								&lt;!--$out{user.name}--&gt; James &lt;!--$end--&gt;<br/>
@@ -78,6 +78,7 @@ $!
 								$message{"home.title"} welcome $end<br/>
 								&lt;!--$message{"home.title"}--&gt; welcome &lt;!--$end--&gt;<br/>
 								<b>(2) 条件指令:</b><br/>
+								如果参数条件为真则执行其内部块:<br/>
 								$if{user.name == "james"}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$elseif{ user.name == "kent"}<br/>
@@ -94,10 +95,12 @@ $!
 								$cycle{color: ("red", "blue", "green")}<br/>
 								迭代集合或数组:<br/>
 								$for{user : users}<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;从循环显示项中取值 <font color="green">(注：cycle变量每次next取值时向后滚动，到最后一个值时将循环到第一个值)</font><br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;${color.next} ${color.value} ${color.index}<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;中断循环 <font color="green">(注：条件判定与指令合并，以避免冗长的语句：$if {for.count &gt; 5} $break $end)</font><br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;$break{for.count &gt; 5}<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;从循环显示项中取值 <font color="green">(注：可用于交替颜色的表格行)</font><br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;${color.next} <font color="green">(注：cycle变量每次next取值时向后滚动，到最后一个值时将循环到第一个值)</font><br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;${color.value} ${color.index} <font color="green">(注：取值但不滚动)</font><br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;${color.values} <font color="green">(注：取原始定义数据集合)</font><br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;中断循环<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;$break{for.count &gt; 5} <font color="green">(注：条件判定与指令合并，以避免冗长的语句：$if {for.count &gt; 5} $break $end)</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;继续循环<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;$continue{user.name == null}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;状态<br/>
@@ -129,10 +132,10 @@ $!
 								$var{super -&gt; name = "james"}<br/>
 								在根级上下文定义变量<br/>
 								$var{root -&gt; name = "james"}<br/>
-								在指定上下文定义变量<br/>
-								$var{session -&gt; name = "james"}<br/>
 								在全局上下文定义变量(整个引擎内共享)<br/>
 								$var{global -&gt; name = "james"}<br/>
+								在指定上下文定义变量<br/>
+								$var{session -&gt; name = "james"}<br/>
 								常见上下文简化指令:<br/>
 								$root{name = "james"} 等价于 $var{root -> name = "james"}<br/>
 								$global{name = "james"} 等价于 $var{global -> name = "james"}<br/>
@@ -242,8 +245,22 @@ $!
 								$ignore<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end <br/>
-								压缩空格: <font color="green">(注: 将多个连续的空白符压成一个空格)</font><br/>
+								压缩空白符: <font color="green">(注: 将多个连续的空白符压成一个空格)</font><br/>
 								$compress<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+								$end <br/>
+								删除空白符: <font color="green">(注: 将包含的空白符全部删除)</font><br/>
+								$strip<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+								$end <br/>
+								截短空白符: <font color="green">(注: 将两端的空白符截掉)</font><br/>
+								$trim<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+								$end <br/>
+								$leftTrim <font color="green">(注: 只将左端的空白符截掉)</font><br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+								$end <br/>
+								$rightTrim <font color="green">(注: 只将右端的空白符截掉)</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end <br/>
 								转义特殊符:<br/>
@@ -262,6 +279,18 @@ $!
 								停止页面解析：<br/>
 								$stop<br/>
 								$stop{loginUser == null} <font color="green">(注: 表达式结果为真时停止页面解析)</font><br/>
+								异常捕获指令：<br/>
+								$try<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;$exec{"a$$ff$$"}<br/>
+								$catch{e: "org.commontemplate.core.RenderingException"} <font color="green">(注: 缺省变量名为exception, 没有参数表示捕获所有异常)</font><br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;${e}<br/>
+								$end<br/>
+								或者：<br/>
+								$try<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;$exec{"a$$ff$$"}<br/>
+								$catch{e: &org.commontemplate.core.RenderingException}  <font color="green">(注: 参见一元操作符&)</font><br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;${e}<br/>
+								$end<br/>
 								性能监测：(记录其内部块的运行时间，并将时间存入变量中)<br/>
 								$time{"xxx"} 或者 $time:xxx<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>

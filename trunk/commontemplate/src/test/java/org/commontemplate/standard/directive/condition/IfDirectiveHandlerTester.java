@@ -52,7 +52,7 @@ public class IfDirectiveHandlerTester extends TestCase {
 		
 		Writer out = context.getOut();
 		assertEquals("abc", out.toString());
-		assertTrue(((Boolean)(context.getSuperLocalContext().getStatus(IfDirectiveHandler.IF_STATUS))).booleanValue());
+		assertTrue(((Boolean)(context.getParentLocalContext().getStatus(IfDirectiveHandler.IF_STATUS))).booleanValue());
 	}
 	
 	/**
@@ -75,7 +75,7 @@ public class IfDirectiveHandlerTester extends TestCase {
 		
 		Writer out = context.getOut();
 		assertEquals("", out.toString());
-		assertFalse(((Boolean)(context.getSuperLocalContext().getStatus(IfDirectiveHandler.IF_STATUS))).booleanValue());
+		assertFalse(((Boolean)(context.getParentLocalContext().getStatus(IfDirectiveHandler.IF_STATUS))).booleanValue());
 	}
 	
 }

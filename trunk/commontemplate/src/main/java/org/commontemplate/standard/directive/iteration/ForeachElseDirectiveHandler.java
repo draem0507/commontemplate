@@ -29,10 +29,10 @@ public class ForeachElseDirectiveHandler extends MiddleBlockDirectiveHandlerSupp
 	public void doRender(Context context, String directiveName,
 			Object param, List innerElements)
 			throws Exception {
-		Assert.assertNotNull(context.getSuperLocalContext().getStatus(ForeachDirectiveHandler.FOR_STATUS), "ForeachElseDirectiveHandler.location.error");
-		if (! ((Boolean)context.getSuperLocalContext().getStatus(ForeachDirectiveHandler.FOR_STATUS)).booleanValue())
+		Assert.assertNotNull(context.getParentLocalContext().getStatus(ForeachDirectiveHandler.FOR_STATUS), "ForeachElseDirectiveHandler.location.error");
+		if (! ((Boolean)context.getParentLocalContext().getStatus(ForeachDirectiveHandler.FOR_STATUS)).booleanValue())
 			DirectiveUtils.renderAll(innerElements, context);
-		context.getSuperLocalContext().removeStatus(ForeachDirectiveHandler.FOR_STATUS);
+		context.getParentLocalContext().removeStatus(ForeachDirectiveHandler.FOR_STATUS);
 	}
 
 }

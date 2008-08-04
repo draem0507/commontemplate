@@ -1,4 +1,4 @@
-package org.commontemplate.standard.directive.extend;
+package org.commontemplate.standard.filter;
 
 import java.io.Serializable;
 
@@ -7,13 +7,13 @@ import org.commontemplate.core.OutputFilter;
 public class IgnoreOutputFilter implements OutputFilter, Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
-	private static IgnoreOutputFilter ignoreOutputFilter = new IgnoreOutputFilter();
-	
+
+	private static IgnoreOutputFilter IGNORE_OUTPUT_FILTER = new IgnoreOutputFilter();
+
 	private IgnoreOutputFilter() {}
-	
+
 	public static IgnoreOutputFilter getInstance() {
-		return ignoreOutputFilter;
+		return IGNORE_OUTPUT_FILTER;
 	}
 
 	public String filter(String text) {

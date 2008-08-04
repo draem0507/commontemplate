@@ -69,6 +69,7 @@ BeanUtils.class.required=class不能为空！
 BeanUtils.property.required=property不能为空！
 BeanUtils.getter.return.void=getter返回值类型不能为void！
 ClassUtils.class.name.required=类名不能为空！
+ClassUtils.constructor.no.such="无法访问{0}的{1}构造函数！"
 ClassUtils.method.no.such="无法访问{0}的{1}方法！"
 FastWriter.buffer.size.negative=buffer size不能小于0!
 
@@ -171,6 +172,8 @@ Selector.condition.expression.error=三目运算，\"?\"号应与\":\"匹配!
 ObjectPropertyOperatorHandler.property.no.such=在 {0} 中，没有找到属性 {1} 的相关取值函数！
 ObjectPropertyOperatorHandler.sequence.no.such="没有找到序列:{0} -- {1}
 
+CatchDirectiveHandler.location.error=$catch指令位置错误, 必需在$try后面!
+CatchDirectiveHandler.parameter.error=$catch指令参数错误! 必需为类名, 如: $catch{e: "com.xxx.XXXException"}
 SnatchDirectiveHandler.parameter.error=snatch指令参数错误,必需为字符串!如:$snatch{'xxx.jsp'}或$snatch{'xxx.jsp','utf-8'}
 SnatchDirectiveHandler.snatch.error=抓取页面失败, 错误信息: {0}
 ElseDirectiveHandler.location.error=else 的嵌套关系错误, 必需在 if 或 elseif 后面!

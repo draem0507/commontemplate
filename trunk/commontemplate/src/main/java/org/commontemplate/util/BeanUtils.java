@@ -267,4 +267,65 @@ public class BeanUtils {
 		}
 	}
 
+	/**
+	 * 设置对象的属性值
+	 *
+	 * @param object 对象实例
+	 * @param property 属性名
+	 * @param value 待设置属性的值
+	 * @throws SecurityException
+	 * @throws NoSuchMethodException
+	 * @throws IllegalArgumentException
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 */
+	public static void setProperty(Object object, String property, Object value) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+		if (object == null)
+			return;
+		Method setter = getSetter(object.getClass(), property, value);
+		setter.invoke(object, new Object[]{value});
+	}
+
+	/**
+	 * 设置对象的多个属性值
+	 *
+	 * @param object 对象实例
+	 * @param properties 属性集合
+	 * @throws SecurityException
+	 * @throws NoSuchMethodException
+	 * @throws IllegalArgumentException
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 */
+	public static void setProperties(Object object, Map properties) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+		if (object == null)
+			return;
+		for (Iterator iterator = properties.entrySet().iterator(); iterator.hasNext();) {
+			Map.Entry entry = (Map.Entry)iterator.next();
+			String property = (String)entry.getKey();
+			Object value = entry.getValue();
+			Method setter = getSetter(object.getClass(), property, value);
+			setter.invoke(object, new Object[]{value});
+		}
+	}
+
+	/**
+	 * 查找setXXX的属性Setter方法
+	 *
+	 * @param clazz 类元
+	 * @param property 属性名
+	 * @return 属性Setter方法
+	 * @throws NoSuchMethodException Setter不存时抛出
+	 */
+	private static Method getSetter(Class clazz, String property, Object value) throws NoSuchMethodException, SecurityException {
+		if (clazz == null)
+			throw new java.lang.NullPointerException("类元不能为空！");
+		if (property == null)
+			throw new java.lang.NullPointerException("属性名不能为空！");
+		property = property.trim();
+		String upper = property.substring(0, 1).toUpperCase() + property.substring(1);
+		String setter = "set" + upper;
+		return ClassUtils.getMethod(clazz, setter, new Object[]{value});
+	}
+
 }

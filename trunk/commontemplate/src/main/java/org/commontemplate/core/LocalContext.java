@@ -13,7 +13,7 @@ public abstract class LocalContext extends BaseContext implements OutputControll
 	 *
 	 * @return 上级变量上下文, 若当前上下文为根上下文则返回null
 	 */
-	public abstract LocalContext getSuperLocalContext();
+	public abstract LocalContext getParentLocalContext();
 
 	/**
 	 * 获取变量上下文名
