@@ -292,7 +292,7 @@ $!
 								&nbsp;&nbsp;&nbsp;&nbsp;${e}<br/>
 								$end<br/>
 								断言指令：<br/>
-								$assert{user != null}<br/>
+								$assert{user != null}  <font color="green">(注: 如果表达式结果不为真, 则抛出异常)</font><br/>
 								$assert{(user != null), "error messages"}<br/>
 								调试日志：<br/>
 								$log{"debug messages..."}<br/>
