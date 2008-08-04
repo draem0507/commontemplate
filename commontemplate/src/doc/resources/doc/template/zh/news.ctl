@@ -1,6 +1,68 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
 	<!--$overzone{"content"}-->
 $!
+								<b>0.8.5 版本发布！(2008-08-04)</b> <a href="downloads.html">下载...</a><br/>
+								此版本主要完善核心引擎和标准指令集.<br/>
+								Bug Fixed:<br/>
+								修复BeanUtils查找对象属性的BUG.<br/>
+								修复调试器变量树栈溢出BUG.<br/>
+								调试窗口在Tomcat下无效的BUG.<br/>
+								调试窗口变量树改为延迟加载方式(点击节点时加载其子节点), 避免变量相互引用时, 树节点无穷递归.<br/>
+								修复调试器线程列表显示错误的BUG.<br/>
+								修复三目运算符不能处理null值的BUG, ${null ? "a" : "b"}原来错误输出:"a:b", 改正后输出:"b"<br/>
+								加入对表达式未结束括号的检查, 并抛出正确的异常信息.<br/>
+								修改当有多余的$end指令时抛出友好异常信息, 以前抛出空栈异常.<br/>
+								修改ObjectToJsonPropertyHandler, JavaScriptEscapeFilter, StringEscapeJsHandler, 采用JavaScriptUtils实现转义.<br/>
+								对$if, $elseif, $for等指令进行必需有参数表达式检查, 如果没有则抛出异常信息.<br/>
+								修复StringConvertUtils在转换单一字符上的BUG.<br/>
+								修复ClassUtils对参数相近类型的识别, 使表达式中的函数对泛型等均能正常调用.<br/>
+								修复表达式解析出错时, 没有提示出错位置信息的BUG.<br/>
+								Function Changed:<br/>
+								宏指令改为即可以传参, 又可以访问变量上下文.<br/>
+								块指令调用后缀默认值由"_block"改成".block"(可配置)), 如: $table.block{name : "xxx"} ... $end<br/>
+								$using指令代替原有$import指令的功能(将整个模板作为宏), $import指令改为导入模板内的宏定义. <br/>
+								改为采用反单引号表示不转义串, 不再提倡使用@符.<br/>
+								New Feature:<br/>
+								调试窗口模板面板右键菜单加入"属性"项, 显示模板名称,编码,修改时间等信息.<br/>
+								增加对YAML数据格式的支持. <a href="viewer.html">查看器</a><br/>
+								完成SpringConfigurationLoader, 通过Spring的beans方式组装配置.<br/>
+								实现外部数据加载指令$load{"xxx.xml"}.<br/>
+								增加结束指令对块指令名称的检查, 如: $end{"if"}, 如果参数名称与被结束的块指令不匹配时抛出异常信息.<br/>
+								实现冒号简化语法: $macro:xxx 等价于 $macro{"xxx"}, $end:if 等价于 $end{"if"}<br/>
+								实现任意区间变量定义指令:　$var{session -> user = name}, $var{global -> user = name}<br/>
+								增加===和!==操作符, 表示内存地址相等, 保证功能上的完备性.<br/>
+								增加$return指令, 用于中断$macro.<br/>
+								实现递归迭代, 如: $for{menu -> children : menus}<br/>
+								实现注释结束符, 不解释块结束符的转义, 如: $* \*$ *$ 以及 $! \!$ !$<br/>
+								实现展开式列表，如：${1,3..6,9} 输出展开式列表：[1,3,4,5,6,9]，而：${1,(3..6),9} 或者 ${1,[3..6],9} 输出两级列表：[1,[3,4,5,6],9]<br/>
+								增加对".12"格式的小数支持, 保持与Java一致.<br/>
+								增加集合乘法支持, 如: ${["a", "b"] * 2} 输出: [a, b, a, b]<br/>
+								增加字符串除号("/")运算, 表示分割字符串, 如: ${"aaa.bbb.ccc" / '.'} 输出数组: [aaa, bbb, ccc]<br/>
+								增加字符串减号("-")运算, 表示过滤字符串, 如: ${"aaa.bbb.ccc" - '.'} 输出: aaabbbccc<br/>
+								增加操作符"^~", "$~", "*~", 与原有的"^=", "$=", "*="功能相似, 不同点在于忽略大写小比较.<br/>
+								增加操作符"^-", "$-" 分别表示截取前后缀，如：${"note.txt" ^- "."} 输出：note ，而：${"note.txt" $- "."} 输出：txt<br/>
+								增加操作符"^?", "$?" 分别表示indexOf, lastIndexOf，如：${"aaa.bbb.ccc" ^? "."} 输出：3 ，而：${"aaa.bbb.ccc" $? "."} 输出：7<br/>
+								增加操作符"*?", 表示整个字符串中匹配子串的个数，如：${"xxxabcxxxabcxxx" *? "abc"} 输出：2<br/>
+								增加C#.Net的is操作符, 功能与instanceof相同, 但更简洁, 提倡使用is.<br/>
+								增加$操作符, 表示创建实例, 如: ${$com.xxx.User(id: 1, name:""james)}<br/>
+								增加sum,avg,max,min等聚合函数, 如: ${sum(3,4,7)} 输出: 14<br/>
+								增加命名转换扩展属性: String.toCamelNaming, String.toCapitalNaming, String.toUnderlineNaming.<br/>
+								增加uncapitalize与capitalize相对应. 去除首字母大写.<br/>
+								增加String.toAscii和toUnicode, 分别表示Unicode码与Ascii码之间的转换.<br/>
+								增加String.toSwapCase, 交换大小写, 把字符串中大写的改为小写, 小写的改为大写, 与toUpperCase,toLowerCase对应.<br/>
+								增加字符填充leftPad和rightPad实现, 如: ${"123".leftPad(6, '0')} 输出：000123<br/>
+								增加 $ignore...$end 指令, 执行指令内部块, 但忽略输出.<br/>
+								增加 $capture{"variableName"} ... $end 指令, 捕获指令内部块输出到变量中.<br/>
+								增加 $strip, $trim, $leftTrim, $rightTrim 等指令, 用于删除空白符和截短两端空白符.<br/>
+								增加 $try $catch 指令, 用于捕获$exec和$eval等动态指令错误.<br/>
+								增加 $assert 指令, 用于断言前置条件,不变式等.<br/>
+								增加数字扩展属性: positive, negative, abs, sign<br/>
+								增加Float和Double类型取整属性 toCeilingInteger(向上取整), toFloorInteger(向下取整)<br/>
+								增加Integer和Long类型转为二进制,八进制,十六进制表示串属性 toBinaryString, toOctalString, toHexString<br/>
+								增加String.empty, whitespace, naming, number等字符串类型状态属性.<br/>
+								------------<br/>
+								感谢James.Li和Andrew.Chen的热心帮助<br/>
+								<br/>
 								<b>0.8.4 版本发布！(2008-06-24)</b> <a href="downloads.html">下载...</a><br/>
 								加强各DriectiveHandler的单元测试.<br/>
 								修复不解释块"$! !$!\$$!"状态机图的BUG, 并全面整理状态机图.<br/>
