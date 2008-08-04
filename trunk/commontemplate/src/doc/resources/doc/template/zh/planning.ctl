@@ -11,6 +11,251 @@ $!
 											<td>重要性</td>
 										</tr>
 										<tr>
+											<td>实现命令行调试器.</td>
+											<td>需求</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>服务器以命令行启动时,Swing不可用 (自动适应命令行调试器).</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>实现远程调试器,通过配置服务器IP,端口, TCP连接到服务器进行调试,客户端同样可用Swing或命令行.</td>
+											<td>需求</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>调试窗口不能同时打开多个模板.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>查看器可设置Classpath,引入其它第三方包.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>配置文件容错处理, 可设置当类不存在时忽略.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>CTE脱离MVC框架运行. codebehind.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>ResumeAll状态应存放在ThreadLocal内, 保证当前线程执行不被挂起.</td>
+											<td>BUG</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>扩展点的文档整理.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>加入commontemplate-plugin.properties支持, 自动抓取.</td>
+											<td>需求</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>加入对DOM模型的支持,root,parent,children,ancestors,name,type,namespace.</td>
+											<td>需求</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>$for指令可迭代对象, 另入反射iterator()和enumerator()函数.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>$for对象转集合接口, 可按类型配置, 如: 将NodeList转成集合.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>Block, Node 两个接口待重构.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>(自动导入)全局宏定义, 全局父模板.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>相似函数调用时, String转为char处理.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>数字操作符: round 基于有效位四舍五入.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>扩展属性也应能处理get和is前缀.</td>
+											<td>BUG</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>$setting指令, 用于设置Locale,TimeZone等.</td>
+											<td>需求</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>扩展属性list.sort.</td>
+											<td>需求</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>扩展属性number.sin, cos, tan, ctan.</td>
+											<td>需求</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>Element不必保持其原生文本, 只要有Location, 到Template中统一读取, 以减小模板树占用的内存大小.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>允许函数调用, 禁止void函数调用, 正则表达式匹配禁止, 如delete*,remove*,save*,update*</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>配置中的集合, 过滤空项.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>明显为List的配置, 将Chain放入引擎中实现.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>可动态编辑Debug窗口中的变量.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>Debug窗口中的变量, 有变化的用红色显示.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>Web应用配置默认继承于标准web配置.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>属性外套实现有BUG, 空指针检测不全.</td>
+											<td>BUG</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>四则运算优化器有BUG, 已暂时屏蔽.</td>
+											<td>BUG</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>context不作为关键字.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>清理不明确的操作符,并讨论操作符是否合理.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>BreakVisitException不应抛给调用者.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>Bpackage.name与package["name"],一个先查子包,一个先查属性.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>实现外部文件引入List和Map.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
 											<td>出错位置信息准确性, 当抛出异常时, 应显示准确的出错元素在模板中的行列位置, 并显示出错位置附件的模板内容.</td>
 											<td>BUG</td>
 											<td>中</td>
