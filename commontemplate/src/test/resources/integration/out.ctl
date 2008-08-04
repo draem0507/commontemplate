@@ -1,1 +1,1 @@
-${(1:1).key.class.name}
+$assert{true, "ssssss"}

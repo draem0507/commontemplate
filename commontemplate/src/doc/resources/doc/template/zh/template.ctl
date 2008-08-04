@@ -291,16 +291,19 @@ $!
 								$catch{e: &org.commontemplate.core.RenderingException}  <font color="green">(注: 参见一元操作符&)</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;${e}<br/>
 								$end<br/>
-								性能监测：(记录其内部块的运行时间，并将时间存入变量中)<br/>
-								$time{"xxx"} 或者 $time:xxx<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
-								$end<br/>
+								断言指令：<br/>
+								$assert{user != null}<br/>
+								$assert{(user != null), "error messages"}<br/>
 								调试日志：<br/>
 								$log{"debug messages..."}<br/>
 								$log{debug: "debug messages..."}<br/>
 								$log{info: "info messages..."}<br/>
 								$log{warn: "warn messages..."}<br/>
 								$log{error: "error messages..."}<br/>
+								性能监测：(记录其内部块的运行时间，并将时间存入变量中)<br/>
+								$time{"xxx"} 或者 $time:xxx<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+								$end<br/>
 								单步调试断点：(此指令将在其所在行设置断点) <a href="debug.html">更多...</a><br/>
 								$breakpoint 或者 $. <font color="green">(注: 指令名称为点号的指令)</font><br/>
 								<br/>

@@ -226,6 +226,8 @@ BinaryOperatorHandlerChain.unhandle.error=无法处理参数类型为: ({0}, {1}) 值为: (
 UnaryOperatorHandlerChain.handler.required=一元操作符处理类不能为空!
 UnaryOperatorHandlerChain.handler.type.error=一元操作符处理类:{0} 未实现接口: {1}
 UnaryOperatorHandlerChain.unhandle.error=无法处理参数类型为: {0} 值为: {1}, 已尝试调用过的处理类: {2}
+AssertDirectiveHandler.parameter.error=$assert指令不能处理多于两个参数.
+AssertDirectiveHandler.assert.error=断言错误!
 
 MruCache.max.strong.size=maxStrongSize必需大于或等于零
 MruCache.max.soft.size=maxSoftSize必需大于或等于零
