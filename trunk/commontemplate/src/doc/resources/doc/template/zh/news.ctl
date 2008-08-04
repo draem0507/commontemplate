@@ -87,6 +87,8 @@ $!
 								增加字符串abbreviate操作, 如: ${"abcdefghijk" % 6} 或者 ${'abcdefghijk'.abbreviate(6)}, 输出: abc...<br/>
 								core包增加ExpressionFactory, ExpressionBuilder, TemplateElementFactory, TemplateBuidler, 使第三方工具能脱离模板解析过程构建模板.<br/>
 								Element增加getTemplate(),获取元素所在模板的引用.<br/>
+								------------<br/>
+								感谢Guileen参与开发<br/>
 								<br/>
 								<b>0.8.3 版本发布！(2008-03-30)</b> <a href="downloads.html">下载...</a><br/>
 								此版本新功能较少, 主要为加强测试与BUG修复. <br/>
