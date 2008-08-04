@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts-config PUBLIC 
+	"-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" 
+	"http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<struts-config>
+	<form-beans>
+		<form-bean name="userForm" type="com.xxx.web.struts.form.UserForm" />
+	</form-beans>
+	<action-mappings>
+		<action path="/list" name="userForm" type="com.xxx.web.struts.UserListAction">
+			<forward name="success" path="/list.ctl" />
+		</action>
+		<action path="/view" name="userForm" type="com.xxx.web.struts.UserViewAction">
+			<forward name="success" path="/view.ctl" />
+		</action>
+	</action-mappings>
+	<message-resources parameter="messages" null="false" />
+</struts-config>
+

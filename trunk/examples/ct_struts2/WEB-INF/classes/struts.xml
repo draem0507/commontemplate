@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="test" extends="commontemplate-default">
+		<action name="list" class="com.xxx.web.struts2.UserAction" method="list">
+			<result>/list.ctl</result>
+		</action>
+		<action name="view" class="com.xxx.web.struts2.UserAction" method="view">
+			<result>/view.ctl</result>
+		</action>
+		<action name="edit" class="com.xxx.web.struts2.UserAction" method="view">
+			<result>/edit.ctl</result>
+		</action>
+		<action name="change" class="com.xxx.web.struts2.LanguageAction" method="change">
+			<result type="redirect-action">list</result>
+		</action>
+	</package>
+</struts>
