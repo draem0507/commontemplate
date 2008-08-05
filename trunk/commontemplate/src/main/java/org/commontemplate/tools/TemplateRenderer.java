@@ -40,6 +40,12 @@ public class TemplateRenderer {
 
 	private final Engine engine;
 
+	// TODO 将engine单例化
+
+	public static void setConfiguration(Configuration config) {
+
+	}
+
 	public TemplateRenderer(String templateText) {
 		this(templateText, PropertiesConfigurationLoader.loadStandardConfiguration());
 	}

@@ -2,7 +2,7 @@
 	<!--$overzone{"content"}-->
 								<b>一、什么是CommonTemplate?</b><br/>
 								CommonTemplate是一个模板引擎，用于编译运行<a href="template.html">CTL模板</a>语言，并且模板可以在Java，.Net，JS等中通用；<br/>
-								其主要目标是作为JSP，ASP.Net等的替代方案，以保证用简单的语法，良好的结构，不混杂业务逻辑的方式书写页面；<br/>
+								其主要目标是作为JSP，ASP.Net等页面技术的另一种选择方案，以保证用简单的语法，良好的结构，不混杂业务逻辑的方式书写页面；<br/>
 								适合于充当Model-View-Controller(MVC)模式应用的View角色，以使能更好的分离页面设计人员与业务开发人员的职责；<br/>
 								也可以作为动态文本生成工具，生成HTML、XML、Mail、Java源代码或其它文本等。<br/>
 								<br/>
