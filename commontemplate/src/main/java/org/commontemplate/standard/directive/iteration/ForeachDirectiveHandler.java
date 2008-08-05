@@ -205,7 +205,7 @@ public class ForeachDirectiveHandler extends BlockDirectiveHandler {
 			return null;
 		if (data instanceof Collection)
 			return (Collection) data;
-		else if (data instanceof Object[])
+		else if (data instanceof Object[]) // TODO 未处理基本类型
 			return Arrays.asList((Object[]) data);
 		else if (data instanceof Map)
 			return ((Map) data).entrySet();

@@ -35,6 +35,8 @@ public class ExpressionEvaluator implements VariableResolver {
 
 	private final String expr;
 
+	// TODO 将engine单例化
+
 	public ExpressionEvaluator(String expr) {
 		this(expr, PropertiesConfigurationLoader.loadStandardExpressionConfiguration());
 	}

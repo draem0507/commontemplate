@@ -1,1 +1,3 @@
-$assert{true, "ssssss"}
+$for{chr : "asdfasd".toCharArray}
+${chr},
+$end

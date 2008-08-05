@@ -257,10 +257,10 @@ $!
 								$trim<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end <br/>
-								$leftTrim <font color="green">(注: 只将左端的空白符截掉)</font><br/>
+								$ltrim <font color="green">(注: 只将左端的空白符截掉)</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end <br/>
-								$rightTrim <font color="green">(注: 只将右端的空白符截掉)</font><br/>
+								$rtrim <font color="green">(注: 只将右端的空白符截掉)</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end <br/>
 								转义特殊符:<br/>

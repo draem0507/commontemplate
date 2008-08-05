@@ -24,8 +24,8 @@ $!
 								<b>二、每日构建</b> (当前版本0.8.6-dev)<br/>
 								<table border="0" cellpadding="2" cellspacing="0">
 									<tr>
-										<td height="31"><a target="_blank" href="http://commontemplate.googlecode.com/svn/trunk/commontemplate/dist" target="_blank"><img src="../images/google_code.gif" border="0" width="88" height="31" /></a></td>
-										<td><a target="_blank" href="http://commontemplate.googlecode.com/svn/trunk/commontemplate/dist" target="_blank">http://commontemplate.googlecode.com/svn/trunk/commontemplate/dist</a></td>
+										<td height="31"><a target="_blank" href="http://commontemplate.googlecode.com/svn/trunk/build" target="_blank"><img src="../images/google_code.gif" border="0" width="88" height="31" /></a></td>
+										<td><a target="_blank" href="http://commontemplate.googlecode.com/svn/trunk/build" target="_blank">http://commontemplate.googlecode.com/svn/trunk/build</a></td>
 									</tr>
 								</table>
 								(1) commontemplate-SNAPSHOT.jar 标准二进制包<br/>
