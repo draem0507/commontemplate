@@ -259,6 +259,7 @@ $!
 								toInteger false为0, true为1, 如: ${true.toInteger} 输出：1<br/>
 								<b>(7) 数组(Array):</b><br/>
 								size 数组长度，保持与List统一，如：${arr.size}<br/>
+								sort 数组或List排序，如：${arr.sort} ${list.sort} ${['f','a','d'].sort}<br/>
 								<br/>
 								<b>六. 对象函数及扩展函数</b><br/>
 								<b>函数调用格式</b><br/>
