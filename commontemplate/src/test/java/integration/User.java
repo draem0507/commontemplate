@@ -2,7 +2,7 @@ package integration;
 
 import java.util.Date;
 
-public class User {
+public class User implements Comparable {
 
 	private int id;
 
@@ -88,6 +88,15 @@ public class User {
 
 	public static final String getStaticName() {
 		return "user";
+	}
+
+	public int compareTo(Object o) {
+		if (o == null)
+			return -1;
+		if (! (o instanceof User))
+			return -1;
+		User u = (User)o;
+		return this.id - u.id;
 	}
 
 }
