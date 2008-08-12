@@ -196,6 +196,7 @@ $!
 								capitalize 首字母大写, eg: ${"james".capitalize} (输出：James)<br/>
 								uncapitalize 首字母小写, eg: ${"James".uncapitalize} (输出：james)<br/>
 								toSwapCase 交换大小写, 把串中大写的改小写, 小写的改为大写. 如：${"ABCdef".toSwapCase} 输出：abcDEF <font color="green">(注：与toUpperCase, toLowerCase相对应)</font><br/>
+								toClass 将字符串转为类元, 如: ${"com.xxx.User".toClass}<br/>
 								toDate 以yyyy-MM-dd格式转换为Date, 如:  ${"2007-01-01".toDate}<br/>
 								toTime 以HH:mm:ss格式转换为Date, 如:  ${"22:10:15".toTime}<br/>
 								toDateTime 以yyyy-MM-dd HH:mm:ss格式转换为Date, 如:  ${"2007-01-01 23:10:05".toDateTime}<br/>
