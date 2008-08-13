@@ -52,7 +52,7 @@ final class ExpressionProvider {
 	Expression getUnaryExpression(Token token, boolean isFunction) throws ParsingException {
 		String name = token.getMessage().trim();
 		// 字符串
-		if (TypeUtils.isString(name))
+		if (TypeUtils.isEscapeString(name))
 			return new ConstantImpl(StringConvertUtils.convertLiteral(name.substring(1, name.length() - 1)), token.getLocation());
 
 		// 非转义字符串

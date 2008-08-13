@@ -16,6 +16,7 @@ import org.commontemplate.core.Variable;
 import org.commontemplate.engine.expression.ExpressionEngine;
 import org.commontemplate.util.Assert;
 import org.commontemplate.util.Location;
+import org.commontemplate.util.TypeUtils;
 import org.commontemplate.util.scanner.Token;
 
 /**
@@ -243,6 +244,8 @@ final class DirectiveProvider {
 		// 结束指令
 		if (syntax.getEndDirectiveName().equals(name)) {
 			if (expressionSource != null) { // $end指令不解析表达式
+				if (TypeUtils.isString(expressionSource))
+					expressionSource = expressionSource.substring(1, expressionSource.length() - 1);
 				return new EndDirective(expressionSource);
 			}
 			return EndDirective.END_DIRECTIVE;
