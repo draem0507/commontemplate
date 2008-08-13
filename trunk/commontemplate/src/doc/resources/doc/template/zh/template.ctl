@@ -140,6 +140,9 @@ $!
 								$block{myblock}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
+								$block{global -&gt; myblock} <font color="green">(注: 将块变量定义到指定区域)</font><br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+								$end<br/>
 								显示块变量: <font color="green">(注：执行块变量所指模板块，模板块可以通过变量传递到其它模板中再show)</font><br/>
 								$show{myblock}<br/>
 								<b>(6) 数据指令:</b><br/>
@@ -295,7 +298,7 @@ $!
 								$time{xxx}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
-								$time{global -> xxx} <font color="green">(注: 指定变量区间)</font><br/>
+								$time{global -&gt; xxx} <font color="green">(注: 指定变量区间)</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
 								单步调试断点：(此指令将在其所在行设置断点) <a href="debug.html">更多...</a><br/>
