@@ -18,4 +18,8 @@ public class ShowBlockDirectiveHandler extends DirectiveHandlerSupport {
 		DirectiveUtils.renderAll(((List)context.getProperty(BlockDefineDirectiveHandler.BLOCK_TYPE, blockName)), context);
 	}
 
+	public boolean isExpressionNamed() {
+		return true;
+	}
+
 }

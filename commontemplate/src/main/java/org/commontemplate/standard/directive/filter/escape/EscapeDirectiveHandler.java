@@ -47,4 +47,8 @@ public class EscapeDirectiveHandler extends BlockDirectiveHandlerSupport {
 		}
 	}
 
+	public boolean isExpressionNamed() {
+		return true;
+	}
+
 }

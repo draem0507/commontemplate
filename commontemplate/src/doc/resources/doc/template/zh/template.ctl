@@ -7,20 +7,6 @@ $!
 								<font color="green">(注：指令名只能包含字母，下划线，数字，点号)</font><br/>
 								<font color="green">(注：指令名或参数表达式均可以为空，参数表达式为空时，大括号可省)</font><br/>
 								<br/>
-								简化语法规则：<font color="green">(注：通常用于名词性定义指令，从0.8.5版本开始支持)</font><br/>
-								<b>$指令名:参数名</b><br/>
-								等价于：<br/>
-								$指令名{"参数名"}<br/>
-								<font color="green">(注：参数名与指令名一样，只能包含字母，下划线，数字，点号)</font><br/>
-								如：<br/>
-								$end:if 等价于 $end{"if"}<br/>
-								$data:xml 等价于 $data{"xml"}<br/>
-								$block:form 等价于 $block{"form"}<br/>
-								$macro:button 等价于 $macro{"button"}<br/>
-								$zone:body 等价于 $zone{"body"}<br/>
-								$code:java 等价于 $code{"java"}<br/>
-								$time:xxx 等价于 $time{"xxx"}<br/>
-								<br/>
 								<b>二. 特殊符转义:</b><br/>
 								<b>(1) \ 为转义符，\\ 取消转义(或自转义)</b><br/>
 								<font color="green">(注：未处于转义位置的斜线不作任何处理，以避免模板中到处使用双斜线)</font><br/>
@@ -57,8 +43,9 @@ $!
 								&nbsp;&nbsp;&nbsp;&nbsp;no parse, eg: $if ... <br/>
 								\!$<br/>
 								<b>(4) 通用结束指令:</b><br/>
-								$end 或者 $end{"if"} 或者 $end:if<br/>
+								$end 或者 $end{if}<br/>
 								<font color="green">(注: 参数表示被结束块指令的名称, 编译时将进行检查(不匹配将抛出异常), 没有参数表示自动匹配)</font><br/>
+								<font color="green">(注: 因$end指令为编译指令，参数表达式不解析，直接作为字符串)</font><br/>
 								<br/>
 								<b>四. 标准指令:</b><br/>
 								<b>(1) 输出指令:</b><br/>
@@ -145,15 +132,15 @@ $!
 								$init{name = "guest"}<br/>
 								<b>(5) 块变量指令:</b><br/>
 								将模板块定义为变量: <font color="green">(注: 如果需要将模板块传递到宏或其它模板中, 可以使用块变量)</font><br/>
-								$block{"myblock"} 或者 $block:myblock<br/>
+								$block{myblock}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
 								显示块变量: <font color="green">(注：执行块变量所指模板块，模板块可以通过变量传递到其它模板中再show)</font><br/>
-								$show{"myblock"}<br/>
+								$show{myblock}<br/>
 								<b>(6) 数据指令:</b><br/>
 								<font color="green">(注：内置支持xml,json,properties,yaml等数据格式，并且数据格式是可扩展的)</font> <a href="viewer.html">格式说明...</a><br/>
 								数据块：<br/>
-								$data{"xml"} 或者 $data:xml<br/>
+								$data{xml}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
 								装载外部数据：<br/>
@@ -162,7 +149,7 @@ $!
 								<b>(7) 宏指令:</b><br/>
 								<font color="red">(注：0.8.5版本不兼容改动，$using指令代替原有$import指令，$import指令重新实现，块指令调用后缀默认值由"_block"改成".block"(可配置))</font><br/>
 								宏定义:<br/>
-								$macro{"button"} 或者 $macro:button<br/>
+								$macro{button}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;回调调用者的内部块，如果为行指令方式调用，则inner为空<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;$inner{param3: "value3"}<br/>
@@ -189,7 +176,7 @@ $!
 								$using{"mymacro.ctl#button"} <font color="green">(注：将使用原始宏的名称(#号后的名称)作为宏的名称)</font><br/>
 								<b>(8) 继承指令:</b> <font color="green">(注：通常用于布局layout)</font> <a href="demo_extends.html">示例&gt;&gt;</a><br/>
 								模板区域定义: <font color="green">(注：在父模板中)</font><br/>
-								$zone{"body"} 或者 $zone:body<br/>
+								$zone{body}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
 								继承模板: <font color="green">(注：在子模板中)</font><br/>
@@ -238,7 +225,7 @@ $!
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end <br/>
 								捕获输出指令: <font color="green">(注：捕获指令内部块输出内容到指定变量)</font><br/>
-								$capture{"xxx"} 或者 $capture:xxx<br/>
+								$capture{xxx}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end <br/>
 								忽略输出指令: <font color="green">(注：执行内部指令，但忽略输出)</font><br/>
@@ -268,7 +255,7 @@ $!
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
 								代码HTML着色: <font color="green">(注: 内置支持java,xml,html,properties,ini等格式，可扩展)</font> <a href="extension.html">扩展...</a><br/>
-								$code{"java"} 或者 $code:java<br/>
+								$code{java}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
 								关键字HTML加亮:<br/>
@@ -301,7 +288,10 @@ $!
 								$log{warn: "warn messages..."}<br/>
 								$log{error: "error messages..."}<br/>
 								性能监测：(记录其内部块的运行时间，并将时间存入变量中)<br/>
-								$time{"xxx"} 或者 $time:xxx<br/>
+								$time{xxx}<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+								$end<br/>
+								$time{global -> xxx} <font color="green">(注: 指定变量区间)</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
 								单步调试断点：(此指令将在其所在行设置断点) <a href="debug.html">更多...</a><br/>
