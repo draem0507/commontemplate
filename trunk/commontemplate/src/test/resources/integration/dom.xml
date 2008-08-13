@@ -3,4 +3,8 @@
 		<property name="username" type="java.lang.String"/>
 		<property name="password" type="java.lang.String"/>
 	</entity>
+	<entity name="Role">
+		<property name="name" type="java.lang.String"/>
+		<property name="desc" type="java.lang.String"/>
+	</entity>
 </project>

@@ -6,9 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
+import org.commontemplate.util.DomUtils;
 import org.commontemplate.util.TypeUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -49,11 +47,7 @@ public class XmlDataProvider extends InputStreamDataProvider {
 
 	// 读取.xml文件, 组装成Map数据, 文件不存在时返回null
 	public Map getData(InputStream dataInputStream) throws Exception {
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		factory.setIgnoringComments(true);
-		factory.setIgnoringElementContentWhitespace(true);
-		DocumentBuilder builder = factory.newDocumentBuilder();
-		Document document = builder.parse(dataInputStream);
+		Document document = DomUtils.getDocument(dataInputStream);
 		Element root = document.getDocumentElement();
 		if (! OBJECT_TAG_NAME.equals(root.getTagName()))
 			throw new IllegalStateException("XML数据格式错误, 根标签必需为<object>!"); // TODO 未国际化
