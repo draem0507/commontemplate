@@ -47,7 +47,7 @@ public class MapEntry implements Map.Entry, Serializable {
 	}
 	
 	public int hashCode() {
-		return 37 * (key.hashCode() + value.hashCode());
+		return 37 * (key.hashCode() + (value!=null?value.hashCode():0));
 	}
 	
 }
