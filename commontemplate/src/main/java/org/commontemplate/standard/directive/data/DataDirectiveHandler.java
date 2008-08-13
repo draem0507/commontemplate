@@ -49,4 +49,8 @@ public class DataDirectiveHandler extends BlockDirectiveHandlerSupport {
 		context.getRootLocalContext().putAllVariables(data);
 	}
 
+	public boolean isExpressionNamed() {
+		return true;
+	}
+
 }

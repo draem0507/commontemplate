@@ -11,16 +11,16 @@ import org.commontemplate.core.OutputFilter;
 
 /**
  * 代码着色高亮显示过滤(HTML)
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
 public class CodeDirectiveHandler extends BlockDirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private Map filters;
-	
+
 	public void setFilters(Map filters) {
 		this.filters = filters;
 	}
@@ -36,6 +36,10 @@ public class CodeDirectiveHandler extends BlockDirectiveHandlerSupport {
 		} else {
 			DirectiveUtils.renderAll(innerElements, context);
 		}
+	}
+
+	public boolean isExpressionNamed() {
+		return true;
 	}
 
 }

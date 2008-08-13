@@ -25,4 +25,15 @@ public abstract class DirectiveHandler implements Serializable {
 	 */
 	public abstract void doRender(Context context, Directive directive) throws Exception;
 
+	/**
+	 * 表达式是否名称化.<br>
+	 * 名称化后, 如果表达式为变量名, 将作为字符串处理,<br>
+	 * 如: $macro{xxx} 等价于 $macro{"xxx"}<br>
+	 *
+	 * @return 是否名称化
+	 */
+	public boolean isExpressionNamed() {
+		return false;
+	}
+
 }
