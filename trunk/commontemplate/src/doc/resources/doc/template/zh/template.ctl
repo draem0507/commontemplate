@@ -7,6 +7,11 @@ $!
 								<font color="green">(注：指令名只能包含字母，下划线，数字，点号)</font><br/>
 								<font color="green">(注：指令名或参数表达式均可以为空，参数表达式为空时，大括号可省)</font><br/>
 								<br/>
+								简化语法规则：<font color="green">(注：主要用于简化名称定义性指令(如：$block, $macro, $zone等)</font><br/>
+								<b>$指令名:参数名</b> 等价于：$指令名{"参数名"}<br/>
+								<font color="green">(注：参数名与指令名一样，只能包含字母，下划线，数字，点号)</font><br/>
+								<font color="red">(注：为使语法更统一，不建议使用，将在1.0版本删除，名称定义性指令从0.8.6版本开始支持参数名引号可省，如：$指令名{参数名})</font><br/>
+								<br/>
 								<b>二. 特殊符转义:</b><br/>
 								<b>(1) \ 为转义符，\\ 取消转义(或自转义)</b><br/>
 								<font color="green">(注：未处于转义位置的斜线不作任何处理，以避免模板中到处使用双斜线)</font><br/>
@@ -140,16 +145,15 @@ $!
 								<b>(6) 数据指令:</b><br/>
 								<font color="green">(注：内置支持xml,json,properties,yaml等数据格式，并且数据格式是可扩展的)</font> <a href="viewer.html">格式说明...</a><br/>
 								数据块：<br/>
-								$data{xml}<br/>
+								$data{xml} <font color="green">(注：如果类型需取变量，可使用"\"一元操作符：$data{\type})</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
 								装载外部数据：<br/>
 								$load{"xxx.xml"} <font color="green">(注：根据文件扩展名识别类型)</font><br/>
 								$load{xml: "xxx.xml"} <br/>
 								<b>(7) 宏指令:</b><br/>
-								<font color="red">(注：0.8.5版本不兼容改动，$using指令代替原有$import指令，$import指令重新实现，块指令调用后缀默认值由"_block"改成".block"(可配置))</font><br/>
 								宏定义:<br/>
-								$macro{button}<br/>
+								$macro{button} <font color="green">(注：如果名称需取变量，可使用"\"一元操作符：$macro{\name})</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;回调调用者的内部块，如果为行指令方式调用，则inner为空<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;$inner{param3: "value3"}<br/>
