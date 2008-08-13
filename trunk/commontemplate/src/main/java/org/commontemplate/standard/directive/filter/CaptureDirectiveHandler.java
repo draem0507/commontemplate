@@ -32,4 +32,8 @@ public class CaptureDirectiveHandler extends BlockDirectiveHandlerSupport {
 		context.getParentLocalContext().putVariable(var, value);
 	}
 
+	public boolean isExpressionNamed() {
+		return true;
+	}
+
 }

@@ -1,9 +1,9 @@
-$macro{"mymacro"}
+$macro{mymacro}
     define...
     param1 value: ${param1}
     okok
     param2 value: ${param2}
-$end
+$end{macro}
 $mymacro{param1: "value1", param2: "value2"}
 -----------
 $macro{"mymacro2"}

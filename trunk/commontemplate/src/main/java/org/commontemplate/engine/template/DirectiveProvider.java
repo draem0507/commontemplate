@@ -199,26 +199,34 @@ final class DirectiveProvider {
 
 	private Element parseDirective(Token token, String message) throws ParsingException {
 		String name;
+		String expressionSource = null;
 		Expression expression = null;
 		int i = message.indexOf(syntax.getExpressionBegin());
 		if (i > -1) {
 			Assert.assertTrue(message.charAt(message.length() - 1) == syntax.getExpressionEnd(), "DirectiveFactory.miss.parenthesis");
 			name = message.substring(1, i);
-			String expressionText = message.substring(i + 1, message.length() - 1);
-			if (expressionText != null && expressionText.length() > 0)
-				expression = parseExpression(expressionText.trim(),
+			String param = message.substring(i + 1, message.length() - 1);
+			if (param != null && param.length() > 0) {
+				expressionSource = param.trim();
+				if (! syntax.getEndDirectiveName().equals(name)) { // $end指令不解析表达式
+					expression = parseExpression(expressionSource,
 						token.subToken(i + 1, message.length() - 1).getLocation());
+				}
+			}
 		} else {
 			int j = message.indexOf(syntax.getNameSeparator());
 			if (j > -1) {
 				name = message.substring(1, j);
 				String param = message.substring(j + 1);
-				expression = expressionEngine.createConstant(param.trim());
+				expressionSource = param.trim();
+				if (! syntax.getEndDirectiveName().equals(name)) { // $end指令不解析表达式
+					expression = expressionEngine.createConstant(expressionSource);
+				}
 			} else {
 				name = message.substring(1, message.length());
 			}
 		}
-		return resolveDirective(token, name.trim(), expression);
+		return resolveDirective(token, name.trim(), expression, expressionSource);
 	}
 
 	private Expression parseExpression(String expr, Location location) throws ParsingException {
@@ -231,15 +239,11 @@ final class DirectiveProvider {
 		}
 	}
 
-	private Element resolveDirective(Token token, String name, Expression expression) throws ParsingException {
+	private Element resolveDirective(Token token, String name, Expression expression, String expressionSource) throws ParsingException {
 		// 结束指令
 		if (syntax.getEndDirectiveName().equals(name)) {
-			if (expression != null) {
-				if (expression instanceof Variable) // 变量名称化
-					return new EndDirective(((Variable)expression).getName());
-				Object obj = expression.evaluate(null);
-				if (obj != null && obj instanceof String)
-					return new EndDirective((String)obj);
+			if (expressionSource != null) { // $end指令不解析表达式
+				return new EndDirective(expressionSource);
 			}
 			return EndDirective.END_DIRECTIVE;
 		}
