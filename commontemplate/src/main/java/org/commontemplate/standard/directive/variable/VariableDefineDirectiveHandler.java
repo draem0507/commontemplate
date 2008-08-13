@@ -3,8 +3,8 @@ package org.commontemplate.standard.directive.variable;
 import java.util.Map.Entry;
 
 import org.commontemplate.core.Context;
-import org.commontemplate.core.LocalContext;
 import org.commontemplate.standard.directive.DirectiveHandlerSupport;
+import org.commontemplate.standard.directive.VariableScopeUtils;
 import org.commontemplate.standard.operator.string.NamePair;
 
 /**
@@ -23,25 +23,7 @@ public class VariableDefineDirectiveHandler extends DirectiveHandlerSupport {
 			Object key = model.getKey();
 			Object value = model.getValue();
 			if (key instanceof NamePair) {
-				NamePair pair = (NamePair)key;
-				String scope = pair.getLeftName();
-				String var = pair.getRightName();
-				if ("global".equals(scope)) {
-					context.getGlobalContext().putVariable(var, value);
-				} else if ("root".equals(scope)) {
-					context.getRootLocalContext().putVariable(var, value);
-				} else if ("super".equals(scope)) {
-					context.getParentLocalContext().putVariable(var, value);
-				} else if ("local".equals(scope) || "this".equals(scope)) {
-					context.putVariable(var, value);
-				} else {
-					LocalContext localContext = context.findLocalContext(scope);
-					if (localContext != null) {
-						localContext.putVariable(var, value);
-					} else {
-						context.putVariable(var, value);
-					}
-				}
+				VariableScopeUtils.putVariable(context, false, (NamePair)param, value);
 			} else {
 				String var = String.valueOf(model.getKey());
 				context.putVariable(var, value);
