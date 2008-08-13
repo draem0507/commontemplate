@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.commontemplate.util.DomUtils;
+import org.w3c.dom.Document;
+
 public class ModelProvider {
 
 	public static Map getSessionModel() {
@@ -79,6 +82,16 @@ public class ModelProvider {
 					)
 				);
 
+		model.put("dom", getDom());
+
 		return model;
+	}
+
+	public static Document getDom() {
+		try {
+			return DomUtils.getDocument(ModelProvider.class.getClassLoader().getResourceAsStream("integration/dom.xml"));
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }

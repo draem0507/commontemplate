@@ -31,19 +31,27 @@ import org.commontemplate.engine.expression.ExpressionEngine;
  */
 public class ExpressionEvaluator implements VariableResolver {
 
-	private final ExpressionEngine expressionEngine;
+	private static ExpressionEngine expressionEngine;
+
+	public static synchronized void init(ExpressionConfiguration config) {
+		expressionEngine = new ExpressionEngine(config);
+	}
+
+	private static ExpressionEngine getExpressionEngine() {
+		if (expressionEngine == null) { // XXX
+			synchronized(ExpressionEvaluator.class) {
+				if (expressionEngine == null) {
+					init(PropertiesConfigurationLoader.loadStandardExpressionConfiguration());
+				}
+			}
+		}
+		return expressionEngine;
+	}
 
 	private final String expr;
 
-	// TODO 将engine单例化
-
 	public ExpressionEvaluator(String expr) {
-		this(expr, PropertiesConfigurationLoader.loadStandardExpressionConfiguration());
-	}
-
-	public ExpressionEvaluator(String expr, ExpressionConfiguration config) {
 		this.expr = expr;
-		this.expressionEngine = new ExpressionEngine(config);
 	}
 
 	/**
@@ -52,7 +60,7 @@ public class ExpressionEvaluator implements VariableResolver {
 	 * @return 求值结果
 	 */
 	public Object evaluate() {
-		return expressionEngine.parseExpression(expr).evaluate(this);
+		return getExpressionEngine().parseExpression(expr).evaluate(this);
 	}
 
 	// 适配VariableResolver ---------
