@@ -19,4 +19,8 @@ public class MacroDirectiveHandler extends BlockDirectiveHandlerSupport {
 		context.getParentLocalContext().putProperty(MACRO_TYPE, var, new Macro(innerElements, var));
 	}
 
+	public boolean isExpressionNamed() {
+		return true;
+	}
+
 }

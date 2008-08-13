@@ -25,4 +25,8 @@ public class BlockDefineDirectiveHandler extends BlockDirectiveHandlerSupport {
 		context.getParentLocalContext().putProperty(BLOCK_TYPE, var, innerElements);
 	}
 
+	public boolean isExpressionNamed() {
+		return true;
+	}
+
 }

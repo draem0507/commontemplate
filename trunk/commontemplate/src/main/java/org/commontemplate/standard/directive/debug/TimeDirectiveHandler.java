@@ -8,7 +8,7 @@ import org.commontemplate.core.Context;
 
 /**
  * 性能测试指令, 计算其内部块的执行时间.
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
@@ -21,5 +21,9 @@ public class TimeDirectiveHandler extends BlockDirectiveHandlerSupport {
 		DirectiveUtils.renderAll(innerElements, context);
 		context.getRootLocalContext().putReadonlyVariable((String)param, new Long(System.currentTimeMillis() - beginTime));
 	}
-	
+
+	public boolean isExpressionNamed() {
+		return true;
+	}
+
 }

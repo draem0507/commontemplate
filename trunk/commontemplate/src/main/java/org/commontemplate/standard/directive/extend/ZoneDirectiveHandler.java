@@ -8,16 +8,16 @@ import org.commontemplate.core.Context;
 
 /**
  * 模板区域定义指令. 用于将模板分区, 便于子模板重写.
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
 public class ZoneDirectiveHandler extends BlockDirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	public static final String ZONE_TYPE = "zone";
-	
+
 	public void doRender(Context context, String directiveName,
 			Object param, List innerElements)
 			throws Exception {
@@ -30,6 +30,10 @@ public class ZoneDirectiveHandler extends BlockDirectiveHandlerSupport {
 			childZone.setSuperZone(innerZone);
 			childZone.render(context);
 		}
+	}
+
+	public boolean isExpressionNamed() {
+		return true;
 	}
 
 }

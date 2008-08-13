@@ -12,6 +12,7 @@ import org.commontemplate.config.TextFilter;
 import org.commontemplate.core.Element;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.ParsingException;
+import org.commontemplate.core.Variable;
 import org.commontemplate.engine.expression.ExpressionEngine;
 import org.commontemplate.util.Assert;
 import org.commontemplate.util.Location;
@@ -234,6 +235,8 @@ final class DirectiveProvider {
 		// 结束指令
 		if (syntax.getEndDirectiveName().equals(name)) {
 			if (expression != null) {
+				if (expression instanceof Variable) // 变量名称化
+					return new EndDirective(((Variable)expression).getName());
 				Object obj = expression.evaluate(null);
 				if (obj != null && obj instanceof String)
 					return new EndDirective((String)obj);
@@ -244,6 +247,8 @@ final class DirectiveProvider {
 		DirectiveHandler handler = directiveHandlerProvider.getDirectiveHandler(name);
 		if (handler == null)
 			throw new ParsingException(token.getLocation(), "DirectiveFactory.handler.not.such", new Object[]{name});
+		if (handler.isExpressionNamed() && expression instanceof Variable)
+			expression = expressionEngine.createConstant(((Variable)expression).getName());
 		if (handler instanceof MiddleBlockDirectiveHandler)
 			return new MiddleBlockDirectiveImpl(name, token.getLocation(), expression, (MiddleBlockDirectiveHandler)handler, token.getMessage(), syntax.getDirectiveLeader() + syntax.getEndDirectiveName(), elementInterceptors);
 		if (handler instanceof BlockDirectiveHandler)
