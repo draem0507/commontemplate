@@ -42,12 +42,17 @@ public abstract class Resource {
 	public abstract String getEncoding();
 
 	/**
+	 * 未知内容长度
+	 */
+	public static final long UNKOWN_LENGTH = -1;
+
+	/**
 	 * 获取模板的内容长度
 	 *
 	 * @return 内容长度
 	 */
 	public long getLength() {
-		return 0;
+		return UNKOWN_LENGTH;
 	}
 
 	/**
@@ -60,7 +65,9 @@ public abstract class Resource {
 	 *
 	 * @return 模板的最后修改时间, 未知时返回<code>UNKOWN_MODIFIED</code>, 应总是不小于-1
 	 */
-	public abstract long getLastModified();
+	public long getLastModified() {
+		return UNKOWN_MODIFIED;
+	}
 
 	/**
 	 * 获取原始内容

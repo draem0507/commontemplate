@@ -1,12 +1,12 @@
 package org.commontemplate.engine.expression;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.commontemplate.config.UnaryOperatorHandler;
 import org.commontemplate.core.EvaluationException;
 import org.commontemplate.core.Expression;
-import org.commontemplate.core.FilteredVisitor;
 import org.commontemplate.core.UnaryOperator;
 import org.commontemplate.core.VariableResolver;
 import org.commontemplate.core.Visitor;
@@ -95,16 +95,15 @@ final class UnaryOperatorImpl extends UnaryOperator {
 		return operands;
 	}
 
-	public String getCanonicalForm() {
-		return getName() + " " + getOperand().getCanonicalForm();
+	public String getSource() throws IOException {
+		return getName() + " " + getOperand().getSource();
 	}
 
-	public void accept(Visitor visitor) {
-		if (visitor instanceof FilteredVisitor
-				&& ! ((FilteredVisitor)visitor).isVisit(this))
-			return;
-		visitor.visit(this);
-		getOperand().accept(visitor);
+	protected int guide(Visitor visitor) {
+		int v = getOperand().accept(visitor);
+		if (v == Visitor.STOP)
+			return Visitor.STOP;
+		return Visitor.NEXT;
 	}
 
 	/**

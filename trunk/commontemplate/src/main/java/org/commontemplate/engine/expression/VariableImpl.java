@@ -1,8 +1,6 @@
 package org.commontemplate.engine.expression;
 
-import org.commontemplate.core.FilteredVisitor;
 import org.commontemplate.core.Variable;
-import org.commontemplate.core.Visitor;
 import org.commontemplate.util.Location;
 
 /**
@@ -28,19 +26,12 @@ final class VariableImpl extends Variable {
 		return name;
 	}
 
-	public String getCanonicalForm() {
+	public String getSource() {
 		return name;
 	}
 
 	public Location getLocation() {
 		return location;
-	}
-
-	public void accept(Visitor visitor) {
-		if (visitor instanceof FilteredVisitor
-				&& ! ((FilteredVisitor)visitor).isVisit(this))
-			return;
-		visitor.visit(this);
 	}
 
 }

@@ -1,5 +1,6 @@
 package org.commontemplate.engine.expression;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,6 @@ import org.commontemplate.config.BinaryOperatorHandler;
 import org.commontemplate.core.BinaryOperator;
 import org.commontemplate.core.EvaluationException;
 import org.commontemplate.core.Expression;
-import org.commontemplate.core.FilteredVisitor;
 import org.commontemplate.core.VariableResolver;
 import org.commontemplate.core.Visitor;
 import org.commontemplate.util.Assert;
@@ -119,27 +119,28 @@ final class BinaryOperatorImpl extends BinaryOperator {
 		return rightOperandFunctioned;
 	}
 
-	public String getCanonicalForm() {
+	public String getSource() throws IOException {
 		Expression left = getLeftOperand();
-		String leftPrototype = left.getCanonicalForm();
+		String leftPrototype = left.getSource();
 		if (left instanceof BinaryOperator && ((BinaryOperator)left).getPriority() < getPriority()) {
 			leftPrototype = "(" + leftPrototype + ")";
 		}
 		Expression right = getRightOperand();
-		String rightPrototype = right.getCanonicalForm();
+		String rightPrototype = right.getSource();
 		if (right instanceof BinaryOperator && ((BinaryOperator)right).getPriority() < getPriority()) {
 			rightPrototype = "(" + rightPrototype + ")";
 		}
 		return leftPrototype + " " + getName() + " " + rightPrototype;
 	}
 
-	public void accept(Visitor visitor) {
-		if (visitor instanceof FilteredVisitor
-				&& ! ((FilteredVisitor)visitor).isVisit(this))
-			return;
-		visitor.visit(this);
-		getLeftOperand().accept(visitor);
-		getRightOperand().accept(visitor);
+	protected int guide(Visitor visitor) {
+		int v = getLeftOperand().accept(visitor);
+		if (v == Visitor.STOP)
+			return Visitor.STOP;
+		v = getRightOperand().accept(visitor);
+		if (v == Visitor.STOP)
+			return Visitor.STOP;
+		return Visitor.NEXT;
 	}
 
 	private List operands;

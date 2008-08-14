@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.commontemplate.core.BlockDirective;
 import org.commontemplate.core.Element;
-import org.commontemplate.core.Expression;
 import org.commontemplate.core.Visitor;
 
 /**
@@ -27,24 +26,21 @@ abstract class BlockDirectiveSupport extends BlockDirective implements java.io.S
 		this.elements = Collections.unmodifiableList(elements);
 	}
 
-	protected void acceptExpression(Visitor visitor) {
-		Expression expression = getExpression();
-		if (expression != null)
-			expression.accept(visitor);
-	}
-
-	protected void acceptAll(Visitor visitor) {
+	protected int acceptElements(Visitor visitor) {
 		for (int i = 0, n = elements.size(); i < n; i ++) {
-			Element directive = (Element)elements.get(i);
-			directive.accept(visitor);
+			Element element = (Element)elements.get(i);
+			int v = element.accept(visitor);
+			if (v == Visitor.STOP)
+				return Visitor.STOP;
 		}
+		return Visitor.NEXT;
 	}
 
-	protected String getCanonicalFormAll() throws IOException {
+	protected String getElementsSource() throws IOException {
 		StringBuffer buf = new StringBuffer();
 		for (int i = 0, n = elements.size(); i < n; i ++) {
-			Element directive = (Element)elements.get(i);
-			buf.append(directive.getSource());
+			Element element = (Element)elements.get(i);
+			buf.append(element.getSource());
 		}
 		return buf.toString();
 	}

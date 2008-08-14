@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.commontemplate.core.Context;
-import org.commontemplate.core.FilteredVisitor;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Resource;
 import org.commontemplate.core.Template;
@@ -66,12 +65,13 @@ final class TemplateImpl extends Template implements Serializable {
 		}
 	}
 
-	public final void accept(Visitor visitor) {
-		if (visitor instanceof FilteredVisitor
-				&& ! ((FilteredVisitor)visitor).isVisit(this))
-			return;
-		visitor.visit(this);
-		rootDirective.accept(visitor);
+	public final int accept(Visitor visitor) {
+		int v = visitor.visit(this);
+		if (v == Visitor.STOP)
+			return Visitor.STOP;
+		if (v == Visitor.SKIP)
+			return Visitor.NEXT;
+		return rootDirective.accept(visitor);
 	}
 
 	public final String getEncoding() {

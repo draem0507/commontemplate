@@ -13,7 +13,7 @@ import java.util.List;
  * @author liangfei0201@163.com
  *
  */
-public abstract class Template extends Resource implements Node, Serializable {
+public abstract class Template extends Resource implements Node, Renderable, Serializable {
 
 	public static final String TYPE = "Template";
 

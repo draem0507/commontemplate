@@ -75,7 +75,7 @@ public class FilterEntryOperatorHandlerTester extends TestCase {
 			return String.valueOf(value);
 		}
 
-		public String getCanonicalForm() {
+		public String getSource() {
 			return null;
 		}
 
@@ -83,7 +83,8 @@ public class FilterEntryOperatorHandlerTester extends TestCase {
 			return location;
 		}
 
-		public void accept(Visitor visitor) {
+		public int accept(Visitor visitor) {
+			return Visitor.NEXT;
 		}
 
 		public Object getValue() {

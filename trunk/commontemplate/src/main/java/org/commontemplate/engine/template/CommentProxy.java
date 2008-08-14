@@ -21,8 +21,8 @@ final class CommentProxy extends Comment {
 		this.comment = comment;
 	}
 
-	public void accept(Visitor visitor) {
-		comment.accept(visitor);
+	public int accept(Visitor visitor) {
+		return comment.accept(visitor);
 	}
 
 	public boolean equals(Object obj) {

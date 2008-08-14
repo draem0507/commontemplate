@@ -3,11 +3,9 @@ package org.commontemplate.standard.visit;
 import java.util.List;
 
 import org.commontemplate.core.BlockDirective;
-import org.commontemplate.core.BreakVisitException;
 import org.commontemplate.core.Expression;
-import org.commontemplate.core.FilteredVisitor;
-import org.commontemplate.core.Template;
-import org.commontemplate.core.Visitable;
+import org.commontemplate.core.Node;
+import org.commontemplate.core.Visitor;
 import org.commontemplate.util.Assert;
 
 /**
@@ -19,7 +17,7 @@ import org.commontemplate.util.Assert;
  * @author liangfei0201@163.com
  *
  */
-public class BlockDirectiveVisitor implements FilteredVisitor {
+public class BlockDirectiveVisitor implements Visitor {
 
 	private final String type;
 
@@ -34,21 +32,20 @@ public class BlockDirectiveVisitor implements FilteredVisitor {
 		this.name = name;
 	}
 
-	public boolean isVisit(Visitable node) {
-		return (node instanceof BlockDirective || node instanceof Template);
-	}
-
-	public void visit(Visitable node) throws BreakVisitException {
+	public int visit(Node node) {
+		if (node instanceof Expression)
+			return SKIP;
 		if (node instanceof BlockDirective) {
 			BlockDirective blockDirective = (BlockDirective)node;
 			if (type.equals(blockDirective.getName())) {
 				Expression expression = blockDirective.getExpression();
 				if (expression != null && name.equals(expression.evaluate(null))) {
 					this.blockDirective = blockDirective;
-					throw new BreakVisitException();
+					return STOP;
 				}
 			}
 		}
+		return NEXT;
 	}
 
 	public BlockDirective getBlockDirective() {
@@ -63,13 +60,9 @@ public class BlockDirectiveVisitor implements FilteredVisitor {
 	 * @param name 块名
 	 * @return 块指令;
 	 */
-	public static BlockDirective findBlockDirective(Visitable node, String type, String name) {
+	public static BlockDirective findBlockDirective(Node node, String type, String name) {
 		BlockDirectiveVisitor visitor = new BlockDirectiveVisitor(type, name);
-		try {
-			node.accept(visitor);
-		} catch (BreakVisitException e) {
-			// ignore
-		}
+		node.accept(visitor);
 		return visitor.getBlockDirective();
 	}
 
@@ -81,7 +74,7 @@ public class BlockDirectiveVisitor implements FilteredVisitor {
 	 * @param name 块名
 	 * @return 块指令的内部元素集;
 	 */
-	public static List findInnerElements(Visitable node, String type, String name) {
+	public static List findInnerElements(Node node, String type, String name) {
 		BlockDirective blockDirective = findBlockDirective(node, type, name);
 		if (blockDirective == null)
 			return null;

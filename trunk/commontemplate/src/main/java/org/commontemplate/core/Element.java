@@ -11,7 +11,7 @@ import org.commontemplate.util.Location;
  * @author liangfei0201@163.com
  *
  */
-public abstract class Element implements Node, Serializable {
+public abstract class Element implements Node, Renderable, Serializable {
 
 	/**
 	 * 获取元素所属模板
@@ -38,6 +38,19 @@ public abstract class Element implements Node, Serializable {
 		} catch (IOException e) {
 			return "ERROR:" + e.getMessage();
 		}
+	}
+
+	public int accept(Visitor visitor) {
+		int v = visitor.visit(this);
+		if (v == Visitor.STOP)
+			return Visitor.STOP;
+		if (v == Visitor.SKIP)
+			return Visitor.NEXT;
+		return guide(visitor);
+	}
+
+	protected int guide(Visitor visitor) {
+		return Visitor.NEXT;
 	}
 
 }

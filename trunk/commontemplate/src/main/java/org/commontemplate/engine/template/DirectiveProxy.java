@@ -27,8 +27,8 @@ class DirectiveProxy extends Directive {
 		this.directive = directive;
 	}
 
-	public void accept(Visitor visitor) {
-		directive.accept(visitor);
+	public int accept(Visitor visitor) {
+		return directive.accept(visitor);
 	}
 
 	public boolean equals(Object obj) {

@@ -79,8 +79,8 @@ public class MockDirective extends Element {
 	 *
 	 * @param visitor 访问者
 	 */
-	public void accept(Visitor visitor) {
-		visitor.visit(this);
+	public int accept(Visitor visitor) {
+		return visitor.visit(this);
 	}
 
 	public void setName(String name) {

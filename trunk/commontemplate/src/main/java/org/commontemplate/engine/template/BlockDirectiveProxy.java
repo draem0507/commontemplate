@@ -28,8 +28,8 @@ class BlockDirectiveProxy extends BlockDirective {
 		this.blockDirective = blockDirective;
 	}
 
-	public void accept(Visitor visitor) {
-		blockDirective.accept(visitor);
+	public int accept(Visitor visitor) {
+		return blockDirective.accept(visitor);
 	}
 
 	public String getSource() throws IOException {
