@@ -29,7 +29,7 @@ $!
 								如：“$*aaa\\\*$bbb*$” 注释内容为“aaa\*$bbb”<br/>
 								<br/>
 								<b>三. 编译指令: </b><br/>
-								<b>(1) 行注释:</b> 忽略其后同一行的内容 <font color="green">(注: 可注释不合法的指令内容)</font><br/>
+								<b>(1) 行注释:</b> 忽略其后同一行的内容 <font color="green">(注: 可注释不合法的指令内容，注释内容<b>不包含</b>最后的换行符)</font><br/>
 								运行期不保留: <font color="green">(注: 编译后即抛弃)</font><br/>
 								$# line comment ...<br/>
 								运行期保留: <font color="green">(注: 可通过Visitor访问到)</font><br/>
