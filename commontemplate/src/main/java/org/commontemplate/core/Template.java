@@ -13,7 +13,7 @@ import java.util.List;
  * @author liangfei0201@163.com
  *
  */
-public abstract class Template extends Resource implements Node, Renderable, Serializable {
+public abstract class Template extends Resource implements Node, Serializable {
 
 	public static final String TYPE = "Template";
 
@@ -22,10 +22,19 @@ public abstract class Template extends Resource implements Node, Renderable, Ser
 	}
 
 	/**
-	 * 获取模板/块组成元素
+	 * 获取模板组成元素
 	 *
-	 * @return 模板/块组成元素, 类型: List&lt;Element&gt;
+	 * @return 模板组成元素, 类型: List&lt;Element&gt;
 	 */
 	public abstract List getElements();
+
+	/**
+	 * 模板元素渲染接口
+	 *
+	 * @param context
+	 *            模板上下文
+	 * @throws RenderingException 模板渲染出错时抛出
+	 */
+	public abstract void render(Context context) throws RenderingException;
 
 }
