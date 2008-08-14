@@ -39,11 +39,12 @@ final class RootBlockDirectiveImpl extends BlockDirectiveSupport {
 	}
 
 	public String getSource() throws IOException {
-		return getCanonicalFormAll();
+		return getElementsSource();
 	}
 
-	public void accept(Visitor visitor) {
-		acceptAll(visitor);
+	public int accept(Visitor visitor) {
+		acceptElements(visitor);
+		return Visitor.NEXT;
 	}
 
 	public Expression getExpression() {

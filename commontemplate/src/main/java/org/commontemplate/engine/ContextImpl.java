@@ -265,7 +265,7 @@ final class ContextImpl extends Context {
 			throws IOException {
 		String encoding = getCurrentTemplateEncoding();
 		if (encoding != null)
-			return templateFactory.getTemplate(relateTemplateName(name), encoding);
+			return templateFactory.loadResource(relateTemplateName(name), encoding);
 		else
 			return templateFactory.loadResource(relateTemplateName(name));
 	}

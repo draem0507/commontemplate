@@ -25,7 +25,7 @@ final class MiddleBlockDirectiveImpl extends BlockDirectiveImpl {
 	}
 
 	public String getCanonicalForm() throws IOException {
-		return prototype + getCanonicalFormAll();
+		return prototype + getElementsSource();
 	}
 
 }

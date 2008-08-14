@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.commontemplate.core.BlockDirective;
-import org.commontemplate.core.BreakVisitException;
-import org.commontemplate.core.FilteredVisitor;
-import org.commontemplate.core.Template;
-import org.commontemplate.core.Visitable;
+import org.commontemplate.core.Expression;
+import org.commontemplate.core.Node;
+import org.commontemplate.core.Visitor;
 import org.commontemplate.util.Assert;
 
-public class BlockDirectivesVisitor implements FilteredVisitor {
+public class BlockDirectivesVisitor implements Visitor {
 
 	private final String type;
 
@@ -21,17 +20,16 @@ public class BlockDirectivesVisitor implements FilteredVisitor {
 		this.type = type;
 	}
 
-	public boolean isVisit(Visitable node) {
-		return (node instanceof BlockDirective || node instanceof Template);
-	}
-
-	public void visit(Visitable node) throws BreakVisitException {
+	public int visit(Node node) {
+		if (node instanceof Expression)
+			return SKIP;
 		if (node instanceof BlockDirective) {
 			BlockDirective blockDirective = (BlockDirective)node;
 			if (type.equals(blockDirective.getName())) {
 				blockDirectives.add(blockDirective);
 			}
 		}
+		return NEXT;
 	}
 
 	public List getBlockDirectives() {
@@ -46,7 +44,7 @@ public class BlockDirectivesVisitor implements FilteredVisitor {
 	 * @param name 块名
 	 * @return 块指令的内部元素集;
 	 */
-	public static List findBlockDirectives(Visitable node, String type) {
+	public static List findBlockDirectives(Node node, String type) {
 		BlockDirectivesVisitor visitor = new BlockDirectivesVisitor(type);
 		node.accept(visitor);
 		return visitor.getBlockDirectives();

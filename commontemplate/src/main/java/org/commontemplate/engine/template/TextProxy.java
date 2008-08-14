@@ -26,8 +26,8 @@ final class TextProxy extends Text {
 		this.text = text;
 	}
 
-	public void accept(Visitor visitor) {
-		text.accept(visitor);
+	public int accept(Visitor visitor) {
+		return text.accept(visitor);
 	}
 
 	public boolean equals(Object obj) {

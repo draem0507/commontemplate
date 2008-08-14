@@ -1,8 +1,6 @@
 package org.commontemplate.engine.expression;
 
 import org.commontemplate.core.Constant;
-import org.commontemplate.core.FilteredVisitor;
-import org.commontemplate.core.Visitor;
 import org.commontemplate.util.Location;
 
 /**
@@ -28,7 +26,7 @@ final class ConstantImpl extends Constant {
 		return String.valueOf(value);
 	}
 
-	public String getCanonicalForm() {
+	public String getSource() {
 		if (value instanceof String)
 			return "\"" + value + "\"";
 		return String.valueOf(value);
@@ -36,13 +34,6 @@ final class ConstantImpl extends Constant {
 
 	public Location getLocation() {
 		return location;
-	}
-
-	public void accept(Visitor visitor) {
-		if (visitor instanceof FilteredVisitor
-				&& ! ((FilteredVisitor)visitor).isVisit(this))
-			return;
-		visitor.visit(this);
 	}
 
 	public Object getValue() {

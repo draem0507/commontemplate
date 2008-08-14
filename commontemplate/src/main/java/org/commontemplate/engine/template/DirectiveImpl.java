@@ -7,7 +7,6 @@ import org.commontemplate.config.DirectiveHandler;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.Directive;
 import org.commontemplate.core.Expression;
-import org.commontemplate.core.FilteredVisitor;
 import org.commontemplate.core.IgnoreException;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Template;
@@ -67,14 +66,14 @@ final class DirectiveImpl extends Directive {
 		}
 	}
 
-	public void accept(Visitor visitor) {
-		if (visitor instanceof FilteredVisitor
-				&& ! ((FilteredVisitor)visitor).isVisit(this))
-			return;
-		visitor.visit(this);
+	protected int guide(Visitor visitor) {
 		Expression expression = getExpression();
-		if (expression != null)
-			expression.accept(visitor);
+		if (expression != null) {
+			int v = expression.accept(visitor);
+			if (v == Visitor.STOP)
+				return Visitor.STOP;
+		}
+		return Visitor.NEXT;
 	}
 
 	public String getName() {

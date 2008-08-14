@@ -1,5 +1,6 @@
 package org.commontemplate.engine.expression;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.commontemplate.core.EvaluationException;
@@ -33,7 +34,7 @@ final class Parenthesis extends Operator {
 		throw new UnsupportedOperationException("Parenthesis.unsupported.error");
 	}
 
-	public void accept(Visitor visitor) {
+	public int accept(Visitor visitor) {
 		throw new UnsupportedOperationException("Parenthesis.unsupported.error");
 	}
 
@@ -49,12 +50,18 @@ final class Parenthesis extends Operator {
 		return name;
 	}
 
-	public String getCanonicalForm() {
+	public String getSource() throws IOException {
 		return name;
 	}
 
 	public int getPriority() {
 		return Integer.MAX_VALUE;
+	}
+
+	public static final String TYPE = "Parenthesis";
+
+	public String getType() {
+		return TYPE;
 	}
 
 }

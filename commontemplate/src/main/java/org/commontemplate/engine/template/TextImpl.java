@@ -4,11 +4,9 @@ import java.io.IOException;
 import java.util.List;
 
 import org.commontemplate.core.Context;
-import org.commontemplate.core.FilteredVisitor;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Template;
 import org.commontemplate.core.Text;
-import org.commontemplate.core.Visitor;
 import org.commontemplate.util.Location;
 
 /**
@@ -64,13 +62,6 @@ final class TextImpl extends Text {
 
 	public Location getLocation() {
 		return location;
-	}
-
-	public void accept(Visitor visitor) {
-		if (visitor instanceof FilteredVisitor
-				&& ! ((FilteredVisitor)visitor).isVisit(this))
-			return;
-		visitor.visit(this);
 	}
 
 	public String getValue() {

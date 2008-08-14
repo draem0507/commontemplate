@@ -5,10 +5,8 @@ import java.util.List;
 
 import org.commontemplate.core.Comment;
 import org.commontemplate.core.Context;
-import org.commontemplate.core.FilteredVisitor;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Template;
-import org.commontemplate.core.Visitor;
 import org.commontemplate.util.Location;
 
 /**
@@ -61,13 +59,6 @@ final class CommentImpl extends Comment {
 
 	public String getName() {
 		return name;
-	}
-
-	public void accept(Visitor visitor) {
-		if (visitor instanceof FilteredVisitor
-				&& ! ((FilteredVisitor)visitor).isVisit(this))
-			return;
-		visitor.visit(this);
 	}
 
 	public String getValue() {

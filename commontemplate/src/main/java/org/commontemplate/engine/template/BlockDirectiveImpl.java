@@ -8,7 +8,6 @@ import org.commontemplate.core.BlockDirective;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.Element;
 import org.commontemplate.core.Expression;
-import org.commontemplate.core.FilteredVisitor;
 import org.commontemplate.core.IgnoreException;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Template;
@@ -91,16 +90,18 @@ class BlockDirectiveImpl extends BlockDirectiveSupport {
 	}
 
 	public String getCanonicalForm() throws IOException {
-		return prototype + getCanonicalFormAll() + endPrototype;
+		return prototype + getElementsSource() + endPrototype;
 	}
 
-	public void accept(Visitor visitor) {
-		if (visitor instanceof FilteredVisitor
-				&& ! ((FilteredVisitor)visitor).isVisit(this))
-			return;
-		visitor.visit(this);
-		acceptExpression(visitor);
-		acceptAll(visitor);
+	protected int guide(Visitor visitor) {
+		Expression expression = getExpression();
+		if (expression != null) {
+			int v = expression.accept(visitor);
+			if (v == Visitor.STOP)
+				return Visitor.STOP;
+		}
+		acceptElements(visitor);
+		return Visitor.NEXT;
 	}
 
 	public String getSignature() {
