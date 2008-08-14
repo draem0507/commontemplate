@@ -17,9 +17,9 @@ public abstract class BlockDirective extends Directive {
 	}
 
 	/**
-	 * 获取模板/块组成元素
+	 * 获取块内部元素
 	 *
-	 * @return 模板/块组成元素, 类型: List&lt;Element&gt;
+	 * @return 块内部元素, 类型: List&lt;Element&gt;
 	 */
 	public abstract List getElements();
 

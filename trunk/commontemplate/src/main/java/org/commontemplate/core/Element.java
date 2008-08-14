@@ -11,7 +11,16 @@ import org.commontemplate.util.Location;
  * @author liangfei0201@163.com
  *
  */
-public abstract class Element implements Node, Renderable, Serializable {
+public abstract class Element implements Node, Serializable {
+
+	/**
+	 * 模板元素渲染接口
+	 *
+	 * @param context
+	 *            模板上下文
+	 * @throws RenderingException 模板元素渲染出错时抛出
+	 */
+	public abstract void render(Context context) throws RenderingException;
 
 	/**
 	 * 获取元素所属模板
