@@ -153,9 +153,9 @@ public class ConfigurationSettings extends Configuration {
 		setSyntax(new Syntax(leader, expressionBegin, expressionEnd, lineComment, blockComment, noParse, endDirectiveName));
 	}
 
-	private char getSyntaxSign(String configSign, char defaultSign) {
-		if (configSign != null && configSign.length() > 0)
-			return configSign.charAt(0);
+	private char getSyntaxSign(Character configSign, char defaultSign) {
+		if (configSign != null && configSign.charValue() > 0 && configSign.charValue() < 128)
+			return configSign.charValue();
 		return defaultSign;
 	}
 
