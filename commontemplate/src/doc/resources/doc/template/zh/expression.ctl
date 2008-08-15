@@ -294,7 +294,8 @@ $!
 								(3) 季度: ${"Spring" .. "Winter"}<br/>
 								(4) 月份: ${"January" .. "December"}<br/>
 								(5) 星期: ${"Sunday" .. "Saturday"}<br/>
-								<b>八. 遗留:</b> <font color="green">(注: 将在1.0版本统一删除)</font><br/>
+								<br/>
+								<b>八. 遗留：</b> <font color="green">(注: 将在1.0版本统一删除)</font><br/>
 								(1) @ 一元操作符<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.8.3加入，0.8.5废弃<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>用动态操作符实现不转义字符串有BUG，并且不希望特殊化@操作符<br/>
