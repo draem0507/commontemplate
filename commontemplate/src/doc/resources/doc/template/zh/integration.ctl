@@ -48,7 +48,7 @@ $!
 								<br/>
 								<b>2. 与Struts集成</b><br/>
 								同上面配置好Servlet，在Struts中直接forward到相应.ctl页面<br/>
-								(注：与Struts的集成方案请参见下载列表中：commontemplate-example.zip 内的 ct_struts.war) <a href="downloads.html">下载&gt;&gt;</a><br/>
+								(注：与Struts的集成方案请参见下载列表中：ct_struts.war) <a href="downloads.html">下载&gt;&gt;</a><br/>
 								配置web.xml:<br/>
 								<font color="#3f7f5f">&lt;?xml&nbsp;<font color="#7f0055">version</font><font color="#000000">=</font><font color="#2a00ff">"1.0"</font>&nbsp;<font color="#7f0055">encoding</font><font color="#000000">=</font><font color="#2a00ff">"UTF-8"</font>?&gt;</font><br/>
 <font color="#3f7f5f">&lt;web-app&nbsp;<font color="#7f0055">version</font><font color="#000000">=</font><font color="#2a00ff">"2.4"</font>&nbsp;<br/>
@@ -126,7 +126,7 @@ $!
 								<img src="../images/frame/mvc.gif" alt="CommonTemplate In MVC" /><br/>
 								<br/>
 								<b>3. 与SpringMVC集成</b><br/>
-								(注：与SpringMVC的集成方案请参见下载列表中：commontemplate-example.zip 内的 ct_springmvc.war)  <a href="downloads.html">下载&gt;&gt;</a><br/>
+								(注：与SpringMVC的集成方案请参见下载列表中：ct_springmvc.war)  <a href="downloads.html">下载&gt;&gt;</a><br/>
 								配置web.xml:<br/>
 <font color="#3f5fbf">&lt;!--&nbsp;Spring容器初始化配置&nbsp;--&gt;</font><br/>
 <font color="#3f7f5f">&lt;context-param&gt;</font><br/>
@@ -180,6 +180,7 @@ $!
 <font color="#3f7f5f">&lt;/beans&gt;</font><br/>
 								<br/>
 								<b>4. 与WebWork集成</b><br/>
+								(注：与WebWork的集成方案请参见下载列表中：ct_webwork.war) <a href="downloads.html">下载&gt;&gt;</a><br/>
 								配置web.xml:<br/>
 <font color="#3f5fbf">&lt;!--&nbsp;模板引擎初始化配置&nbsp;--&gt;</font><br/>
 <font color="#3f7f5f">&lt;listener&gt;</font><br/>
@@ -229,7 +230,7 @@ $!
 <font color="#3f7f5f">&lt;/xwork&gt;</font><br/>
 								<br/>
 								<b>5. 与Struts2集成</b><br/>
-								(注：与Struts2的集成方案请参见下载列表中：commontemplate-example.zip 内的 ct_struts2.war)  <a href="downloads.html">下载&gt;&gt;</a><br/>
+								(注：与Struts2的集成方案请参见下载列表中：ct_struts2.war)  <a href="downloads.html">下载&gt;&gt;</a><br/>
 								配置web.xml:<br/>
 <font color="#3f5fbf">&lt;!--&nbsp;模板引擎初始化配置&nbsp;--&gt;</font><br/>
 <font color="#3f7f5f">&lt;listener&gt;</font><br/>
@@ -277,7 +278,7 @@ $!
 								test.jsp:<br/>
 <font color="#3f7f5f">&lt;%@taglib&nbsp;<font color="#7f0055">uri</font><font color="#000000">=</font><font color="#2a00ff">"commontemplate"</font>&nbsp;<font color="#7f0055">prefix</font><font color="#000000">=</font><font color="#2a00ff">"ct"</font>&nbsp;%&gt;</font><br/>
 <font color="#3f7f5f">&lt;ct:template&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;JSP&nbsp;or/and&nbsp;CTL...<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;CTL...<br/>
 <font color="#3f7f5f">&lt;/ct:template&gt;</font><br/>
 								<br/>
 								如果服务器不支持Servlet2.4或以上版本, 需在web.xml中配置tld的引用:<br/>

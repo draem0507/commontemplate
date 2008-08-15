@@ -18,6 +18,7 @@ import org.commontemplate.core.Context;
 import org.commontemplate.core.EvaluationException;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.standard.directive.DirectiveUtils;
+import org.commontemplate.standard.directive.condition.IfDirectiveHandler;
 import org.commontemplate.standard.operator.string.NamePair;
 import org.commontemplate.util.Assert;
 import org.commontemplate.util.BeanUtils;
@@ -39,9 +40,6 @@ public class ForeachDirectiveHandler extends BlockDirectiveHandler {
 		this.statusName = statusName;
 	}
 
-	// 条件状态位，用于传递整个For链是否已经为迭代过
-	public static final String FOR_STATUS = "for.status";
-
 	public void doRender(Context context, BlockDirective directive) throws Exception {
 		Assert.assertNotNull(directive.getExpression(), "ForeachDirectiveHandler.expression.is.null");
 		doRender(context, directive.getName(),
@@ -52,7 +50,8 @@ public class ForeachDirectiveHandler extends BlockDirectiveHandler {
 
 	public void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
 		boolean isSuccess = doForeach(context, param, innerElements);
-		context.getParentLocalContext().setStatus(FOR_STATUS, Boolean.valueOf(isSuccess));
+		// 条件状态位，用于传递整个For链是否已经为迭代过
+		context.getParentLocalContext().setStatus(IfDirectiveHandler.IF_STATUS, Boolean.valueOf(isSuccess));
 	}
 
 	private boolean doForeach(Context context, Object param, List elements) throws RenderingException, EvaluationException, IOException {

@@ -3,6 +3,7 @@ package org.commontemplate.standard.visit;
 import java.util.List;
 
 import org.commontemplate.core.BlockDirective;
+import org.commontemplate.core.Context;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.Node;
 import org.commontemplate.core.Visitor;
@@ -23,13 +24,16 @@ public class BlockDirectiveVisitor implements Visitor {
 
 	private final String name;
 
+	private final Context context;
+
 	private BlockDirective blockDirective;
 
-	public BlockDirectiveVisitor(String type, String name) {
+	public BlockDirectiveVisitor(String type, String name, Context context) {
 		Assert.assertNotNull(type, "ElementsVisitor.type.required");
 		Assert.assertNotNull(name, "ElementsVisitor.name.required");
 		this.type = type;
 		this.name = name;
+		this.context = context;
 	}
 
 	public int visit(Node node) {
@@ -39,7 +43,7 @@ public class BlockDirectiveVisitor implements Visitor {
 			BlockDirective blockDirective = (BlockDirective)node;
 			if (type.equals(blockDirective.getName())) {
 				Expression expression = blockDirective.getExpression();
-				if (expression != null && name.equals(expression.evaluate(null))) {
+				if (expression != null && name.equals(expression.evaluate(context))) {
 					this.blockDirective = blockDirective;
 					return STOP;
 				}
@@ -60,8 +64,8 @@ public class BlockDirectiveVisitor implements Visitor {
 	 * @param name 块名
 	 * @return 块指令;
 	 */
-	public static BlockDirective findBlockDirective(Node node, String type, String name) {
-		BlockDirectiveVisitor visitor = new BlockDirectiveVisitor(type, name);
+	public static BlockDirective findBlockDirective(Node node, String type, String name, Context context) {
+		BlockDirectiveVisitor visitor = new BlockDirectiveVisitor(type, name, context);
 		node.accept(visitor);
 		return visitor.getBlockDirective();
 	}
@@ -74,8 +78,8 @@ public class BlockDirectiveVisitor implements Visitor {
 	 * @param name 块名
 	 * @return 块指令的内部元素集;
 	 */
-	public static List findInnerElements(Node node, String type, String name) {
-		BlockDirective blockDirective = findBlockDirective(node, type, name);
+	public static List findInnerElements(Node node, String type, String name, Context context) {
+		BlockDirective blockDirective = findBlockDirective(node, type, name, context);
 		if (blockDirective == null)
 			return null;
 		return blockDirective.getElements();

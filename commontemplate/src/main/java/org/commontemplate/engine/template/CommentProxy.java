@@ -10,6 +10,12 @@ import org.commontemplate.core.Visitor;
 import org.commontemplate.util.I18nExceptionFactory;
 import org.commontemplate.util.Location;
 
+/**
+ * 注释代理
+ *
+ * @author liangfei0201@163.com
+ *
+ */
 final class CommentProxy extends Comment {
 
 	private static final long serialVersionUID = 1L;

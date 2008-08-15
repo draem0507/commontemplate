@@ -6,11 +6,7 @@ $!
 								<b>$指令名{<a href="expression.html">参数表达式</a>}</b><br/>
 								<font color="green">(注：指令名只能包含字母，下划线，数字，点号)</font><br/>
 								<font color="green">(注：指令名或参数表达式均可以为空，参数表达式为空时，大括号可省)</font><br/>
-								<br/>
-								简化语法规则：<font color="green">(注：主要用于简化名称定义性指令(如：$block, $macro, $zone等)</font><br/>
-								<b>$指令名:参数名</b> 等价于：$指令名{"参数名"}<br/>
-								<font color="green">(注：参数名与指令名一样，只能包含字母，下划线，数字，点号)</font><br/>
-								<font color="red">(注：为使语法更统一，不建议使用，将在1.0版本删除，名称定义性指令从0.8.6版本开始支持参数名引号可省，如：$指令名{参数名})</font><br/>
+								<font color="green">(注：如果指令名称与字母相连，大括号不可省，如：$else{}xxxx，而不能为$elsexxxx，否则引起歧义)</font><br/>
 								<br/>
 								<b>二. 特殊符转义:</b><br/>
 								<b>(1) \ 为转义符，\\ 取消转义(或自转义)</b><br/>
@@ -104,7 +100,7 @@ $!
 								&nbsp;&nbsp;&nbsp;&nbsp;${for.level}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;取值<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;${user.name}<br/>
-								$forelse <font color="green">(注：仿$if ... $else ...语法，以避免多重判断语句，当循环集合为空时执行)</font><br/>
+								$else <font color="green">(注：类似$if ... $else ...语法，以避免多重判断语句，当循环集合为空时执行)</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;have no users...<br/>
 								$end<br/>
 								特殊迭代举例：<br/>
@@ -137,7 +133,7 @@ $!
 								$init{name = "guest"}<br/>
 								<b>(5) 块变量指令:</b><br/>
 								将模板块定义为变量: <font color="green">(注: 如果需要将模板块传递到宏或其它模板中, 可以使用块变量)</font><br/>
-								$block{myblock}<br/>
+								$block{myblock} <font color="green">(注：参数名称化指令，如果名称需取变量，可使用"\"一元操作符：$block{\name})</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
 								$block{global -&gt; myblock} <font color="green">(注: 将块变量定义到指定区域)</font><br/>
@@ -148,7 +144,7 @@ $!
 								<b>(6) 数据指令:</b><br/>
 								<font color="green">(注：内置支持xml,json,properties,yaml等数据格式，并且数据格式是可扩展的)</font> <a href="viewer.html">格式说明...</a><br/>
 								数据块：<br/>
-								$data{xml} <font color="green">(注：如果类型需取变量，可使用"\"一元操作符：$data{\type})</font><br/>
+								$data{xml} <font color="green">(注：参数名称化指令，如果类型需取变量，可使用"\"一元操作符：$data{\type})</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
 								装载外部数据：<br/>
@@ -156,7 +152,7 @@ $!
 								$load{xml: "xxx.xml"} <br/>
 								<b>(7) 宏指令:</b><br/>
 								宏定义:<br/>
-								$macro{button} <font color="green">(注：如果名称需取变量，可使用"\"一元操作符：$macro{\name})</font><br/>
+								$macro{button} <font color="green">(注：参数名称化指令，如果名称需取变量，可使用"\"一元操作符：$macro{\name})</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;回调调用者的内部块，如果为行指令方式调用，则inner为空<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;$inner{param3: "value3"}<br/>
@@ -178,12 +174,12 @@ $!
 								使用模板文件作为宏:<br/>
 								$using{button : "button.ctl"}<br/>
 								$using{"button.ctl"} <font color="green">(注：将使用文件名作为宏的名称)</font><br/>
-								使用模板文件中的宏作为宏:<br/>
+								使用模板文件中的宏作为宏: <font color="green">(注：查找时，如果宏的名称不是常量，则在当前上下文中执行)</font><br/>
 								$using{button : "mymacro.ctl#button"} <font color="green">(注：#后为macro的名称, 参见$macro指令)</font><br/>
 								$using{"mymacro.ctl#button"} <font color="green">(注：将使用原始宏的名称(#号后的名称)作为宏的名称)</font><br/>
 								<b>(8) 继承指令:</b> <font color="green">(注：通常用于布局layout)</font> <a href="demo_extends.html">示例&gt;&gt;</a><br/>
 								模板区域定义: <font color="green">(注：在父模板中)</font><br/>
-								$zone{body}<br/>
+								$zone{body} <font color="green">(注：参数名称化指令，如果名称需取变量，可使用"\"一元操作符：$zone{\name})</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
 								继承模板: <font color="green">(注：在子模板中)</font><br/>
@@ -200,14 +196,14 @@ $!
 								$embed{"common.ctl"}<br/>
 								$embed{"common.ctl", "UTF-8"}<br/>
 								内嵌其它模板的一部分: <font color="green">(注：#后为zone的名称, 参见$zone指令)</font><br/>
-								$embed{"common.ctl#body"}<br/>
+								$embed{"common.ctl#body"} <font color="green">(注：查找时，如果区域的名称不是常量，则在当前上下文中执行)</font><br/>
 								包含其它模板的输出: <font color="green">(注：只包含输出，<b>不可以</b>访问当前上下文的变量，<b>可以</b>传参)</font><br/>
 								$include{"common.ctl"}<br/>
 								$include{"common.ctl", "UTF-8"}<br/>
 								$include{"common.ctl", (param1: "value1", param2: "value2")}<br/>
 								$include{"common.ctl", "UTF-8", (param1: "value1", param2: "value2")}<br/>
 								包含其它模板的一部分: <font color="green">(注：#后为zone的名称, 参见$zone指令)</font><br/>
-								$include{"common.ctl#body"}<br/>
+								$include{"common.ctl#body"} <font color="green">(注：查找时，如果区域的名称不是常量，则在当前上下文中执行)</font><br/>
 								显示文件的内容: <font color="green">(注：不解析其内容)</font><br/>
 								$display{"article.txt"}<br/>
 								$display{"article.txt", "UTF-8"}<br/>
@@ -233,6 +229,9 @@ $!
 								$end <br/>
 								捕获输出指令: <font color="green">(注：捕获指令内部块输出内容到指定变量)</font><br/>
 								$capture{xxx}<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+								$end <br/>
+								$capture{global -&gt; xxx} <font color="green">(注: 指定变量区间)</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end <br/>
 								忽略输出指令: <font color="green">(注：执行内部指令，但忽略输出)</font><br/>
@@ -276,14 +275,20 @@ $!
 								异常捕获指令：<br/>
 								$try<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;$exec{"a$$ff$$"}<br/>
-								$catch{e: "org.commontemplate.core.RenderingException"} <font color="green">(注: 缺省变量名为exception, 没有参数表示捕获所有异常)</font><br/>
+								$catch{e: "org.commontemplate.core.RenderingException"}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;${e}<br/>
 								$end<br/>
 								或者：<br/>
 								$try<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;$exec{"a$$ff$$"}<br/>
-								$catch{e: &org.commontemplate.core.RenderingException}  <font color="green">(注: 参见一元操作符&)</font><br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;${e}<br/>
+								$catch{"org.commontemplate.core.RenderingException"} <font color="green">(注: 缺省变量名为exception)</font><br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;${exception}<br/>
+								$end<br/>
+								或者：<br/>
+								$try<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;$exec{"a$$ff$$"}<br/>
+								$catch <font color="green">(注: 没有参数表示捕获所有异常)</font><br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;${exception}<br/>
 								$end<br/>
 								断言指令：<br/>
 								$assert{user != null}  <font color="green">(注: 如果表达式结果不为真, 则抛出异常)</font><br/>
@@ -368,6 +373,25 @@ $!
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;/table&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;/body&gt;</font><br/>
 <font color="#3f7f5f">&lt;/html&gt;</font><br/>
+								<br/>
+								<b>八. 遗留：</b> <font color="green">(注: 将在1.0版本统一删除)</font><br/>
+								(1) $local<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.8.3加入，0.8.5废弃<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>与$var功能重复<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>$var<br/>
+								(2) 简化语法规则：<b>$指令名:参数名</b> 等价于 <b>$指令名{"参数名"}</b><br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.8.5加入，0.8.6废弃<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>语法规则不统一<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>名称定义性指令(如：$block, $macro, $zone等)参数名引号可省，如：$指令名{参数名} 等价于 $指令名{"参数名"}<br/>
+								(3) $leftTrim, $rightTrim<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.8.5加入，0.8.6废弃<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>指令名太长，参照其它模板语法进行简化<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>$ltrim, $rtrim<br/>
+								(4) $forelse<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.7.6加入，0.8.6废弃<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>$for和$if统一使$else指令作为否则逻辑<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>$else<br/>
+								<br/>
 !$
 	<!--$end-->
 <!--$end-->

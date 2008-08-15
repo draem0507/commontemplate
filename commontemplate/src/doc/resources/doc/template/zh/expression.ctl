@@ -35,8 +35,8 @@ $!
 								[ ] 方括号, 索引属性, 如: ${user["name"]} ${user[variable]}<br/>
 								$ 一元美元符号，创建类实例, 如: ${$com.xxx.User(1, "james")} 或 ${$com.xxx.User(id: 1, name: "james")} 或 ${$com.xxx.User()} 或 ${$com.xxx.User}<br/>
 								<font color="green">(注：参数若为List则传入构造函数, 若为Map则调用无参构造函数, 然后调用setXXX()初始化属性)</font><br/>
-								& 一元与号，包名或类名前缀, 如: ${&com.xxx.AppConstant.PREFIX} 或 ${&com.xxx.AppUtils.calc(xxx)}<br/>
-								is 或 instanceof，类型判断，如：${user1 is &com.xxx.User} 或 ${user1 is "com.xxx.User"} 或 ${user1 instanceof &com.xxx.User} 或 ${user1 instanceof "com.xxx.User"}<br/>
+								& 一元与号，包名或类名前缀, 如: ${&com.xxx.AppConstant.PREFIX} 或 ${&com.xxx.AppUtils.calc(xxx)} 等价于 ${"com.xxx.AppUtils".toClass.calc(xxx)}<br/>
+								is 或 instanceof，类型判断，如：${user1 is "com.xxx.User"} 或 ${user1 instanceof "com.xxx.User"}<br/>
 								== 值相等比较，名称符eq，如: ${user1 == user2} ${user1 eq user2}<font color="green">(注：相近类型如char与string,int与long等对比时，将自动转换类型)</font></br>
 								!= 值不相等比较，名称符ne，如: ${user1 != user2} ${user1 ne user2}<br/>
 								=== 内存地址相等比较，名称符aeq，如: ${user1 === user2} ${user1 aeq user2}<br/>
@@ -169,7 +169,7 @@ $!
 									"**"<br/>
 									一元："+", "-", "!", "~", "?"<br/>
 									".", "[ ]", "-&gt;"<br/>
-									一元：".", "[ ]", "\", "&", "$"<br/>
+									一元：".", "[ ]", "\", "&", "$", "max", "min", "sum", "avg"<br/>
 									"( )"<br/>
 								<br/>
 								<b>五. 对象属性及扩展属性</b><br/>
@@ -294,6 +294,12 @@ $!
 								(3) 季度: ${"Spring" .. "Winter"}<br/>
 								(4) 月份: ${"January" .. "December"}<br/>
 								(5) 星期: ${"Sunday" .. "Saturday"}<br/>
+								<b>八. 遗留:</b> <font color="green">(注: 将在1.0版本统一删除)</font><br/>
+								(1) @ 一元操作符<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.8.3加入，0.8.5废弃<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>用动态操作符实现不转义字符串有BUG，并且不希望特殊化@操作符<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>改用反单引号实现不转义字符串<br/>
+								<br/>
 !$
 	<!--$end-->
 <!--$end-->

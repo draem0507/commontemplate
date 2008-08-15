@@ -5,6 +5,7 @@ import java.util.List;
 import org.commontemplate.core.Context;
 import org.commontemplate.standard.directive.DirectiveUtils;
 import org.commontemplate.standard.directive.MiddleBlockDirectiveHandlerSupport;
+import org.commontemplate.standard.directive.condition.IfDirectiveHandler;
 import org.commontemplate.util.Assert;
 
 /**
@@ -29,10 +30,10 @@ public class ForeachElseDirectiveHandler extends MiddleBlockDirectiveHandlerSupp
 	public void doRender(Context context, String directiveName,
 			Object param, List innerElements)
 			throws Exception {
-		Assert.assertNotNull(context.getParentLocalContext().getStatus(ForeachDirectiveHandler.FOR_STATUS), "ForeachElseDirectiveHandler.location.error");
-		if (! ((Boolean)context.getParentLocalContext().getStatus(ForeachDirectiveHandler.FOR_STATUS)).booleanValue())
+		Assert.assertNotNull(context.getParentLocalContext().getStatus(IfDirectiveHandler.IF_STATUS), "ForeachElseDirectiveHandler.location.error");
+		if (! ((Boolean)context.getParentLocalContext().getStatus(IfDirectiveHandler.IF_STATUS)).booleanValue())
 			DirectiveUtils.renderAll(innerElements, context);
-		context.getParentLocalContext().removeStatus(ForeachDirectiveHandler.FOR_STATUS);
+		context.getParentLocalContext().removeStatus(IfDirectiveHandler.IF_STATUS);
 	}
 
 }
