@@ -16,8 +16,6 @@ public final class Syntax implements java.io.Serializable {
 
 	private final char directiveLeader;
 
-	private final char nameSeparator;
-
 	private final char expressionBegin;
 
 	private final char expressionEnd;
@@ -35,8 +33,7 @@ public final class Syntax implements java.io.Serializable {
 	/**
 	 * 定义指令语法及特殊指令
 	 *
-	 * @param leader
-	 * @param nameSeparator
+	 * @param directiveLeader
 	 * @param expressionBegin
 	 * @param expressionEnd
 	 * @param lineComment
@@ -44,14 +41,13 @@ public final class Syntax implements java.io.Serializable {
 	 * @param noParse
 	 * @param endDirectiveName
 	 */
-	public Syntax(char leader, char nameSeparator, char expressionBegin, char expressionEnd,
+	public Syntax(char leader, char expressionBegin, char expressionEnd,
 			char lineComment, char blockComment, char noParse,
 			String endDirectiveName) {
 		Assert.assertNotEmpty(endDirectiveName, "结束指令名不能为空!");
-		assertMutex(new char[] { leader, nameSeparator, expressionBegin, expressionEnd,
+		assertMutex(new char[] { leader, expressionBegin, expressionEnd,
 				noParse, lineComment, blockComment });
 		this.directiveLeader = leader;
-		this.nameSeparator = nameSeparator;
 		this.expressionBegin = expressionBegin;
 		this.expressionEnd = expressionEnd;
 		this.noParse = noParse;
@@ -87,10 +83,6 @@ public final class Syntax implements java.io.Serializable {
 		return directiveLeader;
 	}
 
-	public char getNameSeparator() {
-		return nameSeparator;
-	}
-
 	public final char getExpressionBegin() {
 		return expressionBegin;
 	}
@@ -123,8 +115,6 @@ public final class Syntax implements java.io.Serializable {
 
 	public static final char DEFAULT_DIRECTIVE_LEADER = '$';
 
-	public static final char DEFAULT_NAME_SEPARATOR = ':';
-
 	public static final char DEFAULT_EXPRESSION_BEGIN = '{';
 
 	public static final char DEFAULT_EXPRESSION_END = '}';
@@ -138,9 +128,9 @@ public final class Syntax implements java.io.Serializable {
 	public static final String DEFAULT_END_DIRECTIVE_NAME = "end";
 
 	public static final Syntax DEFAULT = new Syntax(
-			DEFAULT_DIRECTIVE_LEADER, DEFAULT_NAME_SEPARATOR,
-			DEFAULT_EXPRESSION_BEGIN, DEFAULT_EXPRESSION_END,
-			DEFAULT_LINE_COMMENT, DEFAULT_BLOCK_COMMENT, DEFAULT_NO_PARSE,
+			DEFAULT_DIRECTIVE_LEADER, DEFAULT_EXPRESSION_BEGIN,
+			DEFAULT_EXPRESSION_END, DEFAULT_LINE_COMMENT,
+			DEFAULT_BLOCK_COMMENT, DEFAULT_NO_PARSE,
 			DEFAULT_END_DIRECTIVE_NAME);
 
 }
