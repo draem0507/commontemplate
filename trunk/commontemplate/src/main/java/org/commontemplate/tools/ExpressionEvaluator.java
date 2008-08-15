@@ -37,8 +37,8 @@ public class ExpressionEvaluator implements VariableResolver {
 		expressionEngine = new ExpressionEngine(config);
 	}
 
-	private static ExpressionEngine getExpressionEngine() {
-		if (expressionEngine == null) { // XXX
+	private static ExpressionEngine getEngine() {
+		if (expressionEngine == null) { // FIXME 双重检查成例在JDK1.4中无效
 			synchronized(ExpressionEvaluator.class) {
 				if (expressionEngine == null) {
 					init(PropertiesConfigurationLoader.loadStandardExpressionConfiguration());
@@ -60,7 +60,7 @@ public class ExpressionEvaluator implements VariableResolver {
 	 * @return 求值结果
 	 */
 	public Object evaluate() {
-		return getExpressionEngine().parseExpression(expr).evaluate(this);
+		return getEngine().parseExpression(expr).evaluate(this);
 	}
 
 	// 适配VariableResolver ---------

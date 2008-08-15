@@ -38,21 +38,25 @@ public class TemplateRenderer {
 
 	private Template template;
 
-	private final Engine engine;
+	private static Engine engine;
 
-	// TODO 将engine单例化
+	public static synchronized void init(Configuration config) {
+		engine = new Engine(config);
+	}
 
-	public static void setConfiguration(Configuration config) {
-
+	private static Engine getEngine() {
+		if (engine == null) { // FIXME 双重检查成例在JDK1.4中无效
+			synchronized(TemplateRenderer.class) {
+				if (engine == null) {
+					init(PropertiesConfigurationLoader.loadStandardConfiguration());
+				}
+			}
+		}
+		return engine;
 	}
 
 	public TemplateRenderer(String templateText) {
-		this(templateText, PropertiesConfigurationLoader.loadStandardConfiguration());
-	}
-
-	public TemplateRenderer(String templateText, Configuration config) {
-		engine = new Engine(config);
-		this.template = engine.parseTemplate(templateText);
+		this.template = getEngine().parseTemplate(templateText);
 	}
 
 	public String evaluate() {
