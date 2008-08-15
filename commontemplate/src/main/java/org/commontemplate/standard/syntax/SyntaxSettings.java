@@ -4,67 +4,67 @@ public class SyntaxSettings {
 
 	// 指令语法 -----
 
-	private String directiveLeader;
+	private Character directiveLeader;
 
-	private String expressionBegin;
+	private Character expressionBegin;
 
-	private String expressionEnd;
+	private Character expressionEnd;
 
 	// 特殊指令 ------
 
-	private String lineComment;
+	private Character lineComment;
 
-	private String blockComment;
+	private Character blockComment;
 
-	private String noParse;
+	private Character noParse;
 
 	private String endDirectiveName;
 
-	public String getDirectiveLeader() {
+	public Character getDirectiveLeader() {
 		return directiveLeader;
 	}
 
-	public void setDirectiveLeader(String directiveLeader) {
+	public void setDirectiveLeader(Character directiveLeader) {
 		this.directiveLeader = directiveLeader;
 	}
 
-	public String getExpressionBegin() {
+	public Character getExpressionBegin() {
 		return expressionBegin;
 	}
 
-	public void setExpressionBegin(String expressionBegin) {
+	public void setExpressionBegin(Character expressionBegin) {
 		this.expressionBegin = expressionBegin;
 	}
 
-	public String getExpressionEnd() {
+	public Character getExpressionEnd() {
 		return expressionEnd;
 	}
 
-	public void setExpressionEnd(String expressionEnd) {
+	public void setExpressionEnd(Character expressionEnd) {
 		this.expressionEnd = expressionEnd;
 	}
 
-	public String getLineComment() {
+	public Character getLineComment() {
 		return lineComment;
 	}
 
-	public void setLineComment(String lineComment) {
+	public void setLineComment(Character lineComment) {
 		this.lineComment = lineComment;
 	}
 
-	public String getBlockComment() {
+	public Character getBlockComment() {
 		return blockComment;
 	}
 
-	public void setBlockComment(String blockComment) {
+	public void setBlockComment(Character blockComment) {
 		this.blockComment = blockComment;
 	}
 
-	public String getNoParse() {
+	public Character getNoParse() {
 		return noParse;
 	}
 
-	public void setNoParse(String noParse) {
+	public void setNoParse(Character noParse) {
 		this.noParse = noParse;
 	}
 
