@@ -124,8 +124,8 @@ $!
 								修复了各数字类型混合运算时与Java不一致的bug。<br/>
 								加入数字类型间转换属性:toByte,toShort,toInteger,toLong,toFloat,toDouble。<br/>
 								修复for指令对Iterator和Enumeration的支持。<br/>
-								加入局部包含功能, $inline{"xxx.ctl#body"}, $include{"xxx.ctl#body"}, $import{button: "xxx.cm#button"}。参见：<a href="template.html">模板指南...</a><br/>
-								加入包含时编码功能, $inline{"xxx.ctl", "UTF-8"}, $include{"xxx.ctl", "UTF-8"}, $display{"xxx.txt", "UTF-8"}。<br/>
+								加入局部包含功能, $embed{"xxx.ctl#body"}, $include{"xxx.ctl#body"}, $import{button: "xxx.cm#button"}。参见：<a href="template.html">模板指南...</a><br/>
+								加入包含时编码功能, $embed{"xxx.ctl", "UTF-8"}, $include{"xxx.ctl", "UTF-8"}, $display{"xxx.txt", "UTF-8"}。<br/>
 								<br/>
 								<b>0.8.1 版本发布！(2008-01-30)</b> <a href="downloads.html">下载...</a><br/>
 								增加JspTagLib适配器支持, 可以在CTL使用Jsp标签库。<br/>

@@ -49,7 +49,7 @@ public class EmbedTemplateDirectiveHandler extends DirectiveHandlerSupport {
 				new Object[]{templateName, context.getCurrentTemplate()});
 		Template template = context.getTemplate(templateName, templateEncoding); // assert(template != null);
 		if (zoneName != null && zoneName.length() > 0) {
-			List elements = BlockDirectiveVisitor.findInnerElements(template, "zone", zoneName);
+			List elements = BlockDirectiveVisitor.findInnerElements(template, "zone", zoneName, context);
 			Assert.assertNotEmpty(elements, "EmbedTemplateDirectiveHandler.template.zone.not.found", new Object[]{templateName, zoneName});
 			DirectiveUtils.renderAll(elements, context);
 		} else {

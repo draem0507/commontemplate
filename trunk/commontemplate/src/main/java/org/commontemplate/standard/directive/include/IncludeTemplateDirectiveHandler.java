@@ -67,7 +67,7 @@ public class IncludeTemplateDirectiveHandler extends DirectiveHandlerSupport {
 			if (variables != null && variables.size() > 0)
 				newContext.putAllVariables(variables);
 			if (zoneName != null && zoneName.length() > 0) {
-				List elements = BlockDirectiveVisitor.findInnerElements(template, "zone", zoneName);
+				List elements = BlockDirectiveVisitor.findInnerElements(template, "zone", zoneName, context);
 				Assert.assertNotEmpty(elements, "IncludeTemplateDirectiveHandler.template.zone.not.found", new Object[]{templateName, zoneName});
 				DirectiveUtils.renderAll(elements, newContext);
 			} else {
