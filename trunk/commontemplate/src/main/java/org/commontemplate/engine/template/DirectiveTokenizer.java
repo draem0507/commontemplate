@@ -32,7 +32,7 @@ final class DirectiveTokenizer {
 	// 行表示状态
 	// 行列交点表示: 在该状态时, 遇到某类型的字符时, 切换到的下一状态(数组行号)
 	// E/B/L/N表示结束状态, 接收前面经过的字符序列为一个片断, R表示错误状态(这些状态均为负数)
-	private static final int states[][] = { // TODO 支持指令名称为纯符号
+	private static final int states[][] = { // TODO ":"语法待删除
 					// 0.空格, 1.\, 2.$, 3.字母, 4.:, 5.{, 6.}, 7.!, 8.*, 9.#, 10.\n, 11.", 12.', 13.`, 14.其它
 		/* 0.起始    */ { 9, 1, 2, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9}, // 初始状态或上一片断刚接收完成状态
 		/* 1.转义    */ { 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9}, // $符转义
@@ -66,7 +66,7 @@ final class DirectiveTokenizer {
 		final String types[] = {
 			// 0.空格, 1.\, 2.$, 3.字母, 4.{, 5.}, 6.!, 7.*, 8.#, 9.\n, 10.", 11.', 12.`
 			" |\t|\r|\f", "\\", String.valueOf(syntax.getDirectiveLeader()),
-			"0-9|.|_|a-z|A-Z", String.valueOf(syntax.getNameSeparator()), String.valueOf(syntax.getExpressionBegin()),
+			"0-9|.|_|a-z|A-Z", ":", String.valueOf(syntax.getExpressionBegin()),
 			String.valueOf(syntax.getExpressionEnd()), String.valueOf(syntax.getNoParse()),
 			String.valueOf(syntax.getBlockComment()), String.valueOf(syntax.getLineComment()),
 			"\n", "\"", "\'", "`"

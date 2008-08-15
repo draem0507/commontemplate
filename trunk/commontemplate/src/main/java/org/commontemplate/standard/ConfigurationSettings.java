@@ -19,6 +19,7 @@ import org.commontemplate.core.OutputFormatter;
 import org.commontemplate.core.ResourceLoader;
 import org.commontemplate.standard.i18n.ResourceBundleProvider;
 import org.commontemplate.standard.log.Logger;
+import org.commontemplate.standard.syntax.SyntaxSettings;
 import org.commontemplate.util.Assert;
 
 /**
@@ -132,23 +133,36 @@ public class ConfigurationSettings extends Configuration {
 	 * @param syntax 指令语法
 	 */
 	public void setSyntax(Syntax syntax) {
-		Assert.assertNotNull(syntax, "ConfigurationSettings.syntax.required");
+		// Assert.assertNotNull(syntax, "ConfigurationSettings.syntax.required");
+		if (syntax == null)
+			return;
 		this.syntax = syntax;
 	}
 
-	public void setSyntaxSetting(String value) {
-		Assert.assertTrue(value != null && value.trim().length() > 0, "ConfigurationSettings.syntax.string.required");
+	public void setSyntaxSettings(SyntaxSettings syntaxSettings) {
+		// Assert.assertNotNull(syntaxSettings, "ConfigurationSettings.syntax.string.required");
+		if (syntaxSettings == null)
+			return;
+		char leader = getSyntaxSign(syntaxSettings.getDirectiveLeader(), Syntax.DEFAULT_DIRECTIVE_LEADER);
+		char expressionBegin = getSyntaxSign(syntaxSettings.getExpressionBegin(), Syntax.DEFAULT_EXPRESSION_BEGIN);
+		char expressionEnd = getSyntaxSign(syntaxSettings.getExpressionEnd(), Syntax.DEFAULT_EXPRESSION_END);
+		char lineComment = getSyntaxSign(syntaxSettings.getLineComment(), Syntax.DEFAULT_LINE_COMMENT);
+		char blockComment = getSyntaxSign(syntaxSettings.getBlockComment(), Syntax.DEFAULT_BLOCK_COMMENT);
+		char noParse = getSyntaxSign(syntaxSettings.getNoParse(), Syntax.DEFAULT_NO_PARSE);
+		String endDirectiveName = getSyntaxName(syntaxSettings.getEndDirectiveName(), Syntax.DEFAULT_END_DIRECTIVE_NAME);
+		setSyntax(new Syntax(leader, expressionBegin, expressionEnd, lineComment, blockComment, noParse, endDirectiveName));
+	}
 
-		value = value.trim();
-		char leader = value.length() > 0 ? value.charAt(0) : Syntax.DEFAULT_DIRECTIVE_LEADER;
-		char nameSeparator = value.length() > 1 ? value.charAt(1) : Syntax.DEFAULT_NAME_SEPARATOR;
-		char expressionBegin = value.length() > 2 ? value.charAt(2) : Syntax.DEFAULT_EXPRESSION_BEGIN;
-		char expressionEnd = value.length() > 3 ? value.charAt(3) : Syntax.DEFAULT_EXPRESSION_END;
-		char lineComment = value.length() > 4 ? value.charAt(4) : Syntax.DEFAULT_LINE_COMMENT;
-		char blockComment = value.length() > 5 ? value.charAt(5) : Syntax.DEFAULT_BLOCK_COMMENT;
-		char noParse = value.length() > 6 ? value.charAt(6) : Syntax.DEFAULT_NO_PARSE;
-		String endDirectiveName = value.length() > 7 ? value.substring(7) : Syntax.DEFAULT_END_DIRECTIVE_NAME;
-		setSyntax(new Syntax(leader, nameSeparator, expressionBegin, expressionEnd, lineComment, blockComment, noParse, endDirectiveName));
+	private char getSyntaxSign(String configSign, char defaultSign) {
+		if (configSign != null && configSign.length() > 0)
+			return configSign.charAt(0);
+		return defaultSign;
+	}
+
+	private String getSyntaxName(String configName, String defaultName) {
+		if (configName != null && configName.length() > 0)
+			return configName;
+		return defaultName;
 	}
 
 	// 指令处理器 -------------

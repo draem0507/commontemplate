@@ -215,7 +215,7 @@ final class DirectiveProvider {
 				}
 			}
 		} else {
-			int j = message.indexOf(syntax.getNameSeparator());
+			int j = message.indexOf(":"); // TODO ":"语法待删除
 			if (j > -1) {
 				name = message.substring(1, j);
 				String param = message.substring(j + 1);
