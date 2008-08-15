@@ -2,7 +2,6 @@ package org.commontemplate.tools.viewer;
 
 import java.io.File;
 
-import org.commontemplate.tools.generator.TemplateGenerator;
 
 public class TemplateViewerTester {
 
