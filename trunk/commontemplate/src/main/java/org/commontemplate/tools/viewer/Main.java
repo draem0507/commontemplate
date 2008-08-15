@@ -17,20 +17,23 @@ public class Main {
 			if (args == null || args.length == 0) {
 				MainUI.showSettings();
 			} else if (args.length == 1) {
-				view(getSourceFile(args[0]));
+				run("v", args[0]);
 			} else if (args.length == 2) {
-				File sourceFile = getSourceFile(args[1]);
-				String command = args[0];
-				if ("d".equalsIgnoreCase(command)) {
-					debug(sourceFile);
-				} else if ("g".equalsIgnoreCase(command)) {
-					generate(sourceFile);
-				} else {
-					view(sourceFile);
-				}
+				run(args[0], args[1]);
 			}
 		} catch (Exception e) {
 			MainUI.showException(e);
+		}
+	}
+
+	public static void run(String command, String file) throws Exception {
+		File sourceFile = getSourceFile(file);
+		if ("d".equalsIgnoreCase(command)) {
+			debug(sourceFile);
+		} else if ("g".equalsIgnoreCase(command)) {
+			generate(sourceFile);
+		} else {
+			view(sourceFile);
 		}
 	}
 
