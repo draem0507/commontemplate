@@ -1,4 +1,4 @@
-package org.commontemplate.tools.exe;
+package org.commontemplate.tools.viewer;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

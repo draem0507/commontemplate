@@ -1,11 +1,8 @@
-package org.commontemplate.tools.exe;
+package org.commontemplate.tools.viewer;
 
 import java.io.File;
 import java.io.IOException;
 
-import org.commontemplate.tools.debugger.TemplateDebugger;
-import org.commontemplate.tools.generator.TemplateGenerator;
-import org.commontemplate.tools.viewer.TemplateViewer;
 
 public class Main {
 

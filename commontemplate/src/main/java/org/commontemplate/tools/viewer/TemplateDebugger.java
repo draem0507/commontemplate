@@ -1,10 +1,9 @@
-package org.commontemplate.tools.debugger;
+package org.commontemplate.tools.viewer;
 
 import java.io.File;
 
 import org.commontemplate.standard.debug.Breakpoint;
 import org.commontemplate.standard.debug.DebugManager;
-import org.commontemplate.tools.viewer.TemplateViewer;
 
 public class TemplateDebugger {
 

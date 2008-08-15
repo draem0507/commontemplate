@@ -4,7 +4,7 @@
 
 	<property environment="env" />
 	<property name="app.name" value="Common Template Engine" />
-	<property name="mainclass" value="org.commontemplate.tools.exe.Main" />
+	<property name="mainclass" value="org.commontemplate.tools.viewer.Main" />
 	<property name="src" location="src/main/java" />
 	<property name="res" location="src/main/resources" />
 	<property name="build" location="build" />

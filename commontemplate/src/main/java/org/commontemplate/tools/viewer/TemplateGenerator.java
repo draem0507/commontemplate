@@ -1,4 +1,4 @@
-package org.commontemplate.tools.generator;
+package org.commontemplate.tools.viewer;
 
 import java.io.File;
 import java.io.FileWriter;
