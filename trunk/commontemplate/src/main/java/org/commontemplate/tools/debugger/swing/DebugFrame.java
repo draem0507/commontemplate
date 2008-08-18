@@ -67,7 +67,7 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 
 	private final ContextPane contextPane = new ContextPane();
 
-	private final JButton stepInto, stepOver, stepReturn, resume, resumeAll, terminate;
+	private final JButton stepInto, stepOver, stepReturn, resume, resumeAll, terminate, flush;
 
 	private final DefaultListModel executionModel = new DefaultListModel();
 
@@ -166,27 +166,10 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 		s.setOrientation(JSeparator.VERTICAL);
 		buttonPane.add(s);
 
-		JButton flush = new JButton(getIcon("flush.gif"));
+		flush = new JButton(getIcon("flush.gif"));
 		flush.setToolTipText(I18nMessages
 				.getMessage("DebugFrame.flush.button"));
-		flush.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (execution != null) {
-					Context context = execution.getContext();
-					if (context != null) {
-						Writer out = context.getOut();
-						if (out != null) {
-							try {
-								out.flush();
-							} catch (IOException ioe) {
-								ioe.printStackTrace();
-								// ignore
-							}
-						}
-					}
-				}
-			}
-		});
+		flush.addActionListener(this);
 		buttonPane.add(flush);
 
 		frame.getContentPane().add(buttonPane, BorderLayout.NORTH);
@@ -241,8 +224,21 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 				execution.resume();
 			} else if (button == resumeAll) {
 				execution.resumeAll();
-			}  else {
+			} else  if (button == terminate) {
 				execution.terminate();
+			} else {
+				Context context = execution.getContext();
+				if (context != null) {
+					Writer out = context.getOut();
+					if (out != null) {
+						try {
+							out.flush();
+						} catch (IOException ioe) {
+							ioe.printStackTrace();
+							// ignore
+						}
+					}
+				}
 			}
 			removeExecution(execution);
 		}
@@ -311,8 +307,11 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 		resume.setEnabled(true);
 		resumeAll.setEnabled(true);
 		terminate.setEnabled(true);
-		templatePane.setElement(execution.getElement());
-		contextPane.initContextPane(execution.getContext());
+		flush.setEnabled(true);
+		if (execution != null) {
+			templatePane.setElement(execution.getElement());
+			contextPane.initContextPane(execution.getContext());
+		}
 	}
 
 	private synchronized void disableToolbar() {
@@ -322,8 +321,9 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 		resume.setEnabled(false);
 		resumeAll.setEnabled(false);
 		terminate.setEnabled(false);
-		contextPane.clearContextPane();
+		flush.setEnabled(false);
 		templatePane.removeElement();
+		contextPane.clearContextPane();
 	}
 
 }

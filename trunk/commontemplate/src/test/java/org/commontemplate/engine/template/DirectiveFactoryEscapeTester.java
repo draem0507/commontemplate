@@ -20,48 +20,48 @@ public class DirectiveFactoryEscapeTester extends TestCase {
 		String src = "aaa\\!$bbb";
 		int loc = src.indexOf("!$");
 		super.assertEquals(4, loc);
-		super.assertEquals(1, directiveFactory.countInnerLastSlash(src, loc));
+		super.assertEquals(1, directiveFactory.countStringLastSlash(src, loc));
 	}
 
 	public void testUnCleanNoParseEscape() {
-		super.assertEquals("\\", directiveFactory.cleanInnerEscape("\\\\", "!$"));
-		super.assertEquals("aaa!$bbb\\", directiveFactory.cleanInnerEscape("aaa\\!$bbb\\\\", "!$"));
-		super.assertEquals("aaa\\!$bbb\\\\", directiveFactory.cleanInnerEscape("aaa\\\\\\!$bbb\\\\\\\\", "!$"));
-		super.assertEquals("aaa\\\\!$bbb\\\\\\", directiveFactory.cleanInnerEscape("aaa\\\\\\\\\\!$bbb\\\\\\\\\\\\", "!$"));
+		super.assertEquals("\\", directiveFactory.cleanStringEscape("\\\\", "!$"));
+		super.assertEquals("aaa!$bbb\\", directiveFactory.cleanStringEscape("aaa\\!$bbb\\\\", "!$"));
+		super.assertEquals("aaa\\!$bbb\\\\", directiveFactory.cleanStringEscape("aaa\\\\\\!$bbb\\\\\\\\", "!$"));
+		super.assertEquals("aaa\\\\!$bbb\\\\\\", directiveFactory.cleanStringEscape("aaa\\\\\\\\\\!$bbb\\\\\\\\\\\\", "!$"));
 	}
 
 	public void testUnCleanNoParseSlash() {
-		super.assertEquals("aaa!$bbb\\c", directiveFactory.cleanInnerEscape("aaa\\!$bbb\\c", "!$"));
-		super.assertEquals("aaa\\!$bbb\\\\c", directiveFactory.cleanInnerEscape("aaa\\\\\\!$bbb\\\\c", "!$"));
-		super.assertEquals("aaa\\\\!$bbb\\\\\\c", directiveFactory.cleanInnerEscape("aaa\\\\\\\\\\!$bbb\\\\\\c", "!$"));
+		super.assertEquals("aaa!$bbb\\c", directiveFactory.cleanStringEscape("aaa\\!$bbb\\c", "!$"));
+		super.assertEquals("aaa\\!$bbb\\\\c", directiveFactory.cleanStringEscape("aaa\\\\\\!$bbb\\\\c", "!$"));
+		super.assertEquals("aaa\\\\!$bbb\\\\\\c", directiveFactory.cleanStringEscape("aaa\\\\\\\\\\!$bbb\\\\\\c", "!$"));
 	}
 
 	public void testCleanNoParseEscape() {
-		super.assertEquals("aaa!$bbb", directiveFactory.cleanInnerEscape("aaa\\!$bbb", "!$"));
-		super.assertEquals("aaa\\!$bbb", directiveFactory.cleanInnerEscape("aaa\\\\\\!$bbb", "!$"));
-		super.assertEquals("aaa\\\\!$bbb", directiveFactory.cleanInnerEscape("aaa\\\\\\\\\\!$bbb", "!$"));
+		super.assertEquals("aaa!$bbb", directiveFactory.cleanStringEscape("aaa\\!$bbb", "!$"));
+		super.assertEquals("aaa\\!$bbb", directiveFactory.cleanStringEscape("aaa\\\\\\!$bbb", "!$"));
+		super.assertEquals("aaa\\\\!$bbb", directiveFactory.cleanStringEscape("aaa\\\\\\\\\\!$bbb", "!$"));
 
-		super.assertEquals("!$bbb", directiveFactory.cleanInnerEscape("\\!$bbb", "!$"));
-		super.assertEquals("\\!$bbb", directiveFactory.cleanInnerEscape("\\\\\\!$bbb", "!$"));
-		super.assertEquals("\\\\!$bbb", directiveFactory.cleanInnerEscape("\\\\\\\\\\!$bbb", "!$"));
+		super.assertEquals("!$bbb", directiveFactory.cleanStringEscape("\\!$bbb", "!$"));
+		super.assertEquals("\\!$bbb", directiveFactory.cleanStringEscape("\\\\\\!$bbb", "!$"));
+		super.assertEquals("\\\\!$bbb", directiveFactory.cleanStringEscape("\\\\\\\\\\!$bbb", "!$"));
 
-		super.assertEquals("aaa!$", directiveFactory.cleanInnerEscape("aaa\\!$", "!$"));
-		super.assertEquals("aaa\\!$", directiveFactory.cleanInnerEscape("aaa\\\\\\!$", "!$"));
-		super.assertEquals("aaa\\\\!$", directiveFactory.cleanInnerEscape("aaa\\\\\\\\\\!$", "!$"));
+		super.assertEquals("aaa!$", directiveFactory.cleanStringEscape("aaa\\!$", "!$"));
+		super.assertEquals("aaa\\!$", directiveFactory.cleanStringEscape("aaa\\\\\\!$", "!$"));
+		super.assertEquals("aaa\\\\!$", directiveFactory.cleanStringEscape("aaa\\\\\\\\\\!$", "!$"));
 	}
 
 	public void testCleanCommentEscape() {
-		super.assertEquals("aaa*$bbb", directiveFactory.cleanInnerEscape("aaa\\*$bbb", "*$"));
-		super.assertEquals("aaa\\*$bbb", directiveFactory.cleanInnerEscape("aaa\\\\\\*$bbb", "*$"));
-		super.assertEquals("aaa\\\\*$bbb", directiveFactory.cleanInnerEscape("aaa\\\\\\\\\\*$bbb", "*$"));
+		super.assertEquals("aaa*$bbb", directiveFactory.cleanStringEscape("aaa\\*$bbb", "*$"));
+		super.assertEquals("aaa\\*$bbb", directiveFactory.cleanStringEscape("aaa\\\\\\*$bbb", "*$"));
+		super.assertEquals("aaa\\\\*$bbb", directiveFactory.cleanStringEscape("aaa\\\\\\\\\\*$bbb", "*$"));
 
-		super.assertEquals("*$bbb", directiveFactory.cleanInnerEscape("\\*$bbb", "*$"));
-		super.assertEquals("\\*$bbb", directiveFactory.cleanInnerEscape("\\\\\\*$bbb", "*$"));
-		super.assertEquals("\\\\*$bbb", directiveFactory.cleanInnerEscape("\\\\\\\\\\*$bbb", "*$"));
+		super.assertEquals("*$bbb", directiveFactory.cleanStringEscape("\\*$bbb", "*$"));
+		super.assertEquals("\\*$bbb", directiveFactory.cleanStringEscape("\\\\\\*$bbb", "*$"));
+		super.assertEquals("\\\\*$bbb", directiveFactory.cleanStringEscape("\\\\\\\\\\*$bbb", "*$"));
 
-		super.assertEquals("aaa*$", directiveFactory.cleanInnerEscape("aaa\\*$", "*$"));
-		super.assertEquals("aaa\\*$", directiveFactory.cleanInnerEscape("aaa\\\\\\*$", "*$"));
-		super.assertEquals("aaa\\\\*$", directiveFactory.cleanInnerEscape("aaa\\\\\\\\\\*$", "*$"));
+		super.assertEquals("aaa*$", directiveFactory.cleanStringEscape("aaa\\*$", "*$"));
+		super.assertEquals("aaa\\*$", directiveFactory.cleanStringEscape("aaa\\\\\\*$", "*$"));
+		super.assertEquals("aaa\\\\*$", directiveFactory.cleanStringEscape("aaa\\\\\\\\\\*$", "*$"));
 	}
 
 }
