@@ -30,27 +30,27 @@ public class DirectiveFactoryTester extends TestCase {
 	}
 
 	public void testCleanEscape() {
-		super.assertEquals("aaa$bbb", directiveFactory.cleanOuterEscape("aaa\\$bbb", false));
-		super.assertEquals("aaa\\$bbb", directiveFactory.cleanOuterEscape("aaa\\\\\\$bbb", false));
+		super.assertEquals("aaa$bbb", directiveFactory.cleanCharEscape("aaa\\$bbb", '$', false));
+		super.assertEquals("aaa\\$bbb", directiveFactory.cleanCharEscape("aaa\\\\\\$bbb", '$', false));
 	}
 
 	public void testUnCleanEscape() {
-		super.assertEquals("aaa\\bbb", directiveFactory.cleanOuterEscape("aaa\\bbb", false));
-		super.assertEquals("aaa\\\\bbb", directiveFactory.cleanOuterEscape("aaa\\\\bbb", false));
-		super.assertEquals("aaa\\\\\\bbb", directiveFactory.cleanOuterEscape("aaa\\\\\\bbb", false));
-		super.assertEquals("\\\\\\\\bbb", directiveFactory.cleanOuterEscape("\\\\\\\\bbb", false));
+		super.assertEquals("aaa\\bbb", directiveFactory.cleanCharEscape("aaa\\bbb", '$', false));
+		super.assertEquals("aaa\\\\bbb", directiveFactory.cleanCharEscape("aaa\\\\bbb", '$', false));
+		super.assertEquals("aaa\\\\\\bbb", directiveFactory.cleanCharEscape("aaa\\\\\\bbb", '$', false));
+		super.assertEquals("\\\\\\\\bbb", directiveFactory.cleanCharEscape("\\\\\\\\bbb", '$', false));
 	}
 
 	public void testCleanEscapeError() {
 		try {
-			directiveFactory.cleanOuterEscape("aaa\\\\$bbb", false);
+			directiveFactory.cleanCharEscape("aaa\\\\$bbb", '$', false);
 			fail("偶数个反斜杠是错误的! 应抛出异常");
 		} catch (IllegalStateException e) {
 			// right
 		}
 
 		try {
-			directiveFactory.cleanOuterEscape("aaa\\\\\\\\$bbb", false);
+			directiveFactory.cleanCharEscape("aaa\\\\\\\\$bbb", '$', false);
 			fail("偶数个反斜杠是错误的! 应抛出异常");
 		} catch (IllegalStateException e) {
 			// right
@@ -58,28 +58,28 @@ public class DirectiveFactoryTester extends TestCase {
 	}
 
 	public void testCleanEscapeLastSlash() {
-		super.assertEquals("aaabbb\\", directiveFactory.cleanOuterEscape("aaabbb\\\\", false));
-		super.assertEquals("aaabbb\\\\", directiveFactory.cleanOuterEscape("aaabbb\\\\\\\\", false));
-		super.assertEquals("aaabbb\\\\\\", directiveFactory.cleanOuterEscape("aaabbb\\\\\\\\\\\\", false));
+		super.assertEquals("aaabbb\\", directiveFactory.cleanCharEscape("aaabbb\\\\", '$', false));
+		super.assertEquals("aaabbb\\\\", directiveFactory.cleanCharEscape("aaabbb\\\\\\\\", '$', false));
+		super.assertEquals("aaabbb\\\\\\", directiveFactory.cleanCharEscape("aaabbb\\\\\\\\\\\\", '$', false));
 	}
 
 	public void testUnCleanEscapeLastSlash() {
-		super.assertEquals("aaabbb\\", directiveFactory.cleanOuterEscape("aaabbb\\", true));
-		super.assertEquals("aaabbb\\\\", directiveFactory.cleanOuterEscape("aaabbb\\\\", true));
-		super.assertEquals("aaabbb\\\\\\", directiveFactory.cleanOuterEscape("aaabbb\\\\\\", true));
-		super.assertEquals("aaabbb\\\\\\\\", directiveFactory.cleanOuterEscape("aaabbb\\\\\\\\", true));
+		super.assertEquals("aaabbb\\", directiveFactory.cleanCharEscape("aaabbb\\", '$', true));
+		super.assertEquals("aaabbb\\\\", directiveFactory.cleanCharEscape("aaabbb\\\\", '$', true));
+		super.assertEquals("aaabbb\\\\\\", directiveFactory.cleanCharEscape("aaabbb\\\\\\", '$', true));
+		super.assertEquals("aaabbb\\\\\\\\", directiveFactory.cleanCharEscape("aaabbb\\\\\\\\", '$', true));
 	}
 
 	public void testCleanEscapeLastSlashError() {
 		try {
-			directiveFactory.cleanOuterEscape("aaabbb\\", false);
+			directiveFactory.cleanCharEscape("aaabbb\\", '$', false);
 			fail("奇数个结尾反斜杠是错误的! 应抛出异常");
 		} catch (IllegalStateException e) {
 			// right
 		}
 
 		try {
-			directiveFactory.cleanOuterEscape("aaabbb\\\\\\", false);
+			directiveFactory.cleanCharEscape("aaabbb\\\\\\", '$', false);
 			fail("奇数个结尾反斜杠是错误的! 应抛出异常");
 		} catch (IllegalStateException e) {
 			// right
@@ -89,18 +89,18 @@ public class DirectiveFactoryTester extends TestCase {
 	public void testCountSlash() {
 		StringBuffer buf = new StringBuffer(60);
 		buf.append("adga\\\\\\\\\\");
-		super.assertEquals(5, directiveFactory.countOuterLastSlash(buf));
+		super.assertEquals(5, directiveFactory.countCharLastSlash(buf));
 	}
 
 	public void testStartCountSlash() {
 		StringBuffer buf = new StringBuffer(60);
 		buf.append("\\\\\\\\\\");
-		super.assertEquals(5, directiveFactory.countOuterLastSlash(buf));
+		super.assertEquals(5, directiveFactory.countCharLastSlash(buf));
 	}
 
 	public void testZeroCountSlash() {
 		StringBuffer buf = new StringBuffer(60);
 		buf.append("\\\\\\\\\\aa");
-		super.assertEquals(0, directiveFactory.countOuterLastSlash(buf));
+		super.assertEquals(0, directiveFactory.countCharLastSlash(buf));
 	}
 }

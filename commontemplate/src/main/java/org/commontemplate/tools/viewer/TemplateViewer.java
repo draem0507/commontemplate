@@ -13,8 +13,9 @@ public class TemplateViewer {
 	}
 
 	public void view(File sourceFile) throws Exception {
-		String target = generator.generate(sourceFile);
-		Runtime.getRuntime().exec("cmd /c start " + UrlUtils.cleanWindowsPath(target));
+		File targetFile = generator.getFile(sourceFile, "html"); // 目标文件
+		generator.generate(sourceFile, targetFile);
+		Runtime.getRuntime().exec("cmd /c start " + UrlUtils.cleanWindowsPath(targetFile.getCanonicalPath()));
 	}
 
 }

@@ -181,7 +181,7 @@ $!
 								(2) 再查找obj.getXXX()函数<br/>
 								(3) 再查找obj.isXXX()函数<br/>
 								(4) 再查找obj.XXX()函数<br/>
-								(5) 再查找obj.XXX属性(包括静态属性)<br/>
+								(5) 再查找obj.XXX属性<br/>
 								<b>标准扩展属性</b> <a href="extension.html">扩展...</a><br/>
 								<font color="green">(注：根据上面的规则，没有参数，但有返回值的函数，可以直接作为属性，如：toString, hashCode, trim, toUpperCase, size等，下面不再列出)</font><br/>
 								<b>(1) 空值(Null):</b><br/>
@@ -195,6 +195,18 @@ $!
 								<b>(3) 字符串(String):</b><br/>
 								capitalize 首字母大写, eg: ${"james".capitalize} (输出：James)<br/>
 								uncapitalize 首字母小写, eg: ${"James".uncapitalize} (输出：james)<br/>
+								md5Code MD5摘要密文, 如:  ${"mypassword".md5Code}<br/>
+								shaCode SHA摘要密文, 如:  ${"mypassword".shaCode}<br/>
+								base64Code BASE64编码, 如:  ${"mail".base64Code}<br/>
+								escapeHtml HTML转码, 将&lt;和&gt;分别转成&amp;lt;和&amp;gt;等, 如:  ${"&lt;b&gt;".escapeHtml}<br/>
+								escapeXml XML转码, 如:  ${"&lt;book&gt;&lt;book&gt;".escapeXml}<br/>
+								escapeUrl URL转码, 如:  ${"http://xxx.com?xx=xx&yy=yy".escapeUrl}<br/>
+								escapeJs JS转码, 如:  ${"\"\n\"".escapeJs}<br/>
+								toCamelNaming 转为骆驼命名, 如：${"user_name".toCamelNaming} 输出：userName<br/>
+								toCapitalNaming 转为大写命名, 如：${"user_name".toCapitalNaming} 输出：UserName<br/>
+								toUnderlineNaming 转为下划线命名, 如：${"userName".toUnderlineNaming} 输出：user_name<br/>
+								toAscii 将Unicode码转为ASCII码表示, 如：${"中国".toAscii} 输出：\u4E2D\u56FD<br/>
+								toUnicode 将ASCII码转为Unicode码表示, 如：${"\u4E2D\u56FD".toUnicode} 输出：中国<br/>
 								toSwapCase 交换大小写, 把串中大写的改小写, 小写的改为大写. 如：${"ABCdef".toSwapCase} 输出：abcDEF <font color="green">(注：与toUpperCase, toLowerCase相对应)</font><br/>
 								toClass 将字符串转为类元, 如: ${"com.xxx.User".toClass}<br/>
 								toDate 以yyyy-MM-dd格式转换为Date, 如:  ${"2007-01-01".toDate}<br/>
@@ -208,18 +220,6 @@ $!
 								toLong 转为Long类型, 如:  ${"25".toLong + 2}<br/>
 								toFloat 转为Float类型, 如:  ${"1.2".toFloat + 2} <br/>
 								toDouble 转为Double类型, 如:  ${"2.3".toDouble + 2}<br/>
-								md5Code MD5摘要密文, 如:  ${"mypassword".md5Code}<br/>
-								shaCode SHA摘要密文, 如:  ${"mypassword".shaCode}<br/>
-								base64Code BASE64编码, 如:  ${"mail".base64Code}<br/>
-								escapeHtml HTML转码, 将&lt;和&gt;分别转成&amp;lt;和&amp;gt;等, 如:  ${"&lt;b&gt;".escapeHtml}<br/>
-								escapeXml XML转码, 如:  ${"&lt;book&gt;&lt;book&gt;".escapeXml}<br/>
-								escapeUrl URL转码, 如:  ${"http://xxx.com?xx=xx&yy=yy".escapeUrl}<br/>
-								escapeJs JS转码, 如:  ${"\"\n\"".escapeJs}<br/>
-								toCamelNaming 转为骆驼命名, 如：${"user_name".toCamelNaming} 输出：userName<br/>
-								toCapitalNaming 转为大写命名, 如：${"user_name".toCapitalNaming} 输出：UserName<br/>
-								toUnderlineNaming 转为下划线命名, 如：${"userName".toUnderlineNaming} 输出：user_name<br/>
-								toAscii 将Unicode码转为ASCII码表示, 如：${"中国".toAscii} 输出：\u4E2D\u56FD<br/>
-								toUnicode 将ASCII码转为Unicode码表示, 如：${"\u4E2D\u56FD".toUnicode} 输出：中国<br/>
 								empty 是否为空字符串, 如：${"".empty} 输出：true<br/>
 								whitespace 是否为空白字符串, 如：${" ".whitespace} 输出：true<br/>
 								naming 是否为命名字符串, 如：${"abc".naming} 输出：true<br/>

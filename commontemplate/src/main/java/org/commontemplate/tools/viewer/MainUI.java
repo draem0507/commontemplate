@@ -4,12 +4,17 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import org.commontemplate.tools.swing.CommonTemplateFrame;
 
@@ -67,6 +72,49 @@ public class MainUI {
 		pane.getViewport().setView(area);
 		pane.getViewport().setBackground(Color.white);
 		frame.getContentPane().add(pane, BorderLayout.CENTER);
+		frame.setVisible(true);
+	}
+
+	public static void choosePath(String defaultPath) {
+		CommonTemplateFrame frame = new CommonTemplateFrame();
+		frame.setTitle("CommonTemplateViewer - Choose");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(800, 600);
+		Dimension scr = Toolkit.getDefaultToolkit().getScreenSize();
+		Dimension fra = frame.getSize();
+		frame.setLocation((scr.width - fra.width) / 2,
+				(scr.height - fra.height) / 2);// 在屏幕居中显示
+		frame.getRootPane().setFocusable(true);
+		frame.getRootPane().setFocusCycleRoot(true);
+		frame.getContentPane().setLayout(null);
+
+		final JTextField fileField = new JTextField(defaultPath);
+		fileField.setBounds(20, 20, 300, 24);
+		JButton browseButton = new JButton("浏览"); // TODO 未国际化
+		browseButton.setBounds(240, 20, 80, 24);
+		browseButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fc=new JFileChooser(fileField.getText()); //以上次打开的文件为默认路径打开文件选取择框图
+				fc.setDialogTitle("请选择模板生成目标位置"); // TODO 未国际化
+				int ch = fc.showOpenDialog(null);
+				if (ch == JFileChooser.APPROVE_OPTION)
+					fileField.setText(fc.getSelectedFile().getAbsolutePath());
+			}
+		});
+		JButton chooseButton = new JButton("选择"); // TODO 未国际化
+		chooseButton.setBounds(340, 20, 80, 24);
+		browseButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fc=new JFileChooser(fileField.getText()); //以上次打开的文件为默认路径打开文件选取择框图
+				fc.setDialogTitle("请选择模板生成目标位置"); // TODO 未国际化
+				int ch = fc.showOpenDialog(null);
+				if (ch == JFileChooser.APPROVE_OPTION)
+					fileField.setText(fc.getSelectedFile().getAbsolutePath());
+			}
+		});
+
+		frame.getContentPane().add(fileField);
+		frame.getContentPane().add(chooseButton);
 		frame.setVisible(true);
 	}
 

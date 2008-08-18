@@ -44,7 +44,7 @@ public final class Syntax implements java.io.Serializable {
 	public Syntax(char leader, char expressionBegin, char expressionEnd,
 			char lineComment, char blockComment, char noParse,
 			String endDirectiveName) {
-		Assert.assertNotEmpty(endDirectiveName, "结束指令名不能为空!");
+		Assert.assertNotEmpty(endDirectiveName, "结束指令名不能为空!"); // TODO 未国际化
 		assertMutex(new char[] { leader, expressionBegin, expressionEnd,
 				noParse, lineComment, blockComment });
 		this.directiveLeader = leader;
@@ -69,12 +69,12 @@ public final class Syntax implements java.io.Serializable {
 					|| chs[i] == '`')
 				throw new IllegalArgumentException(
 						"语法中特征字符必需为符号，而不能是字母，下划线，点号，数字，引号，空白，转义符等！错误发生在出现非法符号："
-								+ chs[i]);
+								+ chs[i]); // TODO 未国际化
 
 			for (int j = i + 1; j < n; j++) {
 				if (chs[i] == chs[j])
 					throw new IllegalStateException("语法中特征字符不能相同！错误发生在出现多个："
-							+ chs[i]);
+							+ chs[i]); // TODO 未国际化
 			}
 		}
 	}

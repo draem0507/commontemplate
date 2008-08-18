@@ -14,17 +14,19 @@ $!
 								“注册方法”均指：StandardConfiguration的设置函数<br/>
 								“配置方法”均指：内置的properties配置方案，并且继承了标准配置<br/>
 								<br/>
-								<b>1. 国际化扩展</b><br/>
+								<b>1. 事件监听与扩展</b><br/>
 								相关接口：<br/>
-								org.commontemplate.config.ResourceBundleProvider<br/>
+								com.commontemplate.core.EventListener<br/>
+								com.commontemplate.core.Event<br/>
 								注册方法：<br/>
-								setResourceBundleProvider(ResourceBundleProvider)<br/>
-								setMessageBaseName(String baseName) <font color="green">(注：使用内置的PropertiesResourceBundleProvider)</font><br/>
+								addEventListener(EventListener)<br/>
+								addAsynchronousEventListener(EventListener)<br/>
 								配置方法：<br/>
-								resourceBundleProvider=org.commontemplate.standard.i18n.PropertiesResourceBundleProvider()<br/>
-								resourceBundleProvider.baseName=messages<br/>
+								eventListeners[100]=com.xxx.XxxListener <font color="green">(注：下标号任意，只用于排序)</font><br/>
+								asynchronousEventListeners[100]=com.xxx.XxxListener<br/>
 								参考实现：<br/>
-								org.commontemplate.standard.i18n.PropertiesResourceBundleProvider<br/>
+								引擎发布的事件：<br/>
+								com.commontemplate.core.event包下相关类<br/>
 								<br/>
 								<b>2. 模板资源加载器扩展</b><br/>
 								相关接口：<br/>
@@ -80,15 +82,16 @@ $!
 								<br/>
 								<b>6. 模板源过滤器扩展</b><br/>
 								相关接口：<br/>
-								org.commontemplate.config.TemplateReaderFilter<br/>
+								org.commontemplate.config.ResouceFilter<br/>
 								注册方法：<br/>
-								addTemplateReaderFilter(TemplateReaderFilter)<br/>
+								addResouceFilter(ResouceFilter)<br/>
 								配置方法：<br/>
-								templateReaderFilters[200]=com.xxx.XxxFilter<br/>
+								resouceFilter[200]=com.xxx.XxxFilter<br/>
 								参考实现：<br/>
-								org.commontemplate.standard.webapp.AttributeSyntaxCoatFilter<br/>
+								org.commontemplate.standard.coat.attribute.jericho.JerichoAttributeCoatFilter<br/>
 								<br/>
 								<b>7. 非指令文本块过滤器扩展</b><br/>
+								在<b>编译</b>期过滤非指令文本块.<br/>
 								相关接口：<br/>
 								org.commontemplate.config.TextFilter<br/>
 								注册方法：<br/>
@@ -96,36 +99,9 @@ $!
 								配置方法：<br/>
 								textFilters[200]=com.xxx.XxxFilter<br/>
 								参考实现：<br/>
-								org.commontemplate.standard.webapp.CommentSyntaxCoatFilter<br/>
+								org.commontemplate.standard.coat.comment.CommentSyntaxCoatFilter<br/>
 								<br/>
-								<b>8. 日志扩展</b><br/>
-								相关接口：<br/>
-								org.commontemplate.core.Logger<br/>
-								注册方法：<br/>
-								setLogger(Logger)<br/>
-								setCommonsLogging()<br/>
-								配置方法：<br/>
-								logger=org.commontemplate.standard.log.CommonsLogging()<br/>
-								参考实现：<br/>
-								org.commontemplate.core.Logger.DEFAULT<br/>
-								org.commontemplate.standard.log包下相关类<br/>
-								<br/>
-								<b>9. 事件监听与扩展</b><br/>
-								相关接口：<br/>
-								com.commontemplate.core.EventListener<br/>
-								com.commontemplate.core.Event<br/>
-								注册方法：<br/>
-								addEventListener(EventListener)<br/>
-								addAsynchronousEventListener(EventListener)<br/>
-								配置方法：<br/>
-								eventListeners[100]=com.xxx.XxxListener <font color="green">(注：下标号任意，只用于排序)</font><br/>
-								asynchronousEventListeners[100]=com.xxx.XxxListener<br/>
-								参考实现：<br/>
-								…<br/>
-								引擎发布的事件：<br/>
-								com.commontemplate.core.event包下相关类<br/>
-								<br/>
-								<b>10. 语法扩展</b><br/>
+								<b>8. 语法扩展</b><br/>
 								相关类：<br/>
 								org.commontemplate.config.Syntax (指令语法及特殊指令设置)<br/>
 								org.commontemplate.config.Keywords (表达式关键字设置)<br/>
@@ -139,7 +115,7 @@ $!
 								Syntax.DEFAULT<br/>
 								Keywords.DEFAULT<br/>
 								<br/>
-								<b>11. 指令扩展</b><br/>
+								<b>9. 指令扩展</b><br/>
 								相关接口：<br/>
 								org.commontemplate.config.LineDirectiveHandler<br/>
 								org.commontemplate.config.StartDirectiveHandler<br/>
@@ -158,7 +134,7 @@ $!
 								(2) 若DirectiveHandler实现类中所有属性都是final的(或只在构造函数中赋值)，则该实现类也是线程安全的。<br/>
 								(3) 正确同步所有属性修改。<br/>
 								<br/>
-								<b>12. 操作符扩展</b><br/>
+								<b>10. 操作符扩展</b><br/>
 								相关接口：<br/>
 								org.commontemplate.config.BinaryOperatorHandler<br/>
 								org.commontemplate.config.UnaryOperatorHandler<br/>
@@ -194,7 +170,8 @@ $!
 								如：已注册了“abs”一元操作符，则必需用abs(operand)， 而不能用abs operand，否则在复杂表达式中与变量引起歧义，<br/>
 								对比：符号一元操作符“!”，可以用“! operand”，也可以用“!(operand)”<br/>
 								<br/>
-								<b>13. 属性扩展</b> <font color="green">(注：该扩展用于为"."点号操作符提供数据)</font><br/>
+								<b>11. 属性扩展</b><br/>
+								用于为"."点号操作符提供数据<br/>
 								相关接口：<br/>
 								org.commontemplate.standard.property.PropertyHandler<br/>
 								org.commontemplate.standard.property.StaticPropertyHandler<br/>
@@ -207,7 +184,8 @@ $!
 								参考实现：<br/>
 								org.commontemplate.standard.property包及其子包相关类<br/>
 								<br/>
-								<b>14. 方法扩展</b> <font color="green">(该扩展用于为"."点号操作符提供数据，并且只有在配置functionAvailable=true时才有效)</font><br/>
+								<b>12. 方法扩展</b><br/>
+								用于为"."点号操作符提供数据，并且只有在配置functionAvailable=true时才有效<br/>
 								相关接口：<br/>
 								org.commontemplate.standard.function.FunctionHandler<br/>
 								org.commontemplate.standard.function.StaticFunctionHandler<br/>
@@ -220,7 +198,8 @@ $!
 								参考实现：<br/>
 								org.commontemplate.standard.function包及其子包相关类<br/>
 								<br/>
-								<b>15. 序列扩展</b> <font color="green">(该扩展用于为".."双点号操作符提供数据)</font><br/>
+								<b>13. 序列扩展</b><br/>
+								用于为".."双点号操作符提供数据<br/>
 								相关接口：<br/>
 								org.commontemplate.standard.operator.sequence.StringSequenceOperatorHandler<br/>
 								org.commontemplate.standard.operator.sequence.StringSequence<br/>
@@ -232,7 +211,34 @@ $!
 								参考实现：<br/>
 								org.commontemplate.standard.operator.sequence包下相关类<br/>
 								<br/>
-								<b>16. 数据加载类型扩展</b> <font color="green">(该扩展用于为"$data"指令提供数据)</font><br/>
+								<b>14. 国际化扩展</b><br/>
+								用于为$msg或$message指令提供国际化信息内容<br/>
+								相关接口：<br/>
+								org.commontemplate.config.ResourceBundleProvider<br/>
+								注册方法：<br/>
+								setResourceBundleProvider(ResourceBundleProvider)<br/>
+								setMessageBaseName(String baseName) <font color="green">(注：使用内置的PropertiesResourceBundleProvider)</font><br/>
+								配置方法：<br/>
+								resourceBundleProvider=org.commontemplate.standard.i18n.PropertiesResourceBundleProvider()<br/>
+								resourceBundleProvider.baseName=messages<br/>
+								参考实现：<br/>
+								org.commontemplate.standard.i18n.PropertiesResourceBundleProvider<br/>
+								<br/>
+								<b>15. 日志扩展</b><br/>
+								用于$log指令的输出.<br/>
+								相关接口：<br/>
+								org.commontemplate.standard.log.Logger<br/>
+								注册方法：<br/>
+								setLogger(Logger)<br/>
+								setCommonsLogging()<br/>
+								配置方法：<br/>
+								logger=org.commontemplate.standard.log.CommonsLogging()<br/>
+								参考实现：<br/>
+								org.commontemplate.standard.log.Logger.DEFAULT<br/>
+								org.commontemplate.standard.log包下相关类<br/>
+								<br/>
+								<b>16. 数据加载类型扩展</b><br/>
+								用于为"$data"指令提供数据<br/>
 								相关接口和基类：<br/>
 								org.commontemplate.standard.directive.data.DataProvider<br/>
 								org.commontemplate.standard.directive.data.InputStreamDataProvider<br/>
@@ -240,7 +246,8 @@ $!
 								配置方法：<br/>
 								dataProvider{xxx}=com.xxx.XXXDataProvider<br/>
 								<br/>
-								<b>16. 代码着色扩展</b> <font color="green">(该扩展用于为"$code"指令提供过滤器)</font><br/>
+								<b>17. 代码着色扩展</b><br/>
+								用于为"$code"指令提供过滤器<br/>
 								相关接口和基类：<br/>
 								org.commontemplate.core.OutputFilter<br/>
 								配置方法：<br/>

@@ -108,6 +108,7 @@ page.debug.buttons.step.return="Step Return"£¬µ¥²½ÔËĞĞ£¬²¢<b>Ìø³ö</b>µ±Ç°Ö¸ÁîµÄÉ
 page.debug.buttons.resume="Resume"£¬»Ö¸´Õı³£ÔËĞĞ£¬<b>Ö±µ½</b>ÏÂÒ»¶Ïµã¡£
 page.debug.buttons.resume.all="Resume All"£¬»Ö¸´Õı³£ÔËĞĞ£¬²¢<b>Ìø¹ı</b>ËùÓĞ¶Ïµã¡£
 page.debug.buttons.terminate="Terminate"£¬ÖÕÖ¹ÔËĞĞ¡£
+page.debug.buttons.flush="Flush"£¬Ë¢ĞÂÊä³öÁ÷»º´æ¡£
 page.debug.snapshot=µ÷ÊÔ´°¿Ú½ØÍ¼
 page.debug.snapshot.directive=ÔËĞĞµ½Ö¸ÁîÊ±
 page.debug.snapshot.text=ÔËĞĞµ½ÎÄ±¾Ê±
