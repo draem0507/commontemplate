@@ -51,7 +51,7 @@ public class TemplateGenerator {
 		final CommonTemplateFrame frame = new CommonTemplateFrame();
 		frame.setTitle("CommonTemplateViewer - Choose");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(540, 160);
+		frame.setSize(530, 180);
 		Dimension scr = Toolkit.getDefaultToolkit().getScreenSize();
 		Dimension fra = frame.getSize();
 		frame.setLocation((scr.width - fra.width) / 2,
@@ -61,11 +61,11 @@ public class TemplateGenerator {
 		frame.getContentPane().setLayout(null);
 
 		JLabel chooseLabel = new JLabel("请选择模板生成目标位置");
-		chooseLabel.setBounds(20, 20, 300, 24);
+		chooseLabel.setBounds(20, 20, 400, 24);
 		final JTextField fileField = new JTextField(targetFile.getCanonicalPath());
-		fileField.setBounds(20, 60, 300, 24);
+		fileField.setBounds(20, 60, 400, 24);
 		JButton browseButton = new JButton("浏览"); // TODO 未国际化
-		browseButton.setBounds(340, 60, 80, 24);
+		browseButton.setBounds(430, 60, 80, 24);
 		browseButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				File file = null;
@@ -89,9 +89,9 @@ public class TemplateGenerator {
 					fileField.setText(fc.getSelectedFile().getAbsolutePath());
 			}
 		});
-		JButton chooseButton = new JButton("生成"); // TODO 未国际化
-		chooseButton.setBounds(440, 60, 80, 24);
-		chooseButton.addActionListener(new ActionListener() {
+		JButton generateButton = new JButton("生成"); // TODO 未国际化
+		generateButton.setBounds(20, 100, 80, 24);
+		generateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
 				try {
@@ -106,7 +106,7 @@ public class TemplateGenerator {
 		frame.getContentPane().add(chooseLabel);
 		frame.getContentPane().add(fileField);
 		frame.getContentPane().add(browseButton);
-		frame.getContentPane().add(chooseButton);
+		frame.getContentPane().add(generateButton);
 		frame.setVisible(true);
 	}
 
