@@ -131,7 +131,7 @@ public class TemplateEditorPane extends JTextArea implements Border, BreakpointL
 				if (me.getModifiers() == MouseEvent.META_MASK) {
 					int x = me.getX();
 					int y = me.getY();
-					if (x < 30) {
+					if (x < getLineNumberWidth()) {
 						int line = TemplateEditorPane.this.getYLine(me.getY());
 						if (line >= 0 && line < TemplateEditorPane.this.getLineCount()) {
 							Breakpoint breakpoint = new Breakpoint(template
@@ -148,7 +148,7 @@ public class TemplateEditorPane extends JTextArea implements Border, BreakpointL
 					} else {
 						propertiesItem.setEnabled(template != null);
 					}
-				} else if (me.getClickCount() >= 2 && me.getX() < 30) {
+				} else if (me.getClickCount() >= 2 && me.getX() < getLineNumberWidth()) {
 					int line = TemplateEditorPane.this.getYLine(me.getY());
 					if (line >= 0 && line < TemplateEditorPane.this.getLineCount()) {
 						DebugManager.getInstance().changeBreakpoint(
@@ -253,14 +253,14 @@ public class TemplateEditorPane extends JTextArea implements Border, BreakpointL
 			+ "/breakpoint.gif");
 
 	public Insets getBorderInsets(Component c) {
-		return new Insets(0, calcWidth(), 0, 0);
+		return new Insets(0, getLineNumberWidth(), 0, 0);
 	}
 
 	private static final int BREAKPOINT_WIDTH = 10;
 
 	private static final int LINE_NUMBER_WIDTH = 8;
 
-	private int calcWidth() {
+	private int getLineNumberWidth() {
 		int count = getLineCount();
 		String countString = String.valueOf(count);
 		return countString.length() * LINE_NUMBER_WIDTH + BREAKPOINT_WIDTH;
@@ -268,13 +268,13 @@ public class TemplateEditorPane extends JTextArea implements Border, BreakpointL
 
 	public void paintBorder(Component c, Graphics g, int x, int y, int width,
 			int height) {
-		int w = calcWidth();
+		int w = getLineNumberWidth();
 		if (width < w)
 			return;
 		g.setColor(Color.decode("0xECE9D8"));
 		g.fillRect(x, y, BREAKPOINT_WIDTH, height);
 		g.setColor(Color.decode("0xDCDCDC"));
-		int lineLoc = x + w;
+		int lineLoc = x + w - 1;
 		g.drawLine(lineLoc, 0, lineLoc, height);
 		g.setColor(Color.GRAY);
 		g.setFont(c.getFont());

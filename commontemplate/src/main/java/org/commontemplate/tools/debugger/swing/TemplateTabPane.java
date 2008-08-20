@@ -47,7 +47,7 @@ public class TemplateTabPane extends JTabbedPane {
 			this.setSelectedComponent(templatePane);
 		} else {
 			templatePane = new TemplatePane(template, frame, this);
-			this.addTab(UrlUtils.getFileName(template.getName()), templatePane);
+			this.addTab(UrlUtils.getFileName(template.getName()), null, templatePane, template.getName());
 			this.setSelectedComponent(templatePane);
 		}
 		return templatePane;
