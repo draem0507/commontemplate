@@ -1,5 +1,6 @@
 package org.commontemplate.standard.debug;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
@@ -46,7 +47,7 @@ public class DebugInterceptor implements RenderingInterceptor, Serializable {
 							&& context.getProperty(STEP_OVER_KEY) != Boolean.TRUE) // 非跳跃状态
 					|| (! context.getRootLocalContext().getBooleanStatus(STEP_STATUS) // 运行在非调试状态中
 							&& ! context.getRootLocalContext().getBooleanStatus(BREAKPOINT_OVER_STATUS)
-							&& isBreakpoint(template.getName(), element.getLocation())))) { // 当前模板元素在断点位置
+							&& isBreakpoint(template.getName(), element)))) { // 当前模板元素在断点位置
 			// 构造执行过程封装体
 			final ExecutionImpl execution = new ExecutionImpl(rendition, Thread.currentThread().getName());
 			// 挂起
@@ -99,7 +100,14 @@ public class DebugInterceptor implements RenderingInterceptor, Serializable {
 	}
 
 	// 判断模板位置是否为处于断点
-	private boolean isBreakpoint(String templateName, Location location) {
+	private boolean isBreakpoint(String templateName, Element element) {
+		Location location = element.getLocation();
+		String src = null;
+		try {
+			src = element.getSource();
+		} catch (IOException e) {
+			// ignore
+		}
 		final DebugManager debugManager = DebugManager.getInstance();
 		final Collection breakpoints = debugManager.getBreakpoints();
 		for (Iterator iterator = breakpoints.iterator(); iterator.hasNext();) {
@@ -108,10 +116,13 @@ public class DebugInterceptor implements RenderingInterceptor, Serializable {
 				int line = breakpoint.getLine();
 				int beginLine = location.getBegin().getLine();
 				int endLine = location.getEnd().getLine();
+				if (endLine > beginLine && src != null
+						&& ! "\n".equals(src) && ! "\r\n".equals(src)
+						&& (src.startsWith("\n") || src.startsWith("\r\n")))
+					beginLine ++;
 				if (endLine > beginLine
-						&& location.getEnd().getColumn() == 0) {
+						&& location.getEnd().getColumn() == 0)
 					endLine --;
-				}
 				if (beginLine <= line && endLine >= line)
 					return true;
 			}

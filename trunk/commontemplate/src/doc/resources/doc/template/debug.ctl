@@ -15,7 +15,6 @@
 								<img src="../images/debug/resume.gif" /> $msg{'page.debug.shortcut.key'}:"ALT + F8", $msg{'page.debug.buttons.resume'}<br/>
 								<img src="../images/debug/resume_all.gif" /> $msg{'page.debug.shortcut.key'}:"ALT + F9", $msg{'page.debug.buttons.resume.all'}<br/>
 								<img src="../images/debug/terminate.gif" /> $msg{'page.debug.shortcut.key'}:"ALT + F10", $msg{'page.debug.buttons.terminate'}<br/>
-								<img src="../images/debug/flush.gif" /> $msg{'page.debug.buttons.flush'}<br/>
 								<br/>
 								<b>4. $msg{'page.debug.snapshot'}:</b><br/>
 								$msg{'page.debug.snapshot.directive'}:<br/>
