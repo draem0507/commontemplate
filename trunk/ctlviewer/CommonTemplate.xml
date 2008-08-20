@@ -13,11 +13,17 @@
   <stayAlive>true</stayAlive>
   <manifest></manifest>
   <icon>ctl48.ico</icon>
+  <classPath>
+    <mainClass>org.commontemplate.tools.viewer.Main</mainClass>
+    <cp>%EXEDIR%/*.jar</cp>
+    <cp>%PWD%/*.jar</cp>
+  </classPath>
   <jre>
     <path></path>
     <minVersion>1.4.2</minVersion>
     <maxVersion></maxVersion>
     <jdkPreference>preferJre</jdkPreference>
+    <opt>-Dlaunch4j.exedir=&quot;%EXEDIR%&quot;</opt>
   </jre>
   <splash>
     <file>banner.bmp</file>
