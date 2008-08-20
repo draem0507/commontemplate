@@ -137,12 +137,14 @@ public class MenuBuilder {
 					if (selRow != -1)
 						component.setSelectionRow(selRow == -1 ? 0 : selRow);
 					copyItem.setEnabled(false);
+					copyNodeItem.setEnabled(false);
 					TreePath path = component.getSelectionPath();
 					if (path != null) {
 						DefaultMutableTreeNode node = (DefaultMutableTreeNode) path
 								.getLastPathComponent();
 						if (node != null) {
 							copyItem.setEnabled(true);
+							copyNodeItem.setEnabled(true);
 						}
 					}
 					menu.show(component, x, y);
