@@ -18,14 +18,7 @@ public class TemplateNameRelativer implements TemplateNameFilter {
 		try {
 			if (templateName == null)
 				throw new InvalidTemplateNameException(null, "TemplateNameRelativer.template.name.required");
-			templateName = templateName.replace('\\', '/');
-			currentTemplateName = currentTemplateName.replace('\\', '/');
-			/*char leader = name.charAt(0);
-			if (leader != '/' && leader != '\\')
-				name = "/" + name;*/
-			if (templateName.trim().charAt(0) == UrlUtils.PATH_SEPARATOR_CHAR) // 根目录开头，不添加当前路径
-				return UrlUtils.cleanUrl(templateName);
-			return UrlUtils.cleanUrl(UrlUtils.getDirectoryName(currentTemplateName) + templateName);
+			return UrlUtils.relativeUrl(templateName, currentTemplateName);
 		} catch (MalformedURLException e) {
 			throw new InvalidTemplateNameException(e.getMessage());
 		}

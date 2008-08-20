@@ -20,29 +20,25 @@ public class TemplatePane extends JScrollPane {
 
 	private final TemplateEditorPane editor;
 
-	public TemplatePane(JFrame frame) {
+	public TemplatePane(Template template, JFrame frame, TemplateTabPane tabbedPane) {
 		super();
-		editor = new TemplateEditorPane(frame);
+		this.editor = new TemplateEditorPane(template, frame, tabbedPane);
 		this.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		this.getViewport().setView(editor);
 		this.getViewport().setBackground(Color.white);
 		this.getViewport().setAutoscrolls(true);
 	}
 
-	public Element getElement() {
-		return editor.getElement();
-	}
-
 	public Template getTemplate() {
 		return editor.getTemplate();
 	}
 
-	public void setElement(Element element) {
-		editor.setElement(element);
+	public Element getElement() {
+		return editor.getElement();
 	}
 
-	public void setTemplate(Template template) {
-		editor.setTemplate(template);
+	public void setElement(Element element) {
+		editor.setElement(element);
 	}
 
 	public void removeElement() {

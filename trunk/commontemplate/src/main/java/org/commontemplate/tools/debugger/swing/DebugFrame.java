@@ -17,11 +17,14 @@ import java.util.Enumeration;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.JButton;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
@@ -30,6 +33,10 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.commontemplate.core.Context;
+import org.commontemplate.core.LocalContext;
+import org.commontemplate.core.OutputFilter;
+import org.commontemplate.core.ParsingException;
+import org.commontemplate.core.Template;
 import org.commontemplate.standard.debug.Execution;
 import org.commontemplate.tools.swing.CommonTemplateFrame;
 import org.commontemplate.tools.swing.ImageFactory;
@@ -63,11 +70,13 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 
 	private final CommonTemplateFrame frame = new CommonTemplateFrame();
 
-	private final TemplatePane templatePane = new TemplatePane(frame);
+	private final TemplateTabPane templatePane = new TemplateTabPane(frame);
 
 	private final ContextPane contextPane = new ContextPane();
 
-	private final JButton stepInto, stepOver, stepReturn, resume, resumeAll, terminate, flush;
+	private final OutputPane outputPane = new OutputPane();
+
+	private final JButton stepInto, stepOver, stepReturn, resume, resumeAll, terminate;
 
 	private final DefaultListModel executionModel = new DefaultListModel();
 
@@ -87,6 +96,7 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 		frame.getRootPane().setFocusCycleRoot(true);
 		frame.getContentPane().setLayout(new BorderLayout());
 		frame.addWindowListener(this);
+		frame.setJMenuBar(createMenuBar());
 
 		executionList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		executionList.addListSelectionListener(this);
@@ -95,20 +105,32 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 		executionBox.getViewport().setView(executionList);
 		executionBox.getViewport().setBackground(Color.white);
 
-		JTabbedPane tabPanel = new JTabbedPane();
-		tabPanel.add("Threads", executionBox);
-		tabPanel.add("Breakpoints", new BreakpointPane());
+		JTabbedPane tabThreadPane = new JTabbedPane();
+		tabThreadPane.add("Threads", executionBox);
+		tabThreadPane.add("Breakpoints", new BreakpointPane());
 
-		JSplitPane horizontalPane = new JSplitPane(
+		JTabbedPane tabContextPane = new JTabbedPane();
+		tabContextPane.add("Variables", contextPane);
+
+		JTabbedPane tabOutputPane = new JTabbedPane();
+		tabOutputPane.add("Output", outputPane);
+
+		JSplitPane horizontalPane1 = new JSplitPane(
 				JSplitPane.HORIZONTAL_SPLIT,
-				templatePane, contextPane);
-		horizontalPane.setDividerLocation(500);
-		horizontalPane.setOneTouchExpandable(true);
+				tabThreadPane, tabOutputPane);
+		horizontalPane1.setDividerLocation(400);
+		horizontalPane1.setOneTouchExpandable(true);
+
+		JSplitPane horizontalPane2 = new JSplitPane(
+				JSplitPane.HORIZONTAL_SPLIT,
+				templatePane, tabContextPane);
+		horizontalPane2.setDividerLocation(500);
+		horizontalPane2.setOneTouchExpandable(true);
 
 		JSplitPane verticalPane = new JSplitPane(
 				JSplitPane.VERTICAL_SPLIT,
-				tabPanel, horizontalPane);
-		verticalPane.setDividerLocation(100);
+				horizontalPane1, horizontalPane2);
+		verticalPane.setDividerLocation(130);
 		verticalPane.setOneTouchExpandable(true);
 
 		JToolBar buttonPane = new JToolBar();
@@ -162,19 +184,128 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 		terminate.addActionListener(this);
 		buttonPane.add(terminate);
 
-		JToolBar.Separator s = new JToolBar.Separator();
-		s.setOrientation(JSeparator.VERTICAL);
-		buttonPane.add(s);
-
-		flush = new JButton(getIcon("flush.gif"));
-		flush.setToolTipText(I18nMessages
-				.getMessage("DebugFrame.flush.button"));
-		flush.addActionListener(this);
-		buttonPane.add(flush);
-
 		frame.getContentPane().add(buttonPane, BorderLayout.NORTH);
 		frame.getContentPane().add(verticalPane, BorderLayout.CENTER);
 		frame.setVisible(true);
+	}
+
+	private JMenuItem itemStepInto, itemStepOver, itemStepReturn, itemResume, itemResumeAll, itemTerminate, itemOpen, itemFlush;
+
+	private JCheckBoxMenuItem itemCapture;
+
+	private JMenuBar createMenuBar() {
+		JMenuBar mainMenuBar = new JMenuBar();
+
+		JMenu menuFile = new JMenu("文件(F)"); // TODO 未国际化
+		mainMenuBar.add(menuFile);
+		menuFile.setMnemonic(KeyEvent.VK_F);
+			itemOpen = new JMenuItem("打开模板(O)"); // TODO 未国际化
+			itemOpen.setMnemonic(KeyEvent.VK_O);
+			menuFile.add(itemOpen);
+			itemOpen.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e) {
+					String templateName = JOptionPane.showInputDialog(frame,
+							"请输入模板名称：(以\"/\"开头表示绝对路径，否则相对于当前模板路径，可以使用\"../\")", "打开模板",
+							JOptionPane.QUESTION_MESSAGE); // TODO 未国际化
+					if (templateName == null || templateName.length() == 0)
+						return;
+					if (execution == null
+							|| execution.getContext() == null)
+						return;
+					try {
+						Template template = execution.getContext().getTemplate(templateName);
+						templatePane.addTemplate(template);
+					} catch (IOException ex) {
+						JOptionPane.showMessageDialog(frame, "加载模板：\"" + templateName + "\"失败，错误信息：" + ex.getMessage()); // TODO 未国际化
+					} catch (ParsingException ex) {
+						JOptionPane.showMessageDialog(frame, "编译模板：\"" + templateName + "\"失败，错误信息：" + ex.getMessage()); // TODO 未国际化
+					}
+				}
+			});
+			menuFile.addSeparator();
+			JMenuItem itemExit = new JMenuItem("退出(E)"); // TODO 未国际化
+			itemExit.setMnemonic(KeyEvent.VK_E);
+			menuFile.add(itemExit);
+			itemExit.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e) {
+					closeFrame();
+				}
+			});
+
+		JMenu menuDebug = new JMenu("调试(D)"); // TODO 未国际化
+		mainMenuBar.add(menuDebug);
+		menuDebug.setMnemonic(KeyEvent.VK_D);
+			itemStepInto = new JMenuItem("单步运行(S)"); // TODO 未国际化
+			itemStepInto.setMnemonic(KeyEvent.VK_S);
+			menuDebug.add(itemStepInto);
+			itemStepInto.addActionListener(DebugFrame.this);
+
+			itemStepOver = new JMenuItem("单步块运行(O)"); // TODO 未国际化
+			itemStepOver.setMnemonic(KeyEvent.VK_O);
+			menuDebug.add(itemStepOver);
+			itemStepOver.addActionListener(DebugFrame.this);
+
+			itemStepReturn = new JMenuItem("单步返回运行(E)"); // TODO 未国际化
+			itemStepReturn.setMnemonic(KeyEvent.VK_E);
+			menuDebug.add(itemStepReturn);
+			itemStepReturn.addActionListener(DebugFrame.this);
+
+			itemResume = new JMenuItem("恢复运行(R)"); // TODO 未国际化
+			itemResume.setMnemonic(KeyEvent.VK_R);
+			menuDebug.add(itemResume);
+			itemResume.addActionListener(DebugFrame.this);
+
+			itemResumeAll = new JMenuItem("跳过断点运行(A)"); // TODO 未国际化
+			itemResumeAll.setMnemonic(KeyEvent.VK_A);
+			menuDebug.add(itemResumeAll);
+			itemResumeAll.addActionListener(DebugFrame.this);
+
+			itemTerminate = new JMenuItem("终止运行(T)"); // TODO 未国际化
+			itemTerminate.setMnemonic(KeyEvent.VK_T);
+			menuDebug.add(itemTerminate);
+			itemTerminate.addActionListener(DebugFrame.this);
+		JMenu menuOut = new JMenu("输出(O)"); // TODO 未国际化
+		mainMenuBar.add(menuOut);
+		menuOut.setMnemonic(KeyEvent.VK_P);
+			itemFlush = new JMenuItem("刷新输出(F)"); // TODO 未国际化
+			itemFlush.setMnemonic(KeyEvent.VK_F);
+			menuOut.add(itemFlush);
+			itemFlush.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e) {
+					Context context = execution.getContext();
+					if (context != null) {
+						Writer out = context.getOut();
+						if (out != null) {
+							try {
+								out.flush();
+							} catch (IOException ioe) {
+								ioe.printStackTrace();
+								// ignore
+							}
+						}
+					}
+				}
+			});
+
+			itemCapture = new JCheckBoxMenuItem("捕获输出(C)"); // TODO 未国际化
+			itemCapture.setMnemonic(KeyEvent.VK_C);
+			itemCapture.setSelected(true);
+			menuOut.add(itemCapture);
+			itemCapture.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e) {
+					captureOutput();
+				}
+			});
+
+			JMenuItem itemClear = new JMenuItem("清除输出(L)"); // TODO 未国际化
+			itemClear.setMnemonic(KeyEvent.VK_L);
+			menuOut.add(itemClear);
+			itemClear.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e) {
+					outputPane.clearText();
+				}
+			});
+		return mainMenuBar;
 	}
 
 	// ---- 动态结构 ----
@@ -204,7 +335,29 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 		} else {
 			this.execution = execution;
 			enableToolbar();
+			captureOutput();
 			frame.setVisible(true);
+		}
+	}
+
+	private void captureOutput() {
+		if (execution == null)
+			return;
+		Context context = execution.getContext();
+		if (context == null)
+			return;
+		LocalContext root = context.getRootLocalContext();
+		if (itemCapture.getModel().isSelected()) {
+			OutputFilter outputFilter = root.getOutputFilter();
+			if (outputFilter == outputPane)
+				return ;
+			outputPane.setOutputFilter(outputFilter);
+			root.setOutputFilter(outputPane);
+		} else {
+			OutputFilter outputFilter = root.getOutputFilter();
+			if (outputFilter == outputPane) {
+				root.setOutputFilter(outputPane.getOutputFilter());
+			}
 		}
 	}
 
@@ -214,33 +367,25 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 		Object button = e.getSource();
 		disableToolbar();
 		if (execution != null) {
-			if (button == stepInto) {
+			if (button == stepInto || button == itemStepInto) {
 				execution.stepInto();
-			} else if (button == stepOver) {
+				removeExecution(execution);
+			} else if (button == stepOver || button == itemStepOver) {
 				execution.stepOver();
-			} else if (button == stepReturn) {
+				removeExecution(execution);
+			} else if (button == stepReturn || button == itemStepReturn) {
 				execution.stepReturn();
-			} else if (button == resume) {
+				removeExecution(execution);
+			} else if (button == resume || button == itemResume) {
 				execution.resume();
-			} else if (button == resumeAll) {
+				removeExecution(execution);
+			} else if (button == resumeAll || button == itemResumeAll) {
 				execution.resumeAll();
-			} else  if (button == terminate) {
+				removeExecution(execution);
+			} else  if (button == terminate || button == itemTerminate) {
 				execution.terminate();
-			} else {
-				Context context = execution.getContext();
-				if (context != null) {
-					Writer out = context.getOut();
-					if (out != null) {
-						try {
-							out.flush();
-						} catch (IOException ioe) {
-							ioe.printStackTrace();
-							// ignore
-						}
-					}
-				}
+				removeExecution(execution);
 			}
-			removeExecution(execution);
 		}
 	}
 
@@ -263,6 +408,14 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 	}
 
 	public void windowClosing(WindowEvent e) {
+		closeFrame();
+	}
+
+	public void valueChanged(ListSelectionEvent e) {
+		initDebugFrame((Execution)executionList.getSelectedValue());
+	}
+
+	private synchronized void closeFrame() {
 		if (executionModel.size() != 0) {
 			String title = I18nMessages.getMessage("DebugFrame.close.title");
 			String message = I18nMessages
@@ -296,10 +449,6 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 		}
 	}
 
-	public void valueChanged(ListSelectionEvent e) {
-		initDebugFrame((Execution)executionList.getSelectedValue());
-	}
-
 	private synchronized void enableToolbar() {
 		stepInto.setEnabled(true);
 		stepOver.setEnabled(true);
@@ -307,7 +456,14 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 		resume.setEnabled(true);
 		resumeAll.setEnabled(true);
 		terminate.setEnabled(true);
-		flush.setEnabled(true);
+		itemStepInto.setEnabled(true);
+		itemStepOver.setEnabled(true);
+		itemStepReturn.setEnabled(true);
+		itemResume.setEnabled(true);
+		itemResumeAll.setEnabled(true);
+		itemTerminate.setEnabled(true);
+		itemOpen.setEnabled(true);
+		itemFlush.setEnabled(true);
 		if (execution != null) {
 			templatePane.setElement(execution.getElement());
 			contextPane.initContextPane(execution.getContext());
@@ -321,7 +477,14 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 		resume.setEnabled(false);
 		resumeAll.setEnabled(false);
 		terminate.setEnabled(false);
-		flush.setEnabled(false);
+		itemStepInto.setEnabled(false);
+		itemStepOver.setEnabled(false);
+		itemStepReturn.setEnabled(false);
+		itemResume.setEnabled(false);
+		itemResumeAll.setEnabled(false);
+		itemTerminate.setEnabled(false);
+		itemOpen.setEnabled(false);
+		itemFlush.setEnabled(false);
 		templatePane.removeElement();
 		contextPane.clearContextPane();
 	}
