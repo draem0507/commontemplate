@@ -47,6 +47,7 @@ $!
 								$end 或者 $end{if}<br/>
 								<font color="green">(注: 参数表示被结束块指令的名称, 编译时将进行检查(不匹配将抛出异常), 没有参数表示自动匹配)</font><br/>
 								<font color="green">(注: 因$end指令为编译指令，参数表达式不解析，直接作为字符串)</font><br/>
+								<font color="green">(注: $end总是与最近的块指令匹配，如：$if{}...$end{if} 和 $if{}...$else...$end{else})</font><br/>
 								<br/>
 								<b>四. 标准指令:</b><br/>
 								<b>(1) 输出指令:</b><br/>
@@ -56,7 +57,7 @@ $!
 								国际化信息输出:<br/>
 								$msg{"home.title"}<br/>
 								$msg{"home.title", arg0, arg1}<br/>
-								块指令：<font color="green">(注：与上面两个指令功能相同，用于注释版语法外套)</font><br/>
+								块指令：<font color="green">(注：与上面两个指令功能相同，用于语法外套)</font><br/>
 								表达式结果输出：忽略指令内部块内容<br/>
 								$out{user.name} James $end<br/>
 								&lt;!--$out{user.name}--&gt; James &lt;!--$end--&gt;<br/>

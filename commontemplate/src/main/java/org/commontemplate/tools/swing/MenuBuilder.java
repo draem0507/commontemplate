@@ -28,7 +28,6 @@ public class MenuBuilder {
 
 	public static void buildReadonlyTextMenu(final JTextComponent component, final JPopupMenu menu) {
 		final JMenuItem copyItem = new JMenuItem(I18nMessages.getMessage("TextPopupMenu.copy.menu.item"));
-		final JMenuItem copyAllItem = new JMenuItem(I18nMessages.getMessage("TextPopupMenu.copy.all.menu.item"));
 		menu.add(copyItem)
 			.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent ae) {
@@ -36,6 +35,7 @@ public class MenuBuilder {
 					Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, stringSelection);
 				}
 			});
+		final JMenuItem copyAllItem = new JMenuItem(I18nMessages.getMessage("TextPopupMenu.copy.all.menu.item"));
 		menu.add(copyAllItem)
 			.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent ae) {

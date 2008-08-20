@@ -58,12 +58,28 @@ public class TemplateEditorPane extends JTextArea implements Border, BreakpointL
 
 	private PropertiesDialog propertiesDialog;
 
-	public TemplateEditorPane(JFrame frame) {
+
+
+	public TemplateEditorPane(Template t, JFrame frame, final TemplateTabPane tabbedPane) {
 		super();
+		template = t;
+		try {
+			setText(template.getSource());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		propertiesDialog = new PropertiesDialog(frame);
 		setHighlighter(highlighter);
 		templateViewMenu = new JPopupMenu();
 		MenuBuilder.buildReadonlyTextMenu(this, templateViewMenu);
+		templateViewMenu.add(new JPopupMenu.Separator());
+		final JMenuItem closeItem = new JMenuItem("关闭"); // TODO 未国际化
+		closeItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				tabbedPane.closeTemplate(template);
+			}
+		});
+		templateViewMenu.add(closeItem);
 		templateViewMenu.add(new JPopupMenu.Separator());
 		final JMenuItem propertiesItem = new JMenuItem(I18nMessages
 				.getMessage("TemplateEditorPane.properties.menu.item"));
@@ -145,21 +161,10 @@ public class TemplateEditorPane extends JTextArea implements Border, BreakpointL
 		DebugManager.getInstance().addBreakpointListener(this);
 	}
 
-	private Template template;
+	private final Template template;
 
 	public Template getTemplate() {
 		return template;
-	}
-
-	public void setTemplate(Template template) {
-		if (template == null)
-			return;
-		this.template = template;
-		try {
-			setText(template.getSource());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	private Element element;
@@ -173,14 +178,14 @@ public class TemplateEditorPane extends JTextArea implements Border, BreakpointL
 			removeElement();
 			return;
 		}
-		Template template = element.getTemplate();
-		if (template != null)
-			setTemplate(template);
 		this.element = element;
 		int begin = element.getLocation().getBegin().getOffset();
 		int end = element.getLocation().getEnd().getOffset();
 		try {
+			if (highlight != null)
+				highlighter.removeHighlight(highlight);
 			highlight = highlighter.addHighlight(begin, end, painter);
+			select(begin, end);
 		} catch (BadLocationException e) {
 			e.printStackTrace();
 		}
@@ -188,9 +193,10 @@ public class TemplateEditorPane extends JTextArea implements Border, BreakpointL
 	}
 
 	public void removeElement() {
-		this.element = null;
 		if (highlight != null)
 			highlighter.removeHighlight(highlight);
+		highlight = null;
+		element = null;
 	}
 
 	private Rectangle getHighlightRectangle() {

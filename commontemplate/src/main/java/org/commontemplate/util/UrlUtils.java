@@ -67,6 +67,16 @@ public class UrlUtils {
 		return domain + buf.toString();
 	}
 
+	public static String relativeUrl(String templateName, String currentTemplateName) throws MalformedURLException {
+		if (templateName == null || currentTemplateName == null)
+			return templateName;
+		templateName = templateName.replace('\\', '/');
+		currentTemplateName = currentTemplateName.replace('\\', '/');
+		if (templateName.trim().charAt(0) == UrlUtils.PATH_SEPARATOR_CHAR) // 根目录开头，不添加当前路径
+			return UrlUtils.cleanUrl(templateName);
+		return UrlUtils.cleanUrl(UrlUtils.getDirectoryName(currentTemplateName) + templateName);
+	}
+
 	/**
 	 * 获取不包括文件名的路径
 	 *

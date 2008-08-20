@@ -226,7 +226,7 @@ public class ContextPane extends JSplitPane {
 		this.setOrientation(JSplitPane.VERTICAL_SPLIT);
 		this.add(contextBox, JSplitPane.TOP);
 		this.add(variablePane, JSplitPane.BOTTOM);
-		this.setDividerLocation(300);
+		this.setDividerLocation(250);
 		this.setOneTouchExpandable(true);
 	}
 
