@@ -5,65 +5,30 @@
 								目的：方便于页面开发人员独立于业务开发进行模板测试. <br/>
 								<br/>
 								<b>2. 安装使用</b><br/>
-								(1)下载CommonTemplateSetup.exe <a href="downloads.html">下载...</a><br/>
-								(2)双击CommonTemplateSetup.exe，按向导完成安装，安装后，将自动关联*.ctl文件<br/>
-								(3)在*.ctl文件上双击打开，或右键菜单中选“CommonTemplate”打开<br/>
+								(1)安装JDK1.4.2以上版本 <a href="http://java.sun.com/j2se/1.4.2" target="_blank">下载...</a><br/>
+								(2)下载CommonTemplateSetup.exe <a href="downloads.html">下载...</a><br/>
+								(3)双击CommonTemplateSetup.exe，按向导完成安装，安装后，将自动关联*.ctl文件<br/>
+								(4)在*.ctl文件上双击打开，或右键菜单中选“CommonTemplate”打开<br/>
 								<img src="../images/viewer/open_with.gif" alt="Open With CommonTemplate"/><br/>
+								CommonTemplate(view) 编译运行，并用浏览器打开<br/>
+								CommonTemplate(debug) 以调试模式打开，并在模板的第一行设置断点<br/>
+								CommonTemplate(generate) 生成模板到指定文件<br/>
 								<br/>
-								<b>3. 数据查找</b><br/>
+								<b>3. 类加载</b><br/>
+								(1) 加载JRE和引擎内置的jar包<br/>
+								(2) 加载安装目录中的jar包<br/>
+								(3) 加载模板所在目录中的jar包<br/>
+								<br/>
+								<b>4. 配置加载</b><br/>
+								(1) 首先，查找模板所在目录的commontemplate.properties<br/>
+								(2) 其次，查找安装目录的commontemplate.properties<br/>
+								(3) 否则，使用默认的org/commontemplate/tools/viewer/commontemplate.properties<br/>
+								<br/>
+								<b>5. 数据加载</b> <a href="data.html">数据格式...</a><br/>
 								(1)同名数据文件加载：如打开test.ctl，将搜索同目录的test.xml, test.json, test.properties, test.yaml等数据文件并加载<br/>
 								(2)内部数据供给块指令：\$data{"xml"}...\$end，指令内部放数据表示内容<br/>
 								(3)外部数据加载指令：\$load{xml: "test.xml"} 或者 \$load{"test.xml"} 通过文件扩展名识别类型<br/>
 								内置支持xml,json,properties,ymal等数据格式。<a href="extension.html">扩展...</a><br/>
-								<br/>
-								<b>4. 数据格式</b><br/>
-								<b>(1)XML数据格式:</b><br/>
-								语法：&lt;object&gt;表示对象，&lt;array&gt;表示数组，name属性表示其名称。 注：根标签必需为&lt;object&gt;<br/>
-								举例：<br/>
-<!--$code{"xml"}--><object>
-	<object name="mail">
-		<object name="from">xxx@xxx.com</object>
-		<object name="to">yyy@yyy.com</object>
-	</object>
-	<array name="users">
-		<object>
-			<object name="id">1</object>
-			<object name="name">james</object>
-		</object>
-		<object>
-			<object name="id">2</object>
-			<object name="name">kent</object>
-		</object>
-	</array>
-</object>
-<!--$end-->
-								<br/>
-								<b>(2)JSON数据格式:</b><br/>
-								语法：大括号表示对象，冒号表示属性，方括号表示数组，逗号表示项，引号表示字符串(单词引号可省)。<br/>
-								举例：<br/>
-								{mail: {from: "xxx@xxx.com", to: "yyy@yyy.com"}, users: [{id: 1, name: "james"},{id: 2, name: "kent"}]}<br/>
-								<br/>
-								<b>(3)Properties数据格式:</b><br/>
-								语法：等号表示键值对，其中，键中的点号表示层级关系，数字表示数组索引。<br/>
-								举例：<br/>
-								mail.from=xxx@xxx.com<br/>
-								mail.to=yyy@yyy.com<br/>
-								users.0.id=1<br/>
-								users.0.name=james<br/>
-								users.1.id=2<br/>
-								users.1.name=kent<br/>
-								<br/>
-								<b>(4)YAML数据格式:</b><br/>
-								语法：冒号表示对象属性，横线表示数组项，引号表示字符串(单词引号可省)。<br/>
-								举例：<br/>
-								mail:<br/>
-								&nbsp;&nbsp;from: "xxx@xxx.com"<br/>
-								&nbsp;&nbsp;to: "yyy@yyy.com"<br/>
-								users:<br/>
-								&nbsp;&nbsp;- id: 1<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;name: james<br/>
-								&nbsp;&nbsp;- id: 2<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;name: kent<br/>
 								<br/>
 	<!--$end-->
 <!--$end-->
