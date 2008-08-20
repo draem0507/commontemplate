@@ -66,24 +66,4 @@ class VariableTreeNode extends DefaultMutableTreeNode {
 		return (value instanceof VariableStorage) || (value instanceof Map);
 	}
 
-	public String getAllName() {
-		return getAllName(0);
-	}
-
-	public String getAllName(int level) {
-		if (getChildCount() == 0)
-			return name;
-		level += 1;
-		StringBuffer buf = new StringBuffer();
-		for (int i = 0; i < getChildCount(); i++) {
-			VariableTreeNode child = (VariableTreeNode) getChildAt(i);
-			buf.append('\n');
-			for (int j = 0; j < level; j++) {
-				buf.append('\t');
-			}
-			buf.append(child.getAllName(level));
-		}
-		return name + buf.toString();
-	}
-
 }

@@ -16,6 +16,7 @@ import org.commontemplate.standard.debug.Breakpoint;
 import org.commontemplate.standard.debug.BreakpointEvent;
 import org.commontemplate.standard.debug.BreakpointListener;
 import org.commontemplate.standard.debug.DebugManager;
+import org.commontemplate.tools.swing.MenuBuilder;
 
 /**
  * 断点面板，显示所以已注册的断点
@@ -29,10 +30,10 @@ public class BreakpointPane extends JScrollPane implements BreakpointListener {
 
 	private static final long serialVersionUID = 1L;
 
-	private JTree breakpointTree;
+	private final JTree breakpointTree = new JTree();
 
 	public BreakpointPane() {
-		breakpointTree = new JTree();
+		MenuBuilder.buildReadonlyTreeMenu(breakpointTree);
 		this.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		this.getViewport().setView(breakpointTree);
 		this.getViewport().setBackground(Color.white);
