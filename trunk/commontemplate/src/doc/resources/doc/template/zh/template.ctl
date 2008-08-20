@@ -307,7 +307,7 @@ $!
 								$time{global -&gt; xxx} <font color="green">(注: 指定变量区间)</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
-								单步调试断点：(此指令将在其所在行设置断点) <a href="debug.html">更多...</a><br/>
+								单步调试断点：(此指令将在其所在行设置断点) <a href="debugger.html">更多...</a><br/>
 								$breakpoint 或者 $. <font color="green">(注: 指令名称为点号的指令)</font><br/>
 								<br/>
 								<b>五. 变量区间:</b><br/>

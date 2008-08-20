@@ -72,8 +72,8 @@ public class DocumentGenerator {
 				.addChild(
 						new Menu("menu.tools")
 								.addChild(
-										new Menu("menu.debug",
-												"debug.html"))
+										new Menu("menu.debugger",
+												"debugger.html"))
 								.addChild(
 										new Menu("menu.viewer",
 												"viewer.html"))
@@ -206,7 +206,7 @@ public class DocumentGenerator {
 		DocumentGenerator generator = new DocumentGenerator("doc/template/", "doc/");
 		generator.generateAll(new String[]{"index", "template", "expression",
 				"config", "integration", "extension", "api", "dependency", "data",
-				"debug", "viewer", "editor", "code", "ant", "faq", "architecture", "criterion", "planning", "requirement", "downloads",
+				"debugger", "viewer", "editor", "code", "ant", "faq", "architecture", "criterion", "planning", "requirement", "downloads",
 				"uml", "about", "news", "join", "demo_extends"});
 	}
 

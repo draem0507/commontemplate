@@ -68,7 +68,7 @@ $!
 								修复不解释块"$! \!$"状态机图的BUG, 并全面整理状态机图.<br/>
 								采用Jericho实现属性语法外套.<br/>
 								完成Debug拦截器, 实现单步执行.<br/>
-								完成Debug单步调试窗口，可通过脱离于编辑器的GUI进行单步调试. 参见: <a href="debug.html">调试窗口说明...</a><br/>
+								完成Debug单步调试窗口，可通过脱离于编辑器的GUI进行单步调试. 参见: <a href="debugger.html">调试窗口说明...</a><br/>
 								完成查看器功能，双击*.ctl文件，自动读取数据文件，解析模板，生成html，并用IE打开，如果出错，使用Swing界面弹出错误信息, 使页面开发人员独立于业务开发进行模板测试, 参见: <a href="viewer.html">查看器说明...</a><br/>
 								完成$snatch指令的实现, $snatch{"../list.jsp"}, $snatch{"/list.jsp", 'UTF-8'}, $snatch{"http://www.163.com"}<br/>
 								修复当$break, $continue 没有表达式时的处理, 即: 支持 $if{xxx} $break $end, 不再需要写成 $if{xxx} $break{true} $end.<br/>
