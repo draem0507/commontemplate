@@ -6,7 +6,6 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Insets;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -185,11 +184,10 @@ public class TemplateEditorPane extends JTextArea implements Border, BreakpointL
 			if (highlight != null)
 				highlighter.removeHighlight(highlight);
 			highlight = highlighter.addHighlight(begin, end, painter);
-			select(begin, end);
 		} catch (BadLocationException e) {
 			e.printStackTrace();
 		}
-		this.scrollRectToVisible(getHighlightRectangle());
+		select(begin, end);
 	}
 
 	public void removeElement() {
@@ -197,17 +195,6 @@ public class TemplateEditorPane extends JTextArea implements Border, BreakpointL
 			highlighter.removeHighlight(highlight);
 		highlight = null;
 		element = null;
-	}
-
-	private Rectangle getHighlightRectangle() {
-		super.getColumnWidth();
-		Insets margin = super.getMargin();
-		int height = getRowHeight();
-		int width = getColumnWidth();
-		int row = element.getLocation().getBegin().getLine();
-		int col = element.getLocation().getBegin().getColumn();
-		return new Rectangle(width * col + margin.left, height * row
-				+ margin.right, width, height);
 	}
 
 	/**
