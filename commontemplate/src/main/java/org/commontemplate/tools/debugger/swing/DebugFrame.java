@@ -40,6 +40,7 @@ import org.commontemplate.core.Template;
 import org.commontemplate.standard.debug.Execution;
 import org.commontemplate.tools.swing.CommonTemplateFrame;
 import org.commontemplate.tools.swing.ImageFactory;
+import org.commontemplate.tools.swing.MenuBuilder;
 import org.commontemplate.util.I18nMessages;
 
 public class DebugFrame implements ActionListener, WindowListener, ListSelectionListener {
@@ -100,6 +101,7 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 
 		executionList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		executionList.addListSelectionListener(this);
+		MenuBuilder.buildReadonlyListMenu(executionList);
 		JScrollPane executionBox = new JScrollPane();
 		executionBox.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		executionBox.getViewport().setView(executionList);

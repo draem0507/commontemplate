@@ -12,6 +12,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTree;
 import javax.swing.text.JTextComponent;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreePath;
 
 import org.commontemplate.util.I18nMessages;
 
@@ -21,9 +23,10 @@ public class MenuBuilder {
 
 	private MenuBuilder() {}
 
-	public static void buildReadonlyTextMenu(final JTextComponent component) {
+	public static JPopupMenu buildReadonlyTextMenu(final JTextComponent component) {
 		final JPopupMenu menu = new JPopupMenu();
 		buildReadonlyTextMenu(component, menu);
+		return menu;
 	}
 
 	public static void buildReadonlyTextMenu(final JTextComponent component, final JPopupMenu menu) {
@@ -58,45 +61,184 @@ public class MenuBuilder {
 		});
 	}
 
-	public static void buildEditableTextMenu(final JTextComponent component) {
+	public static JPopupMenu buildEditableTextMenu(final JTextComponent component) {
 		final JPopupMenu menu = new JPopupMenu();
 		buildEditableTextMenu(component, menu);
+		return menu;
 	}
 
 	public static void buildEditableTextMenu(final JTextComponent component, final JPopupMenu menu) {
 		// TODO 构造可编辑框菜单
 	}
 
-	public static void buildReadonlyTreeMenu(final JTree component) {
+	public static JPopupMenu buildReadonlyTreeMenu(final JTree component) {
 		final JPopupMenu menu = new JPopupMenu();
 		buildReadonlyTreeMenu(component, menu);
+		return menu;
 	}
 
 	public static void buildReadonlyTreeMenu(final JTree component, final JPopupMenu menu) {
-		// TODO 构造只读树菜单
+		final JMenuItem copyItem = new JMenuItem(I18nMessages
+				.getMessage("DebugFrame.copy.menu.item"));
+		menu.add(copyItem);
+		copyItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				TreePath path = component.getSelectionPath();
+				if (path != null) {
+					DefaultMutableTreeNode node = (DefaultMutableTreeNode) path
+							.getLastPathComponent();
+					if (node != null) {
+						StringSelection stringSelection = new StringSelection(
+								String.valueOf(node.getUserObject()));
+						Toolkit.getDefaultToolkit().getSystemClipboard()
+								.setContents(stringSelection, stringSelection);
+					}
+				}
+			}
+		});
+
+		final JMenuItem copyNodeItem = new JMenuItem(I18nMessages
+				.getMessage("DebugFrame.copy.node.menu.item"));
+		menu.add(copyNodeItem);
+		copyNodeItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				TreePath path = component.getSelectionPath();
+				if (path != null) {
+					DefaultMutableTreeNode node = (DefaultMutableTreeNode) path
+							.getLastPathComponent();
+					if (node != null) {
+						StringSelection stringSelection = new StringSelection(
+								getAllNode(node));
+						Toolkit.getDefaultToolkit().getSystemClipboard()
+								.setContents(stringSelection, stringSelection);
+					}
+				}
+			}
+		});
+
+		final JMenuItem copyAllItem = new JMenuItem(I18nMessages
+				.getMessage("DebugFrame.copy.all.menu.item"));
+		menu.add(copyAllItem);
+		copyAllItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				StringSelection stringSelection = new StringSelection(
+						getAllNode((DefaultMutableTreeNode) component.getModel().getRoot()));
+				Toolkit.getDefaultToolkit().getSystemClipboard().setContents(
+						stringSelection, stringSelection);
+			}
+		});
+
+		component.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent me) {
+				if (me.getModifiers() == MouseEvent.META_MASK) {
+					int x = me.getX();
+					int y = me.getY();
+					int selRow = component.getRowForLocation(x, y);
+					if (selRow != -1)
+						component.setSelectionRow(selRow == -1 ? 0 : selRow);
+					copyItem.setEnabled(false);
+					TreePath path = component.getSelectionPath();
+					if (path != null) {
+						DefaultMutableTreeNode node = (DefaultMutableTreeNode) path
+								.getLastPathComponent();
+						if (node != null) {
+							copyItem.setEnabled(true);
+						}
+					}
+					menu.show(component, x, y);
+				}
+			}
+		});
+
 	}
 
-	public static void buildEditableTreeMenu(final JTree component) {
+	private static String getAllNode(DefaultMutableTreeNode node) {
+		StringBuffer buf = new StringBuffer();
+		buildNode(buf, node, "");
+		return buf.toString();
+	}
+
+	private static void buildNode(StringBuffer buf, DefaultMutableTreeNode node, String level) {
+		if (node != null) {
+			buf.append(level + String.valueOf(node.getUserObject()) + "\n");
+			if (node.getChildCount() > 0) {
+				for (int i = 0; i < node.getChildCount(); i ++) {
+					DefaultMutableTreeNode child = (DefaultMutableTreeNode)node.getChildAt(i);
+					buildNode(buf, child, level + "\t");
+				}
+			}
+		}
+	}
+
+	public static JPopupMenu buildEditableTreeMenu(final JTree component) {
 		final JPopupMenu menu = new JPopupMenu();
 		buildEditableTreeMenu(component, menu);
+		return menu;
 	}
 
 	public static void buildEditableTreeMenu(final JTree component, final JPopupMenu menu) {
 		// TODO 构造可编辑树菜单
 	}
 
-	public static void buildReadonlyListMenu(final JList component) {
+	public static JPopupMenu buildReadonlyListMenu(final JList component) {
 		final JPopupMenu menu = new JPopupMenu();
 		buildReadonlyListMenu(component, menu);
+		return menu;
 	}
 
 	public static void buildReadonlyListMenu(final JList component, final JPopupMenu menu) {
-		// TODO 构造只读列表菜单
+		final JMenuItem copyItem = new JMenuItem(I18nMessages
+				.getMessage("DebugFrame.copy.menu.item"));
+		menu.add(copyItem);
+		copyItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				Object object = component.getSelectedValue();
+				if (object != null) {
+					StringSelection stringSelection = new StringSelection(object.toString());
+					Toolkit.getDefaultToolkit().getSystemClipboard().setContents(
+							stringSelection, stringSelection);
+				}
+			}
+		});
+		final JMenuItem copyAllItem = new JMenuItem(I18nMessages
+				.getMessage("DebugFrame.copy.all.menu.item"));
+		menu.add(copyAllItem);
+		copyAllItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				StringBuffer buf = new StringBuffer();
+				synchronized (component.getModel()) {
+					for (int i = 0; i < component.getModel().getSize(); i ++) {
+						try {
+							Object object = component.getModel().getElementAt(i);
+							if (object != null)
+								buf.append(object.toString());
+						} catch (Exception e) {
+							// ignore
+						}
+					}
+				}
+				StringSelection stringSelection = new StringSelection(buf.toString());
+				Toolkit.getDefaultToolkit().getSystemClipboard().setContents(
+						stringSelection, stringSelection);
+			}
+		});
+		component.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent me) {
+				if (me.getModifiers() == MouseEvent.META_MASK) {
+					int x = me.getX();
+					int y = me.getY();
+					copyItem.setEnabled(component.getSelectedIndex() != -1);
+					copyAllItem.setEnabled(component.getModel().getSize() > 0);
+					menu.show(component, x, y);
+				}
+			}
+		});
 	}
 
-	public static void buildEditableListMenu(final JList component) {
+	public static JPopupMenu buildEditableListMenu(final JList component) {
 		final JPopupMenu menu = new JPopupMenu();
 		buildEditableListMenu(component, menu);
+		return menu;
 	}
 
 	public static void buildEditableListMenu(final JList component, final JPopupMenu menu) {

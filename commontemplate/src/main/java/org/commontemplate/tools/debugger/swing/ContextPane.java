@@ -2,19 +2,11 @@ package org.commontemplate.tools.debugger.swing;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Toolkit;
-import java.awt.datatransfer.StringSelection;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTree;
@@ -28,10 +20,10 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import org.commontemplate.core.Context;
+import org.commontemplate.tools.swing.MenuBuilder;
 import org.commontemplate.tools.swing.MenuTextArea;
 import org.commontemplate.tools.swing.MenuTextField;
 import org.commontemplate.util.BeanUtils;
-import org.commontemplate.util.I18nMessages;
 
 public class ContextPane extends JSplitPane {
 
@@ -43,15 +35,13 @@ public class ContextPane extends JSplitPane {
 
 	private MenuTextArea variableView;
 
-	private JPopupMenu contextTreePopupMenu;
-
 	public ContextPane() {
 		super();
 		createContextPane();
 	}
 
 	private void createContextPane() {
-		final JMenuItem modifyItem = new JMenuItem(I18nMessages
+		/*final JMenuItem modifyItem = new JMenuItem(I18nMessages
 				.getMessage("DebugFrame.modify.variable.menu.item"));
 		modifyItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
@@ -65,65 +55,7 @@ public class ContextPane extends JSplitPane {
 			public void actionPerformed(ActionEvent ae) {
 				// TODO 未实现
 			}
-		});
-
-		final JMenuItem copyItem = new JMenuItem(I18nMessages
-				.getMessage("DebugFrame.copy.menu.item"));
-		copyItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ae) {
-				TreePath path = contextTree.getSelectionPath();
-				if (path != null) {
-					VariableTreeNode node = (VariableTreeNode) path
-							.getLastPathComponent();
-					if (node != null) {
-						StringSelection stringSelection = new StringSelection(
-								node.getName());
-						Toolkit.getDefaultToolkit().getSystemClipboard()
-								.setContents(stringSelection, stringSelection);
-					}
-				}
-			}
-		});
-
-		final JMenuItem copyNodeItem = new JMenuItem(I18nMessages
-				.getMessage("DebugFrame.copy.node.menu.item"));
-		copyNodeItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ae) {
-				TreePath path = contextTree.getSelectionPath();
-				if (path != null) {
-					VariableTreeNode node = (VariableTreeNode) path
-							.getLastPathComponent();
-					if (node != null) {
-						StringSelection stringSelection = new StringSelection(
-								node.getAllName());
-						Toolkit.getDefaultToolkit().getSystemClipboard()
-								.setContents(stringSelection, stringSelection);
-					}
-				}
-			}
-		});
-
-		final JMenuItem copyAllItem = new JMenuItem(I18nMessages
-				.getMessage("DebugFrame.copy.all.menu.item"));
-		copyAllItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ae) {
-				StringSelection stringSelection = new StringSelection(
-						((VariableTreeNode) contextTree.getModel().getRoot())
-								.getAllName());
-				Toolkit.getDefaultToolkit().getSystemClipboard().setContents(
-						stringSelection, stringSelection);
-			}
-		});
-
-		contextTreePopupMenu = new JPopupMenu();
-		/* TODO 未实现，暂时屏蔽
-		contextTreePopupMenu.add(modifyItem);
-		contextTreePopupMenu.add(newItem);
-		contextTreePopupMenu.add(new JPopupMenu.Separator());
-		*/
-		contextTreePopupMenu.add(copyItem);
-		contextTreePopupMenu.add(copyNodeItem);
-		contextTreePopupMenu.add(copyAllItem);
+		});*/
 
 		variableType = new MenuTextField();
 		variableType.setEditable(false);
@@ -147,14 +79,13 @@ public class ContextPane extends JSplitPane {
 		variablePane.add(variableBox, BorderLayout.CENTER);
 
 		contextTree = new JTree();
+		MenuBuilder.buildReadonlyTreeMenu(contextTree);
 		contextTree.getSelectionModel().setSelectionMode(
 				TreeSelectionModel.SINGLE_TREE_SELECTION);
 		contextTree.addTreeWillExpandListener(new TreeWillExpandListener(){
 
 			public void treeWillCollapse(TreeExpansionEvent event)
 					throws ExpandVetoException {
-				// TODO Auto-generated method stub
-
 			}
 
 			public void treeWillExpand(TreeExpansionEvent event)
@@ -188,31 +119,6 @@ public class ContextPane extends JSplitPane {
 									.valueOf(node.getValue()));
 						}
 					}
-				}
-			}
-		});
-		contextTree.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent me) {
-				if (me.getModifiers() == MouseEvent.META_MASK) {
-					int x = me.getX();
-					int y = me.getY();
-					int selRow = contextTree.getRowForLocation(x, y);
-					if (selRow != -1)
-						contextTree.setSelectionRow(selRow == -1 ? 0 : selRow);
-					copyItem.setEnabled(false);
-					modifyItem.setEnabled(false);
-					newItem.setEnabled(false);
-					TreePath path = contextTree.getSelectionPath();
-					if (path != null) {
-						VariableTreeNode node = (VariableTreeNode) path
-								.getLastPathComponent();
-						if (node != null) {
-							copyItem.setEnabled(true);
-							modifyItem.setEnabled(node.isModifiable());
-							newItem.setEnabled(node.isAppendable());
-						}
-					}
-					contextTreePopupMenu.show(contextTree, x, y);
 				}
 			}
 		});
