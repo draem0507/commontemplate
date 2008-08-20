@@ -253,30 +253,41 @@ public class TemplateEditorPane extends JTextArea implements Border, BreakpointL
 			+ "/breakpoint.gif");
 
 	public Insets getBorderInsets(Component c) {
-		return new Insets(0, 30, 0, 0);
+		return new Insets(0, calcWidth(), 0, 0);
+	}
+
+	private static final int BREAKPOINT_WIDTH = 10;
+
+	private static final int LINE_NUMBER_WIDTH = 8;
+
+	private int calcWidth() {
+		int count = getLineCount();
+		String countString = String.valueOf(count);
+		return countString.length() * LINE_NUMBER_WIDTH + BREAKPOINT_WIDTH;
 	}
 
 	public void paintBorder(Component c, Graphics g, int x, int y, int width,
 			int height) {
-		if (width < 30)
+		int w = calcWidth();
+		if (width < w)
 			return;
-		int lineX = x + 11;
 		g.setColor(Color.decode("0xECE9D8"));
-		g.fillRect(x, y, 10, height);
+		g.fillRect(x, y, BREAKPOINT_WIDTH, height);
 		g.setColor(Color.decode("0xDCDCDC"));
-		g.drawLine(x + 29, 0, x + 29, height);
+		int lineLoc = x + w;
+		g.drawLine(lineLoc, 0, lineLoc, height);
 		g.setColor(Color.GRAY);
-		TemplateEditorPane templatePane = (TemplateEditorPane) c;
 		g.setFont(c.getFont());
 		Collection breakpoints = null;
-		Template template = templatePane.getTemplate();
+		Template template = this.getTemplate();
 		if (template != null)
 			breakpoints = DebugManager.getInstance().getBreakpoints(
 					template.getName());
-		for (int line = 0, count = templatePane.getLineCount(); line < count; line++) {
-			int lineY = templatePane.getLineY(line);
+		int lineX = x + BREAKPOINT_WIDTH + 1;
+		for (int line = 0, count = this.getLineCount(); line < count; line++) {
+			int lineY = this.getLineY(line);
 			if (breakpoints != null && isBreakpoint(breakpoints, line))
-				g.drawImage(breakpointImage, x, lineY - 9, c);
+				g.drawImage(breakpointImage, x, lineY - BREAKPOINT_WIDTH + 1, c);
 			g.drawString(String.valueOf(line + 1), lineX, lineY);
 		}
 	}
