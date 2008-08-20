@@ -143,7 +143,7 @@ $!
 								显示块变量: <font color="green">(注：执行块变量所指模板块，模板块可以通过变量传递到其它模板中再show)</font><br/>
 								$show{myblock}<br/>
 								<b>(6) 数据指令:</b><br/>
-								<font color="green">(注：内置支持xml,json,properties,yaml等数据格式，并且数据格式是可扩展的)</font> <a href="viewer.html">格式说明...</a><br/>
+								<font color="green">(注：内置支持xml,json,properties,yaml等数据格式，并且数据格式是可扩展的)</font> <a href="data.html">格式说明...</a><br/>
 								数据块：<br/>
 								$data{xml} <font color="green">(注：参数名称化指令，如果类型需取变量，可使用"\"一元操作符：$data{\type})</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>

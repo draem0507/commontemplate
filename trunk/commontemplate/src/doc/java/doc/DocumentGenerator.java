@@ -63,6 +63,9 @@ public class DocumentGenerator {
 										new Menu("menu.dependency",
 												"dependency.html"))
 								.addChild(
+										new Menu("menu.data",
+												"data.html"))
+								.addChild(
 										new Menu("menu.faq",
 												"faq.html"))
 						)
@@ -202,7 +205,7 @@ public class DocumentGenerator {
 	public static void main(String[] args) {
 		DocumentGenerator generator = new DocumentGenerator("doc/template/", "doc/");
 		generator.generateAll(new String[]{"index", "template", "expression",
-				"config", "integration", "extension", "api", "dependency",
+				"config", "integration", "extension", "api", "dependency", "data",
 				"debug", "viewer", "editor", "code", "ant", "faq", "architecture", "criterion", "planning", "requirement", "downloads",
 				"uml", "about", "news", "join", "demo_extends"});
 	}

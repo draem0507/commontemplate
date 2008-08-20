@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.Writer;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -25,28 +24,14 @@ import org.commontemplate.standard.ConfigurationSettings;
 import org.commontemplate.standard.directive.data.DataProvider;
 import org.commontemplate.tools.PropertiesConfigurationLoader;
 import org.commontemplate.tools.bean.BeanFactory;
+import org.commontemplate.tools.bean.FileClassResourceLoader;
 import org.commontemplate.tools.bean.PropertiesBeanFactory;
 import org.commontemplate.tools.swing.CommonTemplateFrame;
 
 public class TemplateGenerator {
 
-	private final BeanFactory beanFactory;
-
-	private final Map dataProviders;
-
-	private final ConfigurationSettings config;
-
-	private final Engine engine;
-
-	public TemplateGenerator() {
-		this.beanFactory = new PropertiesBeanFactory(TemplateGenerator.class.getPackage().getName().replace('.', '/') + "/commontemplate.properties");
-		this.dataProviders = (Map)beanFactory.getBean("dataProviders");
-		this.config = PropertiesConfigurationLoader.loadConfiguration(beanFactory);
-		this.engine = new Engine(config);
-	}
-
 	public void generate(final File sourceFile) throws Exception {
-		File targetFile = getFile(sourceFile, "html"); // 目标文件
+		File targetFile = getSuffixFile(sourceFile, "html"); // 目标文件
 		final File targetDir = targetFile.getParentFile();
 		final CommonTemplateFrame frame = new CommonTemplateFrame();
 		frame.setTitle("CommonTemplateViewer - Choose");
@@ -110,12 +95,29 @@ public class TemplateGenerator {
 		frame.setVisible(true);
 	}
 
-	public void generate(File sourceFile, File targetFile) throws Exception {
-		Map data = getData(sourceFile); // 查找模板数据
-		generate(data, sourceFile, targetFile);
-	}
+	private static final String DEFAULT_CONFIG = TemplateGenerator.class.getPackage().getName().replace('.', '/') + "/commontemplate.properties";
 
-	public void generate(Map data, File sourceFile, File targetFile) throws IOException {
+	public void generate(File sourceFile, File targetFile) throws Exception {
+		BeanFactory beanFactory;
+		// 首先查找模板所在目录的commontemplate.properties
+		File configFile = getFile(sourceFile, "commontemplate.properties");
+		if (configFile == null || ! configFile.exists()) {
+			// 其次查找安装目录的commontemplate.properties
+			String exedir = System.getProperty("launch4j.exedir");
+			if (exedir != null) {
+				configFile = new File(exedir + "/commontemplate.properties");
+			}
+		}
+		if (configFile != null && configFile.exists()) {
+			beanFactory = new PropertiesBeanFactory(configFile.getCanonicalPath(), new FileClassResourceLoader());
+		} else {
+			// 否则使用默认的commontemplate.properties
+			beanFactory = new PropertiesBeanFactory(DEFAULT_CONFIG);
+		}
+		Map dataProviders = (Map)beanFactory.getBean("dataProviders");
+		Map data = getData(sourceFile, dataProviders); // 查找模板数据
+		ConfigurationSettings config = PropertiesConfigurationLoader.loadConfiguration(beanFactory);
+		Engine engine = new Engine(config);
 		Writer writer = null;
 		try {
 			writer = new FileWriter(targetFile);
@@ -137,7 +139,7 @@ public class TemplateGenerator {
 		}
 	}
 
-	public File getFile(File sourceFile, String suffix) throws Exception {
+	public File getSuffixFile(File sourceFile, String suffix) throws Exception {
 		String prefix;
 		String name = sourceFile.getName();
 		int i = name.lastIndexOf('.');
@@ -146,17 +148,21 @@ public class TemplateGenerator {
 		} else {
 			prefix = name + ".";
 		}
-		return new File(sourceFile.getParentFile(), prefix + suffix).getCanonicalFile();
+		return getFile(sourceFile, prefix + suffix);
 	}
 
-	public Map getData(File sourceFile) throws Exception {
+	private File getFile(File sourceFile, String fileName) throws Exception {
+		return new File(sourceFile.getParentFile(), fileName).getCanonicalFile();
+	}
+
+	private Map getData(File sourceFile, Map dataProviders) throws Exception {
 		if (dataProviders != null) {
 			for (Iterator iterator = dataProviders.entrySet().iterator(); iterator.hasNext();) {
 				Map.Entry entry = (Map.Entry)iterator.next();
 				String suffix = (String)entry.getKey();
 				DataProvider dataProvider = (DataProvider)entry.getValue();
 				if (suffix != null && dataProvider != null) {
-					File file = getFile(sourceFile, suffix);
+					File file = getSuffixFile(sourceFile, suffix);
 					if (file.exists()) {
 						Map data = dataProvider.getData(file);
 						if (data != null)
