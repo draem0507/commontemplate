@@ -19,7 +19,7 @@ public class NewInstanceFunctionOperatorHandler extends UnaryOperatorHandlerSupp
 	public Object doEvaluate(Object operand) throws Exception {
 		Function func = (Function)operand;
 		String name = func.getName();
-		Class cls = Class.forName(name);
+		Class cls = ClassUtils.forName(name);
 		Object args = func.getArgument();
 		if (args == null) {
 			return cls.newInstance();

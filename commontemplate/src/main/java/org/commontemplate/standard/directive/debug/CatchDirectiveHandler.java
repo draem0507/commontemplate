@@ -8,6 +8,7 @@ import org.commontemplate.core.LocalContext;
 import org.commontemplate.standard.directive.DirectiveUtils;
 import org.commontemplate.standard.directive.MiddleBlockDirectiveHandlerSupport;
 import org.commontemplate.util.Assert;
+import org.commontemplate.util.ClassUtils;
 import org.commontemplate.util.I18nExceptionFactory;
 
 public class CatchDirectiveHandler extends MiddleBlockDirectiveHandlerSupport {
@@ -43,7 +44,7 @@ public class CatchDirectiveHandler extends MiddleBlockDirectiveHandlerSupport {
 
 	private Class getExceptionClass(Object param) throws ClassNotFoundException {
 		if (param instanceof String) {
-			return Class.forName((String)param);
+			return ClassUtils.forName((String)param);
 		} else if (param instanceof Class) {
 			return (Class)param;
 		} else {

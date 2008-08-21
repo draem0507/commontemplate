@@ -15,6 +15,7 @@ import org.commontemplate.standard.directive.DirectiveUtils;
 import org.commontemplate.standard.directive.ParameterUtils;
 import org.commontemplate.tools.web.WebContext;
 import org.commontemplate.util.Assert;
+import org.commontemplate.util.ClassUtils;
 
 /**
  * JSP标签块指令适配器
@@ -30,7 +31,7 @@ public class TagBlockDirectiveAdapter extends BlockDirectiveHandlerSupport {
 
 	public void setTagClassName(String tagClassName) {
 		try {
-			this.tagClass = Class.forName(tagClassName);
+			this.tagClass = ClassUtils.forName(tagClassName);
 			Assert.assertTrue(JspTag.class.isAssignableFrom(tagClass), "TagBlockDirectiveAdapter.jsp.tag.type.error");
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException(e);

@@ -1,6 +1,7 @@
 package org.commontemplate.standard.operator.object;
 
 import org.commontemplate.standard.operator.UnaryOperatorHandlerSupport;
+import org.commontemplate.util.ClassUtils;
 
 /**
  * 包名前导操作符: "&"<br/>
@@ -21,7 +22,7 @@ public class ClassPackageOperatorHandler extends UnaryOperatorHandlerSupport {
 	public Object doEvaluate(Object operand) throws Exception {
 		String name = (String)operand;
 		try {
-			return Class.forName(name);
+			return ClassUtils.forName(name);
 		} catch (ClassNotFoundException e) {
 			return Package.getPackage(name);
 		}

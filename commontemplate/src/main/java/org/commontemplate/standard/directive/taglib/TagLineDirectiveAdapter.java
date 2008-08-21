@@ -11,6 +11,7 @@ import org.commontemplate.standard.directive.DirectiveHandlerSupport;
 import org.commontemplate.standard.directive.ParameterUtils;
 import org.commontemplate.tools.web.WebContext;
 import org.commontemplate.util.Assert;
+import org.commontemplate.util.ClassUtils;
 
 /**
  * JSP标签行指令适配器
@@ -26,7 +27,7 @@ public class TagLineDirectiveAdapter extends DirectiveHandlerSupport {
 
 	public void setTagClassName(String tagClassName) {
 		try {
-			this.tagClass = Class.forName(tagClassName);
+			this.tagClass = ClassUtils.forName(tagClassName);
 			Assert.assertTrue(JspTag.class.isAssignableFrom(tagClass), "TagLineDirectiveAdapter.jsp.tag.type.error");
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException(e);

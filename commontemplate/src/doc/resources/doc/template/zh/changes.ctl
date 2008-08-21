@@ -19,6 +19,7 @@ $!
 								查看器安装目录和当前模板所在目录jar包加载.<br/>
 								查看器安装目录和当前模板所在目录,commontemplate.properties配置逐级查找.<br/>
 								实现配置缺省继承, 不再必需配置@extends=, 将自动根据所处环境继承默认配置.<br/>
+								将Class.forName()统一改为ClassUtils.forName(), 使用当前线程类加载器加载类.<br/>
 								<br/>
 								<b>0.8.5 版本更新：(2008-08-04)</b> <a href="downloads.html">下载...</a><br/>
 								此版本主要完善核心引擎和标准指令集.<br/>

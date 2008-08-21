@@ -1,6 +1,7 @@
 package org.commontemplate.standard.operator.object;
 
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
+import org.commontemplate.util.ClassUtils;
 
 /**
  * 包分割操作符: "."<br/>
@@ -23,7 +24,7 @@ public class PackageDotOperatorHandler extends BinaryOperatorHandlerSupport {
 		String subName = (String)rightOperand;
 		String name = superPackage.getName() + "." + subName;
 		try {
-			return Class.forName(name);
+			return ClassUtils.forName(name);
 		} catch (ClassNotFoundException e) {
 			return Package.getPackage(name);
 		}
