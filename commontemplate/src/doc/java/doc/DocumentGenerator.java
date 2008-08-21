@@ -152,13 +152,14 @@ public class DocumentGenerator {
 	}
 
 	public void generateAll(String[] templates) {
+		boolean release = false;
 		for (int i = 0, n = templates.length; i < n; i ++) {
-			generate(templates[i], Locale.CHINA);
-			generate(templates[i], Locale.US);
+			generate(templates[i], Locale.CHINA, release);
+			generate(templates[i], Locale.US, release);
 		}
 	}
 
-	public void generate(String t, Locale l) {
+	public void generate(String t, Locale l, boolean release) {
 		// 执行模板
 		Writer output = null;
 		try {
@@ -172,6 +173,7 @@ public class DocumentGenerator {
 					.createContext(output, l);
 			context.pushLocalContext(getModel());
 			context.put("locale", l);
+			context.put("release", Boolean.valueOf(release));
 			context.put("pageName", t);
 			context.put("pageUrl", t + ".html");
 			Template template;

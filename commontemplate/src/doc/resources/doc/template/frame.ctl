@@ -71,8 +71,17 @@
 								<!--$else-->
 								<a href="../zh/${pageUrl}">&#20013;&#25991;</a>
 								<!--$end-->
+								--
+								<!--$if{release}-->
+								$msg{"frame.release"}
 								|
-								<a href="join.html">$msg{"frame.translate"}</a>&nbsp;&nbsp;
+								<a href="../build/${locale.language}/${pageUrl}">$msg{"frame.build"}</a>
+								<!--$else-->
+								<a href="../../${locale.language}/${pageUrl}">$msg{"frame.release"}</a>
+								|
+								$msg{"frame.build"}
+								<!--$end-->
+								&nbsp;&nbsp;
 							</td>
 						</tr>
 						<tr>
@@ -155,7 +164,7 @@
 					<table border="0" cellpadding="0" cellspacing="0">
 						<tr>
 							<td>
-								$msg{'frame.copyright'} <a href="about.html">$msg{'frame.commonTemplate.team'}</a>
+								$msg{'frame.copyright'} <a href="about.html">$msg{'frame.commontemplate.team'}</a>
 							</td>
 							<td width="100" align="right">
 								<a href="http://www.commontemplate.org"><img src="../images/logo.gif" border="0" /></a>
