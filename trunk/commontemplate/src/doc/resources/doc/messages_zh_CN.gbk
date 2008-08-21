@@ -1,8 +1,9 @@
 frame.title=Common Template Engine
 frame.keywords=commontemplate ctl template language engine code generator
 frame.copyright=版权所有 &#169; 2007-2008
-frame.commonTemplate.team=CommonTemplate 开发小组
-frame.translate=翻译
+frame.commontemplate.team=CommonTemplate 开发小组
+frame.release=发布版本
+frame.build=每日构建
 
 menu.documents=文档
 menu.overview=首页概览

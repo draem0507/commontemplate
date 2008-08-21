@@ -21,7 +21,7 @@ $!
 								(11) ct_springmvc-x.x.war 与<a href="http://www.springframework.org/" target="_blank">SpringMVC</a>框架集成示例应用<br/>
 								<font color="green">(注：8，9，10，11所示war包，放在服务器(如：tomcat)的webapps目录下即可访问(如：http://localhost:8080/war包名)，相关Java源代码放在war包内的/WEB-INF/src目录下。)</font><br/>
 								<br/>
-								<b>二、每日构建</b> (当前版本0.8.6-dev)<br/>
+								<b>二、每日构建</b> (当前版本0.8.6-dev) <a href="../build/zh/index.html">每日构建站点内容...</a><br/>
 								<table border="0" cellpadding="2" cellspacing="0">
 									<tr>
 										<td height="31"><a target="_blank" href="http://commontemplate.googlecode.com/svn/trunk/build" target="_blank"><img src="../images/google_code.gif" border="0" width="88" height="31" /></a></td>
@@ -32,7 +32,7 @@ $!
 								(2) commontemplate-debug-SNAPSHOT.jar 便于调试二进制包，采用保留行号方式编译，并包含源代码<br/>
 								(3) CommonTemplateSetup-SNAPSHOT.exe 查看器安装程序，请参见：<a href="viewer.html">查看器说明...</a><br/>
 								(4) struts-commontemplate-plugin-SNAPSHOT.jar 与<a href="http://struts.apache.org/2.x/" target="_blank">Struts2</a>的集成包，采用Struts2约定的插件方式打包<br/>
-								<font color="green">(注：每日构建版本可以使用所有最新功能特性(与当前站点内容同步)，但也可能出现不稳定问题)</font><br/>
+								<font color="green">(注：每日构建版本可以使用所有最新功能特性，但也可能出现不稳定问题)</font><br/>
 								<br/>
 								<b>三、源码控制 (SVN)</b><br/>
 								<table border="0" cellpadding="2" cellspacing="0">
