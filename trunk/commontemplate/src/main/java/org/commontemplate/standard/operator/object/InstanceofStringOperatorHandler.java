@@ -2,6 +2,7 @@ package org.commontemplate.standard.operator.object;
 
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 import org.commontemplate.standard.operator.UnhandleException;
+import org.commontemplate.util.ClassUtils;
 
 /**
  * 类型检查操作符: "instanceof"<br/>
@@ -20,7 +21,7 @@ public class InstanceofStringOperatorHandler extends BinaryOperatorHandlerSuppor
 
 	public Object doEvaluate(Object leftOperand, Object rightOperand) throws Exception {
 		try {
-			Class cls = Class.forName((String)rightOperand);
+			Class cls = ClassUtils.forName((String)rightOperand);
 			return Boolean.valueOf(leftOperand.getClass().isAssignableFrom(cls));
 		} catch (ClassNotFoundException e) {
 			throw new UnhandleException(e);

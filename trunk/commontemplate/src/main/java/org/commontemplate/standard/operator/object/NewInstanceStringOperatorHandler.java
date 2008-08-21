@@ -1,6 +1,7 @@
 package org.commontemplate.standard.operator.object;
 
 import org.commontemplate.standard.operator.UnaryOperatorHandlerSupport;
+import org.commontemplate.util.ClassUtils;
 
 /**
  * 创建实例操作符: "new"<br/>
@@ -20,7 +21,7 @@ public class NewInstanceStringOperatorHandler extends UnaryOperatorHandlerSuppor
 	public Object doEvaluate(Object operand) throws Exception {
 		String name = (String)operand;
 		try {
-			return Class.forName(name).newInstance();
+			return ClassUtils.forName(name).newInstance();
 		} catch (ClassNotFoundException e) {
 			return new NewPackage(Package.getPackage(name));
 		} catch (InstantiationException e) {

@@ -21,7 +21,7 @@ public class DotInstanceFunctionOperatorHandler extends BinaryOperatorHandlerSup
 		NewPackage pkg = (NewPackage)leftOperand;
 		Function func = (Function)rightOperand;
 		String name = func.getName();
-		Class cls = Class.forName(pkg.getNewPackage().getName() + "." + name);
+		Class cls = ClassUtils.forName(pkg.getNewPackage().getName() + "." + name);
 		Object args = func.getArgument();
 		if (args == null) {
 			return cls.newInstance();

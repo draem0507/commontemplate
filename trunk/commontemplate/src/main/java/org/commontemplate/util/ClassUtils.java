@@ -47,7 +47,8 @@ public class ClassUtils {
 	 */
 	public static Class forName(String className) throws ClassNotFoundException {
 		Assert.assertNotNull(className, "ClassUtils.class.name.required");
-		return Class.forName(className);
+		Class.forName(className);
+		return Class.forName(className, true, Thread.currentThread().getContextClassLoader());
 	}
 
 	/**
@@ -63,7 +64,7 @@ public class ClassUtils {
 		Assert.assertNotNull(className, "ClassUtils.class.name.required");
 		if (className.endsWith("[]"))
 			className = "[L" + className.substring(0, className.length() - 2) + ";";
-		return Class.forName(className);
+		return forName(className);
 	}
 
 	/**

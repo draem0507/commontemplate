@@ -1,6 +1,7 @@
 package org.commontemplate.standard.operator.object;
 
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
+import org.commontemplate.util.ClassUtils;
 
 public class DotInstanceStringOperatorHandler extends BinaryOperatorHandlerSupport {
 
@@ -16,7 +17,7 @@ public class DotInstanceStringOperatorHandler extends BinaryOperatorHandlerSuppo
 		String str = (String)rightOperand;
 		String name = pkg.getNewPackage().getName() + "." + str;
 		try {
-			return Class.forName(name).newInstance();
+			return ClassUtils.forName(name).newInstance();
 		} catch (ClassNotFoundException e) {
 			return new NewPackage(Package.getPackage(name));
 		} catch (InstantiationException e) {

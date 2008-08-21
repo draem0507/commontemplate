@@ -111,7 +111,7 @@ public class DocumentGenerator {
 												"../resources/license.txt"))
 								.addChild(
 										new Menu("menu.changes.log",
-												"news.html"))
+												"changes.html"))
 								.addChild(
 										new Menu("menu.uml", "uml.html"))
 								.addChild(
@@ -143,7 +143,7 @@ public class DocumentGenerator {
 
 		Menu topMenu = new Menu("menu.top").addChild(
 				new Menu("menu.downloads", "downloads.html")).addChild(
-				new Menu("menu.news", "news.html")).addChild(
+				new Menu("menu.changes", "changes.html")).addChild(
 				new Menu("menu.forums", "http://forum.commontemplate.org/index.php")).addChild(
 				new Menu("menu.about.us", "about.html"));
 		model.put("topMenus", topMenu.getChildren());
@@ -209,7 +209,7 @@ public class DocumentGenerator {
 		generator.generateAll(new String[]{"index", "template", "expression",
 				"config", "integration", "extension", "api", "dependency", "data",
 				"debugger", "viewer", "editor", "code", "ant", "faq", "architecture", "criterion", "planning", "requirement", "downloads",
-				"uml", "about", "news", "join", "demo_extends"});
+				"uml", "about", "changes", "join", "demo_extends"});
 	}
 
 }

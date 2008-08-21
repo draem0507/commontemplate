@@ -41,7 +41,7 @@ menu.coverage.report=测试覆盖率报告
 menu.community=社区
 menu.about.us=关于我们
 menu.developer.team=开发团队
-menu.news=更新
+menu.changes=更新
 menu.forums=论坛
 menu.wiki=知识库
 menu.mail.list=邮件列表
@@ -71,7 +71,7 @@ page.requirement.title=CommonTemplate 需求场景
 page.downloads.title=CommonTemplate 下载
 page.uml.title=CommonTemplate UML图
 page.about.title=感谢为CommonTemplate作出贡献的人们
-page.news.title=CommonTemplate 最新动态
+page.changes.title=CommonTemplate 最新动态
 page.join.title=联系我们
 page.demo_extends.title= $extends 指令示例
 

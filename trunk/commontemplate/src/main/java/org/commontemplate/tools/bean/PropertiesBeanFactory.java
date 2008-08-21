@@ -17,6 +17,7 @@ import java.util.TreeMap;
 import java.util.Map.Entry;
 
 import org.commontemplate.util.Assert;
+import org.commontemplate.util.ClassUtils;
 import org.commontemplate.util.TypeUtils;
 
 /**
@@ -299,7 +300,7 @@ public class PropertiesBeanFactory implements BeanFactory {
 
 	private Object getClassMeta(String className) {
 		try {
-			return Class.forName(className);
+			return ClassUtils.forName(className);
 		} catch (ClassNotFoundException e) {
 			throw new BeanException(e);
 		}
@@ -314,7 +315,7 @@ public class PropertiesBeanFactory implements BeanFactory {
 			String className = classAndFieldName.substring(0, i);
 			String filedName = classAndFieldName.substring(i + 1);
 
-			Object bean = Class.forName(className).getField(filedName).get(null);
+			Object bean = ClassUtils.forName(className).getField(filedName).get(null);
 			initProperty(property, bean);
 			return bean;
 		} catch (IllegalAccessException e) {
@@ -339,7 +340,7 @@ public class PropertiesBeanFactory implements BeanFactory {
 			String className = classAndMethodName.substring(0, i);
 			String methodName = classAndMethodName.substring(i + 1);
 
-			Object bean = Class.forName(className).getMethod(methodName, new Class[0]).invoke(null, new Object[0]);
+			Object bean = ClassUtils.forName(className).getMethod(methodName, new Class[0]).invoke(null, new Object[0]);
 			initProperty(property, bean);
 			return bean;
 		} catch (IllegalAccessException e) {
@@ -359,7 +360,7 @@ public class PropertiesBeanFactory implements BeanFactory {
 
 	private Object getObject(String className, String property) {
 		try {
-			Object bean = Class.forName(className).newInstance();
+			Object bean = ClassUtils.forName(className).newInstance();
 			initProperty(property, bean);
 			return bean;
 		} catch (InstantiationException e) {

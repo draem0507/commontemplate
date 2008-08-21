@@ -1,7 +1,7 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
 	<!--$overzone{"content"}-->
 $!
-								<b>一、发行版本</b> (当前版本0.8.5) <a href="news.html">更新日志...</a><br/>
+								<b>一、发行版本</b> (当前版本0.8.5) <a href="changes.html">更新日志...</a><br/>
 								<table border="0" cellpadding="2" cellspacing="0">
 									<tr>
 										<td height="31"><a target="_blank" href="http://code.google.com/p/commontemplate/downloads/list" target="_blank"><img src="../images/google_code.gif" border="0" width="88" height="31" /></a></td>
