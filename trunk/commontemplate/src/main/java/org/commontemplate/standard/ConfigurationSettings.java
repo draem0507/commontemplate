@@ -19,6 +19,7 @@ import org.commontemplate.core.OutputFormatter;
 import org.commontemplate.core.ResourceLoader;
 import org.commontemplate.standard.i18n.ResourceBundleProvider;
 import org.commontemplate.standard.log.Logger;
+import org.commontemplate.standard.syntax.KeywordsSettings;
 import org.commontemplate.standard.syntax.SyntaxSettings;
 import org.commontemplate.util.Assert;
 
@@ -55,17 +56,15 @@ public class ConfigurationSettings extends Configuration {
 		return keywords;
 	}
 
-	public void setKeywordsSetting(String value) {
-		Assert.assertTrue(value != null && value.trim().length() > 0, "ConfigurationSettings.keywords.string.required");
-
-		String[] values = value.trim().split("\\,");
-		String nullKeyword = values.length > 0 ? values[0] : Keywords.DEFAULT_NULL_KEYWORD;
-		String trueKeyword = values.length > 1 ? values[1] : Keywords.DEFAULT_FALSE_KEYWORD;
-		String falseKeyword = values.length > 2 ? values[2] : Keywords.DEFAULT_TRUE_KEYWORD;
-		String thisKeyword = values.length > 3 ? values[3] : Keywords.DEFAULT_CURRENT_LOCAL_CONTEXT_KEYWORD;
-		String superKeyword = values.length > 4 ? values[4] : Keywords.DEFAULT_SUPER_LOCAL_CONTEXT_KEYWORD;
-		String contextKeyword = values.length > 5 ? values[5] : Keywords.DEFAULT_CONTEXT_KEYWORD;
-		setKeywords(new Keywords(nullKeyword, trueKeyword, falseKeyword, thisKeyword, superKeyword, contextKeyword));
+	public void setKeywordsSettings(KeywordsSettings settings) {
+		Assert.assertNotNull(settings, "ConfigurationSettings.keywords.string.required");
+		String nullKeyword = settings.getNull() != null ? settings.getNull() : Keywords.DEFAULT_NULL_KEYWORD;
+		String trueKeyword = settings.getTrue() != null ? settings.getTrue() : Keywords.DEFAULT_FALSE_KEYWORD;
+		String falseKeyword = settings.getFalse() != null ? settings.getFalse() : Keywords.DEFAULT_TRUE_KEYWORD;
+		String currentLocalContextKeyword = settings.getCurrentLocalContext() != null ? settings.getCurrentLocalContext() : Keywords.DEFAULT_CURRENT_LOCAL_CONTEXT_KEYWORD;
+		String parentLocalContextKeyword = settings.getParentLocalContext() != null ? settings.getParentLocalContext() : Keywords.DEFAULT_PARENT_LOCAL_CONTEXT_KEYWORD;
+		String contextKeyword = settings.getContext() != null ? settings.getContext() : Keywords.DEFAULT_CONTEXT_KEYWORD;
+		setKeywords(new Keywords(nullKeyword, trueKeyword, falseKeyword, currentLocalContextKeyword, parentLocalContextKeyword, contextKeyword));
 	}
 
 	/**

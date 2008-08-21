@@ -21,12 +21,7 @@
 </object>
 <!--$end-->
 								<br/>
-								<b>2. JSON数据格式:</b><br/>
-								语法：大括号表示对象，冒号表示属性，方括号表示数组，逗号表示项，引号表示字符串(单词引号可省)。<br/>
-								举例：<br/>
-								{mail: {from: "xxx@xxx.com", to: "yyy@yyy.com"}, users: [{id: 1, name: "james"},{id: 2, name: "kent"}]}<br/>
-								<br/>
-								<b>3. Properties数据格式:</b><br/>
+								<b>2. Properties数据格式:</b><br/>
 								语法：等号表示键值对，其中，键中的点号表示层级关系，数字表示数组索引。<br/>
 								举例：<br/>
 								mail.from=xxx@xxx.com<br/>
@@ -36,8 +31,13 @@
 								users.1.id=2<br/>
 								users.1.name=kent<br/>
 								<br/>
+								<b>3. JSON数据格式:</b><br/>
+								语法：大括号表示对象，冒号表示属性，方括号表示数组，逗号表示项，引号表示字符串。<br/>
+								举例：<br/>
+								{mail: {from: "xxx@xxx.com", to: "yyy@yyy.com"}, users: [{id: 1, name: "james"},{id: 2, name: "kent"}]}<br/>
+								<br/>
 								<b>4. YAML数据格式:</b><br/>
-								语法：冒号表示对象属性，横线表示数组项，引号表示字符串(单词引号可省)。<br/>
+								语法：冒号表示对象属性，横线表示数组项，引号表示字符串。<br/>
 								举例：<br/>
 								mail:<br/>
 								&nbsp;&nbsp;from: "xxx@xxx.com"<br/>

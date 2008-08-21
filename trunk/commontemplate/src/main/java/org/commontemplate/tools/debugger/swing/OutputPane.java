@@ -37,7 +37,7 @@ public class OutputPane extends JScrollPane implements OutputFilter {
 		textArea.setSize(150, 150);
 		JPopupMenu menu = new JPopupMenu();
 		MenuBuilder.buildReadonlyTextMenu(textArea, menu);
-		menu.add(new JPopupMenu.Separator());
+		menu.addSeparator();
 		final JMenuItem clearItem = new JMenuItem("清除"); // TODO 未国际化
 		menu.add(clearItem)
 			.addActionListener(new ActionListener() {

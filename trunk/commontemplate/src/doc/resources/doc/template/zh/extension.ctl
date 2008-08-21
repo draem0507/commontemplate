@@ -109,8 +109,19 @@ $!
 								setSyntax(Syntax)<br/>
 								setKeywords(Keywords)<br/>
 								配置方法：<br/>
-								syntaxString="${}#*!end"<br/>
-								keywordsString=null,true,false,this,super,context<br/>
+								syntax.directiveLeader='$'<br/>
+								syntax.expressionBegin='{'<br/>
+								syntax.expressionEnd='}'<br/>
+								syntax.lineComment='#'<br/>
+								syntax.blockComment='*'<br/>
+								syntax.noParse='!'<br/>
+								syntax.endDirectiveName=end<br/>
+								keywords.null="null"<br/>
+								keywords.true="true"<br/>
+								keywords.false="false"<br/>
+								keywords.currentLocalContext=this<br/>
+								keywords.parentLocalContext=super<br/>
+								keywords.context=context<br/>
 								默认使用：<br/>
 								Syntax.DEFAULT<br/>
 								Keywords.DEFAULT<br/>
@@ -172,6 +183,8 @@ $!
 								<br/>
 								<b>11. 属性扩展</b><br/>
 								用于为"."点号操作符提供数据<br/>
+								属性调用方式如: ${bean.property}<br/>
+								静态属性调用方式如: ${.now}<br/>
 								相关接口：<br/>
 								org.commontemplate.standard.property.PropertyHandler<br/>
 								org.commontemplate.standard.property.StaticPropertyHandler<br/>
@@ -186,6 +199,8 @@ $!
 								<br/>
 								<b>12. 方法扩展</b><br/>
 								用于为"."点号操作符提供数据，并且只有在配置functionAvailable=true时才有效<br/>
+								方法调用方式如: ${obj.func(arg1,arg2)}<br/>
+								静态方法调用方式如: ${.func(arg1,arg2)}<br/>
 								相关接口：<br/>
 								org.commontemplate.standard.function.FunctionHandler<br/>
 								org.commontemplate.standard.function.StaticFunctionHandler<br/>

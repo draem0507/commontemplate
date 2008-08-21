@@ -95,7 +95,7 @@ public class TemplateGenerator {
 		frame.setVisible(true);
 	}
 
-	private static final String DEFAULT_CONFIG = TemplateGenerator.class.getPackage().getName().replace('.', '/') + "/commontemplate.properties";
+	public static final String STANDARD_CONFIG_PATH = TemplateGenerator.class.getPackage().getName().replace('.', '/') + "/commontemplate.properties";
 
 	public void generate(File sourceFile, File targetFile) throws Exception {
 		BeanFactory beanFactory;
@@ -109,10 +109,10 @@ public class TemplateGenerator {
 			}
 		}
 		if (configFile != null && configFile.exists()) {
-			beanFactory = new PropertiesBeanFactory(configFile.getCanonicalPath(), new FileClassResourceLoader());
+			beanFactory = new PropertiesBeanFactory(configFile.getCanonicalPath(), STANDARD_CONFIG_PATH, new FileClassResourceLoader());
 		} else {
 			// 否则使用默认的commontemplate.properties
-			beanFactory = new PropertiesBeanFactory(DEFAULT_CONFIG);
+			beanFactory = new PropertiesBeanFactory(STANDARD_CONFIG_PATH);
 		}
 		Map dataProviders = (Map)beanFactory.getBean("dataProviders");
 		Map data = getData(sourceFile, dataProviders); // 查找模板数据

@@ -48,7 +48,7 @@ public final class PropertiesConfigurationLoader {
 	 * @see org.commontemplate.tools.bean.PropertiesBeanFactory
 	 */
 	public static ConfigurationSettings loadConfiguration(String propertiesPath) {
-		return loadConfiguration(new PropertiesBeanFactory(propertiesPath));
+		return loadConfiguration(new PropertiesBeanFactory(propertiesPath, STANDARD_CONFIG_PATH));
 	}
 
 	/**
@@ -60,7 +60,7 @@ public final class PropertiesConfigurationLoader {
 	 * @see org.commontemplate.tools.bean.PropertiesBeanFactory
 	 */
 	public static ConfigurationSettings loadConfiguration(String propertiesPath, ResourceLoader resourceLoader) {
-		return loadConfiguration(new PropertiesBeanFactory(propertiesPath, resourceLoader));
+		return loadConfiguration(new PropertiesBeanFactory(propertiesPath, STANDARD_CONFIG_PATH, resourceLoader));
 	}
 
 	/**
@@ -72,7 +72,7 @@ public final class PropertiesConfigurationLoader {
 	 * @see org.commontemplate.tools.bean.PropertiesBeanFactory
 	 */
 	public static ConfigurationSettings loadConfiguration(String propertiesPath, Map variables) {
-		return loadConfiguration(new PropertiesBeanFactory(propertiesPath, variables));
+		return loadConfiguration(new PropertiesBeanFactory(propertiesPath, STANDARD_CONFIG_PATH, variables));
 	}
 
 	/**
@@ -85,7 +85,7 @@ public final class PropertiesConfigurationLoader {
 	 * @see org.commontemplate.tools.bean.PropertiesBeanFactory
 	 */
 	public static ConfigurationSettings loadConfiguration(String propertiesPath, ResourceLoader resourceLoader, Map variables) {
-		return loadConfiguration(new PropertiesBeanFactory(propertiesPath, resourceLoader, variables));
+		return loadConfiguration(new PropertiesBeanFactory(propertiesPath, STANDARD_CONFIG_PATH, resourceLoader, variables));
 	}
 
 	/**
@@ -98,7 +98,7 @@ public final class PropertiesConfigurationLoader {
 	 * @see org.commontemplate.tools.bean.PropertiesBeanFactory
 	 */
 	public static ConfigurationSettings loadConfiguration(Properties properties, ResourceLoader resourceLoader, Map variables) {
-		return loadConfiguration(new PropertiesBeanFactory(properties, resourceLoader, variables));
+		return loadConfiguration(new PropertiesBeanFactory(properties, STANDARD_CONFIG_PATH, resourceLoader, variables));
 	}
 
 	/**
@@ -133,7 +133,7 @@ public final class PropertiesConfigurationLoader {
 	 * @see org.commontemplate.tools.bean.PropertiesBeanFactory
 	 */
 	public static ExpressionConfigurationSettings loadExpressionConfiguration(String propertiesPath) {
-		return loadExpressionConfiguration(new PropertiesBeanFactory(propertiesPath));
+		return loadExpressionConfiguration(new PropertiesBeanFactory(propertiesPath, STANDARD_EXPRESSION_CONFIG_PATH));
 	}
 
 	/**
@@ -145,7 +145,7 @@ public final class PropertiesConfigurationLoader {
 	 * @see org.commontemplate.tools.bean.PropertiesBeanFactory
 	 */
 	public static ExpressionConfigurationSettings loadExpressionConfiguration(String propertiesPath, ResourceLoader resourceLoader) {
-		return loadExpressionConfiguration(new PropertiesBeanFactory(propertiesPath, resourceLoader));
+		return loadExpressionConfiguration(new PropertiesBeanFactory(propertiesPath, STANDARD_EXPRESSION_CONFIG_PATH, resourceLoader));
 	}
 
 	/**
@@ -157,7 +157,7 @@ public final class PropertiesConfigurationLoader {
 	 * @see org.commontemplate.tools.bean.PropertiesBeanFactory
 	 */
 	public static ExpressionConfigurationSettings loadExpressionConfiguration(String propertiesPath, Map variables) {
-		return loadExpressionConfiguration(new PropertiesBeanFactory(propertiesPath, variables));
+		return loadExpressionConfiguration(new PropertiesBeanFactory(propertiesPath, STANDARD_EXPRESSION_CONFIG_PATH, variables));
 	}
 
 	/**
@@ -170,7 +170,7 @@ public final class PropertiesConfigurationLoader {
 	 * @see org.commontemplate.tools.bean.PropertiesBeanFactory
 	 */
 	public static ExpressionConfigurationSettings loadExpressionConfiguration(String propertiesPath, ResourceLoader resourceLoader, Map variables) {
-		return loadExpressionConfiguration(new PropertiesBeanFactory(propertiesPath, resourceLoader, variables));
+		return loadExpressionConfiguration(new PropertiesBeanFactory(propertiesPath, STANDARD_EXPRESSION_CONFIG_PATH, resourceLoader, variables));
 	}
 
 	/**
@@ -183,7 +183,7 @@ public final class PropertiesConfigurationLoader {
 	 * @see org.commontemplate.tools.bean.PropertiesBeanFactory
 	 */
 	public static ExpressionConfigurationSettings loadExpressionConfiguration(Properties properties, ResourceLoader resourceLoader, Map variables) {
-		return loadExpressionConfiguration(new PropertiesBeanFactory(properties, resourceLoader, variables));
+		return loadExpressionConfiguration(new PropertiesBeanFactory(properties, STANDARD_EXPRESSION_CONFIG_PATH, resourceLoader, variables));
 	}
 
 	/**

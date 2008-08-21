@@ -45,6 +45,7 @@ $!
 								2.如果未配置，则查找默认WEB-INF路径：/WEB-INF/commontemplate.properties<br/>
 								3.如果WEB-INF中没有，则查找ClassPath根目录：commontemplate.properties<br/>
 								4.如果ClassPath根目录也没有，则使用标准配置：org/commontemplate/tools/web/commontemplate.properties<br/>
+								(注：如果自定义配置文件中未配置@extends项，则缺省为：@extends=org/commontemplate/tools/web/commontemplate.properties)<br/>
 								<br/>
 								<b>2. 与Struts集成</b><br/>
 								同上面配置好Servlet，在Struts中直接forward到相应.ctl页面<br/>
