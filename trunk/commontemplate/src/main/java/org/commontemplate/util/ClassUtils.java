@@ -47,7 +47,6 @@ public class ClassUtils {
 	 */
 	public static Class forName(String className) throws ClassNotFoundException {
 		Assert.assertNotNull(className, "ClassUtils.class.name.required");
-		Class.forName(className);
 		return Class.forName(className, true, Thread.currentThread().getContextClassLoader());
 	}
 
