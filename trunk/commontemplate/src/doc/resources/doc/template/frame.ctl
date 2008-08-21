@@ -75,9 +75,9 @@
 								<!--$if{release}-->
 								$msg{"frame.release"}
 								|
-								<a href="../build/${locale.language}/${pageUrl}">$msg{"frame.build"}</a>
+								<a href="../build/${locale.language}/index.html">$msg{"frame.build"}</a>
 								<!--$else-->
-								<a href="../../${locale.language}/${pageUrl}">$msg{"frame.release"}</a>
+								<a href="../../${locale.language}/index.html">$msg{"frame.release"}</a>
 								|
 								$msg{"frame.build"}
 								<!--$end-->
