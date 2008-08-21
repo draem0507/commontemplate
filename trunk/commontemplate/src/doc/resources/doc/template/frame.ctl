@@ -71,7 +71,7 @@
 								<!--$else-->
 								<a href="../zh/${pageUrl}">&#20013;&#25991;</a>
 								<!--$end-->
-								--
+								&gt;&gt;&nbsp;
 								<!--$if{release}-->
 								$msg{"frame.release"}
 								|
