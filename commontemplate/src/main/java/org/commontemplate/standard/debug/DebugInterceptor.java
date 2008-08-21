@@ -7,7 +7,6 @@ import java.util.Iterator;
 
 import org.commontemplate.config.RenderingInterceptor;
 import org.commontemplate.config.Rendition;
-import org.commontemplate.core.BlockDirective;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.Element;
 import org.commontemplate.core.Template;
@@ -68,15 +67,13 @@ public class DebugInterceptor implements RenderingInterceptor, Serializable {
 				// 设置运行状态
 				if (execution.getStatus() == ExecutionImpl.STEP_OVER) {
 					context.getRootLocalContext().setBooleanStatus(STEP_STATUS, true);
-					if (element instanceof BlockDirective) {
-						context.pushLocalContext();
-						try {
-							context.putProperty(STEP_OVER_KEY, Boolean.TRUE);
-							rendition.doRender(); // 注：doRender必需在wait恢复之后运行
-							return;
-						} finally {
-							context.popLocalContext();
-						}
+					context.pushLocalContext();
+					try {
+						context.putProperty(STEP_OVER_KEY, Boolean.TRUE);
+						rendition.doRender(); // 注：doRender必需在wait恢复之后运行
+						return;
+					} finally {
+						context.popLocalContext();
 					}
 				} else if (execution.getStatus() == ExecutionImpl.STEP_RETURN) {
 					context.getRootLocalContext().setBooleanStatus(STEP_STATUS, true);

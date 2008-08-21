@@ -26,7 +26,7 @@ public final class Keywords implements java.io.Serializable {
 
 	private final String currentLocalContextKeyword;
 
-	private final String superLocalContextKeyword;
+	private final String parentLocalContextKeyword;
 
 	private final String contextKeyword;
 
@@ -41,30 +41,30 @@ public final class Keywords implements java.io.Serializable {
 	 *            false关键字
 	 * @param currentLocalContextKeyword
 	 *            this关键字
-	 * @param superLocalContextKeyword
+	 * @param parentLocalContextKeyword
 	 *            super关键字
 	 * @param contextKeyword
 	 *            context关键字
 	 */
 	public Keywords(String nullKeyword, String trueKeyword,
 			String falseKeyword, String currentLocalContextKeyword,
-			String superLocalContextKeyword, String contextKeyword) {
+			String parentLocalContextKeyword, String contextKeyword) {
 		super();
-		Assert.assertNotEmpty(nullKeyword, "NullKeyword不能为空!");
-		Assert.assertNotEmpty(trueKeyword, "TrueKeyword不能为空!");
-		Assert.assertNotEmpty(falseKeyword, "FalseKeyword不能为空!");
+		Assert.assertNotEmpty(nullKeyword, "NullKeyword不能为空!"); // TODO 未国际化
+		Assert.assertNotEmpty(trueKeyword, "TrueKeyword不能为空!"); // TODO 未国际化
+		Assert.assertNotEmpty(falseKeyword, "FalseKeyword不能为空!"); // TODO 未国际化
 		Assert.assertNotEmpty(currentLocalContextKeyword,
-				"CurrentLocalContextKeyword不能为空!");
-		Assert.assertNotEmpty(superLocalContextKeyword,
-				"SuperLocalContextKeyword不能为空!");
-		Assert.assertNotEmpty(contextKeyword, "ContextKeyword不能为空!");
+				"CurrentLocalContextKeyword不能为空!"); // TODO 未国际化
+		Assert.assertNotEmpty(parentLocalContextKeyword,
+				"ParentLocalContextKeyword不能为空!"); // TODO 未国际化
+		Assert.assertNotEmpty(contextKeyword, "ContextKeyword不能为空!"); // TODO 未国际化
 		assertMutex(new String[] { nullKeyword, trueKeyword, falseKeyword,
-				superLocalContextKeyword, contextKeyword });
+				parentLocalContextKeyword, contextKeyword });
 		this.nullKeyword = nullKeyword;
 		this.trueKeyword = trueKeyword;
 		this.falseKeyword = falseKeyword;
 		this.currentLocalContextKeyword = currentLocalContextKeyword;
-		this.superLocalContextKeyword = superLocalContextKeyword;
+		this.parentLocalContextKeyword = parentLocalContextKeyword;
 		this.contextKeyword = contextKeyword;
 	}
 
@@ -73,7 +73,7 @@ public final class Keywords implements java.io.Serializable {
 		for (int i = 0; i < n; i++) {
 			for (int j = i + 1; j < n; j++) {
 				if (strs[i].equals(strs[j]))
-					throw new IllegalStateException("表达式关键字重复：" + strs[i]);
+					throw new IllegalStateException("表达式关键字重复：" + strs[i]); // TODO 未国际化
 			}
 		}
 	}
@@ -94,8 +94,8 @@ public final class Keywords implements java.io.Serializable {
 		return currentLocalContextKeyword;
 	}
 
-	public final String getSuperLocalContextKeyword() {
-		return superLocalContextKeyword;
+	public final String getParentLocalContextKeyword() {
+		return parentLocalContextKeyword;
 	}
 
 	public final String getContextKeyword() {
@@ -107,7 +107,7 @@ public final class Keywords implements java.io.Serializable {
 			return false;
 		return nullKeyword.equals(name) || trueKeyword.equals(name)
 				|| falseKeyword.equals(name)
-				|| superLocalContextKeyword.equals(name)
+				|| parentLocalContextKeyword.equals(name)
 				|| contextKeyword.equals(name);
 	}
 
@@ -119,13 +119,13 @@ public final class Keywords implements java.io.Serializable {
 
 	public static final String DEFAULT_CURRENT_LOCAL_CONTEXT_KEYWORD = "this";
 
-	public static final String DEFAULT_SUPER_LOCAL_CONTEXT_KEYWORD = "super";
+	public static final String DEFAULT_PARENT_LOCAL_CONTEXT_KEYWORD = "super";
 
 	public static final String DEFAULT_CONTEXT_KEYWORD = "context";
 
 	public static final Keywords DEFAULT = new Keywords(DEFAULT_NULL_KEYWORD,
 			DEFAULT_TRUE_KEYWORD, DEFAULT_FALSE_KEYWORD,
 			DEFAULT_CURRENT_LOCAL_CONTEXT_KEYWORD,
-			DEFAULT_SUPER_LOCAL_CONTEXT_KEYWORD, DEFAULT_CONTEXT_KEYWORD);
+			DEFAULT_PARENT_LOCAL_CONTEXT_KEYWORD, DEFAULT_CONTEXT_KEYWORD);
 
 }

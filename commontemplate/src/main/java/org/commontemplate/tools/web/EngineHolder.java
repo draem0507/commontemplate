@@ -104,7 +104,7 @@ public final class EngineHolder {
 	public static final void init(ServletContext servletContext, String propertiesPath) {
 		Assert.assertNotNull(servletContext, "EngineHolder.servlet.context.required");
 		Assert.assertNotNull(propertiesPath, "EngineHolder.properties.path.required");
-		doInit(servletContext, new PropertiesBeanFactory(propertiesPath.trim(), new ComboResourceLoader(servletContext), getVariables(servletContext)));
+		doInit(servletContext, new PropertiesBeanFactory(propertiesPath.trim(), STANDARD_CONFIG_PATH, new ComboResourceLoader(servletContext), getVariables(servletContext)));
 	}
 
 	/**
@@ -117,7 +117,7 @@ public final class EngineHolder {
 	public static final void init(ServletContext servletContext, Properties properties) {
 		Assert.assertNotNull(servletContext, "EngineHolder.servlet.context.required");
 		Assert.assertNotNull(properties, "EngineHolder.properties.required");
-		doInit(servletContext, new PropertiesBeanFactory(properties, new ComboResourceLoader(servletContext), getVariables(servletContext)));
+		doInit(servletContext, new PropertiesBeanFactory(properties, STANDARD_CONFIG_PATH, new ComboResourceLoader(servletContext), getVariables(servletContext)));
 	}
 
 	private static final void doInit(ServletContext servletContext, BeanFactory beanFactory) {

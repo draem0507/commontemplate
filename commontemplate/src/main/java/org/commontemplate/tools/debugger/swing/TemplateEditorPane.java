@@ -38,7 +38,8 @@ import org.commontemplate.util.I18nMessages;
  * @author liangfei0201@163.com
  *
  */
-public class TemplateEditorPane extends JTextArea implements Border, BreakpointListener {
+public class TemplateEditorPane extends JTextArea implements Border,
+		BreakpointListener {
 
 	// TODO 未监听BreakpointEvent在有断点去除时更新
 
@@ -57,9 +58,8 @@ public class TemplateEditorPane extends JTextArea implements Border, BreakpointL
 
 	private PropertiesDialog propertiesDialog;
 
-
-
-	public TemplateEditorPane(Template t, JFrame frame, final TemplateTabPane tabbedPane) {
+	public TemplateEditorPane(Template t, JFrame frame,
+			final TemplateTabPane tabbedPane) {
 		super();
 		template = t;
 		try {
@@ -71,7 +71,7 @@ public class TemplateEditorPane extends JTextArea implements Border, BreakpointL
 		setHighlighter(highlighter);
 		templateViewMenu = new JPopupMenu();
 		MenuBuilder.buildReadonlyTextMenu(this, templateViewMenu);
-		templateViewMenu.add(new JPopupMenu.Separator());
+		templateViewMenu.addSeparator();
 		final JMenuItem closeItem = new JMenuItem("关闭"); // TODO 未国际化
 		closeItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
@@ -79,7 +79,7 @@ public class TemplateEditorPane extends JTextArea implements Border, BreakpointL
 			}
 		});
 		templateViewMenu.add(closeItem);
-		templateViewMenu.add(new JPopupMenu.Separator());
+		templateViewMenu.addSeparator();
 		final JMenuItem propertiesItem = new JMenuItem(I18nMessages
 				.getMessage("TemplateEditorPane.properties.menu.item"));
 		propertiesItem.addActionListener(new ActionListener() {
@@ -132,12 +132,14 @@ public class TemplateEditorPane extends JTextArea implements Border, BreakpointL
 					int y = me.getY();
 					if (x < getLineNumberWidth()) {
 						int line = TemplateEditorPane.this.getYLine(me.getY());
-						if (line >= 0 && line < TemplateEditorPane.this.getLineCount()) {
+						if (line >= 0
+								&& line < TemplateEditorPane.this
+										.getLineCount()) {
 							Breakpoint breakpoint = new Breakpoint(template
 									.getName(), line);
 							boolean isEable = DebugManager.getInstance()
 									.hasBreakpoint(breakpoint);
-							toggleBreakpoint.setEnabled(! isEable);
+							toggleBreakpoint.setEnabled(!isEable);
 							toggleBreakpoint.setLine(line);
 							disableBreakpoint.setEnabled(isEable);
 							disableBreakpoint.setLine(line);
@@ -147,9 +149,11 @@ public class TemplateEditorPane extends JTextArea implements Border, BreakpointL
 					} else {
 						propertiesItem.setEnabled(template != null);
 					}
-				} else if (me.getClickCount() >= 2 && me.getX() < getLineNumberWidth()) {
+				} else if (me.getClickCount() >= 2
+						&& me.getX() < getLineNumberWidth()) {
 					int line = TemplateEditorPane.this.getYLine(me.getY());
-					if (line >= 0 && line < TemplateEditorPane.this.getLineCount()) {
+					if (line >= 0
+							&& line < TemplateEditorPane.this.getLineCount()) {
 						DebugManager.getInstance().changeBreakpoint(
 								new Breakpoint(template.getName(), line));
 						TemplateEditorPane.this.repaint();
@@ -274,7 +278,9 @@ public class TemplateEditorPane extends JTextArea implements Border, BreakpointL
 		for (int line = 0, count = this.getLineCount(); line < count; line++) {
 			int lineY = this.getLineY(line);
 			if (breakpoints != null && isBreakpoint(breakpoints, line))
-				g.drawImage(breakpointImage, x, lineY - BREAKPOINT_WIDTH + 1, c);
+				g
+						.drawImage(breakpointImage, x, lineY - BREAKPOINT_WIDTH
+								+ 1, c);
 			g.drawString(String.valueOf(line + 1), lineX, lineY);
 		}
 	}
@@ -291,7 +297,6 @@ public class TemplateEditorPane extends JTextArea implements Border, BreakpointL
 	public boolean isBorderOpaque() {
 		return false;
 	}
-
 
 	public void onBreakpointAdded(BreakpointEvent event) {
 		repaint();

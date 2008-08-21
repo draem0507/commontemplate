@@ -149,7 +149,7 @@ final class LocalVariableStorageImpl extends VariableStorageSupport {
 	}
 
 	public Object getVariable(String name) throws VariableException {
-		if (keywords.getSuperLocalContextKeyword().equals(name)) {
+		if (keywords.getParentLocalContextKeyword().equals(name)) {
 			if (superLocalContext != null)
 				return superLocalContext;
 			else

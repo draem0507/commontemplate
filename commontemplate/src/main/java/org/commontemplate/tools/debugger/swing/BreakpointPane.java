@@ -1,16 +1,20 @@
 package org.commontemplate.tools.debugger.swing;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
-import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
 
 import org.commontemplate.standard.debug.Breakpoint;
 import org.commontemplate.standard.debug.BreakpointEvent;
@@ -33,7 +37,38 @@ public class BreakpointPane extends JScrollPane implements BreakpointListener {
 	private final JTree breakpointTree = new JTree();
 
 	public BreakpointPane() {
-		MenuBuilder.buildReadonlyTreeMenu(breakpointTree);
+		JPopupMenu menu = MenuBuilder.buildReadonlyTreeMenu(breakpointTree);
+		menu.addSeparator();
+		final JMenuItem removeItem = new JMenuItem("移除");
+		menu.add(removeItem);
+		removeItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				TreePath path = breakpointTree.getSelectionPath();
+				if (path != null) {
+					BreakpointTreeNode node = (BreakpointTreeNode) path
+							.getLastPathComponent();
+					if (node != null) {
+						if (node.getTemplateName() == null) {
+							DebugManager.getInstance().clearBreakpoints();
+						} else {
+							if (node.getLine() == -1) {
+								DebugManager.getInstance().clearBreakpoints();
+							} else {
+								DebugManager.getInstance().removeBreakpoint(new Breakpoint(node.getTemplateName(), node.getLine()));
+							}
+						}
+					}
+				}
+			}
+		});
+		final JMenuItem removeAllItem = new JMenuItem("全部移除");
+		menu.add(removeAllItem);
+		removeAllItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				DebugManager.getInstance().clearBreakpoints();
+			}
+		});
+
 		this.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		this.getViewport().setView(breakpointTree);
 		this.getViewport().setBackground(Color.white);
@@ -61,14 +96,14 @@ public class BreakpointPane extends JScrollPane implements BreakpointListener {
 			set.add(new Integer(breakpoint.getLine()));
 		}
 
-		DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("breakpoints");
+		BreakpointTreeNode rootNode = new BreakpointTreeNode();
 		for (Iterator mapIterator = map.entrySet().iterator(); mapIterator.hasNext();) {
 			Map.Entry entry = (Map.Entry)mapIterator.next();
-			DefaultMutableTreeNode templateNode = new DefaultMutableTreeNode(entry.getKey());
+			BreakpointTreeNode templateNode = new BreakpointTreeNode((String)entry.getKey());
 			rootNode.add(templateNode);
 			for (Iterator setIterator = ((Set)entry.getValue()).iterator(); setIterator.hasNext();) {
 				Integer line = (Integer)setIterator.next();
-				DefaultMutableTreeNode lineNode = new DefaultMutableTreeNode("line: " + (line.intValue() + 1));
+				BreakpointTreeNode lineNode = new BreakpointTreeNode((String)entry.getKey(), line.intValue());
 				templateNode.add(lineNode);
 			}
 		}

@@ -23,6 +23,7 @@
 								(1) 首先，查找模板所在目录的commontemplate.properties<br/>
 								(2) 其次，查找安装目录的commontemplate.properties<br/>
 								(3) 否则，使用默认的org/commontemplate/tools/viewer/commontemplate.properties<br/>
+								(注：如果自定义配置文件中未配置@extends项，则缺省为：@extends=org/commontemplate/tools/viewer/commontemplate.properties)<br/>
 								<br/>
 								<b>5. 数据加载</b> <a href="data.html">数据格式...</a><br/>
 								(1)同名数据文件加载：如打开test.ctl，将搜索同目录的test.xml, test.json, test.properties, test.yaml等数据文件并加载<br/>

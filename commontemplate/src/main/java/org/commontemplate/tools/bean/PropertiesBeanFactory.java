@@ -74,7 +74,7 @@ public class PropertiesBeanFactory implements BeanFactory {
 	 * @param resourceLoader 配置文件加载器
 	 */
 	public PropertiesBeanFactory(String propertiesPath, ResourceLoader resourceLoader) {
-		this(propertiesPath, resourceLoader, null);
+		this(propertiesPath, resourceLoader, (Map)null);
 	}
 
 	/**
@@ -112,7 +112,70 @@ public class PropertiesBeanFactory implements BeanFactory {
 		this.variables = variables;
 	}
 
+	/**
+	 * 在ClassPath中查找配置
+	 * @param properties 配置文件路径
+	 */
+	public PropertiesBeanFactory(String properties, String defaultExtends) {
+		this(properties, defaultExtends, new ClassLoaderResourceLoader());
+	}
+
+	/**
+	 * 用指定的加载器加载配置
+	 * @param propertiesPath 配置文件路径
+	 * @param resourceLoader 配置文件加载器
+	 */
+	public PropertiesBeanFactory(String propertiesPath, String defaultExtends, ResourceLoader resourceLoader) {
+		this(propertiesPath, defaultExtends, resourceLoader, (Map)null);
+	}
+
+	/**
+	 * 在ClassPath中查找配置
+	 * @param propertiesPath 配置文件路径
+	 * @param variables 变量集，类型：Map<String, Object>
+	 */
+	public PropertiesBeanFactory(String propertiesPath, String defaultExtends, Map variables) {
+		this(propertiesPath, defaultExtends, new ClassLoaderResourceLoader(), variables);
+	}
+
+	/**
+	 * 用指定的加载器加载配置
+	 * @param propertiesPath 配置文件路径
+	 * @param resourceLoader 配置文件加载器
+	 * @param variables 变量集，类型：Map<String, Object>
+	 */
+	public PropertiesBeanFactory(String propertiesPath, String defaultExtends, ResourceLoader resourceLoader, Map variables) {
+		Assert.assertNotNull(propertiesPath, "PropertiesBeanFactory.config.path.required");
+		Assert.assertNotNull(resourceLoader, "PropertiesBeanFactory.config.loader.required");
+		this.properties = extendProperties(loadProperties(propertiesPath, resourceLoader), resourceLoader, defaultExtends);
+		this.variables = variables;
+	}
+
+	/**
+	 * 用指定的加载器加载配置
+	 * @param properties 配置信息
+	 * @param resourceLoader 配置文件加载器
+	 * @param variables 变量集，类型：Map<String, Object>
+	 */
+	public PropertiesBeanFactory(Properties properties, String defaultExtends, ResourceLoader resourceLoader, Map variables) {
+		Assert.assertNotNull(properties, "PropertiesBeanFactory.config.properties.required");
+		Assert.assertNotNull(resourceLoader, "PropertiesBeanFactory.config.loader.required");
+		this.properties = extendProperties(properties, resourceLoader, defaultExtends);
+		this.variables = variables;
+	}
+
+
 	private static final String EXTENDS_KEY = "@extends";
+
+	// 模板继承读取 (属于构造函数块，所以static)
+	private static Properties extendProperties(Properties properties, ResourceLoader resourceLoader, String defaultExtends) {
+		if (defaultExtends != null) {
+			String extendsValue = properties.getProperty(EXTENDS_KEY);
+			if (extendsValue == null)
+				properties.setProperty(EXTENDS_KEY, defaultExtends);
+		}
+		return extendProperties(properties, resourceLoader);
+	}
 
 	// 模板继承读取 (属于构造函数块，所以static)
 	private static Properties extendProperties(Properties properties, ResourceLoader resourceLoader) {
