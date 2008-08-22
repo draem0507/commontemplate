@@ -6,8 +6,8 @@ package org.commontemplate.standard.coat.attribute.jericho;
 import java.io.InputStreamReader;
 import java.util.*;
 
-import org.commontemplate.standard.directive.coat.attribute.Segment;
-import org.commontemplate.standard.directive.coat.attribute.jericho.JerichoDocument;
+import org.commontemplate.standard.coat.attribute.Segment;
+import org.commontemplate.standard.coat.attribute.jericho.JerichoDocument;
 
 import junit.framework.TestCase;
 import au.id.jericho.lib.html.Source;

@@ -27,7 +27,7 @@ public class ResultSetCollectionConverter implements CollectionConverter {
 			}
 			return list;
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException(e.getMessage(), e);
 		}
 	}
 

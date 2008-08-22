@@ -321,13 +321,13 @@ $!
 								<b>(1) 注释版语法外套</b><br/>
 								编译模板时自动去除指令两边的HTML注释符，如：<br/>
 								&lt;!--$指令{表达式}--&gt; <font color="green">(注: 注释符与指令间不能有空格)</font><br/>
-								<font color="green">注: 此语法外套在web版(即@extends=org/commontemplate/tools<b>/web/</b>commontemplate.properties)配置中默认开启，否则需配置：<br/>
-								textFilters[100]=org.commontemplate.standard.coat.comment.CommentSyntaxCoatFilter()</font><br/>
+								<font color="green">注: 此语法外套在web版(即@extends=org/commontemplate/tools/<b>web</b>/commontemplate.properties)配置中默认开启，否则需配置：<br/>
+								textFilters[100]=org.commontemplate.standard.coat.CommentSyntaxCoatFilter()</font><br/>
 								<b>(2) 属性版语法外套</b><br/>
 								自动将名称空间为“ct:”的HTML标签属性转换成指令，如：<br/>
 								&lt;table ct:if="users != null && users.size &gt; 0"&gt;...&lt;table&gt; <font color="green">(注: 只能用于块指令)</font><br/>
 								<font color="green">注: 此语法外套因解析HTML语法，有性能损耗，所以未默认开启，需自行配置：<br/>
-								resourceFilters[100]=org.commontemplate.standard.coat.attribute.jericho.JerichoAttributeCoatFilter()</font><br/>
+								resourceFilters[100]=org.commontemplate.standard.coat.AttributeSyntaxCoatFilter()</font><br/>
 								<br/>
 								<b>七. 举例:</b><br/>
 								<b>(1) 标准语法：</b><br/>
