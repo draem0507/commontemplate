@@ -3,12 +3,12 @@
  */
 package org.commontemplate.standard.coat.attribute.jericho;
 
-import java.io.*;
-
-import org.commontemplate.standard.directive.coat.attribute.jericho.JerichoAttributeCoatFilter;
-import org.commontemplate.util.IOUtils;
+import java.io.InputStreamReader;
+import java.io.Reader;
 
 import junit.framework.TestCase;
+
+import org.commontemplate.util.IOUtils;
 
 /**
  * @author GL

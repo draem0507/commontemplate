@@ -2,7 +2,7 @@ package integration;
 
 import java.io.IOException;
 
-import org.commontemplate.standard.directive.code.JavaCodeFilter;
+import org.commontemplate.standard.directive.filter.code.JavaCodeFilter;
 
 public class JavaHighlight {
 

@@ -88,7 +88,7 @@ $!
 								配置方法：<br/>
 								resouceFilter[200]=com.xxx.XxxFilter<br/>
 								参考实现：<br/>
-								org.commontemplate.standard.coat.attribute.jericho.JerichoAttributeCoatFilter<br/>
+								org.commontemplate.standard.coat.AttributeSyntaxCoatFilter<br/>
 								<br/>
 								<b>7. 非指令文本块过滤器扩展</b><br/>
 								在<b>编译</b>期过滤非指令文本块.<br/>
@@ -99,7 +99,7 @@ $!
 								配置方法：<br/>
 								textFilters[200]=com.xxx.XxxFilter<br/>
 								参考实现：<br/>
-								org.commontemplate.standard.coat.comment.CommentSyntaxCoatFilter<br/>
+								org.commontemplate.standard.coat.CommentSyntaxCoatFilter<br/>
 								<br/>
 								<b>8. 语法扩展</b><br/>
 								相关类：<br/>
@@ -229,7 +229,7 @@ $!
 								<b>14. 国际化扩展</b><br/>
 								用于为$msg或$message指令提供国际化信息内容<br/>
 								相关接口：<br/>
-								org.commontemplate.config.ResourceBundleProvider<br/>
+								org.commontemplate.standard.i18n.ResourceBundleProvider<br/>
 								注册方法：<br/>
 								setResourceBundleProvider(ResourceBundleProvider)<br/>
 								setMessageBaseName(String baseName) <font color="green">(注：使用内置的PropertiesResourceBundleProvider)</font><br/>
@@ -269,13 +269,17 @@ $!
 								org.commontemplate.standard.data.StringDataProvider<br/>
 								配置方法：<br/>
 								dataProvider{xxx}=com.xxx.XXXDataProvider<br/>
+								参考实现：<br/>
+								org.commontemplate.standard.data包下相关类<br/>
 								<br/>
 								<b>18. 代码着色扩展</b><br/>
 								用于为"$code"指令提供过滤器<br/>
 								相关接口和基类：<br/>
 								org.commontemplate.core.OutputFilter<br/>
 								配置方法：<br/>
-								code{xxx}=com.xxx.XXXCodeFilter<br/>
+								codeFilter{xxx}=com.xxx.XXXCodeFilter<br/>
+								参考实现：<br/>
+								org.commontemplate.standard.directive.filter.code包下相关类<br/>
 								<br/>
 !$
 	<!--$end-->
