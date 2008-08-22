@@ -5,6 +5,7 @@ import java.util.Map.Entry;
 
 import org.commontemplate.core.Context;
 import org.commontemplate.core.Resource;
+import org.commontemplate.standard.data.DataProvider;
 import org.commontemplate.standard.directive.DirectiveHandlerSupport;
 import org.commontemplate.util.Assert;
 import org.commontemplate.util.IOUtils;

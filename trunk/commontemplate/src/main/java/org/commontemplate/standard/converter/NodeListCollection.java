@@ -1,0 +1,26 @@
+package org.commontemplate.standard.converter;
+
+import java.util.Iterator;
+
+import org.commontemplate.util.Assert;
+import org.commontemplate.util.CollectionSupport;
+import org.w3c.dom.NodeList;
+
+public class NodeListCollection extends CollectionSupport {
+
+	private final NodeList nodeList;
+
+	public NodeListCollection(NodeList nodeList) {
+		Assert.assertNotNull(nodeList);
+		this.nodeList = nodeList;
+	}
+
+	public Iterator iterator() {
+		return new NodeListIterator(nodeList);
+	}
+
+	public int size() {
+		return nodeList.getLength();
+	}
+
+}

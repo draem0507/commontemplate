@@ -21,7 +21,7 @@ import org.commontemplate.core.Context;
 import org.commontemplate.core.Template;
 import org.commontemplate.engine.Engine;
 import org.commontemplate.standard.ConfigurationSettings;
-import org.commontemplate.standard.directive.data.DataProvider;
+import org.commontemplate.standard.data.DataProvider;
 import org.commontemplate.tools.PropertiesConfigurationLoader;
 import org.commontemplate.tools.bean.BeanFactory;
 import org.commontemplate.tools.bean.FileClassResourceLoader;

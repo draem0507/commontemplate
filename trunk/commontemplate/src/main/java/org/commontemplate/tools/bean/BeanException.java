@@ -28,7 +28,7 @@ public class BeanException extends I18nRuntimeException {
 	}
 
 	public BeanException(Throwable cause) {
-		super(cause);
+		super(cause.getMessage(), cause);
 	}
 
 }
