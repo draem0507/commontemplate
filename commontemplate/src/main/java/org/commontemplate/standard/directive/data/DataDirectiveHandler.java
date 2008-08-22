@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.commontemplate.core.Context;
+import org.commontemplate.standard.data.DataProvider;
 import org.commontemplate.standard.directive.BlockDirectiveHandlerSupport;
 import org.commontemplate.standard.directive.DirectiveUtils;
 import org.commontemplate.standard.filter.BufferedFilter;

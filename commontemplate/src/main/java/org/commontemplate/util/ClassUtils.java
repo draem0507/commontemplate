@@ -38,32 +38,54 @@ public class ClassUtils {
 
 	/**
 	 * 通过类名反射得到类元.
-	 * 使用的类名应该和<code>java.lang.Class#getName()</code>一致
+	 * 使用当前线程类加载器加载类元.
+	 * 在Class.forName的基础上增加支持以下类型：
+	 * 基本类型：boolean, byte, char, short, int, long, float, double
+	 * 基本类型数组：boolean[], byte[], char[], short[], int[], long[], float[], double[]
+	 * 对象数组：java.lang.Object[], com.xxx.XXX[]
 	 *
-	 * @see java.lang.Class#getName()
+	 * @see java.lang.Class#forName()
 	 * @param className 类名
 	 * @return 类元
 	 * @throws ClassNotFoundException 类不存在时抛出
 	 */
 	public static Class forName(String className) throws ClassNotFoundException {
 		Assert.assertNotNull(className, "ClassUtils.class.name.required");
-		return Class.forName(className, true, Thread.currentThread().getContextClassLoader());
-	}
-
-	/**
-	 * 通过标准类名反射得到类元.
-	 * <p/>
-	 * 与forName主要区别在于数组名使用："java.lang.Object[]"，在forName时使用："[Ljava.lang.Object;"
-	 *
-	 * @param className 标准类名
-	 * @return 类元
-	 * @throws ClassNotFoundException 类不存在时抛出
-	 */
-	public static Class forCanonicalName(String className) throws ClassNotFoundException {
-		Assert.assertNotNull(className, "ClassUtils.class.name.required");
+		if ("boolean".equals(className))
+			return Boolean.TYPE;
+		if ("byte".equals(className))
+			return Byte.TYPE;
+		if ("char".equals(className))
+			return Character.TYPE;
+		if ("short".equals(className))
+			return Short.TYPE;
+		if ("int".equals(className))
+			return Integer.TYPE;
+		if ("long".equals(className))
+			return Long.TYPE;
+		if ("float".equals(className))
+			return Float.TYPE;
+		if ("double".equals(className))
+			return Double.TYPE;
+		if ("boolean[]".equals(className))
+			return Boolean.TYPE.getComponentType();
+		if ("byte[]".equals(className))
+			return Byte.TYPE.getComponentType();
+		if ("char[]".equals(className))
+			return Character.TYPE.getComponentType();
+		if ("short[]".equals(className))
+			return Short.TYPE.getComponentType();
+		if ("int[]".equals(className))
+			return Integer.TYPE.getComponentType();
+		if ("long[]".equals(className))
+			return Long.TYPE.getComponentType();
+		if ("float[]".equals(className))
+			return Float.TYPE.getComponentType();
+		if ("double[]".equals(className))
+			return Double.TYPE.getComponentType();
 		if (className.endsWith("[]"))
 			className = "[L" + className.substring(0, className.length() - 2) + ";";
-		return forName(className);
+		return Class.forName(className, true, Thread.currentThread().getContextClassLoader());
 	}
 
 	/**

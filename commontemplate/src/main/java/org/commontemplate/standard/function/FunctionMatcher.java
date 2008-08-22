@@ -17,7 +17,7 @@ public class FunctionMatcher implements java.io.Serializable {
 		function = beanAndFunction.substring(i + 1);
 		String beanName = beanAndFunction.substring(0, i);
 		try {
-			bean = ClassUtils.forCanonicalName(beanName);
+			bean = ClassUtils.forName(beanName);
 		} catch (ClassNotFoundException e) {
 			Assert.fail("FunctionMatcher.type.error", new Object[]{beanName, e.getMessage()});
 		}

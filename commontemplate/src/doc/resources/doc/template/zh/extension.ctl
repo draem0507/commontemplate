@@ -252,16 +252,25 @@ $!
 								org.commontemplate.standard.log.Logger.DEFAULT<br/>
 								org.commontemplate.standard.log包下相关类<br/>
 								<br/>
-								<b>16. 数据加载类型扩展</b><br/>
+								<b>16. 迭代数据集合转换器扩展</b><br/>
+								用于为"$for"指令提供迭代数据<br/>
+								相关接口和基类：<br/>
+								org.commontemplate.standard.converter.CollectionConverter<br/>
+								配置方法：<br/>
+								collectionConverter{com.xxx.XXX}=com.xxx.XXXCollectionConverter<br/>
+								参考实现：<br/>
+								org.commontemplate.standard.converter包下相关类<br/>
+								<br/>
+								<b>17. 数据加载类型扩展</b><br/>
 								用于为"$data"指令提供数据<br/>
 								相关接口和基类：<br/>
-								org.commontemplate.standard.directive.data.DataProvider<br/>
-								org.commontemplate.standard.directive.data.InputStreamDataProvider<br/>
-								org.commontemplate.standard.directive.data.StringDataProvider<br/>
+								org.commontemplate.standard.data.DataProvider<br/>
+								org.commontemplate.standard.data.InputStreamDataProvider<br/>
+								org.commontemplate.standard.data.StringDataProvider<br/>
 								配置方法：<br/>
 								dataProvider{xxx}=com.xxx.XXXDataProvider<br/>
 								<br/>
-								<b>17. 代码着色扩展</b><br/>
+								<b>18. 代码着色扩展</b><br/>
 								用于为"$code"指令提供过滤器<br/>
 								相关接口和基类：<br/>
 								org.commontemplate.core.OutputFilter<br/>

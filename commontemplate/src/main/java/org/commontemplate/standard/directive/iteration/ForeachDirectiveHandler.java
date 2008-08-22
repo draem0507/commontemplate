@@ -1,27 +1,27 @@
 package org.commontemplate.standard.directive.iteration;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.commontemplate.config.BlockDirectiveHandler;
+import org.commontemplate.config.ConfigurationException;
 import org.commontemplate.core.BlockDirective;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.EvaluationException;
 import org.commontemplate.core.RenderingException;
+import org.commontemplate.standard.converter.CollectionConverter;
 import org.commontemplate.standard.directive.DirectiveUtils;
 import org.commontemplate.standard.directive.condition.IfDirectiveHandler;
 import org.commontemplate.standard.operator.string.NamePair;
 import org.commontemplate.util.Assert;
 import org.commontemplate.util.BeanUtils;
+import org.commontemplate.util.ClassUtils;
 
 /**
  * 集合循环迭代指令.
@@ -38,6 +38,29 @@ public class ForeachDirectiveHandler extends BlockDirectiveHandler {
 	public void setStatusName(String statusName) {
 		Assert.assertNotEmpty(statusName, "ForeachDirectiveHandler.status.name.required");
 		this.statusName = statusName;
+	}
+
+	private Map collectionConverters;
+
+	public void setCollectionConverters(Map collectionConverters) {
+		if (collectionConverters != null) {
+			this.collectionConverters = new HashMap();
+			for (Iterator iterator = collectionConverters.entrySet().iterator(); iterator.hasNext();) {
+				Map.Entry entry = (Map.Entry)iterator.next();
+				String key = (String)entry.getKey();
+				Object value = entry.getValue();
+				if (key != null && value != null) {
+					if (! (value instanceof CollectionConverter)) {
+						throw new ConfigurationException("配置错误，请检查迭代集合转换器配置项，错误信息：集合转换器类：\"" + value.getClass().getName() + "\"未实现接口：\"" + CollectionConverter.class.getName() + "\"");
+					}
+					try {
+						this.collectionConverters.put(ClassUtils.forName(key), value);
+					} catch (ClassNotFoundException e) {
+						throw new ConfigurationException("配置错误，请检查迭代集合转换器配置项，错误信息：" + e.getMessage(), e);
+					}
+				}
+			}
+		}
 	}
 
 	public void doRender(Context context, BlockDirective directive) throws Exception {
@@ -193,36 +216,26 @@ public class ForeachDirectiveHandler extends BlockDirectiveHandler {
 
 	}
 
-	/**
-	 * 子类可覆写子函数供给迭代数据
-	 *
-	 * @param data 原始数据
-	 * @return 迭代集合
-	 */
-	protected Collection getCollection(Object data) {
-		if (data == null)
+	private Collection getCollection(Object obj) {
+		if (obj == null)
 			return null;
-		if (data instanceof Collection)
-			return (Collection) data;
-		else if (data instanceof Object[]) // TODO 未处理基本类型
-			return Arrays.asList((Object[]) data);
-		else if (data instanceof Map)
-			return ((Map) data).entrySet();
-		else if (data instanceof Iterator) {
-			List list = new LinkedList();
-			for (Iterator i = (Iterator)data; i.hasNext();)
-				list.add(i.next());
-			return list;
-		} else if (data instanceof Enumeration) {
-			List list = new LinkedList();
-			for (Enumeration e = (Enumeration)data; e.hasMoreElements();)
-				list.add(e.nextElement());
-			return list;
-		} else {
-			Collection collection = new HashSet(1);
-			collection.add(data);
-			return collection;
+		if (obj instanceof Collection)
+			return (Collection) obj;
+		Class dataCls = obj.getClass();
+		if (collectionConverters != null && collectionConverters.size() > 0) {
+			for (Iterator iterator = collectionConverters.entrySet().iterator(); iterator.hasNext();) {
+				Map.Entry entry = (Map.Entry)iterator.next();
+				// setCollectionConverters()已保证cls,converter均不为空
+				Class cls = (Class)entry.getKey();
+				CollectionConverter converter = (CollectionConverter)entry.getValue();
+				if (dataCls.isAssignableFrom(cls)) {
+					return converter.convert(obj);
+				}
+			}
 		}
+		Collection collection = new ArrayList(1);
+		collection.add(obj);
+		return collection;
 	}
 
 }

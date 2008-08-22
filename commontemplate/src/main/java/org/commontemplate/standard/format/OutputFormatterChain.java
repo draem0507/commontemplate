@@ -28,7 +28,7 @@ public class OutputFormatterChain implements OutputFormatter, Serializable {
 		for (Iterator iterator = typeFormatters.entrySet().iterator(); iterator.hasNext();) {
 			Entry entry = (Entry)iterator.next();
 			try {
-				this.typeFormatters.put(ClassUtils.forCanonicalName((String)entry.getKey()), entry.getValue());
+				this.typeFormatters.put(ClassUtils.forName((String)entry.getKey()), entry.getValue());
 			} catch (ClassNotFoundException e) {
 				throw new ConfigurationException("OutputFormatterChain.invaild.class.name", new Object[]{entry.getKey()}, e);
 			}

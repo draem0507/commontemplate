@@ -1,4 +1,4 @@
-package org.commontemplate.standard.directive.data;
+package org.commontemplate.standard.data;
 
 import java.io.InputStream;
 import java.util.ArrayList;

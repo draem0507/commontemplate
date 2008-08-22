@@ -17,7 +17,7 @@ public class PropertyMatcher implements java.io.Serializable {
 		property = beanAndProperty.substring(i + 1);
 		String beanName = beanAndProperty.substring(0, i);
 		try {
-			bean = ClassUtils.forCanonicalName(beanName);
+			bean = ClassUtils.forName(beanName);
 		} catch (ClassNotFoundException e) {
 			Assert.fail("PropertyMatcher.type.error", new Object[]{beanName, e.getMessage()});
 		}
