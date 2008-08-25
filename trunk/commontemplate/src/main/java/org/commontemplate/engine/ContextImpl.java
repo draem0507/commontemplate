@@ -24,6 +24,7 @@ import org.commontemplate.core.ExpressionBuilder;
 import org.commontemplate.core.GlobalContext;
 import org.commontemplate.core.LocalContext;
 import org.commontemplate.core.LocalContextStack;
+import org.commontemplate.core.OutputConverter;
 import org.commontemplate.core.OutputFilter;
 import org.commontemplate.core.OutputFormatter;
 import org.commontemplate.core.ParsingException;
@@ -394,6 +395,18 @@ final class ContextImpl extends Context {
 
 	public OutputFormatter getOutputFormatter(Class type) {
 		return getCurrentLocalContext().getOutputFormatter(type);
+	}
+
+	public OutputConverter getOutputConverter() {
+		return getCurrentLocalContext().getOutputConverter();
+	}
+
+	public void removeOutputConverter() {
+		getCurrentLocalContext().removeOutputConverter();
+	}
+
+	public void setOutputConverter(OutputConverter outputConverter) {
+		getCurrentLocalContext().setOutputConverter(outputConverter);
 	}
 
 	// 代理 VariableStorage ------------

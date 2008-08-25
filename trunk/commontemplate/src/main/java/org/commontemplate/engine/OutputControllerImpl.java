@@ -11,6 +11,7 @@ import java.util.TimeZone;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.LocalContext;
 import org.commontemplate.core.OutputController;
+import org.commontemplate.core.OutputConverter;
 import org.commontemplate.core.OutputFilter;
 import org.commontemplate.core.OutputFormatter;
 import org.commontemplate.core.UnformattedException;
@@ -18,7 +19,7 @@ import org.commontemplate.util.StringCastUtils;
 
 /**
  * 输出控制器实现
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
@@ -27,7 +28,7 @@ final class OutputControllerImpl implements OutputController {
 	private final LocalContext superLocalContext;
 
 	private final Context context;
-	
+
 	private final Writer out;
 
 	OutputControllerImpl(LocalContext superLocalContext, Context context, Writer out) {
@@ -35,9 +36,9 @@ final class OutputControllerImpl implements OutputController {
 		this.context = context;
 		this.out = out;
 	}
-	
+
 	private OutputFilter outputFilter;
-	
+
 	public void setOutputFilter(OutputFilter outputFilter) {
 		this.outputFilter = outputFilter;
 	}
@@ -63,33 +64,33 @@ final class OutputControllerImpl implements OutputController {
 	public void removeGeneralOutputFormatter() {
 		this.generalFormatter = null;
 	}
-	
+
 	private final Map typeFormatters = new HashMap();
-	
+
 	// 将null单独保存而不放到Map中，避免在Map中重复查找null
 	private OutputFormatter nullFormatter;
 
 	public void setOutputFormatter(Class type, OutputFormatter outputFormatter) {
 		if (type == null)
 			nullFormatter = outputFormatter;
-		else 
+		else
 			typeFormatters.put(type, outputFormatter);
 	}
 
 	public OutputFormatter getOutputFormatter(Class type) {
 		if (type == null)
 			return nullFormatter;
-		else 
+		else
 			return (OutputFormatter)typeFormatters.get(type);
 	}
-	
+
 	public void removeOutputFormatter(Class type) {
 		if (type == null)
 			nullFormatter = null;
-		else 
+		else
 			typeFormatters.remove(type);
 	}
-	
+
 	public void clearOutputFormatters() {
 		generalFormatter = null;
 		nullFormatter = null;
@@ -97,14 +98,16 @@ final class OutputControllerImpl implements OutputController {
 	}
 
 	public void output(Object model) throws IOException {
+		if (outputConverter != null)
+			model = outputConverter.convert(model);
 		if (model instanceof String)
 			outputText((String)model);
 		else
 			outputText(format(model));
 	}
-	
+
 	private void outputText(String text) throws IOException {
-		if (outputFilter != null) 
+		if (outputFilter != null)
 			text = outputFilter.filter(text);
 		if (superLocalContext != null)
 			superLocalContext.output(text);
@@ -142,7 +145,7 @@ final class OutputControllerImpl implements OutputController {
 		// 默认处理方式
 		return DEFAULT_FORMATTER.format(model, context.getLocale(), context.getTimeZone());
 	}
-	
+
 	private static final OutputFormatter DEFAULT_FORMATTER = new OutputFormatter() {
 
 		private static final long serialVersionUID = 1L;
@@ -151,7 +154,21 @@ final class OutputControllerImpl implements OutputController {
 				throws UnformattedException {
 			return model == null ? null : StringCastUtils.objectToString(model);
 		}
-		
+
 	};
+
+	private OutputConverter outputConverter;
+
+	public OutputConverter getOutputConverter() {
+		return outputConverter;
+	}
+
+	public void removeOutputConverter() {
+		outputConverter = null;
+	}
+
+	public void setOutputConverter(OutputConverter outputConverter) {
+		this.outputConverter = outputConverter;
+	}
 
 }

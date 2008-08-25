@@ -221,14 +221,14 @@ $!
 								动态表达式求值:<br/>
 								$eval{expressionString}<br/>
 								<b>(11) 过滤指令:</b><br/>
-								输出过滤指令: <font color="green">(注：只过滤动态内容，不过滤文本块)</font><br/>
+								$end <br/>
+								动态内容输出转换指令: <br/>
+								$convert{x => x.escapeHtml} <font color="green">(注：缺省名称为value，如：$convert{=> value.escapeHtml})</font><br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+								$end <br/>
+								输出过滤指令: <font color="green">(注：包括静态文本块)</font><br/>
 								$filter{x => "&lt;b&gt;" + x.escapeHtml + "&lt;/b&gt;"} <font color="green">(注：缺省名称为value，如：$filter{=> value.escapeHtml})</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
-								$end <br/>
-								输出全过滤指令:  <font color="green">(注：过滤所有输出，包括文本块)</font><br/>
-								$filterAll{x => x.escapeHtml} <font color="green">(注：缺省名称为value，如：$filterAll{=> value.escapeHtml})</font><br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
-								$end <br/>
 								输出缓冲指令: <font color="green">(注：将内部块输出缓冲为单一字符串输出)</font><br/>
 								$buffer<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
@@ -328,7 +328,7 @@ $!
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
 								单步调试断点：(此指令将在其所在行设置断点) <a href="debugger.html">更多...</a><br/>
-								$breakpoint 或者 $. <font color="green">(注: 指令名称为点号的指令)</font><br/>
+								$. <font color="green">(注: 指令名称为点号的指令)</font><br/>
 								<br/>
 								<b>五. 变量区间:</b><br/>
 								页面内的每一个块指令(如$if,$for等)都会创建相应的LocalContext, 变量取值时逐级向上查找, <br/>
@@ -398,21 +398,29 @@ $!
 								<b>八. 遗留：</b> <font color="green">(注: 将在1.0版本统一删除)</font><br/>
 								(1) $local<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.8.3加入，0.8.5废弃<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>与$var功能重复<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>与$var功能重复，并且不能像$global一样达到简化作用<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>$var<br/>
-								(2) $forelse<br/>
+								(2) $breakpoint<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.8.3加入，0.8.5废弃<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>简化为"$."，更形象易记<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>$.<br/>
+								(3) $forelse<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.7.6加入，0.8.6废弃<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>$for和$if统一使$else指令作为否则逻辑<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>$else<br/>
-								(3) $overzone<br/>
+								(4) $overzone<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.7.6加入，0.8.6废弃<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>区域定义与覆写均采用$zone指令，保持统一及语义完整<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>$zone<br/>
-								(4) 简化语法规则：<b>$指令名:参数名</b> 等价于 <b>$指令名{"参数名"}</b><br/>
+								(5) $filterAll<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.7.6加入，0.8.6废弃<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>$convert代替$filter，$filter代替$filterAll<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>$filter<br/>
+								(6) 简化语法规则：<b>$指令名:参数名</b> 等价于 <b>$指令名{"参数名"}</b><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.8.5加入，0.8.6废弃<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>语法规则不统一<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>语法规则不统一，比$指令名{参数名}方式并不简化多少，而且存在与字母内容无法分隔的问题<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>名称定义性指令(如：$block, $macro, $zone等)参数名引号可省，如：$指令名{参数名} 等价于 $指令名{"参数名"}<br/>
-								(5) $leftTrim, $rightTrim<br/>
+								(7) $leftTrim, $rightTrim<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.8.5加入，0.8.6废弃<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>多单词指令名，参照其它模板语法进行简化<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>$ltrim, $rtrim<br/>
