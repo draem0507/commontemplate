@@ -42,7 +42,7 @@ final class CommentImpl extends Comment {
 
 	public void render(Context context) throws RenderingException {
 		if (elementInterceptors != null && elementInterceptors.size() > 0)
-			new RenditionImpl(proxy, context, elementInterceptors).doRender();
+			new ElementRenditionImpl(proxy, context, elementInterceptors).doRender();
 	}
 
 	void doRender(Context context) throws RenderingException {

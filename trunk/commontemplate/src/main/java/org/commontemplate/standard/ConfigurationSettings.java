@@ -409,14 +409,14 @@ public class ConfigurationSettings extends Configuration {
 		this.eventListener = eventListener;
 	}
 
-	private List renderingInterceptors;
+	private List elementInterceptors;
 
-	public List getRenderingInterceptors() {
-		return renderingInterceptors;
+	public List getElementInterceptors() {
+		return elementInterceptors;
 	}
 
-	public void setRenderingInterceptors(List renderingInterceptors) {
-		this.renderingInterceptors = renderingInterceptors;
+	public void setElementInterceptors(List elementInterceptors) {
+		this.elementInterceptors = elementInterceptors;
 	}
 
 }

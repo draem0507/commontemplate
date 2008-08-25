@@ -13,7 +13,7 @@ public class DirectiveFactoryEscapeTester extends TestCase {
 	public void setUp() {
 		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
 		ExpressionEngine expressionParser = new ExpressionEngine(config);
-		directiveFactory = new DirectiveProvider(config.getSyntax(), config.getDirectiveHandlerProvider(), expressionParser, config.getTextFilter(), config.getRenderingInterceptors());
+		directiveFactory = new DirectiveProvider(config.getSyntax(), config.getDirectiveHandlerProvider(), expressionParser, config.getTextFilter(), config.getElementInterceptors());
 	}
 
 	public void testCountNoParseSlash() {
