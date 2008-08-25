@@ -17,7 +17,7 @@
 								8. 支持模板继承，采用面向对象的多态思想，方便于页面Layout，比宏指令更灵活。<a href="demo_extends.html">示例...</a><br/>
 								9. 支持JSP标签库适配，可用指令的方式调用JSP标签，如：\$textfield{name:"",value:""}。<br/>
 								10. 内置的国际化支持，国际化信息处理更方便。<br/>
-								11. 完备的表达式支持，在全面兼容Java表达式的基础上，增加了更富表达力的操作符，包括lambda表达式等。<a href="expression.html">更多...</a><br/>
+								11. 完备的表达式支持，在全面兼容Java表达式的基础上，增加了更富表达力的操作符，包括BGGA闭包表达式等。<a href="expression.html">更多...</a><br/>
 								12. 禁止void函数调用，避免在模板中引入业务逻辑。(根据契约式设计原则，void函数通常是有副作用的，即修改状态)<br/>
 								13. 对已有的不可变类(String,Number,Date等)，采用open class思想，允许在类的外部给类添加新的属性或方法，如：String本没有“首字母大写”的功能，可以外部给String注册一个capitalize属性：\${"james".capitalize}。(类似javascript的prototype)<br/>
 								14. 引擎采用微核设计理念，除了核心API及解析器外，其它如语言定义，资源管理等都是外置的，可以基于同一个引擎，设计另一套完全不同的模板语言。<br/>
@@ -82,7 +82,7 @@
 								<b>四、特性语法举例</b><br/>
 								(1) 并行迭代：\$for{i : (1..10), user : users} \$end 多个集合并行取next值，以最长的集合作为结束，短集合自动补null值<br/>
 								(2) break及continue支持：\$break{for.count > 5} 条件与指令合并以避免冗长的语句：\$if {for.count > 5} \$break \$end<br/>
-								(3) lambda表达式过滤器：\${users[u => u.name != 'guest']} 返回名称不为guest的users子集<br/>
+								(3) 简化的BGGA闭包表达式过滤器：\${users[u => u.name != 'guest']} 返回名称不为guest的users子集<br/>
 								(4) 日期字段加减法 \${user.registerDate + 3.year} 年份加3，其中year为数字的外部扩展属性(OpenClass)<br/>
 								(5) ~= 约等于号：\${"aa" ~= "AA"} 字符串忽略大小写比较<br/>
 								(6) Boolean运算符支持非空判断：\${user1 || user2 || user3} 从左至右返回第一个不为空的user对象<br/>

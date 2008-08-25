@@ -20,6 +20,7 @@ import org.commontemplate.core.Expression;
 import org.commontemplate.core.ExpressionBuilder;
 import org.commontemplate.core.GlobalContext;
 import org.commontemplate.core.LocalContext;
+import org.commontemplate.core.OutputConverter;
 import org.commontemplate.core.OutputFilter;
 import org.commontemplate.core.OutputFormatter;
 import org.commontemplate.core.ParsingException;
@@ -40,6 +41,18 @@ import org.commontemplate.core.VariableException;
 public abstract class ContextProxy extends Context {
 
 	protected final Context context;
+
+	public OutputConverter getOutputConverter() {
+		return context.getOutputConverter();
+	}
+
+	public void removeOutputConverter() {
+		context.removeOutputConverter();
+	}
+
+	public void setOutputConverter(OutputConverter outputConverter) {
+		context.setOutputConverter(outputConverter);
+	}
 
 	public Map getProperties() {
 		return context.getProperties();
