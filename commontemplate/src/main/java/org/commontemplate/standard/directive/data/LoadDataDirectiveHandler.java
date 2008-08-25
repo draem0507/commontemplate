@@ -27,7 +27,7 @@ public class LoadDataDirectiveHandler extends DirectiveHandlerSupport {
 		this.dataProviders = dataProviders;
 	}
 
-	public void doRender(Context context, String directiveName, Object param) throws Exception {
+	protected void doRender(Context context, String directiveName, Object param) throws Exception {
 		if (param instanceof String) {
 			String path = (String)param;
 			int i = path.lastIndexOf('.');

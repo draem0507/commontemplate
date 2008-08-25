@@ -12,7 +12,7 @@ public class FilterAllDirectiveHandler extends BlockDirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	public void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
+	protected void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
 		OutputFilter outputFilter = new ValueOutputFilter((Filter)param, getValueName());
 		context.setOutputFilter(outputFilter);
 		for (int i = 0, n = innerElements.size(); i < n; i ++) {

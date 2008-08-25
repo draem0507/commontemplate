@@ -23,7 +23,7 @@ public class I18nMessageDirectiveHandler extends DirectiveHandlerSupport {
 		this.messageSource = messageSource;
 	}
 
-	public void doRender(Context context, String directiveName, Object param) throws Exception {
+	protected void doRender(Context context, String directiveName, Object param) throws Exception {
 		if (param != null) {
 			if (param instanceof List) {
 				List list = (List)param;

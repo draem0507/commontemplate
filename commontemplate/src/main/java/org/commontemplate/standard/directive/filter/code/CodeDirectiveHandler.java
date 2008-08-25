@@ -25,7 +25,7 @@ public class CodeDirectiveHandler extends BlockDirectiveHandlerSupport {
 		this.filters = filters;
 	}
 
-	public void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
+	protected void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
 		String key = (String)param;
 		if (filters.containsKey(key)) {
 			BufferedFilter bufferedFilter = new BufferedFilter();

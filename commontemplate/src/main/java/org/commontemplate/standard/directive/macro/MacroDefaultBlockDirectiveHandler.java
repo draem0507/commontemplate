@@ -17,7 +17,7 @@ public class MacroDefaultBlockDirectiveHandler extends BlockDirectiveHandlerSupp
 		this.defaultBlockDirectiveSuffix = defaultBlockDirectiveSuffix;
 	}
 
-	public void doRender(Context context, String name,
+	protected void doRender(Context context, String name,
 			Object param, List innerElements) throws Exception {
 		Assert.assertNotNull(name);
 		if (defaultBlockDirectiveSuffix != null && name.endsWith(defaultBlockDirectiveSuffix))

@@ -101,7 +101,18 @@ $!
 								参考实现：<br/>
 								org.commontemplate.standard.coat.CommentSyntaxCoatFilter<br/>
 								<br/>
-								<b>8. 语法扩展</b><br/>
+								<b>8. 模板元素拦截器扩展</b><br/>
+								拦截render()过程.<br/>
+								相关接口：<br/>
+								org.commontemplate.config.ElementInterceptor<br/>
+								注册方法：<br/>
+								addElementInterceptor(ElementInterceptor)<br/>
+								配置方法：<br/>
+								elementInterceptors[200]=com.xxx.XxxInterceptor<br/>
+								参考实现：<br/>
+								org.commontemplate.standard.debug.DebugInterceptor<br/>
+								<br/>
+								<b>9. 语法扩展</b><br/>
 								相关类：<br/>
 								org.commontemplate.config.Syntax (指令语法及特殊指令设置)<br/>
 								org.commontemplate.config.Keywords (表达式关键字设置)<br/>
@@ -126,15 +137,16 @@ $!
 								Syntax.DEFAULT<br/>
 								Keywords.DEFAULT<br/>
 								<br/>
-								<b>9. 指令扩展</b><br/>
-								相关接口：<br/>
-								org.commontemplate.config.LineDirectiveHandler<br/>
-								org.commontemplate.config.StartDirectiveHandler<br/>
+								<b>10. 指令扩展</b><br/>
+								相关接口和基类：<br/>
+								org.commontemplate.config.DirectiveHandler<br/>
+								org.commontemplate.config.BlockDirectiveHandler<br/>
 								org.commontemplate.config.MiddleDirectiveHandler<br/>
+								org.commontemplate.standard.directive.DirectiveHandlerSupport<br/>
+								org.commontemplate.standard.directive.BlockDirectiveHandlerSupport<br/>
+								org.commontemplate.standard.directive.MiddleDirectiveHandlerSupport<br/>
 								注册方法：<br/>
-								addDirectiveHandler(String name, LineDirectiveHandler)<br/>
-								addDirectiveHandler(String name, StartDirectiveHandler)<br/>
-								<font color="green">(注：方法名重载，用于表明Line, Start, Middle等指令注册在同一个集合中，相互之间名称不能重复)</font><br/>
+								addDirectiveHandler(String name, DirectiveHandler)<br/>
 								配置方法：<br/>
 								directive{xxx}=com.xxx.XXXDirective<br/>
 								参考实现：<br/>
@@ -144,11 +156,20 @@ $!
 								(1) 若DirectiveHandler实现类中没有任何属性，则该实现类一定是线程安全的。<br/>
 								(2) 若DirectiveHandler实现类中所有属性都是final的(或只在构造函数中赋值)，则该实现类也是线程安全的。<br/>
 								(3) 正确同步所有属性修改。<br/>
+								表达式状态：<br/>
+								(a) 表达式名称化：<br/>
+								如果处理类的isExpressionNamed()方法返回true，表示当表达式为变量名时，作为名称串处理，<br/>
+								如：$macro{button}等价于$macro{"button"}<br/>
+								如果特殊情况需要使用变量，可使用反斜线处理：$macro{\name}<br/>
+								(b) 表达式必需：<br/>
+								如果继承自Support的处理类的isExpressionRequired()方法返回true，表示当指令必需有表达式，否则报错。<br/>
 								<br/>
-								<b>10. 操作符扩展</b><br/>
-								相关接口：<br/>
+								<b>11. 操作符扩展</b><br/>
+								相关接口和基类：<br/>
 								org.commontemplate.config.BinaryOperatorHandler<br/>
 								org.commontemplate.config.UnaryOperatorHandler<br/>
+								org.commontemplate.standard.operator.BinaryOperatorHandlerSupport<br/>
+								org.commontemplate.standard.operator.UnaryOperatorHandlerSupport<br/>
 								注册方法：<br/>
 								addBinaryOperatorHandler(String name, BinaryOperatorHandler)<br/>
 								addUnaryOperatorHandler(String name, UnaryOperatorHandler)<br/>
@@ -181,7 +202,7 @@ $!
 								如：已注册了“abs”一元操作符，则必需用abs(operand)， 而不能用abs operand，否则在复杂表达式中与变量引起歧义，<br/>
 								对比：符号一元操作符“!”，可以用“! operand”，也可以用“!(operand)”<br/>
 								<br/>
-								<b>11. 属性扩展</b><br/>
+								<b>12. 属性扩展</b><br/>
 								用于为"."点号操作符提供数据<br/>
 								属性调用方式如: ${bean.property}<br/>
 								静态属性调用方式如: ${.now}<br/>
@@ -197,7 +218,7 @@ $!
 								参考实现：<br/>
 								org.commontemplate.standard.property包及其子包相关类<br/>
 								<br/>
-								<b>12. 方法扩展</b><br/>
+								<b>13. 方法扩展</b><br/>
 								用于为"."点号操作符提供数据，并且只有在配置functionAvailable=true时才有效<br/>
 								方法调用方式如: ${obj.func(arg1,arg2)}<br/>
 								静态方法调用方式如: ${.func(arg1,arg2)}<br/>
@@ -213,7 +234,7 @@ $!
 								参考实现：<br/>
 								org.commontemplate.standard.function包及其子包相关类<br/>
 								<br/>
-								<b>13. 序列扩展</b><br/>
+								<b>14. 序列扩展</b><br/>
 								用于为".."双点号操作符提供数据<br/>
 								相关接口：<br/>
 								org.commontemplate.standard.operator.sequence.StringSequenceOperatorHandler<br/>
@@ -226,7 +247,7 @@ $!
 								参考实现：<br/>
 								org.commontemplate.standard.operator.sequence包下相关类<br/>
 								<br/>
-								<b>14. 国际化扩展</b><br/>
+								<b>15. 国际化扩展</b><br/>
 								用于为$msg或$message指令提供国际化信息内容<br/>
 								相关接口：<br/>
 								org.commontemplate.standard.i18n.ResourceBundleProvider<br/>
@@ -239,7 +260,7 @@ $!
 								参考实现：<br/>
 								org.commontemplate.standard.i18n.PropertiesResourceBundleProvider<br/>
 								<br/>
-								<b>15. 日志扩展</b><br/>
+								<b>16. 日志扩展</b><br/>
 								用于$log指令的输出.<br/>
 								相关接口：<br/>
 								org.commontemplate.standard.log.Logger<br/>
@@ -252,7 +273,7 @@ $!
 								org.commontemplate.standard.log.Logger.DEFAULT<br/>
 								org.commontemplate.standard.log包下相关类<br/>
 								<br/>
-								<b>16. 迭代数据集合转换器扩展</b><br/>
+								<b>17. 迭代数据集合转换器扩展</b><br/>
 								用于为"$for"指令提供迭代数据<br/>
 								相关接口和基类：<br/>
 								org.commontemplate.standard.converter.CollectionConverter<br/>
@@ -261,7 +282,7 @@ $!
 								参考实现：<br/>
 								org.commontemplate.standard.converter包下相关类<br/>
 								<br/>
-								<b>17. 数据加载类型扩展</b><br/>
+								<b>18. 数据加载类型扩展</b><br/>
 								用于为"$data"指令提供数据<br/>
 								相关接口和基类：<br/>
 								org.commontemplate.standard.data.DataProvider<br/>
@@ -272,7 +293,7 @@ $!
 								参考实现：<br/>
 								org.commontemplate.standard.data包下相关类<br/>
 								<br/>
-								<b>18. 代码着色扩展</b><br/>
+								<b>19. 代码着色扩展</b><br/>
 								用于为"$code"指令提供过滤器<br/>
 								相关接口和基类：<br/>
 								org.commontemplate.core.OutputFilter<br/>

@@ -14,7 +14,7 @@ public class StripSpaceDirectiveHandler extends BlockDirectiveHandlerSupport {
 
 	private static final OutputFilter spaceFilter = new StripSpaceFilter();
 
-	public void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
+	protected void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
 		BufferedFilter bufferedFilter = new BufferedFilter();
 		context.setOutputFilter(bufferedFilter);
 		DirectiveUtils.renderAll(innerElements, context);

@@ -27,7 +27,7 @@ public class SnatchDirectiveHandler extends DirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	public void doRender(Context context, String directiveName, Object param)
+	protected void doRender(Context context, String directiveName, Object param)
 			throws Exception {
 		String urlString;
 		String encode;

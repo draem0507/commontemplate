@@ -11,7 +11,7 @@ public class ShowBlockDirectiveHandler extends DirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	public void doRender(Context context, String directiveName, Object param) throws Exception {
+	protected void doRender(Context context, String directiveName, Object param) throws Exception {
 		Assert.assertNotNull(param, "ShowBlockDirectiveHandler.parameter.required");
 		Assert.assertTrue(param instanceof String, "ShowBlockDirectiveHandler.parameter.type.error");
 		String blockName = (String)param;

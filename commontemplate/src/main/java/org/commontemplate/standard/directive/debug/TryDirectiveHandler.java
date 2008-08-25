@@ -14,7 +14,7 @@ public class TryDirectiveHandler extends BlockDirectiveHandlerSupport {
 	// 条件状态位，用于传递整个If链是否已经为true
 	public static final String TRY_STATUS = "try.status";
 
-	public void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
+	protected void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
 		LocalContext superLocalContext = context.getParentLocalContext();
 		try {
 			DirectiveUtils.renderAll(innerElements, context);

@@ -13,6 +13,7 @@ import org.commontemplate.config.Cache;
 import org.commontemplate.config.ConfigurationException;
 import org.commontemplate.config.DirectiveHandler;
 import org.commontemplate.config.DirectiveHandlerProvider;
+import org.commontemplate.config.ElementInterceptor;
 import org.commontemplate.config.Keywords;
 import org.commontemplate.config.OperatorHandlerProvider;
 import org.commontemplate.config.ReloadController;
@@ -820,6 +821,15 @@ public class StandardConfiguration extends ConfigurationSettings {
 		chain.setEventListeners(getEventListeners());
 		chain.setAsynchronousEventListeners(getAsynchronousEventListeners());
 		return chain;
+	}
+
+	public void addElementInterceptor(ElementInterceptor elementInterceptor) {
+		List elementInterceptors = super.getElementInterceptors();
+		if (elementInterceptors == null) {
+			elementInterceptors = new ArrayList();
+			super.setElementInterceptors(elementInterceptors);
+		}
+		elementInterceptors.add(elementInterceptor);
 	}
 
 	// 子类可以重写此函数进行相应配置有效性检查，如果不需要检查则忽略

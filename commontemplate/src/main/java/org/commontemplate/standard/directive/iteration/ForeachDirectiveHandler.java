@@ -66,7 +66,7 @@ public class ForeachDirectiveHandler extends BlockDirectiveHandlerSupport {
 		return true;
 	}
 
-	public void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
+	protected void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
 		boolean isSuccess = doForeach(context, param, innerElements);
 		// 条件状态位，用于传递整个For链是否已经为迭代过
 		context.getParentLocalContext().setStatus(IfDirectiveHandler.IF_STATUS, Boolean.valueOf(isSuccess));

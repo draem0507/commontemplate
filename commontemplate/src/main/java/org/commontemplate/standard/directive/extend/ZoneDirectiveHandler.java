@@ -17,7 +17,7 @@ public class ZoneDirectiveHandler extends BlockDirectiveHandlerSupport {
 
 	public static final String ZONE_TYPE = "zone";
 
-	public void doRender(Context context, String directiveName,
+	protected void doRender(Context context, String directiveName,
 			Object param, List innerElements)
 			throws Exception {
 		Boolean isInner = (Boolean)context.getProperty(ExtendDirectiveHandler.EXTEND_INNER_PROPERTY);
