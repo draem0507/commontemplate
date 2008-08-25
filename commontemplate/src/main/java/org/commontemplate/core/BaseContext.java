@@ -8,7 +8,7 @@ import java.util.Map;
  * @author liangfei0201@163.com
  *
  */
-public abstract class BaseContext implements Storage {
+public abstract class BaseContext implements VariableStorage, StatusStorage, PropertyStorage {
 
 	/**
 	 * 清空上下文, 此动作将清空该上下文持有的所有数据.
