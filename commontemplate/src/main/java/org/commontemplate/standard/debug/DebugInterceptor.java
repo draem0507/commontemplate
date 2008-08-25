@@ -5,8 +5,8 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 
-import org.commontemplate.config.RenderingInterceptor;
-import org.commontemplate.config.Rendition;
+import org.commontemplate.config.ElementInterceptor;
+import org.commontemplate.config.ElementRendition;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.Element;
 import org.commontemplate.core.Template;
@@ -18,7 +18,7 @@ import org.commontemplate.util.Location;
  * @author linagfei0201@163.com
  *
  */
-public class DebugInterceptor implements RenderingInterceptor, Serializable {
+public class DebugInterceptor implements ElementInterceptor, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -32,7 +32,7 @@ public class DebugInterceptor implements RenderingInterceptor, Serializable {
 		DebugManager.getInstance().addDebugListener(debugListener);
 	}
 
-	public void intercept(Rendition rendition) {
+	public void intercept(ElementRendition rendition) {
 		// 获取调试器
 		final DebugManager debugManager = DebugManager.getInstance();
 		// 获取当前上下文

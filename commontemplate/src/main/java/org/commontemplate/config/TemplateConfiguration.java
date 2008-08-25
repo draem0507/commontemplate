@@ -36,9 +36,10 @@ public abstract class TemplateConfiguration extends ExpressionConfiguration {
 	/**
 	 * 获取板渲染拦截器
 	 *
-	 * @return 模板渲染拦截器, 类型: List&lt;RenderingInterceptor&gt;
+	 * @see org.commontemplate.config.ElementInterceptor
+	 * @return 模板渲染拦截器, 类型: List&lt;ElementInterceptor&gt;
 	 */
-	public abstract List getRenderingInterceptors();
+	public abstract List getElementInterceptors();
 
 	/**
 	 * 获取模板过滤器

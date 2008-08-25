@@ -33,7 +33,7 @@ public class DirectiveReducerTester extends TestCase {
 		ExpressionEngine expressionParser = new ExpressionEngine(config);
 		directiveFactory = new DirectiveProvider(config.getSyntax(),
 				config.getDirectiveHandlerProvider(), expressionParser,
-				config.getTextFilter(), config.getRenderingInterceptors());
+				config.getTextFilter(), config.getElementInterceptors());
 
 		directiveTranslator = new DirectiveTranslator(directiveFactory);
 
