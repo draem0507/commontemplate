@@ -1,5 +1,7 @@
 package org.commontemplate.standard.operator.collection;
 
+import java.lang.reflect.Array;
+
 import org.commontemplate.standard.operator.UnaryOperatorHandlerSupport;
 
 /**
@@ -14,20 +16,20 @@ public class ArrayReverseOperatorHandler extends UnaryOperatorHandlerSupport {
 	private static final long serialVersionUID = 1L;
 
 	public ArrayReverseOperatorHandler() {
-		super(Object[].class);
+		super(new Class[]{boolean[].class, char[].class, byte[].class,
+				short[].class, int[].class, long[].class,
+				float[].class, double[].class, Object[].class});
 	}
 
 	public Object doEvaluate(Object operand) throws Exception {
-		Object[] ar = (Object[])operand;
-		int n = ar.length;
-		if (n <= 1) {
-			return ar;
-		}
-		Object[] re = new Object[n];
-		for (int i = 0; i < n; i ++) {
-			re[i] = ar[n - 1 - i];
-		}
-		return re;
+		Object array = operand;
+		int len = Array.getLength(array);
+		if (len <= 1)
+			return array;
+		Object dest = Array.newInstance(array.getClass().getComponentType(), len);
+		for (int i = 0; i < len; i ++)
+			Array.set(dest, i, Array.get(array, len - 1 - i));
+		return dest;
 	}
 
 }

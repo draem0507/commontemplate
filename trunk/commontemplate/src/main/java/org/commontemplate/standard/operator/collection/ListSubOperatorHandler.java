@@ -25,7 +25,7 @@ public class ListSubOperatorHandler extends IndexedBinaryOperatorHandlerSupport 
 		List sub = new ArrayList();
 		if (rightOperand instanceof IntegerSequence) {
 			IntegerSequence indexs = (IntegerSequence) rightOperand;
-			if (indexs.isAscending()) { // 升序序列
+			if (indexs.isAsc()) { // 升序序列
 				for (int i = indexs.getMin(); i < list.size()
 						&& i <= indexs.getMax(); i++) {
 					if (i >= 0)

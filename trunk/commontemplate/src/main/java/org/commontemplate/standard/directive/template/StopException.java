@@ -1,4 +1,4 @@
-package org.commontemplate.standard.directive.debug;
+package org.commontemplate.standard.directive.template;
 
 import org.commontemplate.core.IgnoreException;
 

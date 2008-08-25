@@ -60,6 +60,16 @@
 						<tr>
 							<td rowspan="2" height="60"><a href="http://www.commontemplate.org"><img src="../images/banner.gif" alt="Common Template Engine" border="0" width="400" height="50" /></a></td>
 							<td height="40" valign="top" align="right">
+								<!--$if{release}-->
+								$msg{"frame.release"}
+								|
+								<a href="../build/${locale.language}/index.html">$msg{"frame.build"}</a>
+								<!--$else-->
+								<a href="../../${locale.language}/index.html">$msg{"frame.release"}</a>
+								|
+								$msg{"frame.build"}
+								<!--$end-->
+								&gt;&gt;&nbsp;
 								<!--$if{locale.language == 'en'}-->
 								English
 								<!--$else-->
@@ -71,17 +81,6 @@
 								<!--$else-->
 								<a href="../zh/${pageUrl}">&#20013;&#25991;</a>
 								<!--$end-->
-								&gt;&gt;&nbsp;
-								<!--$if{release}-->
-								$msg{"frame.release"}
-								|
-								<a href="../build/${locale.language}/index.html">$msg{"frame.build"}</a>
-								<!--$else-->
-								<a href="../../${locale.language}/index.html">$msg{"frame.release"}</a>
-								|
-								$msg{"frame.build"}
-								<!--$end-->
-								&nbsp;&nbsp;
 							</td>
 						</tr>
 						<tr>

@@ -108,4 +108,9 @@ public class SnatchDirectiveHandler extends DirectiveHandlerSupport {
 					+ (context == null ? 0 : context.length()));
 		return "";
 	}
+
+	protected boolean isExpressionRequired() {
+		return true;
+	}
+
 }

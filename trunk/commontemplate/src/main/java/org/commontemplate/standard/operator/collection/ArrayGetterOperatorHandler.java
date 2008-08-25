@@ -1,5 +1,7 @@
 package org.commontemplate.standard.operator.collection;
 
+import java.lang.reflect.Array;
+
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 
 /**
@@ -14,17 +16,21 @@ public class ArrayGetterOperatorHandler extends BinaryOperatorHandlerSupport {
 	private static final long serialVersionUID = 1L;
 
 	public ArrayGetterOperatorHandler() {
-		super(Object[].class, Integer.class);
+		super(new Class[]{boolean[].class, char[].class, byte[].class,
+				short[].class, int[].class, long[].class,
+				float[].class, double[].class, Object[].class},
+				new Class[]{Integer.class});
 	}
 
 	public Object doEvaluate(Object leftOperand, Object rightOperand) throws Exception {
-		Object[] arr = (Object[])leftOperand;
-		Integer index = (Integer)rightOperand;
-		if (index.intValue() < 0) // 小于0表示倒数
-			index = new Integer(arr.length - 1 + index.intValue());
-		if (index.intValue() < 0 || index.intValue() >= arr.length) // 忽略越界
+		Object array = leftOperand;
+		int index = ((Integer)rightOperand).intValue();
+		int len = Array.getLength(array);
+		if (index < 0) // 小于0表示倒数
+			index = len - 1 + index;
+		if (index < 0 || index >= len) // 忽略越界
 			return null;
-		return arr[index.intValue()];
+		return Array.get(array, index);
 	}
 
 }

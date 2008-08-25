@@ -44,4 +44,8 @@ public class I18nMessageDirectiveHandler extends DirectiveHandlerSupport {
 		}
 	}
 
+	protected boolean isExpressionRequired() {
+		return true;
+	}
+
 }

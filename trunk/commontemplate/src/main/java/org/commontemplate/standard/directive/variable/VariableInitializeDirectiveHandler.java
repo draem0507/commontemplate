@@ -24,4 +24,8 @@ public class VariableInitializeDirectiveHandler extends DirectiveHandlerSupport 
 		}
 	}
 
+	protected boolean isExpressionRequired() {
+		return true;
+	}
+
 }

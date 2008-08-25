@@ -16,4 +16,8 @@ public class RootAssignDirectiveHandler extends DirectiveHandlerSupport {
 		context.getRootLocalContext().putVariable(var, value);
 	}
 
+	protected boolean isExpressionRequired() {
+		return true;
+	}
+
 }

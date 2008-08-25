@@ -48,4 +48,8 @@ public class I18nMessageStartDirectiveHandler extends BlockDirectiveHandlerSuppo
 		return bufferedFilter.getBuffered();
 	}
 
+	protected boolean isExpressionRequired() {
+		return true;
+	}
+
 }

@@ -17,6 +17,10 @@ public abstract class IndexedBinaryOperatorHandlerSupport extends BinaryOperator
 		super(leftOperandClass, List.class);
 	}
 
+	public IndexedBinaryOperatorHandlerSupport(Class[] leftOperandClass) {
+		super(leftOperandClass, new Class[]{List.class});
+	}
+
 	public boolean isMatch(Object leftOperand, Object rightOperand) {
 		boolean m = super.isMatch(leftOperand, rightOperand);
 		if (! m)

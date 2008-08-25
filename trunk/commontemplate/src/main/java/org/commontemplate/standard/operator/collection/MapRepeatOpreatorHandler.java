@@ -10,12 +10,19 @@ public class MapRepeatOpreatorHandler extends BinaryOperatorHandlerSupport {
 	private static final long serialVersionUID = 1L;
 
 	public MapRepeatOpreatorHandler() {
-		super(Map.class, Integer.class);
+		super(Map.class, Integer.class, false, false, true); // 左右参数可交换
 	}
 
 	public Object doEvaluate(Object leftOperand, Object rightOperand) throws Exception {
-		Map src = (Map)leftOperand;
-		int repeat = ((Integer)rightOperand).intValue();
+		Map src;
+		int repeat;
+		if (leftOperand instanceof Map) {
+			src = (Map)leftOperand;
+			repeat = ((Integer)rightOperand).intValue();
+		} else {
+			src = (Map)rightOperand;
+			repeat = ((Integer)leftOperand).intValue();
+		}
 		Map dest = null; // 新建Collection对象, 以保证不改变原有数据模型
 		try {
 			dest = (Map) src.getClass().newInstance();

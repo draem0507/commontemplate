@@ -14,15 +14,22 @@ public class StringRepeatOperatorHandler extends BinaryOperatorHandlerSupport {
 	private static final long serialVersionUID = 1L;
 
 	public StringRepeatOperatorHandler() {
-		super(String.class, Integer.class);
+		super(String.class, Integer.class, false, false, true); // 左右参数可交换
 	}
 
 	public Object doEvaluate(Object leftOperand, Object rightOperand) throws Exception {
-		String s = ((String)leftOperand);
-		int n = ((Integer)rightOperand).intValue();
+		String src;
+		int repeat;
+		if (leftOperand instanceof String) {
+			src = (String)leftOperand;
+			repeat = ((Integer)rightOperand).intValue();
+		} else {
+			src = (String)rightOperand;
+			repeat = ((Integer)leftOperand).intValue();
+		}
 		StringBuffer buf = new StringBuffer();
-		for (int i = 0; i < n; i ++)
-			buf.append(s);
+		for (int i = 0; i < repeat; i ++)
+			buf.append(src);
 		return buf.toString();
 	}
 

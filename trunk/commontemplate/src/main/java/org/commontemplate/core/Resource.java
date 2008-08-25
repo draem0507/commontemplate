@@ -73,8 +73,7 @@ public abstract class Resource {
 	 * 获取原始内容
 	 *
 	 * @return 原始内容
-	 * @throws IOException TODO
-	 * @throws IOException
+	 * @throws IOException 读取内容出错时抛出
 	 */
 	public String getSource() throws IOException {
 		return IOUtils.readToString(getReader());

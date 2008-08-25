@@ -39,4 +39,8 @@ public class KeywordDirectiveHandler extends BlockDirectiveHandlerSupport {
 		context.removeOutputFilter();
 	}
 
+	protected boolean isExpressionRequired() {
+		return true;
+	}
+
 }

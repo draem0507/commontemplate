@@ -56,4 +56,9 @@ public class DisplayFileDirectiveHandler extends DirectiveHandlerSupport {
 			}
 		}
 	}
+
+	protected boolean isExpressionRequired() {
+		return true;
+	}
+
 }

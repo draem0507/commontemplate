@@ -57,4 +57,8 @@ public class EmbedTemplateDirectiveHandler extends DirectiveHandlerSupport {
 		}
 	}
 
+	protected boolean isExpressionRequired() {
+		return true;
+	}
+
 }

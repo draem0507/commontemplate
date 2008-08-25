@@ -3,23 +3,28 @@ package org.commontemplate.standard.directive.filter;
 import java.util.List;
 
 import org.commontemplate.core.Context;
+import org.commontemplate.core.Element;
+import org.commontemplate.core.OutputFilter;
+import org.commontemplate.core.Text;
 import org.commontemplate.standard.directive.BlockDirectiveHandlerSupport;
-import org.commontemplate.standard.directive.DirectiveUtils;
-import org.commontemplate.standard.filter.BufferedFilter;
 import org.commontemplate.standard.operator.collection.Filter;
 
-public class FilterDirectiveHandler extends BlockDirectiveHandlerSupport {
+public class ConvertDirectiveHandler extends BlockDirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
 	public void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
-		BufferedFilter bufferedFilter = new BufferedFilter();
-		context.setOutputFilter(bufferedFilter);
-		DirectiveUtils.renderAll(innerElements, context);
-		context.removeOutputFilter();
-		String text = bufferedFilter.getBuffered();
-		String content = new ValueOutputFilter((Filter)param, getValueName()).filter(text);
-		context.output(content);
+		OutputFilter outputFilter = new ValueOutputFilter((Filter)param, getValueName());
+		for (int i = 0, n = innerElements.size(); i < n; i ++) {
+			Element directive = (Element)innerElements.get(i);
+			if (directive instanceof Text) {
+				directive.render(context);
+			} else {
+				context.setOutputFilter(outputFilter);
+				directive.render(context);
+				context.removeOutputFilter();
+			}
+		}
 	}
 
 	private String valueName;

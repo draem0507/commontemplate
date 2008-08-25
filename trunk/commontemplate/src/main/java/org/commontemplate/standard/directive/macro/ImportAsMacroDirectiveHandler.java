@@ -68,4 +68,8 @@ public class ImportAsMacroDirectiveHandler extends DirectiveHandlerSupport {
 		}
 	}
 
+	protected boolean isExpressionRequired() {
+		return true;
+	}
+
 }

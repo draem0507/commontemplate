@@ -26,7 +26,7 @@ public class CharSequenceSubOperatorHandler extends IndexedBinaryOperatorHandler
 		StringBuffer sub = new StringBuffer();
 		if (rightOperand instanceof IntegerSequence) {
 			IntegerSequence indexs = (IntegerSequence) rightOperand;
-			if (indexs.isAscending()) { // 升序序列
+			if (indexs.isAsc()) { // 升序序列
 				for (int i = indexs.getMin(); i < list.length()
 						&& i <= indexs.getMax(); i++) {
 					if (i >= 0)

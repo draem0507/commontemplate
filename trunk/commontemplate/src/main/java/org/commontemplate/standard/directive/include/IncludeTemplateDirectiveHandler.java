@@ -78,4 +78,8 @@ public class IncludeTemplateDirectiveHandler extends DirectiveHandlerSupport {
 		}
 	}
 
+	protected boolean isExpressionRequired() {
+		return true;
+	}
+
 }

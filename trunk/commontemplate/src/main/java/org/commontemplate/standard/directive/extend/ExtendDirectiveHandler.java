@@ -9,7 +9,7 @@ import org.commontemplate.core.Context;
 
 /**
  * 模板继承指令
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
@@ -23,8 +23,12 @@ public class ExtendDirectiveHandler extends BlockDirectiveHandlerSupport {
 		context.setOutputFilter(IgnoreOutputFilter.getInstance());
 		DirectiveUtils.renderAll(innerElements, context);
 		context.removeOutputFilter();
-		
+
 		context.getTemplate((String)param).render(context);
+	}
+
+	protected boolean isExpressionRequired() {
+		return true;
 	}
 
 }
