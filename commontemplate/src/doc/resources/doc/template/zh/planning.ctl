@@ -32,20 +32,6 @@ $!
 											<td>高</td>
 										</tr>
 										<tr>
-											<td>调试窗口不能同时打开多个模板.</td>
-											<td>优化</td>
-											<td>中</td>
-											<td>中</td>
-											<td>高</td>
-										</tr>
-										<tr>
-											<td>查看器可设置Classpath,引入其它第三方包.</td>
-											<td>优化</td>
-											<td>中</td>
-											<td>中</td>
-											<td>高</td>
-										</tr>
-										<tr>
 											<td>配置文件容错处理, 可设置当类不存在时忽略.</td>
 											<td>优化</td>
 											<td>中</td>
@@ -54,20 +40,6 @@ $!
 										</tr>
 										<tr>
 											<td>CTE脱离MVC框架运行. codebehind.</td>
-											<td>优化</td>
-											<td>中</td>
-											<td>中</td>
-											<td>高</td>
-										</tr>
-										<tr>
-											<td>ResumeAll状态应存放在ThreadLocal内, 保证当前线程执行不被挂起.</td>
-											<td>BUG</td>
-											<td>中</td>
-											<td>中</td>
-											<td>高</td>
-										</tr>
-										<tr>
-											<td>扩展点的文档整理.</td>
 											<td>优化</td>
 											<td>中</td>
 											<td>中</td>
@@ -83,27 +55,6 @@ $!
 										<tr>
 											<td>加入对DOM模型的支持,root,parent,children,ancestors,name,type,namespace.</td>
 											<td>需求</td>
-											<td>中</td>
-											<td>中</td>
-											<td>高</td>
-										</tr>
-										<tr>
-											<td>$for指令可迭代对象, 另入反射iterator()和enumerator()函数.</td>
-											<td>优化</td>
-											<td>中</td>
-											<td>中</td>
-											<td>高</td>
-										</tr>
-										<tr>
-											<td>$for对象转集合接口, 可按类型配置, 如: 将NodeList转成集合.</td>
-											<td>优化</td>
-											<td>中</td>
-											<td>中</td>
-											<td>高</td>
-										</tr>
-										<tr>
-											<td>Block, Node 两个接口待重构.</td>
-											<td>优化</td>
 											<td>中</td>
 											<td>中</td>
 											<td>高</td>
@@ -132,20 +83,6 @@ $!
 										<tr>
 											<td>扩展属性也应能处理get和is前缀.</td>
 											<td>BUG</td>
-											<td>中</td>
-											<td>中</td>
-											<td>高</td>
-										</tr>
-										<tr>
-											<td>$setting指令, 用于设置Locale,TimeZone等.</td>
-											<td>需求</td>
-											<td>中</td>
-											<td>中</td>
-											<td>高</td>
-										</tr>
-										<tr>
-											<td>扩展属性list.sort.</td>
-											<td>需求</td>
 											<td>中</td>
 											<td>中</td>
 											<td>高</td>
@@ -200,13 +137,6 @@ $!
 											<td>高</td>
 										</tr>
 										<tr>
-											<td>Web应用配置默认继承于标准web配置.</td>
-											<td>优化</td>
-											<td>中</td>
-											<td>中</td>
-											<td>高</td>
-										</tr>
-										<tr>
 											<td>属性外套实现有BUG, 空指针检测不全.</td>
 											<td>BUG</td>
 											<td>中</td>
@@ -229,13 +159,6 @@ $!
 										</tr>
 										<tr>
 											<td>清理不明确的操作符,并讨论操作符是否合理.</td>
-											<td>优化</td>
-											<td>中</td>
-											<td>中</td>
-											<td>高</td>
-										</tr>
-										<tr>
-											<td>BreakVisitException不应抛给调用者.</td>
 											<td>优化</td>
 											<td>中</td>
 											<td>中</td>
@@ -414,13 +337,6 @@ $!
 											<td>中</td>
 										</tr>
 										<tr>
-											<td>扩展指南页面内容未同步更新</td>
-											<td>文档</td>
-											<td>中</td>
-											<td>低</td>
-											<td>中</td>
-										</tr>
-										<tr>
 											<td>ExpressionConfigurationSettings是否应与ConfigurationSettings合并?</td>
 											<td>疑问</td>
 											<td>小</td>
@@ -430,13 +346,6 @@ $!
 										<tr>
 											<td>StandardConfiguration重构, 加入: static StandardConfiguration
 											loadStandardConfiguration()</td>
-											<td>优化</td>
-											<td>小</td>
-											<td>低</td>
-											<td>低</td>
-										</tr>
-										<tr>
-											<td>可配置禁止调用某些有返回值函数，如：remove*, delete*</td>
 											<td>优化</td>
 											<td>小</td>
 											<td>低</td>
@@ -466,13 +375,6 @@ $!
 											<td>中</td>
 										</tr>
 										<tr>
-											<td>拆分util包到子包, 如: standard.util, 尽可能缩小根目录的util包?</td>
-											<td>疑问</td>
-											<td>小</td>
-											<td>低</td>
-											<td>中</td>
-										</tr>
-										<tr>
 											<td>"用多线程(多核CPU)模拟并发获取模板, 测试并发."</td>
 											<td>测试</td>
 											<td>中</td>
@@ -487,13 +389,6 @@ $!
 											<td>中</td>
 										</tr>
 										<tr>
-											<td>"通过函数扩展或属性扩展实现:四舍五入round, 绝对值abs, 最大值max, 最小值min, 平均值avg 等等"</td>
-											<td>需求</td>
-											<td>小</td>
-											<td>低</td>
-											<td>低</td>
-										</tr>
-										<tr>
 											<td>是否应支持switch case, while等?</td>
 											<td>疑问</td>
 											<td>小</td>
@@ -502,13 +397,6 @@ $!
 										</tr>
 										<tr>
 											<td>是否应支持变量别名引用alias?</td>
-											<td>疑问</td>
-											<td>小</td>
-											<td>低</td>
-											<td>低</td>
-										</tr>
-										<tr>
-											<td>已有字符串重复操作符, 如：str * 2 变成两str，是否扩展到list * 2, map * 2等?</td>
 											<td>疑问</td>
 											<td>小</td>
 											<td>低</td>
