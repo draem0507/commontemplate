@@ -21,7 +21,7 @@ import org.commontemplate.core.Template;
 import org.commontemplate.engine.Engine;
 import org.commontemplate.tools.PropertiesConfigurationLoader;
 import org.commontemplate.tools.bean.BeanFactory;
-import org.commontemplate.tools.bean.ComboResourceLoader;
+import org.commontemplate.tools.bean.ServletClassResourceLoader;
 import org.commontemplate.tools.bean.PropertiesBeanFactory;
 import org.commontemplate.util.Assert;
 import org.commontemplate.util.I18nMessages;
@@ -104,7 +104,7 @@ public final class EngineHolder {
 	public static final void init(ServletContext servletContext, String propertiesPath) {
 		Assert.assertNotNull(servletContext, "EngineHolder.servlet.context.required");
 		Assert.assertNotNull(propertiesPath, "EngineHolder.properties.path.required");
-		doInit(servletContext, new PropertiesBeanFactory(propertiesPath.trim(), STANDARD_CONFIG_PATH, new ComboResourceLoader(servletContext), getVariables(servletContext)));
+		doInit(servletContext, new PropertiesBeanFactory(propertiesPath.trim(), STANDARD_CONFIG_PATH, new ServletClassResourceLoader(servletContext), getVariables(servletContext)));
 	}
 
 	/**
@@ -117,7 +117,7 @@ public final class EngineHolder {
 	public static final void init(ServletContext servletContext, Properties properties) {
 		Assert.assertNotNull(servletContext, "EngineHolder.servlet.context.required");
 		Assert.assertNotNull(properties, "EngineHolder.properties.required");
-		doInit(servletContext, new PropertiesBeanFactory(properties, STANDARD_CONFIG_PATH, new ComboResourceLoader(servletContext), getVariables(servletContext)));
+		doInit(servletContext, new PropertiesBeanFactory(properties, STANDARD_CONFIG_PATH, new ServletClassResourceLoader(servletContext), getVariables(servletContext)));
 	}
 
 	private static final void doInit(ServletContext servletContext, BeanFactory beanFactory) {

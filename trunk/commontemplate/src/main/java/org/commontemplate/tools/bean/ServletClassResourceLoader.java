@@ -19,7 +19,7 @@ import org.commontemplate.util.Assert;
  * @author liangfei0201@163.com
  *
  */
-public class ComboResourceLoader implements ResourceLoader {
+public class ServletClassResourceLoader implements ResourceLoader {
 
 	private final ResourceLoader servletContextResourceLoader; // Servlet上下文资源加载
 
@@ -27,19 +27,19 @@ public class ComboResourceLoader implements ResourceLoader {
 
 	private final ResourceLoader engineResourceLoader; // 模板引擎资源加载，考虑到jar包可能和项目被不同的ClassLoader所加载
 
-	public ComboResourceLoader(final ServletContext servletContext) {
+	public ServletClassResourceLoader(final ServletContext servletContext) {
 		Assert.assertNotNull(servletContext, "ComboResourceLoader.servlet.context.required");
 		this.servletContextResourceLoader = new ServletContextResourceLoader(servletContext);
 		this.classLoaderResourceLoader = new ClassLoaderResourceLoader();
-		this.engineResourceLoader = new ClassLoaderResourceLoader(ComboResourceLoader.class.getClassLoader());
+		this.engineResourceLoader = new ClassLoaderResourceLoader(ServletClassResourceLoader.class.getClassLoader());
 	}
 
-	public ComboResourceLoader(final ServletContext servletContext, ClassLoader classLoader) {
+	public ServletClassResourceLoader(final ServletContext servletContext, ClassLoader classLoader) {
 		Assert.assertNotNull(servletContext, "ComboResourceLoader.servlet.context.required");
 		Assert.assertNotNull(classLoader, "ComboResourceLoader.class.loader.required");
 		this.servletContextResourceLoader = new ServletContextResourceLoader(servletContext);
 		this.classLoaderResourceLoader = new ClassLoaderResourceLoader(classLoader);
-		this.engineResourceLoader = new ClassLoaderResourceLoader(ComboResourceLoader.class.getClassLoader());
+		this.engineResourceLoader = new ClassLoaderResourceLoader(ServletClassResourceLoader.class.getClassLoader());
 	}
 
 	private ResourceLoader getResourceLoader(String name) throws IOException {

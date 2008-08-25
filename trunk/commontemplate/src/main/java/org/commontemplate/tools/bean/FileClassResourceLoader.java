@@ -23,7 +23,7 @@ public class FileClassResourceLoader implements ResourceLoader {
 		Assert.assertNotNull(classLoader, "ComboResourceLoader.class.loader.required");
 		this.fileResourceLoader = new FileResourceLoader();
 		this.classLoaderResourceLoader = new ClassLoaderResourceLoader(classLoader);
-		this.engineResourceLoader = new ClassLoaderResourceLoader(ComboResourceLoader.class.getClassLoader());
+		this.engineResourceLoader = new ClassLoaderResourceLoader(ServletClassResourceLoader.class.getClassLoader());
 	}
 
 	private ResourceLoader getResourceLoader(String name) throws IOException {
