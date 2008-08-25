@@ -222,11 +222,11 @@ $!
 								$eval{expressionString}<br/>
 								<b>(11) 过滤指令:</b><br/>
 								动态内容输出过滤指令: <br/>
-								$filter{x => x.escapeHtml} <font color="green">(注：缺省名称为value，如：$convert{=> value.escapeHtml})</font><br/>
+								$filter{x => "&lt;b&gt;" + x.escapeHtml + "&lt;/b&gt;"} <font color="green">(注：缺省名称为value，如：$filter{=> value.escapeHtml})</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end <br/>
-								全部输出过滤指令: <font color="green">(注：包括静态文本块)</font><br/>
-								$filterall{x => "&lt;b&gt;" + x.escapeHtml + "&lt;/b&gt;"} <font color="green">(注：缺省名称为value，如：$filter{=> value.escapeHtml})</font><br/>
+								全部内容输出过滤指令: <font color="green">(注：包括静态文本块)</font><br/>
+								$filterall{x => x.escapeHtml} <font color="green">(注：缺省名称为value，如：$filterall{=> value.escapeHtml})</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end <br/>
 								输出缓冲指令: <font color="green">(注：将内部块输出缓冲为单一字符串输出)</font><br/>
@@ -234,7 +234,7 @@ $!
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end <br/>
 								缓冲并过滤 <font color="green">(注：过滤方式同$filter指令，将内部块输出缓冲为单一字符串后再过滤输出)</font><br/>
-								$buffer{x => "&lt;b&gt;" + x.escapeHtml + "&lt;/b&gt;"}<br/>
+								$buffer{x => x.escapeHtml}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end <br/>
 								捕获输出指令: <font color="green">(注：捕获指令内部块输出内容到指定变量)</font><br/>
