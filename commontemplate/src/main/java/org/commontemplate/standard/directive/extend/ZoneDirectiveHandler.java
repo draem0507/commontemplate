@@ -32,6 +32,10 @@ public class ZoneDirectiveHandler extends BlockDirectiveHandlerSupport {
 		}
 	}
 
+	protected boolean isExpressionRequired() {
+		return true;
+	}
+
 	public boolean isExpressionNamed() {
 		return true;
 	}

@@ -64,4 +64,8 @@ public class UsingAsMacroDirectiveHandler extends DirectiveHandlerSupport {
 		context.putProperty(MacroDirectiveHandler.MACRO_TYPE, macroName, new Macro(elements, macroName));
 	}
 
+	protected boolean isExpressionRequired() {
+		return true;
+	}
+
 }

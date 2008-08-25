@@ -21,7 +21,7 @@ $!
 								(11) ct_springmvc-x.x.war 与<a href="http://www.springframework.org/" target="_blank">SpringMVC</a>框架集成示例应用<br/>
 								<font color="green">(注：8，9，10，11所示war包，放在服务器(如：tomcat)的webapps目录下即可访问(如：http://localhost:8080/war包名)，相关Java源代码放在war包内的/WEB-INF/src目录下。)</font><br/>
 								<br/>
-								<b>二、每日构建</b> (当前版本0.8.6-dev) <a href="../build/zh/index.html">每日构建站点内容...</a><br/>
+								<b>二、每日构建</b> (当前版本0.8.6-dev) <a href="../build/zh/index.html">每日构建站点...</a><br/>
 								<table border="0" cellpadding="2" cellspacing="0">
 									<tr>
 										<td height="31"><a target="_blank" href="http://commontemplate.googlecode.com/svn/trunk/build" target="_blank"><img src="../images/google_code.gif" border="0" width="88" height="31" /></a></td>

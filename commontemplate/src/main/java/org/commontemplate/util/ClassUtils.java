@@ -52,37 +52,37 @@ public class ClassUtils {
 	public static Class forName(String className) throws ClassNotFoundException {
 		Assert.assertNotNull(className, "ClassUtils.class.name.required");
 		if ("boolean".equals(className))
-			return Boolean.TYPE;
+			return boolean.class;
 		if ("byte".equals(className))
-			return Byte.TYPE;
+			return byte.class;
 		if ("char".equals(className))
-			return Character.TYPE;
+			return char.class;
 		if ("short".equals(className))
-			return Short.TYPE;
+			return short.class;
 		if ("int".equals(className))
-			return Integer.TYPE;
+			return int.class;
 		if ("long".equals(className))
-			return Long.TYPE;
+			return long.class;
 		if ("float".equals(className))
-			return Float.TYPE;
+			return float.class;
 		if ("double".equals(className))
-			return Double.TYPE;
+			return double.class;
 		if ("boolean[]".equals(className))
-			return Boolean.TYPE.getComponentType();
+			return boolean[].class;
 		if ("byte[]".equals(className))
-			return Byte.TYPE.getComponentType();
+			return byte[].class;
 		if ("char[]".equals(className))
-			return Character.TYPE.getComponentType();
+			return char[].class;
 		if ("short[]".equals(className))
-			return Short.TYPE.getComponentType();
+			return short[].class;
 		if ("int[]".equals(className))
-			return Integer.TYPE.getComponentType();
+			return int[].class;
 		if ("long[]".equals(className))
-			return Long.TYPE.getComponentType();
+			return long[].class;
 		if ("float[]".equals(className))
-			return Float.TYPE.getComponentType();
+			return float[].class;
 		if ("double[]".equals(className))
-			return Double.TYPE.getComponentType();
+			return double[].class;
 		if (className.endsWith("[]"))
 			className = "[L" + className.substring(0, className.length() - 2) + ";";
 		return Class.forName(className, true, Thread.currentThread().getContextClassLoader());
@@ -198,14 +198,14 @@ public class ClassUtils {
 
 	// 判断基本类型是否相似
 	private static boolean isLikePrimitiveClass(Class c1, Class c2) {
-		return (c1 == Boolean.TYPE && c2 == Boolean.class)
-				|| (c1 == Byte.TYPE && c2 == Byte.class)
-				|| (c1 == Character.TYPE && c2 == Character.class)
-				|| (c1 == Short.TYPE && c2 == Short.class)
-				|| (c1 == Integer.TYPE && c2 == Integer.class)
-				|| (c1 == Long.TYPE && c2 == Long.class)
-				|| (c1 == Float.TYPE && c2 == Float.class)
-				|| (c1 == Double.TYPE && c2 == Double.class);
+		return (c1 == boolean.class && c2 == Boolean.class)
+				|| (c1 == byte.class && c2 == Byte.class)
+				|| (c1 == char.class && c2 == Character.class)
+				|| (c1 == short.class && c2 == Short.class)
+				|| (c1 == int.class && c2 == Integer.class)
+				|| (c1 == long.class && c2 == Long.class)
+				|| (c1 == float.class && c2 == Float.class)
+				|| (c1 == double.class && c2 == Double.class);
 	}
 
 	// 获取函数签名

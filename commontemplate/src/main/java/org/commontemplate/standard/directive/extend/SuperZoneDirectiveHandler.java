@@ -20,4 +20,8 @@ public class SuperZoneDirectiveHandler extends DirectiveHandlerSupport {
 			superZone.render(context);
 	}
 
+	protected boolean isExpressionRequired() {
+		return true;
+	}
+
 }

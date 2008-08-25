@@ -55,6 +55,10 @@ public class CharacterSequence implements Sequence, Serializable {
 		return size;
 	}
 
+	public boolean isAsc() {
+		return asc;
+	}
+
 	public boolean isEmpty() {
 		return false;
 	}
@@ -319,10 +323,5 @@ public class CharacterSequence implements Sequence, Serializable {
 		}
 
 	}
-
-	public boolean isAsc() {
-		return asc;
-	}
-
 
 }

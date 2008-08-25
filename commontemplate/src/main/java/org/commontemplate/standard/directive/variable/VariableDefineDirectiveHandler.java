@@ -33,4 +33,8 @@ public class VariableDefineDirectiveHandler extends DirectiveHandlerSupport {
 		}
 	}
 
+	protected boolean isExpressionRequired() {
+		return true;
+	}
+
 }

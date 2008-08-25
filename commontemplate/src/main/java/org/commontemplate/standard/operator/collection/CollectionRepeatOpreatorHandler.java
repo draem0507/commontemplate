@@ -12,12 +12,19 @@ public class CollectionRepeatOpreatorHandler extends BinaryOperatorHandlerSuppor
 	private static final long serialVersionUID = 1L;
 
 	public CollectionRepeatOpreatorHandler() {
-		super(Collection.class, Integer.class);
+		super(Collection.class, Integer.class, false, false, true); // 左右参数可交换
 	}
 
 	public Object doEvaluate(Object leftOperand, Object rightOperand) throws Exception {
-		Collection src = (Collection)leftOperand;
-		int repeat = ((Integer)rightOperand).intValue();
+		Collection src;
+		int repeat;
+		if (leftOperand instanceof Collection) {
+			src = (Collection)leftOperand;
+			repeat = ((Integer)rightOperand).intValue();
+		} else {
+			src = (Collection)rightOperand;
+			repeat = ((Integer)leftOperand).intValue();
+		}
 		Collection dest = null; // 新建Collection对象, 以保证不改变原有数据模型
 		try {
 			dest = (Collection) src.getClass().newInstance();

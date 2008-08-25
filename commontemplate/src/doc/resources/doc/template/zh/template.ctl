@@ -126,6 +126,7 @@ $!
 								在指定上下文定义变量<br/>
 								$var{session -&gt; name = "james"}<br/>
 								常见上下文简化指令:<br/>
+								$super{name = "james"} 等价于 $var{super -> name = "james"}<br/>
 								$root{name = "james"} 等价于 $var{root -> name = "james"}<br/>
 								$global{name = "james"} 等价于 $var{global -> name = "james"}<br/>
 								给最近区域的变量赋值: <font color="green">(注：若直到根区域均未找到相应变量，则在当前区域创建局部变量)</font><br/>
@@ -208,7 +209,7 @@ $!
 								显示文件的内容: <font color="green">(注：不解析其内容)</font><br/>
 								$display{"article.txt"}<br/>
 								$display{"article.txt", "UTF-8"}<br/>
-								抓取远程文件的内容: <font color="green">(注：只在Web环境下有效)</font><br/>
+								抓取远程文件的内容: <font color="green">(注：非Web环境只支持完整URL的远程页面)</font><br/>
 								$snatch{"list.jsp"} 相对于当前页面路径目录<br/>
 								$snatch{"../list.jsp"} 相对于当前页面路径的上级目录<br/>
 								$snatch{"/list.jsp"} 相对于Web根目录<br/>
@@ -220,12 +221,20 @@ $!
 								动态表达式求值:<br/>
 								$eval{expressionString}<br/>
 								<b>(11) 过滤指令:</b><br/>
-								输出过滤指令:  <font color="green">(注：只过滤动态内容，不过滤文本块)</font><br/>
+								输出过滤指令: <font color="green">(注：只过滤动态内容，不过滤文本块)</font><br/>
 								$filter{x => "&lt;b&gt;" + x.escapeHtml + "&lt;/b&gt;"} <font color="green">(注：缺省名称为value，如：$filter{=> value.escapeHtml})</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end <br/>
 								输出全过滤指令:  <font color="green">(注：过滤所有输出，包括文本块)</font><br/>
 								$filterAll{x => x.escapeHtml} <font color="green">(注：缺省名称为value，如：$filterAll{=> value.escapeHtml})</font><br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+								$end <br/>
+								输出缓冲指令: <font color="green">(注：将内部块输出缓冲为单一字符串输出)</font><br/>
+								$buffer<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+								$end <br/>
+								缓冲并过滤 <font color="green">(注：过滤方式同$filter指令)</font><br/>
+								$buffer{x => "&lt;b&gt;" + x.escapeHtml + "&lt;/b&gt;"}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end <br/>
 								捕获输出指令: <font color="green">(注：捕获指令内部块输出内容到指定变量)</font><br/>
@@ -269,10 +278,24 @@ $!
 								$keyword{"word1", "word2"}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
-								<b>(12) 调试指令:</b><br/>
-								停止页面解析：<br/>
+								<b>(12) 模板控制指令:</b><br/>
+								模板上下文设置：<br/>
+								$setting{debug:ture,locale:"zh_CN"}<br/>
+								可设置项：<br/>
+								debug:ture<br/>
+								locale:"zh_CN"<br/>
+								timeZone:"GMT+8"<br/>
+								dateFormat:"yyyy-MM-DD HH:mm:ss"<br/>
+								numberFormat:"###,##0.00"<br/>
+								booleanValue="true|false"<br/>
+								nullValue:""<br/>
+								停止模板解析：<br/>
 								$stop<br/>
 								$stop{loginUser == null} <font color="green">(注: 表达式结果为真时停止页面解析)</font><br/>
+								<b>(13) 调试指令:</b><br/>
+								断言指令：<br/>
+								$assert{user != null}  <font color="green">(注: 如果表达式结果不为真, 则抛出异常)</font><br/>
+								$assert{(user != null), "error messages"}<br/>
 								异常捕获指令：<br/>
 								$try<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;$exec{"a$$ff$$"}<br/>
@@ -291,9 +314,6 @@ $!
 								$catch <font color="green">(注: 没有参数表示捕获所有异常)</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;${exception}<br/>
 								$end<br/>
-								断言指令：<br/>
-								$assert{user != null}  <font color="green">(注: 如果表达式结果不为真, 则抛出异常)</font><br/>
-								$assert{(user != null), "error messages"}<br/>
 								调试日志：<br/>
 								$log{"debug messages..."}<br/>
 								$log{debug: "debug messages..."}<br/>
@@ -321,7 +341,7 @@ $!
 								<b>(1) 注释版语法外套</b><br/>
 								编译模板时自动去除指令两边的HTML注释符，如：<br/>
 								&lt;!--$指令{表达式}--&gt; <font color="green">(注: 注释符与指令间不能有空格)</font><br/>
-								<font color="green">注: 此语法外套在web版(即@extends=org/commontemplate/tools/<b>web</b>/commontemplate.properties)配置中默认开启，否则需配置：<br/>
+								<font color="green">注: 此语法外套在web环境下(即@extends=org/commontemplate/tools/<b>web</b>/commontemplate.properties)默认开启，其它环境需配置：<br/>
 								textFilters[100]=org.commontemplate.standard.coat.CommentSyntaxCoatFilter()</font><br/>
 								<b>(2) 属性版语法外套</b><br/>
 								自动将名称空间为“ct:”的HTML标签属性转换成指令，如：<br/>
@@ -384,11 +404,15 @@ $!
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.7.6加入，0.8.6废弃<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>$for和$if统一使$else指令作为否则逻辑<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>$else<br/>
-								(3) 简化语法规则：<b>$指令名:参数名</b> 等价于 <b>$指令名{"参数名"}</b><br/>
+								(3) $overzone<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.7.6加入，0.8.6废弃<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>区域定义与覆写均采用$zone指令，保持统一及语义完整<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>$zone<br/>
+								(4) 简化语法规则：<b>$指令名:参数名</b> 等价于 <b>$指令名{"参数名"}</b><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.8.5加入，0.8.6废弃<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>语法规则不统一<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>名称定义性指令(如：$block, $macro, $zone等)参数名引号可省，如：$指令名{参数名} 等价于 $指令名{"参数名"}<br/>
-								(4) $leftTrim, $rightTrim<br/>
+								(5) $leftTrim, $rightTrim<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.8.5加入，0.8.6废弃<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>多单词指令名，参照其它模板语法进行简化<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>$ltrim, $rtrim<br/>

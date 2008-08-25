@@ -1,6 +1,6 @@
 package org.commontemplate.standard.operator.collection;
 
-import java.util.ArrayList;
+import java.lang.reflect.Array;
 import java.util.List;
 
 import org.commontemplate.standard.operator.sequence.IntegerSequence;
@@ -17,37 +17,42 @@ public class ArraySubOperatorHandler extends
 	private static final long serialVersionUID = 1L;
 
 	public ArraySubOperatorHandler() {
-		super(Object[].class);
+		super(new Class[]{boolean[].class, char[].class, byte[].class,
+				short[].class, int[].class, long[].class,
+				float[].class, double[].class, Object[].class});
 	}
 
 	public Object doEvaluate(Object leftOperand, Object rightOperand)
 			throws Exception {
-		Object[] list = (Object[]) leftOperand;
-		List sub = new ArrayList();
-		if (rightOperand instanceof IntegerSequence) {
+		Object array = leftOperand;
+		int len = Array.getLength(array);
+		if (rightOperand instanceof IntegerSequence) { // 注意：需处理无穷大序列，如：array[2..*]
 			IntegerSequence indexs = (IntegerSequence) rightOperand;
-			if (indexs.isAscending()) { // 升序序列
-				for (int i = indexs.getMin(); i < list.length
-						&& i <= indexs.getMax(); i++) {
-					if (i >= 0)
-						sub.add(list[i]);
-				}
-			} else { // 降序序列
-				for (int i = indexs.getMax(); i >= 0
-						&& i >= indexs.getMin(); i--) {
-					if (i < list.length)
-						sub.add(list[i]);
-				}
+			int min = indexs.getMin() > 0 ? indexs.getMin() : 0;
+			int max = indexs.getMax() < len - 1 ? indexs.getMax() : len - 1;
+			int n = max - min + 1;
+			if (n <= 0)
+				return Array.newInstance(array.getClass().getComponentType(), 0);
+			Object sub = Array.newInstance(array.getClass().getComponentType(), n);
+			for (int i = 0; i < n; i++) {
+				int index = indexs.isAsc() ? min + i : max - i;
+				Array.set(sub, i,
+						Array.get(array, index));
 			}
+			return sub;
 		} else { // 散列索引
 			List indexs = (List) rightOperand;
-			for (int i = 0, n = indexs.size(); i < n; i++) {
+			int n = indexs.size();
+			if (n <= 0)
+				return Array.newInstance(array.getClass().getComponentType(), 0);
+			Object sub = Array.newInstance(array.getClass().getComponentType(), n);
+			for (int i = 0; i < n; i++) {
 				int index = ((Integer) indexs.get(i)).intValue();
-				if (index >= 0 && index < list.length)
-					sub.add(list[index]);
+				if (index >= 0 && index < len)
+					Array.set(sub, i, Array.get(array, index));
 			}
+			return sub;
 		}
-		return sub.toArray();
 	}
 
 }

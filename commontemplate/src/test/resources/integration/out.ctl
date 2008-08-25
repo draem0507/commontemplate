@@ -1,5 +1,2 @@
-$for{user : null}
-aaa
-$else
-bbb
-$end
+$settings{locale:"zh_CN"}
+${context.locale}

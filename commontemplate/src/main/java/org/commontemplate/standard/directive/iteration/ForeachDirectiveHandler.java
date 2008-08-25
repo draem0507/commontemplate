@@ -9,13 +9,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.commontemplate.config.BlockDirectiveHandler;
 import org.commontemplate.config.ConfigurationException;
-import org.commontemplate.core.BlockDirective;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.EvaluationException;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.standard.converter.CollectionConverter;
+import org.commontemplate.standard.directive.BlockDirectiveHandlerSupport;
 import org.commontemplate.standard.directive.DirectiveUtils;
 import org.commontemplate.standard.directive.condition.IfDirectiveHandler;
 import org.commontemplate.standard.operator.string.NamePair;
@@ -29,7 +28,7 @@ import org.commontemplate.util.ClassUtils;
  * @author liangfei0201@163.com
  *
  */
-public class ForeachDirectiveHandler extends BlockDirectiveHandler {
+public class ForeachDirectiveHandler extends BlockDirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
@@ -63,12 +62,8 @@ public class ForeachDirectiveHandler extends BlockDirectiveHandler {
 		}
 	}
 
-	public void doRender(Context context, BlockDirective directive) throws Exception {
-		Assert.assertNotNull(directive.getExpression(), "ForeachDirectiveHandler.expression.is.null");
-		doRender(context, directive.getName(),
-				directive.getExpression() == null
-					? null : directive.getExpression().evaluate(context),
-				directive.getElements());
+	protected boolean isExpressionRequired() {
+		return true;
 	}
 
 	public void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {

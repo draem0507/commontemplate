@@ -50,6 +50,10 @@ public class DataDirectiveHandler extends BlockDirectiveHandlerSupport {
 		context.getRootLocalContext().putAllVariables(data);
 	}
 
+	protected boolean isExpressionRequired() {
+		return true;
+	}
+
 	public boolean isExpressionNamed() {
 		return true;
 	}

@@ -16,4 +16,8 @@ public class GlobalAssignDirectiveHandler extends DirectiveHandlerSupport {
 		context.getGlobalContext().putVariable(var, value);
 	}
 
+	protected boolean isExpressionRequired() {
+		return true;
+	}
+
 }

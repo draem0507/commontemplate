@@ -29,4 +29,8 @@ public class OverZoneDirectiveHandler extends BlockDirectiveHandlerSupport {
 		}
 	}
 
+	protected boolean isExpressionRequired() {
+		return true;
+	}
+
 }

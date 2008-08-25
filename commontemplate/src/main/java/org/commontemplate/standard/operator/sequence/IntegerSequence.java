@@ -59,7 +59,7 @@ public class IntegerSequence implements Sequence, Serializable {
 		return min;
 	}
 
-	public boolean isAscending() {
+	public boolean isAsc() {
 		return asc;
 	}
 
@@ -340,10 +340,6 @@ public class IntegerSequence implements Sequence, Serializable {
 					(inc < 0 && cur < end);
 		}
 
-	}
-
-	public boolean isAsc() {
-		return asc;
 	}
 
 }

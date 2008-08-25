@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 import org.commontemplate.core.Context;
 import org.commontemplate.standard.directive.DirectiveHandlerSupport;
 
-public class LocalAssignDirectiveHandler extends DirectiveHandlerSupport {
+public class SuperAssignDirectiveHandler extends DirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
@@ -13,7 +13,11 @@ public class LocalAssignDirectiveHandler extends DirectiveHandlerSupport {
 		Entry model = (Entry)param;
 		String var = String.valueOf(model.getKey());
 		Object value = model.getValue();
-		context.putVariable(var, value);
+		context.getParentLocalContext().putVariable(var, value);
+	}
+
+	protected boolean isExpressionRequired() {
+		return true;
 	}
 
 }

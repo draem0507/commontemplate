@@ -25,4 +25,8 @@ public class VariableAssignDirectiveHandler extends DirectiveHandlerSupport {
 			context.putVariable(key, value);
 	}
 
+	protected boolean isExpressionRequired() {
+		return true;
+	}
+
 }

@@ -30,6 +30,8 @@
 								<textarea id="txtLink" row="3" col="60" readonly="readonly">&lt;a href="http://www.commontemplate.org" target="_blank"&gt;&lt;img src="http://www.commontemplate.org/images/logo.gif" border="0" width="88" height="31" /&gt;&lt;/a&gt;</textarea><input type="button" value="$msg{'page.about.copy'}" onclick="clipboardData.setData('text',document.getElementById('txtLink').value);alert('$msg{'page.about.copy.prompt'}');" /><br/>
 								$msg{'page.about.link.effect'}:<br/>
 								<a href="http://www.commontemplate.org" target="_blank"><img src="../images/logo.gif" border="0" width="88" height="31" /></a><br/>
+								$msg{'page.about.logo.desc'}:<br/>
+								$msg{'page.about.logo.desc.content'}<br/>
 								<br/>
 								<b>5. $msg{'page.about.project.support'}</b><br/>
 								<table border="0" cellpadding="2" cellspacing="0">

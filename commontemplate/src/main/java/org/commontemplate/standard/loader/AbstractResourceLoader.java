@@ -10,7 +10,7 @@ public abstract class AbstractResourceLoader implements ResourceLoader {
 
 	private String defaultEncoding;
 
-	private String virtualDirectory;
+	private String rootDirectory;
 
 	public Resource loadResource(String name) throws IOException {
 		return loadResource(name, getDefaultEncoding());
@@ -19,8 +19,8 @@ public abstract class AbstractResourceLoader implements ResourceLoader {
 	public Resource loadResource(String name, String encoding) throws IOException {
 		Assert.assertNotNull("AbstractResourceLoader.resource.name.required");
 		String path = name;
-		if (getVirtualDirectory() != null)
-			path = getVirtualDirectory() + path;
+		if (getRootDirectory() != null)
+			path = getRootDirectory() + path;
 		return loadResource(path, name, encoding);
 	}
 
@@ -36,12 +36,12 @@ public abstract class AbstractResourceLoader implements ResourceLoader {
 		this.defaultEncoding = defaultEncoding;
 	}
 
-	public final String getVirtualDirectory() {
-		return virtualDirectory;
+	public final String getRootDirectory() {
+		return rootDirectory;
 	}
 
-	public final void setVirtualDirectory(String virtualDirectory) {
-		this.virtualDirectory = virtualDirectory;
+	public final void setRootDirectory(String rootDirectory) {
+		this.rootDirectory = rootDirectory;
 	}
 
 }

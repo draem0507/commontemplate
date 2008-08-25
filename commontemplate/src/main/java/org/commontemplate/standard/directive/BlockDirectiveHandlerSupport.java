@@ -5,10 +5,13 @@ import java.util.List;
 import org.commontemplate.config.BlockDirectiveHandler;
 import org.commontemplate.core.BlockDirective;
 import org.commontemplate.core.Context;
+import org.commontemplate.util.I18nExceptionFactory;
 
 public abstract class BlockDirectiveHandlerSupport extends BlockDirectiveHandler {
 
 	public void doRender(Context context, BlockDirective directive) throws Exception {
+		if (directive.getExpression() == null && isExpressionRequired())
+			throw I18nExceptionFactory.createIllegalStateException("BlockDirectiveHandlerSupport.expression.is.null", new Object[]{directive.getName()});
 		doRender(context, directive.getName(),
 				directive.getExpression() == null
 					? null : directive.getExpression().evaluate(context),
@@ -31,5 +34,9 @@ public abstract class BlockDirectiveHandlerSupport extends BlockDirectiveHandler
 	 */
 	public abstract void doRender(Context context, String directiveName,
 			Object param, List innerElements) throws Exception;
+
+	protected boolean isExpressionRequired() {
+		return false;
+	}
 
 }

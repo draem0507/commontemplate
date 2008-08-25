@@ -12,7 +12,7 @@ public class StringRepeatOperatorHandlerTester extends BinaryOperatorHandlerTest
 	protected BinaryOperatorHandler newBinaryOperatorHandler() {
 		return new StringRepeatOperatorHandler();
 	}
-	
+
 	/**
 	 * 对2元操作符 * 的测试。<br>
 	 * @condition
@@ -24,8 +24,9 @@ public class StringRepeatOperatorHandlerTester extends BinaryOperatorHandlerTest
 	 * @throws Exception
 	 */
 	public void testDoEvaluate() throws Exception{
-		
 		assertEvaluation("a", Integer.valueOf("3"), "aaa");
 		assertEvaluation(" a", Integer.valueOf("3"), " a a a");
+		assertEvaluation(Integer.valueOf("3"), "a", "aaa");
+		assertEvaluation(Integer.valueOf("3"), " a", " a a a");
 	}
 }

@@ -11,7 +11,7 @@ $!
 								(3). org.commontemplate.standard.cache.EHCache depend on ehcache.jar<br/>
 								(4). org.commontemplate.standard.cache.OSCache depend on oscache.jar<br/>
 								(5). org.commontemplate.standard.coat.attribute.jericho.JerichoAttributeCoatFilter depend on jericho.jar<br/>
-								(6). org.commontemplate.standard.directive.code.JavaCodeFilter depend on java2html.jar<br/>
+								(6). org.commontemplate.standard.directive.filter.code.JavaCodeFilter depend on java2html.jar<br/>
 								(7). org.commontemplate.standard.directive.taglib.TagLineDirectiveAdapter/TagBlockDirectiveAdapter depend on servlet-api.jar and jsp-api.jar<br/>
 !$
 	<!--$end-->

@@ -55,4 +55,8 @@ public class LoadDataDirectiveHandler extends DirectiveHandlerSupport {
 		context.getRootLocalContext().putAllVariables(data);
 	}
 
+	protected boolean isExpressionRequired() {
+		return true;
+	}
+
 }

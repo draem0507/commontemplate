@@ -28,7 +28,7 @@ public interface Visitor {
 	 * 注：此方法不应该被直接调用，而是作为回调接口
 	 *
 	 * @param node 节点
-	 * @return 控制参数
+	 * @return 控制参数：NEXT, SKIP, STOP
 	 */
 	public int visit(Node node);
 

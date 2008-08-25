@@ -7,7 +7,7 @@ import org.commontemplate.core.Context;
 
 /**
  * 信息输出指令.
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
@@ -17,6 +17,10 @@ public class OutputStartDirectiveHandler extends BlockDirectiveHandlerSupport {
 
 	public void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
 		context.output(param);
+	}
+
+	protected boolean isExpressionRequired() {
+		return true;
 	}
 
 }

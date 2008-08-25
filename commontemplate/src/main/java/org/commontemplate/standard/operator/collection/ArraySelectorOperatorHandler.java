@@ -6,8 +6,8 @@ import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 import org.commontemplate.util.BeanUtils;
 
 /**
- * 数组内容选择操作符: "[=]"<br/>
- * 如: ${users[name="xxx"]}<br/>
+ * 数组内容选择操作符: "[:]"<br/>
+ * 如: ${users[name:"xxx"]}<br/>
  *
  * @author liangfei0201@163.com
  *
