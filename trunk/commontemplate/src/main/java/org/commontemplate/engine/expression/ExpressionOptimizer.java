@@ -15,9 +15,7 @@ import org.commontemplate.util.NumberArithmetic;
  *
  */
 final class ExpressionOptimizer {
-
-	// FIXME ${.15 - .12} 错误输出0.14 应该输出0.03
-
+	
 	ExpressionOptimizer() {}
 
 	/**
@@ -71,9 +69,12 @@ final class ExpressionOptimizer {
 				}
 			}
 			// 如果当前的表达式是常量
-			if (expression.getClass() == ConstantImpl.class && i >= 2) {
-
+			if (expression.getClass() == ConstantImpl.class) {
+				
 				// 取出前一个操作符
+				if(i == 0 || expressions.size() < i) {
+					continue;
+				}
 				prevOperator = (Operator) expressions.get(i - 1);
 
 				// 如果前一个操作符是左括号的话，那么不处理
@@ -82,7 +83,7 @@ final class ExpressionOptimizer {
 					continue;
 				}
 
-				// 如果不是2元操作符，则不处理
+				// 如果不是2元操作符的情况
 				if(prevOperator.getClass() != BinaryOperatorImpl.class) {
 
 					// 判断是不是一元操作符
@@ -97,6 +98,13 @@ final class ExpressionOptimizer {
 					}
 
 					continue;
+					
+				} else {
+					// 如果是2元操作符的情况
+					// 如果是2元操作符的情况，那么i必须大于等于2
+					if(i < 2) {
+						continue;
+					}
 				}
 				BinaryOperatorImpl preBinaryOperator = ((BinaryOperatorImpl) prevOperator);
 				// 是否满足结合率
