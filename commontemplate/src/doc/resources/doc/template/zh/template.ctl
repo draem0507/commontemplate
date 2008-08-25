@@ -1,5 +1,5 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
-	<!--$overzone{"content"}-->
+	<!--$zone{"content"}-->
 $!
 								<b>一. 语法规则:</b><br/>
 								整个模板语言只有一个语法规则：<br/>
@@ -187,7 +187,7 @@ $!
 								继承模板: <font color="green">(注：在子模板中)</font><br/>
 								$extends{"super.ctl"}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;覆盖父模板区域:<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;$overzone{"body"}<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;$zone{"body"}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;调用被覆盖的父模板区域:<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$superzone<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
@@ -221,19 +221,19 @@ $!
 								动态表达式求值:<br/>
 								$eval{expressionString}<br/>
 								<b>(11) 过滤指令:</b><br/>
-								$end <br/>
-								动态内容输出转换指令: <br/>
-								$convert{x => x.escapeHtml} <font color="green">(注：缺省名称为value，如：$convert{=> value.escapeHtml})</font><br/>
+								动态内容输出过滤指令: <br/>
+								$filter{x => x.escapeHtml} <font color="green">(注：缺省名称为value，如：$convert{=> value.escapeHtml})</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end <br/>
-								输出过滤指令: <font color="green">(注：包括静态文本块)</font><br/>
-								$filter{x => "&lt;b&gt;" + x.escapeHtml + "&lt;/b&gt;"} <font color="green">(注：缺省名称为value，如：$filter{=> value.escapeHtml})</font><br/>
+								全部输出过滤指令: <font color="green">(注：包括静态文本块)</font><br/>
+								$filterall{x => "&lt;b&gt;" + x.escapeHtml + "&lt;/b&gt;"} <font color="green">(注：缺省名称为value，如：$filter{=> value.escapeHtml})</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+								$end <br/>
 								输出缓冲指令: <font color="green">(注：将内部块输出缓冲为单一字符串输出)</font><br/>
 								$buffer<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end <br/>
-								缓冲并过滤 <font color="green">(注：过滤方式同$filter指令)</font><br/>
+								缓冲并过滤 <font color="green">(注：过滤方式同$filter指令，将内部块输出缓冲为单一字符串后再过滤输出)</font><br/>
 								$buffer{x => "&lt;b&gt;" + x.escapeHtml + "&lt;/b&gt;"}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end <br/>
@@ -412,15 +412,11 @@ $!
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.7.6加入，0.8.6废弃<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>区域定义与覆写均采用$zone指令，保持统一及语义完整<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>$zone<br/>
-								(5) $filterAll<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.7.6加入，0.8.6废弃<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>$convert代替$filter，$filter代替$filterAll<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>$filter<br/>
-								(6) 简化语法规则：<b>$指令名:参数名</b> 等价于 <b>$指令名{"参数名"}</b><br/>
+								(5) 简化语法规则：<b>$指令名:参数名</b> 等价于 <b>$指令名{"参数名"}</b><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.8.5加入，0.8.6废弃<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>语法规则不统一，比$指令名{参数名}方式并不简化多少，而且存在与字母内容无法分隔的问题<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>名称定义性指令(如：$block, $macro, $zone等)参数名引号可省，如：$指令名{参数名} 等价于 $指令名{"参数名"}<br/>
-								(7) $leftTrim, $rightTrim<br/>
+								(6) $leftTrim, $rightTrim<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.8.5加入，0.8.6废弃<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>多单词指令名，参照其它模板语法进行简化<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>$ltrim, $rtrim<br/>

@@ -1,5 +1,5 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
-	<!--$overzone{"content"}-->
+	<!--$zone{"content"}-->
 $!
 公共页：(common.ctl)<br/>
 <font color="#3f7f5f">&lt;html&gt;</font><br/>
@@ -26,20 +26,20 @@ $!
 <br/>
 继承公共页，在body中写业务相关内容：<br/>
 <font color="#3f5fbf">&lt;!--$extends{"common.ctl"}--&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f5fbf">&lt;!--$overzone{"body"}--&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f5fbf">&lt;!--$zone{"body"}--&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;custom&nbsp;body<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f5fbf">&lt;!--$end--&gt;</font><br/>
 <font color="#3f5fbf">&lt;!--$end--&gt;</font><br/>
 <br/>
 扩展公共页head区域：<br/>
 <font color="#3f5fbf">&lt;!--$extends{"common.ctl"}--&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f5fbf">&lt;!--$overzone{"head"}--&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f5fbf">&lt;!--$zone{"head"}--&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f5fbf">&lt;!--$superzone--&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;scrpt&nbsp;<font color="#7f0055">type</font><font color="#000000">=</font><font color="#2a00ff">"text/javascript"</font>&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;custom&nbsp;head<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;/scrpt&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f5fbf">&lt;!--$end--&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f5fbf">&lt;!--$overzone{"body"}--&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f5fbf">&lt;!--$zone{"body"}--&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;custom&nbsp;body<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f5fbf">&lt;!--$end--&gt;</font><br/>
 <font color="#3f5fbf">&lt;!--$end--&gt;</font><br/>

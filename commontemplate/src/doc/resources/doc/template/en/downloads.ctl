@@ -1,5 +1,5 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
-	<!--$overzone{"content"}-->
+	<!--$zone{"content"}-->
 $!
 								<b>1. Releases</b> (0.8.5) <a href="changes.html">changelog...</a><br/>
 								<table border="0" cellpadding="2" cellspacing="0">

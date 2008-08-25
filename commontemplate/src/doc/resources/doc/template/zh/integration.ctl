@@ -1,5 +1,5 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
-	<!--$overzone{"content"}-->
+	<!--$zone{"content"}-->
 $!
 								<b>1. 与Servlet集成</b> <a href="config.html">配置&gt;&gt;</a><br/>
 								配置web.xml:<br/>

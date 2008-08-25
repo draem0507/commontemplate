@@ -1,5 +1,5 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
-	<!--$overzone{"content"}-->
+	<!--$zone{"content"}-->
 								<b>1. $msg{'page.about.developer.team'}</b> <a href="join.html">$msg{'page.about.join.develop'}...</a><br/>
 								<b>$msg{'page.about.developer.liangfei'}</b><br/>
 								Email/MSN: <img src="../images/mail/mail_lf.gif" border="0" /><br/>

@@ -1,5 +1,5 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
-	<!--$overzone{"content"}-->
+	<!--$zone{"content"}-->
 $!
 								<b>一. Properties 配置</b><br/>
 								从ConfigurationSettings开始，所有配置类全部留有setter注入接口，任何支持setter方式的IoC容器均可以完成配置。<br/>

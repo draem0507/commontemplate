@@ -1,5 +1,5 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
-	<!--$overzone{"content"}-->
+	<!--$zone{"content"}-->
 <b>1. Define TemplateTask</b><br/>
 $code{"xml"}<taskdef name="commontemplate" classname="org.commontemplate.tools.ant.TemplateTask" classpath="commontemplate.jar"/>
 $end

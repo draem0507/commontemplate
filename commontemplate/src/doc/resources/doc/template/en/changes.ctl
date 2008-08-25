@@ -1,5 +1,5 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
-	<!--$overzone{"content"}-->
+	<!--$zone{"content"}-->
 $!
 								<b>CommonTemplate0.8.5 released! (2008-08-04)</b><br/>
 								<a href="downloads.html">Downloads</a><br/>

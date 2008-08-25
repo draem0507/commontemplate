@@ -3,6 +3,6 @@ $filter{x => x.escapeHtml}
 <a>xxx${testHtml}yyy</a>
 $end
 ---------
-$filterAll{x => x.escapeHtml}
+$filterall{x => x.escapeHtml}
 <a>xxx${testHtml}yyy</a>
 $end

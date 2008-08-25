@@ -1,5 +1,5 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
-<!--$overzone{"content"}-->
+<!--$zone{"content"}-->
 $!
 									<table border="1" align="center"
 										style="border-style: solid; border-collapse: collapse; border-width: 1px; border-color: #000000;">

@@ -1,5 +1,5 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
-	<!--$overzone{"content"}-->
+	<!--$zone{"content"}-->
 								<b>1. 编码规范</b><br/>
 								(1) 遵守JAVA所有命名约定<br/>
 								(2) 采用Eclipse默认的缩进风格<br/>
