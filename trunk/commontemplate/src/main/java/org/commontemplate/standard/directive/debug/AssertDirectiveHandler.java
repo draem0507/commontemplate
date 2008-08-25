@@ -11,7 +11,7 @@ public class AssertDirectiveHandler extends DirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	public void doRender(Context context, String directiveName, Object param) throws Exception {
+	protected void doRender(Context context, String directiveName, Object param) throws Exception {
 		if (param instanceof List) {
 			List list = (List)param;
 			Assert.assertTrue(list.size() == 2, "AssertDirectiveHandler.parameter.error");

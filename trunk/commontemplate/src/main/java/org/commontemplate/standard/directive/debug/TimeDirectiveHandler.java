@@ -19,7 +19,7 @@ public class TimeDirectiveHandler extends BlockDirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	public void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
+	protected void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
 		long beginTime = System.currentTimeMillis();
 		DirectiveUtils.renderAll(innerElements, context);
 		Long value = new Long(System.currentTimeMillis() - beginTime);

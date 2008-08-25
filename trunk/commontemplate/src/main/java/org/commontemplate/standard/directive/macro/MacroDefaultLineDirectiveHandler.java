@@ -17,7 +17,7 @@ public class MacroDefaultLineDirectiveHandler extends DirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	public void doRender(Context context, String name, Object param) throws Exception {
+	protected void doRender(Context context, String name, Object param) throws Exception {
 		String namespace = (String)context.getProperty(Macro.NAMESPACE_TYPE);
 		if (namespace != null)
 			name = namespace + name;

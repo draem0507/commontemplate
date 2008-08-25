@@ -15,7 +15,7 @@ public class VariableAssignDirectiveHandler extends DirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	public void doRender(Context context, String directiveName, Object param) throws Exception {
+	protected void doRender(Context context, String directiveName, Object param) throws Exception {
 		Entry entry = (Entry)param;
 		String key = String.valueOf(entry.getKey());
 		Object value = entry.getValue();

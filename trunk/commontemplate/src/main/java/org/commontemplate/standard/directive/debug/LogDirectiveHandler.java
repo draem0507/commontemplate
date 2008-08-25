@@ -17,7 +17,7 @@ public class LogDirectiveHandler extends DirectiveHandlerSupport {
 		this.logger = logger;
 	}
 
-	public void doRender(Context context, String directiveName, Object param) throws Exception {
+	protected void doRender(Context context, String directiveName, Object param) throws Exception {
 		if (param instanceof String) {
 			logger.debug((String)param);
 		} else if (param instanceof Entry) {

@@ -34,7 +34,7 @@ public class TagLineDirectiveAdapter extends DirectiveHandlerSupport {
 		}
 	}
 
-	public void doRender(Context context, String directiveName, Object param)
+	protected void doRender(Context context, String directiveName, Object param)
 			throws Exception {
 		JspTag tag = (JspTag)tagClass.newInstance();
 		if (tag instanceof Tag)

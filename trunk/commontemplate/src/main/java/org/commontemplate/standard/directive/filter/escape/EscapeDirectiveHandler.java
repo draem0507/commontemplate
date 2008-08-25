@@ -28,7 +28,7 @@ public class EscapeDirectiveHandler extends BlockDirectiveHandlerSupport {
 		this.filters = filters;
 	}
 
-	public void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
+	protected void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
 		if (param instanceof String) {
 			context.setOutputFilter((OutputFilter)filters.get((String)param));
 			DirectiveUtils.renderAll(innerElements, context);

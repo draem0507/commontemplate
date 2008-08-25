@@ -14,7 +14,7 @@ public class SuperZoneDirectiveHandler extends DirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	public void doRender(Context context, String directiveName, Object param) throws Exception {
+	protected void doRender(Context context, String directiveName, Object param) throws Exception {
 		Zone superZone = (Zone)context.getProperty(Zone.SUPER_ZONE);
 		if (superZone != null)
 			superZone.render(context);

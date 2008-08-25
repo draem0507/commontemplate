@@ -29,7 +29,7 @@ public class UsingAsMacroDirectiveHandler extends DirectiveHandlerSupport {
 		this.macroDirectiveName = macroDirectiveName;
 	}
 
-	public void doRender(Context context, String directiveName, Object param) throws Exception {
+	protected void doRender(Context context, String directiveName, Object param) throws Exception {
 		if (param instanceof String) {
 			usingMacro(context, null, (String)param);
 		} else if (param instanceof Entry) {

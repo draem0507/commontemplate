@@ -26,7 +26,7 @@ public class ImportAsMacroDirectiveHandler extends DirectiveHandlerSupport {
 		this.namespaceSeparator = namespaceSeparator;
 	}
 
-	public void doRender(Context context, String directiveName, Object param) throws Exception {
+	protected void doRender(Context context, String directiveName, Object param) throws Exception {
 		if (param instanceof String) {
 			String str = (String)param;
 			importMacro(context, null, str);

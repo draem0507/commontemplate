@@ -38,7 +38,7 @@ public class TagBlockDirectiveAdapter extends BlockDirectiveHandlerSupport {
 		}
 	}
 
-	public void doRender(Context context, String directiveName,
+	protected void doRender(Context context, String directiveName,
 			Object param, List innerElements)
 			throws Exception {
 		JspTag tag = (JspTag)tagClass.newInstance();

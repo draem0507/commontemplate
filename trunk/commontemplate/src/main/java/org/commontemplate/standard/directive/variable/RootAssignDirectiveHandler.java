@@ -9,7 +9,7 @@ public class RootAssignDirectiveHandler extends DirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	public void doRender(Context context, String directiveName, Object param) throws Exception {
+	protected void doRender(Context context, String directiveName, Object param) throws Exception {
 		Entry model = (Entry)param;
 		String var = String.valueOf(model.getKey());
 		Object value = model.getValue();

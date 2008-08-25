@@ -11,7 +11,7 @@ public abstract class BlockDirectiveHandlerSupport extends BlockDirectiveHandler
 
 	public void doRender(Context context, BlockDirective directive) throws Exception {
 		if (directive.getExpression() == null && isExpressionRequired())
-			throw I18nExceptionFactory.createIllegalStateException("BlockDirectiveHandlerSupport.expression.is.null", new Object[]{directive.getName()});
+			throw I18nExceptionFactory.createIllegalStateException("DirectiveHandlerSupport.expression.is.null", new Object[]{directive.getName()});
 		doRender(context, directive.getName(),
 				directive.getExpression() == null
 					? null : directive.getExpression().evaluate(context),
@@ -32,7 +32,7 @@ public abstract class BlockDirectiveHandlerSupport extends BlockDirectiveHandler
 	 * @throws Exception
 	 *             处理过程中的任意异常都应向上抛出, 由引擎统一处理
 	 */
-	public abstract void doRender(Context context, String directiveName,
+	protected abstract void doRender(Context context, String directiveName,
 			Object param, List innerElements) throws Exception;
 
 	protected boolean isExpressionRequired() {
