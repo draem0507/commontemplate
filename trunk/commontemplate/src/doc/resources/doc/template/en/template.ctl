@@ -1,5 +1,5 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
-	<!--$overzone{"content"}-->
+	<!--$zone{"content"}-->
 $!
 								<b>1. Syntax:</b><br/>
 								Only syntax rule: <br/>
@@ -74,7 +74,7 @@ $!
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
 								$extend{"super.ctl"}<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;$overzone{"myzone"}<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;$zone{"myzone"}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$superzone<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;$end<br/>

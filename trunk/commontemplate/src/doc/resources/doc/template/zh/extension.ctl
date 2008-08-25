@@ -1,5 +1,5 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
-	<!--$overzone{"content"}-->
+	<!--$zone{"content"}-->
 $!
 								<b>一. 扩展总接口</b><br/>
 								org.commontemplate.config.Configuration<br/>

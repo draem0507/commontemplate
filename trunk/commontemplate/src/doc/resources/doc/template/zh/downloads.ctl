@@ -1,5 +1,5 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
-	<!--$overzone{"content"}-->
+	<!--$zone{"content"}-->
 $!
 								<b>一、发行版本</b> (当前版本0.8.5) <a href="changes.html">更新日志...</a><br/>
 								<table border="0" cellpadding="2" cellspacing="0">

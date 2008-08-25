@@ -17,14 +17,25 @@ public class ExtendDirectiveHandler extends BlockDirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
+	public static final String EXTEND_INNER_PROPERTY = "extend_inner";
+
 	public void doRender(Context context, String directiveName,
 			Object param, List innerElements)
 			throws Exception {
-		context.setOutputFilter(IgnoreOutputFilter.getInstance());
-		DirectiveUtils.renderAll(innerElements, context);
-		context.removeOutputFilter();
-
-		context.getTemplate((String)param).render(context);
+		context.putProperty(EXTEND_INNER_PROPERTY, Boolean.TRUE);
+		try {
+			context.setOutputFilter(IgnoreOutputFilter.getInstance());
+			DirectiveUtils.renderAll(innerElements, context);
+			context.removeOutputFilter();
+		} finally {
+			context.removeProperty(EXTEND_INNER_PROPERTY);
+		}
+		context.putProperty(EXTEND_INNER_PROPERTY, Boolean.FALSE);
+		try {
+			context.getTemplate((String)param).render(context);
+		} finally {
+			context.removeProperty(EXTEND_INNER_PROPERTY);
+		}
 	}
 
 	protected boolean isExpressionRequired() {

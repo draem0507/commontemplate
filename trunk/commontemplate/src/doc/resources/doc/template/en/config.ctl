@@ -1,5 +1,5 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
-	<!--$overzone{"content"}-->
+	<!--$zone{"content"}-->
 $!
 								<b>1. Properties Configuration</b><br/>
 @extends=<font color="#2a00ff">org/commontemplate/tools/web/commontemplate.properties</font><br/>

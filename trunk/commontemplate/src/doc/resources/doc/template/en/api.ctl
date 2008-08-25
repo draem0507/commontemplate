@@ -1,5 +1,5 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
-	<!--$overzone{"content"}-->
+	<!--$zone{"content"}-->
 $!
 								<b>1. Using API</b> <a href="../javadoc/index.html">JavaDoc&gt;&gt;</a><br/>
 <font color="#3f7f5f">// import commontemplate module </font><br/>

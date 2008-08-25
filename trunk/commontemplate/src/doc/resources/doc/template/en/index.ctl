@@ -1,5 +1,5 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
-	<!--$overzone{"content"}-->
+	<!--$zone{"content"}-->
 $!
 								<b>1. What's the CommonTemplate?</b><br/>
 								CommonTemplate is a "template engine",<br/>

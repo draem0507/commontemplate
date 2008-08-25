@@ -1,24 +1,24 @@
 child header
 $extends{"../included/super.mm"}
-	$overzone{"head"}
+	$zone{"head"}
 		This is child head!
 	$end
 $end
 $extends{"../included/super.mm"}
-	$overzone{"body"}
+	$zone{"body"}
 		This is child body!
 	$end
 $end
 $extends{"../included/middle.mm"}
-	$overzone{"body"}
+	$zone{"body"}
 		This is child body!
 	$end
 $end
 $extends{"../included/middle.mm"}
-	$overzone{"head"}
+	$zone{"head"}
 		This is child head!
 	$end
-	$overzone{"body"}
+	$zone{"body"}
 		$superzone
 		This is child body!
 	$end

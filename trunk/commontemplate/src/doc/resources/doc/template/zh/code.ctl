@@ -1,5 +1,5 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
-	<!--$overzone{"content"}-->
+	<!--$zone{"content"}-->
 								<b>1. 功能说明</b><br/>
 								代码生器用于设计领域实体属性及关系，并通过<a href="template.html">CTL模板</a>生成结构性代码。<br/>
 								通过配置在代码生器的工具栏上添加模板方案按钮(点击该按钮将调用相应方案的模板进行代码生成)。<br/>

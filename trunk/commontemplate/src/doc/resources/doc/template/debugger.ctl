@@ -1,5 +1,5 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
-	<!--$overzone{"content"}-->
+	<!--$zone{"content"}-->
 								<b>1. $msg{'page.debugger.function'}:</b><br/>
 								$msg{'page.debugger.function.desc'}<br/>
 								<br/>

@@ -1,5 +1,5 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
-	<!--$overzone{"content"}-->
+	<!--$zone{"content"}-->
 								<b>1. XML数据格式:</b><br/>
 								语法：&lt;object&gt;表示对象，&lt;array&gt;表示数组，name属性表示其名称。 注：根标签必需为&lt;object&gt;<br/>
 								举例：<br/>

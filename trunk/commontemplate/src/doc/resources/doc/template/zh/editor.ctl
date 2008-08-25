@@ -1,5 +1,5 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
-	<!--$overzone{"content"}-->
+	<!--$zone{"content"}-->
 								<b>1. 功能说明</b><br/>
 								CTL编辑器是一个Eclipse插件，在WST的HTMLEditor的基础上扩展而来<br/>
 								主要功能：CTL语法高亮, 指令内容辅助, 指令错误标记, 指令块区域选定, 指令树内容大纲, 指令树折叠, 模板格式化. <br/>

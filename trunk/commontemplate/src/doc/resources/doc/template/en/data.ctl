@@ -1,5 +1,5 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
-	<!--$overzone{"content"}-->
+	<!--$zone{"content"}-->
 								<b>1. XML:</b><br/>
 <!--$code{"xml"}--><object>
 	<object name="mail">

@@ -5,6 +5,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import org.commontemplate.core.OutputFormatter;
+import org.commontemplate.util.Assert;
 
 public class BooleanFormatter implements OutputFormatter, Serializable {
 
@@ -16,8 +17,9 @@ public class BooleanFormatter implements OutputFormatter, Serializable {
 
 	public BooleanFormatter(String value) {
 		String[] tokens = value.split("\\|");
+		Assert.assertTrue(tokens != null && tokens.length == 2, "错误的配置项：defaultBooleanValue=" + value + "，应该为：defaultBooleanValue=true|false");
 		this.trueValue = tokens[0];
-		this.trueValue = tokens[1];
+		this.falseValue = tokens[1];
 	}
 
 	public BooleanFormatter(String trueValue, String falseValue) {

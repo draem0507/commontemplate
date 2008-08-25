@@ -1,5 +1,5 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
-	<!--$overzone{"content"}-->
+	<!--$zone{"content"}-->
 $!
 								<b>1. tools package:</b><br/>
 								(1). org.commontemplate.tools.web.servlet.TemplateServlet depend on servlet-api.jar<br/>

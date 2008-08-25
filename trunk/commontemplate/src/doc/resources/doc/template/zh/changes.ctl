@@ -1,5 +1,5 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
-	<!--$overzone{"content"}-->
+	<!--$zone{"content"}-->
 $!
 								<b>0.8.6 版本更新：(2008-08-21)</b> <a href="downloads.html">下载...</a><br/>
 								增加扩展属性List.sort, Object[].sort<br/>
