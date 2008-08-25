@@ -22,7 +22,9 @@ public class ExpressionOptimizerTester extends TestCase {
 	private ExpressionTokenizer expressionTokenizer;
 
 	private ExpressionTranslator expressionTranslator;
-
+	
+	private ExpressionOptimizer expressionOptimizer;
+	
 	private ExpressionReducer expressionReducer;
 
 	public void setUp() {
@@ -31,6 +33,8 @@ public class ExpressionOptimizerTester extends TestCase {
 		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
 		ExpressionProvider expressionFactory = new ExpressionProvider(config.getOperatorHandlerProvider(), config.getKeywords(), config.isFunctionAvailable());
 		expressionTranslator = new ExpressionTranslator(expressionFactory, config.isFunctionAvailable());
+		
+		expressionOptimizer = new ExpressionOptimizer();
 		expressionReducer = new ExpressionReducer();
 	}
 
@@ -46,13 +50,13 @@ public class ExpressionOptimizerTester extends TestCase {
 	 * @throws IOException
 	 * @throws ScanningException
 	 */
-	/*public void testPreOptimizeReduce() throws IOException, ScanningException{
+	public void testPreOptimizeReduce() throws IOException, ScanningException{
 
 		String expressionText = "a+1+2";
 		List tokens = expressionTokenizer.split(expressionText);
 		List expressions = expressionTranslator.translate(tokens);
 
-		Expression root = expressionReducer.reduce(expressions);
+		Expression root = expressionReducer.reduce(expressionOptimizer.optimize(expressions));
 
 		assertTrue(root instanceof BinaryOperatorImpl);
 		assertEquals("+", root.getName());
@@ -64,7 +68,7 @@ public class ExpressionOptimizerTester extends TestCase {
 
 		assertEquals("a", leftExpression.getName());
 		assertEquals("3", rightExpression.getName());
-	}*/
+	}
 
 	/**
 	 * 对表达式进行预优化的测试。
@@ -84,7 +88,7 @@ public class ExpressionOptimizerTester extends TestCase {
 		List tokens = expressionTokenizer.split(expressionText);
 		List expressions = expressionTranslator.translate(tokens);
 
-		Expression root = expressionReducer.reduce(expressions);
+		Expression root = expressionReducer.reduce(expressionOptimizer.optimize(expressions));
 
 		assertEquals("*", root.getName());
 
@@ -130,7 +134,7 @@ public class ExpressionOptimizerTester extends TestCase {
 		String expressionText = "a*(1+2+3+b)";
 		List tokens = expressionTokenizer.split(expressionText);
 		List expressions = expressionTranslator.translate(tokens);
-		Expression root = expressionReducer.reduce(expressions);
+		Expression root = expressionReducer.reduce(expressionOptimizer.optimize(expressions));
 
 		assertEquals("*", root.getName());
 
@@ -168,7 +172,7 @@ public class ExpressionOptimizerTester extends TestCase {
 		String expressionText = "(a+b)*(1+2+3)";
 		List tokens = expressionTokenizer.split(expressionText);
 		List expressions = expressionTranslator.translate(tokens);
-		Expression root = expressionReducer.reduce(expressions);
+		Expression root = expressionReducer.reduce(expressionOptimizer.optimize(expressions));
 
 		assertEquals("*", root.getName());
 
@@ -202,12 +206,12 @@ public class ExpressionOptimizerTester extends TestCase {
 	 * @throws IOException
 	 * @throws ScanningException
 	 */
-	/*public void testPreOptimizeReduce4() throws IOException, ScanningException{
+	public void testPreOptimizeReduce4() throws IOException, ScanningException{
 
 		String expressionText = "a+1+2*3";
 		List tokens = expressionTokenizer.split(expressionText);
 		List expressions = expressionTranslator.translate(tokens);
-		Expression root = expressionReducer.reduce(expressions);
+		Expression root = expressionReducer.reduce(expressionOptimizer.optimize(expressions));
 
 		assertEquals("+", root.getName());
 
@@ -219,7 +223,7 @@ public class ExpressionOptimizerTester extends TestCase {
 		assertEquals("a", leftExpression.getName());
 		assertEquals("7", rightExpression.getName());
 
-	}*/
+	}
 
 	/**
 	 * 对表达式进行预优化的测试。
@@ -238,7 +242,7 @@ public class ExpressionOptimizerTester extends TestCase {
 		String expressionText = "2*(3+3)";
 		List tokens = expressionTokenizer.split(expressionText);
 		List expressions = expressionTranslator.translate(tokens);
-		Expression root = expressionReducer.reduce(expressions);
+		Expression root = expressionReducer.reduce(expressionOptimizer.optimize(expressions));
 
 		assertEquals("12", root.getName());
 
@@ -261,7 +265,7 @@ public class ExpressionOptimizerTester extends TestCase {
 		String expressionText = "(2*3 + 6)";
 		List tokens = expressionTokenizer.split(expressionText);
 		List expressions = expressionTranslator.translate(tokens);
-		Expression root = expressionReducer.reduce(expressions);
+		Expression root = expressionReducer.reduce(expressionOptimizer.optimize(expressions));
 
 		assertEquals("12", root.getName());
 
@@ -284,7 +288,7 @@ public class ExpressionOptimizerTester extends TestCase {
 		String expressionText = "(2**2**2+ 1)";
 		List tokens = expressionTokenizer.split(expressionText);
 		List expressions = expressionTranslator.translate(tokens);
-		Expression root = expressionReducer.reduce(expressions);
+		Expression root = expressionReducer.reduce(expressionOptimizer.optimize(expressions));
 
 		assertEquals("17.0", root.getName());
 
@@ -302,13 +306,13 @@ public class ExpressionOptimizerTester extends TestCase {
 	 * @throws IOException
 	 * @throws ScanningException
 	 */
-	/*public void testPreOptimizeReduce8() throws IOException, ScanningException{
+	public void testPreOptimizeReduce8() throws IOException, ScanningException{
 
 		String expressionText = "a-1+2";
 
 		List tokens = expressionTokenizer.split(expressionText);
 		List expressions = expressionTranslator.translate(tokens);
-		Expression root = expressionReducer.reduce(expressions);
+		Expression root = expressionReducer.reduce(expressionOptimizer.optimize(expressions));
 
 		assertEquals("-", root.getName());
 
@@ -319,7 +323,7 @@ public class ExpressionOptimizerTester extends TestCase {
 
 		assertEquals("a", leftExpression.getName());
 		assertEquals("-1", rightExpression.getName());
-	}*/
+	}
 
 	/**
 	 * 表达式进行预优化的测试。
@@ -339,7 +343,7 @@ public class ExpressionOptimizerTester extends TestCase {
 
 		List tokens = expressionTokenizer.split(expressionText);
 		List expressions = expressionTranslator.translate(tokens);
-		Expression root = expressionReducer.reduce(expressions);
+		Expression root = expressionReducer.reduce(expressionOptimizer.optimize(expressions));
 
 		assertEquals("-", root.getName());
 
@@ -370,7 +374,7 @@ public class ExpressionOptimizerTester extends TestCase {
 
 		List tokens = expressionTokenizer.split(expressionText);
 		List expressions = expressionTranslator.translate(tokens);
-		Expression root = expressionReducer.reduce(expressions);
+		Expression root = expressionReducer.reduce(expressionOptimizer.optimize(expressions));
 
 		assertEquals("-", root.getName());
 
@@ -404,13 +408,13 @@ public class ExpressionOptimizerTester extends TestCase {
 	 * @throws IOException
 	 * @throws ScanningException
 	 */
-	/*public void testPreOptimizeReduce11() throws IOException, ScanningException{
+	public void testPreOptimizeReduce11() throws IOException, ScanningException{
 
 		String expressionText = "a*2*2";
 
 		List tokens = expressionTokenizer.split(expressionText);
 		List expressions = expressionTranslator.translate(tokens);
-		Expression root = expressionReducer.reduce(expressions);
+		Expression root = expressionReducer.reduce(expressionOptimizer.optimize(expressions));
 
 		assertEquals("*", root.getName());
 
@@ -422,7 +426,7 @@ public class ExpressionOptimizerTester extends TestCase {
 		assertEquals("a", leftExpression.getName());
 		assertEquals("4", rightExpression.getName());
 
-	}*/
+	}
 
 	/**
 	 * 表达式进行预优化的测试。
@@ -442,7 +446,7 @@ public class ExpressionOptimizerTester extends TestCase {
 
 		List tokens = expressionTokenizer.split(expressionText);
 		List expressions = expressionTranslator.translate(tokens);
-		Expression root = expressionReducer.reduce(expressions);
+		Expression root = expressionReducer.reduce(expressionOptimizer.optimize(expressions));
 
 		assertEquals("*", root.getName());
 
@@ -474,7 +478,7 @@ public class ExpressionOptimizerTester extends TestCase {
 
 		List tokens = expressionTokenizer.split(expressionText);
 		List expressions = expressionTranslator.translate(tokens);
-		Expression root = expressionReducer.reduce(expressions);
+		Expression root = expressionReducer.reduce(expressionOptimizer.optimize(expressions));
 
 		assertEquals("*", root.getName());
 
@@ -514,7 +518,7 @@ public class ExpressionOptimizerTester extends TestCase {
 
 		List tokens = expressionTokenizer.split(expressionText);
 		List expressions = expressionTranslator.translate(tokens);
-		Expression root = expressionReducer.reduce(expressions);
+		Expression root = expressionReducer.reduce(expressionOptimizer.optimize(expressions));
 
 		assertEquals("/", root.getName());
 
@@ -546,7 +550,7 @@ public class ExpressionOptimizerTester extends TestCase {
 
 		List tokens = expressionTokenizer.split(expressionText);
 		List expressions = expressionTranslator.translate(tokens);
-		Expression root = expressionReducer.reduce(expressions);
+		Expression root = expressionReducer.reduce(expressionOptimizer.optimize(expressions));
 
 		assertEquals("/", root.getName());
 
@@ -586,7 +590,7 @@ public class ExpressionOptimizerTester extends TestCase {
 		List tokens = expressionTokenizer.split(expressionText);
 		List expressions = expressionTranslator.translate(tokens);
 
-		Expression root = expressionReducer.reduce(expressions);
+		Expression root = expressionReducer.reduce(expressionOptimizer.optimize(expressions));
 
 		assertTrue(root instanceof ConstantImpl);
 		assertEquals("-6", root.getName());
@@ -604,13 +608,13 @@ public class ExpressionOptimizerTester extends TestCase {
 	 * @throws IOException
 	 * @throws ScanningException
 	 */
-	/*public void testPreOptimizeReduce17() throws IOException, ScanningException{
+	public void testPreOptimizeReduce17() throws IOException, ScanningException{
 
 		String expressionText = "a*3*-2";
 		List tokens = expressionTokenizer.split(expressionText);
 		List expressions = expressionTranslator.translate(tokens);
 
-		Expression root = expressionReducer.reduce(expressions);
+		Expression root = expressionReducer.reduce(expressionOptimizer.optimize(expressions));
 
 		assertTrue(root instanceof BinaryOperatorImpl);
 		assertEquals("*", root.getName());
@@ -622,7 +626,7 @@ public class ExpressionOptimizerTester extends TestCase {
 
 		assertEquals("a", leftExpression.getName());
 		assertEquals("-6", rightExpression.getName());
-	}*/
+	}
 
 	/**
 	 * 对表达式进行预优化的测试。
@@ -636,13 +640,13 @@ public class ExpressionOptimizerTester extends TestCase {
 	 * @throws IOException
 	 * @throws ScanningException
 	 */
-	/*public void testPreOptimizeReduce18() throws IOException, ScanningException{
+	public void testPreOptimizeReduce18() throws IOException, ScanningException{
 
 		String expressionText = "a*-2*3";
 		List tokens = expressionTokenizer.split(expressionText);
 		List expressions = expressionTranslator.translate(tokens);
 
-		Expression root = expressionReducer.reduce(expressions);
+		Expression root = expressionReducer.reduce(expressionOptimizer.optimize(expressions));
 
 		assertTrue(root instanceof BinaryOperatorImpl);
 		assertEquals("*", root.getName());
@@ -654,6 +658,30 @@ public class ExpressionOptimizerTester extends TestCase {
 
 		assertEquals("a", leftExpression.getName());
 		assertEquals("-6", rightExpression.getName());
-	}*/
+	}
+	
+	/**
+	 * 对表达式进行预优化的测试。
+	 * @condition
+	 *  条件<br>
+	 *  表达式为 a*-2*3
+	 * @result
+	 *  结果<br>
+	 *  表达式应该被优化成 a*-6
+	 * @throws ParseException
+	 * @throws IOException
+	 * @throws ScanningException
+	 */
+	public void testPreOptimizeReduce19() throws IOException, ScanningException{
+
+		String expressionText = ".15 - .12";
+		List tokens = expressionTokenizer.split(expressionText);
+		List expressions = expressionTranslator.translate(tokens);
+
+		Expression root = expressionReducer.reduce(expressionOptimizer.optimize(expressions));
+
+		assertTrue(root instanceof ConstantImpl);
+		assertEquals("0.03", root.getName());
+	}
 
 }

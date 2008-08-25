@@ -45,7 +45,7 @@ public class IntervalReloadControllerTester extends TestCase {
 		assertFalse(b);
 		
 		// 延迟
-		Thread.sleep(3001);
+		Thread.sleep(4000);
 		
 		b = reloadController.shouldReload(templateName);
 		
