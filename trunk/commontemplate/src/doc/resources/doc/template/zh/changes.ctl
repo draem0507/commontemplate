@@ -1,27 +1,38 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
 	<!--$zone{"content"}-->
 $!
-								<b>0.8.6 版本更新：(2008-08-21)</b> <a href="downloads.html">下载...</a><br/>
-								增加扩展属性List.sort, Object[].sort<br/>
-								增加扩展属性String.toClass<br/>
+								<b>0.8.6 版本更新：(2008-08-25)</b> <a href="downloads.html">下载...</a><br/>
+								Bug Fixed:<br/>
 								修复BeanUtils在访问安全上的BUG<br/>
-								名称定义性指令(如: $block, $macro, $zone等), 参数名称引号可省, 如: $macro{button}, 而不再需要:　$macro{"button"}<br/>
-								$block, $time, $capture等指令支持变量区间，如：$block{global -> xxx}<br/>
+								将Class.forName()统一改为ClassUtils.forName(), 使用当前线程类加载器加载类, 并支持基本类型.<br/>
+								修复$for指令以及操作符不能处理基本类型数组(如:int[])的BUG.<br/>
+								Function Changes:<br/>
+								指令$filterAll改为小写的$filterall, 保持指令命名统一.<br/>
 								$leftTrim, $rightTrim 改为 $ltrim, $rtrim<br/>
-								废弃$forelse, $for和$if统一使$else指令作为否则逻辑.<br/>
+								废弃$forelse指令, $for和$if统一使用$else指令作为否则逻辑.<br/>
+								废弃$overzone指令, 区域定义与覆写统一为$zone.<br/>
+								$block, $time, $capture等指令支持变量区间，如：$block{global -> xxx}<br/>
+								名称定义性指令(如: $block, $macro, $zone等), 参数名称引号可省, 如: $macro{button}, 而不再需要:　$macro{"button"}<br/>
 								Visitor加入返回值控制.<br/>
 								指令语法配置分离, 如: syntax.directiveLeader='$'<br/>
 								将TemplateRenderer和ExpressionEvaluator内置的引擎单例化.<br/>
+								修改标准包中的data, code, coat三个子包的类结构.<br/>
+								实现配置缺省继承, 不再必需配置@extends=, 将自动根据所处环境继承默认配置.<br/>
+								New Feature:<br/>
+								增加扩展属性List.sort, Object[].sort<br/>
+								增加扩展属性String.toClass<br/>
 								调试器加入捕获输出功能, 可实时观察输出内容.<br/>
 								调试器加入打开模板功能, 可同时打开多个模板, 便于设置断点.<br/>
 								调试器线程列表和断点集合树加入右键菜单.<br/>
 								查看器加入直接以调试模式打开方式, 不必再在模板内写$breakpoint指令.<br/>
 								查看器安装目录和当前模板所在目录jar包加载.<br/>
 								查看器安装目录和当前模板所在目录,commontemplate.properties配置逐级查找.<br/>
-								实现配置缺省继承, 不再必需配置@extends=, 将自动根据所处环境继承默认配置.<br/>
-								将Class.forName()统一改为ClassUtils.forName(), 使用当前线程类加载器加载类.<br/>
 								增加迭代数据集合转换器(CollectionConverter)扩展点.<br/>
-								修改标准包中的data, code, coat三个子包的类结构(不兼容).<br/>
+								增加$setting指令, 用于设置模板上下文参数.<br/>
+								增加$super指令,与$root,$global同为$var的简化指令.<br/>
+								增加$buffer指令, 用于缓冲输出, 将其内部块缓冲为单一字符串输出.<br/>
+								增加boolean值格式化功能，可配置：defaultBooleanValue=true|false<br/>
+								增加OutputConverter接口, 用于拦截输出前对象进行AOP处理.<br/>
 								<br/>
 								<b>0.8.5 版本更新：(2008-08-04)</b> <a href="downloads.html">下载...</a><br/>
 								此版本主要完善核心引擎和标准指令集.<br/>
