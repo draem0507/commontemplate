@@ -61,14 +61,18 @@
 							<td rowspan="2" height="60"><a href="http://www.commontemplate.org"><img src="../images/banner.gif" alt="Common Template Engine" border="0" width="400" height="50" /></a></td>
 							<td height="40" valign="top" align="right">
 								
+								<a href="../../zh/index.html">发布版本</a>
+								|
+								每日构建
+								
+								&gt;&gt;&nbsp;
+								
 								<a href="../en/extension.html">English</a>
 								
 								|
 								
 								&#20013;&#25991;
 								
-								|
-								<a href="join.html">翻译</a>&nbsp;&nbsp;
 							</td>
 						</tr>
 						<tr>
@@ -78,7 +82,7 @@
 										
 										<td width="90" height="20" style="font-weight: bold;"><a href="downloads.html" target="_self">下载</a></td>
 										
-										<td width="90" height="20" style="font-weight: bold;"><a href="news.html" target="_self">更新</a></td>
+										<td width="90" height="20" style="font-weight: bold;"><a href="changes.html" target="_self">更新</a></td>
 										
 										<td width="90" height="20" style="font-weight: bold;"><a href="http://forum.commontemplate.org/index.php" target="_blank">论坛</a></td>
 										
@@ -206,6 +210,17 @@
 											<table width="100%" border="0" cellpadding="0" cellspacing="0">
 												<tr>
 													<td width="16"></td>
+													<td><a href="data.html" target="_self">数据格式说明</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
 													<td><a href="faq.html" target="_self">常见问题</a></td>
 												</tr>
 											</table>
@@ -230,7 +245,7 @@
 											<table width="100%" border="0" cellpadding="0" cellspacing="0">
 												<tr>
 													<td width="16"></td>
-													<td><a href="debug.html" target="_self">调试器说明</a></td>
+													<td><a href="debugger.html" target="_self">调试器说明</a></td>
 												</tr>
 											</table>
 										</td>
@@ -377,7 +392,7 @@
 											<table width="100%" border="0" cellpadding="0" cellspacing="0">
 												<tr>
 													<td width="16"></td>
-													<td><a href="news.html" target="_self">更新日志</a></td>
+													<td><a href="changes.html" target="_self">更新日志</a></td>
 												</tr>
 											</table>
 										</td>
@@ -549,7 +564,17 @@
 								参考实现：<br/>
 								org.commontemplate.standard.loader包下相关类<br/>
 								<br/>
-								<b>3. 缓存策略扩展</b><br/>
+								<b>3. 上下文初始化器扩展</b><br/>
+								相关接口：<br/>
+								org.commontemplate.config.ContextInitializer<br/>
+								注册方法：<br/>
+								setContextInitializer(ContextInitializer)<br/>
+								配置方法：<br/>
+								contextInitializers[200]=com.xxx.XXXInitializer()<br/>
+								参考实现：<br/>
+								org.commontemplate.standard.context包下相关类<br/>
+								<br/>
+								<b>4. 缓存策略扩展</b><br/>
 								相关接口：<br/>
 								org.commontemplate.config.Cache<br/>
 								注册方法：<br/>
@@ -561,7 +586,7 @@
 								参考实现：<br/>
 								org.commontemplate.standard.cache包下相关类<br/>
 								<br/>
-								<b>4. 热加载控制</b><br/>
+								<b>5. 热加载控制</b><br/>
 								引擎在每次从缓存中返回模板之前都会回调ReloadController.shouldReload(String templateName)，<br/>
 								如果返回true，引擎将重新读取模板源，<br/>
 								并调用ResourceComparator.isModified(Resource oldSource, Resource newSource)进行比较，<br/>
@@ -578,7 +603,7 @@
 								参考实现：<br/>
 								org.commontemplate.standard.reload包下相关类<br/>
 								<br/>
-								<b>5. 模板名称过滤器扩展</b><br/>
+								<b>6. 模板名称过滤器扩展</b><br/>
 								在加载及缓存之前进行路径过滤，用于保证同一个模板的引用名称总是相同。<br/>
 								如：/xxx/yyy.mtl与/xxx/zzz/../yyy.mtl表示同一模板，但会被解析及缓存多次，所以应该用过滤器将其转换成相同的名称。<br/>
 								相关接口：<br/>
@@ -590,7 +615,7 @@
 								参考实现：<br/>
 								org.commontemplate.standard.filter.TemplateNameRelativer <font color="green">(注：此过滤器过滤 ../ 和 ./ 等相对路径)</font><br/>
 								<br/>
-								<b>6. 模板源过滤器扩展</b><br/>
+								<b>7. 模板源过滤器扩展</b><br/>
 								相关接口：<br/>
 								org.commontemplate.config.ResouceFilter<br/>
 								注册方法：<br/>
@@ -598,9 +623,9 @@
 								配置方法：<br/>
 								resouceFilter[200]=com.xxx.XxxFilter<br/>
 								参考实现：<br/>
-								org.commontemplate.standard.coat.attribute.jericho.JerichoAttributeCoatFilter<br/>
+								org.commontemplate.standard.coat.AttributeSyntaxCoatFilter<br/>
 								<br/>
-								<b>7. 非指令文本块过滤器扩展</b><br/>
+								<b>8. 非指令文本块过滤器扩展</b><br/>
 								在<b>编译</b>期过滤非指令文本块.<br/>
 								相关接口：<br/>
 								org.commontemplate.config.TextFilter<br/>
@@ -609,9 +634,31 @@
 								配置方法：<br/>
 								textFilters[200]=com.xxx.XxxFilter<br/>
 								参考实现：<br/>
-								org.commontemplate.standard.coat.comment.CommentSyntaxCoatFilter<br/>
+								org.commontemplate.standard.coat.CommentSyntaxCoatFilter<br/>
 								<br/>
-								<b>8. 语法扩展</b><br/>
+								<b>9. 模板元素渲染过程拦截器扩展</b><br/>
+								拦截render()过程.<br/>
+								相关接口：<br/>
+								org.commontemplate.config.RenderInterceptor<br/>
+								注册方法：<br/>
+								addRenderInterceptor(RenderInterceptor)<br/>
+								配置方法：<br/>
+								renderInterceptors[200]=com.xxx.XxxInterceptor<br/>
+								参考实现：<br/>
+								org.commontemplate.standard.debug.DebugInterceptor<br/>
+								<br/>
+								<b>10. 表达式求值过程拦截器扩展</b><br/>
+								拦截evaluate()过程.<br/>
+								相关接口：<br/>
+								org.commontemplate.config.EvaluateInterceptor<br/>
+								注册方法：<br/>
+								addEvaluateInterceptor(EvaluateInterceptor)<br/>
+								配置方法：<br/>
+								evaluateInterceptors[200]=com.xxx.XxxInterceptor<br/>
+								参考实现：<br/>
+								无<br/>
+								<br/>
+								<b>11. 语法扩展</b><br/>
 								相关类：<br/>
 								org.commontemplate.config.Syntax (指令语法及特殊指令设置)<br/>
 								org.commontemplate.config.Keywords (表达式关键字设置)<br/>
@@ -619,21 +666,33 @@
 								setSyntax(Syntax)<br/>
 								setKeywords(Keywords)<br/>
 								配置方法：<br/>
-								syntaxString="${}#*!end"<br/>
-								keywordsString=null,true,false,this,super,context<br/>
+								syntax.directiveLeader='$'<br/>
+								syntax.expressionBegin='{'<br/>
+								syntax.expressionEnd='}'<br/>
+								syntax.lineComment='#'<br/>
+								syntax.blockComment='*'<br/>
+								syntax.noParse='!'<br/>
+								syntax.endDirectiveName=end<br/>
+								keywords.null="null"<br/>
+								keywords.true="true"<br/>
+								keywords.false="false"<br/>
+								keywords.currentLocalContext=this<br/>
+								keywords.parentLocalContext=super<br/>
+								keywords.context=context<br/>
 								默认使用：<br/>
 								Syntax.DEFAULT<br/>
 								Keywords.DEFAULT<br/>
 								<br/>
-								<b>9. 指令扩展</b><br/>
-								相关接口：<br/>
-								org.commontemplate.config.LineDirectiveHandler<br/>
-								org.commontemplate.config.StartDirectiveHandler<br/>
+								<b>12. 指令扩展</b><br/>
+								相关接口和基类：<br/>
+								org.commontemplate.config.DirectiveHandler<br/>
+								org.commontemplate.config.BlockDirectiveHandler<br/>
 								org.commontemplate.config.MiddleDirectiveHandler<br/>
+								org.commontemplate.standard.directive.DirectiveHandlerSupport<br/>
+								org.commontemplate.standard.directive.BlockDirectiveHandlerSupport<br/>
+								org.commontemplate.standard.directive.MiddleDirectiveHandlerSupport<br/>
 								注册方法：<br/>
-								addDirectiveHandler(String name, LineDirectiveHandler)<br/>
-								addDirectiveHandler(String name, StartDirectiveHandler)<br/>
-								<font color="green">(注：方法名重载，用于表明Line, Start, Middle等指令注册在同一个集合中，相互之间名称不能重复)</font><br/>
+								addDirectiveHandler(String name, DirectiveHandler)<br/>
 								配置方法：<br/>
 								directive{xxx}=com.xxx.XXXDirective<br/>
 								参考实现：<br/>
@@ -643,11 +702,20 @@
 								(1) 若DirectiveHandler实现类中没有任何属性，则该实现类一定是线程安全的。<br/>
 								(2) 若DirectiveHandler实现类中所有属性都是final的(或只在构造函数中赋值)，则该实现类也是线程安全的。<br/>
 								(3) 正确同步所有属性修改。<br/>
+								表达式状态：<br/>
+								(a) 表达式名称化：<br/>
+								如果处理类的isExpressionNamed()方法返回true，表示当表达式为变量名时，作为名称串处理，<br/>
+								如：$macro{button}等价于$macro{"button"}<br/>
+								如果特殊情况需要使用变量，可使用反斜线处理：$macro{\name}<br/>
+								(b) 表达式必需：<br/>
+								如果继承自Support的处理类的isExpressionRequired()方法返回true，表示当指令必需有表达式，否则报错。<br/>
 								<br/>
-								<b>10. 操作符扩展</b><br/>
-								相关接口：<br/>
+								<b>13. 操作符扩展</b><br/>
+								相关接口和基类：<br/>
 								org.commontemplate.config.BinaryOperatorHandler<br/>
 								org.commontemplate.config.UnaryOperatorHandler<br/>
+								org.commontemplate.standard.operator.BinaryOperatorHandlerSupport<br/>
+								org.commontemplate.standard.operator.UnaryOperatorHandlerSupport<br/>
 								注册方法：<br/>
 								addBinaryOperatorHandler(String name, BinaryOperatorHandler)<br/>
 								addUnaryOperatorHandler(String name, UnaryOperatorHandler)<br/>
@@ -680,8 +748,10 @@
 								如：已注册了“abs”一元操作符，则必需用abs(operand)， 而不能用abs operand，否则在复杂表达式中与变量引起歧义，<br/>
 								对比：符号一元操作符“!”，可以用“! operand”，也可以用“!(operand)”<br/>
 								<br/>
-								<b>11. 属性扩展</b><br/>
+								<b>14. 属性扩展</b><br/>
 								用于为"."点号操作符提供数据<br/>
+								属性调用方式如: ${bean.property}<br/>
+								静态属性调用方式如: ${.now}<br/>
 								相关接口：<br/>
 								org.commontemplate.standard.property.PropertyHandler<br/>
 								org.commontemplate.standard.property.StaticPropertyHandler<br/>
@@ -694,8 +764,10 @@
 								参考实现：<br/>
 								org.commontemplate.standard.property包及其子包相关类<br/>
 								<br/>
-								<b>12. 方法扩展</b><br/>
+								<b>15. 方法扩展</b><br/>
 								用于为"."点号操作符提供数据，并且只有在配置functionAvailable=true时才有效<br/>
+								方法调用方式如: ${obj.func(arg1,arg2)}<br/>
+								静态方法调用方式如: ${.func(arg1,arg2)}<br/>
 								相关接口：<br/>
 								org.commontemplate.standard.function.FunctionHandler<br/>
 								org.commontemplate.standard.function.StaticFunctionHandler<br/>
@@ -708,7 +780,7 @@
 								参考实现：<br/>
 								org.commontemplate.standard.function包及其子包相关类<br/>
 								<br/>
-								<b>13. 序列扩展</b><br/>
+								<b>16. 序列扩展</b><br/>
 								用于为".."双点号操作符提供数据<br/>
 								相关接口：<br/>
 								org.commontemplate.standard.operator.sequence.StringSequenceOperatorHandler<br/>
@@ -721,10 +793,10 @@
 								参考实现：<br/>
 								org.commontemplate.standard.operator.sequence包下相关类<br/>
 								<br/>
-								<b>14. 国际化扩展</b><br/>
+								<b>17. 国际化扩展</b><br/>
 								用于为$msg或$message指令提供国际化信息内容<br/>
 								相关接口：<br/>
-								org.commontemplate.config.ResourceBundleProvider<br/>
+								org.commontemplate.standard.i18n.ResourceBundleProvider<br/>
 								注册方法：<br/>
 								setResourceBundleProvider(ResourceBundleProvider)<br/>
 								setMessageBaseName(String baseName) <font color="green">(注：使用内置的PropertiesResourceBundleProvider)</font><br/>
@@ -734,7 +806,7 @@
 								参考实现：<br/>
 								org.commontemplate.standard.i18n.PropertiesResourceBundleProvider<br/>
 								<br/>
-								<b>15. 日志扩展</b><br/>
+								<b>18. 日志扩展</b><br/>
 								用于$log指令的输出.<br/>
 								相关接口：<br/>
 								org.commontemplate.standard.log.Logger<br/>
@@ -747,21 +819,34 @@
 								org.commontemplate.standard.log.Logger.DEFAULT<br/>
 								org.commontemplate.standard.log包下相关类<br/>
 								<br/>
-								<b>16. 数据加载类型扩展</b><br/>
+								<b>19. 迭代数据集合转换器扩展</b><br/>
+								用于为"$for"指令提供迭代数据<br/>
+								相关接口和基类：<br/>
+								org.commontemplate.standard.converter.CollectionConverter<br/>
+								配置方法：<br/>
+								collectionConverter{com.xxx.XXX}=com.xxx.XXXCollectionConverter<br/>
+								参考实现：<br/>
+								org.commontemplate.standard.converter包下相关类<br/>
+								<br/>
+								<b>20. 数据加载类型扩展</b><br/>
 								用于为"$data"指令提供数据<br/>
 								相关接口和基类：<br/>
-								org.commontemplate.standard.directive.data.DataProvider<br/>
-								org.commontemplate.standard.directive.data.InputStreamDataProvider<br/>
-								org.commontemplate.standard.directive.data.StringDataProvider<br/>
+								org.commontemplate.standard.data.DataProvider<br/>
+								org.commontemplate.standard.data.InputStreamDataProvider<br/>
+								org.commontemplate.standard.data.StringDataProvider<br/>
 								配置方法：<br/>
 								dataProvider{xxx}=com.xxx.XXXDataProvider<br/>
+								参考实现：<br/>
+								org.commontemplate.standard.data包下相关类<br/>
 								<br/>
-								<b>17. 代码着色扩展</b><br/>
+								<b>21. 代码着色扩展</b><br/>
 								用于为"$code"指令提供过滤器<br/>
 								相关接口和基类：<br/>
 								org.commontemplate.core.OutputFilter<br/>
 								配置方法：<br/>
-								code{xxx}=com.xxx.XXXCodeFilter<br/>
+								codeFilter{xxx}=com.xxx.XXXCodeFilter<br/>
+								参考实现：<br/>
+								org.commontemplate.standard.directive.filter.code包下相关类<br/>
 								<br/>
 
 	
