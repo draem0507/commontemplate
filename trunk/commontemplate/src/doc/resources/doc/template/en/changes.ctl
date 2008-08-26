@@ -1,6 +1,9 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
 	<!--$zone{"content"}-->
 $!
+								<b>CommonTemplate0.8.6 released! (2008-08-26)</b><br/>
+								<a href="downloads.html">Downloads</a><br/>
+								<br/>
 								<b>CommonTemplate0.8.5 released! (2008-08-04)</b><br/>
 								<a href="downloads.html">Downloads</a><br/>
 								<br/>
