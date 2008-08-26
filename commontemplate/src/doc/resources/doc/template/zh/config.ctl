@@ -68,6 +68,7 @@ $!
 								<b>使用方法：</b><br/>
 								PropertiesConfigurationLoader.loadConfiguration("xxx.properties"); // 在Classpath中查找<br/>
 								PropertiesConfigurationLoader.loadConfiguration("xxx.properties", resourceLoader); // 指定资源加载器<br/>
+								<font color="green">(注：如果@extends项未配置，则缺省为：@extends=org/commontemplate/tools/commontemplate.properties)</font><br/>
 								<br/>
 								<b>参考配置：</b><br/>
 								org/commontemplate/tools/commontemplate.properties<br/>
