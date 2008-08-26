@@ -22,14 +22,14 @@ $!
 								.12 等价于 0.12<br/>
 								E表示10的n次方，也就是科学计数法，如：1.25E3 等于 1250<br/>
 								* 星号代表无穷数，如：${list[2..*]} <font color="green">(注：星号不可以作为一元操作符)</font><br/>
-								<b>4. 关键字：</b>表示特殊值 <font color="green">(注：不可以作为变量名)</font><br/>
+								<b>4. 关键字：</b>表示特殊值 <font color="green">(注：不可以作为变量名)</font> <a href="extension.html#syntax">配置...</a><br/>
 								null 空值<br/>
 								true, false 布尔值<br/>
 								this 代表当前LocalContext<br/>
 								super 代表上级LocalContext<br/>
 								context 代表当前Context<br/>
 								<br/>
-								<b>三. 标准操作符:</b><br/>
+								<b>三. 标准操作符:</b> <a href="extension.html#operator">扩展...</a><br/>
 								<b>(1) 对象(Object)：</b><br/>
 								. 点号, 属性取值, 如: ${user.name}<br/>
 								[ ] 方括号, 索引属性, 如: ${user["name"]} ${user[variable]}<br/>
@@ -172,7 +172,7 @@ $!
 									一元：".", "[ ]", "\", "&", "$", "max", "min", "sum", "avg"<br/>
 									"( )"<br/>
 								<br/>
-								<b>五. 对象属性及扩展属性</b><br/>
+								<b>五. 对象属性及扩展属性</b> <a href="extension.html#property">扩展...</a><br/>
 								<b>属性调用格式</b><br/>
 								${对象.属性}<br/>
 								<b>属性查找顺序</b><br/>
@@ -182,7 +182,7 @@ $!
 								(3) 再查找obj.isXXX()函数<br/>
 								(4) 再查找obj.XXX()函数<br/>
 								(5) 再查找obj.XXX属性<br/>
-								<b>标准扩展属性</b> <a href="extension.html">扩展...</a><br/>
+								<b>标准扩展属性</b><br/>
 								<font color="green">(注：根据上面的规则，没有参数，但有返回值的函数，可以直接作为属性，如：toString, hashCode, trim, toUpperCase, size等，下面不再列出)</font><br/>
 								<b>(1) 空值(Null):</b><br/>
 								toString 转为String类型，如：null.toString 返回"null"字符串<br/>
@@ -262,7 +262,7 @@ $!
 								size 数组长度，保持与List统一，如：${arr.size}<br/>
 								sort 数组或List排序，如：${arr.sort} ${list.sort} ${['f','a','d'].sort} <font color="green">(注：集合中的项需实现Comparable接口)</font><br/>
 								<br/>
-								<b>六. 对象函数及扩展函数</b><br/>
+								<b>六. 对象函数及扩展函数</b> <a href="extension.html#function">扩展...</a><br/>
 								<b>函数调用格式</b><br/>
 								${对象.函数(参数1, 参数2)}<br/>
 								<font color="green">(注：不允许调用返回类型为void的函数)</font><br/>
@@ -272,7 +272,7 @@ $!
 								(1) 首先查找obj类型的外部扩展函数(可覆盖原有函数) <font color="green">(注：参见下一节)</font><br/>
 								(2) 再查找参数类型匹配的函数obj.XXX(Integer)<br/>
 								(3) 再查找参数类型相近的函数obj.XXX(int)<br/>
-								<b>标准扩展函数</b> <a href="extension.html">扩展...</a><br/>
+								<b>标准扩展函数</b><br/>
 								<font color="green">(注：根据上面的规则，有返回值的函数，可以直接调用，如：replaceAll, substring, split等，下面不再列出)</font><br/>
 								<b>(1) 字符串(String):</b><br/>
 								replace(String, String) 替换，如：${"a-b-c".replace('-', '.')} 输出：a.b.c <font color="green">(注：重载了JRE1.4中String原有replace函数，使其支持字符串替换)</font><br/>
@@ -288,7 +288,7 @@ $!
 								${"ab.cd.ef" / "."} 等价于 ${"ab.cd.ef".split("\\.")}<br/>
 								${"abcdefghijk" % 6} 等价于 ${"abcdefghijk".abbreviate(6)}<br/>
 								<br/>
-								<b>七. 序列扩展</b><br/>
+								<b>七. 序列扩展</b> <a href="extension.html#sequence">扩展...</a><br/>
 								(1) 数字: ${1 .. 20} ${20 .. -12}<br/>
 								(2) 字母: ${'a' .. 'z'} ${'z' .. 'a'} ${'A' .. 'Z'} ${'b' .. 'k'}<br/>
 								(3) 季度: ${"Spring" .. "Winter"}<br/>

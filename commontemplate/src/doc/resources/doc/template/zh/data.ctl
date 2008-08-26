@@ -48,5 +48,7 @@
 								&nbsp;&nbsp;- id: 2<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;name: kent<br/>
 								<br/>
+								<a href="extension.html#data">数据格式扩展...</a>
+								<br/>
 	<!--$end-->
 <!--$end-->

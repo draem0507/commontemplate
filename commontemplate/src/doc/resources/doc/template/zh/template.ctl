@@ -24,7 +24,7 @@ $!
 								如：“$*aaa\\*$” 注释内容为“aaa\” <font color="green">(注：结束符未被转义)</font><br/>
 								如：“$*aaa\\\*$bbb*$” 注释内容为“aaa\*$bbb”<br/>
 								<br/>
-								<b>三. 编译指令: </b><br/>
+								<b>三. 编译指令: </b> <a href="extension.html#syntax">配置...</a><br/>
 								<b>(1) 行注释:</b> 忽略其后同一行的内容 <font color="green">(注: 可注释不合法的指令内容，注释内容<b>不包含</b>最后的换行符)</font><br/>
 								运行期不保留: <font color="green">(注: 编译后即抛弃)</font><br/>
 								$# line comment ...<br/>
@@ -49,7 +49,7 @@ $!
 								<font color="green">(注: 因$end指令为编译指令，参数表达式不解析，直接作为字符串)</font><br/>
 								<font color="green">(注: $end总是与最近的块指令匹配，如：$if{}...$end{if} 和 $if{}...$else...$end{else})</font><br/>
 								<br/>
-								<b>四. 标准指令:</b><br/>
+								<b>四. 标准指令:</b> <a href="extension.html#directive">扩展...</a><br/>
 								<b>(1) 输出指令:</b><br/>
 								表达式结果输出: <font color="green">(注：指令名称为空的指令)</font><br/>
 								${user.name}<br/>
@@ -144,7 +144,7 @@ $!
 								显示块变量: <font color="green">(注：执行块变量所指模板块，模板块可以通过变量传递到其它模板中再show)</font><br/>
 								$show{myblock}<br/>
 								<b>(6) 数据指令:</b><br/>
-								<font color="green">(注：内置支持xml,json,properties,yaml等数据格式，并且数据格式是可扩展的)</font> <a href="data.html">格式说明...</a><br/>
+								<font color="green">(注：内置支持xml,json,properties,yaml等数据格式，并且数据格式是可扩展的)</font> <a href="data.html">说明...</a> <a href="extension.html#data">扩展...</a><br/>
 								数据块：<br/>
 								$data{xml} <font color="green">(注：参数名称化指令，如果类型需取变量，可使用"\"一元操作符：$data{\type})</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
@@ -270,7 +270,7 @@ $!
 								$escape{"html", "js", "url", "base64"}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
-								代码HTML着色: <font color="green">(注: 内置支持java,xml,html,properties,ini等格式，可扩展)</font> <a href="extension.html">扩展...</a><br/>
+								代码HTML着色: <font color="green">(注: 内置支持java,xml,html,properties,ini等格式，可扩展)</font> <a href="extension.html#code">扩展...</a><br/>
 								$code{java}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
