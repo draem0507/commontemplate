@@ -266,8 +266,8 @@ $!
 								$rtrim <font color="green">(注: 只将右端的空白符截掉)</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end <br/>
-								转义特殊符:<br/>
-								$escape{"html", "js", "url", "base64"}<br/>
+								转义特殊符: <font color="green">(注: 内置支持html,js,url,base64等格式，可扩展)</font> <a href="extension.html#escape">扩展...</a><br/>
+								$escape{"html", "js"}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
 								代码HTML着色: <font color="green">(注: 内置支持java,xml,html,properties,ini等格式，可扩展)</font> <a href="extension.html#code">扩展...</a><br/>
