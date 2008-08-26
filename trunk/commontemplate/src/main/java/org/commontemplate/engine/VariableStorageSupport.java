@@ -1,5 +1,6 @@
 package org.commontemplate.engine;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -15,7 +16,7 @@ import org.commontemplate.util.TypeUtils;
  * @author liangfei0201@163.com
  *
  */
-abstract class VariableStorageSupport implements VariableStorage {
+abstract class VariableStorageSupport implements VariableStorage, Serializable {
 
 	protected final Keywords keywords;
 

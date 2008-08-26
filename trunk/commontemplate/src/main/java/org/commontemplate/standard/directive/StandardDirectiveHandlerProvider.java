@@ -1,12 +1,15 @@
 package org.commontemplate.standard.directive;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import org.commontemplate.config.BlockDirectiveHandler;
 import org.commontemplate.config.DirectiveHandler;
 import org.commontemplate.config.DirectiveHandlerProvider;
 
-public class StandardDirectiveHandlerProvider implements DirectiveHandlerProvider {
+public class StandardDirectiveHandlerProvider implements DirectiveHandlerProvider, Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private Map directiveHandlers;
 

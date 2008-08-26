@@ -7,7 +7,7 @@ public class ContinueException extends RenderingException {
 	private static final long serialVersionUID = 1L;
 
 	public ContinueException() {
-		super(null);
+		super(null, null);
 	}
 
 }

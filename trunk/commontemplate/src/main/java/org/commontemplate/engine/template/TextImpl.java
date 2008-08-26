@@ -48,7 +48,7 @@ final class TextImpl extends Text {
 		try {
 			context.output(getValue());
 		} catch (IOException e) {
-			throw new RenderingException(this, e);
+			throw new RenderingException(this, context, e);
 		}
 	}
 

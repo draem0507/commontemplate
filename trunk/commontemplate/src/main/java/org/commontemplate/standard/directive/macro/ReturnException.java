@@ -7,7 +7,7 @@ public class ReturnException extends RenderingException {
 	private static final long serialVersionUID = 1L;
 
 	public ReturnException() {
-		super(null);
+		super(null, null);
 	}
 
 }

@@ -2,22 +2,22 @@
  * Copyright (c) 2005, Yu Cheung Ho
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification, are permitted 
+ * Redistribution and use in source and binary forms, with or without modification, are permitted
  * provided that the following conditions are met:
  *
- *    * Redistributions of source code must retain the above copyright notice, this list of 
+ *    * Redistributions of source code must retain the above copyright notice, this list of
  *        conditions and the following disclaimer.
- *    * Redistributions in binary form must reproduce the above copyright notice, this list 
- *        of conditions and the following disclaimer in the documentation and/or other materials 
+ *    * Redistributions in binary form must reproduce the above copyright notice, this list
+ *        of conditions and the following disclaimer in the documentation and/or other materials
  *        provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR 
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND 
- * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS 
- * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES 
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, 
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
+ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+ * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 package org.commontemplate.util.yaml;
@@ -44,8 +44,8 @@ import java.util.StringTokenizer;
 
 
 /**
- * 
- * YamlEncoder - The usage of YamlEncoder mirrors that of java.beans.XMLEncoder. You create an encoder, make some 
+ *
+ * YamlEncoder - The usage of YamlEncoder mirrors that of java.beans.XMLEncoder. You create an encoder, make some
  * calls to writeObject, and then close the encoder. In most cases you may find it is not necessary to access this
  * class directly as {@link Yaml} contain methods for the most common usages. The utility functions that
  * were previously in this class are now in {@link Yaml}.
@@ -57,7 +57,7 @@ public class YamlEncoder{
     NameGenerator nameGenerator = new NameGenerator();
     SpecialTreatmentManager stManager = new SpecialTreatmentManager();
     YamlConfig config = YamlConfig.getDefaultConfig();
-    
+
     /**
      * Creates a YamlEncoder writing to specifed stream.
      * @param out the output stream to write to.
@@ -65,7 +65,7 @@ public class YamlEncoder{
 	public YamlEncoder(OutputStream out){
 		this.out = new PrintWriter(new OutputStreamWriter(out));
 	}
-	
+
     /**
      * Creates a YamlEncoder writing to specifed file.
      * @param file file to write to.
@@ -74,7 +74,7 @@ public class YamlEncoder{
     public YamlEncoder(File file) throws FileNotFoundException{
         this(new FileOutputStream(file));
     }
-    
+
     /**
      * Creates a YamlEncoder writing to specifed file.
      * @param filename name of file to write to.
@@ -83,7 +83,7 @@ public class YamlEncoder{
     public YamlEncoder(String filename) throws FileNotFoundException{
         this(new File(filename));
     }
-    
+
     /**
      * Returns the indentation amount used for one indentation level.
      * @return the amount of indentation used for one indentation level.
@@ -91,7 +91,7 @@ public class YamlEncoder{
     public String getIndentAmount() {
         return config.getIndentAmount();
     }
-    
+
     /**
      * Sets indentation amount.
      * @param indentAmount must be a string consisting only of spaces.
@@ -116,32 +116,32 @@ public class YamlEncoder{
         config.setMinimalOutput(minimalOutput);
     }
 
-	
-    class ObjectEntry{
+
+    static class ObjectEntry{
         Object target;
         String refname = null;
         int refs = 0;
         boolean anchorDeclared = false;
-        
+
         ObjectEntry(Object t){
             target = t;
         }
-        
+
         public String toString(){
             return "{target: " + target + ", refname: " + refname + ", refs: " + refs + "}";
         }
     }
-    
-    class NameGenerator{
+
+    static class NameGenerator{
         BigInteger i = BigInteger.ONE;
-        
+
         String generate(Object obj){
             String ret = i.toString();
             i = i.add(BigInteger.ONE);
             return ret;
         }
     }
-    
+
     void traverseAndCount(Object obj){
         if (obj == null)
             return;
@@ -163,7 +163,7 @@ public class YamlEncoder{
         else
             traverseAndCountJavaBean(obj);
     }
-    
+
     void traverseAndCountCollection(Collection c){
     	Iterator it = c.iterator();
     	for(Object obj;it.hasNext();){
@@ -171,7 +171,7 @@ public class YamlEncoder{
             traverseAndCount(obj);
         }
     }
-    
+
     void traverseAndCountArray(Object array){
         if (!array.getClass().getComponentType().isPrimitive())
             for (int i = 0; i < Array.getLength(array); i++){
@@ -179,7 +179,7 @@ public class YamlEncoder{
                 traverseAndCount(obj);
             }
     }
-    
+
     void traverseAndCountMap(Map map){
     	Iterator it = map.entrySet().iterator();
     	for(Map.Entry ent; it.hasNext(); ){
@@ -188,7 +188,7 @@ public class YamlEncoder{
             traverseAndCount(ent.getValue());
         }
     }
-    
+
     void traverseAndCountJavaBean(Object bean){
         List props = ReflectionUtil.getProperties(bean);
         Iterator it = props.iterator();
@@ -204,26 +204,26 @@ public class YamlEncoder{
                 }
         }
     }
-    
+
     void traverseAndCountSpecialTreatment(Object obj){
-        
+
     }
-	
+
     int refCount(Object obj){
     	ObjectEntry ent = (ObjectEntry)referenceMap.get(obj);
     	return ent != null ? ent.refs : 0;
     }
-    
+
     boolean toBeAnchored(Object obj){
         ObjectEntry ent = (ObjectEntry)referenceMap.get(obj);
         return (ent != null && ent.refs > 1 && !ent.anchorDeclared);
     }
-    
+
     boolean toBeAliased(Object obj){
         ObjectEntry ent = (ObjectEntry) referenceMap.get(obj);
         return (ent != null && ent.refs > 1 && ent.anchorDeclared);
     }
-    
+
     void mark(Object obj){
         ObjectEntry ent = (ObjectEntry)referenceMap.get(obj);
         if (ent == null){
@@ -232,7 +232,7 @@ public class YamlEncoder{
         }
         ent.refs++;
     }
-    
+
     void generateNames(){
     	Iterator it = referenceMap.values().iterator();
         for (ObjectEntry oe; it.hasNext(); ){
@@ -241,7 +241,7 @@ public class YamlEncoder{
                 oe.refname = generateName(oe);
         }
     }
-    
+
     String generateName(Object obj){
         return nameGenerator.generate(obj);
     }
@@ -263,19 +263,19 @@ public class YamlEncoder{
         referenceMap.clear();
         nameGenerator = new NameGenerator();
     }
-    
+
     String indent(String s){
         return getIndentAmount() + s;
     }
-    
+
     boolean needSpecialTreatment(Object value){
         return stManager.needsSpecialTreatment(value);
     }
-    
+
     void writeSpecial(Object value, String indent, Class expectedType){
         stManager.encode(value, this, indent);
     }
-    
+
     void writeObject(Object value, String indent, Class expectedType){
         if (value == null)
             out.println("~");
@@ -298,17 +298,17 @@ public class YamlEncoder{
                 writeJavaBean(value, indent, expectedType);
         }
     }
-    
+
     void writeReference(Object value){
         ObjectEntry ent = (ObjectEntry)referenceMap.get(value);
         out.println("*" + ent.refname);
     }
-    
+
     void writeAlias(Object value){
         ObjectEntry ent = (ObjectEntry)referenceMap.get(value);
         out.print("&" + ent.refname + " ");
         ent.anchorDeclared = true;
-        
+
     }
 
     void writeSimpleValue(Object value, Class expectedType, String indent){
@@ -325,7 +325,7 @@ public class YamlEncoder{
 	        else if (value instanceof File)
 	            out.println(value.toString());
 	        /**
-	         * No Enum in JDK14 
+	         * No Enum in JDK14
 			else if (value.getClass().isEnum())
 	        	writeEnum(value, expectedType);
 	        	*/
@@ -333,7 +333,7 @@ public class YamlEncoder{
 	            out.println(value.toString());
         }
     }
-    
+
     void writeEnum(Object value, Class expectedType){
     	try {
 			out.println(value.getClass().getMethod("name", null).invoke(value, null));
@@ -341,11 +341,11 @@ public class YamlEncoder{
 			throw new YamlParserException("Cannot invoke name() method of " + value);
 		}
     }
-    
+
     String quote(Object value){
         return "\"" + value + "\"";
     }
-    
+
     static String stringify(Object value, String indent){
         String text = value.toString();
         // special handling for multiple lines
@@ -377,11 +377,11 @@ public class YamlEncoder{
             return text;
         }
     }
-    
+
     static String quote(String value){
         return "\"" + value + "\"";
     }
-    
+
     /**
      * assumes map is not null
      * @param map
@@ -399,7 +399,7 @@ public class YamlEncoder{
             writeObject(ent.getValue(), indent(indent), null);
         }
     }
-    
+
     /**
      * assumes col is not null
      * @param col
@@ -419,7 +419,7 @@ public class YamlEncoder{
             }
         }
     }
-    
+
     /**
      * assumes array is not null
      * @param array
@@ -439,7 +439,7 @@ public class YamlEncoder{
             for (int i = 0; i < Array.getLength(array); i++){
                 Object o = Array.get(array, i);
                 out.print(indent+"- ");
-                if (array.getClass().getComponentType().isPrimitive()) 
+                if (array.getClass().getComponentType().isPrimitive())
                     // if elements are primitive, they won't be in the reference map
                     // do don't treat it like an object and just write it out
                     writeSimpleValue(o, expectedType == null ? array.getClass().getComponentType(): expectedType.getComponentType(), indent(indent));
@@ -454,7 +454,7 @@ public class YamlEncoder{
      * @param value
      * @param indent
      */
-    private void writeJavaBean(Object value, String indent, Class expectedType){    
+    private void writeJavaBean(Object value, String indent, Class expectedType){
 
         List allProps = ReflectionUtil.getProperties(value);
         List propsOrFields = new ArrayList();
@@ -483,7 +483,7 @@ public class YamlEncoder{
             } catch (Exception e){}
             if (prototype != null && !same(pv, protov)){
             	propsOrFields.add(field);
-            }    		
+            }
     	}
     	Iterator pit2 = allProps.iterator();
         for (PropertyDescriptor prop; pit2.hasNext();){
@@ -499,7 +499,7 @@ public class YamlEncoder{
                 propsOrFields.add(prop);
             }
         }
-        
+
         if (propsOrFields.size() == 0){
             if (isMinimalOutput() && value.getClass() == expectedType)
                 out.println("{}");
@@ -536,25 +536,25 @@ public class YamlEncoder{
         			if (prototype != null && !same(pv, protov)){
         				out.print(indent + field.getName() + ": ");
         				writeObject(pv, indent(indent), field.getType());
-        			}	
+        			}
             	}
             }
         }
     }
-    
+
     boolean same(Object one, Object other){
         if (one != null){
             return one.equals(other);
         }else if (other != null)
             return other.equals(one);
-        else 
+        else
             return true;
     }
-    
+
     String getTransferName(Class clazz){
     	return ReflectionUtil.className(clazz, config);
     }
-    
+
     /**
      * Closes this YamlEncoder instance. This must be done after a write sequence for the
      * write to be effective.
@@ -563,7 +563,7 @@ public class YamlEncoder{
     public void close(){
         out.close();
     }
-    
+
     /**
      * Flushes the outputStream that this YamlEncoder points to.
      *
@@ -573,19 +573,19 @@ public class YamlEncoder{
     }
 
     /**
-     * 
+     *
      * @return the config object for this encoder.
      */
 	public YamlConfig getConfig() {
 		return config;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param config the new config object for this encoder.
 	 */
 	public void setConfig(YamlConfig config) {
 		this.config = config;
 	}
-	
+
 }

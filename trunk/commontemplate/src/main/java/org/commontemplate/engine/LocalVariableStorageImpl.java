@@ -24,6 +24,8 @@ import org.commontemplate.util.Assert;
  */
 final class LocalVariableStorageImpl extends VariableStorageSupport {
 
+	private static final long serialVersionUID = 1L;
+
 	// 上级局部上下文, 当前为根级时为空
 	private final LocalContext superLocalContext;
 

@@ -5,6 +5,7 @@ package org.commontemplate.standard.coat.attribute;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.io.Serializable;
 import java.io.StringReader;
 import java.util.Iterator;
 import java.util.List;
@@ -17,7 +18,7 @@ import org.commontemplate.config.ResourceFilter;
  * @author GL
  * @since 2008-4-5 上午12:10:05
  */
-public abstract class AbstractAttributeFilter implements ResourceFilter {
+public abstract class AbstractAttributeFilter implements ResourceFilter, Serializable {
 
 	public Reader filter(final Reader reader) throws IOException {
 		final StringBuffer sb = new StringBuffer();

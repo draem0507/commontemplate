@@ -1,12 +1,15 @@
 package org.commontemplate.standard.directive.filter;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.commontemplate.core.OutputConverter;
 import org.commontemplate.standard.operator.collection.Filter;
 
-public class ValueOutputConverter implements OutputConverter {
+public class ValueOutputConverter implements OutputConverter, Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private final Filter filter;
 

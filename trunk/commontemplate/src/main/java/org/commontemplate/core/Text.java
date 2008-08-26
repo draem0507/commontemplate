@@ -21,7 +21,7 @@ public abstract class Text extends Content {
 		try {
 			context.output(getValue());
 		} catch (IOException e) {
-			throw new RenderingException(this, e);
+			throw new RenderingException(this, context, e);
 		}
 	}
 

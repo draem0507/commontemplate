@@ -1,5 +1,6 @@
 package org.commontemplate.standard.directive.macro;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -7,7 +8,9 @@ import org.commontemplate.core.Context;
 import org.commontemplate.core.Template;
 import org.commontemplate.standard.filter.IgnoreOutputFilter;
 
-public class MacroImporter {
+public class MacroImporter implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private String namespaceSeparator;
 

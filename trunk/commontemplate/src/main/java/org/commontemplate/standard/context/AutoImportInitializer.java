@@ -1,5 +1,6 @@
 package org.commontemplate.standard.context;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -14,7 +15,9 @@ import org.commontemplate.standard.directive.macro.MacroImporter;
  * @author liangfei0201@163.com
  *
  */
-public class AutoImportInitializer implements ContextInitializer {
+public class AutoImportInitializer implements ContextInitializer, Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private MacroImporter macroImporter;
 

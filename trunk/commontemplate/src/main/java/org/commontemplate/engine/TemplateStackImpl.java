@@ -1,5 +1,6 @@
 package org.commontemplate.engine;
 
+import java.io.Serializable;
 import java.util.Iterator;
 
 import org.commontemplate.config.TemplateNameFilter;
@@ -14,23 +15,25 @@ import org.commontemplate.util.Stack;
 
 /**
  * 模板栈实现
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
-final class TemplateStackImpl implements TemplateStack {
-	
+final class TemplateStackImpl implements TemplateStack, Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	private final EventPublisher eventPublisher;
-	
+
 	private final TemplateNameFilter templateNameFilter;
-	
+
 	TemplateStackImpl(EventPublisher eventPublisher, TemplateNameFilter templateNameFilter) {
 		this.eventPublisher = eventPublisher;
 		this.templateNameFilter = templateNameFilter;
 	}
-	
+
 	private final Stack templateNameStack = new LinkedStack();
-	
+
 	public Template getCurrentTemplate() {
 		if (templateNameStack.isEmpty())
 			return null;
@@ -59,8 +62,8 @@ final class TemplateStackImpl implements TemplateStack {
 	public boolean containsTemplate(String name) {
 		for (Iterator iterator =  templateNameStack.iterator(); iterator.hasNext();) {
 			Template template = (Template)iterator.next();
-			if (template != null 
-					&& name.equals(template.getName())) 
+			if (template != null
+					&& name.equals(template.getName()))
 				return true;
 		}
 		return false;
@@ -76,13 +79,13 @@ final class TemplateStackImpl implements TemplateStack {
 
 	public Template findTemplate(String name) {
 		Assert.assertNotEmpty(name, "不能查找空的模板名称!");
-		
+
 		Template result = null;
 		// 因LinkedStack使用LinkedList, 从头开始迭代快于倒序get()
 		for (Iterator iterator = templateNameStack.iterator(); iterator.hasNext();) {
 			Template template = (Template)iterator.next();
-			if (template != null 
-					&& name.equals(template.getName())) 
+			if (template != null
+					&& name.equals(template.getName()))
 				result = template;
 		}
 		return result;

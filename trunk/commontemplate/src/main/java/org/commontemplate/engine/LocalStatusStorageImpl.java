@@ -1,5 +1,6 @@
 package org.commontemplate.engine;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,7 +15,9 @@ import org.commontemplate.util.TypeUtils;
  * @author liangfei0201@163.com
  *
  */
-final class LocalStatusStorageImpl implements StatusStorage {
+final class LocalStatusStorageImpl implements StatusStorage, Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private final Context context;
 

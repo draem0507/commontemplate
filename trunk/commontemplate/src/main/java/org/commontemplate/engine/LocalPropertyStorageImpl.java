@@ -1,5 +1,6 @@
 package org.commontemplate.engine;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -14,7 +15,9 @@ import org.commontemplate.core.PropertyStorage;
  * @author liangfei0201@163.com
  *
  */
-final class LocalPropertyStorageImpl implements PropertyStorage {
+final class LocalPropertyStorageImpl implements PropertyStorage, Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private final LocalContext superLocalContext;
 

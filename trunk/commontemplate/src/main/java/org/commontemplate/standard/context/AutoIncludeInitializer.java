@@ -1,5 +1,6 @@
 package org.commontemplate.standard.context;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,9 +13,11 @@ import org.commontemplate.core.Context;
  * @author liangfei0201@163.com
  *
  */
-public class AutoIncludeInitializer implements ContextInitializer {
+public class AutoIncludeInitializer implements ContextInitializer, Serializable {
 
 	// TODO 待考虑与自动embed的顺序
+
+	private static final long serialVersionUID = 1L;
 
 	private List autoIncludes;
 

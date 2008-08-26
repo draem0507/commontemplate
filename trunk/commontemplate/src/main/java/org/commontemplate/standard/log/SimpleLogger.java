@@ -1,7 +1,11 @@
 package org.commontemplate.standard.log;
 
+import java.io.Serializable;
 
-public class SimpleLogger implements Logger {
+
+public class SimpleLogger implements Logger, Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	public void debug(String msg) {
 		System.out.println(msg);
@@ -48,7 +52,7 @@ public class SimpleLogger implements Logger {
 	public boolean isWarnEnabled() {
 		return true;
 	}
-	
+
 	public boolean isErrorEnabled() {
 		return true;
 	}

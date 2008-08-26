@@ -1,5 +1,7 @@
 package org.commontemplate.standard.debug;
 
+import java.io.Serializable;
+
 import org.commontemplate.config.Rendition;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.Element;
@@ -12,7 +14,9 @@ import org.commontemplate.util.Assert;
  * @author linagfei0201@163.com
  *
  */
-final class ExecutionImpl implements Execution, Comparable {
+final class ExecutionImpl implements Execution, Comparable, Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private final Context context;
 
@@ -173,6 +177,44 @@ final class ExecutionImpl implements Execution, Comparable {
 			}
 		}
 		return text.toString();
+	}
+
+	// equals,hashCode方法为Eclipse生成
+
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((context == null) ? 0 : context.hashCode());
+		result = prime * result + ((element == null) ? 0 : element.hashCode());
+		result = prime * result
+				+ ((threadName == null) ? 0 : threadName.hashCode());
+		return result;
+	}
+
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final ExecutionImpl other = (ExecutionImpl) obj;
+		if (context == null) {
+			if (other.context != null)
+				return false;
+		} else if (!context.equals(other.context))
+			return false;
+		if (element == null) {
+			if (other.element != null)
+				return false;
+		} else if (!element.equals(other.element))
+			return false;
+		if (threadName == null) {
+			if (other.threadName != null)
+				return false;
+		} else if (!threadName.equals(other.threadName))
+			return false;
+		return true;
 	}
 
 }

@@ -1,6 +1,7 @@
 package org.commontemplate.engine;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.io.Writer;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -23,13 +24,15 @@ import org.commontemplate.util.StringCastUtils;
  * @author liangfei0201@163.com
  *
  */
-final class OutputControllerImpl implements OutputController {
+final class OutputControllerImpl implements OutputController, Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private final LocalContext superLocalContext;
 
 	private final Context context;
 
-	private final Writer out;
+	private transient final Writer out;
 
 	OutputControllerImpl(LocalContext superLocalContext, Context context, Writer out) {
 		this.superLocalContext = superLocalContext;
@@ -146,7 +149,9 @@ final class OutputControllerImpl implements OutputController {
 		return DEFAULT_FORMATTER.format(model, context.getLocale(), context.getTimeZone());
 	}
 
-	private static final OutputFormatter DEFAULT_FORMATTER = new OutputFormatter() {
+	private static final OutputFormatter DEFAULT_FORMATTER = new DefaultOutputFormatter();
+
+	private static final class DefaultOutputFormatter implements OutputFormatter, Serializable {
 
 		private static final long serialVersionUID = 1L;
 

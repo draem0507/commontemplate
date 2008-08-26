@@ -17,6 +17,8 @@ import org.commontemplate.core.VariableStorage;
  */
 final class GlobalContextImpl extends GlobalContext {
 
+	private static final long serialVersionUID = 1L;
+
 	GlobalContextImpl(Keywords keywords) {
 		variableStorage = new GlobalVariableStorageImpl(keywords);
 	}

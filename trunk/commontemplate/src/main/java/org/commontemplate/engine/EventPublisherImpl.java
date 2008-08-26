@@ -1,5 +1,6 @@
 package org.commontemplate.engine;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,9 @@ import org.commontemplate.core.EventPublisher;
  * @author liangfei0201@163.com
  *
  */
-final class EventPublisherImpl implements EventPublisher {
+final class EventPublisherImpl implements EventPublisher, Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private final EventListener eventListener;
 

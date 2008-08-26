@@ -1,5 +1,6 @@
 package org.commontemplate.standard.format;
 
+import java.io.Serializable;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -13,7 +14,7 @@ import org.commontemplate.util.StringCastUtils;
  * @author liangfei0201@163.com
  *
  */
-public class ArrayFormatter implements OutputFormatter, java.io.Serializable {
+public class ArrayFormatter implements OutputFormatter, Serializable {
 
 	private static final long serialVersionUID = -3541910931467990145L;
 

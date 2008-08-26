@@ -1,12 +1,15 @@
 package org.commontemplate.standard.listener;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 
 import org.commontemplate.core.Event;
 import org.commontemplate.core.EventListener;
 
-public class EventListenerChain implements EventListener {
+public class EventListenerChain implements EventListener, Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private List eventListeners;
 

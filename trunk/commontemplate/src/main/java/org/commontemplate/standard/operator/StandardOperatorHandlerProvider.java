@@ -1,5 +1,6 @@
 package org.commontemplate.standard.operator;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import org.commontemplate.config.BinaryOperatorHandler;
@@ -9,11 +10,13 @@ import org.commontemplate.util.TypeUtils;
 
 /**
  * 标准操作符供给器实现
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
-public class StandardOperatorHandlerProvider implements OperatorHandlerProvider {
+public class StandardOperatorHandlerProvider implements OperatorHandlerProvider, Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private Map binaryOperatorHandlers;
 
@@ -57,7 +60,7 @@ public class StandardOperatorHandlerProvider implements OperatorHandlerProvider 
 			return ((Integer) binaryOperatorPrioritys.get(name.trim())).intValue();
 		return 0;
 	}
-	
+
 	private Map unaryOperatorPrioritys;
 
 	public void setUnaryOperatorPrioritys(Map unaryOperatorPrioritys) {
@@ -68,7 +71,7 @@ public class StandardOperatorHandlerProvider implements OperatorHandlerProvider 
 		name = name.trim();
 		if (unaryOperatorPrioritys.containsKey(name))
 			return ((Integer) unaryOperatorPrioritys.get(name)).intValue();
-		if (TypeUtils.isNamed(name)) 
+		if (TypeUtils.isNamed(name))
 			return functionPriority;
 		return 0;
 	}
@@ -78,7 +81,7 @@ public class StandardOperatorHandlerProvider implements OperatorHandlerProvider 
 	public final void setFunctionPriority(int functionPriority) {
 		this.functionPriority = functionPriority;
 	}
-	
+
 	public int getFunctionPriority() {
 		return functionPriority;
 	}

@@ -67,7 +67,7 @@ class BlockDirectiveImpl extends BlockDirectiveSupport {
 		} catch (IgnoreException e) {
 			throw e;
 		} catch (Exception e) {
-			throw new RenderingException(this, e);
+			throw new RenderingException(this, context, e);
 		} finally {
 			context.popLocalContext();
 		}

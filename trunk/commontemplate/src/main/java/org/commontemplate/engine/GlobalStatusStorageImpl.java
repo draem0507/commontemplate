@@ -1,5 +1,6 @@
 package org.commontemplate.engine;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,7 +13,9 @@ import org.commontemplate.util.TypeUtils;
  * @author liangfei0201@163.com
  *
  */
-final class GlobalStatusStorageImpl implements StatusStorage {
+final class GlobalStatusStorageImpl implements StatusStorage, Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private Map statusContainer = new HashMap();
 

@@ -1,5 +1,6 @@
 package org.commontemplate.engine;
 
+import java.io.Serializable;
 import java.io.Writer;
 import java.util.Iterator;
 import java.util.Map;
@@ -22,9 +23,11 @@ import org.commontemplate.util.Stack;
  * @author liangfei0201@163.com
  *
  */
-final class LocalContextStackImpl implements LocalContextStack {
+final class LocalContextStackImpl implements LocalContextStack, Serializable {
 
-	private final Writer out;
+	private static final long serialVersionUID = 1L;
+
+	private transient final Writer out;
 
 	private final EventPublisher eventPublisher;
 

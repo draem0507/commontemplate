@@ -17,34 +17,40 @@ public class RenderingException extends I18nRuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
-	public RenderingException(Element element) {
+	public RenderingException(Element element, Context context) {
 		super();
 		this.element = element;
+		this.context = context;
 	}
 
-	public RenderingException(Element element, String message) {
+	public RenderingException(Element element, Context context, String message) {
 		super(message);
 		this.element = element;
+		this.context = context;
 	}
 
-	public RenderingException(Element element, String message, Object[] args) {
+	public RenderingException(Element element, Context context, String message, Object[] args) {
 		super(message, args);
 		this.element = element;
+		this.context = context;
 	}
 
-	public RenderingException(Element element, Throwable cause) {
+	public RenderingException(Element element, Context context, Throwable cause) {
 		super(cause);
 		this.element = element;
+		this.context = context;
 	}
 
-	public RenderingException(Element element, String message, Throwable cause) {
+	public RenderingException(Element element, Context context, String message, Throwable cause) {
 		super(message, cause);
 		this.element = element;
+		this.context = context;
 	}
 
-	public RenderingException(Element element, String message, Object[] args, Throwable cause) {
+	public RenderingException(Element element, Context context, String message, Object[] args, Throwable cause) {
 		super(message, args, cause);
 		this.element = element;
+		this.context = context;
 	}
 
 	private Element element;

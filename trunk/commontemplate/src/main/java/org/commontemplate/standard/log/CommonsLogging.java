@@ -1,5 +1,7 @@
 package org.commontemplate.standard.log;
 
+import java.io.Serializable;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -11,9 +13,11 @@ import org.apache.commons.logging.LogFactory;
  * @author liangfei0201@163.com
  *
  */
-public class CommonsLogging implements Logger {
+public class CommonsLogging implements Logger, Serializable {
 
-	private final Log log = LogFactory.getLog(CommonsLogging.class);
+	private static final long serialVersionUID = 1L;
+
+	private static final Log log = LogFactory.getLog(CommonsLogging.class);
 
 	public void debug(String msg) {
 		log.debug(msg);

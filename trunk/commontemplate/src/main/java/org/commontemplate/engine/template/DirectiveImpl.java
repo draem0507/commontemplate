@@ -62,7 +62,7 @@ final class DirectiveImpl extends Directive {
 		} catch (IgnoreException e) {
 			throw e;
 		} catch (Exception e) {
-			throw new RenderingException(this, e);
+			throw new RenderingException(this, context, e);
 		}
 	}
 
