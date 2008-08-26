@@ -139,6 +139,9 @@ memoryCache=<font color="#2a00ff">org.commontemplate.standard.cache.LruCache()</
 <font color="#3f7f5f"># 内存缓存容量，用于：LruCache, MruCache, FifoCache</font><br/>
 memoryCache.maxSize=<font color="#2a00ff">1000</font><br/>
 <br/>
+<font color="#3f7f5f"># 自动导入宏模板，以xx为名称空间导入xxx.ctl和yyy.ctl的配置如下：</font><br/>
+autoImport{my}=<font color="#2a00ff">xxx.ctl,yyy.ctl</font><br/>
+<br/>
 <font color="#3f7f5f"># 响应内容类型, 不设置默认为text/html</font><br/>
 response.contentType=<font color="#2a00ff">text/html</font><br/>
 								<br/>

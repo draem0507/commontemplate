@@ -36,9 +36,11 @@ public class ResourceLoaderChain implements ResourceLoader {
 		for (Iterator iterator = resourceLoaders.iterator(); iterator.hasNext();) {
 			try {
 				ResourceLoader resourceLoader = (ResourceLoader)iterator.next();
-				Resource resource = resourceLoader.loadResource(name, encoding);
-				if (resource != null)
-					return resource;
+				if (resourceLoader != null) {
+					Resource resource = resourceLoader.loadResource(name, encoding);
+					if (resource != null)
+						return resource;
+				}
 			} catch (IOException e) {
 				// 忽略，继续取下一loader
 			}

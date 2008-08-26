@@ -20,11 +20,11 @@ final class ElementFactoryImpl implements ElementFactory {
 
 	private final DirectiveHandlerProvider directiveHandlerProvider;
 
-	private final List elementInterceptors;
+	private final List renderInterceptors;
 
-	public ElementFactoryImpl(DirectiveHandlerProvider directiveHandlerProvider, List elementInterceptors) {
+	public ElementFactoryImpl(DirectiveHandlerProvider directiveHandlerProvider, List renderInterceptors) {
 		this.directiveHandlerProvider = directiveHandlerProvider;
-		this.elementInterceptors = elementInterceptors;
+		this.renderInterceptors = renderInterceptors;
 	}
 
 	public BlockDirective createBlockDirective(String name,
@@ -32,21 +32,21 @@ final class ElementFactoryImpl implements ElementFactory {
 		DirectiveHandler handler = directiveHandlerProvider.getDirectiveHandler(name);
 		Assert.assertTrue(handler instanceof BlockDirectiveHandler);
 		if (handler instanceof MiddleBlockDirectiveHandler)
-			return new MiddleBlockDirectiveImpl(name, null, expression, (MiddleBlockDirectiveHandler)handler, null, null, elementInterceptors);
-		return new BlockDirectiveImpl(name, null, expression, (BlockDirectiveHandler)handler, null, null, elementInterceptors);
+			return new MiddleBlockDirectiveImpl(name, null, expression, (MiddleBlockDirectiveHandler)handler, null, null, renderInterceptors);
+		return new BlockDirectiveImpl(name, null, expression, (BlockDirectiveHandler)handler, null, null, renderInterceptors);
 	}
 
 	public Directive createDirective(String name, Expression expression) {
 		DirectiveHandler handler = directiveHandlerProvider.getDirectiveHandler(name);
-		return new DirectiveImpl(name, null, expression, (DirectiveHandler)handler, null, elementInterceptors);
+		return new DirectiveImpl(name, null, expression, (DirectiveHandler)handler, null, renderInterceptors);
 	}
 
 	public Comment createComment(String comment) {
-		return new CommentImpl("*", null, comment, comment, elementInterceptors);
+		return new CommentImpl("*", null, comment, comment, renderInterceptors);
 	}
 
 	public Text createText(String text) {
-		return new TextImpl(text, null, text, elementInterceptors);
+		return new TextImpl(text, null, text, renderInterceptors);
 	}
 
 	public Template createTemplate(String name, List elements) {

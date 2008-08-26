@@ -36,11 +36,15 @@ final class TemplateImpl extends Template implements Serializable {
 
 	private final char[] data;
 
-	TemplateImpl(Resource resource, RootBlockDirectiveImpl rootDirective) throws IOException {
-		this(resource == null ? null : resource.getReader(), resource, rootDirective);
+	private final List renderInterceptors;
+
+	private final Template proxy;
+
+	TemplateImpl(Resource resource, RootBlockDirectiveImpl rootDirective, List renderInterceptors) throws IOException {
+		this(resource == null ? null : resource.getReader(), resource, rootDirective, renderInterceptors);
 	}
 
-	TemplateImpl(Reader reader, Resource resource, RootBlockDirectiveImpl rootDirective) throws IOException {
+	TemplateImpl(Reader reader, Resource resource, RootBlockDirectiveImpl rootDirective, List renderInterceptors) throws IOException {
 		Assert.assertNotNull(resource, "TemplateImpl.resource.required");
 		Assert.assertNotNull(rootDirective, "TemplateImpl.elements.required");
 
@@ -50,6 +54,8 @@ final class TemplateImpl extends Template implements Serializable {
 		this.data = IOUtils.readToChars(reader);
 		this.rootDirective = rootDirective;
 		this.rootDirective.setTemplate(this);
+		this.renderInterceptors = renderInterceptors;
+		this.proxy = new TemplateProxy(this);
 	}
 
 	public final List getElements() {
@@ -57,6 +63,13 @@ final class TemplateImpl extends Template implements Serializable {
 	}
 
 	public final void render(Context context) throws RenderingException {
+		if (renderInterceptors != null && renderInterceptors.size() > 0)
+			new RenditionImpl(proxy, context, renderInterceptors).doRender();
+		else
+			doRender(context);
+	}
+
+	final void doRender(Context context) throws RenderingException {
 		context.pushTemplate(this);
 		try {
 			rootDirective.render(context);

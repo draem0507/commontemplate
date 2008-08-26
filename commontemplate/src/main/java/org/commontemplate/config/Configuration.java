@@ -77,4 +77,6 @@ public abstract class Configuration extends TemplateConfiguration {
 	 */
 	public abstract TemplateNameFilter getTemplateNameFilter();
 
+	public abstract ContextInitializer getContextInitializer();
+
 }

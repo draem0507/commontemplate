@@ -17,8 +17,11 @@ public class TemplateNameFilterChain implements TemplateNameFilter {
 			throws InvalidTemplateNameException {
 		if (templateNameFilters != null && templateNameFilters.size() > 0) {
 			for (int i = 0, n = templateNameFilters.size(); i < n; i++) {
-				path = ((TemplateNameFilter) templateNameFilters.get(i)).filter(
-						path, currentTemplateName);
+				TemplateNameFilter templateNameFilter = (TemplateNameFilter) templateNameFilters.get(i);
+				if (templateNameFilter != null) {
+					path = templateNameFilter.filter(
+							path, currentTemplateName);
+				}
 			}
 		}
 		return path;

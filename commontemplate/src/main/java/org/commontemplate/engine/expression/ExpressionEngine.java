@@ -30,30 +30,35 @@ public final class ExpressionEngine implements ExpressionParser {
 
 	private final ExpressionTranslator expressionTranslator;
 
-	private final ExpressionOptimizer expressionOptimizer = new ExpressionOptimizer(); // TODO 此优化方案待测试
+	private final ExpressionOptimizer expressionOptimizer;
 
-	private final ExpressionReducer expressionReducer = new ExpressionReducer();
+	private final ExpressionReducer expressionReducer;
 
 	private final ExpressionFactory expressionFactory;
 
 	private final OperatorHandlerProvider operatorHandlerProvider;
 
+	private final List evaluateInterceptors;
+
 	public ExpressionEngine(ExpressionConfiguration config) {
 		Assert.assertNotNull(config, "ExpressionEngine.config.required");
 		config.validate(); // 配置自验证
-
 		operatorHandlerProvider = config.getOperatorHandlerProvider();
-		expressionTranslator = new ExpressionTranslator(new ExpressionProvider(
-				operatorHandlerProvider, config.getKeywords(),
-				config.isFunctionAvailable()), config.isFunctionAvailable());
-		expressionFactory = new ExpressionFactoryImpl(operatorHandlerProvider);
+		evaluateInterceptors = config.getEvaluateInterceptors();
+		ExpressionProvider expressionProvider = new ExpressionProvider(
+				operatorHandlerProvider, evaluateInterceptors,
+				config.getKeywords(), config.isFunctionAvailable());
+		expressionTranslator = new ExpressionTranslator(expressionProvider, config.isFunctionAvailable());
+		expressionFactory = new ExpressionFactoryImpl(operatorHandlerProvider, evaluateInterceptors);
+		expressionReducer = new ExpressionReducer(evaluateInterceptors);
+		expressionOptimizer = new ExpressionOptimizer(evaluateInterceptors);
 	}
 
 	public final Expression parseExpression(String expressionText) throws ParsingException {
 		try {
 			List tokens = expressionTokenizer.split(expressionText);
 			List expressions = expressionTranslator.translate(tokens);
-			expressions = expressionOptimizer.optimize(expressions); // TODO 此优化方案待测试
+			// expressions = expressionOptimizer.optimize(expressions); // TODO 此优化方案待测试
 			Expression root = expressionReducer.reduce(expressions);
 			return root;
 		} catch (ParsingException e) {
@@ -85,7 +90,7 @@ public final class ExpressionEngine implements ExpressionParser {
 	}
 
 	public ExpressionBuilder getExpressionBuilder() {
-		return new ExpressionBuilderImpl(operatorHandlerProvider);
+		return new ExpressionBuilderImpl(operatorHandlerProvider, evaluateInterceptors);
 	}
 
 }

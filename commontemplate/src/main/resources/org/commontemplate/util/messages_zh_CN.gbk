@@ -106,10 +106,11 @@ GlobalVariableStorageImpl.locked.error=变量容器锁定! 操作变量 {0} 失败!
 GlobalVariableStorageImpl.readonly.error={0}为只读变量!
 GlobalVariableStorageImpl.variable.type.error=变量名必需为String类型!
 LocalContextStackImpl.context.name.required=不能查找空的变量区域名称!
-BlockDirectiveProxy.cycle.render=不能在指令处理过程内回调render,否则将死循环调用.请检测查指令:{0}
-DirectiveProxy.cycle.render=不能在指令处理过程内回调render,否则将死循环调用.请检测查指令:{0}
-TextProxy.cycle.render=不能在文本处理过程内回调render,否则将死循环调用.请检测查文件:{0}
-CommentProxy.cycle.render=不能在注释处理过程内回调render,否则将死循环调用.请检测查注释:{0}
+TemplateProxy.cycle.render=不能在模板render过程内回调render,否则将死循环调用.请检测模板:{0}
+BlockDirectiveProxy.cycle.render=不能在指令处理过程内回调render,否则将死循环调用.请检测指令:{0}
+DirectiveProxy.cycle.render=不能在指令处理过程内回调render,否则将死循环调用.请检测指令:{0}
+TextProxy.cycle.render=不能在文本处理过程内回调render,否则将死循环调用.请检测文件:{0}
+CommentProxy.cycle.render=不能在注释处理过程内回调render,否则将死循环调用.请检测注释:{0}
 EndDirective.unsupported.error=end指令为结束标识, 不应出现在指令树中, 也不应被执行!
 ExpressionFactory.function.forbidden="禁止调用函数! 函数名:{0} (配置项functionAvailable=false)"
 ExpressionFactory.invaild.unary.operator.name={0}为非法的一元运算符或名称！

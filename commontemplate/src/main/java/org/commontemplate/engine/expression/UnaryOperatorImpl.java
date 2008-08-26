@@ -37,7 +37,11 @@ final class UnaryOperatorImpl extends UnaryOperator {
 
 	private final boolean functionLiteral;
 
-	UnaryOperatorImpl(String name, Location location, int priority, UnaryOperatorHandler handler) {
+	private final List evaluateInterceptors;
+
+	private final UnaryOperator proxy;
+
+	UnaryOperatorImpl(String name, Location location, int priority, UnaryOperatorHandler handler, List evaluateInterceptors) {
 		Assert.assertNotNull(handler);
 		this.name = name;
 		this.location = location;
@@ -46,9 +50,18 @@ final class UnaryOperatorImpl extends UnaryOperator {
 		this.operandLazy  = handler.isOperandLazy();
 		this.operandLiteral  = handler.isOperandNamed();
 		this.functionLiteral = handler.isOperandFunctioned();
+		this.evaluateInterceptors = evaluateInterceptors;
+		this.proxy = new UnaryOperatorProxy(this);
 	}
 
 	public Object evaluate(VariableResolver context) throws EvaluationException {
+		if (evaluateInterceptors != null && evaluateInterceptors.size() > 0)
+			return new EvaluationImpl(proxy, context, evaluateInterceptors).doEvaluate();
+		else
+			return doEvaluate(context);
+	}
+
+	Object doEvaluate(VariableResolver context) throws EvaluationException {
 		try {
 			Object operand;
 			if (operandLazy)

@@ -402,7 +402,7 @@ $!
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>$var<br/>
 								(2) $breakpoint<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.8.3加入，0.8.5废弃<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>简化为"$."，更形象易记<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>简化为"$."<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>$.<br/>
 								(3) $forelse<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.7.6加入，0.8.6废弃<br/>

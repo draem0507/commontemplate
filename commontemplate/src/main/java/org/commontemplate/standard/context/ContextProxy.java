@@ -1,4 +1,4 @@
-package org.commontemplate.tools;
+package org.commontemplate.standard.context;
 
 import java.io.IOException;
 import java.io.Writer;

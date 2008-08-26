@@ -9,7 +9,7 @@ import org.commontemplate.core.EventListener;
 public class EventListenerChain implements EventListener {
 
 	private List eventListeners;
-	
+
 	public void setEventListeners(List eventListeners) {
 		this.eventListeners = eventListeners;
 	}
@@ -28,21 +28,24 @@ public class EventListenerChain implements EventListener {
 					.hasNext();) {
 				final EventListener eventListener = (EventListener) iterator
 						.next();
-				new Thread() { // FIXME 异步处理不完善，应该放入一个队列中
-					public void run() {
-						eventListener.onEvent(event);
-					}
-				}.start();
+				if (eventListener != null) {
+					new Thread() { // FIXME 异步处理不完善，应该放入一个队列中
+						public void run() {
+							eventListener.onEvent(event);
+						}
+					}.start();
+				}
 			}
 		}
-		
+
 		// 同步监听器
 		if (eventListeners != null && eventListeners.size() > 0) {
 			for (Iterator iterator = eventListeners.iterator(); iterator
 					.hasNext();) {
 				EventListener eventListener = (EventListener) iterator
 						.next();
-				eventListener.onEvent(event);
+				if (eventListener != null)
+					eventListener.onEvent(event);
 			}
 		}
 	}

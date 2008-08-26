@@ -1,6 +1,8 @@
 package org.commontemplate.engine.expression;
 
 
+import java.util.List;
+
 import org.commontemplate.config.OperatorHandlerProvider;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.ExpressionBuilder;
@@ -20,8 +22,11 @@ final class ExpressionBuilderImpl implements ExpressionBuilder {
 	// 操作符处理类供给器
 	private final OperatorHandlerProvider operatorHandlerProvider;
 
-	public ExpressionBuilderImpl(OperatorHandlerProvider operatorHandlerProvider) {
+	private final List evaluateInterceptors;
+
+	public ExpressionBuilderImpl(OperatorHandlerProvider operatorHandlerProvider, List evaluateInterceptors) {
 		this.operatorHandlerProvider = operatorHandlerProvider;
+		this.evaluateInterceptors = evaluateInterceptors;
 	}
 
 	// 操作符栈
@@ -53,21 +58,21 @@ final class ExpressionBuilderImpl implements ExpressionBuilder {
 	public void addBinaryOperator(String operatorName) {
 		operatorStack.push(new BinaryOperatorImpl(operatorName, null,
 				operatorHandlerProvider.getBinaryOperatorPriority(operatorName),
-				operatorHandlerProvider.getBinaryOperatorHandler(operatorName)));
+				operatorHandlerProvider.getBinaryOperatorHandler(operatorName), evaluateInterceptors));
 	}
 
 	public void addUnaryOperator(String operatorName) {
 		operatorStack.push(new UnaryOperatorImpl(operatorName, null,
 				operatorHandlerProvider.getUnaryOperatorPriority(operatorName),
-				operatorHandlerProvider.getUnaryOperatorHandler(operatorName)));
+				operatorHandlerProvider.getUnaryOperatorHandler(operatorName), evaluateInterceptors));
 	}
 
 	public void addConstant(Object value) {
-		parameterStack.push(new ConstantImpl(value, null));
+		parameterStack.push(new ConstantImpl(value, null, evaluateInterceptors));
 	}
 
 	public void addVariable(String variableName) {
-		parameterStack.push(new VariableImpl(variableName, null));
+		parameterStack.push(new VariableImpl(variableName, null, evaluateInterceptors));
 	}
 
 }

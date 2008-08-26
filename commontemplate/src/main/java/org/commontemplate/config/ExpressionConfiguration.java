@@ -1,6 +1,7 @@
 package org.commontemplate.config;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 与表达式相关的配置
@@ -34,6 +35,14 @@ public abstract class ExpressionConfiguration implements Serializable {
 	public boolean isFunctionAvailable() {
 		return false;
 	}
+
+	/**
+	 * 获取表达式求值拦截器
+	 *
+	 * @see org.commontemplate.config.EvaluateInterceptor
+	 * @return 表达式求值拦截器, 类型: List&lt;EvaluateInterceptor&gt;
+	 */
+	public abstract List getEvaluateInterceptors();
 
 	/**
 	 * 引擎获取配置前的自检验回调.

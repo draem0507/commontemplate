@@ -35,15 +35,15 @@ final class DirectiveProvider {
 
 	private final TextFilter textFilter;
 
-	private final List elementInterceptors;
+	private final List renderInterceptors;
 
 	DirectiveProvider(Syntax syntax, DirectiveHandlerProvider directiveHandlerProvider,
-			ExpressionEngine expressionParser, TextFilter textFilter, List elementInterceptors) {
+			ExpressionEngine expressionParser, TextFilter textFilter, List renderInterceptors) {
 		this.syntax = syntax;
 		this.directiveHandlerProvider = directiveHandlerProvider;
 		this.expressionEngine = expressionParser;
 		this.textFilter = textFilter;
-		this.elementInterceptors = elementInterceptors;
+		this.renderInterceptors = renderInterceptors;
 	}
 
 	/**
@@ -71,7 +71,7 @@ final class DirectiveProvider {
 			} else if (trim.charAt(1) == syntax.getLineComment()) { // 行注释指令
 				if (trim.length() > 2
 						&& trim.charAt(2) == syntax.getLineComment()) // 运行期保留
-					return new CommentImpl(String.valueOf(syntax.getLineComment()), token.getLocation(), message.substring(3), trim, elementInterceptors);
+					return new CommentImpl(String.valueOf(syntax.getLineComment()), token.getLocation(), message.substring(3), trim, renderInterceptors);
 				return null;
 			} else if (trim.charAt(1) == syntax.getBlockComment()) { // 块注释指令
 				if (trim.length() < 4
@@ -82,7 +82,7 @@ final class DirectiveProvider {
 						&& trim.charAt(2) == syntax.getBlockComment()) { // 运行期保留
 					String value = message.substring(3, message.length() - 2);
 					value = cleanStringEscape(value, String.valueOf(syntax.getBlockComment()) + String.valueOf(syntax.getDirectiveLeader()));
-					return new CommentImpl(String.valueOf(syntax.getBlockComment()), token.getLocation(), value, trim, elementInterceptors);
+					return new CommentImpl(String.valueOf(syntax.getBlockComment()), token.getLocation(), value, trim, renderInterceptors);
 				}
 				return null;
 			} else { //指令
@@ -96,7 +96,7 @@ final class DirectiveProvider {
 	private Element parseText(String name, Token token, String message) {
 		if (textFilter != null)
 			message = textFilter.filter(message);
-		return new TextImpl(name, token.getLocation(), message, elementInterceptors);
+		return new TextImpl(name, token.getLocation(), message, renderInterceptors);
 	}
 
 	/**
@@ -263,14 +263,14 @@ final class DirectiveProvider {
 		if (handler instanceof MiddleBlockDirectiveHandler) // 中间块指令
 			return new MiddleBlockDirectiveImpl(name, token.getLocation(), expression,
 					(MiddleBlockDirectiveHandler)handler, token.getMessage(),
-					syntax.getDirectiveLeader() + syntax.getEndDirectiveName(), elementInterceptors);
+					syntax.getDirectiveLeader() + syntax.getEndDirectiveName(), renderInterceptors);
 		if (handler instanceof BlockDirectiveHandler) // 起始块指令
 			return new BlockDirectiveImpl(name, token.getLocation(), expression,
 					(BlockDirectiveHandler)handler, token.getMessage(),
-					syntax.getDirectiveLeader() + syntax.getEndDirectiveName(), elementInterceptors);
+					syntax.getDirectiveLeader() + syntax.getEndDirectiveName(), renderInterceptors);
 		if (handler instanceof DirectiveHandler) // 行指令
 			return new DirectiveImpl(name, token.getLocation(), expression,
-					(DirectiveHandler)handler, token.getMessage(), elementInterceptors);
+					(DirectiveHandler)handler, token.getMessage(), renderInterceptors);
 		// 非法的指令处理器类型
 		throw new ParsingException(token.getLocation(), "DirectiveFactory.handler.type.error", new Object[]{handler.getClass().getName()});
 	}

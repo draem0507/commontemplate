@@ -16,7 +16,11 @@ import org.commontemplate.util.NumberArithmetic;
  */
 final class ExpressionOptimizer {
 	
-	ExpressionOptimizer() {}
+	private final List evaluateInterceptors;
+
+	ExpressionOptimizer(List evaluateInterceptors) {
+		this.evaluateInterceptors = evaluateInterceptors;
+	}
 
 	/**
 	 * 预优化表达式，原则是常量的计算进行优化。<br>
@@ -90,7 +94,7 @@ final class ExpressionOptimizer {
 					if(prevOperator.getClass() == UnaryOperatorImpl.class) {
 						UnaryOperatorImpl preUnaryOperator = (UnaryOperatorImpl) prevOperator;
 						preUnaryOperator.setOperand(expression);
-						expression = new ConstantImpl(preUnaryOperator.evaluate(null), null);
+						expression = new ConstantImpl(preUnaryOperator.evaluate(null), null, evaluateInterceptors);
 						// 重新设置 Expressions
 						i = resetExpressions(i, 1, expressions, expression);
 
@@ -160,9 +164,9 @@ final class ExpressionOptimizer {
 										Number number = (Number)((Constant) expression).getValue();
 										preBinaryOperator.setOperands(prevExpression,
 												new ConstantImpl(NumberArithmetic.negative(number),
-														expression.getLocation()));
+														expression.getLocation(), evaluateInterceptors));
 
-										expression = new ConstantImpl(preBinaryOperator.evaluate(null), null);
+										expression = new ConstantImpl(preBinaryOperator.evaluate(null), null, evaluateInterceptors);
 										flag = true;
 									}
 								}
@@ -170,7 +174,7 @@ final class ExpressionOptimizer {
 						}
 						if(!flag) {
 							preBinaryOperator.setOperands(prevExpression, expression);
-							expression = new ConstantImpl(preBinaryOperator.evaluate(null), null);
+							expression = new ConstantImpl(preBinaryOperator.evaluate(null), null, evaluateInterceptors);
 						}
 
 						// 重新设置 Expressions
