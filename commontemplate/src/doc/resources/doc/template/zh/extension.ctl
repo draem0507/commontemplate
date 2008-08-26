@@ -314,7 +314,7 @@ $!
 								参考实现：<br/>
 								org.commontemplate.standard.data包下相关类<br/>
 								<br/>
-								<a name="code"/><b>21. 代码着色扩展</b><br/>
+								<a name="code"/><b>21. 代码过滤扩展</b><br/>
 								用于为"$code"指令提供过滤器<br/>
 								相关接口和基类：<br/>
 								org.commontemplate.core.OutputFilter<br/>
@@ -323,7 +323,7 @@ $!
 								参考实现：<br/>
 								org.commontemplate.standard.directive.filter.code包下相关类<br/>
 								<br/>
-								<a name="escape"/><b>22. 转义扩展</b><br/>
+								<a name="escape"/><b>22. 转义过滤扩展</b><br/>
 								用于为"$escape"指令提供过滤器<br/>
 								相关接口和基类：<br/>
 								org.commontemplate.core.OutputFilter<br/>
