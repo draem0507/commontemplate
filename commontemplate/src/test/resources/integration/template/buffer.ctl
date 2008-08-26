@@ -1,0 +1,9 @@
+$buffer
+aaa
+$end
+$buffer{=>value.escapeHtml}
+<b>bbb</b>
+$end
+$buffer{x=>x.escapeHtml}
+<b>ccc</b>
+$end
