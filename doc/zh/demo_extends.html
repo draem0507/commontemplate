@@ -61,14 +61,18 @@
 							<td rowspan="2" height="60"><a href="http://www.commontemplate.org"><img src="../images/banner.gif" alt="Common Template Engine" border="0" width="400" height="50" /></a></td>
 							<td height="40" valign="top" align="right">
 								
+								<a href="../../zh/index.html">发布版本</a>
+								|
+								每日构建
+								
+								&gt;&gt;&nbsp;
+								
 								<a href="../en/demo_extends.html">English</a>
 								
 								|
 								
 								&#20013;&#25991;
 								
-								|
-								<a href="join.html">翻译</a>&nbsp;&nbsp;
 							</td>
 						</tr>
 						<tr>
@@ -78,7 +82,7 @@
 										
 										<td width="90" height="20" style="font-weight: bold;"><a href="downloads.html" target="_self">下载</a></td>
 										
-										<td width="90" height="20" style="font-weight: bold;"><a href="news.html" target="_self">更新</a></td>
+										<td width="90" height="20" style="font-weight: bold;"><a href="changes.html" target="_self">更新</a></td>
 										
 										<td width="90" height="20" style="font-weight: bold;"><a href="http://forum.commontemplate.org/index.php" target="_blank">论坛</a></td>
 										
@@ -206,6 +210,17 @@
 											<table width="100%" border="0" cellpadding="0" cellspacing="0">
 												<tr>
 													<td width="16"></td>
+													<td><a href="data.html" target="_self">数据格式说明</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
 													<td><a href="faq.html" target="_self">常见问题</a></td>
 												</tr>
 											</table>
@@ -230,7 +245,7 @@
 											<table width="100%" border="0" cellpadding="0" cellspacing="0">
 												<tr>
 													<td width="16"></td>
-													<td><a href="debug.html" target="_self">调试器说明</a></td>
+													<td><a href="debugger.html" target="_self">调试器说明</a></td>
 												</tr>
 											</table>
 										</td>
@@ -377,7 +392,7 @@
 											<table width="100%" border="0" cellpadding="0" cellspacing="0">
 												<tr>
 													<td width="16"></td>
-													<td><a href="news.html" target="_self">更新日志</a></td>
+													<td><a href="changes.html" target="_self">更新日志</a></td>
 												</tr>
 											</table>
 										</td>
@@ -536,20 +551,20 @@
 <br/>
 继承公共页，在body中写业务相关内容：<br/>
 <font color="#3f5fbf">&lt;!--$extends{"common.ctl"}--&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f5fbf">&lt;!--$overzone{"body"}--&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f5fbf">&lt;!--$zone{"body"}--&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;custom&nbsp;body<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f5fbf">&lt;!--$end--&gt;</font><br/>
 <font color="#3f5fbf">&lt;!--$end--&gt;</font><br/>
 <br/>
 扩展公共页head区域：<br/>
 <font color="#3f5fbf">&lt;!--$extends{"common.ctl"}--&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f5fbf">&lt;!--$overzone{"head"}--&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f5fbf">&lt;!--$zone{"head"}--&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f5fbf">&lt;!--$superzone--&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;scrpt&nbsp;<font color="#7f0055">type</font><font color="#000000">=</font><font color="#2a00ff">"text/javascript"</font>&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;custom&nbsp;head<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;/scrpt&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f5fbf">&lt;!--$end--&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f5fbf">&lt;!--$overzone{"body"}--&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f5fbf">&lt;!--$zone{"body"}--&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;custom&nbsp;body<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f5fbf">&lt;!--$end--&gt;</font><br/>
 <font color="#3f5fbf">&lt;!--$end--&gt;</font><br/>

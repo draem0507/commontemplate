@@ -61,14 +61,18 @@
 							<td rowspan="2" height="60"><a href="http://www.commontemplate.org"><img src="../images/banner.gif" alt="Common Template Engine" border="0" width="400" height="50" /></a></td>
 							<td height="40" valign="top" align="right">
 								
+								<a href="../../zh/index.html">发布版本</a>
+								|
+								每日构建
+								
+								&gt;&gt;&nbsp;
+								
 								<a href="../en/dependency.html">English</a>
 								
 								|
 								
 								&#20013;&#25991;
 								
-								|
-								<a href="join.html">翻译</a>&nbsp;&nbsp;
 							</td>
 						</tr>
 						<tr>
@@ -78,7 +82,7 @@
 										
 										<td width="90" height="20" style="font-weight: bold;"><a href="downloads.html" target="_self">下载</a></td>
 										
-										<td width="90" height="20" style="font-weight: bold;"><a href="news.html" target="_self">更新</a></td>
+										<td width="90" height="20" style="font-weight: bold;"><a href="changes.html" target="_self">更新</a></td>
 										
 										<td width="90" height="20" style="font-weight: bold;"><a href="http://forum.commontemplate.org/index.php" target="_blank">论坛</a></td>
 										
@@ -206,6 +210,17 @@
 											<table width="100%" border="0" cellpadding="0" cellspacing="0">
 												<tr>
 													<td width="16"></td>
+													<td><a href="data.html" target="_self">数据格式说明</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
 													<td><a href="faq.html" target="_self">常见问题</a></td>
 												</tr>
 											</table>
@@ -230,7 +245,7 @@
 											<table width="100%" border="0" cellpadding="0" cellspacing="0">
 												<tr>
 													<td width="16"></td>
-													<td><a href="debug.html" target="_self">调试器说明</a></td>
+													<td><a href="debugger.html" target="_self">调试器说明</a></td>
 												</tr>
 											</table>
 										</td>
@@ -377,7 +392,7 @@
 											<table width="100%" border="0" cellpadding="0" cellspacing="0">
 												<tr>
 													<td width="16"></td>
-													<td><a href="news.html" target="_self">更新日志</a></td>
+													<td><a href="changes.html" target="_self">更新日志</a></td>
 												</tr>
 											</table>
 										</td>
@@ -512,19 +527,23 @@
 											
 
 								<b>一、tools包依赖第三方包情况：</b><br/>
-								(1). org.commontemplate.tools.web.servlet.TemplateServlet依赖于servlet-api.jar包<br/>
-								(2). org.commontemplate.tools.web.jsp.TemplateTag依赖于jsp-api.jar包<br/>
-								(3). org.commontemplate.tools.web.webwork.TemplateResult依赖于webwork.jar和xwork.jar包<br/>
-								(4). org.commontemplate.tools.web.struts2.TemplateResult依赖于struts2.jar和xwork2.jar包<br/>
+								(1) org.commontemplate.tools.web.servlet.TemplateServlet依赖于servlet-api.jar包<br/>
+								(2) org.commontemplate.tools.web.jsp.TemplateTag依赖于jsp-api.jar包<br/>
+								(3) org.commontemplate.tools.web.webwork.TemplateResult依赖于webwork.jar和xwork.jar包<br/>
+								(4) org.commontemplate.tools.web.struts2.TemplateResult依赖于struts2.jar和xwork2.jar包<br/>
+								(5) org.commontemplate.tools.web.spring.CommonTemplateViewResolver/CommonTemplateView依赖于spring.jar包<br/>
+								(6) org.commontemplate.tools.web.ant.TemplateTask依赖于ant.jar包<br/>
 								<br/>
 								<b>二、standard包依赖第三方包情况：</b><br/>
-								(1). org.commontemplate.standard.log.CommonsLogging依赖于commons-logging.jar包<br/>
-								(3). org.commontemplate.standard.cache.EHCache依赖于ehcache.jar包<br/>
-								(4). org.commontemplate.standard.cache.OSCache依赖于oscache.jar包<br/>
-								(5). org.commontemplate.standard.coat.attribute.jericho.JerichoAttributeCoatFilter依赖于jericho.jar包<br/>
-								(6). org.commontemplate.standard.directive.code.JavaCodeFilter依赖于java2html.jar包<br/>
-								(7). org.commontemplate.standard.directive.taglib.TagLineDirectiveAdapter/TagBlockDirectiveAdapter依赖于servlet-api.jar包和jsp-api.jar包<br/>
+								(1) org.commontemplate.standard.log.CommonsLogging依赖于commons-logging.jar包<br/>
+								(2) org.commontemplate.standard.cache.EHCache依赖于ehcache.jar包<br/>
+								(3) org.commontemplate.standard.cache.OSCache依赖于oscache.jar包<br/>
+								(4) org.commontemplate.standard.coat.attribute.jericho.JerichoAttributeCoatFilter依赖于jericho.jar包<br/>
+								(5) org.commontemplate.standard.directive.filter.code.JavaCodeFilter依赖于java2html.jar包<br/>
+								(6) org.commontemplate.standard.directive.taglib.TagLineDirectiveAdapter/TagBlockDirectiveAdapter依赖于servlet-api.jar包和jsp-api.jar包<br/>
+								(7) org.commontemplate.standard.directive.taglib.PageContextImpl依赖于commons-el.jar包<br/>
 								<br/>
+								<font color="green">(注：以上jar包只有用到相应功能时才需要加入，必然依赖的第三方包均已通过源码引入util包中)</font><br/>
 								<font color="green">(注：这里列出的是build依赖，运行时依赖需看具体应用，所依赖的包可能会再依赖其它包，以上列出的包可以在项目的lib目录下找到)</font><br/>
 
 	
