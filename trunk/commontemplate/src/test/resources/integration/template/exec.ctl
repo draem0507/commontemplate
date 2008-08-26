@@ -1,6 +1,5 @@
-1.$exec
-2.$exec{null}
-3.$exec{""}
-4.$exec{"xxxx"}
-5.$exec{"$if{users[0].name=='liangfei'} okok $else nono $end"}
-6.$exec{"aaaa $* bbbb *$ cccc"}
+1.$exec{null}
+2.$exec{""}
+3.$exec{"xxxx"}
+4.$exec{"$if{users[0].name=='liangfei'} okok $else nono $end"}
+5.$exec{"aaaa $* bbbb *$ cccc"}

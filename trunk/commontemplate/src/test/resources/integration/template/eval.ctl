@@ -1,5 +1,4 @@
-1.$eval
-2.$eval{null}
-3.$eval{""}
-4.$eval{"1+2"}
-5.$eval{"users[0].name + 'ok'"}
+1.$eval{null}
+2.$eval{""}
+3.$eval{"1+2"}
+4.$eval{"users[0].name + 'ok'"}
