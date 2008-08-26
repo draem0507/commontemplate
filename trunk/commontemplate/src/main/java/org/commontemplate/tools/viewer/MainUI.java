@@ -39,7 +39,7 @@ public class MainUI {
 		area.setText("一、运行方式：\n"
 				+ "双击*.ctl文件，或右键菜单选择\"CommonTemplate\"打开，即可运行。\n\n"
 				+ "二、加载项：\n"
-				+ "(1)类：加载安装目录和模板所在目录中的jar包。\n"
+				+ "(1)类：加载安装目录和模板所在目录中的class文件或jar包。\n"
 				+ "(2)配置：首先查找模板所在目录的commontemplate.properties，\n"
 				+ "   再查找安装目录的commontemplate.properties，\n"
 				+ "   否则使用默认的org/commontemplate/tools/viewer/commontemplate.properties\n"

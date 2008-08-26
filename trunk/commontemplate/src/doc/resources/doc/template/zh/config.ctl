@@ -116,6 +116,7 @@ modificationCheckInterval=<font color="#2a00ff">30000</font><br/>
 <font color="#3f7f5f"># 模板运行日志输出端</font><br/>
 logger=<font color="#2a00ff">org.commontemplate.standard.log.SimpleLogger()</font><br/>
 <font color="#3f7f5f">#logger=org.commontemplate.standard.log.CommonsLogging()</font><br/>
+<a href="extension.html#logger">扩展...</a><br/>
 <br/>
 <font color="#3f7f5f"># 磁盘缓存目录，用于缓存模板编译结果</font><br/>
 diskCache.directory=<font color="#2a00ff">WEB-INF/cache/</font><br/>
@@ -136,6 +137,7 @@ memoryCache=<font color="#2a00ff">org.commontemplate.standard.cache.LruCache()</
 <font color="#3f7f5f">#memoryCache=org.commontemplate.standard.cache.StrongCache()</font><br/>
 <font color="#3f7f5f">#memoryCache=org.commontemplate.standard.cache.OSCache()</font><br/>
 <font color="#3f7f5f">#memoryCache=org.commontemplate.standard.cache.EHCache()</font><br/>
+<a href="extension.html#cache">扩展...</a><br/>
 <br/>
 <font color="#3f7f5f"># 内存缓存容量，用于：LruCache, MruCache, FifoCache</font><br/>
 memoryCache.maxSize=<font color="#2a00ff">1000</font><br/>

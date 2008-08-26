@@ -15,9 +15,8 @@
 								CommonTemplate(generate) 生成模板到指定文件<br/>
 								<br/>
 								<b>3. 类加载</b><br/>
-								(1) 加载JRE和引擎内置的jar包<br/>
-								(2) 加载安装目录中的jar包<br/>
-								(3) 加载模板所在目录中的jar包<br/>
+								(1) 加载安装目录中的class文件或jar包<br/>
+								(2) 加载模板所在目录中的class文件或jar包<br/>
 								<br/>
 								<b>4. 配置加载</b><br/>
 								(1) 首先，查找模板所在目录的commontemplate.properties<br/>
@@ -29,7 +28,7 @@
 								(1)同名数据文件加载：如打开test.ctl，将搜索同目录的test.xml, test.json, test.properties, test.yaml等数据文件并加载<br/>
 								(2)内部数据供给块指令：\$data{"xml"}...\$end，指令内部放数据表示内容<br/>
 								(3)外部数据加载指令：\$load{xml: "test.xml"} 或者 \$load{"test.xml"} 通过文件扩展名识别类型<br/>
-								内置支持xml,json,properties,ymal等数据格式。<a href="extension.html">扩展...</a><br/>
+								内置支持xml,json,properties,ymal等数据格式。<a href="extension.html#data">扩展...</a><br/>
 								<br/>
 	<!--$end-->
 <!--$end-->
