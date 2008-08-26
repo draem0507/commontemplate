@@ -15,7 +15,7 @@ import org.commontemplate.util.NumberArithmetic;
  *
  */
 final class ExpressionOptimizer {
-	
+
 	private final List evaluateInterceptors;
 
 	ExpressionOptimizer(List evaluateInterceptors) {
@@ -34,6 +34,8 @@ final class ExpressionOptimizer {
 	 * @return 优化后的表达式列表
 	 */
 	List optimize(List expressions) {
+		if (expressions == null)
+			return null;
 
 		// 表达式对象
 		Expression expression;
@@ -74,7 +76,7 @@ final class ExpressionOptimizer {
 			}
 			// 如果当前的表达式是常量
 			if (expression.getClass() == ConstantImpl.class) {
-				
+
 				// 取出前一个操作符
 				if(i == 0 || expressions.size() < i) {
 					continue;
@@ -102,7 +104,7 @@ final class ExpressionOptimizer {
 					}
 
 					continue;
-					
+
 				} else {
 					// 如果是2元操作符的情况
 					// 如果是2元操作符的情况，那么i必须大于等于2
