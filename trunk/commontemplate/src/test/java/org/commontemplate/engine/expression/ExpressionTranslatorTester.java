@@ -18,7 +18,7 @@ public class ExpressionTranslatorTester extends TestCase {
 
 	public void setUp() {
 		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		expressionTranslator = new ExpressionTranslator(new ExpressionProvider(config.getOperatorHandlerProvider(), config.getKeywords(), config.isFunctionAvailable()), false);
+		expressionTranslator = new ExpressionTranslator(new ExpressionProvider(config.getOperatorHandlerProvider(), config.getEvaluateInterceptors(), config.getKeywords(), config.isFunctionAvailable()), false);
 	}
 
 	public void testExpression() throws ParsingException {
@@ -65,7 +65,7 @@ public class ExpressionTranslatorTester extends TestCase {
 		super.assertEquals("9", ((Expression)expressions.get(5)).getName());
 		super.assertEquals(")", ((Expression)expressions.get(6)).getName());
 	}
-	
+
 	public void testConjointOperatorExpression() throws ParsingException {
 		List tokens = new ArrayList();
 		tokens.add(new Token("3", new Position(1, 1, 1)));

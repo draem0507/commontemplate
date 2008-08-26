@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.commontemplate.core.Context;
-import org.commontemplate.tools.ContextProxy;
+import org.commontemplate.standard.context.ContextProxy;
 
 /**
  * Web扩展上下文

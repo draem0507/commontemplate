@@ -13,10 +13,11 @@ import org.commontemplate.config.Cache;
 import org.commontemplate.config.ConfigurationException;
 import org.commontemplate.config.DirectiveHandler;
 import org.commontemplate.config.DirectiveHandlerProvider;
-import org.commontemplate.config.ElementInterceptor;
+import org.commontemplate.config.EvaluateInterceptor;
 import org.commontemplate.config.Keywords;
 import org.commontemplate.config.OperatorHandlerProvider;
 import org.commontemplate.config.ReloadController;
+import org.commontemplate.config.RenderInterceptor;
 import org.commontemplate.config.ResourceComparator;
 import org.commontemplate.config.ResourceFilter;
 import org.commontemplate.config.Syntax;
@@ -823,13 +824,22 @@ public class StandardConfiguration extends ConfigurationSettings {
 		return chain;
 	}
 
-	public void addElementInterceptor(ElementInterceptor elementInterceptor) {
-		List elementInterceptors = super.getElementInterceptors();
-		if (elementInterceptors == null) {
-			elementInterceptors = new ArrayList();
-			super.setElementInterceptors(elementInterceptors);
+	public void addEvaluateInterceptor(EvaluateInterceptor evaluateInterceptor) {
+		List evaluateInterceptors = super.getEvaluateInterceptors();
+		if (evaluateInterceptors == null) {
+			evaluateInterceptors = new ArrayList();
+			super.setEvaluateInterceptors(evaluateInterceptors);
 		}
-		elementInterceptors.add(elementInterceptor);
+		evaluateInterceptors.add(evaluateInterceptor);
+	}
+
+	public void addRenderInterceptor(RenderInterceptor renderInterceptor) {
+		List renderInterceptors = super.getRenderInterceptors();
+		if (renderInterceptors == null) {
+			renderInterceptors = new ArrayList();
+			super.setRenderInterceptors(renderInterceptors);
+		}
+		renderInterceptors.add(renderInterceptor);
 	}
 
 	// 子类可以重写此函数进行相应配置有效性检查，如果不需要检查则忽略

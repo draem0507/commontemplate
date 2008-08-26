@@ -1,6 +1,10 @@
 package org.commontemplate.engine.expression;
 
+import java.util.List;
+
+import org.commontemplate.core.EvaluationException;
 import org.commontemplate.core.Variable;
+import org.commontemplate.core.VariableResolver;
 import org.commontemplate.util.Location;
 
 /**
@@ -17,9 +21,26 @@ final class VariableImpl extends Variable {
 
 	private final Location location;
 
-	VariableImpl(String name, Location location) {
+	private final List evaluateInterceptors;
+
+	private final Variable proxy;
+
+	VariableImpl(String name, Location location, List evaluateInterceptors) {
 		this.name = name;
 		this.location = location;
+		this.evaluateInterceptors = evaluateInterceptors;
+		this.proxy = new VariableProxy(this);
+	}
+
+	public Object evaluate(VariableResolver context) throws EvaluationException {
+		if (evaluateInterceptors != null && evaluateInterceptors.size() > 0)
+			return new EvaluationImpl(proxy, context, evaluateInterceptors).doEvaluate();
+		else
+			return doEvaluate(context);
+	}
+
+	Object doEvaluate(VariableResolver context) throws EvaluationException {
+		return context.getVariable(getName());
 	}
 
 	public String getName() {

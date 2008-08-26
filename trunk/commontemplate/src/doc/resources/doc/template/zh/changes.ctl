@@ -3,7 +3,7 @@
 $!
 								<b>0.8.6 版本更新：(2008-08-25)</b> <a href="downloads.html">下载...</a><br/>
 								Bug Fixed:<br/>
-								修复BeanUtils在访问安全上的BUG<br/>
+								修复BeanUtils在访问级安全控制上的BUG<br/>
 								将Class.forName()统一改为ClassUtils.forName(), 使用当前线程类加载器加载类, 并支持基本类型.<br/>
 								修复$for指令以及操作符不能处理基本类型数组(如:int[])的BUG.<br/>
 								Function Changes:<br/>
@@ -21,11 +21,11 @@ $!
 								New Feature:<br/>
 								增加扩展属性List.sort, Object[].sort<br/>
 								增加扩展属性String.toClass<br/>
-								调试器加入捕获输出功能, 可实时观察输出内容.<br/>
+								调试器加入捕获输出功能, 可实时观察输出内容. <a href="debugger.html">调试器说明...</a><br/>
 								调试器加入打开模板功能, 可同时打开多个模板, 便于设置断点.<br/>
 								调试器线程列表和断点集合树加入右键菜单.<br/>
-								查看器加入直接以调试模式打开方式, 不必再在模板内写$breakpoint指令.<br/>
-								查看器安装目录和当前模板所在目录jar包加载.<br/>
+								查看器加入直接以调试模式打开方式, 不必再在模板内写$.断点指令. <a href="viewer.html">查看器说明...</a><br/>
+								自动加载查看器安装目录和当前模板所在目录下的jar包，使得模板配置中的扩展类以及数据相关类可以正常加载.<br/>
 								查看器安装目录和当前模板所在目录,commontemplate.properties配置逐级查找.<br/>
 								增加迭代数据集合转换器(CollectionConverter)扩展点.<br/>
 								增加$setting指令, 用于设置模板上下文参数.<br/>
@@ -33,6 +33,9 @@ $!
 								增加$buffer指令, 用于缓冲输出, 将其内部块缓冲为单一字符串输出.<br/>
 								增加boolean值格式化功能，可配置：defaultBooleanValue=true|false<br/>
 								增加OutputConverter接口, 用于拦截输出前对象进行AOP处理.<br/>
+								增加ContextInitializer接口, 用于初始化上下文.<br/>
+								增加autoImport配置项，自动导入宏.<br/>
+								增加EvaluateInterceptor拦截器接口，用于拦截表达式求值过程.<br/>
 								<br/>
 								<b>0.8.5 版本更新：(2008-08-04)</b> <a href="downloads.html">下载...</a><br/>
 								此版本主要完善核心引擎和标准指令集.<br/>

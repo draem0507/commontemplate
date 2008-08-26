@@ -5,6 +5,7 @@ import java.util.List;
 import org.commontemplate.config.Cache;
 import org.commontemplate.config.Configuration;
 import org.commontemplate.config.ConfigurationException;
+import org.commontemplate.config.ContextInitializer;
 import org.commontemplate.config.DirectiveHandlerProvider;
 import org.commontemplate.config.Keywords;
 import org.commontemplate.config.OperatorHandlerProvider;
@@ -21,7 +22,6 @@ import org.commontemplate.standard.i18n.ResourceBundleProvider;
 import org.commontemplate.standard.log.Logger;
 import org.commontemplate.standard.syntax.KeywordsSettings;
 import org.commontemplate.standard.syntax.SyntaxSettings;
-import org.commontemplate.util.Assert;
 
 /**
  * 配置设置
@@ -56,8 +56,22 @@ public class ConfigurationSettings extends Configuration {
 		return keywords;
 	}
 
+	/**
+	 * 设置表达式关键字
+	 *
+	 * @param keywords 表达式关键字
+	 */
+	public void setKeywords(Keywords keywords) {
+		// Assert.assertNotNull(syntax, "ConfigurationSettings.keywords.required");
+		if (keywords == null)
+			return;
+		this.keywords = keywords;
+	}
+
 	public void setKeywordsSettings(KeywordsSettings settings) {
-		Assert.assertNotNull(settings, "ConfigurationSettings.keywords.string.required");
+		// Assert.assertNotNull(settings, "ConfigurationSettings.keywords.string.required");
+		if (settings == null)
+			return;
 		String nullKeyword = settings.getNull() != null ? settings.getNull() : Keywords.DEFAULT_NULL_KEYWORD;
 		String trueKeyword = settings.getTrue() != null ? settings.getTrue() : Keywords.DEFAULT_FALSE_KEYWORD;
 		String falseKeyword = settings.getFalse() != null ? settings.getFalse() : Keywords.DEFAULT_TRUE_KEYWORD;
@@ -67,14 +81,18 @@ public class ConfigurationSettings extends Configuration {
 		setKeywords(new Keywords(nullKeyword, trueKeyword, falseKeyword, currentLocalContextKeyword, parentLocalContextKeyword, contextKeyword));
 	}
 
-	/**
-	 * 设置表达式关键字
-	 *
-	 * @param keywords 表达式关键字
-	 */
-	public void setKeywords(Keywords keywords) {
-		Assert.assertNotNull(syntax, "ConfigurationSettings.keywords.required");
-		this.keywords = keywords;
+	public void setKeywordsString(String value) {
+		// Assert.assertTrue(value != null && value.trim().length() > 0, "ExpressionConfigurationSettings.keywords.string.required");
+		if (value == null)
+			return;
+		String[] values = value.trim().split("\\,");
+		String nullKeyword = values.length > 0 ? values[0] : Keywords.DEFAULT_NULL_KEYWORD;
+		String trueKeyword = values.length > 1 ? values[1] : Keywords.DEFAULT_FALSE_KEYWORD;
+		String falseKeyword = values.length > 2 ? values[2] : Keywords.DEFAULT_TRUE_KEYWORD;
+		String thisKeyword = values.length > 3 ? values[3] : Keywords.DEFAULT_CURRENT_LOCAL_CONTEXT_KEYWORD;
+		String superKeyword = values.length > 4 ? values[4] : Keywords.DEFAULT_PARENT_LOCAL_CONTEXT_KEYWORD;
+		String contextKeyword = values.length > 5 ? values[5] : Keywords.DEFAULT_CONTEXT_KEYWORD;
+		setKeywords(new Keywords(nullKeyword, trueKeyword, falseKeyword, thisKeyword, superKeyword, contextKeyword));
 	}
 
 	// 操作符优先级 --------------
@@ -162,6 +180,21 @@ public class ConfigurationSettings extends Configuration {
 		if (configName != null && configName.length() > 0)
 			return configName;
 		return defaultName;
+	}
+
+	public void setSyntaxString(String value) {
+		// Assert.assertTrue(value != null && value.trim().length() > 0, "ConfigurationSettings.syntax.string.required");
+		if (value == null)
+			return;
+		value = value.trim();
+		char leader = value.length() > 0 ? value.charAt(0) : Syntax.DEFAULT_DIRECTIVE_LEADER;
+		char expressionBegin = value.length() > 1 ? value.charAt(1) : Syntax.DEFAULT_EXPRESSION_BEGIN;
+		char expressionEnd = value.length() > 2 ? value.charAt(2) : Syntax.DEFAULT_EXPRESSION_END;
+		char lineComment = value.length() > 3 ? value.charAt(3) : Syntax.DEFAULT_LINE_COMMENT;
+		char blockComment = value.length() > 4 ? value.charAt(4) : Syntax.DEFAULT_BLOCK_COMMENT;
+		char noParse = value.length() > 5 ? value.charAt(5) : Syntax.DEFAULT_NO_PARSE;
+		String endDirectiveName = value.length() > 6 ? value.substring(6) : Syntax.DEFAULT_END_DIRECTIVE_NAME;
+		setSyntax(new Syntax(leader, expressionBegin, expressionEnd, lineComment, blockComment, noParse, endDirectiveName));
 	}
 
 	// 指令处理器 -------------
@@ -409,14 +442,34 @@ public class ConfigurationSettings extends Configuration {
 		this.eventListener = eventListener;
 	}
 
-	private List elementInterceptors;
+	private List evaluateInterceptors;
 
-	public List getElementInterceptors() {
-		return elementInterceptors;
+	public List getEvaluateInterceptors() {
+		return evaluateInterceptors;
 	}
 
-	public void setElementInterceptors(List elementInterceptors) {
-		this.elementInterceptors = elementInterceptors;
+	public void setEvaluateInterceptors(List evaluateInterceptors) {
+		this.evaluateInterceptors = evaluateInterceptors;
+	}
+
+	private List renderInterceptors;
+
+	public List getRenderInterceptors() {
+		return renderInterceptors;
+	}
+
+	public void setRenderInterceptors(List renderInterceptors) {
+		this.renderInterceptors = renderInterceptors;
+	}
+
+	private ContextInitializer contextInitializer;
+
+	public ContextInitializer getContextInitializer() {
+		return contextInitializer;
+	}
+
+	public void setContextInitializer(ContextInitializer contextInitializer) {
+		this.contextInitializer = contextInitializer;
 	}
 
 }

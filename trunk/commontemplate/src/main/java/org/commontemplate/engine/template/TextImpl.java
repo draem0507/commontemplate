@@ -25,21 +25,21 @@ final class TextImpl extends Text {
 
 	private final String text;
 
-	private final List elementInterceptors;
+	private final List renderInterceptors;
 
 	private final Text proxy;
 
-	TextImpl(String name, Location location, String text, List elementInterceptors) {
+	TextImpl(String name, Location location, String text, List renderInterceptors) {
 		this.name = name;
 		this.location = location;
 		this.text = text;
-		this.elementInterceptors = elementInterceptors;
+		this.renderInterceptors = renderInterceptors;
 		this.proxy = new TextProxy(this);
 	}
 
 	public void render(Context context) throws RenderingException {
-		if (elementInterceptors != null && elementInterceptors.size() > 0)
-			new ElementRenditionImpl(proxy, context, elementInterceptors).doRender();
+		if (renderInterceptors != null && renderInterceptors.size() > 0)
+			new RenditionImpl(proxy, context, renderInterceptors).doRender();
 		else
 			doRender(context);
 	}

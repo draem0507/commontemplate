@@ -1,6 +1,6 @@
 package org.commontemplate.standard.debug;
 
-import org.commontemplate.config.ElementRendition;
+import org.commontemplate.config.Rendition;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.Element;
 import org.commontemplate.core.Template;
@@ -20,7 +20,7 @@ final class ExecutionImpl implements Execution, Comparable {
 
 	private final String threadName;
 
-	public ExecutionImpl(ElementRendition rendition, String threadName) {
+	public ExecutionImpl(Rendition rendition, String threadName) {
 		this.context = rendition.getContext();
 		this.element = rendition.getElement();
 		this.threadName = threadName;

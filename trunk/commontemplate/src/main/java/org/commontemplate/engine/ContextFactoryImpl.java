@@ -4,6 +4,7 @@ import java.io.Writer;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import org.commontemplate.config.ContextInitializer;
 import org.commontemplate.config.Keywords;
 import org.commontemplate.config.TemplateNameFilter;
 import org.commontemplate.core.Context;
@@ -23,6 +24,8 @@ import org.commontemplate.util.LocaleUtils;
  */
 final class ContextFactoryImpl implements ContextFactory {
 
+	private final ContextInitializer contextInitializer;
+
 	private final GlobalContext globalContext;
 
 	private final TemplateFactory templateFactory;
@@ -38,6 +41,7 @@ final class ContextFactoryImpl implements ContextFactory {
 	private final Keywords keywords;
 
 	ContextFactoryImpl(TemplateFactory templateFactory,
+			ContextInitializer contextInitializer,
 			TemplateNameFilter templateNameFilter,
 			OutputFormatter defaultFormater,
 			EventListener eventListener,
@@ -46,12 +50,17 @@ final class ContextFactoryImpl implements ContextFactory {
 		Assert.assertNotNull(templateFactory);
 		Assert.assertNotNull(keywords);
 		this.globalContext = new GlobalContextImpl(keywords);
+		this.contextInitializer = contextInitializer;
 		this.templateFactory = templateFactory;
 		this.templateNameFilter = templateNameFilter;
 		this.defaultFormater = defaultFormater;
 		this.eventListener = eventListener;
 		this.debugMode = debugMode;
 		this.keywords = keywords;
+	}
+
+	public GlobalContext getGlobalContext() {
+		return globalContext;
 	}
 
 	public Context createContext(Writer out) {
@@ -63,12 +72,11 @@ final class ContextFactoryImpl implements ContextFactory {
 	}
 
 	public Context createContext(Writer out, Locale locale, TimeZone timeZone) {
-		return new ContextImpl(globalContext, out, locale,
+		Context context = new ContextImpl(globalContext, out, locale,
 				timeZone, templateFactory, templateNameFilter, defaultFormater, eventListener, debugMode, keywords);
-	}
-
-	public GlobalContext getGlobalContext() {
-		return globalContext;
+		if (contextInitializer != null)
+			contextInitializer.initialize(context);
+		return context;
 	}
 
 }

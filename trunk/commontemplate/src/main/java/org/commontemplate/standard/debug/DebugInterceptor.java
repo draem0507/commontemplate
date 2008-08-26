@@ -5,11 +5,10 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 
-import org.commontemplate.config.ElementInterceptor;
-import org.commontemplate.config.ElementRendition;
+import org.commontemplate.config.RenderInterceptor;
+import org.commontemplate.config.Rendition;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.Element;
-import org.commontemplate.core.Template;
 import org.commontemplate.util.Location;
 
 /**
@@ -18,7 +17,7 @@ import org.commontemplate.util.Location;
  * @author linagfei0201@163.com
  *
  */
-public class DebugInterceptor implements ElementInterceptor, Serializable {
+public class DebugInterceptor implements RenderInterceptor, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -32,21 +31,21 @@ public class DebugInterceptor implements ElementInterceptor, Serializable {
 		DebugManager.getInstance().addDebugListener(debugListener);
 	}
 
-	public void intercept(ElementRendition rendition) {
+	public void intercept(Rendition rendition) {
 		// 获取调试器
 		final DebugManager debugManager = DebugManager.getInstance();
 		// 获取当前上下文
 		final Context context = rendition.getContext();
 		final Element element = rendition.getElement();
-		final Template template = element.getTemplate();
 		// 判断是否需要单步运行
-		if (! debugManager.isDebugListenerEmpty() // 前置条件：调试器存在
+		if (element != null // 前置条件：模板元素不为空
+				&& ! debugManager.isDebugListenerEmpty() // 前置条件：调试器存在
 				&& context.isDebug() // 前置条件：配置中开启了调试模式
 					&& ((context.getRootLocalContext().getBooleanStatus(STEP_STATUS) // 运行在调试状态中
 							&& context.getProperty(STEP_OVER_KEY) != Boolean.TRUE) // 非跳跃状态
 					|| (! context.getRootLocalContext().getBooleanStatus(STEP_STATUS) // 运行在非调试状态中
 							&& ! context.getRootLocalContext().getBooleanStatus(BREAKPOINT_OVER_STATUS)
-							&& isBreakpoint(template.getName(), element)))) { // 当前模板元素在断点位置
+							&& isBreakpoint(element.getTemplate().getName(), element)))) { // 当前模板元素在断点位置
 			// 构造执行过程封装体
 			final ExecutionImpl execution = new ExecutionImpl(rendition, Thread.currentThread().getName());
 			// 挂起

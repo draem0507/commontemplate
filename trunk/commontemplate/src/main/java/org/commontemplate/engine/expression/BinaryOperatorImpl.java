@@ -47,7 +47,11 @@ final class BinaryOperatorImpl extends BinaryOperator {
 
 	private final boolean rightOperandFunctioned;
 
-	BinaryOperatorImpl(String name, Location location, int priority, BinaryOperatorHandler handler) {
+	private final List evaluateInterceptors;
+
+	private final BinaryOperator proxy;
+
+	BinaryOperatorImpl(String name, Location location, int priority, BinaryOperatorHandler handler, List evaluateInterceptors) {
 		Assert.assertNotNull(handler);
 		this.name = name;
 		this.location = location;
@@ -61,9 +65,18 @@ final class BinaryOperatorImpl extends BinaryOperator {
 		this.rightOperandFunctioned = handler.isRightOperandFunctioned();
 		this.associativeLaw = handler.isAssociative();
 		this.commutativeLaw = handler.isCommutative();
+		this.evaluateInterceptors = evaluateInterceptors;
+		this.proxy = new BinaryOperatorProxy(this);
 	}
 
 	public Object evaluate(VariableResolver context) throws EvaluationException {
+		if (evaluateInterceptors != null && evaluateInterceptors.size() > 0)
+			return new EvaluationImpl(proxy, context, evaluateInterceptors).doEvaluate();
+		else
+			return doEvaluate(context);
+	}
+
+	Object doEvaluate(VariableResolver context) throws EvaluationException {
 		try {
 			Object left;
 			if (leftOperandLazy)

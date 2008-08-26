@@ -55,7 +55,8 @@ public final class Engine implements Factory {
 				config.getReloadController(), config.getResourceComparator());
 		// 创建上下文工厂
 		this.contextFactory = new ContextFactoryImpl(
-				templateFactory, config.getTemplateNameFilter(), config.getDefaultOutputFormatter(),
+				templateFactory, config.getContextInitializer(),
+				config.getTemplateNameFilter(), config.getDefaultOutputFormatter(),
 				config.getEventListener(), config.isDebug(),
 				config.getKeywords());
 	}

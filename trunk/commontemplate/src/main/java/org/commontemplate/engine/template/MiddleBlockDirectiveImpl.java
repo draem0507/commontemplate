@@ -19,8 +19,8 @@ final class MiddleBlockDirectiveImpl extends BlockDirectiveImpl {
 
 	private final String prototype;
 
-	MiddleBlockDirectiveImpl(String name, Location location, Expression expression, MiddleBlockDirectiveHandler middleNestDirectiveHandler, String prototype, String endPrototype, List elementInterceptors) {
-		super(name, location, expression, middleNestDirectiveHandler, endPrototype, endPrototype, elementInterceptors);
+	MiddleBlockDirectiveImpl(String name, Location location, Expression expression, MiddleBlockDirectiveHandler middleNestDirectiveHandler, String prototype, String endPrototype, List renderInterceptors) {
+		super(name, location, expression, middleNestDirectiveHandler, endPrototype, endPrototype, renderInterceptors);
 		this.prototype = prototype;
 	}
 

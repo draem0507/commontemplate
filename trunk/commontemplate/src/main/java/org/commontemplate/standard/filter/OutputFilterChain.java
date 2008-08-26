@@ -9,7 +9,7 @@ import org.commontemplate.core.OutputFilter;
 public class OutputFilterChain implements OutputFilter, Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private List filters;
 
 	public OutputFilterChain(List filters) {
@@ -20,7 +20,9 @@ public class OutputFilterChain implements OutputFilter, Serializable {
 	public String filter(String text) {
 		for (Iterator iterator = filters.iterator(); iterator.hasNext();) {
 			OutputFilter outputFilter = (OutputFilter)iterator.next();
-			text = outputFilter.filter(text);
+			if (outputFilter != null) {
+				text = outputFilter.filter(text);
+			}
 		}
 		return text;
 	}

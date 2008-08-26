@@ -51,7 +51,7 @@ public final class TemplateEngine implements TemplateParser {
 
 	private final Syntax syntax;
 
-	private final List elementInterceptors;
+	private final List renderInterceptors;
 
 	private final DirectiveHandlerProvider directiveHandlerProvider;
 
@@ -59,15 +59,15 @@ public final class TemplateEngine implements TemplateParser {
 		Assert.assertNotNull(config, "TemplateEngine.config.required");
 		directiveHandlerProvider = config.getDirectiveHandlerProvider();
 		syntax = config.getSyntax();
-		elementInterceptors = config.getElementInterceptors();
+		renderInterceptors = config.getRenderInterceptors();
 		expressionParser = new ExpressionEngine(config);
 		directiveTokenizer = new DirectiveTokenizer(config.getSyntax());
 		directiveTranslator = new DirectiveTranslator(new DirectiveProvider(
 				syntax, directiveHandlerProvider,
-				expressionParser, config.getTextFilter(), elementInterceptors));
+				expressionParser, config.getTextFilter(), renderInterceptors));
 		directiveReducer = new DirectiveReducer();
 		resourceFilter = config.getResourceFilter();
-		elementFactory = new ElementFactoryImpl(directiveHandlerProvider, elementInterceptors);
+		elementFactory = new ElementFactoryImpl(directiveHandlerProvider, renderInterceptors);
 	}
 
 	private final RootBlockDirectiveImpl parseDirective(Reader templateProvider) throws IOException, ParsingException {
@@ -95,7 +95,7 @@ public final class TemplateEngine implements TemplateParser {
 	public final Template parseTemplate(Resource resource)
 			throws ParsingException, IOException {
 		try {
-			return new TemplateImpl(getReader(resource), resource, parseDirective(getReader(resource)));
+			return new TemplateImpl(getReader(resource), resource, parseDirective(getReader(resource)), renderInterceptors);
 		} catch (ParsingException e) {
 			e.setResource(resource);
 			throw e;
@@ -120,7 +120,7 @@ public final class TemplateEngine implements TemplateParser {
 	}
 
 	public TemplateBudiler getTemplateBudiler(String templateName) {
-		return new TemplateBudilerImpl(templateName, syntax, directiveHandlerProvider, elementInterceptors);
+		return new TemplateBudilerImpl(templateName, syntax, directiveHandlerProvider, renderInterceptors);
 	}
 
 	public BinaryOperator createBinaryOperator(String operatorName,

@@ -25,38 +25,38 @@ final class TemplateBudilerImpl implements TemplateBudiler {
 
 	private final DirectiveHandlerProvider directiveHandlerProvider;
 
-	private final List elementInterceptors;
+	private final List renderInterceptors;
 
 	private final DirectiveReducer directiveReducer = new DirectiveReducer();
 
-	TemplateBudilerImpl(String templateName, Syntax syntax, DirectiveHandlerProvider directiveHandlerProvider, List elementInterceptors) {
+	TemplateBudilerImpl(String templateName, Syntax syntax, DirectiveHandlerProvider directiveHandlerProvider, List renderInterceptors) {
 		this.templateName = templateName;
 		this.syntax = syntax;
 		this.directiveHandlerProvider = directiveHandlerProvider;
-		this.elementInterceptors = elementInterceptors;
+		this.renderInterceptors = renderInterceptors;
 	}
 
 	private List elements = new ArrayList();
 
 	public void addComment(String comment) {
-		elements.add(new CommentImpl(String.valueOf(syntax.getBlockComment()), null, comment, comment, elementInterceptors));
+		elements.add(new CommentImpl(String.valueOf(syntax.getBlockComment()), null, comment, comment, renderInterceptors));
 	}
 
 	public void addDirective(String directiveName, Expression expression) {
 		elements.add(new DirectiveImpl(directiveName, null, expression, directiveHandlerProvider.getDirectiveHandler(directiveName),
 				String.valueOf(syntax.getDirectiveLeader())
 				+ directiveName + String.valueOf(syntax.getExpressionBegin())
-				+ expression.toString() + String.valueOf(syntax.getExpressionEnd()), elementInterceptors));
+				+ expression.toString() + String.valueOf(syntax.getExpressionEnd()), renderInterceptors));
 	}
 
 	public void addText(String text) {
-		elements.add(new TextImpl(String.valueOf(syntax.getNoParse()), null, text, elementInterceptors));
+		elements.add(new TextImpl(String.valueOf(syntax.getNoParse()), null, text, renderInterceptors));
 	}
 
 	public Template getTemplate() {
 		RootBlockDirectiveImpl rootBlockDirective = directiveReducer.reduce(elements);
 		try {
-			return new TemplateImpl(new ResourceImpl("", templateName), rootBlockDirective);
+			return new TemplateImpl(new ResourceImpl("", templateName), rootBlockDirective, renderInterceptors);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
@@ -66,7 +66,7 @@ final class TemplateBudilerImpl implements TemplateBudiler {
 		elements.add(new BlockDirectiveImpl(directiveName, null, expression, (BlockDirectiveHandler)directiveHandlerProvider.getDirectiveHandler(directiveName),
 				String.valueOf(syntax.getDirectiveLeader())
 				+ directiveName + String.valueOf(syntax.getExpressionBegin())
-				+ expression.toString() + String.valueOf(syntax.getExpressionEnd()), syntax.getEndDirective(), elementInterceptors));
+				+ expression.toString() + String.valueOf(syntax.getExpressionEnd()), syntax.getEndDirective(), renderInterceptors));
 	}
 
 	public void endBlockDirective() {

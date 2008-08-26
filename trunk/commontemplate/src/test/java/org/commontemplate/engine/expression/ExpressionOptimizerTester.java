@@ -22,20 +22,20 @@ public class ExpressionOptimizerTester extends TestCase {
 	private ExpressionTokenizer expressionTokenizer;
 
 	private ExpressionTranslator expressionTranslator;
-	
+
 	private ExpressionOptimizer expressionOptimizer;
-	
+
 	private ExpressionReducer expressionReducer;
 
 	public void setUp() {
 
 		expressionTokenizer = new ExpressionTokenizer();
 		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		ExpressionProvider expressionFactory = new ExpressionProvider(config.getOperatorHandlerProvider(), config.getKeywords(), config.isFunctionAvailable());
+		ExpressionProvider expressionFactory = new ExpressionProvider(config.getOperatorHandlerProvider(), config.getEvaluateInterceptors(), config.getKeywords(), config.isFunctionAvailable());
 		expressionTranslator = new ExpressionTranslator(expressionFactory, config.isFunctionAvailable());
-		
-		expressionOptimizer = new ExpressionOptimizer();
-		expressionReducer = new ExpressionReducer();
+
+		expressionOptimizer = new ExpressionOptimizer(config.getEvaluateInterceptors());
+		expressionReducer = new ExpressionReducer(config.getEvaluateInterceptors());
 	}
 
 	/**
@@ -659,7 +659,7 @@ public class ExpressionOptimizerTester extends TestCase {
 		assertEquals("a", leftExpression.getName());
 		assertEquals("-6", rightExpression.getName());
 	}
-	
+
 	/**
 	 * 对表达式进行预优化的测试。
 	 * @condition

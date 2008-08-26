@@ -21,8 +21,10 @@ import org.commontemplate.util.Stack;
  */
 final class ExpressionReducer {
 
-	ExpressionReducer() {
+	private final List evaluateInterceptors;
 
+	ExpressionReducer(List evaluateInterceptors) {
+		this.evaluateInterceptors = evaluateInterceptors;
 	}
 
 	/**
@@ -36,7 +38,7 @@ final class ExpressionReducer {
 		if (expressions == null
 				|| expressions.size() == 0)
 			return null;
-		ReduceStack expressionStack = new ReduceStack();
+		ReduceStack expressionStack = new ReduceStack(evaluateInterceptors);
 		for (int i = 0, n = expressions.size(); i < n; i++) {
 			Expression expression = (Expression) expressions.get(i);
 			// 弹栈
@@ -86,6 +88,12 @@ final class ExpressionReducer {
 
 		// 参数栈
 		private Stack parameterStack = new LinkedStack();
+
+		private final List evaluateInterceptors;
+
+		ReduceStack(List evaluateInterceptors) {
+			this.evaluateInterceptors = evaluateInterceptors;
+		}
 
 		/**
 		 * 压入操作符
@@ -158,11 +166,11 @@ final class ExpressionReducer {
 			if (leftParameter instanceof Variable
 					&& binaryOperator.isLeftOperandNamed())
 				leftParameter = new ConstantImpl(((Variable) leftParameter)
-						.getName(), leftParameter.getLocation());
+						.getName(), leftParameter.getLocation(), evaluateInterceptors);
 			if (rightParameter instanceof Variable
 					&& binaryOperator.isRightOperandNamed())
 				rightParameter = new ConstantImpl(((Variable) rightParameter)
-						.getName(), rightParameter.getLocation());
+						.getName(), rightParameter.getLocation(), evaluateInterceptors);
 			binaryOperator.setOperands(leftParameter, rightParameter);
 			try {
 				// 常量优化算法，将常量先计算，如：
@@ -171,7 +179,7 @@ final class ExpressionReducer {
 				if (leftParameter instanceof Constant
 						&& rightParameter instanceof Constant)
 					return new ConstantImpl(binaryOperator.evaluate(null),
-							binaryOperator.getLocation());
+							binaryOperator.getLocation(), evaluateInterceptors);
 			} catch (Exception e) {
 				// 抛出任何异常都表示其不支持优化
 			}
@@ -183,14 +191,14 @@ final class ExpressionReducer {
 				UnaryOperatorImpl unaryOperator, Expression parameter) {
 			if (parameter instanceof Variable && unaryOperator.isOperandNamed())
 				parameter = new ConstantImpl(((Variable) parameter).getName(),
-						parameter.getLocation());
+						parameter.getLocation(), evaluateInterceptors);
 			unaryOperator.setOperand(parameter);
 			try {
 				// 常量优化算法，将常量先计算，如：
 				// ! true 将被优化为 false
 				if (parameter instanceof Constant)
 					return new ConstantImpl(unaryOperator.evaluate(null),
-							unaryOperator.getLocation());
+							unaryOperator.getLocation(), evaluateInterceptors);
 			} catch (Exception e) {
 				// 抛出任何异常都表示其不支持优化
 			}
