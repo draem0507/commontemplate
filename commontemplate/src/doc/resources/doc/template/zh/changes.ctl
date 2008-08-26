@@ -1,7 +1,7 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
 	<!--$zone{"content"}-->
 $!
-								<b>0.8.6 版本更新：(2008-08-25)</b> <a href="downloads.html">下载...</a><br/>
+								<b>0.8.6 版本更新：(2008-08-26)</b> <a href="downloads.html">下载...</a><br/>
 								Bug Fixed:<br/>
 								修复BeanUtils在访问级安全控制上的BUG<br/>
 								将Class.forName()统一改为ClassUtils.forName(), 使用当前线程类加载器加载类, 并支持基本类型.<br/>
