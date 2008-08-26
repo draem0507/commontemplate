@@ -20,6 +20,7 @@ $!
 								<br/>
 								<font color="green">(注：以上jar包只有用到相应功能时才需要加入，必然依赖的第三方包均已通过源码引入util包中)</font><br/>
 								<font color="green">(注：这里列出的是build依赖，运行时依赖需看具体应用，所依赖的包可能会再依赖其它包，以上列出的包可以在项目的lib目录下找到)</font><br/>
+								<a href="http://commontemplate.googlecode.com/svn/trunk/commontemplate/lib" target="_blank">依赖包下载...</a><br/>
 !$
 	<!--$end-->
 <!--$end-->

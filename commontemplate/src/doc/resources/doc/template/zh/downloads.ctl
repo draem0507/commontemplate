@@ -10,16 +10,15 @@ $!
 								</table>
 								(1) commontemplate-x.x.jar 标准二进制包<br/>
 								(2) commontemplate-debug-x.x.jar 便于调试二进制包，采用保留行号方式编译，并包含源代码<br/>
-								(3) commontemplate-src-x.x.jar 源代码包<br/>
+								(3) commontemplate-src-x.x.jar 源代码包 <a href="http://commontemplate.googlecode.com/svn/trunk/commontemplate/lib" target="_blank">依赖包下载...</a><br/>
 								(4) commontemplate-doc-x.x.jar 文档包，当前网站内容<br/>
-								(5) commontemplate-lib-x.x.zip 构建所依赖的第三方包，此ZIP只有改动时才更新，所以版本号可能与其它文件不一致，请参见：<a href="dependency.html">依赖包说明...</a><br/>
-								(6) CommonTemplateSetup-x.x.exe 查看器安装程序，请参见：<a href="viewer.html">查看器说明...</a><br/>
-								(7) struts-commontemplate-plugin-x.x.jar 与<a href="http://struts.apache.org/2.x/" target="_blank">Struts2</a>的集成包，采用Struts2约定的插件方式打包<br/>
-								(8) ct_struts2-x.x.war 与<a href="http://struts.apache.org/2.x/" target="_blank">Struts2</a>框架集成示例应用，请参见：<a href="integration.html">Web框架集成...</a><br/>
-								(9) ct_struts-x.x.war 与<a href="http://struts.apache.org/1.x/" target="_blank">Struts(1.x)</a>框架集成示例应用<br/>
-								(10) ct_webwork-x.x.war 与<a href="http://webwork.opensymphony.com/" target="_blank">WebWork</a>框架集成示例应用<br/>
-								(11) ct_springmvc-x.x.war 与<a href="http://www.springframework.org/" target="_blank">SpringMVC</a>框架集成示例应用<br/>
-								<font color="green">(注：8，9，10，11所示war包，放在服务器(如：tomcat)的webapps目录下即可访问(如：http://localhost:8080/war包名)，相关Java源代码放在war包内的/WEB-INF/src目录下。)</font><br/>
+								(5) CommonTemplateSetup-x.x.exe 查看器安装程序，请参见：<a href="viewer.html">查看器说明...</a><br/>
+								(6) struts-commontemplate-plugin-x.x.jar 与<a href="http://struts.apache.org/2.x/" target="_blank">Struts2</a>的集成包，采用Struts2约定的插件方式打包<br/>
+								(7) ct_struts2-x.x.war 与<a href="http://struts.apache.org/2.x/" target="_blank">Struts2</a>框架集成示例应用，请参见：<a href="integration.html">Web框架集成...</a><br/>
+								(8) ct_struts-x.x.war 与<a href="http://struts.apache.org/1.x/" target="_blank">Struts(1.x)</a>框架集成示例应用<br/>
+								(9) ct_webwork-x.x.war 与<a href="http://webwork.opensymphony.com/" target="_blank">WebWork</a>框架集成示例应用<br/>
+								(10) ct_springmvc-x.x.war 与<a href="http://www.springframework.org/" target="_blank">SpringMVC</a>框架集成示例应用<br/>
+								<font color="green">(注：7，8，9，10所示war包，放在服务器(如：tomcat)的webapps目录下即可访问(如：http://localhost:8080/war包名)，相关Java源代码放在war包内的/WEB-INF/src目录下。)</font><br/>
 								<br/>
 								<b>二、每日构建</b> (当前版本0.8.7-dev) <a href="../build/zh/index.html">每日构建站点...</a><br/>
 								<table border="0" cellpadding="2" cellspacing="0">
