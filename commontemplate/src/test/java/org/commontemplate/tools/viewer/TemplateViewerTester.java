@@ -10,14 +10,14 @@ public class TemplateViewerTester {
 		/*new Thread(new Runnable() {
 			public void run() {
 				try {
-					viewer.view(new File("C:\\Documents and Settings\\lf\\桌面\\test\\test_json.ctl"));
+					viewer.view(new File("F:\\test\\test_json.ctl"));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		}).start();*/
 		try {
-			viewer.view(new File("C:\\Documents and Settings\\lf\\桌面\\test\\test_xml.ctl"));
+			viewer.view(new File("F:\\test\\test_xml.ctl"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
