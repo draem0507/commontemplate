@@ -6,6 +6,7 @@ $!
 								修复BeanUtils在访问级安全控制上的BUG<br/>
 								将Class.forName()统一改为ClassUtils.forName(), 使用当前线程类加载器加载类, 并支持基本类型.<br/>
 								修复$for指令以及操作符不能处理基本类型数组(如:int[])的BUG.<br/>
+								修复ExpressionOptimizer处理前导小数点".15"的BUG.<br/>
 								Function Changes:<br/>
 								指令$filterAll改为小写的$filterall, 保持指令命名统一.<br/>
 								$leftTrim, $rightTrim 改为 $ltrim, $rtrim<br/>
