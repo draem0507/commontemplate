@@ -45,7 +45,7 @@ public class TemplateRenderer {
 	}
 
 	private static Engine getEngine() {
-		if (engine == null) { // FIXME 双重检查成例在JDK1.4中无效
+		if (engine == null) { // FIXME 双重检查成例在JDK1.4中不可靠
 			synchronized(TemplateRenderer.class) {
 				if (engine == null) {
 					init(PropertiesConfigurationLoader.loadStandardConfiguration());
