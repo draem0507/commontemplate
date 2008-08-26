@@ -412,14 +412,18 @@ $!
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.7.6加入，0.8.6废弃<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>区域定义与覆写均采用$zone指令，保持统一及语义完整<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>$zone<br/>
-								(5) 简化语法规则：<b>$指令名:参数名</b> 等价于 <b>$指令名{"参数名"}</b><br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.8.5加入，0.8.6废弃<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>语法规则不统一，比$指令名{参数名}方式并不简化多少，而且存在与字母内容无法分隔的问题<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>名称定义性指令(如：$block, $macro, $zone等)参数名引号可省，如：$指令名{参数名} 等价于 $指令名{"参数名"}<br/>
+								(5) $filterAll<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.7.8加入，0.8.6废弃<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>改为全小写$filterall，保持命名统一<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>$filterall<br/>
 								(6) $leftTrim, $rightTrim<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.8.5加入，0.8.6废弃<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>多单词指令名，参照其它模板语法进行简化<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>$ltrim, $rtrim<br/>
+								(7) 简化语法规则：<b>$指令名:参数名</b> 等价于 <b>$指令名{"参数名"}</b><br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.8.5加入，0.8.6废弃<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>语法规则不统一，比$指令名{参数名}方式并不简化多少，而且存在与字母内容无法分隔的问题<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>名称定义性指令(如：$block, $macro, $zone等)参数名引号可省，如：$指令名{参数名} 等价于 $指令名{"参数名"}<br/>
 								<br/>
 !$
 	<!--$end-->
