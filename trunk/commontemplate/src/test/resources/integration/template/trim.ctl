@@ -12,23 +12,23 @@ $trim
     a a a
 $end
 --
-$leftTrim
+$ltrim
 
 aaa
 $end
 --
-$rightTrim
+$rtrim
 
 aaa
 $end
 --
-$leftTrim
+$ltrim
 aaa
 
 
 $end
 --
-$rightTrim
+$rtrim
 aaa
 
 
