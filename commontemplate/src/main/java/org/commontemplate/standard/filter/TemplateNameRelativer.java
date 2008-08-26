@@ -1,5 +1,6 @@
 package org.commontemplate.standard.filter;
 
+import java.io.Serializable;
 import java.net.MalformedURLException;
 
 import org.commontemplate.config.InvalidTemplateNameException;
@@ -12,7 +13,9 @@ import org.commontemplate.util.UrlUtils;
  * @author liangfei0201@163.com
  *
  */
-public class TemplateNameRelativer implements TemplateNameFilter {
+public class TemplateNameRelativer implements TemplateNameFilter, Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	public String filter(String templateName, String currentTemplateName) throws InvalidTemplateNameException {
 		try {

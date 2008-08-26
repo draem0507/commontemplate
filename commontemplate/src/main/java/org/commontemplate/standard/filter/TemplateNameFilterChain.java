@@ -1,11 +1,14 @@
 package org.commontemplate.standard.filter;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.commontemplate.config.InvalidTemplateNameException;
 import org.commontemplate.config.TemplateNameFilter;
 
-public class TemplateNameFilterChain implements TemplateNameFilter {
+public class TemplateNameFilterChain implements TemplateNameFilter, Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private List templateNameFilters;
 

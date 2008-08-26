@@ -1,5 +1,6 @@
 package org.commontemplate.standard.i18n;
 
+import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -11,7 +12,9 @@ import java.util.ResourceBundle;
  * @author liangfei0201@163.com
  *
  */
-public class ResourceBundleMessageSource implements MessageSource {
+public class ResourceBundleMessageSource implements MessageSource, Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private ResourceBundleProvider resourceBundleProvider;
 

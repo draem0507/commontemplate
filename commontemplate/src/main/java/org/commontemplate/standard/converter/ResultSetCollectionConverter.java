@@ -18,7 +18,7 @@ public class ResultSetCollectionConverter implements CollectionConverter {
 			ResultSetMetaData metaData = resultSet.getMetaData();
 			while (resultSet.next()) {
 				Map map = new HashMap();
-				for (int i = 0, n = metaData.getColumnCount(); i < n; i ++) {
+				for (int i = 1, n = metaData.getColumnCount(); i <= n; i ++) {
 					String key = metaData.getColumnName(i);
 					Object value = resultSet.getObject(i);
 					map.put(key, value);

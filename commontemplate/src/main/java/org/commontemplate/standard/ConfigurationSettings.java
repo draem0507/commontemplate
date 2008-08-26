@@ -248,7 +248,7 @@ public class ConfigurationSettings extends Configuration {
 
 	// 模板缓存 -------
 
-	private Cache templateCache;
+	private transient Cache templateCache;
 
 	public Cache getTemplateCache() {
 		return templateCache;
@@ -265,7 +265,7 @@ public class ConfigurationSettings extends Configuration {
 
 	// 输出缓存 -------
 
-	private Cache outCache;
+	private transient Cache outCache;
 
 	public Cache getOutCache() {
 		return outCache;
@@ -300,7 +300,7 @@ public class ConfigurationSettings extends Configuration {
 
 	// 模板加载器 --------
 
-	private ResourceLoader resourceLoader;
+	private transient ResourceLoader resourceLoader;
 
 	public ResourceLoader getResourceLoader() {
 		return resourceLoader;

@@ -17,6 +17,8 @@ import au.id.jericho.lib.html.Source;
  */
 public class JerichoAttributeCoatFilter extends AbstractAttributeFilter {
 
+	private static final long serialVersionUID = 1L;
+
 	protected Document getDocument(final Reader reader) throws IOException {
 		final Source source = new Source(reader);
 		return new JerichoDocument(source);

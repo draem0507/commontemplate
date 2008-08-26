@@ -1,5 +1,6 @@
 package org.commontemplate.core;
 
+import java.io.Serializable;
 import java.util.Map;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Map;
  * @author liangfei0201@163.com
  *
  */
-public abstract class BaseContext implements VariableStorage, StatusStorage, PropertyStorage {
+public abstract class BaseContext implements VariableStorage, StatusStorage, PropertyStorage, Serializable {
 
 	/**
 	 * 清空上下文, 此动作将清空该上下文持有的所有数据.

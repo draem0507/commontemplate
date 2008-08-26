@@ -7,7 +7,7 @@ public class BreakException extends RenderingException {
 	private static final long serialVersionUID = 1L;
 
 	public BreakException() {
-		super(null);
+		super(null, null);
 	}
 
 }

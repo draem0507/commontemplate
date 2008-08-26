@@ -4,4 +4,6 @@ import org.commontemplate.standard.coat.attribute.jericho.JerichoAttributeCoatFi
 
 public class AttributeSyntaxCoatFilter extends JerichoAttributeCoatFilter {
 
+	private static final long serialVersionUID = 1L;
+
 }

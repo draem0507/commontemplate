@@ -1,5 +1,7 @@
 package org.commontemplate.config;
 
+import java.io.Serializable;
+
 import org.commontemplate.util.Assert;
 
 /**
@@ -10,7 +12,7 @@ import org.commontemplate.util.Assert;
  * @author liangfei0201@163.com
  *
  */
-public final class Keywords implements java.io.Serializable {
+public final class Keywords implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

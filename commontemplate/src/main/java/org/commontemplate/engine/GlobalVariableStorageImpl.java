@@ -19,6 +19,8 @@ import org.commontemplate.core.VariableException;
  */
 final class GlobalVariableStorageImpl extends VariableStorageSupport {
 
+	private static final long serialVersionUID = 1L;
+
 	// 变量容器, 不为空
 	private final Map variablesContainer = new HashMap();
 

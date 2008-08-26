@@ -161,7 +161,7 @@ public class StandardConfiguration extends ConfigurationSettings {
 
 	// 缓存策略 -------
 
-	private Cache templateCache;
+	private transient Cache templateCache;
 
 	public Cache getTemplateCache() {
 		return templateCache;
@@ -208,7 +208,7 @@ public class StandardConfiguration extends ConfigurationSettings {
 
 	// 模板加载器 --------
 
-	private ResourceLoader resourceLoader;
+	private transient ResourceLoader resourceLoader;
 
 	public ResourceLoader getResourceLoader() {
 		return resourceLoader;

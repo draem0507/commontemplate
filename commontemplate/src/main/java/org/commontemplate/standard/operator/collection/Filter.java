@@ -1,5 +1,6 @@
 package org.commontemplate.standard.operator.collection;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import org.commontemplate.core.Expression;
@@ -10,7 +11,9 @@ import org.commontemplate.core.Expression;
  * @author liangfei0201@163.com
  *
  */
-public class Filter {
+public class Filter implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private final Expression expression;
 

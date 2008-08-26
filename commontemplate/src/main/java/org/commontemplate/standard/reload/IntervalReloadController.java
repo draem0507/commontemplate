@@ -1,5 +1,6 @@
 package org.commontemplate.standard.reload;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,7 +13,9 @@ import org.commontemplate.util.Assert;
  * @author liangfei0201@163.com
  *
  */
-public class IntervalReloadController implements ReloadController {
+public class IntervalReloadController implements ReloadController, Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 不检查模板是否修改

@@ -1,5 +1,6 @@
 package org.commontemplate.engine;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -12,7 +13,9 @@ import org.commontemplate.core.PropertyStorage;
  * @author liangfei0201@163.com
  *
  */
-final class GlobalPropertyStorageImpl implements PropertyStorage {
+final class GlobalPropertyStorageImpl implements PropertyStorage, Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private final Map defaultObjectContainer = new HashMap();
 

@@ -1,15 +1,18 @@
 package org.commontemplate.standard.directive.filter;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.commontemplate.core.OutputFilter;
 import org.commontemplate.standard.operator.collection.Filter;
 
-public class ValueOutputFilter implements OutputFilter {
-	
+public class ValueOutputFilter implements OutputFilter, Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	private final Filter filter;
-	
+
 	private String valueName;
 
 	public ValueOutputFilter(Filter filter, String valueName) {
@@ -25,9 +28,9 @@ public class ValueOutputFilter implements OutputFilter {
 	}
 
 	public final String resolveValueName(String name) {
-		if (name != null && name.length() > 0) 
+		if (name != null && name.length() > 0)
 			return name;
 		return valueName;
 	}
-	
+
 }

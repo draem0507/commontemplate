@@ -1,5 +1,7 @@
 package org.commontemplate.standard.context;
 
+import java.io.Serializable;
+
 import org.commontemplate.config.ContextInitializer;
 import org.commontemplate.core.Context;
 import org.commontemplate.standard.directive.extend.ExtendDirectiveHandler;
@@ -10,7 +12,9 @@ import org.commontemplate.standard.directive.extend.ExtendDirectiveHandler;
  * @author liangfei0201@163.com
  *
  */
-public class AutoExtendInitializer implements ContextInitializer {
+public class AutoExtendInitializer implements ContextInitializer, Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private String autoExtends;
 

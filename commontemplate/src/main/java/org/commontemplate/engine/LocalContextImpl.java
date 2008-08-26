@@ -25,6 +25,8 @@ import org.commontemplate.util.Assert;
  */
 final class LocalContextImpl extends LocalContext {
 
+	private static final long serialVersionUID = 1L;
+
 	private final LocalContext parentLocalContext;
 
 	private final String localContextName;

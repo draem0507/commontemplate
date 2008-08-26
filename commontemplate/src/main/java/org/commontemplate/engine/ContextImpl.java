@@ -240,7 +240,7 @@ final class ContextImpl extends Context {
 
 	// 代理 TemplateFactory -----------
 
-	private final TemplateFactory templateFactory;
+	private transient final TemplateFactory templateFactory;
 
 	private String getCurrentTemplateEncoding() {// 获取当前模板编码
 		Template template = this.getCurrentTemplate();
