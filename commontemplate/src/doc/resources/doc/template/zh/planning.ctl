@@ -42,71 +42,71 @@ $!
 											<td>CTE脱离MVC框架运行. codebehind.</td>
 											<td>优化</td>
 											<td>中</td>
+											<td>低</td>
 											<td>中</td>
-											<td>高</td>
 										</tr>
 										<tr>
 											<td>加入commontemplate-plugin.properties支持, 自动抓取.</td>
 											<td>需求</td>
-											<td>中</td>
-											<td>中</td>
-											<td>高</td>
+											<td>小</td>
+											<td>低</td>
+											<td>低</td>
 										</tr>
 										<tr>
 											<td>加入对DOM模型的支持,root,parent,children,ancestors,name,type,namespace.</td>
 											<td>需求</td>
+											<td>小</td>
 											<td>中</td>
 											<td>中</td>
-											<td>高</td>
 										</tr>
 										<tr>
 											<td>(自动导入)全局宏定义, 全局父模板.</td>
 											<td>优化</td>
+											<td>小</td>
 											<td>中</td>
 											<td>中</td>
-											<td>高</td>
 										</tr>
 										<tr>
 											<td>相似函数调用时, String转为char处理.</td>
 											<td>优化</td>
+											<td>小</td>
 											<td>中</td>
 											<td>中</td>
-											<td>高</td>
 										</tr>
 										<tr>
 											<td>数字操作符: round 基于有效位四舍五入.</td>
 											<td>优化</td>
-											<td>中</td>
-											<td>中</td>
-											<td>高</td>
+											<td>小</td>
+											<td>低</td>
+											<td>低</td>
 										</tr>
 										<tr>
 											<td>扩展属性也应能处理get和is前缀.</td>
 											<td>BUG</td>
-											<td>中</td>
+											<td>小</td>
 											<td>中</td>
 											<td>高</td>
 										</tr>
 										<tr>
 											<td>扩展属性number.sin, cos, tan, ctan.</td>
 											<td>需求</td>
-											<td>中</td>
-											<td>中</td>
-											<td>高</td>
+											<td>小</td>
+											<td>低</td>
+											<td>低</td>
 										</tr>
 										<tr>
 											<td>Element不必保持其原生文本, 只要有Location, 到Template中统一读取, 以减小模板树占用的内存大小.</td>
 											<td>优化</td>
+											<td>小</td>
 											<td>中</td>
 											<td>中</td>
-											<td>高</td>
 										</tr>
 										<tr>
 											<td>允许函数调用, 禁止void函数调用, 正则表达式匹配禁止, 如delete*,remove*,save*,update*</td>
 											<td>优化</td>
 											<td>中</td>
-											<td>中</td>
-											<td>高</td>
+											<td>低</td>
+											<td>低</td>
 										</tr>
 										<tr>
 											<td>配置中的集合, 过滤空项.</td>
@@ -123,18 +123,25 @@ $!
 											<td>高</td>
 										</tr>
 										<tr>
-											<td>可动态编辑Debug窗口中的变量.</td>
+											<td>调试器Output内容应该与线程绑定.</td>
 											<td>优化</td>
 											<td>中</td>
 											<td>中</td>
-											<td>高</td>
+											<td>中</td>
+										</tr>
+										<tr>
+											<td>可动态编辑Debug窗口中的变量.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>低</td>
+											<td>中</td>
 										</tr>
 										<tr>
 											<td>Debug窗口中的变量, 有变化的用红色显示.</td>
 											<td>优化</td>
 											<td>中</td>
+											<td>低</td>
 											<td>中</td>
-											<td>高</td>
 										</tr>
 										<tr>
 											<td>属性外套实现有BUG, 空指针检测不全.</td>
@@ -144,28 +151,21 @@ $!
 											<td>高</td>
 										</tr>
 										<tr>
-											<td>四则运算优化器有BUG, 已暂时屏蔽.</td>
-											<td>BUG</td>
-											<td>中</td>
-											<td>中</td>
-											<td>高</td>
-										</tr>
-										<tr>
 											<td>context不作为关键字.</td>
 											<td>优化</td>
-											<td>中</td>
+											<td>小</td>
 											<td>中</td>
 											<td>高</td>
 										</tr>
 										<tr>
 											<td>清理不明确的操作符,并讨论操作符是否合理.</td>
 											<td>优化</td>
-											<td>中</td>
+											<td>大</td>
 											<td>中</td>
 											<td>高</td>
 										</tr>
 										<tr>
-											<td>Bpackage.name与package["name"],一个先查子包,一个先查属性.</td>
+											<td>package.name与package["name"],一个先查子包,一个先查属性.</td>
 											<td>优化</td>
 											<td>中</td>
 											<td>中</td>

@@ -47,7 +47,7 @@ $!
 								$end 或者 $end{if}<br/>
 								<font color="green">(注: 参数表示被结束块指令的名称, 编译时将进行检查(不匹配将抛出异常), 没有参数表示自动匹配)</font><br/>
 								<font color="green">(注: 因$end指令为编译指令，参数表达式不解析，直接作为字符串)</font><br/>
-								<font color="green">(注: $end总是与最近的块指令匹配，如：$if{}...$end{if} 和 $if{}...$else...$end{else})</font><br/>
+								<font color="green">(注: $end总是与最近的块指令匹配，如：$if...$end{if} 和 $if...$else...$end{else})</font><br/>
 								<br/>
 								<b>四. 标准指令:</b> <a href="extension.html#directive">扩展...</a><br/>
 								<b>(1) 输出指令:</b><br/>
@@ -79,7 +79,7 @@ $!
 								$if{user} 等价于 $if{user != null}<br/>
 								$if{list} 等价于 $if{list != null && list.size > 0}<br/>
 								$if{string} 等价于 $if{string != null && string.length > 0}<br/>
-								<b>(3) 迭代指令:</b><br/>
+								<b>(3) 迭代指令:</b> <a href="extension.html#converter">扩展...</a><br/>
 								定义循环显示项:<br/>
 								$cycle{color: ("red", "blue", "green")}<br/>
 								迭代集合或数组:<br/>
@@ -93,7 +93,7 @@ $!
 								&nbsp;&nbsp;&nbsp;&nbsp;继续循环<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;$continue{user.name == null}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;状态<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;<font color="green">(注：for变量(非关键字)持有循环过程的状态，多级嵌套循环时，可以用super.for.index获取上级循环的状态)</font><br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="green">(注：for变量(非关键字)持有循环过程的状态，多级嵌套循环时，可以用super.for.index(或super.super.for.index)获取上级循环的状态)</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="green">(注：index从0开始，count从1开始，也就是count = index + 1)</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;${for.index} ${for.count} ${for.size} ${for.first} ${for.middle} ${for.last} ${for.odd} ${for.even}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;递归级别状态<br/>
@@ -143,8 +143,8 @@ $!
 								$end<br/>
 								显示块变量: <font color="green">(注：执行块变量所指模板块，模板块可以通过变量传递到其它模板中再show)</font><br/>
 								$show{myblock}<br/>
-								<b>(6) 数据指令:</b><br/>
-								<font color="green">(注：内置支持xml,json,properties,yaml等数据格式，并且数据格式是可扩展的)</font> <a href="data.html">说明...</a> <a href="extension.html#data">扩展...</a><br/>
+								<b>(6) 数据指令:</b> <a href="data.html">数据格式说明...</a> <a href="extension.html#data">扩展...</a><br/>
+								<font color="green">(注：内置支持xml,json,properties,yaml等数据格式，并且数据格式是可扩展的)</font><br/>
 								数据块：<br/>
 								$data{xml} <font color="green">(注：参数名称化指令，如果类型需取变量，可使用"\"一元操作符：$data{\type})</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
@@ -222,11 +222,11 @@ $!
 								$eval{expressionString}<br/>
 								<b>(11) 过滤指令:</b><br/>
 								动态内容输出过滤指令: <br/>
-								$filter{x => "&lt;b&gt;" + x.escapeHtml + "&lt;/b&gt;"} <font color="green">(注：缺省名称为value，如：$filter{=> value.escapeHtml})</font><br/>
+								$filter{x => "&lt;b&gt;" + x.escapeHtml + "&lt;/b&gt;"} <font color="green">(注：缺省变量名为value，如：$filter{=> value.escapeHtml})</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end <br/>
 								全部内容输出过滤指令: <font color="green">(注：包括静态文本块)</font><br/>
-								$filterall{x => x.escapeHtml} <font color="green">(注：缺省名称为value，如：$filterall{=> value.escapeHtml})</font><br/>
+								$filterall{x => x.escapeHtml} <font color="green">(注：缺省变量名为value，如：$filterall{=> value.escapeHtml})</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end <br/>
 								输出缓冲指令: <font color="green">(注：将内部块输出缓冲为单一字符串输出)</font><br/>
@@ -234,7 +234,7 @@ $!
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end <br/>
 								缓冲并过滤 <font color="green">(注：过滤方式同$filter指令，将内部块输出缓冲为单一字符串后再过滤输出)</font><br/>
-								$buffer{x => x.escapeHtml}<br/>
+								$buffer{x => x.escapeHtml} <font color="green">(注：缺省变量名为value，如：$buffer{=> value.escapeHtml})</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end <br/>
 								捕获输出指令: <font color="green">(注：捕获指令内部块输出内容到指定变量)</font><br/>
@@ -287,7 +287,7 @@ $!
 								timeZone:"GMT+8"<br/>
 								dateFormat:"yyyy-MM-DD HH:mm:ss"<br/>
 								numberFormat:"###,##0.00"<br/>
-								booleanValue="true|false"<br/>
+								booleanValue:"true|false"<br/>
 								nullValue:""<br/>
 								停止模板解析：<br/>
 								$stop<br/>
