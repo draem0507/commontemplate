@@ -1,12 +1,13 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
 	<!--$zone{"content"}-->
 $!
+								整个配置体系，从ConfigurationSettings开始，所有配置类全部留有setter注入接口，任何支持setter注入方式的IoC容器均可以完成配置。<br/>
+								<br/>
 								<b>一. Properties 配置</b><br/>
-								从ConfigurationSettings开始，所有配置类全部留有setter注入接口，任何支持setter方式的IoC容器均可以完成配置。<br/>
-								默认采用内置的IoC容器初始化配置，详细请参考：org.commontemplate.tools.bean.PropertiesBeanFactory。<br/>
-								<b>配置规则：</b><br/>
+								默认采用内置的IoC容器初始化配置，详细请参考：org.commontemplate.tools.bean.PropertiesBeanFactory<br/>
 								使用properties文件作为配置，所以需遵循java.util.Properties的所有规则，如：# ! = :等符号需转义等。<br/>
-								使用properties文件的优势为：各属性项按行展开，便于上下级配置间层级覆盖。<br/>
+								使用properties文件的优势：各属性项按行展开，便于上下级配置间层级覆盖。<br/>
+								<b>配置规则：</b><br/>
 								<b>(1) 基本类型：</b>(与Java相似)<br/>
 								(a) null为空值，true, false为布尔值<br/>
 								如：<br/>
