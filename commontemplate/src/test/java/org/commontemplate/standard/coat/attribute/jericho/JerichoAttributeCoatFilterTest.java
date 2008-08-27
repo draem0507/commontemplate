@@ -24,7 +24,7 @@ public class JerichoAttributeCoatFilterTest extends TestCase {
 	}
 
 	/**
-	 * Test method for {@link org.commontemplate.standard.directive.coat.attribute.AbstractAttributeFilter#filter(java.io.Reader)}.
+	 * Test method for {@link org.commontemplate.standard.directive.coat.attribute.AbstractAttributeFilter#filter(java.io.Reader, boolean, boolean)}.
 	 * @throws Exception
 	 */
 	public void testFilter() throws Exception {

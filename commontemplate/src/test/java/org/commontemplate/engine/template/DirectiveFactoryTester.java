@@ -24,7 +24,7 @@ public class DirectiveFactoryTester extends TestCase {
 	}
 
 	public void testNullDirective() throws IOException, ParsingException {
-		Element directive = directiveFactory.getDirective(new Token("$if{true}", new Position(21, 10, 12)), false);
+		Element directive = directiveFactory.getDirective(new Token("$if{true}", new Position(21, 10, 12)), false, false);
 		super.assertEquals("if", directive.getName());
 		super.assertEquals(new Location(21, 10, 12, 30, 10, 21), directive.getLocation());
 	}

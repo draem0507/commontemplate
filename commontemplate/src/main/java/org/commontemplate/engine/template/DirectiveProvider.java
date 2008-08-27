@@ -56,7 +56,7 @@ final class DirectiveProvider {
 	 * @throws ParsingException
 	 * @throws ParsingException
 	 */
-	Element getDirective(Token token, boolean isLast) throws ParsingException {
+	Element getDirective(Token token, boolean isFirst, boolean isLast) throws ParsingException {
 		String message = token.getMessage();
 		String trim = message.trim();
 		if (trim.length() > 1 && trim.charAt(0) == syntax.getDirectiveLeader()) {
@@ -67,7 +67,7 @@ final class DirectiveProvider {
 					throw new ParsingException(token.getLocation(), "DirectiveFactory.no.parse.error", new Object[]{String.valueOf(syntax.getDirectiveLeader()), String.valueOf(syntax.getNoParse())});
 				String value = message.substring(2, message.length() - 2);
 				value = cleanStringEscape(value, String.valueOf(syntax.getNoParse()) + String.valueOf(syntax.getDirectiveLeader()));
-				return parseText(String.valueOf(syntax.getNoParse()), token, value);
+				return parseText(String.valueOf(syntax.getNoParse()), token, value, isFirst, isLast);
 			} else if (trim.charAt(1) == syntax.getLineComment()) { // 行注释指令
 				if (trim.length() > 2
 						&& trim.charAt(2) == syntax.getLineComment()) // 运行期保留
@@ -89,13 +89,13 @@ final class DirectiveProvider {
 				return parseDirective(token, trim);
 			}
 		} else { // 文本
-			return parseText(null, token, cleanCharEscape(message, syntax.getDirectiveLeader(), isLast)); // 这里不能用trim, 需保留空格
+			return parseText(null, token, cleanCharEscape(message, syntax.getDirectiveLeader(), isLast), isFirst, isLast); // 这里不能用trim, 需保留空格
 		}
 	}
 
-	private Element parseText(String name, Token token, String message) {
+	private Element parseText(String name, Token token, String message, boolean isFirst, boolean isLast) {
 		if (textFilter != null)
-			message = textFilter.filter(message);
+			message = textFilter.filter(message, isFirst, isLast);
 		return new TextImpl(name, token.getLocation(), message, renderInterceptors);
 	}
 
