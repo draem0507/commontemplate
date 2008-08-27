@@ -52,7 +52,7 @@ public class ReloadResourceBundleProxy extends ResourceBundle {
 			MAX_BUNDLES_SEARCHED, CACHE_LOAD_FACTOR);
 
 	/** reference JDK1.4 source */
-	private static final Integer DEFAULT_NOT_FOUND = new Integer(-1);	
+	private static final Integer DEFAULT_NOT_FOUND = new Integer(-1);
 
 	/** reference JDK1.4 source */
 	private static SoftCache cacheList = new SoftCache(INITIAL_CACHE_SIZE,
@@ -60,7 +60,7 @@ public class ReloadResourceBundleProxy extends ResourceBundle {
 
 	/** reference JDK1.4 source */
 	protected ResourceBundle parent = null;
-	
+
 	/** 真正的 ResourceBundle */
 	protected ResourceBundle realBundle;
 
@@ -76,7 +76,7 @@ public class ReloadResourceBundleProxy extends ResourceBundle {
 	 */
 	private static SoftCache baseNameModifyCache = new SoftCache(INITIAL_CACHE_SIZE,
 			CACHE_LOAD_FACTOR);
-	
+
 	/**
 	 * 对每一个basename,都保存最后的读取的时间<br>
 	 * key 是 baseName<br>
@@ -88,15 +88,11 @@ public class ReloadResourceBundleProxy extends ResourceBundle {
 	/** reference JDK1.4 source */
 	private Locale locale = null;
 
-	/** reference JDK1.4 source */
-	private ReloadResourceBundleProxy() {
-	}
-	
 	/**
 	 * 用于实现代理功能的构造方法
 	 * @param bundle
 	 */
-	public ReloadResourceBundleProxy(ResourceBundle bundle) {
+	private ReloadResourceBundleProxy(ResourceBundle bundle) {
 
 		realBundle = bundle;
 	}
@@ -136,7 +132,7 @@ public class ReloadResourceBundleProxy extends ResourceBundle {
 			//with the calling code.
 			throw new IllegalArgumentException();
 		}
-	}	
+	}
 
 	/** reference JDK1.4 source */
 	protected void setParent(ResourceBundle parent) {
@@ -224,7 +220,7 @@ public class ReloadResourceBundleProxy extends ResourceBundle {
 			setKeyValues(null, "", null);
 		}
 	}
-	
+
 	/** reference JDK1.4 source */
 	public static ResourceBundle getBundle(String baseName, Locale locale,
 			ClassLoader loader) {
@@ -234,7 +230,7 @@ public class ReloadResourceBundleProxy extends ResourceBundle {
 
 		return getBundleImpl(baseName, locale, loader);
 	}
-	
+
 	/** reference JDK1.4 source */
 	private static ResourceBundle getBundleImpl(String baseName, Locale locale,
 			ClassLoader loader) {
@@ -355,7 +351,7 @@ public class ReloadResourceBundleProxy extends ResourceBundle {
 		}
 		return (ResourceBundle) parent;
 	}
-	
+
 	/**
 	 * 判断 properties 文件是否被修改了。
 	 * @param loader
@@ -364,7 +360,7 @@ public class ReloadResourceBundleProxy extends ResourceBundle {
 	 */
 	private static boolean isFileModified(final ClassLoader loader, String bundleName) {
 		try {
-			
+
 			final String resName = bundleName.replace('.', '/') + ".properties";
 			URL url = (URL) java.security.AccessController
 					.doPrivileged(new java.security.PrivilegedAction() {
@@ -376,16 +372,16 @@ public class ReloadResourceBundleProxy extends ResourceBundle {
 							}
 						}
 					});
-			
+
 			// 文件存在的话
 			if(url != null) {
 				Long cachedLastModified = (Long) baseNameModifyCache.get(resName);
 				long lastModified = url.openConnection().getLastModified();
-				
+
 				if(cachedLastModified == null) {
 					cachedLastModified = new Long(0);
 				}
-				
+
 				if(cachedLastModified.longValue() != lastModified) {
 					cachedLastModified = new Long(lastModified);
 					baseNameModifyCache.put(resName, cachedLastModified);
@@ -438,8 +434,8 @@ public class ReloadResourceBundleProxy extends ResourceBundle {
 		Object result;
 		synchronized (cacheList) {
 			//check for bundle in cache
-			
-			cacheKey.setKeyValues(loader, bundleName, defaultLocale);			
+
+			cacheKey.setKeyValues(loader, bundleName, defaultLocale);
 			result = cacheList.get(cacheKey);
 			if (result != null) {
 				cacheKey.clear();
@@ -465,9 +461,9 @@ public class ReloadResourceBundleProxy extends ResourceBundle {
 					cacheKey.setKeyValues(loader, bundleName, defaultLocale);
 					beingBuilt = underConstruction.containsKey(cacheKey);
 				}
-				
+
 				cacheKey.setKeyValues(loader, bundleName, defaultLocale);
-				//if someone constructed the bundle for us, return it				
+				//if someone constructed the bundle for us, return it
 				result = cacheList.get(cacheKey);
 				if (result != null) {
 					cacheKey.clear();
@@ -552,17 +548,17 @@ public class ReloadResourceBundleProxy extends ResourceBundle {
 			String baseName, String bundleName, Locale locale, Locale defaultLocale) {
 		//Synchronize access to cacheList, cacheKey, and underConstruction
 		synchronized (cacheList) {
-			
+
 			// 清空缓存的方法
 			cleanCacheProcess(baseName, locale, defaultLocale, loader);
-			
-			cacheKey.setKeyValues(loader, bundleName, defaultLocale);			
-			Object result = cacheList.get(cacheKey);			
+
+			cacheKey.setKeyValues(loader, bundleName, defaultLocale);
+			Object result = cacheList.get(cacheKey);
 			cacheKey.clear();
 			return result;
 		}
-	}	
-	
+	}
+
 	/**
 	 * 查看是否需要检查文件被更新了，如果需要检查，则调用 cleanAllModifiedBundleCache <br>
 	 * 去清空缓存。
@@ -574,7 +570,7 @@ public class ReloadResourceBundleProxy extends ResourceBundle {
 	 */
 	private static boolean cleanCacheProcess(String baseName,
 			Locale locale, Locale defaultLocale, ClassLoader loader) {
-		
+
 		Long lastRefreshTime = (Long) baseNameIntervalCache.get(baseName);
  		long now = System.currentTimeMillis();
 		if(lastRefreshTime == null) {
@@ -582,16 +578,16 @@ public class ReloadResourceBundleProxy extends ResourceBundle {
 			// 保存最新的刷新时间
 			baseNameIntervalCache.put(baseName, lastRefreshTime);
 		}
-		// 如果当前时间 - 最后刷新时间 > 间隔时间，那么就检查文件是否被修改了。 
+		// 如果当前时间 - 最后刷新时间 > 间隔时间，那么就检查文件是否被修改了。
 		if(now - lastRefreshTime.longValue() - refreshInterval > 0) {
 			// 保存最新的刷新时间
 			baseNameIntervalCache.put(baseName, new Long(now));
-			
+
 			cleanAllModifiedBundleCache(baseName, locale, defaultLocale, loader);
 		}
 		return false;
 	}
-	
+
 	/**
 	 * 清空缓存里的一个数据。
 	 * @param loader
@@ -603,7 +599,7 @@ public class ReloadResourceBundleProxy extends ResourceBundle {
 		cacheList.remove(cacheKey);
 		cacheKey.clear();
 	}
-	
+
 	/**
 	 * 根据basename 得到全部的可能的 .properties 文件，然后察看是否被修改了，<br>
 	 * 如果修改，则清空缓存。
@@ -611,56 +607,56 @@ public class ReloadResourceBundleProxy extends ResourceBundle {
 	 * @param defaultLocale
 	 * @return
 	 */
-	private static void cleanAllModifiedBundleCache(String baseName, Locale locale, Locale defaultLocale, 
+	private static void cleanAllModifiedBundleCache(String baseName, Locale locale, Locale defaultLocale,
 														final ClassLoader loader) {
-		
+
 		boolean rootModifyFlag = false;
-		
+
 		if(isFileModified(loader, baseName)) {
-			
+
 			rootModifyFlag = true;
-			
+
 			removeCacheObject(loader, baseName, defaultLocale);
 		}
-		
+
 		Vector names = calculateBundleNames(baseName, locale);
 		// 子properties 是否也需要重载的标志。
 		// 例如 父 properties = test_zh.properties, 子 properties = test_zh_CN.properties，
 		// 那么如果 test_zh.properties 修改了，那么 test_zh_CN.properties 也许要重载。
 		boolean subReloadFlag = false;
-		
+
 		for(int i = 0, size = names.size(); i < size; i++) {
-			
+
 			String name = (String) names.get(i);
-			
+
 			if(rootModifyFlag) {
 				// 如果root 修改了，那么全部可能存在的子properties 都重新加载。
 				removeCacheObject(loader, name, defaultLocale);
-				
+
 			} else if(subReloadFlag || isFileModified(loader, name)) {
-				
+
 				removeCacheObject(loader, name, defaultLocale);
 				subReloadFlag = true;
 			}
 		}
-		
+
 		names = calculateBundleNames(baseName, defaultLocale);
 		subReloadFlag = false;
-		
+
 		for(int i = 0, size = names.size(); i < size; i++) {
-			
+
 			String name = (String) names.get(i);
 			if(rootModifyFlag) {
 				// 如果root 修改了，那么全部可能存在的子properties 都重新加载。
 				removeCacheObject(loader, name, Locale.getDefault());
-				
+
 			} else if(subReloadFlag || isFileModified(loader, name)) {
-				
+
 				removeCacheObject(loader, name, Locale.getDefault());
 				subReloadFlag = true;
 			}
 		}
-				
+
 	}
 
 	/** reference JDK1.4 source */
@@ -673,9 +669,9 @@ public class ReloadResourceBundleProxy extends ResourceBundle {
 			cacheList.put(cacheKey.clone(), value);
 			underConstruction.remove(cacheKey);
 			cacheKey.clear();
-			
+
 			baseNameIntervalCache.put(bundleName, new Long(System.currentTimeMillis()));
-			
+
 			//notify waiters that we're done constructing the bundle
 			cacheList.notifyAll();
 		}
@@ -744,13 +740,13 @@ public class ReloadResourceBundleProxy extends ResourceBundle {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * 除非在单元测试中，否则不建议从外部直接调用这个方法。
 	 *
 	 */
 	static void _clearCache() {
-		
+
 		synchronized (cacheList) {
 			cacheList.clear();
 			baseNameModifyCache.clear();
