@@ -7,7 +7,7 @@ import org.commontemplate.core.Context;
 import org.commontemplate.standard.data.DataProvider;
 import org.commontemplate.standard.directive.BlockDirectiveHandlerSupport;
 import org.commontemplate.standard.directive.DirectiveUtils;
-import org.commontemplate.standard.filter.BufferedFilter;
+import org.commontemplate.standard.filter.BufferedOutputFilter;
 
 /**
  * 数据指令. 使用如:
@@ -41,7 +41,7 @@ public class DataDirectiveHandler extends BlockDirectiveHandlerSupport {
 					+ "数据类型. 配置中只支持数据类型: " + dataProviders.keySet()
 					+ ", 可以通过实现:"+DataProvider.class.getName()
 					+ "接口扩展数据供给类型. 然后在commontemplate.properties中注册, 如: dataProvider{xxx}=com.xxx.XXXDataProvider()"); // TODO 未国际化
-		BufferedFilter bufferedFilter = new BufferedFilter();
+		BufferedOutputFilter bufferedFilter = new BufferedOutputFilter();
 		context.setOutputFilter(bufferedFilter);
 		DirectiveUtils.renderAll(innerElements, context);
 		context.removeOutputFilter();
