@@ -18,7 +18,7 @@ public class CommentSpacelineSyntaxCoatFilter extends CommentSyntaxCoatFilter {
 			if (ch == '\n') { // 如果遇到换行符，表示指令所在行没有其它内容，将空白去除
 				text = text.substring(i + 1);
 				break;
-			} else if (! isSpace(ch)) {
+			} else if (! isSpace(ch)) { // 如果遇到非空白符，表示指令所在行有其它内容，不作处理
 				break;
 			}
 		}
@@ -32,7 +32,7 @@ public class CommentSpacelineSyntaxCoatFilter extends CommentSyntaxCoatFilter {
 			if (ch == '\n') { // 如果遇到换行符，表示指令所在行没有其它内容，将空白去除(保留换行符)
 				text = text.substring(0, i + 1);
 				break;
-			} else if (! isSpace(ch)) {
+			} else if (! isSpace(ch)) { // 如果遇到非空白符，表示指令所在行有其它内容，不作处理
 				break;
 			}
 		}
