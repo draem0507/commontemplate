@@ -6,7 +6,7 @@ import org.commontemplate.core.Context;
 import org.commontemplate.standard.directive.BlockDirectiveHandlerSupport;
 import org.commontemplate.standard.directive.DirectiveUtils;
 import org.commontemplate.standard.directive.VariableScopeUtils;
-import org.commontemplate.standard.filter.BufferedFilter;
+import org.commontemplate.standard.filter.BufferedOutputFilter;
 import org.commontemplate.standard.operator.string.NamePair;
 import org.commontemplate.util.Assert;
 
@@ -25,7 +25,7 @@ public class CaptureDirectiveHandler extends BlockDirectiveHandlerSupport {
 
 	protected void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
 		Assert.assertTrue(param instanceof String);
-		BufferedFilter bufferedFilter = new BufferedFilter();
+		BufferedOutputFilter bufferedFilter = new BufferedOutputFilter();
 		context.setOutputFilter(bufferedFilter);
 		DirectiveUtils.renderAll(innerElements, context);
 		context.removeOutputFilter();

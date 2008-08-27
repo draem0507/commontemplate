@@ -5,7 +5,7 @@ import java.util.List;
 import org.commontemplate.core.Context;
 import org.commontemplate.standard.directive.BlockDirectiveHandlerSupport;
 import org.commontemplate.standard.directive.DirectiveUtils;
-import org.commontemplate.standard.filter.BufferedFilter;
+import org.commontemplate.standard.filter.BufferedOutputFilter;
 import org.commontemplate.standard.i18n.MessageSource;
 import org.commontemplate.standard.i18n.NoSuchMessageException;
 
@@ -41,7 +41,7 @@ public class I18nMessageStartDirectiveHandler extends BlockDirectiveHandlerSuppo
 	}
 
 	private String getInnerText(Context context, List elements) {
-		BufferedFilter bufferedFilter = new BufferedFilter();
+		BufferedOutputFilter bufferedFilter = new BufferedOutputFilter();
 		context.setOutputFilter(bufferedFilter);
 		DirectiveUtils.renderAll(elements, context);
 		context.removeOutputFilter();

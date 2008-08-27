@@ -6,7 +6,7 @@ import org.commontemplate.core.Context;
 import org.commontemplate.core.OutputFilter;
 import org.commontemplate.standard.directive.BlockDirectiveHandlerSupport;
 import org.commontemplate.standard.directive.DirectiveUtils;
-import org.commontemplate.standard.filter.BufferedFilter;
+import org.commontemplate.standard.filter.BufferedOutputFilter;
 
 public class TrimSpaceDirectiveHandler extends BlockDirectiveHandlerSupport {
 
@@ -15,7 +15,7 @@ public class TrimSpaceDirectiveHandler extends BlockDirectiveHandlerSupport {
 	private static final OutputFilter spaceFilter = new TrimSpaceFilter();
 
 	protected void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
-		BufferedFilter bufferedFilter = new BufferedFilter();
+		BufferedOutputFilter bufferedFilter = new BufferedOutputFilter();
 		context.setOutputFilter(bufferedFilter);
 		DirectiveUtils.renderAll(innerElements, context);
 		context.removeOutputFilter();

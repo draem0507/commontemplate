@@ -4,13 +4,13 @@ import java.io.Serializable;
 
 import org.commontemplate.core.OutputFilter;
 
-public class BufferedFilter implements OutputFilter, Serializable {
+public class BufferedOutputFilter implements OutputFilter, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private StringBuffer buffer = new StringBuffer();
 
-	public BufferedFilter() {
+	public BufferedOutputFilter() {
 	}
 
 	public String filter(String text) {
