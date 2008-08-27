@@ -610,50 +610,31 @@ public class ReloadResourceBundleProxy extends ResourceBundle {
 	private static void cleanAllModifiedBundleCache(String baseName, Locale locale, Locale defaultLocale,
 														final ClassLoader loader) {
 
-		boolean rootModifyFlag = false;
-
 		if(isFileModified(loader, baseName)) {
-
-			rootModifyFlag = true;
 
 			removeCacheObject(loader, baseName, defaultLocale);
 		}
 
 		Vector names = calculateBundleNames(baseName, locale);
-		// 子properties 是否也需要重载的标志。
-		// 例如 父 properties = test_zh.properties, 子 properties = test_zh_CN.properties，
-		// 那么如果 test_zh.properties 修改了，那么 test_zh_CN.properties 也许要重载。
-		boolean subReloadFlag = false;
-
+		
 		for(int i = 0, size = names.size(); i < size; i++) {
 
 			String name = (String) names.get(i);
 
-			if(rootModifyFlag) {
-				// 如果root 修改了，那么全部可能存在的子properties 都重新加载。
-				removeCacheObject(loader, name, defaultLocale);
-
-			} else if(subReloadFlag || isFileModified(loader, name)) {
+			if(isFileModified(loader, name)) {
 
 				removeCacheObject(loader, name, defaultLocale);
-				subReloadFlag = true;
 			}
 		}
 
 		names = calculateBundleNames(baseName, defaultLocale);
-		subReloadFlag = false;
-
+		
 		for(int i = 0, size = names.size(); i < size; i++) {
 
 			String name = (String) names.get(i);
-			if(rootModifyFlag) {
-				// 如果root 修改了，那么全部可能存在的子properties 都重新加载。
-				removeCacheObject(loader, name, Locale.getDefault());
-
-			} else if(subReloadFlag || isFileModified(loader, name)) {
+			if(isFileModified(loader, name)) {
 
 				removeCacheObject(loader, name, Locale.getDefault());
-				subReloadFlag = true;
 			}
 		}
 
@@ -749,20 +730,27 @@ public class ReloadResourceBundleProxy extends ResourceBundle {
 
 		synchronized (cacheList) {
 			cacheList.clear();
-			baseNameModifyCache.clear();
+			baseNameIntervalCache.clear();
 			baseNameModifyCache.clear();
 		}
 	}
 
 	/** reference JDK1.4 source */
 	protected Object handleGetObject(String key) {
-		// 如果没有 parent, 那么就使用被代理的 bundle 对象。
-		// 否则的话，调用 parent 对象来进行处理。
-		if (parent == null)
-			return realBundle.getObject(key);
-		else
-			return parent.getObject(key);
-
+		
+		Object obj = null;
+		try {
+			obj = realBundle.getObject(key);
+		} catch (MissingResourceException e) {
+			
+		}
+		if(obj == null) {
+			if(parent != null) {
+				obj = parent.getObject(key);
+			}
+		}
+		
+		return obj;
 	}
 
 	/**
@@ -771,11 +759,13 @@ public class ReloadResourceBundleProxy extends ResourceBundle {
 	 */
 	public Enumeration getKeys() {
 
-		if (parent != null) {
-			return parent.getKeys();
-		} else {
-			return realBundle.getKeys();
+		Enumeration keys = realBundle.getKeys();
+		if(keys == null) {
+			if(parent != null) {
+				keys = parent.getKeys();
+			}
 		}
+		return keys;
 	}
 
 	public static long getRefreshInterval() {
