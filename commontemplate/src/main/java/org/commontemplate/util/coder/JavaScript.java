@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.commontemplate.util;
+package org.commontemplate.util.coder;
 
 /**
  * Utility class for JavaScript escaping. Escapes based on the JavaScript 1.5
@@ -27,7 +27,8 @@ package org.commontemplate.util;
  * @author Rob Harrop
  * @since 1.1.1
  */
-public class JavaScriptUtils {
+public class JavaScript {
+
     /**
      * Turn special characters into escaped characters conforming to JavaScript.
      * Handles complete character set defined in HTML 4.01 recommendation.
@@ -36,7 +37,7 @@ public class JavaScriptUtils {
      *            the input string
      * @return the escaped string
      */
-    public static String javaScriptEscape(String input) {
+    public static String encode(String input) {
         if (input == null) {
             return input;
         }

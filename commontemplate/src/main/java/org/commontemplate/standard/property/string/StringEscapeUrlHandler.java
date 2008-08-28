@@ -9,8 +9,7 @@ public class StringEscapeUrlHandler extends PropertyHandlerSupport {
 	private static final long serialVersionUID = 1L;
 
 	public Object doProperty(Object bean) throws Exception {
-		String str = (String)bean;
-		return URLEncoder.encode(str, "UTF-8");
+		return URLEncoder.encode((String)bean, "UTF-8");
 	}
 
 }
