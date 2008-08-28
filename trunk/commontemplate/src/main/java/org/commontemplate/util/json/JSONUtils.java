@@ -102,9 +102,10 @@ public final class JSONUtils {
 				|| bean.getClass() == Long.class
 				|| bean.getClass() == Float.class
 				|| bean.getClass() == Double.class
-				|| bean.getClass() == Character.class
-				|| bean.getClass() == String.class) {
-			buf.append(filterValue(bean));
+				|| bean.getClass() == Character.class) {
+			buf.append(String.valueOf(bean));
+		} else if (bean instanceof CharSequence) {
+			buf.append("\"" + JavaScript.encode(bean.toString()) + "\"");
 		} else if (bean instanceof Date) {
 			buf.append("\"" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format((Date)bean) + "\"");
 		} else if (isCycle(bean, beans)){
@@ -121,6 +122,16 @@ public final class JSONUtils {
 				appendMap(BeanUtils.getProperties(bean), buf, beans, count + 1);
 			}
 		}
+	}
+
+	// 判断是否循环引用
+	private static boolean isCycle(Object bean, List beans) {
+		for (Iterator i = beans.iterator(); i.hasNext();) {
+			Object obj = i.next();
+			if (obj == bean)
+				return true;
+		}
+		return false;
 	}
 
 	// 添加数组，包括基本类型数组
@@ -167,35 +178,18 @@ public final class JSONUtils {
 			else
 				buf.append(",");
 			Map.Entry entry = (Map.Entry)iterator.next();
-			buf.append(filterName(entry.getKey()));
+			buf.append(filterKey(entry.getKey()));
 			buf.append(":");
 			appendObject(entry.getValue(), buf, beans, count + 1);
 		}
 		buf.append("}");
 	}
 
-	// 判断是否循环引用
-	private static boolean isCycle(Object bean, List beans) {
-		for (Iterator i = beans.iterator(); i.hasNext();) {
-			Object obj = i.next();
-			if (obj == bean)
-				return true;
-		}
-		return false;
-	}
-
 	// 过滤名称
-	private static String filterName(Object property) throws Exception {
+	private static String filterKey(Object property) throws Exception {
 		if (TypeUtils.isNamed(String.valueOf(property)))
 			return String.valueOf(property);
 		return "\"" + JavaScript.encode(property.toString()) + "\"";
-	}
-
-	// 过滤值
-	private static String filterValue(Object property) throws Exception {
-		if (property instanceof CharSequence)
-			return "\"" + JavaScript.encode(property.toString()) + "\"";
-		return String.valueOf(property);
 	}
 
 }
