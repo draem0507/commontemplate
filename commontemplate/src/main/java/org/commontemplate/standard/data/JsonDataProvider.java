@@ -2,7 +2,6 @@ package org.commontemplate.standard.data;
 
 import java.util.Map;
 
-import org.commontemplate.util.json.JSONObject;
 import org.commontemplate.util.json.JSONUtils;
 
 /**
@@ -15,8 +14,7 @@ import org.commontemplate.util.json.JSONUtils;
 public class JsonDataProvider extends StringDataProvider {
 
 	public Map getData(String dataSource) throws Exception {
-		JSONObject jsonObject = new JSONObject(dataSource);
-		return JSONUtils.jsonToMap(jsonObject);
+		return JSONUtils.fromJsonToMap(dataSource);
 	}
 
 }
