@@ -116,7 +116,7 @@ public class BeanUtils {
 		return method;
 	}
 
-	// 查找公开的方法 (辅助方法)
+	// 查找公开的方法 (辅助方法，当method.setAccessible(true)失败时被调用)
 	private static Method searchPublicMethod(Class[] classes, String methodName) throws NoSuchMethodException, SecurityException {
 		if (classes != null && classes.length > 0) {
 			for (int i = 0, n = classes.length; i < n; i ++) {
@@ -131,7 +131,7 @@ public class BeanUtils {
 		throw new NoSuchMethodException(); // 未找到方法
 	}
 
-	// 查找公开的方法 (辅助方法)
+	// 查找公开的方法 (辅助方法，当method.setAccessible(true)失败时被调用)
 	private static Method searchPublicMethod(Class cls, String methodName) throws NoSuchMethodException, SecurityException {
 		if (ClassUtils.isPublicClass(cls)) { // 首先保证类是公开的
 			Method method = cls.getMethod(methodName, new Class[0]);
