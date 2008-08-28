@@ -349,12 +349,11 @@ $!
 								<b>(2) HTML标签注释版语法外套</b><br/>
 								编译模板时自动去除指令两边的HTML注释符，如：<br/>
 								&lt;!--$指令{表达式}--&gt; <font color="green">(注: 注释符与指令间不能有空格)</font><br/>
-								<font color="green">
 								注：此语法外套在Web环境下(即@extends=org/commontemplate/tools/<b>web</b>/commontemplate.properties)默认开启，其它环境需配置：<br/>
 								textFilters[100]=<font color="#2a00ff">org.commontemplate.standard.coat.CommentSyntaxCoatFilter()</font><br/>
 								textFilters[100].begin=<font color="#2a00ff">&lt;!--</font> <font color="green">(注：注释起始符)</font><br/>
-								textFilters[100].end=--<font color="#2a00ff">&gt;</font> <font color="green">(注：注释结束符)</font><br/>
-								textFilters[100].clearSpaceline=<font color="#2a00ff">true</font> <font color="green">(注：清除空白行，当指令所在行没有其它内容时，清除该行)</font><br/>
+								textFilters[100].end=<font color="#2a00ff">--&gt;</font> <font color="green">(注：注释结束符)</font><br/>
+								textFilters[100].clearSpaceline=<font color="#2a00ff">true</font> <font color="green">(注：当指令所在行没有其它内容时，清除该空白行)</font><br/>
 								<b>(3) HTML标签属性版语法外套</b><br/>
 								自动将名称空间为“ct:”的HTML标签属性转换成指令，如：<br/>
 								&lt;table ct:if="users != null && users.size &gt; 0"&gt;...&lt;table&gt; <font color="green">(注: 只能用于块指令)</font><br/>
