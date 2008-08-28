@@ -2,15 +2,16 @@ package org.commontemplate.standard.coat;
 
 import junit.framework.TestCase;
 
-public class CommentSpacelineSyntaxCoatFilterTester extends TestCase {
+public class CommentSyntaxCoatFilterTester extends TestCase {
 
-	private CommentSpacelineSyntaxCoatFilter syntaxCoatFilter;
+	private CommentSyntaxCoatFilter syntaxCoatFilter;
 
 	protected void setUp() throws Exception {
 		super.setUp();
-		syntaxCoatFilter = new CommentSpacelineSyntaxCoatFilter();
+		syntaxCoatFilter = new CommentSyntaxCoatFilter();
 		syntaxCoatFilter.setBegin("/*");
 		syntaxCoatFilter.setEnd("*/");
+		syntaxCoatFilter.setClearSpaceline(true);
 	}
 
 	public void testFilter() throws Exception {

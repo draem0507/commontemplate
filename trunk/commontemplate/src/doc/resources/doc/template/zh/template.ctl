@@ -337,17 +337,29 @@ $!
 								可以用context["区域名"]在指定范围内查找，如：${context["session"].loginUser}<br/>
 								另外，也可以用context["指令名"]查找最近的某个块指令区域内的变量，如：${context["for"].xxx} ${context["if"].xxx}<br/>
 								<br/>
-								<b>六. HTML语法扩展</b><br/>
-								<b>(1) 注释版语法外套</b><br/>
+								<b>六. 语法扩展</b><br/>
+								<b>(1) Java代码注释版语法外套</b><br/>
+								编译模板时自动去除指令两边的Java代码注释符，如：<br/>
+								/*$指令{表达式}*/ <font color="green">(注: 注释符与指令间不能有空格)</font><br/>
+								注：此语法外套在代码生成器环境下(即@extends=org/commontemplate/tools/<b>generator</b>/commontemplate.properties)默认开启，其它环境需配置：<br/>
+								textFilters[100]=<font color="#2a00ff">org.commontemplate.standard.coat.CommentSyntaxCoatFilter()</font><br/>
+								textFilters[100].begin=<font color="#2a00ff">/*</font> <font color="green">(注：注释起始符)</font><br/>
+								textFilters[100].end=<font color="#2a00ff">*/</font> <font color="green">(注：注释结束符)</font><br/>
+								textFilters[100].clearSpaceline=<font color="#2a00ff">true</font> <font color="green">(注：当指令所在行没有其它内容时，清除该空白行)</font><br/>
+								<b>(2) HTML标签注释版语法外套</b><br/>
 								编译模板时自动去除指令两边的HTML注释符，如：<br/>
 								&lt;!--$指令{表达式}--&gt; <font color="green">(注: 注释符与指令间不能有空格)</font><br/>
-								<font color="green">注: 此语法外套在web环境下(即@extends=org/commontemplate/tools/<b>web</b>/commontemplate.properties)默认开启，其它环境需配置：<br/>
-								textFilters[100]=org.commontemplate.standard.coat.CommentSyntaxCoatFilter()</font><br/>
-								<b>(2) 属性版语法外套</b><br/>
+								<font color="green">
+								注：此语法外套在Web环境下(即@extends=org/commontemplate/tools/<b>web</b>/commontemplate.properties)默认开启，其它环境需配置：<br/>
+								textFilters[100]=<font color="#2a00ff">org.commontemplate.standard.coat.CommentSyntaxCoatFilter()</font><br/>
+								textFilters[100].begin=<font color="#2a00ff">&lt;!--</font> <font color="green">(注：注释起始符)</font><br/>
+								textFilters[100].end=--<font color="#2a00ff">&gt;</font> <font color="green">(注：注释结束符)</font><br/>
+								textFilters[100].clearSpaceline=<font color="#2a00ff">true</font> <font color="green">(注：清除空白行，当指令所在行没有其它内容时，清除该行)</font><br/>
+								<b>(3) HTML标签属性版语法外套</b><br/>
 								自动将名称空间为“ct:”的HTML标签属性转换成指令，如：<br/>
 								&lt;table ct:if="users != null && users.size &gt; 0"&gt;...&lt;table&gt; <font color="green">(注: 只能用于块指令)</font><br/>
-								<font color="green">注: 此语法外套因解析HTML语法，有性能损耗，所以未默认开启，需自行配置：<br/>
-								resourceFilters[100]=org.commontemplate.standard.coat.AttributeSyntaxCoatFilter()</font><br/>
+								注：此语法外套因解析HTML语法，有性能损耗，所以未默认开启，需自行配置：<br/>
+								resourceFilters[100]=<font color="#2a00ff">org.commontemplate.standard.coat.AttributeSyntaxCoatFilter()</font><br/>
 								<br/>
 								<b>七. 举例:</b><br/>
 								<b>(1) 标准语法：</b><br/>
@@ -366,7 +378,7 @@ $!
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$end<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;/body&gt;</font><br/>
 <font color="#3f7f5f">&lt;/html&gt;</font><br/>
-								<b>(2) 注释版语法外套：</b><br/>
+								<b>(2) HTML标签注释版语法外套：</b><br/>
 <font color="#3f7f5f">&lt;html&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;body&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f5fbf">&lt;!--$if{users&nbsp;!=&nbsp;null&nbsp;&amp;&amp;&nbsp;users.size&nbsp;&gt;&nbsp;0}--&gt;</font><br/>
@@ -382,7 +394,7 @@ $!
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f5fbf">&lt;!--$end--&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;/body&gt;</font><br/>
 <font color="#3f7f5f">&lt;/html&gt;</font><br/>
-								<b>(3) 属性版语法外套：</b><br/>
+								<b>(3) HTML标签属性版语法外套：</b><br/>
 <font color="#3f7f5f">&lt;html&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;body&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;table&nbsp;<font color="#7f0055">ct:if</font><font color="#000000">=</font><font color="#2a00ff">"users&nbsp;!=&nbsp;null&nbsp;&amp;&amp;&nbsp;users.size&nbsp;&gt;&nbsp;0"</font>&nbsp;<font color="#7f0055">border</font><font color="#000000">=</font><font color="#2a00ff">"1"</font>&gt;</font><br/>

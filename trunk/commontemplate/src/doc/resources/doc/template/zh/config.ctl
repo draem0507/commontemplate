@@ -198,6 +198,13 @@ response.contentType=<font color="#2a00ff">text/html</font><br/>
 								<br/>
 								<b>参考配置：</b><br/>
 								org/commontemplate/tools/commontemplate-spring.xml<br/>
+								<br/>
+								<b>三. 遗留</b> <font color="green">(注: 将在1.0版本统一删除)</font><br/>
+								(1) virtualDirectory<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.7.8加入，0.8.6废弃<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>名称歧义<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>rootDirectory<br/>
+								<br/>
 !$
 	<!--$end-->
 <!--$end-->
