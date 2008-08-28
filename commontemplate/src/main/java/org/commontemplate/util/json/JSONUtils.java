@@ -1,8 +1,10 @@
 package org.commontemplate.util.json;
 
+import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -101,8 +103,10 @@ public final class JSONUtils {
 				|| bean.getClass() == Character.class
 				|| bean.getClass() == String.class) {
 			buf.append(filterValue(bean));
+		} else if (bean instanceof Date) {
+			buf.append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format((Date)bean));
 		} else if (bean.getClass().isArray()) {
-			appendCollection(Arrays.asList((Object[])bean), buf, count + 1);
+			appendArray(bean, buf, count + 1);
 		} else if (bean instanceof Collection) {
 			appendCollection((Collection)bean, buf, count + 1);
 		} else if (bean instanceof Map) {
@@ -112,6 +116,23 @@ public final class JSONUtils {
 		}
 	}
 
+	// 添加数组，包括基本类型数组
+	private static void appendArray(Object array, StringBuffer buf, int count) throws Exception {
+		if (count > MAX_RECURSION)
+			return;
+		buf.append("[");
+		boolean isFirst = true;
+		for (int i = 0, n = Array.getLength(array); i < n; i ++) {
+			if (isFirst)
+				isFirst = false;
+			else
+				buf.append(",");
+			appendObject(Array.get(array, i), buf, count + 1);
+		}
+		buf.append("]");
+	}
+
+	// 添加集合
 	private static void appendCollection(Collection collection, StringBuffer buf, int count) throws Exception {
 		if (count > MAX_RECURSION)
 			return;
@@ -127,6 +148,7 @@ public final class JSONUtils {
 		buf.append("]");
 	}
 
+	// 添加Map
 	private static void appendMap(Map properties, StringBuffer buf, int count) throws Exception {
 		if (count > MAX_RECURSION)
 			return;
@@ -145,12 +167,14 @@ public final class JSONUtils {
 		buf.append("}");
 	}
 
+	// 过滤名称
 	private static String filterName(Object property) throws Exception {
 		if (TypeUtils.isNamed(String.valueOf(property)))
 			return String.valueOf(property);
 		return "\"" + JavaScript.encode(property.toString()) + "\"";
 	}
 
+	// 过滤值
 	private static String filterValue(Object property) throws Exception {
 		if (property instanceof CharSequence)
 			return "\"" + JavaScript.encode(property.toString()) + "\"";
