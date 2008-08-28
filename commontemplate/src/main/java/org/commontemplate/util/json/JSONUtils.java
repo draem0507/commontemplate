@@ -12,6 +12,11 @@ import org.commontemplate.util.BeanUtils;
 import org.commontemplate.util.JavaScriptUtils;
 import org.commontemplate.util.TypeUtils;
 
+/**
+ * JSON简化使用工具类
+ *
+ * @author liangfei0201@163.com
+ */
 public final class JSONUtils {
 
 	// 如果两个对象互引用，则死循环递归，这里做最大递归限制
@@ -143,12 +148,12 @@ public final class JSONUtils {
 	private static String filterName(Object property) throws Exception {
 		if (TypeUtils.isNamed(String.valueOf(property)))
 			return String.valueOf(property);
-		return "\"" + JavaScriptUtils.javaScriptEscape(property.toString()) + "\""; // modify: 陈志强
+		return "\"" + JavaScriptUtils.javaScriptEscape(property.toString()) + "\"";
 	}
 
 	private static String filterValue(Object property) throws Exception {
 		if (property instanceof CharSequence)
-			return "\"" + JavaScriptUtils.javaScriptEscape(property.toString()) + "\""; // modify: 陈志强
+			return "\"" + JavaScriptUtils.javaScriptEscape(property.toString()) + "\"";
 		return String.valueOf(property);
 	}
 
