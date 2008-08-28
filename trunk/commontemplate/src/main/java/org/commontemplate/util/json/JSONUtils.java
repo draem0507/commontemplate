@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.commontemplate.util.BeanUtils;
-import org.commontemplate.util.JavaScriptUtils;
 import org.commontemplate.util.TypeUtils;
+import org.commontemplate.util.coder.JavaScript;
 
 /**
  * JSON简化使用工具类
@@ -148,12 +148,12 @@ public final class JSONUtils {
 	private static String filterName(Object property) throws Exception {
 		if (TypeUtils.isNamed(String.valueOf(property)))
 			return String.valueOf(property);
-		return "\"" + JavaScriptUtils.javaScriptEscape(property.toString()) + "\"";
+		return "\"" + JavaScript.encode(property.toString()) + "\"";
 	}
 
 	private static String filterValue(Object property) throws Exception {
 		if (property instanceof CharSequence)
-			return "\"" + JavaScriptUtils.javaScriptEscape(property.toString()) + "\"";
+			return "\"" + JavaScript.encode(property.toString()) + "\"";
 		return String.valueOf(property);
 	}
 
