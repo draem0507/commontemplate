@@ -106,7 +106,7 @@ public final class JSONUtils {
 				|| bean.getClass() == String.class) {
 			buf.append(filterValue(bean));
 		} else if (bean instanceof Date) {
-			buf.append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format((Date)bean));
+			buf.append("\"" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format((Date)bean) + "\"");
 		} else if (isCycle(bean, beans)){
 			buf.append("null"); // 如果循环引用，则用null代替
 		} else {
