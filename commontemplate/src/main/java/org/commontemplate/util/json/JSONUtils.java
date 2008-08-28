@@ -109,14 +109,17 @@ public final class JSONUtils {
 			buf.append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format((Date)bean));
 		} else if (isCycle(bean, beans)){
 			buf.append("null"); // 如果循环引用，则用null代替
-		} else if (bean.getClass().isArray()) {
-			appendArray(bean, buf, beans, count + 1);
-		} else if (bean instanceof Collection) {
-			appendCollection((Collection)bean, buf, beans, count + 1);
-		} else if (bean instanceof Map) {
-			appendMap((Map)bean, buf, beans, count + 1);
 		} else {
-			appendMap(BeanUtils.getProperties(bean), buf, beans, count + 1);
+			beans.add(bean); // 添加对象引用
+			if (bean.getClass().isArray()) {
+				appendArray(bean, buf, beans, count + 1);
+			} else if (bean instanceof Collection) {
+				appendCollection((Collection)bean, buf, beans, count + 1);
+			} else if (bean instanceof Map) {
+				appendMap((Map)bean, buf, beans, count + 1);
+			} else {
+				appendMap(BeanUtils.getProperties(bean), buf, beans, count + 1);
+			}
 		}
 	}
 
@@ -171,6 +174,7 @@ public final class JSONUtils {
 		buf.append("}");
 	}
 
+	// 判断是否循环引用
 	private static boolean isCycle(Object bean, List beans) {
 		for (Iterator i = beans.iterator(); i.hasNext();) {
 			Object obj = i.next();
