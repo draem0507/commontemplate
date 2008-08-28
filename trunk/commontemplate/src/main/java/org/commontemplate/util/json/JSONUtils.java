@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -84,15 +85,16 @@ public final class JSONUtils {
 
 	public static String toJson(Object bean) throws Exception {
 		StringBuffer buf = new StringBuffer();
-		appendObject(bean, buf, 0);
+		appendObject(bean, buf, new LinkedList(), 0);
 		return buf.toString();
 	}
 
-	private static void appendObject(Object bean, StringBuffer buf, int count) throws Exception {
+	private static void appendObject(Object bean, StringBuffer buf, List beans, int count) throws Exception {
 		if (count > MAX_RECURSION)
 			return;
-		if (bean == null
-				|| bean.getClass().isPrimitive()
+		if (bean == null) {
+			buf.append("null");
+		} else if (bean.getClass().isPrimitive()
 				|| bean.getClass() == Boolean.class
 				|| bean.getClass() == Byte.class
 				|| bean.getClass() == Short.class
@@ -105,19 +107,21 @@ public final class JSONUtils {
 			buf.append(filterValue(bean));
 		} else if (bean instanceof Date) {
 			buf.append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format((Date)bean));
+		} else if (isCycle(bean, beans)){
+			buf.append("null"); // 如果循环引用，则用null代替
 		} else if (bean.getClass().isArray()) {
-			appendArray(bean, buf, count + 1);
+			appendArray(bean, buf, beans, count + 1);
 		} else if (bean instanceof Collection) {
-			appendCollection((Collection)bean, buf, count + 1);
+			appendCollection((Collection)bean, buf, beans, count + 1);
 		} else if (bean instanceof Map) {
-			appendMap((Map)bean, buf, count + 1);
+			appendMap((Map)bean, buf, beans, count + 1);
 		} else {
-			appendMap(BeanUtils.getProperties(bean), buf, count + 1);
+			appendMap(BeanUtils.getProperties(bean), buf, beans, count + 1);
 		}
 	}
 
 	// 添加数组，包括基本类型数组
-	private static void appendArray(Object array, StringBuffer buf, int count) throws Exception {
+	private static void appendArray(Object array, StringBuffer buf, List beans, int count) throws Exception {
 		if (count > MAX_RECURSION)
 			return;
 		buf.append("[");
@@ -127,13 +131,13 @@ public final class JSONUtils {
 				isFirst = false;
 			else
 				buf.append(",");
-			appendObject(Array.get(array, i), buf, count + 1);
+			appendObject(Array.get(array, i), buf, beans, count + 1);
 		}
 		buf.append("]");
 	}
 
 	// 添加集合
-	private static void appendCollection(Collection collection, StringBuffer buf, int count) throws Exception {
+	private static void appendCollection(Collection collection, StringBuffer buf, List beans, int count) throws Exception {
 		if (count > MAX_RECURSION)
 			return;
 		buf.append("[");
@@ -143,13 +147,13 @@ public final class JSONUtils {
 				isFirst = false;
 			else
 				buf.append(",");
-			appendObject(iterator.next(), buf, count + 1);
+			appendObject(iterator.next(), buf, beans, count + 1);
 		}
 		buf.append("]");
 	}
 
 	// 添加Map
-	private static void appendMap(Map properties, StringBuffer buf, int count) throws Exception {
+	private static void appendMap(Map properties, StringBuffer buf, List beans, int count) throws Exception {
 		if (count > MAX_RECURSION)
 			return;
 		buf.append("{");
@@ -162,9 +166,18 @@ public final class JSONUtils {
 			Map.Entry entry = (Map.Entry)iterator.next();
 			buf.append(filterName(entry.getKey()));
 			buf.append(":");
-			appendObject(entry.getValue(), buf, count + 1);
+			appendObject(entry.getValue(), buf, beans, count + 1);
 		}
 		buf.append("}");
+	}
+
+	private static boolean isCycle(Object bean, List beans) {
+		for (Iterator i = beans.iterator(); i.hasNext();) {
+			Object obj = i.next();
+			if (obj == bean)
+				return true;
+		}
+		return false;
 	}
 
 	// 过滤名称
