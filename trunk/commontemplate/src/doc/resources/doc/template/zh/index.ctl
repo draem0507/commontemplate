@@ -32,52 +32,94 @@
 								18. 站在巨人的肩膀上，参考并借鉴了 WebMacro, Velocity, FreeMarker, JavaFX, OGNL, Perl6, Python/Django, PHP/Smarty, JavaScript/JSON, XML/XPath 等开源项目或规范，感谢它们做出的成果。<br/>
 								<br/>
 								<b>三、怎么书写CommonTemplate模板?</b> <a href="template.html">更多...</a><br/>
+								<b>(1) 标准语法：</b><br/>
 								CommonTemplate只有一个语法规则: \$指令名{参数表达式}<br/>
-<font color="#3f7f5f">&lt;html&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;body&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\$if{users&nbsp;!=&nbsp;null&nbsp;&amp;&amp;&nbsp;users.size&nbsp;&gt;&nbsp;0}<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;table&nbsp;<font color="#7f0055">border</font><font color="#000000">=</font><font color="#2a00ff">"1"</font>&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\$for{user&nbsp;:&nbsp;users}<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;tr&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;td&gt;</font>\${for.index&nbsp;+&nbsp;1}<font color="#3f7f5f">&lt;/td&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;td&gt;</font>\${user.name}<font color="#3f7f5f">&lt;/td&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;td&gt;</font>\${user.coins}<font color="#3f7f5f">&lt;/td&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;/tr&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\$end<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;/table&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\$end<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;/body&gt;</font><br/>
-<font color="#3f7f5f">&lt;/html&gt;</font><br/>
-								<br/>
-								HTML语法外套: <font color="green">(注: 用于保护WYSWYG)</font><br/>
-								(1) 注释版语法外套:<br/>
-<font color="#3f7f5f">&lt;html&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;body&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f5fbf">&lt;!--\$if{users&nbsp;!=&nbsp;null&nbsp;&amp;&amp;&nbsp;users.size&nbsp;&gt;&nbsp;0}--&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;table&nbsp;<font color="#7f0055">border</font><font color="#000000">=</font><font color="#2a00ff">"1"</font>&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f5fbf">&lt;!--\$for{user&nbsp;:&nbsp;users}--&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;tr&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;td&gt;</font><font color="#3f5fbf">&lt;!--\$out{for.index&nbsp;+&nbsp;1}--&gt;</font>1<font color="#3f5fbf">&lt;!--\$end--&gt;</font><font color="#3f7f5f">&lt;/td&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;td&gt;</font><font color="#3f5fbf">&lt;!--\$out{user.name}--&gt;</font>james<font color="#3f5fbf">&lt;!--\$end--&gt;</font><font color="#3f7f5f">&lt;/td&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;td&gt;</font><font color="#3f5fbf">&lt;!--\$out{user.coins}--&gt;</font>2.00<font color="#3f5fbf">&lt;!--\$end--&gt;</font><font color="#3f7f5f">&lt;/td&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;/tr&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f5fbf">&lt;!--\$end--&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;/table&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f5fbf">&lt;!--\$end--&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;/body&gt;</font><br/>
-<font color="#3f7f5f">&lt;/html&gt;</font><br/>
-								(2) 属性版语法外套:<br/>
-<font color="#3f7f5f">&lt;html&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;body&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;table&nbsp;<font color="#7f0055">ct:if</font><font color="#000000">=</font><font color="#2a00ff">"users&nbsp;!=&nbsp;null&nbsp;&amp;&amp;&nbsp;users.size&nbsp;&gt;&nbsp;0"</font>&nbsp;<font color="#7f0055">border</font><font color="#000000">=</font><font color="#2a00ff">"1"</font>&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;tr&nbsp;<font color="#7f0055">ct:for</font><font color="#000000">=</font><font color="#2a00ff">"user&nbsp;:&nbsp;users"</font>&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;td&gt;</font><font color="#3f7f5f">&lt;span&nbsp;<font color="#7f0055">ct:out</font><font color="#000000">=</font><font color="#2a00ff">"for.index&nbsp;+&nbsp;1"</font>&gt;</font>1<font color="#3f7f5f">&lt;/span&gt;</font><font color="#3f7f5f">&lt;/td&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;td&gt;</font><font color="#3f7f5f">&lt;span&nbsp;<font color="#7f0055">ct:out</font><font color="#000000">=</font><font color="#2a00ff">"user.name"</font>&gt;</font>james<font color="#3f7f5f">&lt;/span&gt;</font><font color="#3f7f5f">&lt;/td&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;td&gt;</font><font color="#3f7f5f">&lt;span&nbsp;<font color="#7f0055">ct:out</font><font color="#000000">=</font><font color="#2a00ff">"user.coins"</font>&gt;</font>2.00<font color="#3f7f5f">&lt;/span&gt;</font><font color="#3f7f5f">&lt;/td&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;/tr&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;/table&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;/body&gt;</font><br/>
-<font color="#3f7f5f">&lt;/html&gt;</font><br/>
+								<b>(a) Java代码生成：</b><br/>
+$code{java}$!package com.${project.company}.${project.name}.domain;
+$if{project.framework != project.name}
+import com.${project.company}.${project.framework}.domain.BaseEntity;
+$end
+public class ${entity.name} extends BaseEntity {
+	$for{field : entity.fields}
+	private ${field.type} ${field.name};
+
+	public ${field.type} get${field.name.capitalize}() {
+		return ${field.name};
+	}
+
+	public void set${field.name.capitalize}(${field.type} ${field.name}) {
+		this.${field.name} = ${field.name};
+	}
+	$end
+}
+!$$end
+								<b>(b) HTML页面生成：</b><br/>
+$code{html}$!<html>
+    <body>
+        $if{users != null && users.size &gt; 0}
+        <table border="1">
+            $for{user : users}
+            <tr>
+                <td>${for.index + 1}</td>
+                <td>${user.name}</td>
+                <td>${user.coins}</td>
+            </tr>
+            $end
+        </table>
+        $end
+    </body>
+</html>
+!$$end
+								<b>(2) 语法外套：</b><br/>
+								<b>(a) Java注释版语法外套：</b><br/>
+$code{java}$!package com./*${project.company}*/./*${project.name}*/.domain;
+/*$if{project.framework != project.name}*/
+import com./*${project.company}*/./*${project.framework}*/.domain.BaseEntity;
+/*$end*/
+public class /*${entity.name}*/ extends BaseEntity {
+	/*$for{field : entity.fields}*/
+	private /*${field.type}*/ /*${field.name}*/;
+
+	public /*${field.type}*/ get/*${field.name.capitalize}*/() {
+		return /*${field.name}*/;
+	}
+
+	public void set/*${field.name.capitalize}*/(/*${field.type}*/ /*${field.name}*/) {
+		this./*${field.name}*/ = /*${field.name}*/;
+	}
+	/*$end*/
+}
+!$$end
+								<b>(b) HTML标签注释版语法外套：</b><br/>
+$code{html}$!<html>
+    <body>
+        <!--$if{users != null && users.size &gt; 0}-->
+        <table border="1">
+            <!--$for{user : users}-->
+            <tr>
+                <td><!--$out{for.index + 1}-->1<!--$end--></td>
+                <td><!--$out{user.name}-->james<!--$end--></td>
+                <td><!--$out{user.coins}-->2.00<!--$end--></td>
+            </tr>
+            <!--$end-->
+        </table>
+        <!--$end-->
+    </body>
+</html>
+!$$end
+								<b>(c) HTML标签属性版语法外套：</b><br/>
+$code{html}<html>
+    <body>
+        <table ct:if="users != null && users.size &gt; 0" border="1">
+            <tr ct:for="user : users">
+                <td><span ct:out="for.index + 1">1</span></td>
+                <td><span ct:out="user.name">james</span></td>
+                <td><span ct:out="user.coins">2.00</span></td>
+            </tr>
+        </table>
+    </body>
+</html>
+$end
 								<br/>
 								<b>四、特性语法举例</b><br/>
 								(1) 并行迭代：\$for{i : (1..10), user : users} \$end 多个集合并行取next值，以最长的集合作为结束，短集合自动补null值<br/>
