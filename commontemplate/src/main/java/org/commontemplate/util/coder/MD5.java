@@ -12,7 +12,7 @@ public class MD5 {
 			return null;
 		try {
 			MessageDigest md = MessageDigest.getInstance("MD5");
-			return new String(HEX.encode(md.digest(src)));
+			return HEX.encode(md.digest(src));
 		} catch (NoSuchAlgorithmException e) {
 			throw new RuntimeException(e);
 		}
