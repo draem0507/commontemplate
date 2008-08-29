@@ -19,16 +19,16 @@ $end
 								<br/>
 								<b>3. 界面截图</b><br/>
 								(1) 主界面：(包括菜单，工具栏，模型树，关系视图，缩略视图，属性面板)<br/>
-								<img src="../images/code/code_main.gif" border="0" /><br/>
+								<img src="../images/generator/code_main.gif" border="0" /><br/>
 								<br/>
 								(2) 数据库设置：<br/>
-								<img src="../images/code/code_database.gif" border="0" /><br/>
+								<img src="../images/generator/code_database.gif" border="0" /><br/>
 								<br/>
 								(3) 视图菜单：(可建立多个视图，分别显示相关联的实体，以防止实体太多而变成蜘蛛网)<br/>
-								<img src="../images/code/code_view.gif" border="0" /><br/>
+								<img src="../images/generator/code_view.gif" border="0" /><br/>
 								<br/>
 								(4) 实体树上下文菜单：(用于对Project,Entity,Field进行操作)<br/>
-								<img src="../images/code/code_menu.gif" border="0" /><br/>
+								<img src="../images/generator/code_menu.gif" border="0" /><br/>
 								<br/>
 	<!--$end-->
 <!--$end-->
