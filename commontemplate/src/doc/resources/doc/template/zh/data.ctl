@@ -3,7 +3,8 @@
 								<b>1. XML数据格式:</b><br/>
 								语法：&lt;object&gt;表示对象，&lt;array&gt;表示数组，name属性表示其名称。 注：根标签必需为&lt;object&gt;<br/>
 								举例：<br/>
-<!--$code{"xml"}--><object>
+<!--$code{"xml"}--><?xml version="1.0" encoding="UTF-8" ?>
+<object>
 	<object name="mail">
 		<object name="from">xxx@xxx.com</object>
 		<object name="to">yyy@yyy.com</object>
@@ -20,6 +21,7 @@
 	</array>
 </object>
 <!--$end-->
+								<font color="green">(注：如果内容包含中文，而且文件不是以UTF-8格式保存，可设置&lt;?xml encoding="GBK" ?&gt;)</font><br/>
 								<br/>
 								<b>2. Properties数据格式:</b><br/>
 								语法：等号表示键值对，其中，键中的点号表示层级关系，数字表示数组索引。<br/>
