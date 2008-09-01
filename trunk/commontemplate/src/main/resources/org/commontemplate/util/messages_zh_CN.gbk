@@ -170,6 +170,7 @@ ElementsVisitor.name.required=名称不能为空！
 NumberToSizeHandler.size.error=.toSizeString出错，Size必需大于或等于0 !
 StringToCharacterHandler.length.error={0}.toCharacter failure: length != 1
 Selector.condition.expression.error=三目运算，\"?\"号应与\":\"匹配!
+ObjectFunctionOperatorHandler.function.no.such=在 {0} 中，没有找到函数 {1}
 ObjectPropertyOperatorHandler.property.no.such=在 {0} 中，没有找到属性 {1} 的相关取值函数！
 ObjectPropertyOperatorHandler.sequence.no.such="没有找到序列:{0} -- {1}
 
