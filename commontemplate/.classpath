@@ -23,5 +23,6 @@
 	<classpathentry kind="lib" path="lib/xwork2.jar"/>
 	<classpathentry kind="lib" path="lib/jericho-html-2.5.jar"/>
 	<classpathentry kind="lib" path="lib/log4j.jar"/>
+	<classpathentry kind="lib" path="lib/velocity-1.5.jar" sourcepath="F:/workspace/velocity/src"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
