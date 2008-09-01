@@ -5,6 +5,12 @@ import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.MissingResourceException;
 
+/**
+ * 国际化信息源基类, 适配接口方法.
+ *
+ * @author liangfei0201@163.com
+ *
+ */
 public abstract class MessageSourceSupport implements MessageSource, Serializable {
 
 	public String getMessage(Locale locale, String key, Object[] args)
@@ -31,7 +37,10 @@ public abstract class MessageSourceSupport implements MessageSource, Serializabl
 		return formatMessage(locale, getMessage(locale, key, defaultValue), args);
 	}
 
-	protected String formatMessage(Locale locale, String msg, Object[] args) {
+	/**
+	 * 格式化国际化信息, 替换占位符{0}{1}等
+	 */
+	protected final String formatMessage(Locale locale, String msg, Object[] args) {
 		if (msg != null && msg.length() > 0 && args != null && args.length > 0) {
 			return new MessageFormat(msg, locale).format(args);
 		}
