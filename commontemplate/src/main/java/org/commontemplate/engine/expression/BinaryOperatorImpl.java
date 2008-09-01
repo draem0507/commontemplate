@@ -45,6 +45,8 @@ final class BinaryOperatorImpl extends BinaryOperator {
 
 	private final boolean rightOperandNamed;
 
+	private final boolean rightOperandDotNamed;
+
 	private final boolean rightOperandFunctioned;
 
 	private final List evaluateInterceptors;
@@ -62,6 +64,7 @@ final class BinaryOperatorImpl extends BinaryOperator {
 		this.rightOperandLazy = handler.isRightOperandLazy();
 		this.leftOperandNamed = handler.isLeftOperandNamed();
 		this.rightOperandNamed = handler.isRightOperandNamed();
+		this.rightOperandDotNamed = handler.isRightOperandDotNamed();
 		this.rightOperandFunctioned = handler.isRightOperandFunctioned();
 		this.associativeLaw = handler.isAssociative();
 		this.commutativeLaw = handler.isCommutative();
@@ -126,6 +129,10 @@ final class BinaryOperatorImpl extends BinaryOperator {
 
 	boolean isRightOperandNamed() {
 		return rightOperandNamed;
+	}
+
+	boolean isRightOperandDotNamed() {
+		return rightOperandDotNamed;
 	}
 
 	boolean isRightOperandFunctioned() {

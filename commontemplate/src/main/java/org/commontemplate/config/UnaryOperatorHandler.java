@@ -45,6 +45,16 @@ public abstract class UnaryOperatorHandler implements Serializable {
 	}
 
 	/**
+	 * 一元操作符操作数变量字面化 <p/> 当操作数为无引号字符串时，将不作为变量取值，而作为String传入
+	 *
+	 * @return 是否字面化
+	 *
+	 */
+	public boolean isOperandDotNamed() {
+		return false;
+	}
+
+	/**
 	 * 一元操作符操作数函数字面化 <p/>
 	 * 当操作数为函数时，将不作为函数运行，而作为<code>org.commontemplate.util.Function</code>传入
 	 *

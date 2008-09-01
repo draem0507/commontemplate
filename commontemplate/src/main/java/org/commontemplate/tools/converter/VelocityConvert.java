@@ -19,7 +19,7 @@ public class VelocityConvert {
 		Parser parser = runtime.createNewParser();
 		SimpleNode node = parser.parse(reader, templateName);
 		ConfigurationSettings config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		ParserVisitor visitor = new VelocityParserVisitor(new Engine(config));
+		ParserVisitor visitor = new VelocityParserVisitor(new Engine(config), templateName, writer);
 		node.jjtAccept(visitor, writer);
 	}
 
