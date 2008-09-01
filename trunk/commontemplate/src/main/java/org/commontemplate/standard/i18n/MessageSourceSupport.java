@@ -40,7 +40,7 @@ public abstract class MessageSourceSupport implements MessageSource, Serializabl
 	/**
 	 * 格式化国际化信息, 替换占位符{0}{1}等
 	 */
-	protected final String formatMessage(Locale locale, String msg, Object[] args) {
+	protected String formatMessage(Locale locale, String msg, Object[] args) {
 		if (msg != null && msg.length() > 0 && args != null && args.length > 0) {
 			return new MessageFormat(msg, locale).format(args);
 		}
