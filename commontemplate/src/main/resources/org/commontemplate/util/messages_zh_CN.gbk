@@ -173,7 +173,8 @@ Selector.condition.expression.error=三目运算，\"?\"号应与\":\"匹配!
 ObjectPropertyOperatorHandler.property.no.such=在 {0} 中，没有找到属性 {1} 的相关取值函数！
 ObjectPropertyOperatorHandler.sequence.no.such="没有找到序列:{0} -- {1}
 
-DirectiveHandlerSupport.expression.is.null=${0}指令条件参数不能为空！语法为：${0}{参数}
+DirectiveImpl.expression.is.null=${0}指令条件参数不能为空！语法为：${0}{参数}
+BlockDirectiveImpl.expression.is.null=${0}指令条件参数不能为空！语法为：${0}{参数}
 CatchDirectiveHandler.location.error=$catch指令位置错误, 必需在$try后面!
 CatchDirectiveHandler.parameter.error=$catch指令参数错误! 必需为类名, 如: $catch{e: "com.xxx.XXXException"}
 SnatchDirectiveHandler.parameter.error=snatch指令参数错误,必需为字符串!如:$snatch{'xxx.jsp'}或$snatch{'xxx.jsp','utf-8'}

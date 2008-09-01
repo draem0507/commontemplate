@@ -28,7 +28,7 @@ public class DataDirectiveHandler extends BlockDirectiveHandlerSupport {
 		this.dataProviders = dataProviders;
 	}
 
-	protected void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
+	public void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
 		if (param == null)
 			throw new RuntimeException("$data指令参数不能为空, 必需为String"); // TODO 未国际化
 		if (! (param instanceof String))
@@ -50,7 +50,7 @@ public class DataDirectiveHandler extends BlockDirectiveHandlerSupport {
 		context.getRootLocalContext().putAllVariables(data);
 	}
 
-	protected boolean isExpressionRequired() {
+	public boolean isExpressionRequired() {
 		return true;
 	}
 

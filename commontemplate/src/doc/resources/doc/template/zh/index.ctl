@@ -56,7 +56,7 @@ public class ${entity.name} extends BaseEntity {
 								<b>(b) HTML页面生成：</b><br/>
 $code{html}$!<html>
     <body>
-        $if{users != null && users.size &gt; 0}
+        $if{users != null && users.size &amp;gt; 0}
         <table border="1">
             $for{user : users}
             <tr>
@@ -93,7 +93,7 @@ public class /*${entity.name}*/ extends BaseEntity {
 								<b>(b) HTML标签注释版语法外套：</b><br/>
 $code{html}$!<html>
     <body>
-        <!--$if{users != null && users.size &gt; 0}-->
+        <!--$if{users != null && users.size &amp;gt; 0}-->
         <table border="1">
             <!--$for{user : users}-->
             <tr>
@@ -110,7 +110,7 @@ $code{html}$!<html>
 								<b>(c) HTML标签属性版语法外套：</b><br/>
 $code{html}<html>
     <body>
-        <table ct:if="users != null && users.size &gt; 0" border="1">
+        <table ct:if="users != null && users.size &amp;gt; 0" border="1">
             <tr ct:for="user : users">
                 <td><span ct:out="for.index + 1">1</span></td>
                 <td><span ct:out="user.name">james</span></td>

@@ -19,7 +19,7 @@ public class I18nMessageStartDirectiveHandler extends BlockDirectiveHandlerSuppo
 		this.messageSource = messageSource;
 	}
 
-	protected void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
+	public void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
 		if (param != null) {
 			if (param instanceof List) {
 				List list = (List)param;
@@ -48,7 +48,7 @@ public class I18nMessageStartDirectiveHandler extends BlockDirectiveHandlerSuppo
 		return bufferedFilter.getBuffered();
 	}
 
-	protected boolean isExpressionRequired() {
+	public boolean isExpressionRequired() {
 		return true;
 	}
 

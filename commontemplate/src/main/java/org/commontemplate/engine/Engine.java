@@ -21,7 +21,7 @@ import org.commontemplate.core.GlobalContext;
 import org.commontemplate.core.ParsingException;
 import org.commontemplate.core.Template;
 import org.commontemplate.core.TemplateBudiler;
-import org.commontemplate.core.TemplateFactory;
+import org.commontemplate.core.TemplateLoader;
 import org.commontemplate.core.Resource;
 import org.commontemplate.core.Text;
 import org.commontemplate.core.UnaryOperator;
@@ -37,7 +37,7 @@ import org.commontemplate.util.Assert;
  */
 public final class Engine implements Factory {
 
-	private final TemplateFactory templateFactory;
+	private final TemplateLoader templateFactory;
 
 	private final ContextFactory contextFactory;
 

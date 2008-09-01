@@ -32,12 +32,4 @@ public interface Node {
 	 */
 	public abstract String getSource() throws IOException;
 
-	/**
-	 * 接收访问者, 并带领访问者遍历整个树 (中序遍历)<br>
-	 *
-	 * @param visitor 访问者
-	 * @return 控制参数：Visitor.NEXT, Visitor.SKIP, Visitor.STOP
-	 */
-	public abstract int accept(Visitor visitor);
-
 }

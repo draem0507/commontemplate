@@ -14,7 +14,7 @@ public class LeftTrimSpaceDirectiveHandler extends BlockDirectiveHandlerSupport 
 
 	private static final OutputFilter spaceFilter = new LeftTrimSpaceFilter();
 
-	protected void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
+	public void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
 		BufferedOutputFilter bufferedFilter = new BufferedOutputFilter();
 		context.setOutputFilter(bufferedFilter);
 		DirectiveUtils.renderAll(innerElements, context);

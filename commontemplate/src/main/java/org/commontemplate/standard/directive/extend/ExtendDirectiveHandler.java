@@ -19,7 +19,7 @@ public class ExtendDirectiveHandler extends BlockDirectiveHandlerSupport {
 
 	public static final String EXTEND_INNER_PROPERTY = "extend_inner";
 
-	protected void doRender(Context context, String directiveName,
+	public void doRender(Context context, String directiveName,
 			Object param, List innerElements)
 			throws Exception {
 		context.putProperty(EXTEND_INNER_PROPERTY, Boolean.TRUE);
@@ -38,7 +38,7 @@ public class ExtendDirectiveHandler extends BlockDirectiveHandlerSupport {
 		}
 	}
 
-	protected boolean isExpressionRequired() {
+	public boolean isExpressionRequired() {
 		return true;
 	}
 

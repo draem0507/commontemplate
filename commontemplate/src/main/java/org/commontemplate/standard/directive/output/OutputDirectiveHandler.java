@@ -13,7 +13,7 @@ public class OutputDirectiveHandler extends DirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	protected void doRender(Context context, String directiveName, Object param) throws Exception {
+	public void doRender(Context context, String directiveName, Object param) throws Exception {
 		context.output(param);
 	}
 

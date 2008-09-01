@@ -11,7 +11,9 @@ import org.commontemplate.core.Expression;
 import org.commontemplate.core.IgnoreException;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Template;
-import org.commontemplate.core.Visitor;
+import org.commontemplate.core.TemplateVisitor;
+import org.commontemplate.util.Assert;
+import org.commontemplate.util.I18nExceptionFactory;
 import org.commontemplate.util.Location;
 
 /**
@@ -32,7 +34,7 @@ class BlockDirectiveImpl extends BlockDirectiveSupport {
 
 	private final String prototype;
 
-	private final BlockDirectiveHandler startDirectiveHandler;
+	private final BlockDirectiveHandler blockDirectiveHandler;
 
 	private final String endPrototype;
 
@@ -40,12 +42,15 @@ class BlockDirectiveImpl extends BlockDirectiveSupport {
 
 	private final BlockDirective proxy;
 
-	BlockDirectiveImpl(String name, Location location, Expression expression, BlockDirectiveHandler startDirectiveHandler, String prototype, String endPrototype, List renderInterceptors) {
+	BlockDirectiveImpl(String name, Location location, Expression expression, BlockDirectiveHandler blockDirectiveHandler, String prototype, String endPrototype, List renderInterceptors) {
+		Assert.assertNotNull(blockDirectiveHandler);
+		if (blockDirectiveHandler.isExpressionRequired() && expression == null)
+			throw I18nExceptionFactory.createIllegalStateException("BlockDirectiveImpl.expression.is.null", new Object[]{name});
 		this.name = name;
 		this.prototype = prototype;
 		this.location = location;
 		this.expression = expression;
-		this.startDirectiveHandler = startDirectiveHandler;
+		this.blockDirectiveHandler = blockDirectiveHandler;
 		this.endPrototype = endPrototype;
 		this.renderInterceptors = renderInterceptors;
 		this.proxy = new BlockDirectiveProxy(this);
@@ -61,7 +66,7 @@ class BlockDirectiveImpl extends BlockDirectiveSupport {
 	void doRender(Context context) throws RenderingException {
 		context.pushLocalContext(name);
 		try {
-			startDirectiveHandler.doRender(context, proxy);
+			blockDirectiveHandler.doRender(context, proxy);
 		} catch (RenderingException e) {
 			throw e;
 		} catch (IgnoreException e) {
@@ -93,17 +98,6 @@ class BlockDirectiveImpl extends BlockDirectiveSupport {
 		return prototype + getElementsSource() + endPrototype;
 	}
 
-	protected int guide(Visitor visitor) {
-		Expression expression = getExpression();
-		if (expression != null) {
-			int v = expression.accept(visitor);
-			if (v == Visitor.STOP)
-				return Visitor.STOP;
-		}
-		acceptElements(visitor);
-		return Visitor.NEXT;
-	}
-
 	public String getSignature() {
 		return prototype;
 	}
@@ -128,6 +122,12 @@ class BlockDirectiveImpl extends BlockDirectiveSupport {
 			else if (directive instanceof CommentImpl)
 				((CommentImpl)directive).setTemplate(template);
 		}
+	}
+
+	public void accept(TemplateVisitor visitor) {
+		visitor.visitBlockDirective(this);
+		acceptElements(visitor);
+		visitor.visitEndBlockDirective();
 	}
 
 }

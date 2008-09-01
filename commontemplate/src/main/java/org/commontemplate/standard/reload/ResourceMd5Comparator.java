@@ -7,6 +7,7 @@ import java.security.NoSuchAlgorithmException;
 
 import org.commontemplate.config.ResourceComparator;
 import org.commontemplate.core.Resource;
+import org.commontemplate.core.Template;
 import org.commontemplate.util.IOUtils;
 
 /**
@@ -21,7 +22,7 @@ public class ResourceMd5Comparator implements ResourceComparator, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public boolean isModified(Resource oldSource, Resource newSource) throws IOException {
+	public boolean isModified(Template oldSource, Resource newSource) throws IOException {
 		try {
 			MessageDigest messageDigest = MessageDigest.getInstance("MD5");
 			byte[] oldBytes = IOUtils.readToBytes(oldSource.getReader());

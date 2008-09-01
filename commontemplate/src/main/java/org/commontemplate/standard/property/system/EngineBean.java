@@ -6,12 +6,12 @@ import org.commontemplate.Version;
 
 public class EngineBean {
 	
-	public String getVersionNumber() {
-		return Version.getVersionNumber();
+	public String getVersion() {
+		return Version.getVersion();
 	}
 	
-	public Date getReleaseDate() {
-		return Version.getReleaseDate();
+	public Date getReleased() {
+		return Version.getReleased();
 	}
 	
 	public String getVendor() {

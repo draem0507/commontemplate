@@ -2,45 +2,46 @@
 	<!--$zone{"content"}-->
 $!
 								<b>一. 模板引擎使用</b> <a href="../javadoc/index.html">JavaDoc&gt;&gt;</a><br/>
-								<b>(1) Java版: </b><font color="green">(环境需求JRE1.4.2_10以上)</font> <a href="http://java.sun.com/j2se/1.4.2/downloads.html" target="_blank">下载...</a><br/>
-<font color="#7f0055"><b>import</b></font> java.util.*; <br/>
-<br/>
-<font color="#3f7f5f">// 导入commontemplate模块 </font><br/>
-<font color="#7f0055"><b>import</b></font> org.commontemplate.core.*; <br/>
-<font color="#7f0055"><b>import</b></font> org.commontemplate.engine.*; <br/>
-<font color="#7f0055"><b>import</b></font> org.commontemplate.standard.*; <br/>
-<font color="#7f0055"><b>import</b></font> org.commontemplate.tools.*; <br/>
-<br/>
-<font color="#3f7f5f">// 配置并建造引擎 (Engine是内同步线程安全的，可单例重用) </font><br/>
-ConfigurationSettings config = PropertiesConfigurationLoader.loadStandardConfiguration(); <br/>
-<font color="#3f7f5f">// 或者：ConfigurationSettings config = PropertiesConfigurationLoader.loadConfiguration("xxx.properties"); </font><br/>
-<font color="#3f7f5f">// 或者：StandardConfiguration config = new StandardConfiguration(); </font><br/>
-Engine engine = <font color="#7f0055"><b>new</b></font> Engine(config); <br/>
-<br/>
-<font color="#3f7f5f">// 设置全局上下文 (GlobalContext在同一Engine创建的Context间共享)</font><br/>
-GlobalContext globalContext = engine.getGlobalContext();<br/>
-globalContext.put(<font color="#2a00ff">"name"</font>, <font color="#2a00ff">"value"</font>); <br/>
-...<br/>
-<br/>
-<font color="#3f7f5f">// 定义运行期数据 </font><br/>
-Map model = ... <br/>
-Writer out = ... <br/>
-<br/>
-<font color="#3f7f5f">// 创建上下文 (Context非线程安全，应为每次执行创建新的Context)</font><br/>
-<font color="#3f7f5f">// 注：国际化信息传入可用factory.createContext(out, locale, timeZone);</font><br/>
-Context context = engine.createContext(out);<br/>
-context.putAll(model); <br/>
-context.put(<font color="#2a00ff">"name"</font>, <font color="#2a00ff">"value"</font>); <br/>
-... <br/>
-<br/>
-<font color="#3f7f5f">// 执行模板 </font><br/>
-Template template = engine.getTemplate(<font color="#2a00ff">"mytemplate.ctl"</font>); <br/>
-template.render(context); <br/>
-<br/>
-<font color="#3f7f5f">// 清理上下文及输出(最好放在finally块中) </font><br/>
-context.clear(); <br/>
-out.flush(); <br/>
-out.close(); <br/>
+								<b>(1) Java版: </b><font color="green">(环境需求JRE1.4.2以上)</font> <a href="http://java.sun.com/j2se/1.4.2/downloads.html" target="_blank">下载...</a><br/>
+								<font color="#7f0055"><b>import</b></font> java.util.*; <br/>
+								<br/>
+								<font color="#3f7f5f">// 导入commontemplate模块 </font><br/>
+								<font color="#7f0055"><b>import</b></font> org.commontemplate.core.*; <br/>
+								<font color="#7f0055"><b>import</b></font> org.commontemplate.engine.*; <br/>
+								<font color="#7f0055"><b>import</b></font> org.commontemplate.standard.*; <br/>
+								<font color="#7f0055"><b>import</b></font> org.commontemplate.tools.*; <br/>
+								<br/>
+								<font color="#3f7f5f">// 配置并建造引擎 (Engine是内同步线程安全的，可单例重用) </font><br/>
+								ConfigurationSettings config = PropertiesConfigurationLoader.loadStandardConfiguration(); <br/>
+								<font color="#3f7f5f">// 或者：ConfigurationSettings config = PropertiesConfigurationLoader.loadConfiguration("xxx.properties"); </font><br/>
+								<font color="#3f7f5f">// 或者：StandardConfiguration config = new StandardConfiguration(); </font><br/>
+								<font color="#3f7f5f">// config.setXXX(); </font><br/>
+								Engine engine = <font color="#7f0055"><b>new</b></font> Engine(config); <br/>
+								<br/>
+								<font color="#3f7f5f">// 设置全局上下文 (GlobalContext在同一Engine创建的Context间共享)</font><br/>
+								GlobalContext globalContext = engine.getGlobalContext();<br/>
+								globalContext.put(<font color="#2a00ff">"name"</font>, <font color="#2a00ff">"value"</font>); <br/>
+								...<br/>
+								<br/>
+								<font color="#3f7f5f">// 定义运行期数据 </font><br/>
+								Map model = ... <br/>
+								Writer out = ... <br/>
+								<br/>
+								<font color="#3f7f5f">// 创建上下文 (Context非线程安全，应为每次执行创建新的Context)</font><br/>
+								<font color="#3f7f5f">// 注：国际化信息传入可用factory.createContext(out, locale, timeZone);</font><br/>
+								Context context = engine.createContext(out);<br/>
+								context.putAll(model); <br/>
+								context.put(<font color="#2a00ff">"name"</font>, <font color="#2a00ff">"value"</font>); <br/>
+								... <br/>
+								<br/>
+								<font color="#3f7f5f">// 执行模板 </font><br/>
+								Template template = engine.getTemplate(<font color="#2a00ff">"mytemplate.ctl"</font>); <br/>
+								template.render(context); <br/>
+								<br/>
+								<font color="#3f7f5f">// 清理上下文及输出(最好放在finally块中) </font><br/>
+								context.clear(); <br/>
+								out.flush(); <br/>
+								out.close(); <br/>
 								<br/>
 								<b>关系图如下：</b><br/>
 								<img src="../images/uml/api.gif"/><br/>
@@ -65,6 +66,7 @@ out.close(); <br/>
 								<font color="#3f7f5f">// 配置并建造引擎</font><br/>
 								ExpressionConfigurationSettings config = PropertiesConfigurationLoader.loadStandardExpressionConfiguration();<br/>
 								<font color="#3f7f5f">// 或者：ExpressionConfigurationSettings config = PropertiesConfigurationLoader.loadExpressionConfiguration("xxx.properties");</font><br/>
+								<font color="#3f7f5f">// config.setXXX(); </font><br/>
 								ExpressionEngine engine = <font color="#7f0055"><b>new</b></font> ExpressionEngine(config);<br/>
 								<br/>
 								<font color="#3f7f5f">// 创建上下文</font><br/>

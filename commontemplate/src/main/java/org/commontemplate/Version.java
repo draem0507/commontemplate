@@ -57,7 +57,7 @@ public final class Version {
 	 * @return 版本间差值. 等于0表示版本相同, 大于0表示当前版本新, 大于0表示当前版本旧
 	 */
 	public static int compareTo(String otherVersion) {
-		return compare(getVersionNumber(), otherVersion);
+		return compare(getVersion(), otherVersion);
 	}
 
 	/**
@@ -65,7 +65,7 @@ public final class Version {
 	 * 
 	 * @return 版本号, 未知时返回null
 	 */
-	public static String getVersionNumber() {
+	public static String getVersion() {
 		Package pkg = Version.class.getPackage();
 		if (pkg != null) {
 			String v = pkg.getImplementationVersion();
@@ -86,7 +86,7 @@ public final class Version {
 	 * 
 	 * @return 发行日期, 未知时返回null
 	 */
-	public static Date getReleaseDate() {
+	public static Date getReleased() {
 		try {
 			Properties prop = new Properties();
 			prop.load(Version.class.getClassLoader().getResourceAsStream("org/commontemplate/version.properties"));

@@ -13,13 +13,13 @@ public class MacroDirectiveHandler extends BlockDirectiveHandlerSupport {
 
 	public static final String MACRO_TYPE = "macro";
 
-	protected void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
+	public void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
 		String var = (String)param;
 		Assert.assertTrue(TypeUtils.isNamed(var), "MacroDirectiveHandler.invaild.macro.name", new Object[]{var});
 		context.getParentLocalContext().putProperty(MACRO_TYPE, var, new Macro(innerElements, var));
 	}
 
-	protected boolean isExpressionRequired() {
+	public boolean isExpressionRequired() {
 		return true;
 	}
 

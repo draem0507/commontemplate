@@ -4,17 +4,18 @@ import java.io.IOException;
 import java.io.Writer;
 
 import org.commontemplate.core.Context;
-import org.commontemplate.core.Element;
+import org.commontemplate.core.Directive;
+import org.commontemplate.core.Expression;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Template;
-import org.commontemplate.core.Visitor;
+import org.commontemplate.core.TemplateVisitor;
 import org.commontemplate.util.Location;
 /**
  * Mock一个Element的实现，用来测试指令。
  * @author YanRong
  *
  */
-public class MockDirective extends Element {
+public class MockDirective extends Directive {
 
 	private static final long serialVersionUID = 1L;
 
@@ -79,8 +80,8 @@ public class MockDirective extends Element {
 	 *
 	 * @param visitor 访问者
 	 */
-	public int accept(Visitor visitor) {
-		return visitor.visit(this);
+	public void accept(TemplateVisitor visitor) {
+		visitor.visitDirective(this);
 	}
 
 	public void setName(String name) {
@@ -93,6 +94,10 @@ public class MockDirective extends Element {
 
 	public String getType() {
 		return "MockDirective";
+	}
+
+	public Expression getExpression() {
+		return null;
 	}
 
 }

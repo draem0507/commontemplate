@@ -5,7 +5,7 @@ $!
 								<br/>
 								<b>一. Properties 配置</b><br/>
 								默认采用内置的IoC容器初始化配置，详细请参考：org.commontemplate.tools.bean.PropertiesBeanFactory<br/>
-								使用properties文件作为配置，所以需遵循java.util.Properties的所有规则，如：# ! = :等符号需转义等。<br/>
+								因为使用properties文件作为配置，所以需遵循java.util.Properties的所有规则，如：# ! = :等符号需转义等。<br/>
 								使用properties文件的优势：各属性项按行展开，便于上下级配置间层级覆盖。<br/>
 								<b>配置规则：</b><br/>
 								<b>(1) 基本类型：</b>(与Java相似)<br/>

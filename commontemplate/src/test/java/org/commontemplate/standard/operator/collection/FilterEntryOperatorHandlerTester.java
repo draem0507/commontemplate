@@ -1,17 +1,17 @@
 package org.commontemplate.standard.operator.collection;
 
+import junit.framework.TestCase;
+
 import org.commontemplate.config.Configuration;
 import org.commontemplate.config.LazyOperand;
 import org.commontemplate.config.OperatorHandlerProvider;
 import org.commontemplate.core.Constant;
 import org.commontemplate.core.Expression;
-import org.commontemplate.core.Visitor;
+import org.commontemplate.core.ExpressionVisitor;
 import org.commontemplate.standard.operator.BinaryOperatorHandlerChain;
 import org.commontemplate.standard.operator.LazyOperandMock;
 import org.commontemplate.tools.PropertiesConfigurationLoader;
 import org.commontemplate.util.Location;
-
-import junit.framework.TestCase;
 /**
  * FilterEntryOperatorHandler 的测试。
  * @author YanRong
@@ -83,8 +83,7 @@ public class FilterEntryOperatorHandlerTester extends TestCase {
 			return location;
 		}
 
-		public int accept(Visitor visitor) {
-			return Visitor.NEXT;
+		public void accept(ExpressionVisitor visitor) {
 		}
 
 		public Object getValue() {

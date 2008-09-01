@@ -60,7 +60,7 @@ public class SettingDirectiveHandler extends DirectiveHandler {
 		}
 	}
 
-	protected boolean isExpressionRequired() {
+	public boolean isExpressionRequired() {
 		return true;
 	}
 

@@ -17,7 +17,7 @@ public class VariableDefineDirectiveHandler extends DirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	protected void doRender(Context context, String directiveName, Object param) throws Exception {
+	public void doRender(Context context, String directiveName, Object param) throws Exception {
 		if (param instanceof Entry) {
 			Entry model = (Entry)param;
 			Object key = model.getKey();
@@ -33,7 +33,7 @@ public class VariableDefineDirectiveHandler extends DirectiveHandlerSupport {
 		}
 	}
 
-	protected boolean isExpressionRequired() {
+	public boolean isExpressionRequired() {
 		return true;
 	}
 

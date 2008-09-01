@@ -7,7 +7,7 @@ import java.util.List;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Template;
-import org.commontemplate.core.Visitor;
+import org.commontemplate.core.TemplateVisitor;
 import org.commontemplate.util.I18nExceptionFactory;
 import org.commontemplate.util.Location;
 
@@ -25,8 +25,8 @@ final class TemplateProxy extends Template {
 		return template;
 	}
 
-	public int accept(Visitor visitor) {
-		return template.accept(visitor);
+	public void accept(TemplateVisitor visitor) {
+		template.accept(visitor);
 	}
 
 	public boolean equals(Object obj) {

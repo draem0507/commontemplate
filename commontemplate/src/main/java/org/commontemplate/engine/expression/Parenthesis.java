@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.util.List;
 
 import org.commontemplate.core.EvaluationException;
+import org.commontemplate.core.ExpressionVisitor;
 import org.commontemplate.core.Operator;
 import org.commontemplate.core.VariableResolver;
-import org.commontemplate.core.Visitor;
 import org.commontemplate.util.Location;
 
 /**
@@ -34,7 +34,7 @@ final class Parenthesis extends Operator {
 		throw new UnsupportedOperationException("Parenthesis.unsupported.error");
 	}
 
-	public int accept(Visitor visitor) {
+	public void accept(ExpressionVisitor visitor) {
 		throw new UnsupportedOperationException("Parenthesis.unsupported.error");
 	}
 

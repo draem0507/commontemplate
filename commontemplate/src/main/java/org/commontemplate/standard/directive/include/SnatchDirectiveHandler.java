@@ -27,7 +27,7 @@ public class SnatchDirectiveHandler extends DirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	protected void doRender(Context context, String directiveName, Object param)
+	public void doRender(Context context, String directiveName, Object param)
 			throws Exception {
 		String urlString;
 		String encode;
@@ -109,7 +109,7 @@ public class SnatchDirectiveHandler extends DirectiveHandlerSupport {
 		return "";
 	}
 
-	protected boolean isExpressionRequired() {
+	public boolean isExpressionRequired() {
 		return true;
 	}
 

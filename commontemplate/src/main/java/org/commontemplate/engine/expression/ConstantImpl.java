@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.commontemplate.core.Constant;
 import org.commontemplate.core.EvaluationException;
+import org.commontemplate.core.ExpressionVisitor;
 import org.commontemplate.core.VariableResolver;
 import org.commontemplate.util.Location;
 
@@ -59,6 +60,10 @@ final class ConstantImpl extends Constant {
 
 	public Object getValue() {
 		return value;
+	}
+
+	public void accept(ExpressionVisitor visitor) {
+		visitor.visitConstant(this);
 	}
 
 }

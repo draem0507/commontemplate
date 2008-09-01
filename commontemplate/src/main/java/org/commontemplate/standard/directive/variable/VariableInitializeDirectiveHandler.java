@@ -15,7 +15,7 @@ public class VariableInitializeDirectiveHandler extends DirectiveHandlerSupport 
 
 	private static final long serialVersionUID = 1L;
 
-	protected void doRender(Context context, String directiveName, Object param) throws Exception {
+	public void doRender(Context context, String directiveName, Object param) throws Exception {
 		Entry model = (Entry)param;
 		String var = model.getKey().toString();
 		Object value = model.getValue();
@@ -24,7 +24,7 @@ public class VariableInitializeDirectiveHandler extends DirectiveHandlerSupport 
 		}
 	}
 
-	protected boolean isExpressionRequired() {
+	public boolean isExpressionRequired() {
 		return true;
 	}
 

@@ -7,6 +7,7 @@ import org.commontemplate.core.Context;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Template;
 import org.commontemplate.core.Text;
+import org.commontemplate.core.TemplateVisitor;
 import org.commontemplate.util.Location;
 
 /**
@@ -80,6 +81,10 @@ final class TextImpl extends Text {
 
 	void setTemplate(Template template) {
 		this.template = template;
+	}
+
+	public void accept(TemplateVisitor visitor) {
+		visitor.visitText(this);
 	}
 
 }

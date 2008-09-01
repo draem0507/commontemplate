@@ -24,7 +24,7 @@ public class ImportAsMacroDirectiveHandler extends DirectiveHandlerSupport {
 		this.macroImporter = macroImporter;
 	}
 
-	protected void doRender(Context context, String directiveName, Object param) throws Exception {
+	public void doRender(Context context, String directiveName, Object param) throws Exception {
 		if (param instanceof String) {
 			String str = (String)param;
 			macroImporter.importMacro(context, null, str);
@@ -41,7 +41,7 @@ public class ImportAsMacroDirectiveHandler extends DirectiveHandlerSupport {
 		}
 	}
 
-	protected boolean isExpressionRequired() {
+	public boolean isExpressionRequired() {
 		return true;
 	}
 

@@ -29,7 +29,7 @@ public class UsingAsMacroDirectiveHandler extends DirectiveHandlerSupport {
 		this.macroDirectiveName = macroDirectiveName;
 	}
 
-	protected void doRender(Context context, String directiveName, Object param) throws Exception {
+	public void doRender(Context context, String directiveName, Object param) throws Exception {
 		if (param instanceof String) {
 			usingMacro(context, null, (String)param);
 		} else if (param instanceof Entry) {
@@ -64,7 +64,7 @@ public class UsingAsMacroDirectiveHandler extends DirectiveHandlerSupport {
 		context.putProperty(MacroDirectiveHandler.MACRO_TYPE, macroName, new Macro(elements, macroName));
 	}
 
-	protected boolean isExpressionRequired() {
+	public boolean isExpressionRequired() {
 		return true;
 	}
 

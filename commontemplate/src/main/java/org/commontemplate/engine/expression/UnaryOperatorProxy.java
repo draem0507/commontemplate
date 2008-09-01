@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.commontemplate.core.EvaluationException;
 import org.commontemplate.core.Expression;
+import org.commontemplate.core.ExpressionVisitor;
 import org.commontemplate.core.UnaryOperator;
 import org.commontemplate.core.VariableResolver;
-import org.commontemplate.core.Visitor;
 import org.commontemplate.util.Location;
 
 /**
@@ -30,8 +30,8 @@ final class UnaryOperatorProxy extends UnaryOperator {
 		return unaryOperator;
 	}
 
-	public int accept(Visitor visitor) {
-		return unaryOperator.accept(visitor);
+	public void accept(ExpressionVisitor visitor) {
+		unaryOperator.accept(visitor);
 	}
 
 	public boolean equals(Object obj) {

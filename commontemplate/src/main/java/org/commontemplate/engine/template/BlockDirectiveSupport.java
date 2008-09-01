@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.commontemplate.core.BlockDirective;
 import org.commontemplate.core.Element;
-import org.commontemplate.core.Visitor;
+import org.commontemplate.core.TemplateVisitor;
 
 /**
  * 内部指令可关联性基类
@@ -26,14 +26,11 @@ abstract class BlockDirectiveSupport extends BlockDirective implements java.io.S
 		this.elements = Collections.unmodifiableList(elements);
 	}
 
-	protected int acceptElements(Visitor visitor) {
+	protected void acceptElements(TemplateVisitor visitor) {
 		for (int i = 0, n = elements.size(); i < n; i ++) {
 			Element element = (Element)elements.get(i);
-			int v = element.accept(visitor);
-			if (v == Visitor.STOP)
-				return Visitor.STOP;
+			element.accept(visitor);
 		}
-		return Visitor.NEXT;
 	}
 
 	protected String getElementsSource() throws IOException {

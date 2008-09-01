@@ -25,7 +25,7 @@ public class CodeDirectiveHandler extends BlockDirectiveHandlerSupport {
 		this.filters = filters;
 	}
 
-	protected void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
+	public void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
 		String key = (String)param;
 		if (filters.containsKey(key)) {
 			BufferedOutputFilter bufferedFilter = new BufferedOutputFilter();
@@ -38,7 +38,7 @@ public class CodeDirectiveHandler extends BlockDirectiveHandlerSupport {
 		}
 	}
 
-	protected boolean isExpressionRequired() {
+	public boolean isExpressionRequired() {
 		return true;
 	}
 

@@ -23,7 +23,7 @@ public class CaptureDirectiveHandler extends BlockDirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	protected void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
+	public void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
 		Assert.assertTrue(param instanceof String);
 		BufferedOutputFilter bufferedFilter = new BufferedOutputFilter();
 		context.setOutputFilter(bufferedFilter);
@@ -39,7 +39,7 @@ public class CaptureDirectiveHandler extends BlockDirectiveHandlerSupport {
 		}
 	}
 
-	protected boolean isExpressionRequired() {
+	public boolean isExpressionRequired() {
 		return true;
 	}
 

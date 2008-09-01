@@ -10,7 +10,7 @@ import org.commontemplate.core.Context;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Resource;
 import org.commontemplate.core.Template;
-import org.commontemplate.core.Visitor;
+import org.commontemplate.core.TemplateVisitor;
 import org.commontemplate.util.Assert;
 import org.commontemplate.util.IOUtils;
 
@@ -78,13 +78,9 @@ final class TemplateImpl extends Template implements Serializable {
 		}
 	}
 
-	public final int accept(Visitor visitor) {
-		int v = visitor.visit(this);
-		if (v == Visitor.STOP)
-			return Visitor.STOP;
-		if (v == Visitor.SKIP)
-			return Visitor.NEXT;
-		return rootDirective.accept(visitor);
+	public final void accept(TemplateVisitor visitor) {
+		visitor.visitTemplate(this);
+		rootDirective.accept(visitor);
 	}
 
 	public final String getEncoding() {

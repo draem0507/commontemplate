@@ -1,10 +1,7 @@
 package org.commontemplate.standard.i18n;
 
-import java.io.Serializable;
-import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.ResourceBundle;
-
 
 /**
  * 国际化信息源实现
@@ -12,7 +9,7 @@ import java.util.ResourceBundle;
  * @author liangfei0201@163.com
  *
  */
-public class ResourceBundleMessageSource implements MessageSource, Serializable {
+public class ResourceBundleMessageSource extends MessageSourceSupport {
 
 	private static final long serialVersionUID = 1L;
 
@@ -37,50 +34,14 @@ public class ResourceBundleMessageSource implements MessageSource, Serializable 
 		if (resourceBundle == null)
 			throw new NoSuchMessageException(
 					"ResourceBundleMessageSource.resource.bundle.required");
-		String msg;
 		try {
-			msg = resourceBundle.getString(key);
+			String msg = resourceBundle.getString(key);
+			if (msg == null)
+				throw new NoSuchMessageException(key, resourceBundle.getLocale());
+			return msg;
 		} catch (java.util.MissingResourceException e) {
-			msg = null;
-		}
-		if (msg == null)
 			throw new NoSuchMessageException(key, resourceBundle.getLocale());
-		return msg;
-	}
-
-	public String getMessage(Locale locale, String key, Object[] args)
-			throws NoSuchMessageException {
-		return formatMessage(locale, getMessage(locale, key), args);
-	}
-
-	public String getMessage(Locale locale, String key, String defaultValue) {
-		if (key == null)
-			return defaultValue;
-		if (locale == null)
-			locale = Locale.getDefault();
-		ResourceBundle resourceBundle = getResourceBundle(locale);
-		if (resourceBundle == null)
-			return defaultValue;
-		String msg;
-		try {
-			msg = resourceBundle.getString(key);
-		} catch (java.util.MissingResourceException e) {
-			msg = null;
 		}
-		if (msg == null)
-			return defaultValue;
-		return msg;
-	}
-
-	public String getMessage(Locale locale, String key, Object[] args, String defaultValue) {
-		return formatMessage(locale, getMessage(locale, key, defaultValue), args);
-	}
-
-	private String formatMessage(Locale locale, String msg, Object[] args) {
-		if (msg != null && msg.length() > 0 && args != null && args.length > 0) {
-			return new MessageFormat(msg, locale).format(args);
-		}
-		return msg;
 	}
 
 }

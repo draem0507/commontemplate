@@ -22,7 +22,7 @@ $!
 								.12 等价于 0.12<br/>
 								E表示10的n次方，也就是科学计数法，如：1.25E3 等于 1250<br/>
 								* 星号代表无穷数，如：${list[2..*]} <font color="green">(注：星号不可以作为一元操作符)</font><br/>
-								<b>4. 关键字：</b>表示特殊值 <font color="green">(注：不可以作为变量名)</font> <a href="extension.html#syntax">配置...</a><br/>
+								<b>4. 关键字：</b>表示特殊值 <font color="green">(注：不可以作为变量名)</font> <a href="extension.html#keywords">配置...</a><br/>
 								null 空值<br/>
 								true, false 布尔值<br/>
 								this 代表当前LocalContext<br/>
@@ -138,7 +138,7 @@ $!
 								!~ 判断集合内是否没有匹配项，如：$if{state !~ (1, 2, 4)} $if{user1 !~ users}<br/>
 								orderby 按属性排序，+号升序(可省)，-号降序， 如: $for{book : books orderby ("-price","+title","author")}<br/>
 								<b>(7) 系统(System)：</b><br/>
-								. 一元点号，取系统属性，如：${.now} ${.random} ${.uuid} ${.system.currentTimeMillis} ${.system.properties["user.dir"]} ${.engine.versionNumber} ${.engine.releaseDate} ${.engine.vendor} <br/>
+								. 一元点号，取系统属性，如：${.now} ${.random} ${.uuid} ${.system.currentTimeMillis} ${.system.properties["user.dir"]} ${.engine.version} ${.engine.released} ${.engine.vendor} <br/>
 								<br/>
 								<b>四. 操作符结合律及优先级</b><br/>
 								<b>结合律：</b><font color="green">(注：可以用括号改变结合)</font><br/>

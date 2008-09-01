@@ -18,7 +18,7 @@ public class ElseIfDirectiveHandler extends MiddleBlockDirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	protected void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
+	public void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
 		Assert.assertNotNull(context.getParentLocalContext().getStatus(IfDirectiveHandler.IF_STATUS), "ElseIfDirectiveHandler.location.error");
 		if (! ((Boolean)context.getParentLocalContext().getStatus(IfDirectiveHandler.IF_STATUS)).booleanValue()
 				&& TypeUtils.isTrue(param)) {
@@ -27,7 +27,7 @@ public class ElseIfDirectiveHandler extends MiddleBlockDirectiveHandlerSupport {
 		}
 	}
 
-	protected boolean isExpressionRequired() {
+	public boolean isExpressionRequired() {
 		return true;
 	}
 

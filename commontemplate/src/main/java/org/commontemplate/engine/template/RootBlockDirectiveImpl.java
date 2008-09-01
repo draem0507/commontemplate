@@ -9,7 +9,7 @@ import org.commontemplate.core.Expression;
 import org.commontemplate.core.IgnoreException;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Template;
-import org.commontemplate.core.Visitor;
+import org.commontemplate.core.TemplateVisitor;
 import org.commontemplate.util.Location;
 
 /**
@@ -42,9 +42,8 @@ final class RootBlockDirectiveImpl extends BlockDirectiveSupport {
 		return getElementsSource();
 	}
 
-	public int accept(Visitor visitor) {
+	public void accept(TemplateVisitor visitor) {
 		acceptElements(visitor);
-		return Visitor.NEXT;
 	}
 
 	public Expression getExpression() {

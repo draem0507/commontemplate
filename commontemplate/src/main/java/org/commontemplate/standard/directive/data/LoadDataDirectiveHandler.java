@@ -27,7 +27,7 @@ public class LoadDataDirectiveHandler extends DirectiveHandlerSupport {
 		this.dataProviders = dataProviders;
 	}
 
-	protected void doRender(Context context, String directiveName, Object param) throws Exception {
+	public void doRender(Context context, String directiveName, Object param) throws Exception {
 		if (param instanceof String) {
 			String path = (String)param;
 			int i = path.lastIndexOf('.');
@@ -55,7 +55,7 @@ public class LoadDataDirectiveHandler extends DirectiveHandlerSupport {
 		context.getRootLocalContext().putAllVariables(data);
 	}
 
-	protected boolean isExpressionRequired() {
+	public boolean isExpressionRequired() {
 		return true;
 	}
 

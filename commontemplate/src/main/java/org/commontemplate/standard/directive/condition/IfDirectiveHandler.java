@@ -22,7 +22,7 @@ public class IfDirectiveHandler extends BlockDirectiveHandlerSupport {
 	// 条件状态位，用于传递整个If链是否已经为true
 	public static final String IF_STATUS = "if.status";
 
-	protected void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
+	public void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
 		boolean condition = TypeUtils.isTrue(param);
 		if (condition)
 			DirectiveUtils.renderAll(innerElements, context);
@@ -30,7 +30,7 @@ public class IfDirectiveHandler extends BlockDirectiveHandlerSupport {
 		superLocalContext.setStatus(IF_STATUS, Boolean.valueOf(condition));
 	}
 
-	protected boolean isExpressionRequired() {
+	public boolean isExpressionRequired() {
 		return true;
 	}
 

@@ -36,4 +36,13 @@ public abstract class DirectiveHandler implements Serializable {
 		return false;
 	}
 
+	/**
+	 * 是否必需有表达式
+	 *
+	 * @return 是否必需有表达式
+	 */
+	public boolean isExpressionRequired() {
+		return false;
+	}
+
 }

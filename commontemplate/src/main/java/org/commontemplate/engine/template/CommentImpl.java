@@ -7,6 +7,7 @@ import org.commontemplate.core.Comment;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Template;
+import org.commontemplate.core.TemplateVisitor;
 import org.commontemplate.util.Location;
 
 /**
@@ -77,6 +78,10 @@ final class CommentImpl extends Comment {
 
 	void setTemplate(Template template) {
 		this.template = template;
+	}
+
+	public void accept(TemplateVisitor visitor) {
+		visitor.visitComment(this);
 	}
 
 }

@@ -11,9 +11,9 @@ public class VersionTester extends TestCase {
 	}
 
 	public void testVersionInfo() {
-		super.assertTrue(Version.getReleaseDate() instanceof Date);
+		super.assertTrue(Version.getReleased() instanceof Date);
 		super.assertEquals("http://www.commontemplate.org/", Version.getVendor());
-		super.assertNotNull(Version.getVersionNumber());
+		super.assertNotNull(Version.getVersion());
 	}
 
 	public void testRightVersions() {

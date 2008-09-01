@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 import org.commontemplate.config.ResourceComparator;
 import org.commontemplate.core.Resource;
+import org.commontemplate.core.Template;
 
 /**
  * 模板源最后修改时间比较器
@@ -16,7 +17,7 @@ public class ResourceLastModifiedComparator implements ResourceComparator, Seria
 
 	private static final long serialVersionUID = 1L;
 
-	public boolean isModified(Resource oldSource, Resource newSource) throws IOException {
+	public boolean isModified(Template oldSource, Resource newSource) throws IOException {
 		return oldSource.getLastModified() - newSource.getLastModified() < 0;
 	}
 

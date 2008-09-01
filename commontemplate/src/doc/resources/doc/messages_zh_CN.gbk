@@ -101,7 +101,7 @@ page.join.contact.msg=如果你想加入开发或帮助翻译文档，或者其它事宜，请联系：
 page.join.desc=发邮件或消息时，请注明来意。
 
 page.debugger.function=功能说明
-page.debugger.function.desc=调试器用于单步执行模板，跟踪上下文变量栈，逐指令排查错误，独立的调试器，使界面开发人员脱离容器调试模板。
+page.debugger.function.desc=功能：调试器用于单步执行模板，跟踪上下文变量栈，查看输出，逐指令排查错误。<br/>目的：使界面开发人员脱离容器调试模板。
 page.debugger.breakpoint=断点设置
 page.debugger.breakpoint.directive=当引擎遇到$.指令时，自动在指令所在行设置断点
 page.debugger.breakpoint.swing=在调试窗口模板内容面板左边的行号上双击，或右键菜单添加断点

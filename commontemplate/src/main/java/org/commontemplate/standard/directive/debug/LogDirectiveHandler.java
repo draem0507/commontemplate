@@ -17,7 +17,7 @@ public class LogDirectiveHandler extends DirectiveHandlerSupport {
 		this.logger = logger;
 	}
 
-	protected void doRender(Context context, String directiveName, Object param) throws Exception {
+	public void doRender(Context context, String directiveName, Object param) throws Exception {
 		if (param instanceof String) {
 			logger.debug((String)param);
 		} else if (param instanceof Entry) {
@@ -40,7 +40,7 @@ public class LogDirectiveHandler extends DirectiveHandlerSupport {
 		}
 	}
 
-	protected boolean isExpressionRequired() {
+	public boolean isExpressionRequired() {
 		return true;
 	}
 

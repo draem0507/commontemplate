@@ -14,7 +14,7 @@ public class InnerDirectiveHandler extends DirectiveHandlerSupport {
 	
 	public static final String INNER_BLOCK = "inner_block";
 
-	protected void doRender(Context context, String directiveName, Object param)
+	public void doRender(Context context, String directiveName, Object param)
 			throws Exception {
 		List inner = (List)context.getProperty(INNER_BLOCK);
 		if (inner != null) {

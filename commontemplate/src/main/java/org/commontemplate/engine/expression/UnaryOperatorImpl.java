@@ -7,9 +7,9 @@ import java.util.List;
 import org.commontemplate.config.UnaryOperatorHandler;
 import org.commontemplate.core.EvaluationException;
 import org.commontemplate.core.Expression;
+import org.commontemplate.core.ExpressionVisitor;
 import org.commontemplate.core.UnaryOperator;
 import org.commontemplate.core.VariableResolver;
-import org.commontemplate.core.Visitor;
 import org.commontemplate.util.Assert;
 import org.commontemplate.util.Location;
 
@@ -112,13 +112,6 @@ final class UnaryOperatorImpl extends UnaryOperator {
 		return getName() + " " + getOperand().getSource();
 	}
 
-	protected int guide(Visitor visitor) {
-		int v = getOperand().accept(visitor);
-		if (v == Visitor.STOP)
-			return Visitor.STOP;
-		return Visitor.NEXT;
-	}
-
 	/**
 	 * 设置一元操作符的操作数
 	 *
@@ -129,6 +122,11 @@ final class UnaryOperatorImpl extends UnaryOperator {
 		List list = new ArrayList(1);
 		list.add(operand);
 		operands = java.util.Collections.unmodifiableList(list);
+	}
+
+	public void accept(ExpressionVisitor visitor) {
+		visitor.visitUnaryOperator(this);
+		this.getOperand().accept(visitor);
 	}
 
 }

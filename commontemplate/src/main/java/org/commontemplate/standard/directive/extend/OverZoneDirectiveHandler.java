@@ -16,7 +16,7 @@ public class OverZoneDirectiveHandler extends BlockDirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	protected void doRender(Context context, String directiveName,
+	public void doRender(Context context, String directiveName,
 			Object param, List innerElements)
 			throws Exception {
 		String zoneName = (String)param;
@@ -29,7 +29,7 @@ public class OverZoneDirectiveHandler extends BlockDirectiveHandlerSupport {
 		}
 	}
 
-	protected boolean isExpressionRequired() {
+	public boolean isExpressionRequired() {
 		return true;
 	}
 
