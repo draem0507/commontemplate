@@ -20,7 +20,7 @@ public class BlockDefineDirectiveHandler extends BlockDirectiveHandlerSupport {
 
 	public static final String BLOCK_TYPE = "block";
 
-	protected void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
+	public void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
 		Assert.assertNotNull(param, "BlockDefineDirectiveHandler.parameter.required");
 		Assert.assertTrue(param instanceof String, "BlockDefineDirectiveHandler.parameter.type.error");
 		if (param instanceof String) {
@@ -32,7 +32,7 @@ public class BlockDefineDirectiveHandler extends BlockDirectiveHandlerSupport {
 		}
 	}
 
-	protected boolean isExpressionRequired() {
+	public boolean isExpressionRequired() {
 		return true;
 	}
 

@@ -3,6 +3,7 @@ package org.commontemplate.engine.expression;
 import java.util.List;
 
 import org.commontemplate.core.EvaluationException;
+import org.commontemplate.core.ExpressionVisitor;
 import org.commontemplate.core.Variable;
 import org.commontemplate.core.VariableResolver;
 import org.commontemplate.util.Location;
@@ -53,6 +54,10 @@ final class VariableImpl extends Variable {
 
 	public Location getLocation() {
 		return location;
+	}
+
+	public void accept(ExpressionVisitor visitor) {
+		visitor.visitVariable(this);
 	}
 
 }

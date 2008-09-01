@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.commontemplate.core.BlockDirective;
-import org.commontemplate.core.Expression;
-import org.commontemplate.core.Node;
-import org.commontemplate.core.Visitor;
+import org.commontemplate.core.Template;
+import org.commontemplate.core.TemplateVisitor;
 import org.commontemplate.util.Assert;
 
-public class BlockDirectivesVisitor implements Visitor {
+public class BlockDirectivesVisitor extends TemplateVisitor {
 
 	private final String type;
 
@@ -20,16 +19,10 @@ public class BlockDirectivesVisitor implements Visitor {
 		this.type = type;
 	}
 
-	public int visit(Node node) {
-		if (node instanceof Expression)
-			return SKIP;
-		if (node instanceof BlockDirective) {
-			BlockDirective blockDirective = (BlockDirective)node;
-			if (type.equals(blockDirective.getName())) {
-				blockDirectives.add(blockDirective);
-			}
+	public void visitBlockDirective(BlockDirective blockDirective) {
+		if (type.equals(blockDirective.getName())) {
+			blockDirectives.add(blockDirective);
 		}
-		return NEXT;
 	}
 
 	public List getBlockDirectives() {
@@ -44,9 +37,9 @@ public class BlockDirectivesVisitor implements Visitor {
 	 * @param name 块名
 	 * @return 块指令的内部元素集;
 	 */
-	public static List findBlockDirectives(Node node, String type) {
+	public static List findBlockDirectives(Template template, String type) {
 		BlockDirectivesVisitor visitor = new BlockDirectivesVisitor(type);
-		node.accept(visitor);
+		template.accept(visitor);
 		return visitor.getBlockDirectives();
 	}
 

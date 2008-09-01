@@ -8,8 +8,8 @@ import org.commontemplate.config.BinaryOperatorHandler;
 import org.commontemplate.core.BinaryOperator;
 import org.commontemplate.core.EvaluationException;
 import org.commontemplate.core.Expression;
+import org.commontemplate.core.ExpressionVisitor;
 import org.commontemplate.core.VariableResolver;
-import org.commontemplate.core.Visitor;
 import org.commontemplate.util.Assert;
 import org.commontemplate.util.Location;
 
@@ -146,16 +146,6 @@ final class BinaryOperatorImpl extends BinaryOperator {
 		return leftPrototype + " " + getName() + " " + rightPrototype;
 	}
 
-	protected int guide(Visitor visitor) {
-		int v = getLeftOperand().accept(visitor);
-		if (v == Visitor.STOP)
-			return Visitor.STOP;
-		v = getRightOperand().accept(visitor);
-		if (v == Visitor.STOP)
-			return Visitor.STOP;
-		return Visitor.NEXT;
-	}
-
 	private List operands;
 
 	public List getOperands() {
@@ -187,6 +177,12 @@ final class BinaryOperatorImpl extends BinaryOperator {
 		l.add(leftOperand);
 		l.add(rightOperand);
 		operands = java.util.Collections.unmodifiableList(l);
+	}
+
+	public void accept(ExpressionVisitor visitor) {
+		visitor.visitBinaryOperator(this);
+		getLeftOperand().accept(visitor);
+		getRightOperand().accept(visitor);
 	}
 
 }

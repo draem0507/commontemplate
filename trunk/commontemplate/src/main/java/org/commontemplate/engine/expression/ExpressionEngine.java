@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.commontemplate.config.ExpressionConfiguration;
+import org.commontemplate.config.ExpressionFilter;
 import org.commontemplate.config.OperatorHandlerProvider;
 import org.commontemplate.core.BinaryOperator;
 import org.commontemplate.core.Constant;
@@ -26,6 +27,8 @@ import org.commontemplate.util.scanner.ScanningException;
  */
 public final class ExpressionEngine implements ExpressionParser {
 
+	private final ExpressionFilter expressionFilter;
+
 	private final ExpressionTokenizer expressionTokenizer = new ExpressionTokenizer();
 
 	private final ExpressionTranslator expressionTranslator;
@@ -43,6 +46,7 @@ public final class ExpressionEngine implements ExpressionParser {
 	public ExpressionEngine(ExpressionConfiguration config) {
 		Assert.assertNotNull(config, "ExpressionEngine.config.required");
 		config.validate(); // 配置自验证
+		expressionFilter = config.getExpressionFilter();
 		operatorHandlerProvider = config.getOperatorHandlerProvider();
 		evaluateInterceptors = config.getEvaluateInterceptors();
 		ExpressionProvider expressionProvider = new ExpressionProvider(
@@ -56,6 +60,8 @@ public final class ExpressionEngine implements ExpressionParser {
 
 	public final Expression parseExpression(String expressionText) throws ParsingException {
 		try {
+			if (expressionFilter != null)
+				expressionText = expressionFilter.filter(expressionText);
 			List tokens = expressionTokenizer.split(expressionText);
 			List expressions = expressionTranslator.translate(tokens);
 			expressions = expressionOptimizer.optimize(expressions);

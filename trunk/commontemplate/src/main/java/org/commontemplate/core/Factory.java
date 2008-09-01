@@ -8,6 +8,6 @@ package org.commontemplate.core;
  * @author liangfei0201@163.com
  * 
  */
-public interface Factory extends TemplateFactory, ContextFactory {
+public interface Factory extends TemplateLoader, ContextFactory {
 
 }

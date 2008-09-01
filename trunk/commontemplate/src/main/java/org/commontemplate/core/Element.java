@@ -37,6 +37,13 @@ public abstract class Element implements Node, Serializable {
 	public abstract Location getLocation();
 
 	/**
+	 * 接收访问者, 并带领访问者遍历整个树 (中序遍历)<br>
+	 *
+	 * @param visitor 访问者
+	 */
+	public abstract void accept(TemplateVisitor visitor);
+
+	/**
 	 * 返回模板元素的标准组成, 同getCanonicalForm()
 	 *
 	 * @return 模板元素的标准组成
@@ -47,19 +54,6 @@ public abstract class Element implements Node, Serializable {
 		} catch (IOException e) {
 			return "ERROR:" + e.getMessage();
 		}
-	}
-
-	public int accept(Visitor visitor) {
-		int v = visitor.visit(this);
-		if (v == Visitor.STOP)
-			return Visitor.STOP;
-		if (v == Visitor.SKIP)
-			return Visitor.NEXT;
-		return guide(visitor);
-	}
-
-	protected int guide(Visitor visitor) {
-		return Visitor.NEXT;
 	}
 
 }

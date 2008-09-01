@@ -8,7 +8,7 @@ import java.util.List;
  * <p/>
  * (线程安全)
  *
- * @see org.commontemplate.core.TemplateFactory
+ * @see org.commontemplate.core.TemplateLoader
  * @see org.commontemplate.core.Factory
  * @author liangfei0201@163.com
  *
@@ -36,5 +36,12 @@ public abstract class Template extends Resource implements Node, Serializable {
 	 * @throws RenderingException 模板渲染出错时抛出
 	 */
 	public abstract void render(Context context) throws RenderingException;
+
+	/**
+	 * 接收访问者, 并带领访问者遍历整个树 (中序遍历)<br>
+	 *
+	 * @param visitor 访问者
+	 */
+	public abstract void accept(TemplateVisitor visitor);
 
 }

@@ -7,7 +7,7 @@ import org.commontemplate.core.Directive;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Template;
-import org.commontemplate.core.Visitor;
+import org.commontemplate.core.TemplateVisitor;
 import org.commontemplate.util.I18nExceptionFactory;
 import org.commontemplate.util.Location;
 
@@ -37,7 +37,7 @@ final class EndDirective extends Directive {
 		throw I18nExceptionFactory.createUnsupportedOperationException("EndDirective.unsupported.error");
 	}
 
-	public int accept(Visitor visitor) {
+	public void accept(TemplateVisitor visitor) {
 		throw new UnsupportedOperationException("EndDirective.unsupported.error");
 	}
 

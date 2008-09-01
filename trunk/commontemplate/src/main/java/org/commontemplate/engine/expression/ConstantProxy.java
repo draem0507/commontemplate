@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import org.commontemplate.core.Constant;
 import org.commontemplate.core.EvaluationException;
+import org.commontemplate.core.ExpressionVisitor;
 import org.commontemplate.core.VariableResolver;
-import org.commontemplate.core.Visitor;
 import org.commontemplate.util.Location;
 
 /**
@@ -28,8 +28,8 @@ final class ConstantProxy extends Constant {
 		return constant;
 	}
 
-	public int accept(Visitor visitor) {
-		return constant.accept(visitor);
+	public void accept(ExpressionVisitor visitor) {
+		constant.accept(visitor);
 	}
 
 	public boolean equals(Object obj) {

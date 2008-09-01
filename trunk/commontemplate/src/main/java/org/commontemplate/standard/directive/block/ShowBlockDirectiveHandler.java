@@ -11,14 +11,14 @@ public class ShowBlockDirectiveHandler extends DirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	protected void doRender(Context context, String directiveName, Object param) throws Exception {
+	public void doRender(Context context, String directiveName, Object param) throws Exception {
 		Assert.assertNotNull(param, "ShowBlockDirectiveHandler.parameter.required");
 		Assert.assertTrue(param instanceof String, "ShowBlockDirectiveHandler.parameter.type.error");
 		String blockName = (String)param;
 		DirectiveUtils.renderAll(((List)context.getProperty(BlockDefineDirectiveHandler.BLOCK_TYPE, blockName)), context);
 	}
 
-	protected boolean isExpressionRequired() {
+	public boolean isExpressionRequired() {
 		return true;
 	}
 

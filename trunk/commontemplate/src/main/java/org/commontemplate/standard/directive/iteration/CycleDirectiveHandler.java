@@ -16,14 +16,14 @@ public class CycleDirectiveHandler extends DirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	protected void doRender(Context context, String directiveName, Object param) throws Exception {
+	public void doRender(Context context, String directiveName, Object param) throws Exception {
 		Entry params = (Entry)param;
 		String var = params.getKey().toString();
 		List list = (List)params.getValue();
 		context.putVariable(var, new Cycle(list));
 	}
 
-	protected boolean isExpressionRequired() {
+	public boolean isExpressionRequired() {
 		return true;
 	}
 

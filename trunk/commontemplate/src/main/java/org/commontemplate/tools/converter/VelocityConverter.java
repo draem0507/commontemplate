@@ -45,6 +45,7 @@ public class VelocityConverter implements TemplateConverter {
 
 			// TODO set指令对函数转换不完全
 			{ "\\#\\s*set\\s*\\(\\s*\\$([^\\=]+)\\s*\\=\\s*\\$([^\\)]+)\\s*\\)", "\1set{$1 = $2}", "2" },
+			{ "\\#\\s*set\\s*\\(\\s*\\$([^\\=]+)\\s*\\=\\s*\\$([^\\)]+)\\s*\\)", "\1set{$1 = $2}", "2" },
 			{ "\\#\\s*\\{\\s*set\\s*\\}\\s*\\(\\s*\\$([^\\=]+)\\s*\\=\\s*\\$([^\\)]+)\\s*\\)", "\1set{$1 = $2}", "2" },
 			{ "\\#\\s*set\\s*\\(\\s*\\$([^\\=]+)\\s*\\=\\s*([^\\)]+)\\s*\\)", "\1set{$1 = $2}", "2" },
 			{ "\\#\\s*\\{\\s*set\\s*\\}\\s*\\(\\s*\\$([^\\=]+)\\s*\\=\\s*([^\\)]+)\\s*\\)", "\1set{$1 = $2}", "2" },
@@ -84,6 +85,10 @@ public class VelocityConverter implements TemplateConverter {
 		}
 		matcher.appendTail(sb);
 		return sb.toString();
+	}
+
+	public static void main(String[] args) {
+		System.out.println("aaa #set(xxx.yyy = mmm.nnn($iii, $jjj)) bbb".matches("\\#\\s*set\\s*\\(\\s*\\$([^\\=]+)\\s*\\=\\s*\\$([^\\)]+)\\s*\\)"));
 	}
 
 }

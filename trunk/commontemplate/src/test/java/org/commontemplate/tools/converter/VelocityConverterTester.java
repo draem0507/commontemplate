@@ -9,6 +9,7 @@ public class VelocityConverterTester extends TestCase {
 	public void testVariable() throws Exception {
 		super.assertEquals("aaa ${user} bbb", velocityConverter.convert("aaa $user bbb"));
 		super.assertEquals("aaa ${user.name} bbb", velocityConverter.convert("aaa $user.name bbb"));
+		super.assertEquals("aaa ${user(xxx, yyy)} bbb", velocityConverter.convert("aaa $user($xxx, $yyy) bbb"));
 		super.assertEquals("aaa ${user.name(xxx, yyy)} bbb", velocityConverter.convert("aaa $user.name($xxx, $yyy) bbb"));
 	}
 
@@ -83,10 +84,10 @@ public class VelocityConverterTester extends TestCase {
 	}
 
 	/*public void testSetDirective() throws Exception {
-		super.assertEquals("aaa #set{xxx.yyy = mmm.nnn(iii, jjj)} bbb", velocityConverter.convert("aaa #set(xxx.yyy = mmm.nnn($iii, $jjj)) bbb"));
-		super.assertEquals("aaa #set{xxx.yyy = mmm.nnn(iii, jjj)} bbb", velocityConverter.convert("aaa # set ( xxx.yyy = mmm.nnn ($iii, $jjj) ) bbb"));
-		super.assertEquals("aaa #set{xxx.yyy = mmm.nnn(iii, jjj)} bbb", velocityConverter.convert("aaa #{set}(xxx.yyy = mmm.nnn($iii, $jjj)) bbb"));
-		super.assertEquals("aaa #set{xxx.yyy = mmm.nnn(iii, jjj)} bbb", velocityConverter.convert("aaa # { set } ( xxx.yyy = mmm.nnn ($iii, $jjj) ) bbb"));
+		//super.assertEquals("aaa #set{xxx.yyy = mmm.nnn(iii, jjj)} bbb", velocityConverter.convert("aaa #set(xxx.yyy = mmm.nnn($iii, $jjj)) bbb"));
+		//super.assertEquals("aaa #set{xxx.yyy = mmm.nnn(iii, jjj)} bbb", velocityConverter.convert("aaa # set ( xxx.yyy = mmm.nnn ($iii, $jjj) ) bbb"));
+		//super.assertEquals("aaa #set{xxx.yyy = mmm.nnn(iii, jjj)} bbb", velocityConverter.convert("aaa #{set}(xxx.yyy = mmm.nnn($iii, $jjj)) bbb"));
+		//super.assertEquals("aaa #set{xxx.yyy = mmm.nnn(iii, jjj)} bbb", velocityConverter.convert("aaa # { set } ( xxx.yyy = mmm.nnn ($iii, $jjj) ) bbb"));
 	}*/
 
 }

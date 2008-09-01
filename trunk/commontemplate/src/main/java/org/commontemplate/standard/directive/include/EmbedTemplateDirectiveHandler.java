@@ -21,7 +21,7 @@ public class EmbedTemplateDirectiveHandler extends DirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	protected void doRender(Context context, String directiveName, Object param) throws Exception {
+	public void doRender(Context context, String directiveName, Object param) throws Exception {
 		String templateName = null;
 		String templateEncoding = null;
 		if (param instanceof String) {
@@ -57,7 +57,7 @@ public class EmbedTemplateDirectiveHandler extends DirectiveHandlerSupport {
 		}
 	}
 
-	protected boolean isExpressionRequired() {
+	public boolean isExpressionRequired() {
 		return true;
 	}
 

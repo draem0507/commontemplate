@@ -3,9 +3,9 @@ package org.commontemplate.engine.expression;
 import java.io.IOException;
 
 import org.commontemplate.core.EvaluationException;
+import org.commontemplate.core.ExpressionVisitor;
 import org.commontemplate.core.Variable;
 import org.commontemplate.core.VariableResolver;
-import org.commontemplate.core.Visitor;
 import org.commontemplate.util.Location;
 
 /**
@@ -28,8 +28,8 @@ final class VariableProxy extends Variable {
 		return variable;
 	}
 
-	public int accept(Visitor visitor) {
-		return variable.accept(visitor);
+	public void accept(ExpressionVisitor visitor) {
+		variable.accept(visitor);
 	}
 
 	public boolean equals(Object obj) {

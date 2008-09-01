@@ -111,7 +111,19 @@ $!
 								参考实现：<br/>
 								org.commontemplate.standard.coat.CommentSyntaxCoatFilter<br/>
 								<br/>
-								<a name="render"/><b>9. 模板元素渲染过程拦截器扩展</b><br/>
+								<a name="expressionfilter"/><b>9. 表达式过滤器扩展</b><br/>
+								在表达式<b>编译</b>之前过滤表达式文本串.<br/>
+								相关接口：<br/>
+								org.commontemplate.config.ExpressionFilter<br/>
+								注册方法：<br/>
+								addExpressionFilter(ExpressionFilter)<br/>
+								配置方法：<br/>
+								expressionFilters[200]=com.xxx.XxxFilter<br/>
+								expressionReplacement{&amp;lt;}=&lt; <font color="green">(注：使用内置的ExpressionReplacementFilter)</font><br/>
+								参考实现：<br/>
+								org.commontemplate.standard.filter.ExpressionReplacementFilter<br/>
+								<br/>
+								<a name="render"/><b>10. 模板元素渲染过程拦截器扩展</b><br/>
 								拦截render()过程.<br/>
 								相关接口：<br/>
 								org.commontemplate.config.RenderInterceptor<br/>
@@ -122,7 +134,7 @@ $!
 								参考实现：<br/>
 								org.commontemplate.standard.debug.DebugInterceptor<br/>
 								<br/>
-								<a name="evaluate"/><b>10. 表达式求值过程拦截器扩展</b><br/>
+								<a name="evaluate"/><b>11. 表达式求值过程拦截器扩展</b><br/>
 								拦截evaluate()过程.<br/>
 								相关接口：<br/>
 								org.commontemplate.config.EvaluateInterceptor<br/>
@@ -133,13 +145,11 @@ $!
 								参考实现：<br/>
 								无<br/>
 								<br/>
-								<a name="syntax"/><b>11. 语法扩展</b><br/>
+								<a name="syntax"/><b>12. 语法扩展</b><br/>
 								相关类：<br/>
 								org.commontemplate.config.Syntax (指令语法及特殊指令设置)<br/>
-								org.commontemplate.config.Keywords (表达式关键字设置)<br/>
 								注册方法：<br/>
 								setSyntax(Syntax)<br/>
-								setKeywords(Keywords)<br/>
 								配置方法：<br/>
 								syntax.directiveLeader='$'<br/>
 								syntax.expressionBegin='{'<br/>
@@ -148,6 +158,15 @@ $!
 								syntax.blockComment='*'<br/>
 								syntax.noParse='!'<br/>
 								syntax.endDirectiveName=end<br/>
+								默认使用：<br/>
+								Syntax.DEFAULT<br/>
+								<br/>
+								<a name="keywords"/><b>13. 关键字扩展</b><br/>
+								相关类：<br/>
+								org.commontemplate.config.Keywords (表达式关键字设置)<br/>
+								注册方法：<br/>
+								setKeywords(Keywords)<br/>
+								配置方法：<br/>
 								keywords.null="null"<br/>
 								keywords.true="true"<br/>
 								keywords.false="false"<br/>
@@ -155,10 +174,9 @@ $!
 								keywords.parentLocalContext=super<br/>
 								keywords.context=context<br/>
 								默认使用：<br/>
-								Syntax.DEFAULT<br/>
 								Keywords.DEFAULT<br/>
 								<br/>
-								<a name="directive"/><b>12. 指令扩展</b><br/>
+								<a name="directive"/><b>14. 指令扩展</b><br/>
 								相关接口和基类：<br/>
 								org.commontemplate.config.DirectiveHandler<br/>
 								org.commontemplate.config.BlockDirectiveHandler<br/>
@@ -183,9 +201,9 @@ $!
 								如：$macro{button}等价于$macro{"button"}<br/>
 								如果特殊情况需要使用变量，可使用反斜线处理：$macro{\name}<br/>
 								(b) 表达式必需：<br/>
-								如果继承自Support的处理类的isExpressionRequired()方法返回true，表示当指令必需有表达式，否则报错。<br/>
+								如果处理类的isExpressionRequired()方法返回true，表示当指令必需有表达式，否则报错。<br/>
 								<br/>
-								<a name="operator"/><b>13. 操作符扩展</b><br/>
+								<a name="operator"/><b>15. 操作符扩展</b><br/>
 								相关接口和基类：<br/>
 								org.commontemplate.config.BinaryOperatorHandler<br/>
 								org.commontemplate.config.UnaryOperatorHandler<br/>
@@ -223,7 +241,7 @@ $!
 								如：已注册了“abs”一元操作符，则必需用abs(operand)， 而不能用abs operand，否则在复杂表达式中与变量引起歧义，<br/>
 								对比：符号一元操作符“!”，可以用“! operand”，也可以用“!(operand)”<br/>
 								<br/>
-								<a name="property"/><b>14. 属性扩展</b><br/>
+								<a name="property"/><b>16. 属性扩展</b><br/>
 								用于为"."点号操作符提供数据<br/>
 								属性调用方式如: ${bean.property}<br/>
 								静态属性调用方式如: ${.now}<br/>
@@ -239,7 +257,7 @@ $!
 								参考实现：<br/>
 								org.commontemplate.standard.property包及其子包相关类<br/>
 								<br/>
-								<a name="function"/><b>15. 方法扩展</b><br/>
+								<a name="function"/><b>17. 方法扩展</b><br/>
 								用于为"."点号操作符提供数据，并且只有在配置functionAvailable=true时才有效<br/>
 								方法调用方式如: ${obj.func(arg1,arg2)}<br/>
 								静态方法调用方式如: ${.func(arg1,arg2)}<br/>
@@ -255,7 +273,7 @@ $!
 								参考实现：<br/>
 								org.commontemplate.standard.function包及其子包相关类<br/>
 								<br/>
-								<a name="sequence"/><b>16. 序列扩展</b><br/>
+								<a name="sequence"/><b>18. 序列扩展</b><br/>
 								用于为".."双点号操作符提供数据<br/>
 								相关接口：<br/>
 								org.commontemplate.standard.operator.sequence.StringSequenceOperatorHandler<br/>
@@ -268,7 +286,7 @@ $!
 								参考实现：<br/>
 								org.commontemplate.standard.operator.sequence包下相关类<br/>
 								<br/>
-								<a name="message"/><b>17. 国际化扩展</b><br/>
+								<a name="message"/><b>19. 国际化扩展</b><br/>
 								用于为$msg或$message指令提供国际化信息内容<br/>
 								相关接口：<br/>
 								org.commontemplate.standard.i18n.ResourceBundleProvider<br/>
@@ -281,7 +299,7 @@ $!
 								参考实现：<br/>
 								org.commontemplate.standard.i18n.PropertiesResourceBundleProvider<br/>
 								<br/>
-								<a name="logger"/><b>18. 日志扩展</b><br/>
+								<a name="logger"/><b>20. 日志扩展</b><br/>
 								用于$log指令的输出.<br/>
 								相关接口：<br/>
 								org.commontemplate.standard.log.Logger<br/>
@@ -294,16 +312,16 @@ $!
 								org.commontemplate.standard.log.Logger.DEFAULT<br/>
 								org.commontemplate.standard.log包下相关类<br/>
 								<br/>
-								<a name="converter"/><b>19. 迭代数据集合转换器扩展</b><br/>
+								<a name="converter"/><b>21. 迭代数据集合转换器扩展</b><br/>
 								用于为"$for"指令提供迭代数据<br/>
 								相关接口和基类：<br/>
-								org.commontemplate.standard.converter.CollectionConverter<br/>
+								org.commontemplate.standard.collection.CollectionConverter<br/>
 								配置方法：<br/>
 								collectionConverter{com.xxx.XXX}=com.xxx.XXXCollectionConverter<br/>
 								参考实现：<br/>
-								org.commontemplate.standard.converter包下相关类<br/>
+								org.commontemplate.standard.collection包下相关类<br/>
 								<br/>
-								<a name="data"/><b>20. 数据加载类型扩展</b><br/>
+								<a name="data"/><b>22. 数据加载类型扩展</b><br/>
 								用于为"$data"指令提供数据<br/>
 								相关接口和基类：<br/>
 								org.commontemplate.standard.data.DataProvider<br/>
@@ -314,7 +332,7 @@ $!
 								参考实现：<br/>
 								org.commontemplate.standard.data包下相关类<br/>
 								<br/>
-								<a name="code"/><b>21. 代码过滤扩展</b><br/>
+								<a name="code"/><b>23. 代码过滤扩展</b><br/>
 								用于为"$code"指令提供过滤器<br/>
 								相关接口和基类：<br/>
 								org.commontemplate.core.OutputFilter<br/>
@@ -323,7 +341,7 @@ $!
 								参考实现：<br/>
 								org.commontemplate.standard.directive.filter.code包下相关类<br/>
 								<br/>
-								<a name="escape"/><b>22. 转义过滤扩展</b><br/>
+								<a name="escape"/><b>24. 转义过滤扩展</b><br/>
 								用于为"$escape"指令提供过滤器<br/>
 								相关接口和基类：<br/>
 								org.commontemplate.core.OutputFilter<br/>

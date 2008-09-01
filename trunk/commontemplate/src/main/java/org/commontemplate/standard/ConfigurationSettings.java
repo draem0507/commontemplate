@@ -7,6 +7,7 @@ import org.commontemplate.config.Configuration;
 import org.commontemplate.config.ConfigurationException;
 import org.commontemplate.config.ContextInitializer;
 import org.commontemplate.config.DirectiveHandlerProvider;
+import org.commontemplate.config.ExpressionFilter;
 import org.commontemplate.config.Keywords;
 import org.commontemplate.config.OperatorHandlerProvider;
 import org.commontemplate.config.ReloadController;
@@ -470,6 +471,16 @@ public class ConfigurationSettings extends Configuration {
 
 	public void setContextInitializer(ContextInitializer contextInitializer) {
 		this.contextInitializer = contextInitializer;
+	}
+
+	private ExpressionFilter expressionFilter;
+
+	public ExpressionFilter getExpressionFilter() {
+		return expressionFilter;
+	}
+
+	public void setExpressionFilter(ExpressionFilter expressionFilter) {
+		this.expressionFilter = expressionFilter;
 	}
 
 }

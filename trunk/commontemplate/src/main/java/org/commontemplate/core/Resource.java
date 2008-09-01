@@ -11,7 +11,7 @@ import org.commontemplate.util.Location;
  * 模板源
  *
  * @see org.commontemplate.core.ResourceLoader
- * @see org.commontemplate.core.TemplateFactory
+ * @see org.commontemplate.core.TemplateLoader
  * @see org.commontemplate.core.Factory
  * @author liangfei0201@163.com
  *

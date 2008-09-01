@@ -24,7 +24,7 @@ public class KeywordDirectiveHandler extends BlockDirectiveHandlerSupport {
 		this.color = color;
 	}
 
-	protected void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
+	public void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
 		List keywords = null;
 		if (param instanceof String) {
 			keywords = new ArrayList(1);
@@ -39,7 +39,7 @@ public class KeywordDirectiveHandler extends BlockDirectiveHandlerSupport {
 		context.removeOutputFilter();
 	}
 
-	protected boolean isExpressionRequired() {
+	public boolean isExpressionRequired() {
 		return true;
 	}
 

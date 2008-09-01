@@ -18,7 +18,7 @@ public class DisplayFileDirectiveHandler extends DirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	protected void doRender(Context context, String directiveName, Object param) throws Exception {
+	public void doRender(Context context, String directiveName, Object param) throws Exception {
 		if (param instanceof String) {
 			readFile(context, (String)param);
 		} else if (param instanceof List) {
@@ -57,7 +57,7 @@ public class DisplayFileDirectiveHandler extends DirectiveHandlerSupport {
 		}
 	}
 
-	protected boolean isExpressionRequired() {
+	public boolean isExpressionRequired() {
 		return true;
 	}
 

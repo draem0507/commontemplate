@@ -12,7 +12,7 @@ import org.commontemplate.core.ContextFactory;
 import org.commontemplate.core.EventListener;
 import org.commontemplate.core.GlobalContext;
 import org.commontemplate.core.OutputFormatter;
-import org.commontemplate.core.TemplateFactory;
+import org.commontemplate.core.TemplateLoader;
 import org.commontemplate.util.Assert;
 import org.commontemplate.util.LocaleUtils;
 
@@ -28,7 +28,7 @@ final class ContextFactoryImpl implements ContextFactory {
 
 	private final GlobalContext globalContext;
 
-	private final TemplateFactory templateFactory;
+	private final TemplateLoader templateFactory;
 
 	private final TemplateNameFilter templateNameFilter;
 
@@ -40,7 +40,7 @@ final class ContextFactoryImpl implements ContextFactory {
 
 	private final Keywords keywords;
 
-	ContextFactoryImpl(TemplateFactory templateFactory,
+	ContextFactoryImpl(TemplateLoader templateFactory,
 			ContextInitializer contextInitializer,
 			TemplateNameFilter templateNameFilter,
 			OutputFormatter defaultFormater,

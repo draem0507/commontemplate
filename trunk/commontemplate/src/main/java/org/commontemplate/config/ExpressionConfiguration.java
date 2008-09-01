@@ -44,6 +44,8 @@ public abstract class ExpressionConfiguration implements Serializable {
 	 */
 	public abstract List getEvaluateInterceptors();
 
+	public abstract ExpressionFilter getExpressionFilter();
+
 	/**
 	 * 引擎获取配置前的自检验回调.
 	 * 子类可以重写此函数进行相应配置有效性检查，如果不需要检查则忽略

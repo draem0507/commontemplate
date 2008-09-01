@@ -3,6 +3,7 @@ package org.commontemplate.standard;
 import java.util.List;
 
 import org.commontemplate.config.ExpressionConfiguration;
+import org.commontemplate.config.ExpressionFilter;
 import org.commontemplate.config.Keywords;
 import org.commontemplate.config.OperatorHandlerProvider;
 import org.commontemplate.standard.syntax.KeywordsSettings;
@@ -95,6 +96,16 @@ public class ExpressionConfigurationSettings extends ExpressionConfiguration {
 
 	public void setEvaluateInterceptors(List evaluateInterceptors) {
 		this.evaluateInterceptors = evaluateInterceptors;
+	}
+
+	private ExpressionFilter expressionFilter;
+
+	public ExpressionFilter getExpressionFilter() {
+		return expressionFilter;
+	}
+
+	public void setExpressionFilter(ExpressionFilter expressionFilter) {
+		this.expressionFilter = expressionFilter;
 	}
 
 }

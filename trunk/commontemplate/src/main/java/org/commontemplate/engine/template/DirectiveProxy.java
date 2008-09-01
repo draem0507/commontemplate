@@ -7,7 +7,7 @@ import org.commontemplate.core.Directive;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Template;
-import org.commontemplate.core.Visitor;
+import org.commontemplate.core.TemplateVisitor;
 import org.commontemplate.util.I18nExceptionFactory;
 import org.commontemplate.util.Location;
 
@@ -27,8 +27,8 @@ class DirectiveProxy extends Directive {
 		this.directive = directive;
 	}
 
-	public int accept(Visitor visitor) {
-		return directive.accept(visitor);
+	public void accept(TemplateVisitor visitor) {
+		directive.accept(visitor);
 	}
 
 	public boolean equals(Object obj) {

@@ -10,13 +10,13 @@ import org.commontemplate.config.MiddleBlockDirectiveHandler;
 import org.commontemplate.core.BlockDirective;
 import org.commontemplate.core.Comment;
 import org.commontemplate.core.Directive;
-import org.commontemplate.core.ElementFactory;
+import org.commontemplate.core.TemplateFactory;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.Template;
 import org.commontemplate.core.Text;
 import org.commontemplate.util.Assert;
 
-final class ElementFactoryImpl implements ElementFactory {
+final class ElementFactoryImpl implements TemplateFactory {
 
 	private final DirectiveHandlerProvider directiveHandlerProvider;
 

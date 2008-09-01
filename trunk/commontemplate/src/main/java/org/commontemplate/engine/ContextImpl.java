@@ -31,7 +31,7 @@ import org.commontemplate.core.ParsingException;
 import org.commontemplate.core.Resource;
 import org.commontemplate.core.Template;
 import org.commontemplate.core.TemplateBudiler;
-import org.commontemplate.core.TemplateFactory;
+import org.commontemplate.core.TemplateLoader;
 import org.commontemplate.core.TemplateStack;
 import org.commontemplate.core.Text;
 import org.commontemplate.core.UnaryOperator;
@@ -51,7 +51,7 @@ final class ContextImpl extends Context {
 
 	ContextImpl(GlobalContext globalContext, Writer out,
 			Locale locale, TimeZone timeZone,
-			TemplateFactory templateFactory, TemplateNameFilter templateNameFilter, OutputFormatter defaultFormater,
+			TemplateLoader templateFactory, TemplateNameFilter templateNameFilter, OutputFormatter defaultFormater,
 			EventListener eventListener, boolean debug, Keywords keywords) {
 		Assert.assertNotNull(globalContext);
 		Assert.assertNotNull(out);
@@ -240,7 +240,7 @@ final class ContextImpl extends Context {
 
 	// 代理 TemplateFactory -----------
 
-	private transient final TemplateFactory templateFactory;
+	private transient final TemplateLoader templateFactory;
 
 	private String getCurrentTemplateEncoding() {// 获取当前模板编码
 		Template template = this.getCurrentTemplate();

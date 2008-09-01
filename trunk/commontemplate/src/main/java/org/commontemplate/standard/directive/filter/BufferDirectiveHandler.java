@@ -12,7 +12,7 @@ public class BufferDirectiveHandler extends BlockDirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	protected void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
+	public void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
 		BufferedOutputFilter bufferedFilter = new BufferedOutputFilter();
 		context.setOutputFilter(bufferedFilter);
 		DirectiveUtils.renderAll(innerElements, context);

@@ -23,7 +23,7 @@ public class I18nMessageDirectiveHandler extends DirectiveHandlerSupport {
 		this.messageSource = messageSource;
 	}
 
-	protected void doRender(Context context, String directiveName, Object param) throws Exception {
+	public void doRender(Context context, String directiveName, Object param) throws Exception {
 		if (param != null) {
 			if (param instanceof List) {
 				List list = (List)param;
@@ -44,7 +44,7 @@ public class I18nMessageDirectiveHandler extends DirectiveHandlerSupport {
 		}
 	}
 
-	protected boolean isExpressionRequired() {
+	public boolean isExpressionRequired() {
 		return true;
 	}
 

@@ -3,7 +3,7 @@ package org.commontemplate.util;
 /**
  * 系统信息工具类
  *
- * @author Achievo: 梁飞
+ * @author liangfei0201@163.com
  *
  */
 public final class SystemUtils {

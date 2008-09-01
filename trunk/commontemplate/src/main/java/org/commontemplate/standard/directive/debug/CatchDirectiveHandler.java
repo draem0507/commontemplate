@@ -17,7 +17,7 @@ public class CatchDirectiveHandler extends MiddleBlockDirectiveHandlerSupport {
 
 	private static final String DEFAULT_EXCEPTION_NAME = "exception";
 
-	protected void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
+	public void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
 		LocalContext superLocalContext = context.getParentLocalContext();
 		Assert.assertNotNull(superLocalContext.getStatus(TryDirectiveHandler.TRY_STATUS), "CatchDirectiveHandler.location.error");
 		Object exception = superLocalContext.getStatus(TryDirectiveHandler.TRY_STATUS);

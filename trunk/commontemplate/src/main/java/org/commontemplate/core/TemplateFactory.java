@@ -1,43 +1,57 @@
 package org.commontemplate.core;
 
-import java.io.IOException;
+import java.util.List;
 
 /**
- * 模板工厂 <p/> (线程安全)
+ * 模板元素工厂, 为外部引擎或存储方式提供模板组装元素, 适合于自底向上的构建方式.
  *
  * @author liangfei0201@163.com
  *
  */
-public interface TemplateFactory extends ResourceLoader, TemplateParser {
+public interface TemplateFactory {
 
 	/**
-	 * 通过名称获取模板. 使用默认编码加载
+	 * 创建注释
 	 *
-	 * @param name
-	 *            模板名称
-	 * @return 模板，(注：后验条件不返回null，不存在时抛异常)
-	 * @throws ParsingException
-	 *             模板解析出错时抛出
-	 * @throws IOException
-	 *             模板不存在或读取失败时抛出
+	 * @param comment 注释内容
+	 * @return 注释
 	 */
-	public Template getTemplate(String name) throws IOException,
-			ParsingException;
+	public Comment createComment(String comment);
 
 	/**
-	 * 通过名称获取模板. 并指定加载编码
+	 * 创建文本
 	 *
-	 * @param name
-	 *            模板名称
-	 * @param encoding
-	 *            模板编码
-	 * @return 模板，(注：后验条件不返回null，不存在时抛异常)
-	 * @throws ParsingException
-	 *             模板解析出错时抛出
-	 * @throws IOException
-	 *             模板不存在或读取失败时抛出
+	 * @param text 文本内容
+	 * @return 文本
 	 */
-	public Template getTemplate(String name, String encoding)
-			throws IOException, ParsingException;
+	public Text createText(String text);
+
+	/**
+	 * 创建行指令
+	 *
+	 * @param name 指令名
+	 * @param expression 指令表达式
+	 * @return 行指令
+	 */
+	public Directive createDirective(String name, Expression expression);
+
+	/**
+	 * 创建块指令
+	 *
+	 * @param name 指令名
+	 * @param expression 指令表达式
+	 * @param elements 块指令内部元素
+	 * @return 块指令
+	 */
+	public BlockDirective createBlockDirective(String name, Expression expression, List elements);
+
+	/**
+	 * 创建模板
+	 *
+	 * @param name 模板名称
+	 * @param elements 模板元素
+	 * @return 模板
+	 */
+	public Template createTemplate(String name, List elements);
 
 }

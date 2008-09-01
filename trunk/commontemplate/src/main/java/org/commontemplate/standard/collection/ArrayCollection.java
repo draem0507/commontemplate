@@ -1,4 +1,4 @@
-package org.commontemplate.standard.converter;
+package org.commontemplate.standard.collection;
 
 import java.lang.reflect.Array;
 import java.util.Iterator;

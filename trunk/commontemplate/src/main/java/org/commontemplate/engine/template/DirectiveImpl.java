@@ -10,7 +10,9 @@ import org.commontemplate.core.Expression;
 import org.commontemplate.core.IgnoreException;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Template;
-import org.commontemplate.core.Visitor;
+import org.commontemplate.core.TemplateVisitor;
+import org.commontemplate.util.Assert;
+import org.commontemplate.util.I18nExceptionFactory;
 import org.commontemplate.util.Location;
 
 /**
@@ -38,6 +40,9 @@ final class DirectiveImpl extends Directive {
 	private final Directive proxy;
 
 	DirectiveImpl(String name, Location location, Expression expression, DirectiveHandler directiveHandler, String prototype, List renderInterceptors) {
+		Assert.assertNotNull(directiveHandler);
+		if (directiveHandler.isExpressionRequired() && expression == null)
+			throw I18nExceptionFactory.createIllegalStateException("DirectiveImpl.expression.is.null", new Object[]{name});
 		this.name = name;
 		this.prototype = prototype;
 		this.location = location;
@@ -64,16 +69,6 @@ final class DirectiveImpl extends Directive {
 		} catch (Exception e) {
 			throw new RenderingException(this, context, e);
 		}
-	}
-
-	protected int guide(Visitor visitor) {
-		Expression expression = getExpression();
-		if (expression != null) {
-			int v = expression.accept(visitor);
-			if (v == Visitor.STOP)
-				return Visitor.STOP;
-		}
-		return Visitor.NEXT;
 	}
 
 	public String getName() {
@@ -104,6 +99,10 @@ final class DirectiveImpl extends Directive {
 
 	void setTemplate(Template template) {
 		this.template = template;
+	}
+
+	public void accept(TemplateVisitor visitor) {
+		visitor.visitDirective(this);
 	}
 
 }

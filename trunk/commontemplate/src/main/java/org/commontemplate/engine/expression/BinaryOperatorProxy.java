@@ -6,8 +6,8 @@ import java.util.List;
 import org.commontemplate.core.BinaryOperator;
 import org.commontemplate.core.EvaluationException;
 import org.commontemplate.core.Expression;
+import org.commontemplate.core.ExpressionVisitor;
 import org.commontemplate.core.VariableResolver;
-import org.commontemplate.core.Visitor;
 import org.commontemplate.util.Location;
 
 /**
@@ -30,8 +30,8 @@ final class BinaryOperatorProxy extends BinaryOperator {
 		return binaryOperator;
 	}
 
-	public int accept(Visitor visitor) {
-		return binaryOperator.accept(visitor);
+	public void accept(ExpressionVisitor visitor) {
+		binaryOperator.accept(visitor);
 	}
 
 	public boolean equals(Object obj) {

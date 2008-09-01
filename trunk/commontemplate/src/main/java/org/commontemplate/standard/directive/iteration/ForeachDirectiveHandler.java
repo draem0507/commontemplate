@@ -13,7 +13,7 @@ import org.commontemplate.config.ConfigurationException;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.EvaluationException;
 import org.commontemplate.core.RenderingException;
-import org.commontemplate.standard.converter.CollectionConverter;
+import org.commontemplate.standard.collection.CollectionConverter;
 import org.commontemplate.standard.directive.BlockDirectiveHandlerSupport;
 import org.commontemplate.standard.directive.DirectiveUtils;
 import org.commontemplate.standard.directive.condition.IfDirectiveHandler;
@@ -62,11 +62,11 @@ public class ForeachDirectiveHandler extends BlockDirectiveHandlerSupport {
 		}
 	}
 
-	protected boolean isExpressionRequired() {
+	public boolean isExpressionRequired() {
 		return true;
 	}
 
-	protected void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
+	public void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
 		boolean isSuccess = doForeach(context, param, innerElements);
 		// 条件状态位，用于传递整个For链是否已经为迭代过
 		context.getParentLocalContext().setStatus(IfDirectiveHandler.IF_STATUS, Boolean.valueOf(isSuccess));

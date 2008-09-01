@@ -14,6 +14,7 @@ import org.commontemplate.config.ConfigurationException;
 import org.commontemplate.config.DirectiveHandler;
 import org.commontemplate.config.DirectiveHandlerProvider;
 import org.commontemplate.config.EvaluateInterceptor;
+import org.commontemplate.config.ExpressionFilter;
 import org.commontemplate.config.Keywords;
 import org.commontemplate.config.OperatorHandlerProvider;
 import org.commontemplate.config.ReloadController;
@@ -35,6 +36,7 @@ import org.commontemplate.standard.cache.SoftCache;
 import org.commontemplate.standard.cache.StrongCache;
 import org.commontemplate.standard.cache.WeakCache;
 import org.commontemplate.standard.directive.StandardDirectiveHandlerProvider;
+import org.commontemplate.standard.filter.ExpressionFilterChain;
 import org.commontemplate.standard.filter.ResourceFilterChain;
 import org.commontemplate.standard.filter.TemplateNameFilterChain;
 import org.commontemplate.standard.filter.TextFilterChain;
@@ -460,6 +462,54 @@ public class StandardConfiguration extends ConfigurationSettings {
 	public TextFilter getTextFilter() {
 		TextFilterChain chain = new TextFilterChain();
 		chain.setTextFilters(getTextFilters());
+		return chain;
+	}
+
+	// 表达式过滤器 -----------
+
+	private List expressionFilters = new ArrayList();
+
+	/**
+	 * 获取表达式过滤器链
+	 *
+	 * @return 表达式过滤器链
+	 */
+	public List getExpressionFilters() {
+		return expressionFilters;
+	}
+
+	/**
+	 * 设置表达式过滤器链.
+	 * 注：为IoC(setter方式)保留
+	 *
+	 * @param expressionFilters 表达式过滤器链
+	 */
+	public void setExpressionFilters(List expressionFilters) {
+		this.expressionFilters = expressionFilters;
+	}
+
+	/**
+	 * 添加文本块过滤器到链中
+	 *
+	 * @param expressionFilter 待添加文本块过滤器链
+	 */
+	public void addExpressionFilter(ExpressionFilter expressionFilter) {
+		expressionFilters.add(expressionFilter);
+	}
+
+	/**
+	 * 从链中删除相应文本块过滤器链
+	 *
+	 * @param expressionFilter 待删除文本块过滤器链
+	 */
+	public void removeExpressionFilter(ExpressionFilter expressionFilter) {
+		expressionFilters.remove(expressionFilter);
+	}
+
+	// 实现接口
+	public ExpressionFilter getExpressionFilter() {
+		ExpressionFilterChain chain = new ExpressionFilterChain();
+		chain.setExpressionFilters(getExpressionFilters());
 		return chain;
 	}
 

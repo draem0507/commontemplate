@@ -8,7 +8,7 @@ import org.commontemplate.core.Context;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Template;
-import org.commontemplate.core.Visitor;
+import org.commontemplate.core.TemplateVisitor;
 import org.commontemplate.util.I18nExceptionFactory;
 import org.commontemplate.util.Location;
 
@@ -28,8 +28,8 @@ class BlockDirectiveProxy extends BlockDirective {
 		this.blockDirective = blockDirective;
 	}
 
-	public int accept(Visitor visitor) {
-		return blockDirective.accept(visitor);
+	public void accept(TemplateVisitor visitor) {
+		blockDirective.accept(visitor);
 	}
 
 	public String getSource() throws IOException {

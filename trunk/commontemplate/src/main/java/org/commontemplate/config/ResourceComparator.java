@@ -3,6 +3,7 @@ package org.commontemplate.config;
 import java.io.IOException;
 
 import org.commontemplate.core.Resource;
+import org.commontemplate.core.Template;
 
 /**
  * Resource新旧比较器
@@ -13,17 +14,19 @@ import org.commontemplate.core.Resource;
 public interface ResourceComparator {
 
 	/**
-	 * 比较两个Resource的新旧 <p/> 主要用于热加载时比较，返回true的数表示需重新加载，否则不重新加载。
+	 * 比较Template和Resource的新旧
+	 * <p/>
+	 * 主要用于热加载时比较，返回true的数表示需重新加载，否则不重新加载。
 	 *
-	 * @param oldSource
-	 *            被比较的模板源
-	 * @param newSource
-	 *            比较的模板源2
+	 * @param template
+	 *            已加载的模板
+	 * @param reource
+	 *            待比较的模板源
 	 * @return 是否已修改
 	 * @throws IOException
 	 *             读取Resource信息出错时抛出
 	 */
-	public boolean isModified(Resource oldSource, Resource newSource)
+	public boolean isModified(Template template, Resource reource)
 			throws IOException;
 
 }
