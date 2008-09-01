@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import org.commontemplate.standard.function.FunctionHandler;
 import org.commontemplate.standard.function.FunctionMatcher;
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
+import org.commontemplate.standard.operator.UnhandleException;
 import org.commontemplate.util.ClassUtils;
 import org.commontemplate.util.Function;
 
@@ -58,7 +59,7 @@ public class ObjectFunctionOperatorHandler extends BinaryOperatorHandlerSupport 
 		try {
 			return ClassUtils.invokeMethod(leftOperand, functionName, args);
 		} catch (NoSuchMethodException e) {
-			return null;
+			throw new UnhandleException("ObjectFunctionOperatorHandler.function.no.such", new Object[]{leftOperand.getClass().getName(), functionName});
 		}
 	}
 
