@@ -37,7 +37,7 @@ import org.commontemplate.util.Assert;
  */
 public final class Engine implements Factory {
 
-	private final TemplateLoader templateFactory;
+	private final TemplateLoader templateLoader;
 
 	private final ContextFactory contextFactory;
 
@@ -50,94 +50,94 @@ public final class Engine implements Factory {
 	public Engine(Configuration config) {
 		Assert.assertNotNull(config, "Engine.config.required");
 		// 创建模板工厂
-		this.templateFactory = new TemplateFactoryImpl(new TemplateEngine(config),
+		this.templateLoader = new TemplateFactoryImpl(new TemplateEngine(config),
 				config.getResourceLoader(), config.getTemplateCache(),
 				config.getReloadController(), config.getResourceComparator());
 		// 创建上下文工厂
 		this.contextFactory = new ContextFactoryImpl(
-				templateFactory, config.getContextInitializer(),
+				templateLoader, config.getContextInitializer(),
 				config.getTemplateNameFilter(), config.getDefaultOutputFormatter(),
 				config.getEventListener(), config.isDebug(),
 				config.getKeywords());
 	}
 
 	public final Template getTemplate(String name) throws IOException, ParsingException {
-		return templateFactory.getTemplate(name);
+		return templateLoader.getTemplate(name);
 	}
 
 	public final Template getTemplate(String name, String encoding)
 			throws IOException, ParsingException {
-		return templateFactory.getTemplate(name, encoding);
+		return templateLoader.getTemplate(name, encoding);
 	}
 
 	public final Resource loadResource(String name, String encoding)
 			throws IOException {
-		return templateFactory.loadResource(name, encoding);
+		return templateLoader.loadResource(name, encoding);
 	}
 
 	public final Resource loadResource(String name) throws IOException {
-		return templateFactory.loadResource(name);
+		return templateLoader.loadResource(name);
 	}
 
 	public BinaryOperator createBinaryOperator(String operatorName,
 			Expression leftOprand, Expression rightOprand) {
-		return templateFactory.createBinaryOperator(operatorName, leftOprand,
+		return templateLoader.createBinaryOperator(operatorName, leftOprand,
 				rightOprand);
 	}
 
 	public Constant createConstant(Object constantValue) {
-		return templateFactory.createConstant(constantValue);
+		return templateLoader.createConstant(constantValue);
 	}
 
 	public UnaryOperator createUnaryOperator(String operatorName,
 			Expression oprand) {
-		return templateFactory.createUnaryOperator(operatorName, oprand);
+		return templateLoader.createUnaryOperator(operatorName, oprand);
 	}
 
 	public Variable createVariable(String variableName) {
-		return templateFactory.createVariable(variableName);
+		return templateLoader.createVariable(variableName);
 	}
 
 	public final Expression parseExpression(String expression) throws ParsingException {
-		return templateFactory.parseExpression(expression);
+		return templateLoader.parseExpression(expression);
 	}
 
 	public final Template parseTemplate(String template) throws ParsingException {
-		return templateFactory.parseTemplate(template);
+		return templateLoader.parseTemplate(template);
 	}
 
 	public final Template parseTemplate(Resource resource)
 			throws ParsingException, IOException {
-		return templateFactory.parseTemplate(resource);
+		return templateLoader.parseTemplate(resource);
 	}
 
 	public BlockDirective createBlockDirective(String name,
 			Expression expression, List elements) {
-		return templateFactory.createBlockDirective(name, expression, elements);
+		return templateLoader.createBlockDirective(name, expression, elements);
 	}
 
 	public Comment createComment(String comment) {
-		return templateFactory.createComment(comment);
+		return templateLoader.createComment(comment);
 	}
 
 	public Directive createDirective(String name, Expression expression) {
-		return templateFactory.createDirective(name, expression);
+		return templateLoader.createDirective(name, expression);
 	}
 
 	public Text createText(String text) {
-		return templateFactory.createText(text);
+		return templateLoader.createText(text);
 	}
 
 	public ExpressionBuilder getExpressionBuilder() {
-		return templateFactory.getExpressionBuilder();
+		return templateLoader.getExpressionBuilder();
 	}
 
 	public TemplateBudiler getTemplateBudiler(String templateName) {
-		return templateFactory.getTemplateBudiler(templateName);
+		return templateLoader.getTemplateBudiler(templateName);
 	}
 
 	public Template createTemplate(String name, List elements) {
-		return templateFactory.createTemplate(name, elements);
+		return templateLoader.createTemplate(name, elements);
 	}
 
 	public final Context createContext(Writer out) {

@@ -16,13 +16,13 @@ import org.commontemplate.core.Template;
 import org.commontemplate.core.Text;
 import org.commontemplate.util.Assert;
 
-final class ElementFactoryImpl implements TemplateFactory {
+final class TemplateFactoryImpl implements TemplateFactory {
 
 	private final DirectiveHandlerProvider directiveHandlerProvider;
 
 	private final List renderInterceptors;
 
-	public ElementFactoryImpl(DirectiveHandlerProvider directiveHandlerProvider, List renderInterceptors) {
+	public TemplateFactoryImpl(DirectiveHandlerProvider directiveHandlerProvider, List renderInterceptors) {
 		this.directiveHandlerProvider = directiveHandlerProvider;
 		this.renderInterceptors = renderInterceptors;
 	}
