@@ -49,11 +49,11 @@ public final class ExpressionEngine implements ExpressionParser {
 		expressionFilter = config.getExpressionFilter();
 		operatorHandlerProvider = config.getOperatorHandlerProvider();
 		evaluateInterceptors = config.getEvaluateInterceptors();
+		expressionFactory = new ExpressionFactoryImpl(operatorHandlerProvider, evaluateInterceptors);
 		ExpressionProvider expressionProvider = new ExpressionProvider(
 				operatorHandlerProvider, evaluateInterceptors,
 				config.getKeywords(), config.isFunctionAvailable());
-		expressionTranslator = new ExpressionTranslator(expressionProvider, config.isFunctionAvailable());
-		expressionFactory = new ExpressionFactoryImpl(operatorHandlerProvider, evaluateInterceptors);
+		expressionTranslator = new ExpressionTranslator(expressionFactory, expressionProvider, config.isFunctionAvailable());
 		expressionReducer = new ExpressionReducer(evaluateInterceptors);
 		expressionOptimizer = new ExpressionOptimizer(evaluateInterceptors);
 	}

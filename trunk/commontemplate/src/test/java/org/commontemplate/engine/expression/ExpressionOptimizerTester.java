@@ -31,8 +31,9 @@ public class ExpressionOptimizerTester extends TestCase {
 
 		expressionTokenizer = new ExpressionTokenizer();
 		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		ExpressionProvider expressionFactory = new ExpressionProvider(config.getOperatorHandlerProvider(), config.getEvaluateInterceptors(), config.getKeywords(), config.isFunctionAvailable());
-		expressionTranslator = new ExpressionTranslator(expressionFactory, config.isFunctionAvailable());
+		ExpressionProvider expressionProvider = new ExpressionProvider(config.getOperatorHandlerProvider(), config.getEvaluateInterceptors(), config.getKeywords(), config.isFunctionAvailable());
+		expressionTranslator = new ExpressionTranslator(new ExpressionFactoryImpl(config.getOperatorHandlerProvider(),
+				config.getEvaluateInterceptors()), expressionProvider, config.isFunctionAvailable());
 
 		expressionOptimizer = new ExpressionOptimizer(config.getEvaluateInterceptors());
 		expressionReducer = new ExpressionReducer(config.getEvaluateInterceptors());

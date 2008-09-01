@@ -88,4 +88,14 @@ public class UnaryOperatorHandlerChain extends UnaryOperatorHandler {
 		this.operandFunctioned = operandFunctioned;
 	}
 
+	private boolean operandDotNamed = false;
+
+	public boolean isOperandDotNamed() {
+		return operandDotNamed;
+	}
+
+	public void setOperandDotNamed(boolean operandDotNamed) {
+		this.operandDotNamed = operandDotNamed;
+	}
+
 }

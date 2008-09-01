@@ -45,15 +45,30 @@ import org.apache.velocity.runtime.parser.node.ASTTrue;
 import org.apache.velocity.runtime.parser.node.ASTWord;
 import org.apache.velocity.runtime.parser.node.ASTprocess;
 import org.apache.velocity.runtime.parser.node.SimpleNode;
+import org.commontemplate.core.TemplateBudiler;
 import org.commontemplate.engine.Engine;
 
 public class VelocityParserVisitor implements ParserVisitor {
 
 	private Engine engine;
 
-	public VelocityParserVisitor(Engine engine) {
+	private Writer writer;
+
+	private TemplateBudiler templateBudiler;
+
+	public VelocityParserVisitor(Engine engine, String templateName, Writer writer) {
 		this.engine = engine;
+		this.writer = writer;
+		templateBudiler = engine.getTemplateBudiler(templateName);
  	}
+
+	private void write(String str) {
+		try {
+			writer.write(str);
+		} catch (IOException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
+	}
 
 	public Object visit(SimpleNode node, Object data) {
 		return null;
@@ -183,85 +198,102 @@ public class VelocityParserVisitor implements ParserVisitor {
 	}
 
 	public Object visit(ASTStop node, Object data) {
-		engine.getTemplateBudiler("").addDirective("stop", null);
+		write("stop");
+		templateBudiler.addDirective("stop", null);
 		return null;
 	}
 
 	public Object visit(ASTExpression node, Object data) {
+		write("expr");
 		return null;
 	}
 
 	public Object visit(ASTAssignment node, Object data) {
+		write("=");
 		engine.getExpressionBuilder().addBinaryOperator("=");
 		return null;
 	}
 
 	public Object visit(ASTOrNode node, Object data) {
+		write("||");
 		engine.getExpressionBuilder().addBinaryOperator("||");
 		return null;
 	}
 
 	public Object visit(ASTAndNode node, Object data) {
+		write("&&");
 		engine.getExpressionBuilder().addBinaryOperator("&&");
 		return null;
 	}
 
 	public Object visit(ASTEQNode node, Object data) {
+		write("==");
 		engine.getExpressionBuilder().addBinaryOperator("==");
 		return null;
 	}
 
 	public Object visit(ASTNENode node, Object data) {
+		write("!=");
 		engine.getExpressionBuilder().addBinaryOperator("!=");
 		return null;
 	}
 
 	public Object visit(ASTLTNode node, Object data) {
+		write("<");
 		engine.getExpressionBuilder().addBinaryOperator("<");
 		return null;
 	}
 
 	public Object visit(ASTGTNode node, Object data) {
+		write(">");
 		engine.getExpressionBuilder().addBinaryOperator(">");
 		return null;
 	}
 
 	public Object visit(ASTLENode node, Object data) {
+		write("<=");
 		engine.getExpressionBuilder().addBinaryOperator("<=");
 		return null;
 	}
 
 	public Object visit(ASTGENode node, Object data) {
+		write(">=");
 		engine.getExpressionBuilder().addBinaryOperator(">=");
 		return null;
 	}
 
 	public Object visit(ASTAddNode node, Object data) {
+		write("+");
 		engine.getExpressionBuilder().addBinaryOperator("+");
 		return null;
 	}
 
 	public Object visit(ASTSubtractNode node, Object data) {
+		write("-");
 		engine.getExpressionBuilder().addBinaryOperator("-");
 		return null;
 	}
 
 	public Object visit(ASTMulNode node, Object data) {
+		write("*");
 		engine.getExpressionBuilder().addBinaryOperator("*");
 		return null;
 	}
 
 	public Object visit(ASTDivNode node, Object data) {
+		write("/");
 		engine.getExpressionBuilder().addBinaryOperator("/");
 		return null;
 	}
 
 	public Object visit(ASTModNode node, Object data) {
+		write("%");
 		engine.getExpressionBuilder().addBinaryOperator("%");
 		return null;
 	}
 
 	public Object visit(ASTNotNode node, Object data) {
+		write("!");
 		engine.getExpressionBuilder().addUnaryOperator("!");
 		return null;
 	}

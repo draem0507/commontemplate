@@ -1,19 +1,20 @@
 package org.commontemplate.standard.operator.object;
 
-import org.commontemplate.config.BinaryOperatorHandler;
-import org.commontemplate.standard.operator.BinaryOperatorHandlerTester;
+import org.commontemplate.config.UnaryOperatorHandler;
+import org.commontemplate.standard.operator.UnaryOperatorHandlerTester;
 import org.commontemplate.standard.operator.collection.UserInfo;
+
 /**
  * ClassStaticPropertyOperatorHandler 的测试。
  * @author YanRong
  *
  */
-public class ClassStaticPropertyOperatorHandlerTester extends BinaryOperatorHandlerTester {
+public class ClassStaticPropertyOperatorHandlerTester extends UnaryOperatorHandlerTester {
 
-	protected BinaryOperatorHandler newBinaryOperatorHandler() {
+	protected UnaryOperatorHandler newUnaryOperatorHandler() {
 		return new ClassStaticPropertyOperatorHandler();
 	}
-	
+
 	/**
 	 * 对2元操作符 . 的测试。<br>
 	 * @condition
@@ -25,11 +26,9 @@ public class ClassStaticPropertyOperatorHandlerTester extends BinaryOperatorHand
 	 * @throws Exception
 	 */
 	public void testDoEvaluateStaticField() throws Exception{
-		
-		assertEvaluation(UserInfo.class, 
-				"TEST_CONST", UserInfo.TEST_CONST);
+		assertEvaluation(UserInfo.class.getName() + ".TEST_CONST", UserInfo.TEST_CONST);
 	}
-	
+
 	/**
 	 * 对2元操作符 . 的测试。<br>
 	 * @condition
@@ -41,8 +40,6 @@ public class ClassStaticPropertyOperatorHandlerTester extends BinaryOperatorHand
 	 * @throws Exception
 	 */
 	public void testDoEvaluateStaticMethod() throws Exception{
-		
-		assertEvaluation(UserInfo.class, 
-				"country", UserInfo.getCountry());
+		assertEvaluation(UserInfo.class.getName() + ".country", UserInfo.getCountry());
 	}
 }

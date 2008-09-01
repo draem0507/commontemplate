@@ -1,29 +1,28 @@
 package org.commontemplate.standard.operator.object;
 
-import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
+import org.commontemplate.standard.operator.UnaryOperatorHandlerSupport;
 import org.commontemplate.util.ClassUtils;
 import org.commontemplate.util.Function;
 
-/**
- * 静态函数操作符: "."<br/>
- * 如: ${&com.xxx.XXXClass.xxx()}<br/>
- *
- * @author liangfei0201@163.com
- *
- */
-public class ClassStaticFunctionOperatorHandler extends BinaryOperatorHandlerSupport {
+public class ClassStaticFunctionOperatorHandler extends UnaryOperatorHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
 	public ClassStaticFunctionOperatorHandler() {
-		super(Class.class, Function.class);
+		super(Function.class);
 	}
 
-	public Object doEvaluate(Object leftOperand, Object rightOperand)
-			throws Exception {
-		Class clazz = (Class)leftOperand;
-		Function func = (Function)rightOperand;
-		return ClassUtils.invokeStaticMethod(clazz, func.getName(), func.getArguments().toArray());
+	public Object doEvaluate(Object operand) throws Exception {
+		Function function = (Function)operand;
+		String name = function.getName();
+		int i = name.lastIndexOf('.');
+		if (i >= 0 && i < name.length()) {
+			String className = name.substring(0, i);
+			String functionName = name.substring(i + 1);
+			Class clazz = ClassUtils.forName(className);
+			return ClassUtils.invokeStaticMethod(clazz, functionName, function.getArguments().toArray());
+		}
+		return ClassUtils.forName(function.getName());
 	}
 
 }
