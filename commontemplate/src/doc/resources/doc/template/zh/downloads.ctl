@@ -8,7 +8,7 @@ $!
 										<td><a target="_blank" href="http://code.google.com/p/commontemplate/downloads/list" target="_blank">http://code.google.com/p/commontemplate/downloads/list</a></td>
 									</tr>
 								</table>
-								(1) commontemplate-x.x.jar 标准二进制包 <font color="green">(注：JRE1.4.2以上版本兼容)</font><br/>
+								(1) commontemplate-x.x.jar 标准二进制包 <font color="green">(注：jre1.4.2以上版本兼容)</font> <a href="http://java.sun.com/j2se/1.4.2" target="_blank">jre1.4.2下载...</a><br/>
 								(2) commontemplate-debug-x.x.jar 便于调试二进制包，采用保留行号方式编译，并包含源代码<br/>
 								(3) commontemplate-src-x.x.jar 源代码包 <a href="http://commontemplate.googlecode.com/svn/trunk/commontemplate/lib" target="_blank">依赖包下载...</a><br/>
 								(4) commontemplate-doc-x.x.jar 文档包，当前网站内容<br/>
