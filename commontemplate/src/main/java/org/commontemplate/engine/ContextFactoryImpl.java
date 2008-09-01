@@ -28,7 +28,7 @@ final class ContextFactoryImpl implements ContextFactory {
 
 	private final GlobalContext globalContext;
 
-	private final TemplateLoader templateFactory;
+	private final TemplateLoader templateLoader;
 
 	private final TemplateNameFilter templateNameFilter;
 
@@ -40,18 +40,18 @@ final class ContextFactoryImpl implements ContextFactory {
 
 	private final Keywords keywords;
 
-	ContextFactoryImpl(TemplateLoader templateFactory,
+	ContextFactoryImpl(TemplateLoader templateLoader,
 			ContextInitializer contextInitializer,
 			TemplateNameFilter templateNameFilter,
 			OutputFormatter defaultFormater,
 			EventListener eventListener,
 			boolean debugMode,
 			Keywords keywords) {
-		Assert.assertNotNull(templateFactory);
+		Assert.assertNotNull(templateLoader);
 		Assert.assertNotNull(keywords);
 		this.globalContext = new GlobalContextImpl(keywords);
 		this.contextInitializer = contextInitializer;
-		this.templateFactory = templateFactory;
+		this.templateLoader = templateLoader;
 		this.templateNameFilter = templateNameFilter;
 		this.defaultFormater = defaultFormater;
 		this.eventListener = eventListener;
@@ -73,7 +73,7 @@ final class ContextFactoryImpl implements ContextFactory {
 
 	public Context createContext(Writer out, Locale locale, TimeZone timeZone) {
 		Context context = new ContextImpl(globalContext, out, locale,
-				timeZone, templateFactory, templateNameFilter, defaultFormater, eventListener, debugMode, keywords);
+				timeZone, templateLoader, templateNameFilter, defaultFormater, eventListener, debugMode, keywords);
 		if (contextInitializer != null)
 			contextInitializer.initialize(context);
 		return context;

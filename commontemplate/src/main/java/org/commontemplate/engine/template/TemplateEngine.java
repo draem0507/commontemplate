@@ -67,7 +67,7 @@ public final class TemplateEngine implements TemplateParser {
 				expressionParser, config.getTextFilter(), renderInterceptors));
 		directiveReducer = new DirectiveReducer();
 		resourceFilter = config.getResourceFilter();
-		elementFactory = new ElementFactoryImpl(directiveHandlerProvider, renderInterceptors);
+		elementFactory = new TemplateFactoryImpl(directiveHandlerProvider, renderInterceptors);
 	}
 
 	private final RootBlockDirectiveImpl parseDirective(Reader templateProvider) throws IOException, ParsingException {
