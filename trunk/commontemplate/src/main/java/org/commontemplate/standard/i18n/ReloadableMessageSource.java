@@ -8,11 +8,11 @@ import java.util.Locale;
  * @author YangRong
  *
  */
-public class ReloadMessageSource extends MessageSourceSupport {
+public class ReloadableMessageSource extends MessageSourceSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	private ReloadResourceProvider reloadResourceProvider;
+	private ReloadableResourceProvider reloadResourceProvider;
 
 	public String getMessage(Locale locale, String key) throws NoSuchMessageException {
 		if (key == null)
@@ -35,7 +35,7 @@ public class ReloadMessageSource extends MessageSourceSupport {
 	}
 
 	public void setReloadResourceProvider(
-			ReloadResourceProvider reloadResourceProvider) {
+			ReloadableResourceProvider reloadResourceProvider) {
 		this.reloadResourceProvider = reloadResourceProvider;
 	}
 

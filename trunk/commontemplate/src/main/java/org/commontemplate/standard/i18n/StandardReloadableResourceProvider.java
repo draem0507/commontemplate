@@ -12,9 +12,9 @@ import sun.misc.SoftCache;
  * 处理可重载的国际化资源的标准实现。实现了 ReloadResourceProvider 接口。<br>
  * 使用者可以根据需要实现自定义的可重载的实现，具体标准请参考 ReloadResourceProvider 接口。
  * @author YanRong
- * @see ReloadResourceProvider
+ * @see ReloadableResourceProvider
  */
-public class StandardReloadResourceProvider implements ReloadResourceProvider {
+public class StandardReloadableResourceProvider implements ReloadableResourceProvider {
 
 	/** initial size of the bundle cache */
     private static final int INITIAL_CACHE_SIZE = 25;
@@ -55,7 +55,7 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
     private String fileExtName = ".properties";
     /**
      * 处理资源文件的类的名字，默认是 ReloadablePropertyResource 类
-     * @see ReloadProviderResource
+     * @see ReloadableResource
      * @see ReloadablePropertyResource
      */
     private String resolveReloadResource = ReloadablePropertyResource.class.getName();
@@ -70,23 +70,23 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
 	 */
 	private long refreshInterval;
 
-    public StandardReloadResourceProvider(String baseName, Locale locale, ClassLoader loader) {
+    public StandardReloadableResourceProvider(String baseName, Locale locale, ClassLoader loader) {
     	resourceBaseName = baseName;
     	resourceLocale = locale;
     	resourceClassLoader = loader;
     }
 
-    public StandardReloadResourceProvider(String baseName, Locale locale) {
-    	new StandardReloadResourceProvider(baseName, locale,
+    public StandardReloadableResourceProvider(String baseName, Locale locale) {
+    	new StandardReloadableResourceProvider(baseName, locale,
     			Thread.currentThread().getClass().getClassLoader());
     }
 
-    public StandardReloadResourceProvider(String baseName) {
-    	new StandardReloadResourceProvider(baseName, Locale.getDefault(),
+    public StandardReloadableResourceProvider(String baseName) {
+    	new StandardReloadableResourceProvider(baseName, Locale.getDefault(),
     			Thread.currentThread().getClass().getClassLoader());
     }
 
-    public StandardReloadResourceProvider() {}
+    public StandardReloadableResourceProvider() {}
 
     public String getString(String key) {
 		return (String) getObject(key);
@@ -104,7 +104,7 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
 		}
 
 		ResourceHolder resourceHolder = getResource(resourceBaseName);
-		ReloadProviderResource resource = resourceHolder.getCurrent();
+		ReloadableResource resource = resourceHolder.getCurrent();
 
 		Object value = resource.handleGetObject(key);
 		if(value == null) {
@@ -215,7 +215,7 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
 
 		synchronized (cacheList) {
 			//try loading the bundle via the class loader
-			ReloadProviderResource resource = loadResource(bundleName);
+			ReloadableResource resource = loadResource(bundleName);
 			if (resource != null) {
 				result = new ResourceHolder(resource);
 				if (parent != NOTFOUND) {
@@ -231,7 +231,7 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
 		return result;
 	}
 
-	private ReloadProviderResource loadResource(String bundleName) {
+	private ReloadableResource loadResource(String bundleName) {
 		// Search for class file using class loader
 		try {
 			Class resourceClass;
@@ -240,10 +240,10 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
 			} else {
 				resourceClass = Class.forName(bundleName);
 			}
-			if (ReloadProviderResource.class.isAssignableFrom(resourceClass)) {
+			if (ReloadableResource.class.isAssignableFrom(resourceClass)) {
 				Object classResource = resourceClass.newInstance();
 
-				return (ReloadProviderResource) classResource;
+				return (ReloadableResource) classResource;
 			}
 		} catch (Exception e) {
 		} catch (LinkageError e) {
@@ -551,10 +551,10 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
 
 	private final class ResourceHolder
 	{
-		private ReloadProviderResource current;
+		private ReloadableResource current;
 		private ResourceHolder parent;
 
-		public ResourceHolder(ReloadProviderResource resource) {
+		public ResourceHolder(ReloadableResource resource) {
 			current = resource;
 		}
 
@@ -566,11 +566,11 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
 			this.parent = parent;
 		}
 
-		public ReloadProviderResource getCurrent() {
+		public ReloadableResource getCurrent() {
 			return current;
 		}
 
-		public void setCurrent(ReloadProviderResource current) {
+		public void setCurrent(ReloadableResource current) {
 			this.current = current;
 		}
 

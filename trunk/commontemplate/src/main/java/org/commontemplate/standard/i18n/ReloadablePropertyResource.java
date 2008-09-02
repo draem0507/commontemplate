@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-public class ReloadablePropertyResource implements ReloadProviderResource {
+public class ReloadablePropertyResource implements ReloadableResource {
 	
 	private Map map;
 	
