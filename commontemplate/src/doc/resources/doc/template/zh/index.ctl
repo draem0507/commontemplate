@@ -7,7 +7,7 @@
 								也可以作为动态文本生成工具，生成HTML、XML、Mail、Java源代码或其它文本等。<br/>
 								<br/>
 								<b>二、CommonTemplate有哪些特性?</b><br/>
-								1. 只有一个语法规则：\$指令名{参数表达式}，使用更简单，更统一。<a href="template.html">更多...</a><br/>
+								1. 只有一个语法规则：\$指令名{参数表达式}，使用更简单，更一致。<a href="template.html">更多...</a><br/>
 								2. 强大的调试器功能，支持模板指令单步执行，查错更方便。<a href="debugger.html">更多...</a><br/>
 								3. 方便的查看器(exe程序)，可在Windows下，双击*.ctl文件，直接生成.html文件，并自动用浏览器打开，方便于独立测试模板。<a href="viewer.html">更多...</a><br/>
 								4. Eclipse模板编辑器插件，支持指令语法高亮，指令提示助手，指令折叠，错误指令检查及提示，指令大纲等。<a href="editor.html">更多...</a><font color="gray">(未全部完成)</font><br/>
