@@ -62,138 +62,137 @@ public class VelocityParserVisitor implements ParserVisitor {
 		templateBudiler = engine.getTemplateBudiler(templateName);
  	}
 
-	private void write(String str) {
+	private void write(Object str) {
 		try {
-			writer.write(str);
+			if (str instanceof String)
+				writer.write((String)str);
+			else
+				writer.write(String.valueOf(str));
+			writer.flush();
 		} catch (IOException e) {
 			throw new RuntimeException(e.getMessage(), e);
 		}
 	}
 
 	public Object visit(SimpleNode node, Object data) {
+		node.childrenAccept(this, data);
 		return null;
 	}
 
 	public Object visit(ASTprocess node, Object data) {
-		return null;
+		node.childrenAccept(this, data);
+		return this;
 	}
 
 	public Object visit(ASTEscapedDirective node, Object data) {
-		try {
-			((Writer)data).write("\\");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		write("\\");
 		return null;
 	}
 
 	public Object visit(ASTEscape node, Object data) {
-		// TODO Auto-generated method stub
+		write("\\\\");
 		return null;
 	}
 
 	public Object visit(ASTComment node, Object data) {
-		// TODO Auto-generated method stub
+		write("##");
 		return null;
 	}
 
 	public Object visit(ASTFloatingPointLiteral node, Object data) {
-		// TODO Auto-generated method stub
-		node.value(null);
+		write(node.literal());
 		return null;
 	}
 
 	public Object visit(ASTIntegerLiteral node, Object data) {
-		// TODO Auto-generated method stub
+		write(node.literal());
 		return null;
 	}
 
 	public Object visit(ASTStringLiteral node, Object data) {
-		// TODO Auto-generated method stub
+		write(node.literal());
  		return null;
 	}
 
 	public Object visit(ASTIdentifier node, Object data) {
-		// TODO Auto-generated method stub
-		node.getLine();
+		node.childrenAccept(this, data);
 		return null;
 	}
 
 	public Object visit(ASTWord node, Object data) {
-		// TODO Auto-generated method stub
+		write(node.value(null));
 		return null;
 	}
 
 	public Object visit(ASTDirective node, Object data) {
-		// TODO Auto-generated method stub
+		node.childrenAccept(this, data);
 		return null;
 	}
 
 	public Object visit(ASTBlock node, Object data) {
-		// TODO Auto-generated method stub
+		node.childrenAccept(this, data);
 		return null;
 	}
 
 	public Object visit(ASTMap node, Object data) {
-		// TODO Auto-generated method stub
+		write(node.literal());
 		return null;
 	}
 
 	public Object visit(ASTObjectArray node, Object data) {
-		// TODO Auto-generated method stub
+		write(node.literal());
 		return null;
 	}
 
 	public Object visit(ASTIntegerRange node, Object data) {
-		// TODO Auto-generated method stub
+		write(node.literal());
 		return null;
 	}
 
 	public Object visit(ASTMethod node, Object data) {
-		// TODO Auto-generated method stub
+		write(node.literal());
 		return null;
 	}
 
 	public Object visit(ASTReference node, Object data) {
+		write(node.literal());
+		node.childrenAccept(this, data);
 		return null;
 	}
 
 	public Object visit(ASTTrue node, Object data) {
-		try {
-			((Writer)data).write("true");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		write("true");
 		return null;
 	}
 
 	public Object visit(ASTFalse node, Object data) {
-		// TODO Auto-generated method stub
+		write("false");
 		return null;
 	}
 
 	public Object visit(ASTText node, Object data) {
-		// TODO Auto-generated method stub
+		write(node.literal());
 		return null;
 	}
 
 	public Object visit(ASTIfStatement node, Object data) {
-		// TODO Auto-generated method stub
+		write("#if");
 		return null;
 	}
 
 	public Object visit(ASTElseStatement node, Object data) {
-		// TODO Auto-generated method stub
+		write("#else");
 		return null;
 	}
 
 	public Object visit(ASTElseIfStatement node, Object data) {
-		// TODO Auto-generated method stub
+		write("#elseif");
 		return null;
 	}
 
 	public Object visit(ASTSetDirective node, Object data) {
-		// TODO Auto-generated method stub
+		write(node.literal());
+		node.childrenAccept(this, data);
 		return null;
 	}
 
@@ -204,12 +203,13 @@ public class VelocityParserVisitor implements ParserVisitor {
 	}
 
 	public Object visit(ASTExpression node, Object data) {
-		write("expr");
+		node.childrenAccept(this, data);
 		return null;
 	}
 
 	public Object visit(ASTAssignment node, Object data) {
 		write("=");
+		node.childrenAccept(this, data);
 		engine.getExpressionBuilder().addBinaryOperator("=");
 		return null;
 	}

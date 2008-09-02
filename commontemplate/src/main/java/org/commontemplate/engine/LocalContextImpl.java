@@ -8,7 +8,6 @@ import org.commontemplate.config.Keywords;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.LocalContext;
 import org.commontemplate.core.OutputController;
-import org.commontemplate.core.OutputConverter;
 import org.commontemplate.core.OutputFilter;
 import org.commontemplate.core.OutputFormatter;
 import org.commontemplate.core.PropertyStorage;
@@ -259,18 +258,6 @@ final class LocalContextImpl extends LocalContext {
 
 	public OutputFormatter getOutputFormatter(Class type) {
 		return outputController.getOutputFormatter(type);
-	}
-
-	public OutputConverter getOutputConverter() {
-		return outputController.getOutputConverter();
-	}
-
-	public void removeOutputConverter() {
-		outputController.removeOutputConverter();
-	}
-
-	public void setOutputConverter(OutputConverter outputConverter) {
-		outputController.setOutputConverter(outputConverter);
 	}
 
 	public void clear() {
