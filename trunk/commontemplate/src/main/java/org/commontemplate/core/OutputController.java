@@ -11,26 +11,6 @@ import java.io.IOException;
 public interface OutputController {
 
 	/**
-	 * 设置输出内容转换器，用于output()时转换内容.
-	 *
-	 * @param outputConverter
-	 *            输出内容转换器
-	 */
-	public void setOutputConverter(OutputConverter outputConverter);
-
-	/**
-	 * 获取当前LocalContext中的输出内容转换器
-	 *
-	 * @return 输出内容转换器
-	 */
-	public OutputConverter getOutputConverter();
-
-	/**
-	 * 移除当前上下文的转换器.
-	 */
-	public void removeOutputConverter();
-
-	/**
 	 * 设置输出内容过滤器，用于output()时过滤.
 	 *
 	 * @param outputFilter

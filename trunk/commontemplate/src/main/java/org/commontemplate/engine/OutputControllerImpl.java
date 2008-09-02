@@ -12,7 +12,6 @@ import java.util.TimeZone;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.LocalContext;
 import org.commontemplate.core.OutputController;
-import org.commontemplate.core.OutputConverter;
 import org.commontemplate.core.OutputFilter;
 import org.commontemplate.core.OutputFormatter;
 import org.commontemplate.core.UnformattedException;
@@ -101,8 +100,6 @@ final class OutputControllerImpl implements OutputController, Serializable {
 	}
 
 	public void output(Object model) throws IOException {
-		if (outputConverter != null)
-			model = outputConverter.convert(model);
 		if (model instanceof String)
 			outputText((String)model);
 		else
@@ -161,19 +158,5 @@ final class OutputControllerImpl implements OutputController, Serializable {
 		}
 
 	};
-
-	private OutputConverter outputConverter;
-
-	public OutputConverter getOutputConverter() {
-		return outputConverter;
-	}
-
-	public void removeOutputConverter() {
-		outputConverter = null;
-	}
-
-	public void setOutputConverter(OutputConverter outputConverter) {
-		this.outputConverter = outputConverter;
-	}
 
 }

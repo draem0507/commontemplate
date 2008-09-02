@@ -200,7 +200,7 @@ $!
 								如果处理类的isExpressionNamed()方法返回true，表示当表达式为变量名时，作为名称串处理，<br/>
 								如：$macro{button}等价于$macro{"button"}<br/>
 								如果特殊情况需要使用变量，可使用反斜线处理：$macro{\name}<br/>
-								(b) 表达式必需：<br/>
+								(b) 表达式是否必需：<br/>
 								如果处理类的isExpressionRequired()方法返回true，表示当指令必需有表达式，否则报错。<br/>
 								<br/>
 								<a name="operator"/><b>15. 操作符扩展</b><br/>
