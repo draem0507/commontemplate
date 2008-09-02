@@ -15,21 +15,21 @@ import sun.misc.SoftCache;
  * @see ReloadResourceProvider
  */
 public class StandardReloadResourceProvider implements ReloadResourceProvider {
-	
+
 	/** initial size of the bundle cache */
     private static final int INITIAL_CACHE_SIZE = 25;
 
     /** capacity of cache consumed before it should grow */
     private static final float CACHE_LOAD_FACTOR = (float)1.0;
-    
+
     private static final int MAX_BUNDLES_SEARCHED = 3;
-    
+
     private static final Integer DEFAULT_NOT_FOUND = new Integer(-1);
-    
-    private static final ResourceCacheKey cacheKey = new ResourceCacheKey();	
-    
+
+    private static final ResourceCacheKey cacheKey = new ResourceCacheKey();
+
     private static SoftCache cacheList = new SoftCache(INITIAL_CACHE_SIZE, CACHE_LOAD_FACTOR);
-    
+
     /**
 	 * 对每一个basename,都保存最新的修改的时间<br>
 	 * key 是 .properties文件，包含全路径<br>
@@ -37,7 +37,7 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
 	 */
 	private static SoftCache baseNameModifyCache = new SoftCache(INITIAL_CACHE_SIZE,
 			CACHE_LOAD_FACTOR);
-	
+
 	/**
 	 * 对每一个basename,都保存最后的读取的时间<br>
 	 * key 是 baseName<br>
@@ -45,26 +45,26 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
 	 */
 	private static SoftCache baseNameIntervalCache = new SoftCache(INITIAL_CACHE_SIZE,
 			CACHE_LOAD_FACTOR);
-    
+
     private Locale resourceLocale = null;
-    
+
     private ClassLoader resourceClassLoader;
-    
+
     private String resourceBaseName;
     /** 可以处理的文件的名字，默认是 .properties 文件 */
     private String fileExtName = ".properties";
-    /** 
-     * 处理资源文件的类的名字，默认是 ReloadablePropertyResource 类 
+    /**
+     * 处理资源文件的类的名字，默认是 ReloadablePropertyResource 类
      * @see ReloadProviderResource
      * @see ReloadablePropertyResource
      */
     private String resolveReloadResource = ReloadablePropertyResource.class.getName();
-    
+
     /**
      * 指定编码的字符集。
      */
     private String encoding = null;
-    
+
     /**
 	 * 刷新间隔的时间
 	 */
@@ -75,25 +75,25 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
     	resourceLocale = locale;
     	resourceClassLoader = loader;
     }
-    
+
     public StandardReloadResourceProvider(String baseName, Locale locale) {
-    	new StandardReloadResourceProvider(baseName, locale, 
+    	new StandardReloadResourceProvider(baseName, locale,
     			Thread.currentThread().getClass().getClassLoader());
     }
-    
+
     public StandardReloadResourceProvider(String baseName) {
-    	new StandardReloadResourceProvider(baseName, Locale.getDefault(), 
+    	new StandardReloadResourceProvider(baseName, Locale.getDefault(),
     			Thread.currentThread().getClass().getClassLoader());
     }
-	
+
     public StandardReloadResourceProvider() {}
-    
+
     public String getString(String key) {
 		return (String) getObject(key);
 	}
 
 	public Object getObject(String key) {
-		
+
 		if(resourceClassLoader == null) {
 			// 如果没有设置 resourceClassLoader，那么就使用当前线程的 ClassLoader，
 			// 以确保能够正确地载入资源。
@@ -102,10 +102,10 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
 		if(resourceClassLoader == null || resourceLocale == null || resourceBaseName == null) {
 			throw new NullPointerException();
 		}
-		
+
 		ResourceHolder resourceHolder = getResource(resourceBaseName);
 		ReloadProviderResource resource = resourceHolder.getCurrent();
-		
+
 		Object value = resource.handleGetObject(key);
 		if(value == null) {
 			if(resourceHolder.getParent() != null) {
@@ -118,12 +118,12 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
 		}
 		return value;
 	}
-	
+
 	private ResourceHolder getResource(String baseName) {
-		
+
 		final Object NOTFOUND = (resourceClassLoader != null) ? (Object) resourceClassLoader
 				: (Object) DEFAULT_NOT_FOUND;
-		
+
 		String bundleName = baseName;
 		String localeSuffix = resourceLocale.toString();
 		if (localeSuffix.length() > 0) {
@@ -133,18 +133,18 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
 			//new Locale("", "", "VARIANT").toString == ""
 			bundleName += "___" + resourceLocale.getVariant();
 		}
-		
+
 		Locale defaultLocale = Locale.getDefault();
-		
+
 		Object lookup = findResourceInCache(baseName, bundleName, defaultLocale);
 		if (lookup == NOTFOUND) {
 			throwMissingResourceException(baseName);
 		} else if (lookup != null) {
 			return (ResourceHolder) lookup;
 		}
-		
+
 		Object parent = NOTFOUND;
-		
+
 		try {
 			//locate the root bundle and work toward the desired child
 			Object root = findResource(baseName, baseName, defaultLocale, NOTFOUND, NOTFOUND);
@@ -172,7 +172,7 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
 					}
 				}
 			}
-			
+
 			if (!foundInMainBranch) {
 				parent = root;
 				//we didn't find anything on the main branch, so we do the fallback branch
@@ -190,7 +190,7 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
 					}
 				}
 			}
-			
+
 		} catch (Exception e) {
 
 			throwMissingResourceException(baseName);
@@ -203,16 +203,16 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
 		}
 		return (ResourceHolder) parent;
 	}
-	
+
 	private Object findResource(String bundleName, String baseName, Locale defaultLocale,
 			Object parent, final Object NOTFOUND) {
-		
+
 		ResourceHolder result;
 		result = findResourceInCache(baseName, bundleName, defaultLocale);
 		if(result != null) {
 			return result;
 		}
-		
+
 		synchronized (cacheList) {
 			//try loading the bundle via the class loader
 			ReloadProviderResource resource = loadResource(bundleName);
@@ -223,14 +223,14 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
 				}
 				// bundle.setLocale(baseName, bundleName);
 				putResourceInCache(bundleName, result);
-				
+
 			} else {
 				putResourceInCache(bundleName, parent);
 			}
 		}
 		return result;
 	}
-	
+
 	private ReloadProviderResource loadResource(String bundleName) {
 		// Search for class file using class loader
 		try {
@@ -242,7 +242,7 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
 			}
 			if (ReloadProviderResource.class.isAssignableFrom(resourceClass)) {
 				Object classResource = resourceClass.newInstance();
-				
+
 				return (ReloadProviderResource) classResource;
 			}
 		} catch (Exception e) {
@@ -269,7 +269,7 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
 				ReloadablePropertyResource resource = (ReloadablePropertyResource) clazz.newInstance();
 				resource.loadFromURL(url, encoding);
 				return resource;
-				
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {
@@ -278,9 +278,9 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
 		}
 		return null;
 	}
-	
+
 	private ResourceHolder findResourceInCache(String baseName, String bundleName, Locale defaultLocale) {
-		
+
 		synchronized (cacheList) {
 			// 清空缓存的方法
 			cleanCacheProcess(baseName, defaultLocale);
@@ -291,7 +291,7 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
 			return (ResourceHolder) result;
 		}
 	}
-	
+
 	/**
 	 * 查看是否需要检查文件被更新了，如果需要检查，则调用 cleanAllModifiedBundleCache <br>
 	 * 去清空缓存。
@@ -305,9 +305,9 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
 
 		Long lastRefreshTime = (Long) baseNameIntervalCache.get(baseName);
  		long now = System.currentTimeMillis();
-		
+
 		// 如果当前时间 - 最后刷新时间 > 间隔时间，那么就检查文件是否被修改了。
-		if(lastRefreshTime == null 
+		if(lastRefreshTime == null
 				|| now - lastRefreshTime.longValue() - refreshInterval > 0) {
 			// 保存最新的刷新时间
 			baseNameIntervalCache.put(baseName, new Long(now));
@@ -315,7 +315,7 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
 			cleanAllModifiedBundleCache(baseName, defaultLocale, resourceClassLoader);
 		}
 	}
-	
+
 	/**
 	 * 根据basename 得到全部的可能的文件，然后察看是否被修改了，<br>
 	 * 如果修改，则清空缓存。
@@ -325,23 +325,23 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
 	 */
 	private void cleanAllModifiedBundleCache(String baseName, Locale defaultLocale,
 														final ClassLoader loader) {
-		
+
 		boolean rootChange = false;
 		if(isFileModified(loader, baseName)) {
-			
+
 			rootChange = true;
 			removeCacheObject(loader, baseName);
 		}
 
 		Vector names = calculateBundleNames(baseName, resourceLocale);
 		boolean parentNameChange = false;
-		
+
 		for(int i = 0, size = names.size(); i < size; i++) {
 
 			String name = (String) names.get(i);
 
 			if(rootChange || parentNameChange || isFileModified(loader, name)) {
-				
+
 				parentNameChange = true;
 				removeCacheObject(loader, name);
 			}
@@ -349,7 +349,7 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
 
 		names = calculateBundleNames(baseName, defaultLocale);
 		parentNameChange = false;
-		
+
 		for(int i = 0, size = names.size(); i < size; i++) {
 
 			String name = (String) names.get(i);
@@ -360,7 +360,7 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
 		}
 
 	}
-	
+
 	/**
 	 * 清空缓存里的一个数据。
 	 * @param loader
@@ -372,7 +372,7 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
 		cacheList.remove(cacheKey);
 		cacheKey.clear();
 	}
-	
+
 	/**
 	 * 判断 properties 文件是否被修改了。
 	 * @param loader
@@ -415,7 +415,7 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
 		}
 		return false;
 	}
-	
+
 	private void putResourceInCache(String bundleName, Object value) {
 		//we use a static shared cacheKey but we use the lock in cacheList since
 		//the key is only used to interact with cacheList.
@@ -427,7 +427,7 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
 			baseNameIntervalCache.put(bundleName, new Long(System.currentTimeMillis()));
 		}
 	}
-	
+
 	private Vector calculateBundleNames(String baseName, Locale locale) {
 		final Vector result = new Vector(MAX_BUNDLES_SEARCHED);
 		final String language = locale.getLanguage();
@@ -466,7 +466,7 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
 
 		return result;
 	}
-	
+
 	/**
 	 * 除非在单元测试中，否则不建议从外部直接调用这个方法。
 	 *
@@ -479,12 +479,12 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
 			baseNameModifyCache.clear();
 		}
 	}
-	
+
 	private void throwMissingResourceException(String baseName) throws MissingResourceException {
 		throw new MissingResourceException("Can't find bundle for base name "
 				+ baseName + ", locale " + resourceLocale, baseName + "_" + resourceLocale, "");
 	}
-	
+
 	private static final class ResourceCacheKey implements Cloneable {
         private SoftReference loaderRef;
         private String searchName;
@@ -504,7 +504,7 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
                 if (!searchName.equals(otherEntry.searchName)) {
                     return false;
                 }
-                
+
                 //are refs (both non-null) or (both null)?
                 if (loaderRef == null) {
                     return otherEntry.loaderRef == null;
@@ -535,7 +535,7 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
         public void setKeyValues(ClassLoader loader, String searchName) {
             this.searchName = searchName;
             hashCodeCache = searchName.hashCode();
-            
+
             if (loader == null) {
                 this.loaderRef = null;
             } else {
@@ -548,14 +548,12 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
             setKeyValues(null, "");
         }
     }
-	
+
 	private final class ResourceHolder
 	{
 		private ReloadProviderResource current;
 		private ResourceHolder parent;
-		
-		private ResourceHolder() {}
-		
+
 		public ResourceHolder(ReloadProviderResource resource) {
 			current = resource;
 		}
@@ -574,10 +572,10 @@ public class StandardReloadResourceProvider implements ReloadResourceProvider {
 
 		public void setCurrent(ReloadProviderResource current) {
 			this.current = current;
-		}		
-		
+		}
+
 	}
-	
+
 	public Locale getResourceLocale() {
 		return resourceLocale;
 	}
