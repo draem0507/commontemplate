@@ -3,7 +3,7 @@ package org.commontemplate.standard.i18n;
 import java.util.Locale;
 
 /**
- * 国际化信息源实现
+ * 国际化信息源热加载实现
  *
  * @author liangfei0201@163.com
  *
@@ -13,7 +13,7 @@ public class ReloadMessageSource extends MessageSourceSupport {
 	private static final long serialVersionUID = 1L;
 
 	private ReloadResourceProvider reloadResourceProvider;
-	
+
 	public String getMessage(Locale locale, String key) throws NoSuchMessageException {
 		if (key == null)
 			throw new NoSuchMessageException(
@@ -21,9 +21,9 @@ public class ReloadMessageSource extends MessageSourceSupport {
 		if(locale == null) {
 			locale = Locale.getDefault();
 		}
-		
+
 		reloadResourceProvider.setResourceLocale(locale);
-		
+
 		try {
 			String msg = reloadResourceProvider.getString(key);
 			if (msg == null)

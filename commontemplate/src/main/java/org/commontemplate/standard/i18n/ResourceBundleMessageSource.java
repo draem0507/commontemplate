@@ -4,7 +4,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
- * 国际化信息源实现
+ * 国际化信息源ResourceBundle适配实现
  *
  * @author liangfei0201@163.com
  *
