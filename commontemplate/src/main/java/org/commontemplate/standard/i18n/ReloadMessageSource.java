@@ -5,7 +5,7 @@ import java.util.Locale;
 /**
  * 国际化信息源热加载实现
  *
- * @author liangfei0201@163.com
+ * @author YangRong
  *
  */
 public class ReloadMessageSource extends MessageSourceSupport {
