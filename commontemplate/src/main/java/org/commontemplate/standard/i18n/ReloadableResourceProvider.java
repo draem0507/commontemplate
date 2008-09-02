@@ -9,7 +9,7 @@ import java.util.Locale;
  * @author yananay@126.com
  * 
  */
-public interface ReloadResourceProvider {
+public interface ReloadableResourceProvider {
 	/**
 	 * 根据 key 得到一个字符串。
 	 * @param key
@@ -46,7 +46,7 @@ public interface ReloadResourceProvider {
 	 * 设置处理资源的类的名字。这个类必须实现 ReloadProviderResource 接口。
 	 * @param resolveReloadResource
 	 * <br>处理资源的类的名字。例如 org.commontemplate.standard.i18n.ReloadablePropertyResource
-	 * @see ReloadProviderResource
+	 * @see ReloadableResource
 	 */
 	public void setResolveReloadResource(String resolveReloadResource);
 	/**
