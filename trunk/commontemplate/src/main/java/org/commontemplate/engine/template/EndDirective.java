@@ -37,7 +37,7 @@ final class EndDirective extends Directive {
 		throw I18nExceptionFactory.createUnsupportedOperationException("EndDirective.unsupported.error");
 	}
 
-	public void accept(TemplateVisitor visitor) {
+	public void accept(TemplateVisitor visitor, boolean isEnter) {
 		throw new UnsupportedOperationException("EndDirective.unsupported.error");
 	}
 

@@ -93,4 +93,8 @@ final class TemplateProxy extends Template {
 		return template.toString();
 	}
 
+	public void accept(TemplateVisitor visitor, boolean isEnter) {
+		template.accept(visitor, isEnter);
+	}
+
 }

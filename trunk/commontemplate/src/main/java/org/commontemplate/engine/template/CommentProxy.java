@@ -79,4 +79,8 @@ final class CommentProxy extends Comment {
 		return comment;
 	}
 
+	public void accept(TemplateVisitor visitor, boolean isEnter) {
+		comment.accept(visitor, isEnter);
+	}
+
 }

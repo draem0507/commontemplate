@@ -83,7 +83,7 @@ public class FilterEntryOperatorHandlerTester extends TestCase {
 			return location;
 		}
 
-		public void accept(ExpressionVisitor visitor) {
+		public void accept(ExpressionVisitor visitor, boolean isEnter) {
 		}
 
 		public Object getValue() {

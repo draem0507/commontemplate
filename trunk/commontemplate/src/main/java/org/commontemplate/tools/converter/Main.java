@@ -16,7 +16,7 @@ public class Main {
 		try {
 			VelocityConvert velocityConvert = new VelocityConvert();
 			Writer writer = new OutputStreamWriter(System.out);
-			velocityConvert.convert("aa.vm", new StringReader("aaa#set($name=$user.xxx($yyy.zzz))bbb"), writer);
+			velocityConvert.convert("aa.vm", new StringReader("aaa\\$xxx.yyy ccc\\#set($employy.name=$user.xxx($yyy.zzz))bbb"), writer);
 			writer.flush();
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -80,7 +80,7 @@ public class MockDirective extends Directive {
 	 *
 	 * @param visitor 访问者
 	 */
-	public void accept(TemplateVisitor visitor) {
+	public void accept(TemplateVisitor visitor, boolean isEnter) {
 		visitor.visitDirective(this);
 	}
 

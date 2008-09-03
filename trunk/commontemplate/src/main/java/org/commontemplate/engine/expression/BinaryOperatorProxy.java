@@ -82,4 +82,8 @@ final class BinaryOperatorProxy extends BinaryOperator {
 		return binaryOperator.toString();
 	}
 
+	public void accept(ExpressionVisitor visitor, boolean isEnter) {
+		binaryOperator.accept(visitor, isEnter);
+	}
+
 }

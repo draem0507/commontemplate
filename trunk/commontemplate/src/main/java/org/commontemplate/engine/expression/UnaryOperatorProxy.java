@@ -78,4 +78,8 @@ final class UnaryOperatorProxy extends UnaryOperator {
 		return unaryOperator.toString();
 	}
 
+	public void accept(ExpressionVisitor visitor, boolean isEnter) {
+		unaryOperator.accept(visitor, isEnter);
+	}
+
 }

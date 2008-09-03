@@ -74,4 +74,8 @@ final class TextProxy extends Text {
 		return text;
 	}
 
+	public void accept(TemplateVisitor visitor, boolean isEnter) {
+		text.accept(visitor, isEnter);
+	}
+
 }

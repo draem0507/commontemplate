@@ -8,7 +8,7 @@ import java.util.Map.Entry;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.Template;
 import org.commontemplate.standard.directive.DirectiveHandlerSupport;
-import org.commontemplate.standard.visit.BlockDirectiveVisitor;
+import org.commontemplate.standard.visitor.BlockDirectiveVisitor;
 import org.commontemplate.util.UrlUtils;
 
 /**
@@ -53,7 +53,7 @@ public class UsingAsMacroDirectiveHandler extends DirectiveHandlerSupport {
 		Template template = context.getTemplate(templateName);
 		List elements = null;
 		if (zoneName != null && zoneName.length() > 0) {
-			elements = BlockDirectiveVisitor.findInnerElements(template, (macroDirectiveName == null ? DEFAULT_MACRO_DIRECTIVE_NAME : macroDirectiveName), zoneName, context);
+			elements = BlockDirectiveVisitor.findBlockDirectiveElements(template, (macroDirectiveName == null ? DEFAULT_MACRO_DIRECTIVE_NAME : macroDirectiveName), zoneName, context);
 			if (macroName == null)
 				macroName = zoneName;
 		} else {

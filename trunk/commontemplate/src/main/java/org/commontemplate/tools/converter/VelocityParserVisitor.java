@@ -45,29 +45,28 @@ import org.apache.velocity.runtime.parser.node.ASTTrue;
 import org.apache.velocity.runtime.parser.node.ASTWord;
 import org.apache.velocity.runtime.parser.node.ASTprocess;
 import org.apache.velocity.runtime.parser.node.SimpleNode;
-import org.commontemplate.core.TemplateBudiler;
 import org.commontemplate.engine.Engine;
 
 public class VelocityParserVisitor implements ParserVisitor {
 
-	private Engine engine;
+	//private Engine engine;
 
 	private Writer writer;
 
-	private TemplateBudiler templateBudiler;
+	//private TemplateBudiler templateBudiler;
 
 	public VelocityParserVisitor(Engine engine, String templateName, Writer writer) {
-		this.engine = engine;
+		//this.engine = engine;
 		this.writer = writer;
-		templateBudiler = engine.getTemplateBudiler(templateName);
+		//templateBudiler = engine.getTemplateBudiler(templateName);
  	}
 
 	private void write(Object str) {
 		try {
 			if (str instanceof String)
-				writer.write((String)str);
+				writer.write((String)str + "\n");
 			else
-				writer.write(String.valueOf(str));
+				writer.write(String.valueOf(str) + "\n");
 			writer.flush();
 		} catch (IOException e) {
 			throw new RuntimeException(e.getMessage(), e);
@@ -75,227 +74,172 @@ public class VelocityParserVisitor implements ParserVisitor {
 	}
 
 	public Object visit(SimpleNode node, Object data) {
-		node.childrenAccept(this, data);
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTprocess node, Object data) {
-		node.childrenAccept(this, data);
-		return this;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTEscapedDirective node, Object data) {
-		write("\\");
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTEscape node, Object data) {
-		write("\\\\");
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTComment node, Object data) {
-		write("##");
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTFloatingPointLiteral node, Object data) {
-		write(node.literal());
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTIntegerLiteral node, Object data) {
-		write(node.literal());
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTStringLiteral node, Object data) {
-		write(node.literal());
- 		return null;
+ 		return doVisit(node, data);
 	}
 
 	public Object visit(ASTIdentifier node, Object data) {
-		node.childrenAccept(this, data);
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTWord node, Object data) {
-		write(node.value(null));
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTDirective node, Object data) {
-		node.childrenAccept(this, data);
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTBlock node, Object data) {
-		node.childrenAccept(this, data);
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTMap node, Object data) {
-		write(node.literal());
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTObjectArray node, Object data) {
-		write(node.literal());
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTIntegerRange node, Object data) {
-		write(node.literal());
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTMethod node, Object data) {
-		write(node.literal());
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTReference node, Object data) {
-		write(node.literal());
-		node.childrenAccept(this, data);
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTTrue node, Object data) {
-		write("true");
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTFalse node, Object data) {
-		write("false");
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTText node, Object data) {
-		write(node.literal());
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTIfStatement node, Object data) {
-		write("#if");
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTElseStatement node, Object data) {
-		write("#else");
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTElseIfStatement node, Object data) {
-		write("#elseif");
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTSetDirective node, Object data) {
-		write(node.literal());
-		node.childrenAccept(this, data);
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTStop node, Object data) {
-		write("stop");
-		templateBudiler.addDirective("stop", null);
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTExpression node, Object data) {
-		node.childrenAccept(this, data);
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTAssignment node, Object data) {
-		write("=");
-		node.childrenAccept(this, data);
-		engine.getExpressionBuilder().addBinaryOperator("=");
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTOrNode node, Object data) {
-		write("||");
-		engine.getExpressionBuilder().addBinaryOperator("||");
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTAndNode node, Object data) {
-		write("&&");
-		engine.getExpressionBuilder().addBinaryOperator("&&");
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTEQNode node, Object data) {
-		write("==");
-		engine.getExpressionBuilder().addBinaryOperator("==");
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTNENode node, Object data) {
-		write("!=");
-		engine.getExpressionBuilder().addBinaryOperator("!=");
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTLTNode node, Object data) {
-		write("<");
-		engine.getExpressionBuilder().addBinaryOperator("<");
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTGTNode node, Object data) {
-		write(">");
-		engine.getExpressionBuilder().addBinaryOperator(">");
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTLENode node, Object data) {
-		write("<=");
-		engine.getExpressionBuilder().addBinaryOperator("<=");
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTGENode node, Object data) {
-		write(">=");
-		engine.getExpressionBuilder().addBinaryOperator(">=");
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTAddNode node, Object data) {
-		write("+");
-		engine.getExpressionBuilder().addBinaryOperator("+");
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTSubtractNode node, Object data) {
-		write("-");
-		engine.getExpressionBuilder().addBinaryOperator("-");
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTMulNode node, Object data) {
-		write("*");
-		engine.getExpressionBuilder().addBinaryOperator("*");
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTDivNode node, Object data) {
-		write("/");
-		engine.getExpressionBuilder().addBinaryOperator("/");
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTModNode node, Object data) {
-		write("%");
-		engine.getExpressionBuilder().addBinaryOperator("%");
-		return null;
+		return doVisit(node, data);
 	}
 
 	public Object visit(ASTNotNode node, Object data) {
-		write("!");
-		engine.getExpressionBuilder().addUnaryOperator("!");
-		return null;
+		return doVisit(node, data);
+	}
+
+	private Object doVisit(SimpleNode node, Object data) {
+		write(node.getClass().getName() + ":" + node.literal());
+		return node.childrenAccept(this, data);
 	}
 
 }

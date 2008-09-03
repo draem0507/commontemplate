@@ -37,11 +37,23 @@ public abstract class Element implements Node, Serializable {
 	public abstract Location getLocation();
 
 	/**
-	 * 接收访问者, 并带领访问者遍历整个树 (中序遍历)<br>
+	 * 接收访问者, 并带领访问者遍历整个树
 	 *
 	 * @param visitor 访问者
 	 */
-	public abstract void accept(TemplateVisitor visitor);
+	public void accept(TemplateVisitor visitor) {
+		accept(visitor, true);
+	}
+
+	/**
+	 * 接收访问者, 并带领访问者遍历整个树<br>
+	 * 通常直接使用accept(Visitor visitor)<br>
+	 *
+	 * @see org.commontemplate.core.Element#accept(TemplateVisitor)
+	 * @param visitor 访问者
+	 * @param isEnter 是否为入口, 在入口处忽略StopVisitException
+	 */
+	public abstract void accept(TemplateVisitor visitor, boolean isEnter);
 
 	/**
 	 * 返回模板元素的标准组成, 同getCanonicalForm()

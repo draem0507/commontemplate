@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.commontemplate.core.Context;
 import org.commontemplate.core.RenderingException;
+import org.commontemplate.core.StopVisitException;
 import org.commontemplate.core.Template;
 import org.commontemplate.core.Text;
 import org.commontemplate.core.TemplateVisitor;
@@ -83,8 +84,13 @@ final class TextImpl extends Text {
 		this.template = template;
 	}
 
-	public void accept(TemplateVisitor visitor) {
-		visitor.visitText(this);
+	public void accept(TemplateVisitor visitor, boolean isEnter) {
+		try {
+			visitor.visitText(this);
+		} catch (StopVisitException e) {
+			if (! isEnter)
+				throw e;
+		}
 	}
 
 }

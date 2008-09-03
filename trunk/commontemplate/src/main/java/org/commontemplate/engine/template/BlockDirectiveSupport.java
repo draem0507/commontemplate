@@ -29,7 +29,7 @@ abstract class BlockDirectiveSupport extends BlockDirective implements java.io.S
 	protected void acceptElements(TemplateVisitor visitor) {
 		for (int i = 0, n = elements.size(); i < n; i ++) {
 			Element element = (Element)elements.get(i);
-			element.accept(visitor);
+			element.accept(visitor, false);
 		}
 	}
 

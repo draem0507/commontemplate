@@ -9,6 +9,7 @@ import java.util.List;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Resource;
+import org.commontemplate.core.StopVisitException;
 import org.commontemplate.core.Template;
 import org.commontemplate.core.TemplateVisitor;
 import org.commontemplate.util.Assert;
@@ -78,9 +79,15 @@ final class TemplateImpl extends Template implements Serializable {
 		}
 	}
 
-	public final void accept(TemplateVisitor visitor) {
-		visitor.visitTemplate(this);
-		rootDirective.accept(visitor);
+	public final void accept(TemplateVisitor visitor, boolean isEnter) {
+		try {
+			visitor.visitTemplate(this);
+			rootDirective.accept(visitor, false);
+			visitor.endTemplate(this);
+		} catch (StopVisitException e) {
+			if (! isEnter)
+				throw e;
+		}
 	}
 
 	public final String getEncoding() {

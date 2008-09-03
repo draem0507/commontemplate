@@ -1,9 +1,10 @@
-package org.commontemplate.standard.visit;
+package org.commontemplate.standard.visitor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.commontemplate.core.BlockDirective;
+import org.commontemplate.core.Directive;
 import org.commontemplate.core.Template;
 import org.commontemplate.core.TemplateVisitor;
 import org.commontemplate.util.Assert;
@@ -17,6 +18,10 @@ public class BlockDirectivesVisitor extends TemplateVisitor {
 	public BlockDirectivesVisitor(String type) {
 		Assert.assertNotNull(type, "ElementsVisitor.type.required");
 		this.type = type;
+	}
+
+	public void visitDirective(Directive directive) {
+		// 忽略TemplateVisitor中的指令表达式访问缺省实现
 	}
 
 	public void visitBlockDirective(BlockDirective blockDirective) {

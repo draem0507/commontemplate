@@ -34,7 +34,7 @@ final class Parenthesis extends Operator {
 		throw new UnsupportedOperationException("Parenthesis.unsupported.error");
 	}
 
-	public void accept(ExpressionVisitor visitor) {
+	public void accept(ExpressionVisitor visitor, boolean isEnter) {
 		throw new UnsupportedOperationException("Parenthesis.unsupported.error");
 	}
 

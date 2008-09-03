@@ -8,6 +8,7 @@ import org.commontemplate.core.Element;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.IgnoreException;
 import org.commontemplate.core.RenderingException;
+import org.commontemplate.core.StopVisitException;
 import org.commontemplate.core.Template;
 import org.commontemplate.core.TemplateVisitor;
 import org.commontemplate.util.Location;
@@ -42,8 +43,13 @@ final class RootBlockDirectiveImpl extends BlockDirectiveSupport {
 		return getElementsSource();
 	}
 
-	public void accept(TemplateVisitor visitor) {
-		acceptElements(visitor);
+	public void accept(TemplateVisitor visitor, boolean isEnter) {
+		try {
+			acceptElements(visitor);
+		} catch (StopVisitException e) {
+			if (! isEnter)
+				throw e;
+		}
 	}
 
 	public Expression getExpression() {
