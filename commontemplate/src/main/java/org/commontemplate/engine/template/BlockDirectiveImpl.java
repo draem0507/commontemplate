@@ -10,6 +10,7 @@ import org.commontemplate.core.Element;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.IgnoreException;
 import org.commontemplate.core.RenderingException;
+import org.commontemplate.core.StopVisitException;
 import org.commontemplate.core.Template;
 import org.commontemplate.core.TemplateVisitor;
 import org.commontemplate.util.Assert;
@@ -124,10 +125,15 @@ class BlockDirectiveImpl extends BlockDirectiveSupport {
 		}
 	}
 
-	public void accept(TemplateVisitor visitor) {
-		visitor.visitBlockDirective(this);
-		acceptElements(visitor);
-		visitor.visitEndBlockDirective();
+	public void accept(TemplateVisitor visitor, boolean isEnter) {
+		try {
+			visitor.visitBlockDirective(this);
+			acceptElements(visitor);
+			visitor.endBlockDirective(this);
+		} catch (StopVisitException e) {
+			if (! isEnter)
+				throw e;
+		}
 	}
 
 }

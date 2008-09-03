@@ -1,10 +1,12 @@
-package org.commontemplate.standard.visit;
+package org.commontemplate.standard.visitor;
 
 import java.util.List;
 
 import org.commontemplate.core.BlockDirective;
 import org.commontemplate.core.Context;
+import org.commontemplate.core.Directive;
 import org.commontemplate.core.Expression;
+import org.commontemplate.core.StopVisitException;
 import org.commontemplate.core.Template;
 import org.commontemplate.core.TemplateVisitor;
 import org.commontemplate.util.Assert;
@@ -36,6 +38,10 @@ public class BlockDirectiveVisitor extends TemplateVisitor {
 		this.context = context;
 	}
 
+	public void visitDirective(Directive directive) {
+		// 忽略TemplateVisitor中的指令表达式访问缺省实现
+	}
+
 	public void visitBlockDirective(BlockDirective blockDirective) {
 		if (type.equals(blockDirective.getName())) {
 			Expression expression = blockDirective.getExpression();
@@ -60,11 +66,7 @@ public class BlockDirectiveVisitor extends TemplateVisitor {
 	 */
 	public static BlockDirective findBlockDirective(Template template, String type, String name, Context context) {
 		BlockDirectiveVisitor visitor = new BlockDirectiveVisitor(type, name, context);
-		try {
-			template.accept(visitor);
-		} catch (StopVisitException e) {
-			// ignore
-		}
+		template.accept(visitor);
 		return visitor.getBlockDirective();
 	}
 
@@ -76,7 +78,7 @@ public class BlockDirectiveVisitor extends TemplateVisitor {
 	 * @param name 块名
 	 * @return 块指令的内部元素集;
 	 */
-	public static List findInnerElements(Template template, String type, String name, Context context) {
+	public static List findBlockDirectiveElements(Template template, String type, String name, Context context) {
 		BlockDirective blockDirective = findBlockDirective(template, type, name, context);
 		if (blockDirective == null)
 			return null;

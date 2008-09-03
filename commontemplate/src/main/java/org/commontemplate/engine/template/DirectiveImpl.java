@@ -9,6 +9,7 @@ import org.commontemplate.core.Directive;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.IgnoreException;
 import org.commontemplate.core.RenderingException;
+import org.commontemplate.core.StopVisitException;
 import org.commontemplate.core.Template;
 import org.commontemplate.core.TemplateVisitor;
 import org.commontemplate.util.Assert;
@@ -101,8 +102,13 @@ final class DirectiveImpl extends Directive {
 		this.template = template;
 	}
 
-	public void accept(TemplateVisitor visitor) {
-		visitor.visitDirective(this);
+	public void accept(TemplateVisitor visitor, boolean isEnter) {
+		try {
+			visitor.visitDirective(this);
+		} catch (StopVisitException e) {
+			if (! isEnter)
+				throw e;
+		}
 	}
 
 }

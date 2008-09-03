@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.commontemplate.core.EvaluationException;
 import org.commontemplate.core.ExpressionVisitor;
+import org.commontemplate.core.StopVisitException;
 import org.commontemplate.core.Variable;
 import org.commontemplate.core.VariableResolver;
 import org.commontemplate.util.Location;
@@ -56,8 +57,13 @@ final class VariableImpl extends Variable {
 		return location;
 	}
 
-	public void accept(ExpressionVisitor visitor) {
-		visitor.visitVariable(this);
+	public void accept(ExpressionVisitor visitor, boolean isEnter) {
+		try {
+			visitor.visitVariable(this);
+		} catch (StopVisitException e) {
+			if (! isEnter)
+				throw e;
+		}
 	}
 
 }

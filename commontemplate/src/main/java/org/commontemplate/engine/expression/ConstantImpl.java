@@ -5,6 +5,7 @@ import java.util.List;
 import org.commontemplate.core.Constant;
 import org.commontemplate.core.EvaluationException;
 import org.commontemplate.core.ExpressionVisitor;
+import org.commontemplate.core.StopVisitException;
 import org.commontemplate.core.VariableResolver;
 import org.commontemplate.util.Location;
 
@@ -62,8 +63,13 @@ final class ConstantImpl extends Constant {
 		return value;
 	}
 
-	public void accept(ExpressionVisitor visitor) {
-		visitor.visitConstant(this);
+	public void accept(ExpressionVisitor visitor, boolean isEnter) {
+		try {
+			visitor.visitConstant(this);
+		} catch (StopVisitException e) {
+			if (! isEnter)
+				throw e;
+		}
 	}
 
 }

@@ -76,4 +76,8 @@ class BlockDirectiveProxy extends BlockDirective {
 		return blockDirective;
 	}
 
+	public void accept(TemplateVisitor visitor, boolean isEnter) {
+		blockDirective.accept(visitor, isEnter);
+	}
+
 }

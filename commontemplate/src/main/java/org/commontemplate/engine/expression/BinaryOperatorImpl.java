@@ -9,6 +9,7 @@ import org.commontemplate.core.BinaryOperator;
 import org.commontemplate.core.EvaluationException;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.ExpressionVisitor;
+import org.commontemplate.core.StopVisitException;
 import org.commontemplate.core.VariableResolver;
 import org.commontemplate.util.Assert;
 import org.commontemplate.util.Location;
@@ -186,10 +187,15 @@ final class BinaryOperatorImpl extends BinaryOperator {
 		operands = java.util.Collections.unmodifiableList(l);
 	}
 
-	public void accept(ExpressionVisitor visitor) {
-		visitor.visitBinaryOperator(this);
-		getLeftOperand().accept(visitor);
-		getRightOperand().accept(visitor);
+	public void accept(ExpressionVisitor visitor, boolean isEnter) {
+		try {
+			getLeftOperand().accept(visitor, false);
+			visitor.visitBinaryOperator(this);
+			getRightOperand().accept(visitor, false);
+		} catch (StopVisitException e) {
+			if (! isEnter)
+				throw e;
+		}
 	}
 
 }

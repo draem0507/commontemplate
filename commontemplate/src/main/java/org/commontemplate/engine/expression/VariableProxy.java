@@ -63,4 +63,8 @@ final class VariableProxy extends Variable {
 	public String toString() {
 		return variable.toString();
 	}
+
+	public void accept(ExpressionVisitor visitor, boolean isEnter) {
+		variable.accept(visitor, isEnter);
+	}
 }

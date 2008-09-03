@@ -68,4 +68,8 @@ final class ConstantProxy extends Constant {
 		return constant.toString();
 	}
 
+	public void accept(ExpressionVisitor visitor, boolean isEnter) {
+		constant.accept(visitor, isEnter);
+	}
+
 }

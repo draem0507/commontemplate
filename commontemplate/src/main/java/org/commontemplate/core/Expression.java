@@ -39,11 +39,24 @@ public abstract class Expression implements Node, Serializable {
 	public abstract Location getLocation();
 
 	/**
-	 * 接收访问者, 并带领访问者遍历整个树 (中序遍历)<br>
+	 * 接收访问者, 并带领访问者遍历整个树 (前序遍历)
 	 *
 	 * @param visitor 访问者
 	 */
-	public abstract void accept(ExpressionVisitor visitor);
+
+	public void accept(ExpressionVisitor visitor) {
+		accept(visitor, true);
+	}
+
+	/**
+	 * 接收访问者, 并带领访问者遍历整个树 (前序遍历)<br>
+	 * 通常直接使用accept(Visitor visitor)<br>
+	 *
+	 * @see org.commontemplate.core.Expression#accept(TemplateVisitor)
+	 * @param visitor 访问者
+	 * @param isEnter 是否为入口, 在入口处忽略StopVisitException
+	 */
+	public abstract void accept(ExpressionVisitor visitor, boolean isEnter);
 
 	/**
 	 * 返回表达式符的标准组成, 同getCanonicalForm()

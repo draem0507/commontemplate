@@ -6,6 +6,7 @@ import java.util.List;
 import org.commontemplate.core.Comment;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.RenderingException;
+import org.commontemplate.core.StopVisitException;
 import org.commontemplate.core.Template;
 import org.commontemplate.core.TemplateVisitor;
 import org.commontemplate.util.Location;
@@ -80,8 +81,13 @@ final class CommentImpl extends Comment {
 		this.template = template;
 	}
 
-	public void accept(TemplateVisitor visitor) {
-		visitor.visitComment(this);
+	public void accept(TemplateVisitor visitor, boolean isEnter) {
+		try {
+			visitor.visitComment(this);
+		} catch (StopVisitException e) {
+			if (! isEnter)
+				throw e;
+		}
 	}
 
 }

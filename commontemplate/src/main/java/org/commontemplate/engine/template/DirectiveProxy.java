@@ -71,4 +71,8 @@ class DirectiveProxy extends Directive {
 		return directive;
 	}
 
+	public void accept(TemplateVisitor visitor, boolean isEnter) {
+		directive.accept(visitor, isEnter);
+	}
+
 }
