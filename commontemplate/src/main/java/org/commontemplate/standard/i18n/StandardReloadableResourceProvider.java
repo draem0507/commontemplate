@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.ref.SoftReference;
 import java.net.URL;
 import java.util.Locale;
+import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.Vector;
 
@@ -46,64 +47,47 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 	private static SoftCache baseNameIntervalCache = new SoftCache(INITIAL_CACHE_SIZE,
 			CACHE_LOAD_FACTOR);
 
-    private Locale resourceLocale = null;
+    // private ClassLoader resourceClassLoader;
 
-    private ClassLoader resourceClassLoader;
-
-    private String resourceBaseName;
     /** 可以处理的文件的名字，默认是 .properties 文件 */
-    private String fileExtName = ".properties";
-    /**
-     * 处理资源文件的类的名字，默认是 ReloadablePropertyResource 类
-     * @see ReloadableResource
-     * @see ReloadablePropertyResource
-     */
-    private String resolveReloadResource = ReloadablePropertyResource.class.getName();
-
-    /**
-     * 指定编码的字符集。
-     */
-    private String encoding = null;
+    private static String DEFAULT_FILE_EXT_NAME = ".properties";
+    
+    public static final String MAP_FILE_EXT_NAME_KEY = "MAP_FILE_EXT_NAME_KEY";
+    public static final String MAP_CLASS_LOADER_KEY = "MAP_CLASS_LOADER_KEY";
+    public static final String MAP_RELOADABLE_RESOURCE_KEY = "MAP_RELOADABLE_RESOURCE_KEY";
+    public static final String MAP_ENCODING_KEY = "MAP_ENCODING_KEY";    
 
     /**
 	 * 刷新间隔的时间
 	 */
 	private long refreshInterval;
+	
+	
+	/**
+	 * 根据 resourceBaseName,locale,key,extInfo 得到一个对象。<br>
+	 * 关于 extInfo, 可以进行如下的设置: <br>
+	 * <b>设置 要处理的文件的扩展名</b><br>
+	 * extInfo.put(StandardReloadableResourceProvider.MAP_FILE_EXT_NAME_KEY, ".xml");<br>
+	 * 如果不设置的话，则使用 .properties<br>
+	 * <b>设置 ClassLoader</b><br>
+	 * extInfo.put(StandardReloadableResourceProvider.MAP_FILE_EXT_NAME_KEY, xxx.getClassLoader());<br>
+	 * 如果不设置的话，则使用 Thread.currentThread().getContextClassLoader();<br>
+	 * <b>设置 处理资源的实现类</b><br>
+	 * extInfo.put(StandardReloadableResourceProvider.MAP_FILE_EXT_NAME_KEY, ReloadablePropertyResource.class);<br>
+	 * 如果不设置的话，则使用 ReloadablePropertyResource.class<br>
+	 * <b>设置 处理文件的字符集编码</b><br>
+	 * extInfo.put(StandardReloadableResourceProvider.MAP_FILE_EXT_NAME_KEY, "UTF-8");<br>
+	 * 如果不设置的话，则使用 Java 默认的 Unicode<br>
+	 */
+	public Object getObject(String resourceBaseName, Locale locale, String key, Map extInfo) {
+		
+		ClassLoader resourceClassLoader = getClassLoader(extInfo);
 
-    public StandardReloadableResourceProvider(String baseName, Locale locale, ClassLoader loader) {
-    	resourceBaseName = baseName;
-    	resourceLocale = locale;
-    	resourceClassLoader = loader;
-    }
-
-    public StandardReloadableResourceProvider(String baseName, Locale locale) {
-    	new StandardReloadableResourceProvider(baseName, locale,
-    			Thread.currentThread().getClass().getClassLoader());
-    }
-
-    public StandardReloadableResourceProvider(String baseName) {
-    	new StandardReloadableResourceProvider(baseName, Locale.getDefault(),
-    			Thread.currentThread().getClass().getClassLoader());
-    }
-
-    public StandardReloadableResourceProvider() {}
-
-    public String getString(String key) {
-		return (String) getObject(key);
-	}
-
-	public Object getObject(String key) {
-
-		if(resourceClassLoader == null) {
-			// 如果没有设置 resourceClassLoader，那么就使用当前线程的 ClassLoader，
-			// 以确保能够正确地载入资源。
-			resourceClassLoader = Thread.currentThread().getContextClassLoader();
-		}
-		if(resourceClassLoader == null || resourceLocale == null || resourceBaseName == null) {
+		if(resourceClassLoader == null || locale == null || resourceBaseName == null) {
 			throw new NullPointerException();
-		}
-
-		ResourceHolder resourceHolder = getResource(resourceBaseName);
+		}		
+		
+		ResourceHolder resourceHolder = getResource(resourceBaseName, locale, extInfo);
 		ReloadableResource resource = resourceHolder.getCurrent();
 
 		Object value = resource.handleGetObject(key);
@@ -114,13 +98,14 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 			}
 		}
 		if(value == null) {
-			throwMissingResourceException(key);
+			throwMissingResourceException(key, locale);
 		}
 		return value;
 	}
 
-	private ResourceHolder getResource(String baseName) {
-
+	private ResourceHolder getResource(String baseName, Locale resourceLocale, Map extInfo) {
+		
+		ClassLoader resourceClassLoader = getClassLoader(extInfo);
 		final Object NOTFOUND = (resourceClassLoader != null) ? (Object) resourceClassLoader
 				: (Object) DEFAULT_NOT_FOUND;
 
@@ -136,9 +121,9 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 
 		Locale defaultLocale = Locale.getDefault();
 
-		Object lookup = findResourceInCache(baseName, bundleName, defaultLocale);
+		Object lookup = findResourceInCache(baseName, bundleName, defaultLocale, resourceLocale, extInfo);
 		if (lookup == NOTFOUND) {
-			throwMissingResourceException(baseName);
+			throwMissingResourceException(baseName, resourceLocale);
 		} else if (lookup != null) {
 			return (ResourceHolder) lookup;
 		}
@@ -147,7 +132,7 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 
 		try {
 			//locate the root bundle and work toward the desired child
-			Object root = findResource(baseName, baseName, defaultLocale, NOTFOUND, NOTFOUND);
+			Object root = findResource(baseName, baseName, defaultLocale, resourceLocale, NOTFOUND, NOTFOUND, extInfo);
 			if (root == null) {
 				root = NOTFOUND;
 			}
@@ -165,7 +150,7 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 				for (int i = 0; i < names.size(); i++) {
 					bundleName = (String) names.elementAt(i);
 					lookup = findResource(bundleName,
-							baseName, defaultLocale, parent, NOTFOUND);
+							baseName, defaultLocale, resourceLocale, parent, NOTFOUND, extInfo);
 					if (lookup != null) {
 						parent = lookup;
 						foundInMainBranch = true;
@@ -184,7 +169,7 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 						continue;
 					}
 					lookup = findResource(bundleName,
-							baseName, defaultLocale, parent, NOTFOUND);
+							baseName, defaultLocale, resourceLocale, parent, NOTFOUND, extInfo);
 					if (lookup != null) {
 						parent = lookup;
 					}
@@ -193,46 +178,47 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 
 		} catch (Exception e) {
 
-			throwMissingResourceException(baseName);
+			throwMissingResourceException(baseName, resourceLocale);
 		} catch (Error e) {
 
 			throw e;
 		}
 		if (parent == NOTFOUND) {
-			throwMissingResourceException(baseName);
+			throwMissingResourceException(baseName, resourceLocale);
 		}
 		return (ResourceHolder) parent;
 	}
 
-	private Object findResource(String bundleName, String baseName, Locale defaultLocale,
-			Object parent, final Object NOTFOUND) {
+	private Object findResource(String bundleName, String baseName, Locale defaultLocale, Locale resourceLocale,
+			Object parent, final Object NOTFOUND, Map extInfo) {
 
 		ResourceHolder result;
-		result = findResourceInCache(baseName, bundleName, defaultLocale);
+		result = findResourceInCache(baseName, bundleName, defaultLocale, resourceLocale, extInfo);
 		if(result != null) {
 			return result;
 		}
 
 		synchronized (cacheList) {
 			//try loading the bundle via the class loader
-			ReloadableResource resource = loadResource(bundleName);
+			ReloadableResource resource = loadResource(bundleName, extInfo);
 			if (resource != null) {
 				result = new ResourceHolder(resource);
 				if (parent != NOTFOUND) {
 					result.setParent((ResourceHolder) parent);
 				}
 				// bundle.setLocale(baseName, bundleName);
-				putResourceInCache(bundleName, result);
+				putResourceInCache(bundleName, result, extInfo);
 
 			} else {
-				putResourceInCache(bundleName, parent);
+				putResourceInCache(bundleName, parent, extInfo);
 			}
 		}
 		return result;
 	}
 
-	private ReloadableResource loadResource(String bundleName) {
+	private ReloadableResource loadResource(String bundleName, Map extInfo) {
 		// Search for class file using class loader
+		final ClassLoader resourceClassLoader = getClassLoader(extInfo);
 		try {
 			Class resourceClass;
 			if (resourceClassLoader != null) {
@@ -250,7 +236,7 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 		}
 
 		// Next search for a Properties file.
-		final String resName = bundleName.replace('.', '/') + fileExtName;
+		final String resName = bundleName.replace('.', '/') + getFileExtName(extInfo);
 		URL url= (URL) java.security.AccessController
 				.doPrivileged(new java.security.PrivilegedAction() {
 					public Object run() {
@@ -265,9 +251,9 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 		if (url != null) {
 			// make sure it is buffered
 			try {
-				Class clazz = resourceClassLoader.loadClass(resolveReloadResource);
-				ReloadablePropertyResource resource = (ReloadablePropertyResource) clazz.newInstance();
-				resource.loadFromURL(url, encoding);
+				Class clazz = getReloadableResource(extInfo);
+				ReloadableResource resource = (ReloadableResource)clazz.newInstance();
+				resource.loadFromURL(url, getEncoding(extInfo));
 				return resource;
 
 			} catch (Exception e) {
@@ -279,13 +265,14 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 		return null;
 	}
 
-	private ResourceHolder findResourceInCache(String baseName, String bundleName, Locale defaultLocale) {
+	private ResourceHolder findResourceInCache(String baseName, String bundleName, 
+							Locale defaultLocale, Locale resourceLocale, Map extInfo) {
 
 		synchronized (cacheList) {
 			// 清空缓存的方法
-			cleanCacheProcess(baseName, defaultLocale);
+			cleanCacheProcess(baseName, defaultLocale, resourceLocale, extInfo);
 
-			cacheKey.setKeyValues(resourceClassLoader, bundleName);
+			cacheKey.setKeyValues(getClassLoader(extInfo), bundleName);
 			Object result = cacheList.get(cacheKey);
 			cacheKey.clear();
 			return (ResourceHolder) result;
@@ -301,7 +288,7 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 	 * @param loader
 	 * @return
 	 */
-	private void cleanCacheProcess(String baseName, Locale defaultLocale) {
+	private void cleanCacheProcess(String baseName, Locale defaultLocale, Locale resourceLocale, Map extInfo) {
 
 		Long lastRefreshTime = (Long) baseNameIntervalCache.get(baseName);
  		long now = System.currentTimeMillis();
@@ -312,7 +299,7 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 			// 保存最新的刷新时间
 			baseNameIntervalCache.put(baseName, new Long(now));
 
-			cleanAllModifiedBundleCache(baseName, defaultLocale, resourceClassLoader);
+			cleanAllModifiedBundleCache(baseName, defaultLocale, resourceLocale, getClassLoader(extInfo), extInfo);
 		}
 	}
 
@@ -324,10 +311,11 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 	 * @return
 	 */
 	private void cleanAllModifiedBundleCache(String baseName, Locale defaultLocale,
-														final ClassLoader loader) {
+														Locale resourceLocale,
+														final ClassLoader loader, Map extInfo) {
 
 		boolean rootChange = false;
-		if(isFileModified(loader, baseName)) {
+		if(isFileModified(loader, baseName, extInfo)) {
 
 			rootChange = true;
 			removeCacheObject(loader, baseName);
@@ -340,7 +328,7 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 
 			String name = (String) names.get(i);
 
-			if(rootChange || parentNameChange || isFileModified(loader, name)) {
+			if(rootChange || parentNameChange || isFileModified(loader, name, extInfo)) {
 
 				parentNameChange = true;
 				removeCacheObject(loader, name);
@@ -353,7 +341,7 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 		for(int i = 0, size = names.size(); i < size; i++) {
 
 			String name = (String) names.get(i);
-			if(rootChange || parentNameChange || isFileModified(loader, name)) {
+			if(rootChange || parentNameChange || isFileModified(loader, name, extInfo)) {
 
 				removeCacheObject(loader, name);
 			}
@@ -379,10 +367,10 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 	 * @param bundleName
 	 * @return
 	 */
-	private boolean isFileModified(final ClassLoader loader, String bundleName) {
+	private boolean isFileModified(final ClassLoader loader, String bundleName, Map extInfo) {
 		try {
 
-			final String resName = bundleName.replace('.', '/') + fileExtName;
+			final String resName = bundleName.replace('.', '/') + getFileExtName(extInfo);
 			URL url = (URL) java.security.AccessController
 					.doPrivileged(new java.security.PrivilegedAction() {
 						public Object run() {
@@ -416,11 +404,11 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 		return false;
 	}
 
-	private void putResourceInCache(String bundleName, Object value) {
+	private void putResourceInCache(String bundleName, Object value, Map extInfo) {
 		//we use a static shared cacheKey but we use the lock in cacheList since
 		//the key is only used to interact with cacheList.
 		synchronized (cacheList) {
-			cacheKey.setKeyValues(resourceClassLoader, bundleName);
+			cacheKey.setKeyValues(getClassLoader(extInfo), bundleName);
 			cacheList.put(cacheKey.clone(), value);
 			cacheKey.clear();
 
@@ -480,7 +468,7 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 		}
 	}
 
-	private void throwMissingResourceException(String baseName) throws MissingResourceException {
+	private void throwMissingResourceException(String baseName, Locale resourceLocale) throws MissingResourceException {
 		throw new MissingResourceException("Can't find bundle for base name "
 				+ baseName + ", locale " + resourceLocale, baseName + "_" + resourceLocale, "");
 	}
@@ -575,47 +563,41 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 		}
 
 	}
-
-	public Locale getResourceLocale() {
-		return resourceLocale;
+	
+	private ClassLoader getClassLoader(Map extInfo) {
+		ClassLoader loader = (ClassLoader) extInfo.get(MAP_CLASS_LOADER_KEY);
+		if(loader == null) {
+			// 如果没有设置 resourceClassLoader，那么就使用当前线程的 ClassLoader，
+			// 以确保能够正确地载入资源。
+			loader = Thread.currentThread().getContextClassLoader();
+			extInfo.put(MAP_CLASS_LOADER_KEY, loader);
+		}
+		return loader;
 	}
-
-	public void setResourceLocale(Locale resourceLocale) {
-		this.resourceLocale = resourceLocale;
+	
+	private String getFileExtName(Map extInfo) {
+		String value = (String) extInfo.get(MAP_FILE_EXT_NAME_KEY);
+		if(value == null) {
+			value = DEFAULT_FILE_EXT_NAME;
+			extInfo.put(MAP_FILE_EXT_NAME_KEY, value);
+		}
+		return value;
 	}
-
-	public ClassLoader getResourceClassLoader() {
-		return resourceClassLoader;
+	
+	private Class getReloadableResource(Map extInfo) {
+		Class resource = (Class) extInfo.get(MAP_RELOADABLE_RESOURCE_KEY);
+		if(resource == null) {
+			resource = ReloadablePropertyResource.class;
+			extInfo.put(MAP_RELOADABLE_RESOURCE_KEY, resource);
+		}
+		return resource;
 	}
-
-	public void setResourceClassLoader(ClassLoader resourceClassLoader) {
-		this.resourceClassLoader = resourceClassLoader;
+	
+	private String getEncoding(Map extInfo) {
+		return (String) extInfo.get(MAP_ENCODING_KEY);
 	}
-
-	public String getResourceBaseName() {
-		return resourceBaseName;
-	}
-
-	public void setResourceBaseName(String resourceBaseName) {
-		this.resourceBaseName = resourceBaseName;
-	}
-
-	public String getFileExtName() {
-		return fileExtName;
-	}
-
-	public void setFileExtName(String fileExtName) {
-		this.fileExtName = fileExtName;
-	}
-
-	public String getResolveReloadResource() {
-		return resolveReloadResource;
-	}
-
-	public void setResolveReloadResource(String resolveReloadResource) {
-		this.resolveReloadResource = resolveReloadResource;
-	}
-
+	
+	
 	public long getRefreshInterval() {
 		return refreshInterval;
 	}
@@ -624,12 +606,5 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 		this.refreshInterval = refreshInterval;
 	}
 
-	public String getEncoding() {
-		return encoding;
-	}
-
-	public void setEncoding(String encoding) {
-		this.encoding = encoding;
-	}
 
 }
