@@ -1,7 +1,9 @@
 package org.commontemplate.standard.i18n;
 
 import java.io.FileWriter;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import junit.framework.TestCase;
 /**
@@ -28,11 +30,11 @@ public class StrandardReloadResourceProviderTester extends TestCase {
 	private static final String BASE_NAME = "integration/i18n/StrandardReloadResourceProviderTester";
 	private static final String SUB_BASE_NAME = "integration/i18n/StrandardReloadResourceProviderTester_zh";
 	
+	private Map extInfoMap = new HashMap();
+	
 	protected void setUp() throws Exception {
 		
-		resourceProvider = new StandardReloadableResourceProvider();
-		resourceProvider.setResourceLocale(locale);
-		resourceProvider.setResourceBaseName(BASE_NAME);
+		resourceProvider = new StandardReloadableResourceProvider();		
 		resourceProvider.setRefreshInterval(3000);
 		resourceProvider.clearCache();
 		
@@ -52,10 +54,10 @@ public class StrandardReloadResourceProviderTester extends TestCase {
 	public void testReloadFail() throws Exception{
 		
 		createResourceFile(ZH_PROPERTY_FILE, KEY, OLD_CONTENT);		
-		assertEquals(OLD_CONTENT, resourceProvider.getString(KEY));
+		assertEquals(OLD_CONTENT, resourceProvider.getObject(BASE_NAME, locale, KEY, extInfoMap));
 		
 		createResourceFile(ZH_PROPERTY_FILE, KEY, NEW_CONTENT_1);
-		assertEquals(OLD_CONTENT, resourceProvider.getString(KEY));
+		assertEquals(OLD_CONTENT, resourceProvider.getObject(BASE_NAME, locale, KEY, extInfoMap));
 	}
 	
 	/**
@@ -72,11 +74,11 @@ public class StrandardReloadResourceProviderTester extends TestCase {
 		
 		createResourceFile(ROOT_PROPERTY_FILE, KEY, OLD_CONTENT);
 		createResourceFile(ZH_PROPERTY_FILE, KEY, NEW_CONTENT_1);
-		assertEquals(NEW_CONTENT_1, resourceProvider.getString(KEY));
+		assertEquals(NEW_CONTENT_1, resourceProvider.getObject(BASE_NAME, locale, KEY, extInfoMap));
 				
 		createResourceFile(ZH_PROPERTY_FILE, KEY, NEW_CONTENT_2);
 		Thread.sleep(((StandardReloadableResourceProvider) resourceProvider).getRefreshInterval() + EXT_WAIT_TIMES);		
-		assertEquals(NEW_CONTENT_2, resourceProvider.getString(KEY));
+		assertEquals(NEW_CONTENT_2, resourceProvider.getObject(BASE_NAME, locale, KEY, extInfoMap));
 	}
 	
 	/**
@@ -93,15 +95,15 @@ public class StrandardReloadResourceProviderTester extends TestCase {
 		
 		createResourceFile(ROOT_PROPERTY_FILE, KEY, OLD_CONTENT);
 		createResourceFile(ZH_PROPERTY_FILE, KEY, NEW_CONTENT_1);
-		assertEquals(NEW_CONTENT_1, resourceProvider.getString(KEY));
+		assertEquals(NEW_CONTENT_1, resourceProvider.getObject(BASE_NAME, locale, KEY, extInfoMap));
 				
 		createResourceFile(ZH_PROPERTY_FILE, KEY, NEW_CONTENT_2);
 		Thread.sleep(((StandardReloadableResourceProvider) resourceProvider).getRefreshInterval() + EXT_WAIT_TIMES);		
-		assertEquals(NEW_CONTENT_2, resourceProvider.getString(KEY));
+		assertEquals(NEW_CONTENT_2, resourceProvider.getObject(BASE_NAME, locale, KEY, extInfoMap));
 		
 		createResourceFile(ZH_PROPERTY_FILE, KEY, OLD_CONTENT);
 		Thread.sleep(((StandardReloadableResourceProvider) resourceProvider).getRefreshInterval() + EXT_WAIT_TIMES);
-		assertEquals(OLD_CONTENT, resourceProvider.getString(KEY));
+		assertEquals(OLD_CONTENT, resourceProvider.getObject(BASE_NAME, locale, KEY, extInfoMap));
 	}
 	
 	/**
@@ -120,18 +122,17 @@ public class StrandardReloadResourceProviderTester extends TestCase {
 		// 子properties
 		createResourceFile(ZH_PROPERTY_FILE, KEY, NEW_CONTENT_1);
 			
-		assertEquals(NEW_CONTENT_1, resourceProvider.getString(KEY));
+		assertEquals(NEW_CONTENT_1, resourceProvider.getObject(BASE_NAME, locale, KEY, extInfoMap));
 		
 		// 修改 父properties
 		createResourceFile(ROOT_PROPERTY_FILE, KEY, NEW_CONTENT_2);
 		Thread.sleep(((StandardReloadableResourceProvider) resourceProvider).getRefreshInterval() + EXT_WAIT_TIMES);
-		assertEquals(NEW_CONTENT_1, resourceProvider.getString(KEY));
+		assertEquals(NEW_CONTENT_1, resourceProvider.getObject(BASE_NAME, locale, KEY, extInfoMap));
 		
 		// 修改 子properties
 		createResourceFile(ZH_PROPERTY_FILE, KEY, OLD_CONTENT);
 		Thread.sleep(((StandardReloadableResourceProvider) resourceProvider).getRefreshInterval() + EXT_WAIT_TIMES);
-		resourceProvider.setResourceBaseName(SUB_BASE_NAME);
-		assertEquals(OLD_CONTENT, resourceProvider.getString(KEY));
+		assertEquals(OLD_CONTENT, resourceProvider.getObject(SUB_BASE_NAME, locale, KEY, extInfoMap));
 	}
 	
 	public void testReloadParentProperties() throws Exception{
@@ -140,12 +141,12 @@ public class StrandardReloadResourceProviderTester extends TestCase {
 		createResourceFile(ROOT_PROPERTY_FILE, KEY2, OLD_CONTENT);
 		// 子properties
 		createResourceFile(ZH_PROPERTY_FILE, KEY, NEW_CONTENT_1);
-		assertEquals(OLD_CONTENT, resourceProvider.getString(KEY2));
+		assertEquals(OLD_CONTENT, resourceProvider.getObject(BASE_NAME, locale, KEY2, extInfoMap));
 		
 		// 修改父properties
 		createResourceFile(ROOT_PROPERTY_FILE, KEY2, NEW_CONTENT_2);
 		Thread.sleep(((StandardReloadableResourceProvider) resourceProvider).getRefreshInterval() + EXT_WAIT_TIMES);
-		assertEquals(NEW_CONTENT_2, resourceProvider.getString(KEY2));
+		assertEquals(NEW_CONTENT_2, resourceProvider.getObject(BASE_NAME, locale, KEY2, extInfoMap));
 	}
 		
 	private void createResourceFile(String fileName, String key, String content) throws Exception {

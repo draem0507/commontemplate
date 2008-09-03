@@ -1,5 +1,6 @@
 package org.commontemplate.standard.i18n;
 
+import java.util.HashMap;
 import java.util.Locale;
 
 /**
@@ -11,7 +12,9 @@ import java.util.Locale;
 public class ReloadableMessageSource extends MessageSourceSupport {
 
 	private static final long serialVersionUID = 1L;
-
+	
+	private String basename;
+	
 	private ReloadableResourceProvider reloadResourceProvider;
 
 	public String getMessage(Locale locale, String key) throws NoSuchMessageException {
@@ -22,10 +25,8 @@ public class ReloadableMessageSource extends MessageSourceSupport {
 			locale = Locale.getDefault();
 		}
 
-		reloadResourceProvider.setResourceLocale(locale);
-
 		try {
-			String msg = reloadResourceProvider.getString(key);
+			String msg = (String) reloadResourceProvider.getObject(basename, locale, key, new HashMap());
 			if (msg == null)
 				throw new NoSuchMessageException(key, locale);
 			return msg;
@@ -37,6 +38,14 @@ public class ReloadableMessageSource extends MessageSourceSupport {
 	public void setReloadResourceProvider(
 			ReloadableResourceProvider reloadResourceProvider) {
 		this.reloadResourceProvider = reloadResourceProvider;
+	}
+
+	public String getBasename() {
+		return basename;
+	}
+
+	public void setBasename(String basename) {
+		this.basename = basename;
 	}
 
 }
