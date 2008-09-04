@@ -1,5 +1,8 @@
 package org.commontemplate.tools.converter;
 
+import java.io.Reader;
+import java.io.Writer;
+
 /**
  * 将FreeMarker模板转换为CommonTemplate
  *
@@ -8,9 +11,8 @@ package org.commontemplate.tools.converter;
  */
 public class FreeMarkerConverter implements TemplateConverter {
 
-	public String convert(String source) {
+	public void convert(String templateName, Reader reader, Writer writer) throws Exception {
 		// TODO 未实现
-		return source;
 	}
 
 }

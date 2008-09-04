@@ -11,53 +11,60 @@ $!
 											<td>重要性</td>
 										</tr>
 										<tr>
-											<td>实现命令行调试器.</td>
+											<td>完成与AntTask的集成, 可用于代码生成等, 实现:org.commontemplate.tools.ant.TemplateTask</td>
 											<td>需求</td>
+											<td>小</td>
+											<td>低</td>
 											<td>中</td>
-											<td>中</td>
-											<td>高</td>
 										</tr>
 										<tr>
-											<td>服务器以命令行启动时,Swing不可用 (自动适应命令行调试器).</td>
-											<td>优化</td>
+											<td>完成Velocity和FreeMarker的转换为CommonTemplate</td>
+											<td>需求</td>
+											<td>小</td>
+											<td>低</td>
 											<td>中</td>
+										</tr>
+										<tr>
+											<td>实现命令行调试器, 服务器以命令行启动时,Swing不可用 (自动适应命令行调试器).</td>
+											<td>需求</td>
 											<td>中</td>
-											<td>高</td>
+											<td>低</td>
+											<td>中</td>
 										</tr>
 										<tr>
 											<td>实现远程调试器,通过配置服务器IP,端口, TCP连接到服务器进行调试,客户端同样可用Swing或命令行.</td>
 											<td>需求</td>
 											<td>中</td>
+											<td>低</td>
 											<td>中</td>
-											<td>高</td>
-										</tr>
-										<tr>
-											<td>配置文件容错处理, 可设置当类不存在时忽略.</td>
-											<td>优化</td>
-											<td>中</td>
-											<td>中</td>
-											<td>高</td>
 										</tr>
 										<tr>
 											<td>CTE脱离MVC框架运行. codebehind.</td>
-											<td>优化</td>
+											<td>需求</td>
 											<td>中</td>
 											<td>低</td>
 											<td>中</td>
 										</tr>
 										<tr>
 											<td>加入commontemplate-plugin.properties支持, 自动抓取.</td>
-											<td>需求</td>
+											<td>优化</td>
 											<td>小</td>
 											<td>低</td>
 											<td>低</td>
 										</tr>
 										<tr>
 											<td>加入对DOM模型的支持,root,parent,children,ancestors,name,type,namespace.</td>
-											<td>需求</td>
+											<td>优化</td>
 											<td>小</td>
 											<td>中</td>
 											<td>中</td>
+										</tr>
+										<tr>
+											<td>配置文件容错处理, 可设置当类不存在时忽略.</td>
+											<td>优化</td>
+											<td>小</td>
+											<td>中</td>
+											<td>高</td>
 										</tr>
 										<tr>
 											<td>(自动导入)全局宏定义, 全局父模板.</td>
@@ -89,7 +96,7 @@ $!
 										</tr>
 										<tr>
 											<td>扩展属性number.sin, cos, tan, ctan.</td>
-											<td>需求</td>
+											<td>优化</td>
 											<td>小</td>
 											<td>低</td>
 											<td>低</td>
@@ -172,7 +179,7 @@ $!
 											<td>高</td>
 										</tr>
 										<tr>
-											<td>实现外部文件引入List和Map.</td>
+											<td>配置实现外部文件引入List和Map.</td>
 											<td>优化</td>
 											<td>中</td>
 											<td>中</td>
@@ -193,8 +200,7 @@ $!
 											<td>高</td>
 										</tr>
 										<tr>
-											<td>对象存储加一个不分级控制的存储空间. 此存储空间在单一Context内有效(非全局),
-											但不受LocalContext栈的隔离.</td>
+											<td>对象存储加一个不分级控制的存储空间. 此存储空间在单一Context内有效(非全局),但不受LocalContext栈的隔离.</td>
 											<td>优化</td>
 											<td>小</td>
 											<td>中</td>
@@ -209,7 +215,7 @@ $!
 										</tr>
 										<tr>
 											<td>加入对jsp2.1的taglib支持, 主要是EL的转变</td>
-											<td>需求</td>
+											<td>优化</td>
 											<td>中</td>
 											<td>低</td>
 											<td>低</td>
@@ -294,13 +300,6 @@ $!
 											<td>高</td>
 										</tr>
 										<tr>
-											<td>"完成与AntTask的集成, 可用于代码生成等, 实现:org.commontemplate.tools.ant.TemplateTask"</td>
-											<td>需求</td>
-											<td>小</td>
-											<td>低</td>
-											<td>中</td>
-										</tr>
-										<tr>
 											<td>"实现热加载国际化信息:org.commontemplate.standard.i18n.ReloadablePropertiesResourceBundleProvider"</td>
 											<td>需求</td>
 											<td>小</td>
@@ -375,7 +374,7 @@ $!
 											<td>中</td>
 										</tr>
 										<tr>
-											<td>"用多线程(多核CPU)模拟并发获取模板, 测试并发."</td>
+											<td>用多线程(多核CPU)模拟并发获取模板, 测试并发.</td>
 											<td>测试</td>
 											<td>中</td>
 											<td>低</td>

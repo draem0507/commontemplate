@@ -1,8 +1,18 @@
 package org.commontemplate.tools.converter;
 
+import java.io.Reader;
+import java.io.Writer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.velocity.runtime.RuntimeInstance;
+import org.apache.velocity.runtime.RuntimeServices;
+import org.apache.velocity.runtime.parser.Parser;
+import org.apache.velocity.runtime.parser.ParserVisitor;
+import org.apache.velocity.runtime.parser.node.SimpleNode;
+import org.commontemplate.engine.Engine;
+import org.commontemplate.standard.ConfigurationSettings;
+import org.commontemplate.tools.PropertiesConfigurationLoader;
 import org.commontemplate.util.StringUtils;
 
 /**
@@ -12,6 +22,17 @@ import org.commontemplate.util.StringUtils;
  *
  */
 public class VelocityConverter implements TemplateConverter {
+
+	// TODO 未实现完成
+
+	public void convert(String templateName, Reader reader, Writer writer) throws Exception {
+		RuntimeServices runtime = new RuntimeInstance();
+		Parser parser = runtime.createNewParser();
+		SimpleNode node = parser.parse(reader, templateName);
+		ConfigurationSettings config = PropertiesConfigurationLoader.loadStandardConfiguration();
+		ParserVisitor visitor = new VelocityParserVisitor(new Engine(config), templateName, writer);
+		node.childrenAccept(visitor, null);
+	}
 
 	private String[][] replaces = new String[][] {
 			{ "\\#\\#", "\\$#", null },

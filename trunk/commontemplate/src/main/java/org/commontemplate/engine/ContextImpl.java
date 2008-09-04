@@ -15,6 +15,7 @@ import org.commontemplate.core.BlockDirective;
 import org.commontemplate.core.Comment;
 import org.commontemplate.core.Constant;
 import org.commontemplate.core.Context;
+import org.commontemplate.core.ContextFactory;
 import org.commontemplate.core.Directive;
 import org.commontemplate.core.Event;
 import org.commontemplate.core.EventListener;
@@ -48,20 +49,19 @@ final class ContextImpl extends Context {
 
 	private static final long serialVersionUID = 1L;
 
-	ContextImpl(GlobalContext globalContext, Writer out,
-			Locale locale, TimeZone timeZone,
-			TemplateLoader templateFactory, TemplateNameFilter templateNameFilter, OutputFormatter defaultFormater,
-			EventListener eventListener, boolean debug, Keywords keywords) {
-		Assert.assertNotNull(globalContext);
+	ContextImpl(Writer out, Locale locale, TimeZone timeZone,
+			boolean debug, TemplateLoader templateLoader, ContextFactory contextFactory, TemplateNameFilter templateNameFilter,
+			OutputFormatter defaultFormater, EventListener eventListener, Keywords keywords) {
 		Assert.assertNotNull(out);
-		Assert.assertNotNull(templateFactory);
+		Assert.assertNotNull(templateLoader);
+		Assert.assertNotNull(contextFactory);
 		Assert.assertNotNull(keywords);
 
-		this.globalContext = globalContext;
 		this.out = out;
 		this.locale = locale;
 		this.timeZone = timeZone;
-		this.templateFactory = templateFactory;
+		this.templateLoader = templateLoader;
+		this.contextFactory = contextFactory;
 		this.templateNameFilter = templateNameFilter;
 		this.defaultFormater = defaultFormater;
 		this.eventListener = eventListener;
@@ -84,13 +84,7 @@ final class ContextImpl extends Context {
 	private final OutputFormatter defaultFormater;
 
 	public Context createContext() {
-		return new ContextImpl(globalContext, out, locale, timeZone, templateFactory, templateNameFilter, defaultFormater, eventListener, debug, keywords);
-	}
-
-	private final GlobalContext globalContext;
-
-	public GlobalContext getGlobalContext() {
-		return globalContext;
+		return new ContextImpl(out, locale, timeZone, debug, templateLoader, contextFactory, templateNameFilter, defaultFormater, eventListener, keywords);
 	}
 
 	private transient final Writer out;
@@ -235,105 +229,6 @@ final class ContextImpl extends Context {
 	public void pushLocalContext(String name,
 			Map variablesContainer) {
 		localContextStack.pushLocalContext(name, variablesContainer);
-	}
-
-	// 代理 TemplateFactory -----------
-
-	private transient final TemplateLoader templateFactory;
-
-	private String getCurrentTemplateEncoding() {// 获取当前模板编码
-		Template template = this.getCurrentTemplate();
-		if (template != null)
-			return template.getEncoding();
-		return null;
-	}
-
-	public Template getTemplate(String name) throws IOException, ParsingException {
-		String encoding = getCurrentTemplateEncoding();
-		if (encoding != null)
-			return templateFactory.getTemplate(relateTemplateName(name), encoding);
-		else
-			return templateFactory.getTemplate(relateTemplateName(name));
-	}
-
-	public Template getTemplate(String name, String encoding)
-			throws IOException, ParsingException {
-		return templateFactory.getTemplate(relateTemplateName(name), encoding);
-	}
-
-	public Resource loadResource(String name)
-			throws IOException {
-		String encoding = getCurrentTemplateEncoding();
-		if (encoding != null)
-			return templateFactory.loadResource(relateTemplateName(name), encoding);
-		else
-			return templateFactory.loadResource(relateTemplateName(name));
-	}
-
-	public Resource loadResource(String name, String encoding)
-			throws IOException {
-		return templateFactory.loadResource(relateTemplateName(name), encoding);
-	}
-
-	public Expression parseExpression(String expression) throws ParsingException {
-		return templateFactory.parseExpression(expression);
-	}
-
-	public Template parseTemplate(String template) throws ParsingException {
-		return templateFactory.parseTemplate(template);
-	}
-
-	public Template parseTemplate(Resource resource)
-			throws ParsingException, IOException {
-		return templateFactory.parseTemplate(resource);
-	}
-
-	public BlockDirective createBlockDirective(String name,
-			Expression expression, List elements) {
-		return templateFactory.createBlockDirective(name, expression, elements);
-	}
-
-	public Comment createComment(String comment) {
-		return templateFactory.createComment(comment);
-	}
-
-	public Directive createDirective(String name, Expression expression) {
-		return templateFactory.createDirective(name, expression);
-	}
-
-	public Text createText(String text) {
-		return templateFactory.createText(text);
-	}
-
-	public ExpressionBuilder getExpressionBuilder() {
-		return templateFactory.getExpressionBuilder();
-	}
-
-	public TemplateBudiler getTemplateBudiler(String templateName) {
-		return templateFactory.getTemplateBudiler(templateName);
-	}
-
-	public BinaryOperator createBinaryOperator(String operatorName,
-			Expression leftOprand, Expression rightOprand) {
-		return templateFactory.createBinaryOperator(operatorName, leftOprand,
-				rightOprand);
-	}
-
-	public Constant createConstant(Object constantValue) {
-		return templateFactory.createConstant(constantValue);
-	}
-
-	public UnaryOperator createUnaryOperator(String operatorName,
-			Expression oprand) {
-		return templateFactory.createUnaryOperator(operatorName, oprand);
-	}
-
-	public Variable createVariable(String variableName) {
-		return templateFactory.createVariable(variableName);
-	}
-
-	public Template createTemplate(String name, List elements) {
-		return templateFactory.createTemplate(name, elements);
 	}
 
 	// 代理 栈顶的LocalContext --------------
@@ -540,6 +435,123 @@ final class ContextImpl extends Context {
 
 	public Map getProperties() {
 		return getCurrentLocalContext().getProperties();
+	}
+
+	// 代理 Factory -----------
+
+	private transient final TemplateLoader templateLoader;
+
+	private String getCurrentTemplateEncoding() {// 获取当前模板编码
+		Template template = this.getCurrentTemplate();
+		if (template != null)
+			return template.getEncoding();
+		return null;
+	}
+
+	public Template getTemplate(String name) throws IOException, ParsingException {
+		String encoding = getCurrentTemplateEncoding();
+		if (encoding != null)
+			return templateLoader.getTemplate(relateTemplateName(name), encoding);
+		else
+			return templateLoader.getTemplate(relateTemplateName(name));
+	}
+
+	public Template getTemplate(String name, String encoding)
+			throws IOException, ParsingException {
+		return templateLoader.getTemplate(relateTemplateName(name), encoding);
+	}
+
+	public Resource loadResource(String name)
+			throws IOException {
+		String encoding = getCurrentTemplateEncoding();
+		if (encoding != null)
+			return templateLoader.loadResource(relateTemplateName(name), encoding);
+		else
+			return templateLoader.loadResource(relateTemplateName(name));
+	}
+
+	public Resource loadResource(String name, String encoding)
+			throws IOException {
+		return templateLoader.loadResource(relateTemplateName(name), encoding);
+	}
+
+	public Expression parseExpression(String expression) throws ParsingException {
+		return templateLoader.parseExpression(expression);
+	}
+
+	public Template parseTemplate(String template) throws ParsingException {
+		return templateLoader.parseTemplate(template);
+	}
+
+	public Template parseTemplate(Resource resource)
+			throws ParsingException, IOException {
+		return templateLoader.parseTemplate(resource);
+	}
+
+	public BlockDirective createBlockDirective(String name,
+			Expression expression, List elements) {
+		return templateLoader.createBlockDirective(name, expression, elements);
+	}
+
+	public Comment createComment(String comment) {
+		return templateLoader.createComment(comment);
+	}
+
+	public Directive createDirective(String name, Expression expression) {
+		return templateLoader.createDirective(name, expression);
+	}
+
+	public Text createText(String text) {
+		return templateLoader.createText(text);
+	}
+
+	public ExpressionBuilder getExpressionBuilder() {
+		return templateLoader.getExpressionBuilder();
+	}
+
+	public TemplateBudiler getTemplateBudiler(String templateName) {
+		return templateLoader.getTemplateBudiler(templateName);
+	}
+
+	public BinaryOperator createBinaryOperator(String operatorName,
+			Expression leftOprand, Expression rightOprand) {
+		return templateLoader.createBinaryOperator(operatorName, leftOprand,
+				rightOprand);
+	}
+
+	public Constant createConstant(Object constantValue) {
+		return templateLoader.createConstant(constantValue);
+	}
+
+	public UnaryOperator createUnaryOperator(String operatorName,
+			Expression oprand) {
+		return templateLoader.createUnaryOperator(operatorName, oprand);
+	}
+
+	public Variable createVariable(String variableName) {
+		return templateLoader.createVariable(variableName);
+	}
+
+	public Template createTemplate(String name, List elements) {
+		return templateLoader.createTemplate(name, elements);
+	}
+
+	private transient final ContextFactory contextFactory;
+
+	public Context createContext(Writer out, Locale locale, TimeZone timeZone) {
+		return contextFactory.createContext(out, locale, timeZone);
+	}
+
+	public Context createContext(Writer out, Locale locale) {
+		return contextFactory.createContext(out, locale);
+	}
+
+	public Context createContext(Writer out) {
+		return contextFactory.createContext(out);
+	}
+
+	public GlobalContext getGlobalContext() {
+		return contextFactory.getGlobalContext();
 	}
 
 }

@@ -1,0 +1,32 @@
+aaa
+#if ($aaa && $user.allow)
+bbb
+#elseif($bb.allow("xxx") && $dd)
+ccc
+#else
+ddd
+#end
+ooo
+## xxxxxxxx
+#*
+xxxxxxxx
+yyyyyyyy
+*#
+eee
+#foreach ($aaa in $user.allow("xxx"))
+fff
+#end
+ggg
+#stop
+mmm
+#include("xxx.vm")
+nnn
+#parse("xxx.vm")
+kkk
+#macro(button $name)
+hhh
+$xxx.yyy
+iii
+#end
+#button("aa")
+jjj

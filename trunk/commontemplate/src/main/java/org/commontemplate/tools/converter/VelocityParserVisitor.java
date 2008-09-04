@@ -64,182 +64,203 @@ public class VelocityParserVisitor implements ParserVisitor {
 	private void write(Object str) {
 		try {
 			if (str instanceof String)
-				writer.write((String)str + "\n");
+				writer.write((String)str);
 			else
-				writer.write(String.valueOf(str) + "\n");
+				writer.write(String.valueOf(str));
 			writer.flush();
 		} catch (IOException e) {
 			throw new RuntimeException(e.getMessage(), e);
 		}
 	}
 
+	// 控制 ------
+
 	public Object visit(SimpleNode node, Object data) {
-		return doVisit(node, data);
+		return node.childrenAccept(this, data);
 	}
 
 	public Object visit(ASTprocess node, Object data) {
-		return doVisit(node, data);
-	}
-
-	public Object visit(ASTEscapedDirective node, Object data) {
-		return doVisit(node, data);
-	}
-
-	public Object visit(ASTEscape node, Object data) {
-		return doVisit(node, data);
-	}
-
-	public Object visit(ASTComment node, Object data) {
-		return doVisit(node, data);
-	}
-
-	public Object visit(ASTFloatingPointLiteral node, Object data) {
-		return doVisit(node, data);
-	}
-
-	public Object visit(ASTIntegerLiteral node, Object data) {
-		return doVisit(node, data);
-	}
-
-	public Object visit(ASTStringLiteral node, Object data) {
- 		return doVisit(node, data);
-	}
-
-	public Object visit(ASTIdentifier node, Object data) {
-		return doVisit(node, data);
-	}
-
-	public Object visit(ASTWord node, Object data) {
-		return doVisit(node, data);
-	}
-
-	public Object visit(ASTDirective node, Object data) {
-		return doVisit(node, data);
+		return node.childrenAccept(this, data);
 	}
 
 	public Object visit(ASTBlock node, Object data) {
-		return doVisit(node, data);
+		data = node.childrenAccept(this, data);
+		write("$end\n");
+		return data;
 	}
 
-	public Object visit(ASTMap node, Object data) {
-		return doVisit(node, data);
+	// 文本注释块 ----------
+
+	public Object visit(ASTEscapedDirective node, Object data) {
+		write(node.literal());
+		return node.childrenAccept(this, data);
 	}
 
-	public Object visit(ASTObjectArray node, Object data) {
-		return doVisit(node, data);
+	public Object visit(ASTEscape node, Object data) {
+		write("\\");
+		return node.childrenAccept(this, data);
 	}
 
-	public Object visit(ASTIntegerRange node, Object data) {
-		return doVisit(node, data);
-	}
-
-	public Object visit(ASTMethod node, Object data) {
-		return doVisit(node, data);
-	}
-
-	public Object visit(ASTReference node, Object data) {
-		return doVisit(node, data);
-	}
-
-	public Object visit(ASTTrue node, Object data) {
-		return doVisit(node, data);
-	}
-
-	public Object visit(ASTFalse node, Object data) {
-		return doVisit(node, data);
+	public Object visit(ASTComment node, Object data) {
+		write(node.literal());
+		return node.childrenAccept(this, data);
 	}
 
 	public Object visit(ASTText node, Object data) {
-		return doVisit(node, data);
+		write(node.literal());
+		return node.childrenAccept(this, data);
+	}
+
+	// 指令 ----------
+
+	public Object visit(ASTDirective node, Object data) {
+		String name = node.getFirstToken().image;
+		if (name.startsWith("#{") && name.endsWith("}")) {
+			name = name.substring(2, name.length() - 1);
+		} else {
+			name = name.substring(1);
+		}
+		write("$" + name + "{}");
+		return node.childrenAccept(this, data);
 	}
 
 	public Object visit(ASTIfStatement node, Object data) {
-		return doVisit(node, data);
+		write("$if{}");
+		return node.childrenAccept(this, data);
 	}
 
 	public Object visit(ASTElseStatement node, Object data) {
-		return doVisit(node, data);
+		write("$else{}");
+		return node.childrenAccept(this, data);
 	}
 
 	public Object visit(ASTElseIfStatement node, Object data) {
-		return doVisit(node, data);
+		write("$elseif{}");
+		return node.childrenAccept(this, data);
 	}
 
 	public Object visit(ASTSetDirective node, Object data) {
-		return doVisit(node, data);
+		write("$set{}");
+		return node.childrenAccept(this, data);
 	}
 
 	public Object visit(ASTStop node, Object data) {
-		return doVisit(node, data);
+		write("$stop{}");
+		return node.childrenAccept(this, data);
 	}
 
+	//  ------------ 表达式相关 ----------
+
 	public Object visit(ASTExpression node, Object data) {
-		return doVisit(node, data);
+		return data;
 	}
 
 	public Object visit(ASTAssignment node, Object data) {
-		return doVisit(node, data);
+		return data;
 	}
 
 	public Object visit(ASTOrNode node, Object data) {
-		return doVisit(node, data);
+		return data;
 	}
 
 	public Object visit(ASTAndNode node, Object data) {
-		return doVisit(node, data);
+		return data;
 	}
 
 	public Object visit(ASTEQNode node, Object data) {
-		return doVisit(node, data);
+		return data;
 	}
 
 	public Object visit(ASTNENode node, Object data) {
-		return doVisit(node, data);
+		return data;
 	}
 
 	public Object visit(ASTLTNode node, Object data) {
-		return doVisit(node, data);
+		return data;
 	}
 
 	public Object visit(ASTGTNode node, Object data) {
-		return doVisit(node, data);
+		return data;
 	}
 
 	public Object visit(ASTLENode node, Object data) {
-		return doVisit(node, data);
+		return data;
 	}
 
 	public Object visit(ASTGENode node, Object data) {
-		return doVisit(node, data);
+		return data;
 	}
 
 	public Object visit(ASTAddNode node, Object data) {
-		return doVisit(node, data);
+		return data;
 	}
 
 	public Object visit(ASTSubtractNode node, Object data) {
-		return doVisit(node, data);
+		return data;
 	}
 
 	public Object visit(ASTMulNode node, Object data) {
-		return doVisit(node, data);
+		return data;
 	}
 
 	public Object visit(ASTDivNode node, Object data) {
-		return doVisit(node, data);
+		return data;
 	}
 
 	public Object visit(ASTModNode node, Object data) {
-		return doVisit(node, data);
+		return data;
 	}
 
 	public Object visit(ASTNotNode node, Object data) {
-		return doVisit(node, data);
+		return data;
 	}
 
-	private Object doVisit(SimpleNode node, Object data) {
-		write(node.getClass().getName() + ":" + node.literal());
-		return node.childrenAccept(this, data);
+	public Object visit(ASTFloatingPointLiteral node, Object data) {
+		return data;
+	}
+
+	public Object visit(ASTIntegerLiteral node, Object data) {
+		return data;
+	}
+
+	public Object visit(ASTStringLiteral node, Object data) {
+		return data;
+	}
+
+	public Object visit(ASTIdentifier node, Object data) {
+		return data;
+	}
+
+	public Object visit(ASTWord node, Object data) {
+		return data;
+	}
+
+	public Object visit(ASTMap node, Object data) {
+		return data;
+	}
+
+	public Object visit(ASTObjectArray node, Object data) {
+		return data;
+	}
+
+	public Object visit(ASTIntegerRange node, Object data) {
+		return data;
+	}
+
+	public Object visit(ASTMethod node, Object data) {
+		return data;
+	}
+
+	public Object visit(ASTReference node, Object data) {
+		return data;
+	}
+
+	public Object visit(ASTTrue node, Object data) {
+		return data;
+	}
+
+	public Object visit(ASTFalse node, Object data) {
+		return data;
 	}
 
 }

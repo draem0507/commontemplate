@@ -504,4 +504,16 @@ public abstract class ContextProxy extends Context {
 		return context.createTemplate(name, elements);
 	}
 
+	public Context createContext(Writer out, Locale locale, TimeZone timeZone) {
+		return context.createContext(out, locale, timeZone);
+	}
+
+	public Context createContext(Writer out, Locale locale) {
+		return context.createContext(out, locale);
+	}
+
+	public Context createContext(Writer out) {
+		return context.createContext(out);
+	}
+
 }

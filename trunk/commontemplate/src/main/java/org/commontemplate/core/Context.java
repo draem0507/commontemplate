@@ -17,7 +17,7 @@ import java.util.TimeZone;
  */
 public abstract class Context extends LocalContext
 			implements LocalContextStack, TemplateStack,
-			TemplateLoader, EventPublisher, Serializable {
+			Factory, EventPublisher, Serializable {
 
 	/**
 	 * 以当前上下文构造条件重建新的上下文 (共享Writer,不共享数据)
@@ -25,13 +25,6 @@ public abstract class Context extends LocalContext
 	 * @return 新的上下文
 	 */
 	public abstract Context createContext();
-
-	/**
-	 * 获取全局上下文
-	 *
-	 * @return 全局上下文
-	 */
-	public abstract GlobalContext getGlobalContext();
 
 	/**
 	 * 获取当前上下文的输出端.
