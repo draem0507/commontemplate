@@ -98,4 +98,14 @@ public class UnaryOperatorHandlerChain extends UnaryOperatorHandler {
 		this.operandDotNamed = operandDotNamed;
 	}
 
+	private boolean keyword;
+
+	public boolean isKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(boolean keyword) {
+		this.keyword = keyword;
+	}
+
 }

@@ -52,7 +52,7 @@ public final class ExpressionEngine implements ExpressionParser {
 		expressionFactory = new ExpressionFactoryImpl(operatorHandlerProvider, evaluateInterceptors);
 		ExpressionProvider expressionProvider = new ExpressionProvider(
 				operatorHandlerProvider, evaluateInterceptors,
-				config.getKeywords(), config.isFunctionAvailable());
+				config.getKeywords());
 		expressionTranslator = new ExpressionTranslator(expressionFactory, expressionProvider, config.isFunctionAvailable());
 		expressionReducer = new ExpressionReducer(evaluateInterceptors);
 		expressionOptimizer = new ExpressionOptimizer(evaluateInterceptors);

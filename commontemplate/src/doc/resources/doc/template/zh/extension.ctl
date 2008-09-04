@@ -237,8 +237,11 @@ $!
 								相关标识：BinaryOperatorHandler.isRightOperandFunctioned(), UnaryOperatorHandler.isOperandFunctioned()<br/>
 								关于函数：<br/>
 								函数其实就是非符号(与变量名规则相同)的一元操作符，注册及使用方式与一元操作符一致，<br/>
-								非符号一元操作符的操作数必需有括号，否则将视为变量，<br/>
-								如：已注册了“abs”一元操作符，则必需用abs(operand)， 而不能用abs operand，否则在复杂表达式中与变量引起歧义，<br/>
+								非符号一元操作符UnaryOperatorHandler.isKeyword()的返回值：<br/>
+								为true时，该操作符名称将不可作为变量名。<br/>
+								为false时，操作符的操作数必需有括号，否则将视为变量。<br/>
+								如：注册“abs”一元操作符，则必需用abs(operand)， 而不能用abs operand，否则在复杂表达式中与变量引起歧义，<br/>
+								如果abs的isKeyword()为true, 则可以用abs operand, 但abs将不能再作为变量名。<br/>
 								对比：符号一元操作符“!”，可以用“! operand”，也可以用“!(operand)”<br/>
 								<br/>
 								<a name="property"/><b>16. 属性扩展</b><br/>

@@ -28,6 +28,8 @@ $!
 								this 代表当前LocalContext<br/>
 								super 代表上级LocalContext<br/>
 								context 代表当前Context<br/>
+								<b>5. 操作符关键字： <font color="green">(注：不可以作为变量名)</font></b>
+								new 一元操作符(优先于变量)<br/>
 								<br/>
 								<b>三. 标准操作符:</b> <a href="extension.html#operator">扩展...</a><br/>
 								<b>(1) 对象(Object)：</b><br/>
@@ -300,6 +302,10 @@ $!
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.8.3加入，0.8.5废弃<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>用动态操作符实现不转义字符串有BUG，并且不希望特殊化@操作符<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>改用反单引号实现不转义字符串<br/>
+								(3) $ 一元操作符<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.8.3加入，0.8.7废弃<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>创建类实例操作符，保持与Java一致，改为"new"，并设为键字<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>new<br/>
 								<br/>
 !$
 	<!--$end-->

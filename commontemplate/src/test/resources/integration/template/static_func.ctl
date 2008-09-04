@@ -1,7 +1,7 @@
-${$integration.User}
-${$integration.User()}
-${$integration.User(name:"oooo")}
-${$integration.User(name:"oooo",email:"oooo@oooo.com")}
+${new integration.User}
+${new integration.User()}
+${new integration.User(name:"oooo")}
+${new integration.User(name:"oooo",email:"oooo@oooo.com")}
 ${&integration.User.test}
 ${&integration.User.getTest()}
 ${&integration.User.getTest2("xxx")}

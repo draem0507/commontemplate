@@ -22,8 +22,7 @@ public class ExpressionTranslatorTester extends TestCase {
 				new ExpressionFactoryImpl(config.getOperatorHandlerProvider(),
 						config.getEvaluateInterceptors()),
 				new ExpressionProvider(config.getOperatorHandlerProvider(),
-						config.getEvaluateInterceptors(), config.getKeywords(),
-						config.isFunctionAvailable()), false);
+						config.getEvaluateInterceptors(), config.getKeywords()), false);
 	}
 
 	public void testExpression() throws ParsingException {
