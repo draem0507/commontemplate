@@ -1,8 +1,28 @@
 package org.commontemplate.tools.converter;
 
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.io.Writer;
+
 import junit.framework.TestCase;
 
 public class VelocityConverterTester extends TestCase {
+
+	public static void main(String[] args) {
+		try {
+			TemplateConverter templateConverter = new VelocityConverter();
+			Writer writer = new OutputStreamWriter(System.out);
+			String templateName = "org/commontemplate/tools/converter/velocity.vm";
+			Reader reader = new InputStreamReader(TemplateConverterExecute.class.getClassLoader().getResourceAsStream(templateName));
+			templateConverter.convert(templateName, reader, writer);
+			writer.flush();
+			writer.close();
+			reader.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	private VelocityConverter velocityConverter = new VelocityConverter();
 

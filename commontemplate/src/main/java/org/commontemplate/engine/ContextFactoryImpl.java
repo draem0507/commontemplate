@@ -72,8 +72,8 @@ final class ContextFactoryImpl implements ContextFactory {
 	}
 
 	public Context createContext(Writer out, Locale locale, TimeZone timeZone) {
-		Context context = new ContextImpl(globalContext, out, locale,
-				timeZone, templateLoader, templateNameFilter, defaultFormater, eventListener, debugMode, keywords);
+		Context context = new ContextImpl(out, locale,
+				timeZone, debugMode, templateLoader, this, templateNameFilter, defaultFormater, eventListener, keywords);
 		if (contextInitializer != null)
 			contextInitializer.initialize(context);
 		return context;
