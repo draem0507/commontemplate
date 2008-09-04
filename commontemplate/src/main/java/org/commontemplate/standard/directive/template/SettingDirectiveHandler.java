@@ -2,7 +2,6 @@ package org.commontemplate.standard.directive.template;
 
 import java.util.Date;
 import java.util.Iterator;
-import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.Map.Entry;
@@ -16,6 +15,7 @@ import org.commontemplate.standard.format.DateFormatter;
 import org.commontemplate.standard.format.NullFormatter;
 import org.commontemplate.standard.format.NumberFormatter;
 import org.commontemplate.util.Assert;
+import org.commontemplate.util.LocaleUtils;
 
 public class SettingDirectiveHandler extends DirectiveHandler {
 
@@ -44,7 +44,7 @@ public class SettingDirectiveHandler extends DirectiveHandler {
 		if ("debug".equals(entry.getKey())) {
 			context.setDebug(((Boolean)entry.getValue()).booleanValue());
 		} else if ("locale".equals(entry.getKey())) {
-			context.setLocale(new Locale(String.valueOf(entry.getValue())));
+			context.setLocale(LocaleUtils.getLocale(String.valueOf(entry.getValue())));
 		} else if ("timeZone".equals(entry.getKey())) {
 			context.setTimeZone(TimeZone.getTimeZone(String.valueOf(entry.getValue())));
 		} else if ("dateFormat".equals(entry.getKey())) {
