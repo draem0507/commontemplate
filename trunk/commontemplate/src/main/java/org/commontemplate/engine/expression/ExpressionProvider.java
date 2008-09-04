@@ -2,8 +2,10 @@ package org.commontemplate.engine.expression;
 
 import java.util.List;
 
+import org.commontemplate.config.BinaryOperatorHandler;
 import org.commontemplate.config.Keywords;
 import org.commontemplate.config.OperatorHandlerProvider;
+import org.commontemplate.config.UnaryOperatorHandler;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.ParsingException;
 import org.commontemplate.util.Infinitude;
@@ -24,34 +26,31 @@ final class ExpressionProvider {
 
 	private final Keywords keywords;
 
-	private final boolean functionAvailable;
-
 	private final List evaluateInterceptors;
 
-	ExpressionProvider(OperatorHandlerProvider operatorHandlerProvider, List evaluateInterceptors, Keywords keywords, boolean functionAvailable) {
+	ExpressionProvider(OperatorHandlerProvider operatorHandlerProvider, List evaluateInterceptors, Keywords keywords) {
 		this.operatorHandlerProvider = operatorHandlerProvider;
 		this.evaluateInterceptors = evaluateInterceptors;
 		this.keywords = keywords;
-		this.functionAvailable = functionAvailable;
 	}
 
 	boolean hasUnaryExpression(String name) {
 		if (Infinitude.SYMBOL.equals(name))
 			return true;
-		return operatorHandlerProvider.hasUnaryOperatorHandler(name.trim());
+		return operatorHandlerProvider.getUnaryOperatorHandler(name.trim()) != null;
 	}
 
 	boolean hasBinaryExpression(String name) {
-		return operatorHandlerProvider.hasBinaryOperatorHandler(name.trim());
-	}
-
-	Expression getUnaryExpression(Token token) throws ParsingException {
-		return getUnaryExpression(token, false);
+		return operatorHandlerProvider.getBinaryOperatorHandler(name.trim()) != null;
 	}
 
 	Expression getFunctionExpression(Token token) throws ParsingException {
 		String name = token.getMessage().trim();
 		return new UnaryOperatorImpl(name, token.getLocation(), Integer.MAX_VALUE, new FunctionUnaryOperatorHandler(name), evaluateInterceptors);
+	}
+
+	Expression getUnaryExpression(Token token) throws ParsingException {
+		return getUnaryExpression(token, false);
 	}
 
 	Expression getUnaryExpression(Token token, boolean isFunction) throws ParsingException {
@@ -73,37 +72,39 @@ final class ExpressionProvider {
 		if (keywords.getTrueKeyword().equals(name)) return new ConstantImpl(Boolean.TRUE, token.getLocation(), evaluateInterceptors);
 		if (keywords.getFalseKeyword().equals(name)) return new ConstantImpl(Boolean.FALSE, token.getLocation(), evaluateInterceptors);
 		if (Infinitude.SYMBOL.equals(name)) return new ConstantImpl(Infinitude.POSITIVE, token.getLocation(), evaluateInterceptors);
+
+		// 括号
 		if ("(".equals(name)) return Parenthesis.LEFT_PARENTHESIS;
 
-		// 名称
-		if (TypeUtils.isNamed(name)) {
-			if (! isFunction)
-				return new VariableImpl(name, token.getLocation(), evaluateInterceptors);
+		UnaryOperatorHandler unaryOperatorHandler = operatorHandlerProvider.getUnaryOperatorHandler(name);
 
-			if (! functionAvailable)
-				throw new ParsingException(token.getLocation(), "ExpressionFactory.function.forbidden", new Object[]{name});
+		// 名称
+		if (TypeUtils.isNamed(name) && ! isFunction) {
+			if (unaryOperatorHandler == null || ! unaryOperatorHandler.isKeyword())
+				return new VariableImpl(name, token.getLocation(), evaluateInterceptors);
 		}
 
 		// 一元操作符
-		if (operatorHandlerProvider.hasUnaryOperatorHandler(name))
+		if (unaryOperatorHandler != null)
 			return new UnaryOperatorImpl(name, token.getLocation(),
 					operatorHandlerProvider.getUnaryOperatorPriority(name),
-					operatorHandlerProvider.getUnaryOperatorHandler(name), evaluateInterceptors);
+					unaryOperatorHandler, evaluateInterceptors);
 
 		throw new ParsingException(token.getLocation(), "ExpressionFactory.invaild.unary.operator.name", new Object[]{name});
 	}
 
 	Expression getBinaryExpression(Token token) throws ParsingException {
 		String name = token.getMessage().trim();
-		// 关键字
+		// 括号
 		if (")".equals(name) || "]".equals(name))
 			return Parenthesis.RIGHT_PARENTHESIS;
 
 		// 二元操作符
-		if (operatorHandlerProvider.hasBinaryOperatorHandler(name))
+		BinaryOperatorHandler binaryOperatorHandler = operatorHandlerProvider.getBinaryOperatorHandler(name);
+		if (binaryOperatorHandler != null)
 			return new BinaryOperatorImpl(name, token.getLocation(),
 					operatorHandlerProvider.getBinaryOperatorPriority(name),
-					operatorHandlerProvider.getBinaryOperatorHandler(name), evaluateInterceptors);
+					binaryOperatorHandler, evaluateInterceptors);
 
 		throw new ParsingException(token.getLocation(), "ExpressionFactory.invaild.binary.operator.name", new Object[]{name});
 	}

@@ -31,7 +31,7 @@ public class ExpressionReducerTester extends TestCase {
 
 		expressionTokenizer = new ExpressionTokenizer();
 		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		ExpressionProvider expressionProvider = new ExpressionProvider(config.getOperatorHandlerProvider(), config.getEvaluateInterceptors(), config.getKeywords(), config.isFunctionAvailable());
+		ExpressionProvider expressionProvider = new ExpressionProvider(config.getOperatorHandlerProvider(), config.getEvaluateInterceptors(), config.getKeywords());
 		expressionTranslator = new ExpressionTranslator(new ExpressionFactoryImpl(config.getOperatorHandlerProvider(),
 				config.getEvaluateInterceptors()), expressionProvider, config.isFunctionAvailable());
 		expressionReducer = new ExpressionReducer(config.getEvaluateInterceptors());

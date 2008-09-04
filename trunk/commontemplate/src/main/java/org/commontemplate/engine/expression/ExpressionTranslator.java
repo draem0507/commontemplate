@@ -78,19 +78,25 @@ final class ExpressionTranslator {
 			// 处理函数
 			boolean isFunction = TypeUtils.isNamed(token.getMessage().trim())
 						&& i + 1 < n && "(".equals(((Token)tokens.get(i + 1)).getMessage().trim());
-			if (isFunction && expressions.size() > 0) {
-				Expression prev = (Expression)expressions.get(expressions.size() - 1);
-				if (prev instanceof BinaryOperatorImpl) {
-					BinaryOperatorImpl prevOperator = (BinaryOperatorImpl)prev;
-					if (prevOperator.isRightOperandFunctioned()) {
-						appendFunction(expressions, token);
-						continue;
-					}
-				} else if (prev instanceof UnaryOperatorImpl) {
-					UnaryOperatorImpl prevOperator = (UnaryOperatorImpl)prev;
-					if (prevOperator.isOperandFunctioned()) {
-						appendFunction(expressions, token);
-						continue;
+			if (isFunction) {
+				if (! functionAvailable)
+					throw new ParsingException(token.getLocation(), "" +
+							"ExpressionFactory.function.forbidden",
+							new Object[]{token.getMessage().trim()});
+				if (expressions.size() > 0) {
+					Expression prev = (Expression)expressions.get(expressions.size() - 1);
+					if (prev instanceof BinaryOperatorImpl) {
+						BinaryOperatorImpl prevOperator = (BinaryOperatorImpl)prev;
+						if (prevOperator.isRightOperandFunctioned()) {
+							appendFunction(expressions, token);
+							continue;
+						}
+					} else if (prev instanceof UnaryOperatorImpl) {
+						UnaryOperatorImpl prevOperator = (UnaryOperatorImpl)prev;
+						if (prevOperator.isOperandFunctioned()) {
+							appendFunction(expressions, token);
+							continue;
+						}
 					}
 				}
 			}
@@ -130,7 +136,7 @@ final class ExpressionTranslator {
 	}
 
 	// 将name所对应的表达式添加到表达式列表中
-	private void appendExpression(final List expressions, final Token token, final boolean isFunction) throws ParsingException {
+	private void appendExpression(final List expressions, final Token token, boolean isFunction) throws ParsingException {
 		Expression beforeExpression = null;
 		if (expressions.size() > 0)
 			beforeExpression = (Expression)expressions.get(expressions.size() - 1);

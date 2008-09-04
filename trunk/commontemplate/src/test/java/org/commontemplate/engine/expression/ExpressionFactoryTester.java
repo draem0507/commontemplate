@@ -17,7 +17,7 @@ public class ExpressionFactoryTester extends TestCase {
 
 	public void setUp() {
 		Configuration config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		expressionFactory = new ExpressionProvider(config.getOperatorHandlerProvider(), config.getEvaluateInterceptors(), config.getKeywords(), config.isFunctionAvailable());
+		expressionFactory = new ExpressionProvider(config.getOperatorHandlerProvider(), config.getEvaluateInterceptors(), config.getKeywords());
 	}
 
 	public void testNumberExpression() throws ParsingException {

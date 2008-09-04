@@ -64,4 +64,13 @@ public abstract class UnaryOperatorHandler implements Serializable {
 		return false;
 	}
 
+	/**
+	 * 名称一元操作符是否为关键字
+	 *
+	 * @return 是否为关键字
+	 */
+	public boolean isKeyword() {
+		return false;
+	}
+
 }
