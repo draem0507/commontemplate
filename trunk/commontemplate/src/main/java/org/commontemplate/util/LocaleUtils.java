@@ -9,17 +9,17 @@ import java.util.TimeZone;
 
 /**
  * 地区信息工具类
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
 public final class LocaleUtils {
-	
+
 	private LocaleUtils() {}
-	
+
 	/**
 	 * 获取本地区域
-	 * 
+	 *
 	 * @return 本地区域
 	 */
 	public static Locale getNativeLocale() {
@@ -28,7 +28,7 @@ public final class LocaleUtils {
 
 	/**
 	 * 获取本地编码信息
-	 * 
+	 *
 	 * @return 本地编码信息
 	 */
 	public static String getNativeEncoding() {
@@ -42,7 +42,7 @@ public final class LocaleUtils {
 
 	/**
 	 * 获取指定地区的默认编码
-	 * 
+	 *
 	 * @param locale 地区
 	 * @return 指定地区的默认编码
 	 */
@@ -58,10 +58,10 @@ public final class LocaleUtils {
 			return defaultEncoding;
 		return FINAL_DEFAULT_ENCODING;
 	}
-	
+
 	/**
 	 * 获取本地时区信息
-	 * 
+	 *
 	 * @return 本地时区信息
 	 */
 	public static TimeZone getNativeTimeZone() {
@@ -73,7 +73,7 @@ public final class LocaleUtils {
 
 	/**
 	 * 获取指定地区的默认时区(以首都为准)
-	 * 
+	 *
 	 * @param locale 地区
 	 * @return 指定地区的默认时区(以首都为准)
 	 */
@@ -89,7 +89,7 @@ public final class LocaleUtils {
 			return TimeZone.getDefault();
 		return TimeZone.getTimeZone(defaultTimeZoneId);
 	}
-	
+
 	// 从配置中搜取相应地区值
 	private static String searchValue(Properties prop, Locale locale) {
 		String value = (String) prop.get(locale.getLanguage());
@@ -97,43 +97,59 @@ public final class LocaleUtils {
 			value = (String) prop.get(locale.getLanguage() + "_" + locale.getCountry());
 		return value;
 	}
-	
+
 	/**
 	 * 获取本地流通货币信息
-	 * 
+	 *
 	 * @return 本地流通货币信息
 	 */
 	public static Currency getNativeCurrency() {
 		return getDefaultCurrency(getNativeLocale());
 	}
-	
+
 	/**
 	 * 获取指定地区的默认流通货币信息
-	 * 
+	 *
 	 * @param locale 地区
 	 * @return 流通货币信息
 	 */
 	public static Currency getDefaultCurrency(Locale locale) {
 		return Currency.getInstance(locale);
 	}
-	
+
 	/**
 	 * 获取本地校对机信息
-	 * 
+	 *
 	 * @return 本地校对机信息
 	 */
 	public static Collator getNativeCollator() {
 		return getDefaultCollator(getNativeLocale());
 	}
-	
+
 	/**
 	 * 获取指定地区的默认校对机信息
-	 * 
+	 *
 	 * @param locale 地区
 	 * @return 校对机信息
 	 */
 	public static Collator getDefaultCollator(Locale locale) {
 		return Collator.getInstance(locale);
+	}
+
+	public static Locale getLocale(String localeString) {
+		if (localeString != null) {
+			String[] tokens = localeString.split("_");
+			if (tokens != null) {
+				if (tokens.length >= 3) {
+					return new Locale(tokens[0], tokens[1], tokens[2]);
+				} else if (tokens.length >= 2) {
+					return new Locale(tokens[0], tokens[1]);
+				} else if (tokens.length >= 1) {
+					return new Locale(tokens[0]);
+				}
+			}
+		}
+		return Locale.getDefault();
 	}
 
 }
