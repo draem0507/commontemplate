@@ -10,12 +10,6 @@ import java.util.List;
  */
 public abstract class BlockDirective extends Directive {
 
-	public static final String TYPE = "BlockDirective";
-
-	public String getType() {
-		return TYPE;
-	}
-
 	/**
 	 * 获取块内部元素
 	 *

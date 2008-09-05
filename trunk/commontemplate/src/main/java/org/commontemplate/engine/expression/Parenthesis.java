@@ -1,6 +1,5 @@
 package org.commontemplate.engine.expression;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.commontemplate.core.EvaluationException;
@@ -50,7 +49,7 @@ final class Parenthesis extends Operator {
 		return name;
 	}
 
-	public String getSource() throws IOException {
+	public String getSource() {
 		return name;
 	}
 

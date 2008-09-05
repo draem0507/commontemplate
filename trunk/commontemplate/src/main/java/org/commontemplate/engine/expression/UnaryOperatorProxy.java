@@ -1,6 +1,5 @@
 package org.commontemplate.engine.expression;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.commontemplate.core.EvaluationException;
@@ -62,12 +61,8 @@ final class UnaryOperatorProxy extends UnaryOperator {
 		return unaryOperator.getPriority();
 	}
 
-	public String getSource() throws IOException {
+	public String getSource() {
 		return unaryOperator.getSource();
-	}
-
-	public String getType() {
-		return unaryOperator.getType();
 	}
 
 	public int hashCode() {

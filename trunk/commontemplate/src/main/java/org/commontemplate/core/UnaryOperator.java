@@ -8,12 +8,6 @@ package org.commontemplate.core;
  */
 public abstract class UnaryOperator extends Operator {
 
-	public static final String TYPE = "UnaryOperator";
-
-	public String getType() {
-		return TYPE;
-	}
-
 	/**
 	 * 获取参数
 	 *

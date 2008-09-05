@@ -1,6 +1,5 @@
 package org.commontemplate.standard.debug;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
@@ -98,12 +97,7 @@ public class DebugInterceptor implements RenderInterceptor, Serializable {
 	// 判断模板位置是否为处于断点
 	private boolean isBreakpoint(String templateName, Element element) {
 		Location location = element.getLocation();
-		String src = null;
-		try {
-			src = element.getSource();
-		} catch (IOException e) {
-			// ignore
-		}
+		String src = element.getSource();
 		final DebugManager debugManager = DebugManager.getInstance();
 		final Collection breakpoints = debugManager.getBreakpoints();
 		for (Iterator iterator = breakpoints.iterator(); iterator.hasNext();) {

@@ -1,6 +1,5 @@
 package org.commontemplate.engine.template;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.commontemplate.core.Comment;
@@ -51,7 +50,7 @@ final class CommentImpl extends Comment {
 		// DO NOTHING
 	}
 
-	public String getSource() throws IOException {
+	public String getSource() {
 		return prototype;
 	}
 

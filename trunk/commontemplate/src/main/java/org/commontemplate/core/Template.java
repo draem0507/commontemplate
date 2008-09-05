@@ -13,20 +13,7 @@ import java.util.List;
  * @author liangfei0201@163.com
  *
  */
-public abstract class Template extends Resource implements Node, Serializable {
-
-	public static final String TYPE = "Template";
-
-	public String getType() {
-		return TYPE;
-	}
-
-	/**
-	 * 获取模板组成元素
-	 *
-	 * @return 模板组成元素, 类型: List&lt;Element&gt;
-	 */
-	public abstract List getElements();
+public abstract class Template extends Resource implements Serializable {
 
 	/**
 	 * 模板元素渲染接口
@@ -55,5 +42,12 @@ public abstract class Template extends Resource implements Node, Serializable {
 	 * @param isEnter 是否为入口, 在入口处忽略StopVisitException
 	 */
 	public abstract void accept(TemplateVisitor visitor, boolean isEnter);
+
+	/**
+	 * 获取模板组成元素
+	 *
+	 * @return 模板组成元素, 类型: List&lt;Element&gt;
+	 */
+	public abstract List getElements();
 
 }

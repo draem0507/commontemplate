@@ -8,12 +8,6 @@ package org.commontemplate.core;
  */
 public abstract class Constant extends Parameter {
 
-	public static final String TYPE = "Constant";
-
-	public String getType() {
-		return TYPE;
-	}
-
 	/**
 	 * 获取常量值
 	 *

@@ -58,7 +58,7 @@ public class MockDirective extends Directive {
 	 *
 	 * @return 模板元素的标准组成
 	 */
-	public String getSource() throws IOException {
+	public String getSource() {
 		return null;
 	}
 
@@ -68,11 +68,7 @@ public class MockDirective extends Directive {
 	 * @return 模板元素的标准组成
 	 */
 	public String toString() {
-		try {
-			return getSource();
-		} catch (IOException e) {
-			return "ERROR:" + e.getMessage();
-		}
+		return getSource();
 	}
 
 	/**

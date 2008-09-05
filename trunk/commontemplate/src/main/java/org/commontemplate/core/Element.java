@@ -1,6 +1,5 @@
 package org.commontemplate.core;
 
-import java.io.IOException;
 import java.io.Serializable;
 
 import org.commontemplate.util.Location;
@@ -11,7 +10,7 @@ import org.commontemplate.util.Location;
  * @author liangfei0201@163.com
  *
  */
-public abstract class Element implements Node, Serializable {
+public abstract class Element implements Serializable {
 
 	/**
 	 * 模板元素渲染接口
@@ -21,20 +20,6 @@ public abstract class Element implements Node, Serializable {
 	 * @throws RenderingException 模板元素渲染出错时抛出
 	 */
 	public abstract void render(Context context) throws RenderingException;
-
-	/**
-	 * 获取元素所属模板
-	 *
-	 * @return 模板
-	 */
-	public abstract Template getTemplate();
-
-	/**
-	 * 获取模板元素在模板中的位置
-	 *
-	 * @return 元素在模板中的位置
-	 */
-	public abstract Location getLocation();
 
 	/**
 	 * 接收访问者, 并带领访问者遍历整个树
@@ -56,16 +41,40 @@ public abstract class Element implements Node, Serializable {
 	public abstract void accept(TemplateVisitor visitor, boolean isEnter);
 
 	/**
+	 * 获取模板元素名称
+	 *
+	 * @return 模板元素名称
+	 */
+	public abstract String getName();
+
+	/**
+	 * 获取模板元素的标准组成
+	 *
+	 * @return 模板元素的标准组成
+	 */
+	public abstract String getSource();
+
+	/**
+	 * 获取元素所属模板
+	 *
+	 * @return 模板
+	 */
+	public abstract Template getTemplate();
+
+	/**
+	 * 获取模板元素在模板中的位置
+	 *
+	 * @return 元素在模板中的位置
+	 */
+	public abstract Location getLocation();
+
+	/**
 	 * 返回模板元素的标准组成, 同getCanonicalForm()
 	 *
 	 * @return 模板元素的标准组成
 	 */
 	public String toString() {
-		try {
-			return getSource();
-		} catch (IOException e) {
-			return "ERROR:" + e.getMessage();
-		}
+		return getSource();
 	}
 
 }

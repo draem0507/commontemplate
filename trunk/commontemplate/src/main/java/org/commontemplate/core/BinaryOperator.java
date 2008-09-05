@@ -8,12 +8,6 @@ package org.commontemplate.core;
  */
 public abstract class BinaryOperator extends Operator {
 
-	public static final String TYPE = "BinaryOperator";
-
-	public String getType() {
-		return TYPE;
-	}
-
 	/**
 	 * 获取左参数
 	 *

@@ -1,6 +1,5 @@
 package org.commontemplate.engine.expression;
 
-import java.io.IOException;
 
 import org.commontemplate.core.EvaluationException;
 import org.commontemplate.core.ExpressionVisitor;
@@ -48,12 +47,8 @@ final class VariableProxy extends Variable {
 		return variable.getName();
 	}
 
-	public String getSource() throws IOException {
+	public String getSource() {
 		return variable.getSource();
-	}
-
-	public String getType() {
-		return variable.getType();
 	}
 
 	public int hashCode() {

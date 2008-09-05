@@ -58,7 +58,7 @@ final class TextImpl extends Text {
 		return name;
 	}
 
-	public String getSource() throws IOException {
+	public String getSource() {
 		return getValue();
 	}
 

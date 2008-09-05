@@ -1,6 +1,5 @@
 package org.commontemplate.engine.expression;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -116,7 +115,7 @@ final class UnaryOperatorImpl extends UnaryOperator {
 		return operands;
 	}
 
-	public String getSource() throws IOException {
+	public String getSource() {
 		return getName() + " " + getOperand().getSource();
 	}
 

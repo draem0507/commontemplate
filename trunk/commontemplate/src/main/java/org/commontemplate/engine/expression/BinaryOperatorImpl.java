@@ -1,6 +1,5 @@
 package org.commontemplate.engine.expression;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -140,7 +139,7 @@ final class BinaryOperatorImpl extends BinaryOperator {
 		return rightOperandFunctioned;
 	}
 
-	public String getSource() throws IOException {
+	public String getSource() {
 		Expression left = getLeftOperand();
 		String leftPrototype = left.getSource();
 		if (left instanceof BinaryOperator && ((BinaryOperator)left).getPriority() < getPriority()) {

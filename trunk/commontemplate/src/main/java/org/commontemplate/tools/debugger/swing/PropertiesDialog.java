@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -16,8 +15,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import org.commontemplate.core.BlockDirective;
+import org.commontemplate.core.Comment;
+import org.commontemplate.core.Directive;
 import org.commontemplate.core.Element;
 import org.commontemplate.core.Template;
+import org.commontemplate.core.Text;
 import org.commontemplate.tools.swing.MenuTextField;
 
 public class PropertiesDialog extends JDialog {
@@ -150,12 +153,8 @@ public class PropertiesDialog extends JDialog {
 		}
 		if (element != null) {
 			txtElementName.setText(element.getName());
-			txtElementType.setText(element.getType());
-			try {
-				txtElementSource.setText(escapeElementSource(element.getSource()));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			txtElementType.setText(getElementType(element));
+			txtElementSource.setText(escapeElementSource(element.getSource()));
 			txtElementLocation.setText(String.valueOf(element.getLocation()));
 		} else {
 			txtElementName.setText("");
@@ -167,6 +166,18 @@ public class PropertiesDialog extends JDialog {
 		Dimension fra = this.getSize();
 		this.setLocation((scr.width - fra.width) / 2, (scr.height - fra.height) / 2);// 在屏幕居中显示
 		this.setVisible(true);
+	}
+
+	private String getElementType(Element element) {
+		if (element instanceof Text)
+			return "Text";
+		if (element instanceof Comment)
+			return "Comment";
+		if (element instanceof BlockDirective)
+			return "BlockDirective";
+		if (element instanceof Directive)
+			return "Directive";
+		return "Unkown";
 	}
 
 	private String escapeElementSource(String elementSource) {
