@@ -1,6 +1,7 @@
 package org.commontemplate.standard.i18n;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.lang.ref.SoftReference;
 import java.net.URL;
 import java.util.Locale;
@@ -15,7 +16,9 @@ import sun.misc.SoftCache;
  * @author YanRong
  * @see ReloadableResourceProvider
  */
-public class StandardReloadableResourceProvider implements ReloadableResourceProvider {
+public class StandardReloadableResourceProvider implements ReloadableResourceProvider, Serializable {
+	
+	private static final long serialVersionUID = -7692930294944755410L;
 
 	/** initial size of the bundle cache */
     private static final int INITIAL_CACHE_SIZE = 25;
