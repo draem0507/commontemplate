@@ -54,4 +54,13 @@ public class UserInfo {
 
 		return "hello man " + i;
 	}
+	
+	public boolean equals(Object obj) {
+		if(obj==null)
+			return false;
+		if(obj instanceof UserInfo){
+			return userName.equals(((UserInfo)obj).getUserName()) && userAge==((UserInfo)obj).getUserAge();
+		}
+		return super.equals(obj);
+	}
 }

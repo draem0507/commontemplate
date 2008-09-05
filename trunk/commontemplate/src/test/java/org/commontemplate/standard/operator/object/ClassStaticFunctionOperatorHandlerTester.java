@@ -30,6 +30,16 @@ public class ClassStaticFunctionOperatorHandlerTester extends UnaryOperatorHandl
 	public void testDoEvaluate() throws Exception{
 
 		assertEvaluation(new Function(UserInfo.class.getName() + ".getCountry", new ArrayList()), UserInfo.getCountry());
+		assertEvaluation(new Function(UserInfo.class.getName() + ".getCountry.toLowerCase", new ArrayList()), UserInfo.getCountry().toLowerCase());
+		ArrayList args = new ArrayList();
+		args.add(new Integer(1));
+		args.add(new Integer(3));
+		assertEvaluation(new Function(UserInfo.class.getName() + ".getCountry.toLowerCase.substring", args), UserInfo.getCountry().toLowerCase().substring(1,3));
+		args.clear();
+		args.add("Jason Green");
+		args.add(new Integer(1));
+		assertEvaluation(new Function(UserInfo.class.getName(),args), new UserInfo("Jason Green",1));
+	
 	}
 
 }
