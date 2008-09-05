@@ -53,10 +53,12 @@ public class StrandardReloadResourceProviderTester extends TestCase {
 	 */
 	public void testReloadFail() throws Exception{
 		
-		createResourceFile(ZH_PROPERTY_FILE, KEY, OLD_CONTENT);		
+		createResourceFile(ZH_PROPERTY_FILE, KEY2, OLD_CONTENT);
+		
+		createResourceFile(ROOT_PROPERTY_FILE, KEY, OLD_CONTENT);		
 		assertEquals(OLD_CONTENT, resourceProvider.getObject(BASE_NAME, locale, KEY, extInfoMap));
 		
-		createResourceFile(ZH_PROPERTY_FILE, KEY, NEW_CONTENT_1);
+		createResourceFile(ROOT_PROPERTY_FILE, KEY, NEW_CONTENT_1);
 		assertEquals(OLD_CONTENT, resourceProvider.getObject(BASE_NAME, locale, KEY, extInfoMap));
 	}
 	
@@ -145,7 +147,7 @@ public class StrandardReloadResourceProviderTester extends TestCase {
 		
 		// 修改父properties
 		createResourceFile(ROOT_PROPERTY_FILE, KEY2, NEW_CONTENT_2);
-		Thread.sleep(((StandardReloadableResourceProvider) resourceProvider).getRefreshInterval() + EXT_WAIT_TIMES);
+		Thread.sleep(((StandardReloadableResourceProvider) resourceProvider).getRefreshInterval() + EXT_WAIT_TIMES + 2000);
 		assertEquals(NEW_CONTENT_2, resourceProvider.getObject(BASE_NAME, locale, KEY2, extInfoMap));
 	}
 		

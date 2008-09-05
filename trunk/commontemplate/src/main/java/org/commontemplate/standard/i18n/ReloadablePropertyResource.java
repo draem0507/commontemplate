@@ -22,7 +22,11 @@ public class ReloadablePropertyResource implements ReloadableResource {
 		
 		Properties properties = new Properties();
 		properties.load(new FileInputStream(new File(url.getFile())));
-		map = new HashMap(properties);
+		if(map == null) {
+			map = new HashMap(properties);
+		}else{
+			map.putAll(new HashMap(properties));
+		}
 	}
 
 }
