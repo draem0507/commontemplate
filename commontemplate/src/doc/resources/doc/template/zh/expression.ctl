@@ -211,6 +211,7 @@ $!
 								toUnicode 将ASCII码转为Unicode码表示, 如：${"\u4E2D\u56FD".toUnicode} 输出：中国<br/>
 								toSwapCase 交换大小写, 把串中大写的改小写, 小写的改为大写. 如：${"ABCdef".toSwapCase} 输出：abcDEF <font color="green">(注：与toUpperCase, toLowerCase相对应)</font><br/>
 								toClass 将字符串转为类元, 如: ${"com.xxx.User".toClass}<br/>
+								newInstance 将字符串转为类实例, 通过无参构造函数创建, 如: ${"com.xxx.User".newInstance}<br/>
 								toDate 以yyyy-MM-dd格式转换为Date, 如:  ${"2007-01-01".toDate}<br/>
 								toTime 以HH:mm:ss格式转换为Date, 如:  ${"22:10:15".toTime}<br/>
 								toDateTime 以yyyy-MM-dd HH:mm:ss格式转换为Date, 如:  ${"2007-01-01 23:10:05".toDateTime}<br/>
@@ -284,6 +285,8 @@ $!
 								leftPad(int) 以空格左填充对齐，如：${"123".leftPad(6)} 输出：□□□123 <br/>
 								rightPad(int, String) 右填充对齐，如：${"123".rightPad(6, '-')} 输出：123--- <br/>
 								rightPad(int) 以空格右填充对齐，如：${"123".rightPad(6)} 输出：123□□□ <br/>
+								newInstance(arg1, arg2) 通过构造函数创建类实例, 如: ${"com.xxx.User".newInstance(12, "james")}<br/>
+								newInstance(prop1 : value1, prop2 : value2) 通过无参构造函数创建类实例, 并通过setXXX注入相应属性值, 如: ${"com.xxx.User".newInstance(id:12, name:"james")}<br/>
 								<b>函数与操作符</b><br/>
 								函数与操作符部分功能是重叠的，建议采用操作符，如：<br/>
 								${"abcdefgh"[1..2]} 等价于 ${"abcdefgh".substring(1, 3)}<br/>
