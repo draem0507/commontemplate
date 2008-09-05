@@ -6,6 +6,7 @@ import java.util.List;
 import junit.framework.TestCase;
 
 import org.commontemplate.standard.property.PropertyHandler;
+import org.commontemplate.standard.property.object.ObjectToJsonPropertyHandler;
 
 public class ObjectToJsonPropertyHandlerTester extends TestCase {
 

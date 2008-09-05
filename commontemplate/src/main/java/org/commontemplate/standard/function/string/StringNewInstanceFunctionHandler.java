@@ -1,26 +1,20 @@
-package org.commontemplate.standard.operator.object;
+package org.commontemplate.standard.function.string;
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.commontemplate.standard.operator.UnaryOperatorHandlerSupport;
+import org.commontemplate.standard.function.FunctionHandler;
 import org.commontemplate.util.ArgumentUtils;
 import org.commontemplate.util.BeanUtils;
 import org.commontemplate.util.ClassUtils;
-import org.commontemplate.util.Function;
 
-public class NewInstanceConstructorOperatorHandler extends UnaryOperatorHandlerSupport {
+public class StringNewInstanceFunctionHandler implements FunctionHandler, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public NewInstanceConstructorOperatorHandler() {
-		super(Function.class);
-	}
-
-	public Object doEvaluate(Object operand) throws Exception {
-		Function function = (Function)operand;
-		String name = function.getName();
-		Object args = function.getArgument();
+	public Object doFunction(Object bean, Object args) throws Exception {
+		String name = (String)bean;
 		Class cls = ClassUtils.forName(name);
 		if (args == null) {
 			return cls.newInstance();
@@ -34,7 +28,7 @@ public class NewInstanceConstructorOperatorHandler extends UnaryOperatorHandlerS
 			BeanUtils.setProperty(obj, String.valueOf(entry.getKey()), entry.getValue());
 			return obj;
 		} else {
-			return ClassUtils.invokeConstructor(cls, ArgumentUtils.getArgumentArray(function.getArgument()));
+			return ClassUtils.invokeConstructor(cls, ArgumentUtils.getArgumentArray(args));
 		}
 	}
 

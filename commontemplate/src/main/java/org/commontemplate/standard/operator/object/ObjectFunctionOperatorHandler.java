@@ -9,6 +9,7 @@ import org.commontemplate.standard.function.FunctionHandler;
 import org.commontemplate.standard.function.FunctionMatcher;
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 import org.commontemplate.standard.operator.UnhandleException;
+import org.commontemplate.util.ArgumentUtils;
 import org.commontemplate.util.ClassUtils;
 import org.commontemplate.util.Function;
 
@@ -45,13 +46,13 @@ public class ObjectFunctionOperatorHandler extends BinaryOperatorHandlerSupport 
 	public Object doEvaluate(Object leftOperand, Object rightOperand) throws Exception {
 		Function function = (Function)rightOperand;
 		String functionName = function.getName();
-		Object[] args = function.getArguments().toArray();
+		Object[] args = ArgumentUtils.getArgumentArray(function.getArgument());
 
 		if (functionHandlers != null) {
 			for (Iterator iterator = functionHandlers.entrySet().iterator(); iterator.hasNext();) {
 				Entry entry = (Entry)iterator.next();
 				if (((FunctionMatcher)entry.getKey()).isMatch(leftOperand.getClass(), function.getName())) {
-					return ((FunctionHandler)entry.getValue()).doFunction(leftOperand, function.getArguments());
+					return ((FunctionHandler)entry.getValue()).doFunction(leftOperand, function.getArgument());
 				}
 			}
 		}

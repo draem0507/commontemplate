@@ -1,4 +1,4 @@
-package org.commontemplate.standard.property.bean;
+package org.commontemplate.standard.property.object;
 
 import org.commontemplate.standard.property.PropertyHandlerSupport;
 import org.commontemplate.util.json.JSONUtils;
