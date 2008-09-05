@@ -7,11 +7,11 @@ package org.commontemplate.core.event;
  * @author liangfei0201@163.com
  *
  */
-public class ObjectChangedEvent extends ValueChangedEvent {
+public class PropertyChangedEvent extends ValueChangedEvent {
 
 	private static final long serialVersionUID = 1L;
 	
-	public ObjectChangedEvent(Object source, String type, String name, Object oldValue,
+	public PropertyChangedEvent(Object source, String type, String name, Object oldValue,
 			Object newValue) {
 		super(source, name, oldValue, newValue);
 		this.type = type;
