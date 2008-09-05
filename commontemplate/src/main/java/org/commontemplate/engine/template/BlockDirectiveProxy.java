@@ -1,6 +1,5 @@
 package org.commontemplate.engine.template;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.commontemplate.core.BlockDirective;
@@ -32,7 +31,7 @@ class BlockDirectiveProxy extends BlockDirective {
 		blockDirective.accept(visitor);
 	}
 
-	public String getSource() throws IOException {
+	public String getSource() {
 		return blockDirective.getSource();
 	}
 

@@ -91,7 +91,7 @@ class BlockDirectiveImpl extends BlockDirectiveSupport {
 		return expression;
 	}
 
-	public String getSource() throws IOException {
+	public String getSource() {
 		return prototype;
 	}
 

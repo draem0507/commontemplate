@@ -1,6 +1,5 @@
 package org.commontemplate.engine.expression;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.commontemplate.core.BinaryOperator;
@@ -66,12 +65,8 @@ final class BinaryOperatorProxy extends BinaryOperator {
 		return binaryOperator.getRightOperand();
 	}
 
-	public String getSource() throws IOException {
+	public String getSource() {
 		return binaryOperator.getSource();
-	}
-
-	public String getType() {
-		return binaryOperator.getType();
 	}
 
 	public int hashCode() {

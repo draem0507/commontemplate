@@ -77,10 +77,6 @@ final class TemplateProxy extends Template {
 		return template.getSource(location);
 	}
 
-	public String getType() {
-		return template.getType();
-	}
-
 	public int hashCode() {
 		return template.hashCode();
 	}

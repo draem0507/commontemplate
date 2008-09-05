@@ -1,6 +1,5 @@
 package org.commontemplate.engine.template;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.commontemplate.core.Context;
@@ -39,7 +38,7 @@ final class RootBlockDirectiveImpl extends BlockDirectiveSupport {
 		}
 	}
 
-	public String getSource() throws IOException {
+	public String getSource() {
 		return getElementsSource();
 	}
 

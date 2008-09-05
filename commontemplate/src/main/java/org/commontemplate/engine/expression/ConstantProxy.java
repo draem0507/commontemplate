@@ -1,6 +1,5 @@
 package org.commontemplate.engine.expression;
 
-import java.io.IOException;
 
 import org.commontemplate.core.Constant;
 import org.commontemplate.core.EvaluationException;
@@ -48,12 +47,8 @@ final class ConstantProxy extends Constant {
 		return constant.getName();
 	}
 
-	public String getSource() throws IOException {
+	public String getSource() {
 		return constant.getSource();
-	}
-
-	public String getType() {
-		return constant.getType();
 	}
 
 	public Object getValue() {

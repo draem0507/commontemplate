@@ -1,6 +1,5 @@
 package org.commontemplate.engine.template;
 
-import java.io.IOException;
 
 import org.commontemplate.core.Context;
 import org.commontemplate.core.Directive;
@@ -45,7 +44,7 @@ final class EndDirective extends Directive {
 		return null;
 	}
 
-	public String getSource() throws IOException {
+	public String getSource() {
 		return "$end";
 	}
 

@@ -1,6 +1,5 @@
 package org.commontemplate.core;
 
-import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 
@@ -103,11 +102,7 @@ public class RenderingException extends I18nRuntimeException {
 		Template template = getTemplate();
 		if (template != null)
 			s.println("[commontemplate] Error Template Name: " + template.getName()); // TODO 未国际化
-		try {
-			s.println("[commontemplate] Error Element Source: " + getElement().getSource()); // TODO 未国际化
-		} catch (IOException e) {
-			// ignore
-		}
+		s.println("[commontemplate] Error Element Source: " + getElement().getSource()); // TODO 未国际化
 		s.println("[commontemplate] Error Element Location: " + getLocation()); // TODO 未国际化
 		s.println("[commontemplate] Error Message: " + getMessage()); // TODO 未国际化
 		super.printStackTrace(s);
@@ -118,11 +113,7 @@ public class RenderingException extends I18nRuntimeException {
 		Template template = getTemplate();
 		if (template != null)
 			s.println("[commontemplate] Error Template Name: " + template.getName()); // TODO 未国际化
-		try {
-			s.println("[commontemplate] Error Element Source: " + getElement().getSource()); // TODO 未国际化
-		} catch (IOException e) {
-			// ignore
-		}
+		s.println("[commontemplate] Error Element Source: " + getElement().getSource()); // TODO 未国际化
 		s.println("[commontemplate] Error Element Location: " + getLocation()); // TODO 未国际化
 		s.println("[commontemplate] Error Message: " + getMessage()); // TODO 未国际化
 		super.printStackTrace(s);
