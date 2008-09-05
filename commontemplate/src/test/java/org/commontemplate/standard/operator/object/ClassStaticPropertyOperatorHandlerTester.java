@@ -41,5 +41,8 @@ public class ClassStaticPropertyOperatorHandlerTester extends UnaryOperatorHandl
 	 */
 	public void testDoEvaluateStaticMethod() throws Exception{
 		assertEvaluation(UserInfo.class.getName() + ".country", UserInfo.getCountry());
+		assertEvaluation(UserInfo.class.getName() + ".country.toLowerCase", UserInfo.getCountry().toLowerCase());
+		assertEvaluation(UserInfo.class.getName() + ".country.toLowerCase.toUpperCase", UserInfo.getCountry().toLowerCase().toUpperCase());
+		assertEvaluation(UserInfo.class.getName() , UserInfo.class);
 	}
 }

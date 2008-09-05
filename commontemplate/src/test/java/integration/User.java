@@ -32,6 +32,10 @@ public class User implements Comparable {
 		return "test" + name;
 	}
 
+	public static User getRootUser(){
+		return new User(-1,"admin","admin@gmail.com",0,null);
+	}
+	
 	private long fee = 50L;
 
 	public long getFee() {
