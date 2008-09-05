@@ -37,7 +37,7 @@ public class StaticFunctionOperatorHandler extends UnaryOperatorHandlerSupport {
 		if (functionHandlers != null) {
 			StaticFunctionHandler handler = (StaticFunctionHandler)functionHandlers.get(function.getName());
 			if (handler != null)
-				return handler.doFunction(function.getArguments());
+				return handler.doFunction(function.getArgument());
 		}
 		return null;
 	}

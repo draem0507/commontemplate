@@ -1,9 +1,7 @@
 package org.commontemplate.standard.function;
 
-import java.util.List;
-
 public interface StaticFunctionHandler {
-	
-	public Object doFunction(List args) throws Exception;
-	
+
+	public Object doFunction(Object argument) throws Exception;
+
 }

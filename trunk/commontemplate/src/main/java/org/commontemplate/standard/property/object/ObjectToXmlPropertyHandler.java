@@ -1,4 +1,4 @@
-package org.commontemplate.standard.property.bean;
+package org.commontemplate.standard.property.object;
 
 import java.beans.XMLEncoder;
 import java.io.ByteArrayOutputStream;
