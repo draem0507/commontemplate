@@ -83,9 +83,25 @@ public class ClassUtils {
 			return float[].class;
 		if ("double[]".equals(className))
 			return double[].class;
-		if (className.endsWith("[]"))
-			className = "[L" + className.substring(0, className.length() - 2) + ";";
-		return Class.forName(className, true, Thread.currentThread().getContextClassLoader());
+		try {
+			return arrayForName(className);
+		} catch (ClassNotFoundException e) {
+			if (className.indexOf('.') == -1) { // 尝试java.lang包
+				try {
+					return arrayForName("java.lang." + className);
+				} catch (ClassNotFoundException e2) {
+					throw e; // 忽略尝试异常, 抛出原始异常
+				}
+			}
+			throw e;
+		}
+	}
+
+	// 数组转换
+	private static Class arrayForName(String className) throws ClassNotFoundException {
+		return Class.forName(className.endsWith("[]")
+				? "[L" + className.substring(0, className.length() - 2) + ";"
+						: className, true, Thread.currentThread().getContextClassLoader());
 	}
 
 	/**

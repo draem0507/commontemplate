@@ -99,6 +99,16 @@ public class BinaryOperatorHandlerChain extends BinaryOperatorHandler {
 		this.rightOperandNamed = rightOperandNamed;
 	}
 
+	private boolean rightOperandDotNamed;
+
+	public boolean isRightOperandDotNamed() {
+		return rightOperandDotNamed;
+	}
+
+	public void setRightOperandDotNamed(boolean rightOperandDotNamed) {
+		this.rightOperandDotNamed = rightOperandDotNamed;
+	}
+
 	private boolean rightOperandFunctioned;
 
 	public boolean isRightOperandFunctioned() {
