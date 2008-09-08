@@ -26,4 +26,9 @@ public class NewInstanceOperatorHandlerTester extends UnaryOperatorHandlerTester
 	public void testNewInstance() throws Exception{
 		assertEvaluation(UserInfo.class.getName(), new UserInfo());
 	}
+
+	public void testNewInstanceProperty() throws Exception{
+		assertEvaluation(UserInfo.class.getName() + ".userName", new UserInfo().getUserName());
+		assertEvaluation(UserInfo.class.getName() + ".userAge", new Integer(new UserInfo().getUserAge()));
+	}
 }
