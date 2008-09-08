@@ -89,6 +89,20 @@ public class ClassUtils {
 	}
 
 	/**
+	 * 安全转换类元, 当不存在时返回null, 不抛出ClassNotFoundException异常.
+	 *
+	 * @param className 类名
+	 * @return 类元, 当不存在时返回null
+	 */
+	public static Class safeForName(String className) {
+		try {
+			return ClassUtils.forName(className);
+		} catch (ClassNotFoundException e) {
+			return null;
+		}
+	}
+
+	/**
 	 * 获取构造子, 或相似构造子
 	 *
 	 * @param clazz 类

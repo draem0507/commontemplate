@@ -1,5 +1,6 @@
 package org.commontemplate.util;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -39,7 +40,9 @@ public class BeanUtils {
 			try {
 				return getGetter(object.getClass(), property).invoke(object, new Object[0]);
 			} catch (NoSuchMethodException e) {
-				return object.getClass().getField(property).get(object);
+				Field field = object.getClass().getField(property);
+				field.setAccessible(true);
+				return field.get(object);
 			}
 		} catch (SecurityException e) {
 			throw new NoSuchPropertyException(e);
@@ -248,7 +251,9 @@ public class BeanUtils {
 			try {
 				return getGetter(clazz, property).invoke(null, new Object[0]);
 			} catch (NoSuchMethodException e) {
-				return clazz.getField(property).get(null);
+				Field field = clazz.getField(property);
+				field.setAccessible(true);
+				return field.get(null);
 			}
 		} catch (SecurityException e) {
 			throw new NoSuchPropertyException(e);

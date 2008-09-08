@@ -104,6 +104,12 @@ $!
 								$else <font color="green">(注：类似$if ... $else ...语法，以避免多重判断语句，当循环集合为空时执行)</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;have no users...<br/>
 								$end<br/>
+								对于一个List&lt;Map&lt;Object, Object&gt;&gt;的嵌套集合, 迭代方式如: <br/>
+								$for{map: list} <font color="green">(注：先取出List中的Map项)</font><br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;$for{entry: map} <font color="green">(注：再取出Map中Entry键值对)</font><br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${entry.key} 或者 ${entry.value}<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;$end<br/>
+								$end<br/>
 								特殊迭代举例：<br/>
 								<b>a.</b> 简单次数迭代：$for{10}，迭代10次，不产生迭代项数据，但可以用状态信息${for.index}等，当次数小于或等于零时不迭代<br/>
 								<b>b.</b> 递归迭代：$for{menu -> children : menus}，递归迭代menu的children属性，直到为空，通常用于输出树结构。<br/>
