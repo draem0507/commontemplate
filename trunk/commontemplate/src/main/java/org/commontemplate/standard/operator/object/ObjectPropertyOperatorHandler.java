@@ -6,7 +6,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
+import org.commontemplate.standard.operator.UnhandleException;
+import org.commontemplate.standard.property.PropertyHandler;
 import org.commontemplate.standard.property.PropertyMatcher;
+import org.commontemplate.util.BeanUtils;
 
 /**
  * 对象属性取值操作符: "."<br/>
@@ -36,7 +39,28 @@ public class ObjectPropertyOperatorHandler extends BinaryOperatorHandlerSupport 
 	public Object doEvaluate(Object leftOperand, Object rightOperand) throws Exception {
 		if (rightOperand == null)
 			return null;
-		return ObjectHandlerUtils.invokeProperty(leftOperand, (String)rightOperand, propertyHandlers);
+
+		String property = (String)rightOperand;
+		if (leftOperand == null) { // 允许调用null.toString
+			if ("toString".equals(property))
+				return "null";
+			return null;
+		}
+
+		if (propertyHandlers != null) {
+			for (Iterator iterator = propertyHandlers.entrySet().iterator(); iterator.hasNext();) {
+				Entry entry = (Entry)iterator.next();
+				if (((PropertyMatcher)entry.getKey()).isMatch(leftOperand.getClass(), property)) {
+					return ((PropertyHandler)entry.getValue()).doProperty(leftOperand);
+				}
+			}
+		}
+
+		try {
+			return BeanUtils.getProperty(leftOperand, property);
+		} catch (Exception e) {
+			throw new UnhandleException("ObjectPropertyOperatorHandler.property.no.such", new Object[]{leftOperand.getClass().getName(), property});
+		}
 	}
 
 }

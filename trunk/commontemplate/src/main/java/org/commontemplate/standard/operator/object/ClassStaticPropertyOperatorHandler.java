@@ -1,7 +1,19 @@
 package org.commontemplate.standard.operator.object;
 
-
-public class ClassStaticPropertyOperatorHandler extends ClassStaticOperatorHandlerSupport {
+/**
+ * 类元或类静态属性处理器.
+ * 如:
+ * &com.xxx.Utils
+ * 或者:
+ * &com.xxx.Utils.URI
+ * 或者:
+ * &com.xxx.Utils.URI.name
+ *
+ * @author Guileen
+ * @author liangfei0201@163.com
+ *
+ */
+public class ClassStaticPropertyOperatorHandler extends ClassNamedOperatorHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
@@ -9,8 +21,8 @@ public class ClassStaticPropertyOperatorHandler extends ClassStaticOperatorHandl
 		super(String.class);
 	}
 
-	protected String getOperandName(Object operand) {
-		return (String)operand;
+	public Object doEvaluate(Object operand) throws Exception {
+		return super.doEvaluateProperties((String)operand);
 	}
 
 }

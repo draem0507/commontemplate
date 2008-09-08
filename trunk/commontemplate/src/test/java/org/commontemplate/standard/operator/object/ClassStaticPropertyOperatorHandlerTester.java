@@ -1,6 +1,10 @@
 package org.commontemplate.standard.operator.object;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.commontemplate.config.UnaryOperatorHandler;
+import org.commontemplate.standard.operator.BinaryOperatorHandlerChain;
 import org.commontemplate.standard.operator.UnaryOperatorHandlerTester;
 import org.commontemplate.standard.operator.collection.UserInfo;
 
@@ -12,7 +16,16 @@ import org.commontemplate.standard.operator.collection.UserInfo;
 public class ClassStaticPropertyOperatorHandlerTester extends UnaryOperatorHandlerTester {
 
 	protected UnaryOperatorHandler newUnaryOperatorHandler() {
-		return new ClassStaticPropertyOperatorHandler();
+		List dotHandlers = new ArrayList();
+		dotHandlers.add(new ObjectFunctionOperatorHandler());
+		dotHandlers.add(new ObjectPropertyOperatorHandler());
+		dotHandlers.add(new StaticFunctionOperatorHandler());
+		dotHandlers.add(new StaticPropertyOperatorHandler());
+		BinaryOperatorHandlerChain dotHandlersChain = new BinaryOperatorHandlerChain();
+		dotHandlersChain.setBinaryOperatorHandlers(dotHandlers);
+		ClassStaticPropertyOperatorHandler handler = new ClassStaticPropertyOperatorHandler();
+		handler.setDotBinaryOperatorHandler(dotHandlersChain);
+		return handler;
 	}
 
 	/**

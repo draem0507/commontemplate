@@ -1,1 +1,1 @@
-${max(2, 6, 4)}
+${&integration.User.test}

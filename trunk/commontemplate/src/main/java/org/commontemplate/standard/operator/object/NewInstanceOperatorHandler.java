@@ -1,9 +1,17 @@
 package org.commontemplate.standard.operator.object;
 
-import org.commontemplate.standard.operator.UnaryOperatorHandlerSupport;
-import org.commontemplate.util.ClassUtils;
-
-public class NewInstanceOperatorHandler extends UnaryOperatorHandlerSupport {
+/**
+ * 类无参构造函数处理器.
+ * 如:
+ * new com.xxx.User
+ * 或者:
+ * new com.xxx.User.xxx
+ *
+ * @author Guileen
+ * @author liangfei0201@163.com
+ *
+ */
+public class NewInstanceOperatorHandler extends NewInstanceOperatorHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
@@ -12,7 +20,7 @@ public class NewInstanceOperatorHandler extends UnaryOperatorHandlerSupport {
 	}
 
 	public Object doEvaluate(Object operand) throws Exception {
-		return ClassUtils.forName((String)operand).newInstance();
+		return super.doEvaluateProperties((String)operand);
 	}
 
 }
