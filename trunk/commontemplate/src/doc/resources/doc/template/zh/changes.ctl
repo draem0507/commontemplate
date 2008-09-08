@@ -1,6 +1,22 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
 	<!--$zone{"content"}-->
 $!
+								<b>0.8.7 版本更新：(未发布)</b> <a href="downloads.html">下载...</a><br/>
+								注释语法外套, 增加clearSpaceline属性, 如果指令所在行没有其它内容, 则清除该空白行.<br/>
+								完成热加载国际化信息文件.<br/>
+								修复Object.toJson在两对象互相引用时死循环的BUG<br/>
+								增加ExpressionFilter扩展点, 在表达式编译之前过滤表达式字符串.<br/>
+								Web环境中, 表达式增加支持&lt; &gt;等XML转义符, 如: $var{session -&gt; name = "kent"}<br/>
+								拆分Visitor为TemplateVisitor和ExpressionVisitor<br/>
+								修复静态方法不能调用的BUG, 如: ${&com.xxx.Utils.calc(xxx)}<br/>
+								操作符处理器增加isOperandDotNamed()状态设置,用于将点号作为名称处理.<br/>
+								修复$setting指令String到Locale转换的BUG.<br/>
+								UnaryOperatorHandler扩展点增加isKeyword()状态的设置, 如: new操作符, 设为关键字的操作符名不能再作为变量名使用.<br/>
+								将$操符符改为new, 与Java保持一致.<br/>
+								实现ReloadMessageSource, 热加载国际化配置.<br/>
+								增加String.newInstance扩展属性和String.newInstance(args)方法<br/>
+								$load指令加入指定编码支持. 如: $load{xml: "xxx.ctl", "utf-8"} 或 $load{"xxx.ctl", "utf-8"}<br/>
+								<br/>
 								<b>0.8.6 版本更新：(2008-08-26)</b> <a href="downloads.html">下载...</a><br/>
 								Bug Fixed:<br/>
 								修复BeanUtils在访问级安全控制上的BUG<br/>

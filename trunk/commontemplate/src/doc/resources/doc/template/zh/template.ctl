@@ -150,8 +150,10 @@ $!
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
 								装载外部数据：<br/>
-								$load{"xxx.xml"} <font color="green">(注：根据文件扩展名识别类型)</font><br/>
 								$load{xml: "xxx.xml"} <br/>
+								$load{"xxx.xml"} <font color="green">(注：根据文件扩展名识别类型)</font><br/>
+								$load{xml: "xxx.ctl", "utf-8"} <font color="green">(注：指定加载文件编码)</font<br/>
+								$load{"xxx.ctl", "utf-8"}<br/>
 								<b>(7) 宏指令:</b><br/>
 								宏定义:<br/>
 								$macro{button} <font color="green">(注：参数名称化指令，如果名称需取变量，可使用"\"一元操作符：$macro{\name})</font><br/>
