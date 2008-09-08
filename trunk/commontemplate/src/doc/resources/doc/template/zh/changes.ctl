@@ -6,15 +6,17 @@ $!
 								完成热加载国际化信息文件.<br/>
 								修复Object.toJson在两对象互相引用时死循环的BUG<br/>
 								增加ExpressionFilter扩展点, 在表达式编译之前过滤表达式字符串.<br/>
-								Web环境中, 表达式增加支持&lt; &gt;等XML转义符, 如: $var{session -&gt; name = "kent"}<br/>
+								Web环境中, 表达式增加支持&amp;lt; &amp;gt;等XML转义符, 如: $var{session -&amp;gt; name = "kent"}<br/>
 								拆分Visitor为TemplateVisitor和ExpressionVisitor<br/>
 								修复静态方法不能调用的BUG, 如: ${&com.xxx.Utils.calc(xxx)}<br/>
 								操作符处理器增加isOperandDotNamed()状态设置,用于将点号作为名称处理.<br/>
 								修复$setting指令String到Locale转换的BUG.<br/>
 								UnaryOperatorHandler扩展点增加isKeyword()状态的设置, 如: new操作符, 设为关键字的操作符名不能再作为变量名使用.<br/>
 								将$操符符改为new, 与Java保持一致.<br/>
-								实现ReloadMessageSource, 热加载国际化配置.<br/>
+								修复"&"和"new"在处理类元和属性上的歧义, 最大匹配类元, 如: ${new com.xxx.User.name} ${&com.xxx.User.PREFIX}<br/>
 								增加String.newInstance扩展属性和String.newInstance(args)方法<br/>
+								is或instanceof操作符的右参字符串引号可省，如：${user is com.xxx.User} 或者 ${user is "com.xxx.User"}<br/>
+								实现ReloadMessageSource, 热加载国际化配置.<br/>
 								$load指令加入指定编码支持. 如: $load{xml: "xxx.ctl", "utf-8"} 或 $load{"xxx.ctl", "utf-8"}<br/>
 								<br/>
 								<b>0.8.6 版本更新：(2008-08-26)</b> <a href="downloads.html">下载...</a><br/>
