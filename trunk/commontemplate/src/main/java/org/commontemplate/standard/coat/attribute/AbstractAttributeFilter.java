@@ -11,6 +11,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.commontemplate.config.ResourceFilter;
+import org.commontemplate.config.Syntax;
+import org.commontemplate.standard.syntax.SyntaxSettings;
 
 /**
  * 继承此类可以方便的实现AttributeFilter TODO: 优化性能
@@ -73,12 +75,12 @@ public abstract class AbstractAttributeFilter implements ResourceFilter, Seriali
 					final Attribute attr = (Attribute) i.next();
 					if (attr != null) {
 						String attrName = attr.getName();
-						if (attrName != null && attrName.startsWith("ct:")) {
+						if (attrName != null && attrName.startsWith(namespace + ":")) {
 							// 获取directive并外套到Tag之外
 							final String directive = attrName.substring(3);
 							element.getSegments().add(startTagAt, new TextSegment(
-									"$" + directive + "{" + attr.getValue() + "}"));
-							element.getSegments().add(new TextSegment("$end"));
+									"" + syntax.getDirectiveLeader() + directive + syntax.getExpressionBegin() + attr.getValue() + syntax.getExpressionEnd()));
+							element.getSegments().add(new TextSegment("" + syntax.getDirectiveLeader() + syntax.getEndDirectiveName() + syntax.getExpressionBegin() + directive + syntax.getExpressionEnd()));
 							// remove the ct: attribute
 							i.remove();
 							// 后出现的attribute将往后面插入
@@ -91,5 +93,34 @@ public abstract class AbstractAttributeFilter implements ResourceFilter, Seriali
 	}
 
 	protected abstract Document getDocument(Reader reader) throws IOException;
+
+	public static final String DEFAULT_NAMESPACE = "ct";
+
+	private String namespace = DEFAULT_NAMESPACE;
+
+	public String getNamespace() {
+		return namespace;
+	}
+
+	public void setNamespace(String namespace) {
+		if (namespace != null && namespace.length() > 0)
+			this.namespace = namespace;
+	}
+
+	private Syntax syntax = Syntax.DEFAULT;
+
+	public Syntax getSyntax() {
+		return syntax;
+	}
+
+	public void setSyntax(Syntax syntax) {
+		if (syntax != null)
+			this.syntax = syntax;
+	}
+
+	public void setSyntaxSettings(SyntaxSettings syntaxSettings) {
+		if (syntaxSettings != null)
+			this.syntax = syntaxSettings.toSyntax();
+	}
 
 }

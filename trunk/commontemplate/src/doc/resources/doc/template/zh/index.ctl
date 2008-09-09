@@ -97,9 +97,9 @@ $code{html}$!<html>
         <table border="1">
             <!--$for{user : users}-->
             <tr>
-                <td><!--$out{for.index + 1}-->1<!--$end--></td>
-                <td><!--$out{user.name}-->james<!--$end--></td>
-                <td><!--$out{user.coins}-->2.00<!--$end--></td>
+                <td><!--$output{for.index + 1}-->1<!--$end--></td>
+                <td><!--$output{user.name}-->james<!--$end--></td>
+                <td><!--$output{user.coins}-->2.00<!--$end--></td>
             </tr>
             <!--$end-->
         </table>
@@ -107,14 +107,31 @@ $code{html}$!<html>
     </body>
 </html>
 !$$end
-								<b>(c) HTML标签属性版语法外套：</b><br/>
+								<b>(c) HTML标签版语法外套：</b><br/>
+$code{html}<html>
+    <body>
+    	<ct:if param="users != null && users.size &amp;gt; 0">
+	        <table border="1">
+	        	<ct:for param="user : users">
+	            <tr>
+	                <td><ct:out param="for.index + 1"/></td>
+	                <td><ct:out param="user.name"/></td>
+	                <td><ct:out param="user.coins"/></td>
+	            </tr>
+	            </ct:for>
+	        </table>
+        </ct:if>
+    </body>
+</html>
+$end
+								<b>(d) HTML标签属性版语法外套：</b><br/>
 $code{html}<html>
     <body>
         <table ct:if="users != null && users.size &amp;gt; 0" border="1">
             <tr ct:for="user : users">
-                <td><span ct:out="for.index + 1">1</span></td>
-                <td><span ct:out="user.name">james</span></td>
-                <td><span ct:out="user.coins">2.00</span></td>
+                <td><span ct:output="for.index + 1">1</span></td>
+                <td><span ct:output="user.name">james</span></td>
+                <td><span ct:output="user.coins">2.00</span></td>
             </tr>
         </table>
     </body>
