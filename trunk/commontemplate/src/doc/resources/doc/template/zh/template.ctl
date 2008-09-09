@@ -373,13 +373,14 @@ $!
 								resourceFilters[100]=<font color="#2a00ff">org.commontemplate.standard.coat.TagSyntaxCoatFilterTester()</font><br/>
 								resourceFilters[100].namespace=<font color="#2a00ff">ct</font><br/>
 								resourceFilters[100].expressionAttributeName=<font color="#2a00ff">param</font><br/>
-								<font color="green">(注：此语法外套使用ResourceFilter扩展点实现，在资源加载时使用简单的正则表达式替换，加载模板资源时有内存消耗和转换时间消耗，但消耗不是很大，如需关闭可配置：resourceFilters[100]=null)</font><br/>
+								<font color="green">(注：此语法外套使用ResourceFilter扩展点实现，在资源加载时使用简单的正则表达式替换，不解析HTML语法，没有不规则HTML语法兼容问题，加载模板资源时有内存消耗和转换时间消耗，但消耗不是很大，如需关闭可配置：resourceFilters[100]=null)</font><br/>
 								<b>(4) XML/HTML标签属性版语法外套</b><br/>
 								自动将名称空间为"ct:"的XML/HTML标签属性转换成指令，如：<br/>
 								&lt;table ct:if="users != null && users.size &gt; 0"&gt;...&lt;/table&gt; <font color="green">(注: 只能用于块指令)</font><br/>
 								注：此语法外套因解析HTML语法，有性能损耗，所以未默认开启，需自行配置：<br/>
 								resourceFilters[200]=<font color="#2a00ff">org.commontemplate.standard.coat.AttributeSyntaxCoatFilter()</font><br/>
 								resourceFilters[200].namespace=<font color="#2a00ff">ct</font><br/>
+								<font color="green">(注：此语法外套使用ResourceFilter扩展点实现，在资源加载时使用jericho进行html解析，对不规则HTML语法的兼容性，以jericho的实现为准，转换时间消耗较大)</font><br/>
 								<br/>
 								<b>七. 举例:</b><br/>
 								<b>(1) 标准语法：</b><br/>
