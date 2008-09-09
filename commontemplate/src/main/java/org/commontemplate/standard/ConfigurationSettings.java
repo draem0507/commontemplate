@@ -73,27 +73,14 @@ public class ConfigurationSettings extends Configuration {
 		// Assert.assertNotNull(settings, "ConfigurationSettings.keywords.string.required");
 		if (settings == null)
 			return;
-		String nullKeyword = settings.getNull() != null ? settings.getNull() : Keywords.DEFAULT_NULL_KEYWORD;
-		String trueKeyword = settings.getTrue() != null ? settings.getTrue() : Keywords.DEFAULT_FALSE_KEYWORD;
-		String falseKeyword = settings.getFalse() != null ? settings.getFalse() : Keywords.DEFAULT_TRUE_KEYWORD;
-		String currentLocalContextKeyword = settings.getCurrentLocalContext() != null ? settings.getCurrentLocalContext() : Keywords.DEFAULT_CURRENT_LOCAL_CONTEXT_KEYWORD;
-		String parentLocalContextKeyword = settings.getParentLocalContext() != null ? settings.getParentLocalContext() : Keywords.DEFAULT_PARENT_LOCAL_CONTEXT_KEYWORD;
-		String contextKeyword = settings.getContext() != null ? settings.getContext() : Keywords.DEFAULT_CONTEXT_KEYWORD;
-		setKeywords(new Keywords(nullKeyword, trueKeyword, falseKeyword, currentLocalContextKeyword, parentLocalContextKeyword, contextKeyword));
+		this.keywords = settings.toKeywords();
 	}
 
 	public void setKeywordsString(String value) {
 		// Assert.assertTrue(value != null && value.trim().length() > 0, "ExpressionConfigurationSettings.keywords.string.required");
 		if (value == null)
 			return;
-		String[] values = value.trim().split("\\,");
-		String nullKeyword = values.length > 0 ? values[0] : Keywords.DEFAULT_NULL_KEYWORD;
-		String trueKeyword = values.length > 1 ? values[1] : Keywords.DEFAULT_FALSE_KEYWORD;
-		String falseKeyword = values.length > 2 ? values[2] : Keywords.DEFAULT_TRUE_KEYWORD;
-		String thisKeyword = values.length > 3 ? values[3] : Keywords.DEFAULT_CURRENT_LOCAL_CONTEXT_KEYWORD;
-		String superKeyword = values.length > 4 ? values[4] : Keywords.DEFAULT_PARENT_LOCAL_CONTEXT_KEYWORD;
-		String contextKeyword = values.length > 5 ? values[5] : Keywords.DEFAULT_CONTEXT_KEYWORD;
-		setKeywords(new Keywords(nullKeyword, trueKeyword, falseKeyword, thisKeyword, superKeyword, contextKeyword));
+		this.keywords = KeywordsSettings.parseKeywords(value);
 	}
 
 	// 操作符优先级 --------------
@@ -161,41 +148,14 @@ public class ConfigurationSettings extends Configuration {
 		// Assert.assertNotNull(syntaxSettings, "ConfigurationSettings.syntax.string.required");
 		if (syntaxSettings == null)
 			return;
-		char leader = getSyntaxSign(syntaxSettings.getDirectiveLeader(), Syntax.DEFAULT_DIRECTIVE_LEADER);
-		char expressionBegin = getSyntaxSign(syntaxSettings.getExpressionBegin(), Syntax.DEFAULT_EXPRESSION_BEGIN);
-		char expressionEnd = getSyntaxSign(syntaxSettings.getExpressionEnd(), Syntax.DEFAULT_EXPRESSION_END);
-		char lineComment = getSyntaxSign(syntaxSettings.getLineComment(), Syntax.DEFAULT_LINE_COMMENT);
-		char blockComment = getSyntaxSign(syntaxSettings.getBlockComment(), Syntax.DEFAULT_BLOCK_COMMENT);
-		char noParse = getSyntaxSign(syntaxSettings.getNoParse(), Syntax.DEFAULT_NO_PARSE);
-		String endDirectiveName = getSyntaxName(syntaxSettings.getEndDirectiveName(), Syntax.DEFAULT_END_DIRECTIVE_NAME);
-		setSyntax(new Syntax(leader, expressionBegin, expressionEnd, lineComment, blockComment, noParse, endDirectiveName));
-	}
-
-	private char getSyntaxSign(Character configSign, char defaultSign) {
-		if (configSign != null && configSign.charValue() > 0 && configSign.charValue() < 128)
-			return configSign.charValue();
-		return defaultSign;
-	}
-
-	private String getSyntaxName(String configName, String defaultName) {
-		if (configName != null && configName.length() > 0)
-			return configName;
-		return defaultName;
+		this.syntax = syntaxSettings.toSyntax();
 	}
 
 	public void setSyntaxString(String value) {
 		// Assert.assertTrue(value != null && value.trim().length() > 0, "ConfigurationSettings.syntax.string.required");
 		if (value == null)
 			return;
-		value = value.trim();
-		char leader = value.length() > 0 ? value.charAt(0) : Syntax.DEFAULT_DIRECTIVE_LEADER;
-		char expressionBegin = value.length() > 1 ? value.charAt(1) : Syntax.DEFAULT_EXPRESSION_BEGIN;
-		char expressionEnd = value.length() > 2 ? value.charAt(2) : Syntax.DEFAULT_EXPRESSION_END;
-		char lineComment = value.length() > 3 ? value.charAt(3) : Syntax.DEFAULT_LINE_COMMENT;
-		char blockComment = value.length() > 4 ? value.charAt(4) : Syntax.DEFAULT_BLOCK_COMMENT;
-		char noParse = value.length() > 5 ? value.charAt(5) : Syntax.DEFAULT_NO_PARSE;
-		String endDirectiveName = value.length() > 6 ? value.substring(6) : Syntax.DEFAULT_END_DIRECTIVE_NAME;
-		setSyntax(new Syntax(leader, expressionBegin, expressionEnd, lineComment, blockComment, noParse, endDirectiveName));
+		this.syntax = SyntaxSettings.parseSyntax(value);
 	}
 
 	// 指令处理器 -------------

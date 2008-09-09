@@ -307,7 +307,7 @@ $!
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>改用反单引号实现不转义字符串<br/>
 								(3) $ 一元操作符<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.8.3加入，0.8.7废弃<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>创建类实例操作符，保持与Java一致，改为"new"，并设为键字<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>创建类实例操作符，保持与Java一致，改为"new"，并设为关键字<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>new<br/>
 								<br/>
 !$

@@ -194,7 +194,7 @@ $!
 								DirectiveHandler应该保证线程安全，最简单的保证方式是：<br/>
 								(1) 若DirectiveHandler实现类中没有任何属性，则该实现类一定是线程安全的。<br/>
 								(2) 若DirectiveHandler实现类中所有属性都是final的(或只在构造函数中赋值)，则该实现类也是线程安全的。<br/>
-								(3) 正确同步所有属性修改。<br/>
+								(3) 若DirectiveHandler实现类中所有属性状态都是正确同步的，则该实现类也是线程安全的。<br/>
 								表达式状态：<br/>
 								(a) 表达式名称化：<br/>
 								如果处理类的isExpressionNamed()方法返回true，表示当表达式为变量名时，作为名称串处理，<br/>

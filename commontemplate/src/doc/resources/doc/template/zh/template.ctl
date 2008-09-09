@@ -4,7 +4,7 @@ $!
 								<b>一. 语法规则:</b><br/>
 								整个模板语言只有一个语法规则：<br/>
 								<b>$指令名{<a href="expression.html">参数表达式</a>}</b><br/>
-								<font color="green">(注：指令名只能包含字母，下划线，数字，点号)</font><br/>
+								<font color="green">(注：指令名只能包含字母，下划线，数字，点号，并且标准指令名全部采用全小写)</font><br/>
 								<font color="green">(注：指令名或参数表达式均可以为空，参数表达式为空时，大括号可省)</font><br/>
 								<font color="green">(注：如果指令名称与字母相连，大括号不可省，如：$else{}xxxx，而不能为$elsexxxx，否则引起歧义)</font><br/>
 								<br/>
@@ -28,14 +28,14 @@ $!
 								<b>(1) 行注释:</b> 忽略其后同一行的内容 <font color="green">(注: 可注释不合法的指令内容，注释内容<b>不包含</b>最后的换行符)</font><br/>
 								运行期不保留: <font color="green">(注: 编译后即抛弃)</font><br/>
 								$# line comment ...<br/>
-								运行期保留: <font color="green">(注: 可通过Visitor访问到)</font><br/>
+								运行期保留: <font color="green">(注: 可通过TemplateVisitor访问到)</font><br/>
 								$## line comment ...<br/>
 								<b>(2) 多行块注释:</b> 忽略其包含的内容 <font color="green">(注: 可注释不合法的指令内容，自身不可嵌套，但可嵌套行注释和不解释块等)</font><br/>
 								运行期不保留: <font color="green">(注: 编译后即抛弃)</font><br/>
 								$*<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;block comment ...<br/>
 								*$<br/>
-								运行期保留: <font color="green">(注: 可通过Visitor访问到)</font><br/>
+								运行期保留: <font color="green">(注: 可通过TemplateVisitor访问到)</font><br/>
 								$**<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;block comment ...<br/>
 								*$<br/>
@@ -54,18 +54,20 @@ $!
 								表达式结果输出: <font color="green">(注：指令名称为空的指令)</font><br/>
 								${user.name}<br/>
 								${user.coins + 100}<br/>
+								 <font color="red">(注：0.8.7版本使用$output代替原有$out指令，$out指令改为与${}空名称指令等价，原语法外套的使用受影响)</font><br/>
+								$out{user.name} 等价于 ${user.name} <font color="green">(注：用于指令名不能为空的语法外套中)</font><br/>
+								表达式结果输出块指令：忽略指令内部块内容 <font color="green">(注：用于语法外套)</font><br/>
+								$output{user.name} James $end<br/>
+								&lt;!--$output{user.name}--&gt; James &lt;!--$end--&gt;<br/>
+								&lt;span ct:output="user.name"&gt; James &lt;/span&gt;<br/>
 								国际化信息输出:<br/>
 								$msg{"home.title"}<br/>
 								$msg{"home.title", arg0, arg1}<br/>
-								块指令：<font color="green">(注：与上面两个指令功能相同，用于语法外套)</font><br/>
-								表达式结果输出：忽略指令内部块内容<br/>
-								$out{user.name} James $end<br/>
-								&lt;!--$out{user.name}--&gt; James &lt;!--$end--&gt;<br/>
-								&lt;!--$out{user.coins + 100}--&gt; 112 &lt;!--$end--&gt;<br/>
-								国际化信息输出：将内部块内容作为默认值<br/>
+								国际化信息输出块指令：将内部块内容作为默认值 <font color="green">(注：用于语法外套)</font><br/>
 								$message{"key", arg0, arg1} default value $end<br/>
 								$message{"home.title"} welcome $end<br/>
 								&lt;!--$message{"home.title"}--&gt; welcome &lt;!--$end--&gt;<br/>
+								&lt;span ct:message="'home.title'"&gt; welcome &lt;/span&gt;<br/>
 								<b>(2) 条件指令:</b><br/>
 								如果参数条件为真则执行其内部块:<br/>
 								$if{user.name == "james"}<br/>
@@ -158,7 +160,7 @@ $!
 								装载外部数据：<br/>
 								$load{xml: "xxx.xml"} <br/>
 								$load{"xxx.xml"} <font color="green">(注：根据文件扩展名识别类型)</font><br/>
-								$load{xml: "xxx.ctl", "utf-8"} <font color="green">(注：指定加载文件编码)</font<br/>
+								$load{xml: "xxx.ctl", "utf-8"} <font color="green">(注：指定加载文件编码)</font><br/>
 								$load{"xxx.ctl", "utf-8"}<br/>
 								<b>(7) 宏指令:</b><br/>
 								宏定义:<br/>
@@ -337,6 +339,7 @@ $!
 								$end<br/>
 								单步调试断点：(此指令将在其所在行设置断点) <a href="debugger.html">更多...</a><br/>
 								$. <font color="green">(注: 指令名称为点号的指令)</font><br/>
+								$breakpoint 等价于 $. <font color="green">(注: 用于指令名不能为特殊符的语法外套中)</font><br/>
 								<br/>
 								<b>五. 变量区间:</b><br/>
 								页面内的每一个块指令(如$if,$for等)都会创建相应的LocalContext, 变量取值时逐级向上查找, <br/>
@@ -345,28 +348,38 @@ $!
 								可以用context["区域名"]在指定范围内查找，如：${context["session"].loginUser}<br/>
 								另外，也可以用context["指令名"]查找最近的某个块指令区域内的变量，如：${context["for"].xxx} ${context["if"].xxx}<br/>
 								<br/>
-								<b>六. 语法扩展</b><br/>
-								<b>(1) Java代码注释版语法外套</b><br/>
-								编译模板时自动去除指令两边的Java代码注释符，如：<br/>
+								<b>六. 语法外套</b><br/>
+								<b>(1) Java/C++/C#代码注释版语法外套</b><br/>
+								编译模板时自动去除指令两边的Java/C++/C#代码注释符，如：<br/>
 								/*$指令{表达式}*/ <font color="green">(注: 注释符与指令间不能有空格)</font><br/>
 								注：此语法外套在代码生成器环境下(即@extends=org/commontemplate/tools/<b>generator</b>/commontemplate.properties)默认开启，其它环境需配置：<br/>
 								textFilters[100]=<font color="#2a00ff">org.commontemplate.standard.coat.CommentSyntaxCoatFilter()</font><br/>
 								textFilters[100].begin=<font color="#2a00ff">/*</font> <font color="green">(注：注释起始符)</font><br/>
 								textFilters[100].end=<font color="#2a00ff">*/</font> <font color="green">(注：注释结束符)</font><br/>
 								textFilters[100].clearSpaceline=<font color="#2a00ff">true</font> <font color="green">(注：当指令所在行没有其它内容时，清除该空白行)</font><br/>
-								<b>(2) HTML标签注释版语法外套</b><br/>
-								编译模板时自动去除指令两边的HTML注释符，如：<br/>
+								<b>(2) XML/HTML标签注释版语法外套</b><br/>
+								编译模板时自动去除指令两边的XML/HTML注释符，如：<br/>
 								&lt;!--$指令{表达式}--&gt; <font color="green">(注: 注释符与指令间不能有空格)</font><br/>
 								注：此语法外套在Web环境下(即@extends=org/commontemplate/tools/<b>web</b>/commontemplate.properties)默认开启，其它环境需配置：<br/>
 								textFilters[100]=<font color="#2a00ff">org.commontemplate.standard.coat.CommentSyntaxCoatFilter()</font><br/>
 								textFilters[100].begin=<font color="#2a00ff">&lt;!--</font> <font color="green">(注：注释起始符)</font><br/>
 								textFilters[100].end=<font color="#2a00ff">--&gt;</font> <font color="green">(注：注释结束符)</font><br/>
-								textFilters[100].clearSpaceline=<font color="#2a00ff">true</font> <font color="green">(注：当指令所在行没有其它内容时，清除该空白行)</font><br/>
-								<b>(3) HTML标签属性版语法外套</b><br/>
-								自动将名称空间为“ct:”的HTML标签属性转换成指令，如：<br/>
-								&lt;table ct:if="users != null && users.size &gt; 0"&gt;...&lt;table&gt; <font color="green">(注: 只能用于块指令)</font><br/>
+								textFilters[100].clearSpaceline=<font color="#2a00ff">false</font> <font color="green">(注：当指令所在行没有其它内容时，清除该空白行)</font><br/>
+								<font color="green">(注：此语法外套使用TextFilter扩展点实现，在编译期过滤文本，编译模板时有过滤时间消耗，但消耗不大，如需关闭可配置：textFilters[100]=null)</font><br/>
+								<b>(3) XML/HTML标签版语法外套</b><br/>
+								自动将名称空间为"ct:"的XML/HTML标签转换成指令，将"param"属性转换为表达式参数，如：<br/>
+								&lt;ct:if param="users != null && users.size &gt; 0"&gt;...&lt;/cf:if&gt;<br/>
+								注：此语法外套在Web环境下(即@extends=org/commontemplate/tools/<b>web</b>/commontemplate.properties)默认开启，其它环境需配置：<br/>
+								resourceFilters[100]=<font color="#2a00ff">org.commontemplate.standard.coat.TagSyntaxCoatFilterTester()</font><br/>
+								resourceFilters[100].namespace=<font color="#2a00ff">ct</font><br/>
+								resourceFilters[100].expressionAttributeName=<font color="#2a00ff">param</font><br/>
+								<font color="green">(注：此语法外套使用ResourceFilter扩展点实现，在资源加载时使用简单的正则表达式替换，加载模板资源时有内存消耗和转换时间消耗，但消耗不是很大，如需关闭可配置：resourceFilters[100]=null)</font><br/>
+								<b>(4) XML/HTML标签属性版语法外套</b><br/>
+								自动将名称空间为"ct:"的XML/HTML标签属性转换成指令，如：<br/>
+								&lt;table ct:if="users != null && users.size &gt; 0"&gt;...&lt;/table&gt; <font color="green">(注: 只能用于块指令)</font><br/>
 								注：此语法外套因解析HTML语法，有性能损耗，所以未默认开启，需自行配置：<br/>
-								resourceFilters[100]=<font color="#2a00ff">org.commontemplate.standard.coat.AttributeSyntaxCoatFilter()</font><br/>
+								resourceFilters[200]=<font color="#2a00ff">org.commontemplate.standard.coat.AttributeSyntaxCoatFilter()</font><br/>
+								resourceFilters[200].namespace=<font color="#2a00ff">ct</font><br/>
 								<br/>
 								<b>七. 举例:</b><br/>
 								<b>(1) 标准语法：</b><br/>
@@ -434,9 +447,13 @@ $code{html}$!<html>
         <table border="1">
             <!--$for{user : users}-->
             <tr>
-                <td><!--$out{for.index + 1}-->1<!--$end--></td>
-                <td><!--$out{user.name}-->james<!--$end--></td>
-                <td><!--$out{user.coins}-->2.00<!--$end--></td>
+                <td><!--${for.index + 1}--></td>
+                <td><!--${user.name}--></td>
+                <td><!--${user.coins}--></td>
+                  或者
+                <td><!--$output{for.index + 1}-->1<!--$end--></td>
+                <td><!--$output{user.name}-->james<!--$end--></td>
+                <td><!--$output{user.coins}-->2.00<!--$end--></td>
             </tr>
             <!--$end-->
         </table>
@@ -444,14 +461,35 @@ $code{html}$!<html>
     </body>
 </html>
 !$$end
-								<b>(c) HTML标签属性版语法外套：</b><br/>
+								<b>(c) HTML标签版语法外套：</b><br/>
+$code{html}<html>
+    <body>
+    	<ct:if param="users != null && users.size &amp;gt; 0">
+	        <table border="1">
+	        	<ct:for param="user : users">
+	            <tr>
+	                <td><ct:out param="for.index + 1"/></td>
+	                <td><ct:out param="user.name"/></td>
+	                <td><ct:out param="user.coins"/></td>
+	                  或者
+	                <td><ct:output param="for.index + 1">1</ct:output></td>
+	                <td><ct:output param="user.name">james</ct:output></td>
+	                <td><ct:output param="user.coins">2.00</ct:output></td>
+	            </tr>
+	            </ct:for>
+	        </table>
+        </ct:if>
+    </body>
+</html>
+$end
+								<b>(d) HTML标签属性版语法外套：</b><br/>
 $code{html}<html>
     <body>
         <table ct:if="users != null && users.size &amp;gt; 0" border="1">
             <tr ct:for="user : users">
-                <td><span ct:out="for.index + 1">1</span></td>
-                <td><span ct:out="user.name">james</span></td>
-                <td><span ct:out="user.coins">2.00</span></td>
+                <td><span ct:output="for.index + 1">1</span></td>
+                <td><span ct:output="user.name">james</span></td>
+                <td><span ct:output="user.coins">2.00</span></td>
             </tr>
         </table>
     </body>
@@ -464,30 +502,30 @@ $!
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.8.3加入，0.8.5废弃<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>与$var功能重复，并且不能像$global一样达到简化作用<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>$var<br/>
-								(2) $breakpoint<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.8.3加入，0.8.5废弃<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>简化为"$."<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>$.<br/>
-								(3) $forelse<br/>
+								(2) $forelse<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.7.6加入，0.8.6废弃<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>$for和$if统一使$else指令作为否则逻辑<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>$else<br/>
-								(4) $overzone<br/>
+								(3) $overzone<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.7.6加入，0.8.6废弃<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>区域定义与覆写均采用$zone指令，保持统一及语义完整<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>$zone<br/>
-								(5) $filterAll<br/>
+								(4) $filterAll<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.7.8加入，0.8.6废弃<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>改为全小写$filterall，保持命名统一<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>$filterall<br/>
-								(6) $leftTrim, $rightTrim<br/>
+								(5) $leftTrim, $rightTrim<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.8.5加入，0.8.6废弃<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>多单词指令名，参照其它模板语法进行简化<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>$ltrim, $rtrim<br/>
-								(7) 简化语法规则：<b>$指令名:参数名</b> 等价于 <b>$指令名{"参数名"}</b><br/>
+								(6) 简化语法规则：<b>$指令名:参数名</b> 等价于 <b>$指令名{"参数名"}</b><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.8.5加入，0.8.6废弃<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>语法规则不统一，比$指令名{参数名}方式并不简化多少，而且存在与字母内容无法分隔的问题<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>名称定义性指令(如：$block, $macro, $zone等)参数名引号可省，如：$指令名{参数名} 等价于 $指令名{"参数名"}<br/>
+								<br/>
+								<b>九. 不兼容：</b> <font color="green">(注: 升级版本请注意)</font><br/>
+								(1) 0.8.5版本使用$using代替原有$import指令，$import指令重新实现<br/>
+								(2) 0.8.7版本使用$output代替原有$out指令，$out指令改为与${}空名称指令等价<br/>
 								<br/>
 !$
 	<!--$end-->

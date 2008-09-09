@@ -18,6 +18,8 @@ $!
 								is或instanceof操作符的右参字符串引号可省，如：${user is com.xxx.User} 或者 ${user is "com.xxx.User"}<br/>
 								实现ReloadMessageSource, 热加载国际化配置.<br/>
 								$load指令加入指定编码支持. 如: $load{xml: "xxx.ctl", "utf-8"} 或 $load{"xxx.ctl", "utf-8"}<br/>
+								加入标签语法外套支持，如：&lt;ct:if param="users != null && users.size &gt; 0"&gt;...&lt;/cf:if&gt;<br/>
+								使用$output代替原有$out指令，$out指令改为与${}空名称指令等价<br/>
 								<br/>
 								<b>0.8.6 版本更新：(2008-08-26)</b> <a href="downloads.html">下载...</a><br/>
 								Bug Fixed:<br/>
