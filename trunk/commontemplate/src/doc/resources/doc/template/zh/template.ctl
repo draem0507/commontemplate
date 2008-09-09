@@ -165,6 +165,8 @@ $!
 								<b>(7) 宏指令:</b><br/>
 								宏定义:<br/>
 								$macro{button} <font color="green">(注：参数名称化指令，如果名称需取变量，可使用"\"一元操作符：$macro{\name})</font><br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;设置参数缺省值<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;$init{name: "submit"}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;回调调用者的内部块，如果为行指令方式调用，则inner为空<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;$inner{param3: "value3"}<br/>
