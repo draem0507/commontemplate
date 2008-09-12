@@ -316,7 +316,7 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 		if (execution == null)
 			return;
 		synchronized (executionModel) {
-			if (executionModel.indexOf(execution) < 0) {
+			if (! executionModel.contains(execution)) {
 				executionModel.addElement(execution);
 				if (executionList.getSelectedIndex() < 0)
 					executionList.setSelectedValue(execution, true);

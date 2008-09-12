@@ -7,13 +7,13 @@ public class MainTester {
 			new Thread(new Runnable() {
 				public void run() {
 					try {
-						Main.run("d", "F:\\test\\test_yaml.ctl");
+						Main.run("d", "F:\\CommonTemplate\\test\\test_yaml.ctl");
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
 			}).start();
-			Main.run("d", "F:\\test\\test_xml.ctl");
+			Main.run("d", "F:\\CommonTemplate\\test\\test_xml.ctl");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
