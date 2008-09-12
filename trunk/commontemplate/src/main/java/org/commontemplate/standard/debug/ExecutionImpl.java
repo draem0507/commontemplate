@@ -184,8 +184,6 @@ final class ExecutionImpl implements Execution, Comparable, Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((context == null) ? 0 : context.hashCode());
-		result = prime * result + ((element == null) ? 0 : element.hashCode());
 		result = prime * result
 				+ ((threadName == null) ? 0 : threadName.hashCode());
 		return result;
@@ -199,20 +197,10 @@ final class ExecutionImpl implements Execution, Comparable, Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		final ExecutionImpl other = (ExecutionImpl) obj;
-		if (context == null) {
-			if (other.context != null)
-				return false;
-		} else if (!context.equals(other.context))
-			return false;
-		if (element == null) {
-			if (other.element != null)
-				return false;
-		} else if (!element.equals(other.element))
-			return false;
 		if (threadName == null) {
 			if (other.threadName != null)
 				return false;
-		} else if (!threadName.equals(other.threadName))
+		} else if (! threadName.equals(other.threadName))
 			return false;
 		return true;
 	}

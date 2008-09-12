@@ -11,16 +11,16 @@ public class ResourceFilterChain implements ResourceFilter, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private List templateReaderFilters;
+	private List resourceFilters;
 
-	public void setResourceFilters(List templateReaderFilters) {
-		this.templateReaderFilters = templateReaderFilters;
+	public void setResourceFilters(List resourceFilters) {
+		this.resourceFilters = resourceFilters;
 	}
 
 	public Reader filter(Reader reader) throws IOException {
-		if (templateReaderFilters != null && templateReaderFilters.size() > 0) {
-			for (int i = 0, n = templateReaderFilters.size(); i < n; i++) {
-				ResourceFilter resourceFilter = (ResourceFilter)templateReaderFilters.get(i);
+		if (resourceFilters != null && resourceFilters.size() > 0) {
+			for (int i = 0, n = resourceFilters.size(); i < n; i++) {
+				ResourceFilter resourceFilter = (ResourceFilter)resourceFilters.get(i);
 				if (resourceFilter != null) {
 					reader = resourceFilter.filter(reader);
 				}
