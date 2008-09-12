@@ -11,10 +11,9 @@ import javax.swing.JTextArea;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultHighlighter;
 
-import org.commontemplate.core.OutputFilter;
 import org.commontemplate.tools.swing.MenuBuilder;
 
-public class OutputPane extends JScrollPane implements OutputFilter {
+public class OutputPane extends JScrollPane {
 
 	private static final long serialVersionUID = 1L;
 
@@ -51,11 +50,12 @@ public class OutputPane extends JScrollPane implements OutputFilter {
 		this.getViewport().setAutoscrolls(true);
 	}
 
-	public void appendText(String source) {
-		if (source == null || source.length() == 0)
+	public void setText(String source, int begin) {
+		if (source == null || source.length() == 0) {
+			textArea.setText("");
 			return;
-		int begin = textArea.getText().length();
-		textArea.append(source);
+		}
+		textArea.setText(source);
 		int end = textArea.getText().length();
 		try {
 			if (highlight != null)
@@ -72,23 +72,22 @@ public class OutputPane extends JScrollPane implements OutputFilter {
 			highlighter.removeHighlight(highlight);
 		highlight = null;
 		textArea.setText("");
+		if (debugOutputFilter != null)
+			debugOutputFilter.clearText();
 	}
 
-	public String filter(String text) {
-		appendText(text);
-		if (outputFilter != null)
-			return outputFilter.filter(text);
-		return text;
+	private DebugOutputFilter debugOutputFilter;
+
+	public DebugOutputFilter getDebugOutputFilter() {
+		return debugOutputFilter;
 	}
 
-	private OutputFilter outputFilter;
-
-	public OutputFilter getOutputFilter() {
-		return outputFilter;
-	}
-
-	public void setOutputFilter(OutputFilter outputFilter) {
-		this.outputFilter = outputFilter;
+	public void setDebugOutputFilter(DebugOutputFilter debugOutputFilter) {
+		if (debugOutputFilter != null)
+			debugOutputFilter.showText();
+		else
+			clearText();
+		this.debugOutputFilter = debugOutputFilter;
 	}
 
 }
