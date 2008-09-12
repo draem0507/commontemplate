@@ -554,4 +554,12 @@ final class ContextImpl extends Context {
 		return contextFactory.getGlobalContext();
 	}
 
+	public int getLocalContextStackSize() {
+		return localContextStack.getLocalContextStackSize();
+	}
+
+	public int getTemplateStackSize() {
+		return templateNameStack.getTemplateStackSize();
+	}
+
 }

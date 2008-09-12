@@ -5,23 +5,23 @@ import java.util.Iterator;
 
 /**
  * 同步栈
- * 
+ *
  * @author liangfei0201@163.com
  *
  */
 public class SynchronizationStack implements Stack, Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private final Stack targetStack;
-	
+
 	/**
 	 * 默认使用LinkedStack
 	 */
 	public SynchronizationStack() {
 		this.targetStack = new LinkedStack();
 	}
-	
+
 	public SynchronizationStack(Stack targetStack) {
 		this.targetStack = targetStack;
 	}
@@ -52,6 +52,10 @@ public class SynchronizationStack implements Stack, Serializable {
 
 	public synchronized Iterator iterator() {
 		return targetStack.iterator();
+	}
+
+	public int size() {
+		return targetStack.size();
 	}
 
 }

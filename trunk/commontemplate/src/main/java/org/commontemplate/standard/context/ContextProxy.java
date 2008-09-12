@@ -516,4 +516,12 @@ public abstract class ContextProxy extends Context {
 		return context.createContext(out);
 	}
 
+	public int getLocalContextStackSize() {
+		return context.getLocalContextStackSize();
+	}
+
+	public int getTemplateStackSize() {
+		return context.getTemplateStackSize();
+	}
+
 }

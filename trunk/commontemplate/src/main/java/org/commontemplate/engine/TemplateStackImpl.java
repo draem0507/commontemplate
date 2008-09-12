@@ -51,6 +51,10 @@ final class TemplateStackImpl implements TemplateStack, Serializable {
 		eventPublisher.publishEvent(new TemplatePopedEvent(this, old, getCurrentTemplate()));
 	}
 
+	public int getTemplateStackSize() {
+		return templateNameStack.size();
+	}
+
 	public Iterator getTemplateStackValues() {
 		return templateNameStack.iterator();
 	}

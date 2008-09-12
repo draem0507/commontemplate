@@ -81,6 +81,13 @@ public interface LocalContextStack {
 	public Iterator getLocalContextStackValues();
 
 	/**
+	 * 获取上下文栈大小
+	 *
+	 * @return 上下文栈大小
+	 */
+	public int getLocalContextStackSize();
+
+	/**
 	 * 清空所有局部上下文
 	 */
 	public void clearLocalContexts();

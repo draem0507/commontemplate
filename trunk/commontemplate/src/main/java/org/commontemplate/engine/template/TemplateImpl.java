@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.commontemplate.core.Context;
+import org.commontemplate.core.IgnoreException;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.Resource;
 import org.commontemplate.core.StopVisitException;
@@ -73,7 +74,14 @@ final class TemplateImpl extends Template implements Serializable {
 	final void doRender(Context context) throws RenderingException {
 		context.pushTemplate(this);
 		try {
-			rootDirective.render(context);
+			context.pushLocalContext();
+			try {
+				rootDirective.render(context);
+			} catch (IgnoreException e) {
+				// ignore
+			} finally {
+				context.popLocalContext();
+			}
 		} finally {
 			context.popTemplate();
 		}
