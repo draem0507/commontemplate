@@ -13,6 +13,9 @@ import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
@@ -43,7 +46,7 @@ import org.commontemplate.tools.swing.ImageFactory;
 import org.commontemplate.tools.swing.MenuBuilder;
 import org.commontemplate.util.I18nMessages;
 
-public class DebugFrame implements ActionListener, WindowListener, ListSelectionListener {
+public class DebugFrame {
 
 	private static DebugFrame debugFrame;
 
@@ -85,7 +88,10 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 
 	private Execution execution;
 
+	private final UIListener uiListener;
+
 	public DebugFrame() {
+		uiListener = new UIListener();
 		frame.setTitle(I18nMessages.getMessage("DebugFrame.title"));
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.setSize(800, 600);
@@ -96,11 +102,11 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 		frame.getRootPane().setFocusable(true);
 		frame.getRootPane().setFocusCycleRoot(true);
 		frame.getContentPane().setLayout(new BorderLayout());
-		frame.addWindowListener(this);
+		frame.addWindowListener(uiListener);
 		frame.setJMenuBar(createMenuBar());
 
 		executionList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		executionList.addListSelectionListener(this);
+		executionList.addListSelectionListener(uiListener);
 		MenuBuilder.buildReadonlyListMenu(executionList);
 		JScrollPane executionBox = new JScrollPane();
 		executionBox.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -143,7 +149,7 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 				.getMessage("DebugFrame.step.into.button")
 				+ " (ALT+F5)");
 		stepInto.setMnemonic(KeyEvent.VK_F5);
-		stepInto.addActionListener(this);
+		stepInto.addActionListener(uiListener);
 		buttonPane.add(stepInto);
 
 		stepOver = new JButton(getIcon("stepover.gif"));
@@ -151,7 +157,7 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 				.getMessage("DebugFrame.step.over.button")
 				+ " (ALT+F6)");
 		stepOver.setMnemonic(KeyEvent.VK_F6);
-		stepOver.addActionListener(this);
+		stepOver.addActionListener(uiListener);
 		buttonPane.add(stepOver);
 
 		stepReturn = new JButton(getIcon("stepreturn.gif"));
@@ -159,7 +165,7 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 				.getMessage("DebugFrame.step.return.button")
 				+ " (ALT+F7)");
 		stepReturn.setMnemonic(KeyEvent.VK_F7);
-		stepReturn.addActionListener(this);
+		stepReturn.addActionListener(uiListener);
 		buttonPane.add(stepReturn);
 
 		resume = new JButton(getIcon("resume.gif"));
@@ -167,7 +173,7 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 				.getMessage("DebugFrame.resume.button")
 				+ " (ALT+F8)");
 		resume.setMnemonic(KeyEvent.VK_F8);
-		resume.addActionListener(this);
+		resume.addActionListener(uiListener);
 		buttonPane.add(resume);
 
 		resumeAll = new JButton(getIcon("resume_all.gif"));
@@ -175,7 +181,7 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 				.getMessage("DebugFrame.resume.all.button")
 				+ " (ALT+F9)");
 		resumeAll.setMnemonic(KeyEvent.VK_F9);
-		resumeAll.addActionListener(this);
+		resumeAll.addActionListener(uiListener);
 		buttonPane.add(resumeAll);
 
 		terminate = new JButton(getIcon("terminate.gif"));
@@ -183,7 +189,7 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 				.getMessage("DebugFrame.terminate.button")
 				+ " (ALT+F10)");
 		terminate.setMnemonic(KeyEvent.VK_F10);
-		terminate.addActionListener(this);
+		terminate.addActionListener(uiListener);
 		buttonPane.add(terminate);
 
 		frame.getContentPane().add(buttonPane, BorderLayout.NORTH);
@@ -240,32 +246,32 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 			itemStepInto = new JMenuItem("单步运行(S)"); // TODO 未国际化
 			itemStepInto.setMnemonic(KeyEvent.VK_S);
 			menuDebug.add(itemStepInto);
-			itemStepInto.addActionListener(DebugFrame.this);
+			itemStepInto.addActionListener(DebugFrame.this.uiListener);
 
 			itemStepOver = new JMenuItem("单步块运行(O)"); // TODO 未国际化
 			itemStepOver.setMnemonic(KeyEvent.VK_O);
 			menuDebug.add(itemStepOver);
-			itemStepOver.addActionListener(DebugFrame.this);
+			itemStepOver.addActionListener(DebugFrame.this.uiListener);
 
 			itemStepReturn = new JMenuItem("单步返回运行(E)"); // TODO 未国际化
 			itemStepReturn.setMnemonic(KeyEvent.VK_E);
 			menuDebug.add(itemStepReturn);
-			itemStepReturn.addActionListener(DebugFrame.this);
+			itemStepReturn.addActionListener(DebugFrame.this.uiListener);
 
 			itemResume = new JMenuItem("恢复运行(R)"); // TODO 未国际化
 			itemResume.setMnemonic(KeyEvent.VK_R);
 			menuDebug.add(itemResume);
-			itemResume.addActionListener(DebugFrame.this);
+			itemResume.addActionListener(DebugFrame.this.uiListener);
 
 			itemResumeAll = new JMenuItem("跳过断点运行(A)"); // TODO 未国际化
 			itemResumeAll.setMnemonic(KeyEvent.VK_A);
 			menuDebug.add(itemResumeAll);
-			itemResumeAll.addActionListener(DebugFrame.this);
+			itemResumeAll.addActionListener(DebugFrame.this.uiListener);
 
 			itemTerminate = new JMenuItem("终止运行(T)"); // TODO 未国际化
 			itemTerminate.setMnemonic(KeyEvent.VK_T);
 			menuDebug.add(itemTerminate);
-			itemTerminate.addActionListener(DebugFrame.this);
+			itemTerminate.addActionListener(DebugFrame.this.uiListener);
 		JMenu menuOut = new JMenu("输出(O)"); // TODO 未国际化
 		mainMenuBar.add(menuOut);
 		menuOut.setMnemonic(KeyEvent.VK_P);
@@ -293,11 +299,11 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 			itemCapture.setMnemonic(KeyEvent.VK_C);
 			itemCapture.setSelected(true);
 			menuOut.add(itemCapture);
-			itemCapture.addActionListener(new ActionListener(){
+			/*itemCapture.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e) {
 					captureOutput();
 				}
-			});
+			});*/
 
 			JMenuItem itemClear = new JMenuItem("清除输出(L)"); // TODO 未国际化
 			itemClear.setMnemonic(KeyEvent.VK_L);
@@ -307,66 +313,88 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 					outputPane.clearText();
 				}
 			});
+
+			JMenuItem itemClearAll = new JMenuItem("清除所有输出(A)"); // TODO 未国际化
+			itemClearAll.setMnemonic(KeyEvent.VK_A);
+			menuOut.add(itemClearAll);
+			itemClearAll.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e) {
+					clearOutput();
+				}
+			});
 		return mainMenuBar;
 	}
 
 	// ---- 动态结构 ----
 
-	public void addExecution(final Execution execution) {
+	public synchronized void addExecution(final Execution execution) {
 		if (execution == null)
 			return;
-		synchronized (executionModel) {
-			if (! executionModel.contains(execution)) {
-				executionModel.addElement(execution);
-				if (executionList.getSelectedIndex() < 0)
-					executionList.setSelectedValue(execution, true);
-			}
+		if (! executionModel.contains(execution)) {
+			executionModel.addElement(execution);
+			if (executionList.getSelectedIndex() < 0)
+				executionList.setSelectedValue(execution, true);
 		}
+		addOutput(execution);
 	}
 
-	public void removeExecution(final Execution execution) {
-		synchronized (executionModel) {
-			executionModel.removeElement(execution);
-		}
+	public synchronized void removeExecution(final Execution execution) {
+		if (execution == null)
+			return;
+		executionModel.removeElement(execution);
 	}
 
-	private void initDebugFrame(Execution execution) {
+	private synchronized void changeExecution() {
+		Execution execution = (Execution)executionList.getSelectedValue();
 		if (execution == null) {
 			this.execution = null;
 			disableToolbar();
 		} else {
 			this.execution = execution;
 			enableToolbar();
-			captureOutput();
+			changeOutput(execution);
 			frame.setVisible(true);
 		}
 	}
 
-	private void captureOutput() {
+	private Map filters = new HashMap();
+
+	private synchronized void addOutput(Execution execution) {
 		if (execution == null)
 			return;
 		Context context = execution.getContext();
 		if (context == null)
 			return;
 		LocalContext root = context.getRootLocalContext();
-		if (itemCapture.getModel().isSelected()) {
-			OutputFilter outputFilter = root.getOutputFilter();
-			if (outputFilter == outputPane)
-				return ;
-			outputPane.setOutputFilter(outputFilter);
-			root.setOutputFilter(outputPane);
-		} else {
-			OutputFilter outputFilter = root.getOutputFilter();
-			if (outputFilter == outputPane) {
-				root.setOutputFilter(outputPane.getOutputFilter());
-			}
+		OutputFilter outputFilter = root.getOutputFilter();
+		if (outputFilter instanceof DebugOutputFilter)
+			return ;
+		DebugOutputFilter debugOutputFilter = new DebugOutputFilter(outputPane, itemCapture.getModel());
+		filters.put(context, debugOutputFilter);
+		debugOutputFilter.setOutputFilter(outputFilter);
+		root.setOutputFilter(debugOutputFilter);
+	}
+
+	private synchronized void changeOutput(Execution execution) {
+		if (execution == null)
+			return;
+		Context context = execution.getContext();
+		if (context == null)
+			return;
+		DebugOutputFilter debugOutputFilter = (DebugOutputFilter)filters.get(context);
+		outputPane.setDebugOutputFilter(debugOutputFilter);
+	}
+
+	private synchronized void clearOutput() {
+		outputPane.clearText();
+		for (Iterator iterator = filters.values().iterator(); iterator.hasNext();) {
+			DebugOutputFilter debugOutputFilter = (DebugOutputFilter)iterator.next();
+			if (debugOutputFilter != null)
+				debugOutputFilter.clearText();
 		}
 	}
 
-	// ---- 事件处理 ----
-
-	public void actionPerformed(ActionEvent e) {
-		Object button = e.getSource();
+	public synchronized void executeExecution(Object button) {
 		disableToolbar();
 		if (execution != null) {
 			if (button == stepInto || button == itemStepInto) {
@@ -391,30 +419,40 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 		}
 	}
 
-	public void windowActivated(WindowEvent e) {
-	}
+	// ---- 事件处理 ----
 
-	public void windowDeactivated(WindowEvent e) {
-	}
+	private class UIListener implements ActionListener, WindowListener, ListSelectionListener {
 
-	public void windowIconified(WindowEvent e) {
-	}
+		public void actionPerformed(ActionEvent e) {
+			executeExecution(e.getSource());
+		}
 
-	public void windowDeiconified(WindowEvent e) {
-	}
+		public void windowActivated(WindowEvent e) {
+		}
 
-	public void windowOpened(WindowEvent e) {
-	}
+		public void windowDeactivated(WindowEvent e) {
+		}
 
-	public void windowClosed(WindowEvent e) {
-	}
+		public void windowIconified(WindowEvent e) {
+		}
 
-	public void windowClosing(WindowEvent e) {
-		closeFrame();
-	}
+		public void windowDeiconified(WindowEvent e) {
+		}
 
-	public void valueChanged(ListSelectionEvent e) {
-		initDebugFrame((Execution)executionList.getSelectedValue());
+		public void windowOpened(WindowEvent e) {
+		}
+
+		public void windowClosed(WindowEvent e) {
+		}
+
+		public void windowClosing(WindowEvent e) {
+			closeFrame();
+		}
+
+		public void valueChanged(ListSelectionEvent e) {
+			changeExecution();
+		}
+
 	}
 
 	private synchronized void closeFrame() {
@@ -440,6 +478,7 @@ public class DebugFrame implements ActionListener, WindowListener, ListSelection
 					removeExecution(exec);
 				}
 				executionModel.clear();
+				filters.clear();
 				removeDebugFrame();
 				frame.dispose();
 			}
