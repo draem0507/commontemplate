@@ -21,6 +21,7 @@ $!
 								加入标签语法外套支持，如：&lt;ct:if param="users != null && users.size &gt; 0"&gt;...&lt;/cf:if&gt;<br/>
 								使用$output代替原有$out指令，$out指令改为与${}空名称指令等价<br/>
 								调试器Output内容与线程绑定, 可切换显示.<br/>
+								修复调试器在处理层级包含模板时, Step Return不能回到上一模板的BUG.<br/>
 								<br/>
 								<b>0.8.6 版本更新：(2008-08-26)</b> <a href="downloads.html">下载...</a><br/>
 								Bug Fixed:<br/>
