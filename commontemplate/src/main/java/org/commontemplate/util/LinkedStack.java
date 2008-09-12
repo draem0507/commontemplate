@@ -18,6 +18,10 @@ public class LinkedStack implements Stack, Serializable {
 
 	private final LinkedList stack = new LinkedList();
 
+	public int size() {
+		return stack.size();
+	}
+
 	public boolean isEmpty() {
 		return stack.size() == 0;
 	}

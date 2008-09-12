@@ -5,7 +5,6 @@ import java.util.List;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.Element;
 import org.commontemplate.core.Expression;
-import org.commontemplate.core.IgnoreException;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.StopVisitException;
 import org.commontemplate.core.Template;
@@ -27,14 +26,12 @@ final class RootBlockDirectiveImpl extends BlockDirectiveSupport {
 	}
 
 	public void render(Context context) throws RenderingException {
-		try {
-			List directives = getElements();
+		List directives = getElements();
+		if (directives != null) {
 			for (int i = 0, n = directives.size(); i < n; i ++) {
 				Element directive = (Element)directives.get(i);
 				directive.render(context);
 			}
-		} catch (IgnoreException e) {
-			// ignore
 		}
 	}
 

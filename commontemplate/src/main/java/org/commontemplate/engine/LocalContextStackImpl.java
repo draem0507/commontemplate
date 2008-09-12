@@ -103,6 +103,10 @@ final class LocalContextStackImpl implements LocalContextStack, Serializable {
 		return localContextStack.iterator();
 	}
 
+	public int getLocalContextStackSize() {
+		return localContextStack.size();
+	}
+
 	public void clearLocalContexts() {
 		while (! localContextStack.isEmpty()) popLocalContext();
 		localContextStack.clear();
