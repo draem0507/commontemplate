@@ -19,15 +19,9 @@ import org.commontemplate.tools.PropertiesConfigurationLoader;
 
 public class DocumentGenerator {
 
-	private String sourceDir;
-
-	private String targetDir;
-
 	private Factory factory;
 
-	public DocumentGenerator(String sourceDir, String targetDir) {
-		this.sourceDir = sourceDir;
-		this.targetDir = targetDir;
+	public DocumentGenerator() {
 		ConfigurationSettings config = PropertiesConfigurationLoader
 				.loadConfiguration("doc/commontemplate.properties");
 		this.factory = new Engine(config);
@@ -155,14 +149,15 @@ public class DocumentGenerator {
 	}
 
 	public void generateAll(String[] templates) {
-		boolean release = false;
 		for (int i = 0, n = templates.length; i < n; i ++) {
-			generate(templates[i], Locale.CHINA, release);
-			generate(templates[i], Locale.US, release);
+			generate("doc/template/", "doc/", templates[i], Locale.CHINA, true);
+			generate("doc/template/", "doc/", templates[i], Locale.US, true);
+			generate("doc/template/", "doc/build/", templates[i], Locale.CHINA, false);
+			generate("doc/template/", "doc/build/", templates[i], Locale.US, false);
 		}
 	}
 
-	public void generate(String t, Locale l, boolean release) {
+	public void generate(String sourceDir, String targetDir, String t, Locale l, boolean release) {
 		// 执行模板
 		Writer output = null;
 		try {
@@ -208,7 +203,7 @@ public class DocumentGenerator {
 	}
 
 	public static void main(String[] args) {
-		DocumentGenerator generator = new DocumentGenerator("doc/template/", "doc/");
+		DocumentGenerator generator = new DocumentGenerator();
 		generator.generateAll(new String[]{"index", "template", "expression",
 				"config", "integration", "extension", "api", "dependency", "data",
 				"debugger", "viewer", "editor", "converter", "generator", "ant", "faq", "architecture", "criterion", "planning", "requirement", "downloads",
