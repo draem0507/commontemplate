@@ -60,6 +60,8 @@ Section "MainSection" SEC01
   SetOutPath "$INSTDIR"
   SetOverwrite on
   File "CommonTemplate.exe"
+  File "json.jar"
+  File "jyaml.jar"
   CreateDirectory "$SMPROGRAMS\CommonTemplate"
   CreateShortCut "$SMPROGRAMS\CommonTemplate\CommonTemplate.lnk" "$INSTDIR\CommonTemplate.exe"
   CreateShortCut "$DESKTOP\CommonTemplate.lnk" "$INSTDIR\CommonTemplate.exe"
@@ -109,6 +111,8 @@ Section Uninstall
   Delete "$INSTDIR\${PRODUCT_NAME}.url"
   Delete "$INSTDIR\uninst.exe"
   Delete "$INSTDIR\CommonTemplate.exe"
+  Delete "$INSTDIR\json.jar"
+  Delete "$INSTDIR\jyaml.jar"
 
   Delete "$SMPROGRAMS\CommonTemplate\Uninstall.lnk"
   Delete "$SMPROGRAMS\CommonTemplate\www.commontemplate.org.lnk"
