@@ -5,15 +5,17 @@ import java.util.TimeZone;
 
 /**
  * 对象输出格式化
- * 
+ *
+ * @see org.commontemplate.core.OutputController#setOutputFormatter(Class, OutputFormatter)
+ * @see org.commontemplate.core.OutputController#setGeneralOutputFormatter(OutputFormatter)
  * @author liangfei0201@163.com
- * 
+ *
  */
 public interface OutputFormatter {
 
 	/**
 	 * 格式化数据模型为输出字符串
-	 * 
+	 *
 	 * @param model
 	 *            被格式化的数据模型
 	 * @param locale

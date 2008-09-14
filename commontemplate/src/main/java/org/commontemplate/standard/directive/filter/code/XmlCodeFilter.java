@@ -4,11 +4,26 @@ import java.io.Serializable;
 
 import org.commontemplate.core.OutputFilter;
 
+/**
+ * XML代码着色.<br>
+ * 使用如:
+ * <pre>
+ * $code{xml}
+ * &lt;html&gt;
+ *     &lt;body&gt;
+ *     &lt;/body&gt;
+ * &lt;/html&gt;
+ * $end
+ * </pre>
+ *
+ * @author liangfei0201@163.com
+ *
+ */
 public class XmlCodeFilter implements OutputFilter, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	// private String textColor = "#000000";
+	private String textColor = "#000000";
 
 	private String commentColor = "#3f5fbf";
 
@@ -38,7 +53,7 @@ public class XmlCodeFilter implements OutputFilter, Serializable {
 		// 过滤标签
 		result = result.replaceAll("<([^(<|>)]+)>",
 				"[tagtempfont][lesstempsign]$1[greattempsign]</font>");
-		// 过滤属性(双引号) //TODO 单双引号应改为反向引用方式
+		// 过滤属性(双引号)
 		result = result
 				.replaceAll(
 						"(\\s+)([\\w|:]+)(\\s*)\\=(\\s*)(\"[^\"]*\")",
@@ -84,6 +99,70 @@ public class XmlCodeFilter implements OutputFilter, Serializable {
 				+ entityColor + "\">");
 		// return "<font color=\"" + textColor + "\">" + result + "</font>";
 		return result;
+	}
+
+	public String getTextColor() {
+		return textColor;
+	}
+
+	public void setTextColor(String textColor) {
+		this.textColor = textColor;
+	}
+
+	public String getCommentColor() {
+		return commentColor;
+	}
+
+	public void setCommentColor(String commentColor) {
+		this.commentColor = commentColor;
+	}
+
+	public String getTagColor() {
+		return tagColor;
+	}
+
+	public void setTagColor(String tagColor) {
+		this.tagColor = tagColor;
+	}
+
+	public String getAttributeColor() {
+		return attributeColor;
+	}
+
+	public void setAttributeColor(String attributeColor) {
+		this.attributeColor = attributeColor;
+	}
+
+	public String getEqualColor() {
+		return equalColor;
+	}
+
+	public void setEqualColor(String equalColor) {
+		this.equalColor = equalColor;
+	}
+
+	public String getStringColor() {
+		return stringColor;
+	}
+
+	public void setStringColor(String stringColor) {
+		this.stringColor = stringColor;
+	}
+
+	public String getEntityColor() {
+		return entityColor;
+	}
+
+	public void setEntityColor(String entityColor) {
+		this.entityColor = entityColor;
+	}
+
+	public String getDataColor() {
+		return dataColor;
+	}
+
+	public void setDataColor(String dataColor) {
+		this.dataColor = dataColor;
 	}
 
 }

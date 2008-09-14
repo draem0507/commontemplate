@@ -77,6 +77,11 @@ public abstract class Configuration extends TemplateConfiguration {
 	 */
 	public abstract TemplateNameFilter getTemplateNameFilter();
 
+	/**
+	 * 获取上下文初始化器
+	 *
+	 * @return 上下文初始化器
+	 */
 	public abstract ContextInitializer getContextInitializer();
 
 }

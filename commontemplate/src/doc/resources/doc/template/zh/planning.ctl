@@ -18,7 +18,7 @@ $!
 											<td>中</td>
 										</tr>
 										<tr>
-											<td>完成Velocity和FreeMarker的转换为CommonTemplate</td>
+											<td>完成Velocity和FreeMarker模板转换为CommonTemplate</td>
 											<td>需求</td>
 											<td>小</td>
 											<td>低</td>
@@ -130,13 +130,6 @@ $!
 											<td>高</td>
 										</tr>
 										<tr>
-											<td>调试器Output内容应该与线程绑定.</td>
-											<td>优化</td>
-											<td>中</td>
-											<td>中</td>
-											<td>中</td>
-										</tr>
-										<tr>
 											<td>可动态编辑Debug窗口中的变量.</td>
 											<td>优化</td>
 											<td>中</td>
@@ -151,7 +144,7 @@ $!
 											<td>中</td>
 										</tr>
 										<tr>
-											<td>属性外套实现有BUG, 空指针检测不全.</td>
+											<td>属性语法外套实现有BUG, 空指针检测不全.</td>
 											<td>BUG</td>
 											<td>中</td>
 											<td>中</td>
@@ -200,13 +193,6 @@ $!
 											<td>高</td>
 										</tr>
 										<tr>
-											<td>对象存储加一个不分级控制的存储空间. 此存储空间在单一Context内有效(非全局),但不受LocalContext栈的隔离.</td>
-											<td>优化</td>
-											<td>小</td>
-											<td>中</td>
-											<td>中</td>
-										</tr>
-										<tr>
 											<td>测试JspTagLib的集成方案, 尤其是对上下级关联的Tag测试.</td>
 											<td>测试</td>
 											<td>中</td>
@@ -221,14 +207,7 @@ $!
 											<td>低</td>
 										</tr>
 										<tr>
-											<td>指令单元测试, 完善边界值测试, 提高测试覆盖率.</td>
-											<td>测试</td>
-											<td>中</td>
-											<td>中</td>
-											<td>高</td>
-										</tr>
-										<tr>
-											<td>操作符单元测试, 操作符的个数比较多. 急需测试.</td>
+											<td>指令, 操作符单元测试, 完善边界值测试, 提高测试覆盖率.</td>
 											<td>测试</td>
 											<td>大</td>
 											<td>高</td>
@@ -322,13 +301,6 @@ $!
 											<td>高</td>
 										</tr>
 										<tr>
-											<td>"完成properties高亮显示的html过滤, 通用在内容中加入<font color=""""></font>实现:org.commontemplate.standard.directive.filter.highlight.PropertiesCodeFilter"</td>
-											<td>需求</td>
-											<td>小</td>
-											<td>低</td>
-											<td>低</td>
-										</tr>
-										<tr>
 											<td>完成网站的英文版</td>
 											<td>文档</td>
 											<td>大</td>
@@ -349,14 +321,6 @@ $!
 											<td>小</td>
 											<td>低</td>
 											<td>低</td>
-										</tr>
-										<tr>
-											<td>代码生成时, 自动去掉块指令所在的空白行. 如: 模板通常会将$if和$end等放在单独的行中,
-											生成的文本会在指令位置出现空白行, 应实现一过滤器, 自动去掉该空白行.</td>
-											<td>需求</td>
-											<td>中</td>
-											<td>低</td>
-											<td>中</td>
 										</tr>
 										<tr>
 											<td>重构异常, 分析ParsingException, RenderingException,
@@ -400,17 +364,6 @@ $!
 											<td>小</td>
 											<td>低</td>
 											<td>低</td>
-										</tr>
-										<tr>
-											<td>加强模板测试, 在test/integration/template/目录下放一个xxx.ctl, 写入模板,
-											在test/integration/result/目录下放同名的模板结果,
-											运行test/integration.TemplateTester可以进行自动测试. 另外,
-											模板结果的获取可以通过integration.OutTester得到,
-											它将读取模板文件test/integration/out.ctl的内容, 并将解析结果输出到控制台.</td>
-											<td>测试</td>
-											<td>大</td>
-											<td>中</td>
-											<td>中</td>
 										</tr>
 									</table>
 									<br/>

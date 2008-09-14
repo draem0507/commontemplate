@@ -7,6 +7,7 @@ import org.commontemplate.util.Location;
 /**
  * 表达式 (线程安全)
  *
+ * @see org.commontemplate.core.Directive#getExpression()
  * @author liangfei0201@163.com
  *
  */

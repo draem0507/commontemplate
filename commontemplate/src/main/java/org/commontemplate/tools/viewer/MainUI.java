@@ -91,7 +91,7 @@ public class MainUI {
 		frame.setVisible(true);
 	}
 
-	public static void showException(Exception e) {
+	public static void showException(Throwable e) {
 		StringWriter out = new StringWriter();
 		e.printStackTrace(new PrintWriter(out));
 		String msg = out.getBuffer().toString();

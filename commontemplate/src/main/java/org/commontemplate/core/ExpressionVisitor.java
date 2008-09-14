@@ -1,7 +1,12 @@
 package org.commontemplate.core;
 
 /**
- * 表达式结构访问者，用于遍历整个表达式树
+ * 表达式结构访问者，用于遍历整个表达式树.<br>
+ * 使用如:
+ * <pre>
+ * ExpressionVisitor visitor = new MyExpressionVisitor();
+ * expression.accept(visitor);
+ * </pre>
  *
  * @author liangfei0201@163.com
  *

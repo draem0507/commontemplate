@@ -3,20 +3,22 @@ package org.commontemplate.standard.directive.filter.escape;
 import java.io.Serializable;
 
 import org.commontemplate.core.OutputFilter;
-import org.commontemplate.util.coder.HTML;
 
 /**
- * HTML转义过滤器.
+ * 换行符转义过滤器.
+ * "\n"换行符转为"&lt;br/&gt;"
  *
  * @author liangfei0201@163.com
  *
  */
-public class HtmlEscapeFilter implements OutputFilter, Serializable {
+public class NewlineEscapeFilter implements OutputFilter, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	public String filter(String message) {
-		return HTML.encode(message);
+		if (message == null)
+			return null;
+		return message.replaceAll("\r?\n", "<br/>$0");
 	}
 
 }

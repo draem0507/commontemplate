@@ -1,7 +1,7 @@
 package org.commontemplate.core;
 
 /**
- * 指令
+ * 指令表达式
  *
  * @author Achievo 梁飞
  *
@@ -9,9 +9,9 @@ package org.commontemplate.core;
 public abstract class Directive extends Element {
 
 	/**
-	 * 得到该指令表达式
+	 * 获取指令的参数表达式
 	 *
-	 * @return 表达式, 指令未定表达式时返时null.
+	 * @return 指令的参数表达式, 指令没有表达式时返时null.
 	 */
 	public abstract Expression getExpression();
 

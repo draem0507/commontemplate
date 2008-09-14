@@ -4,7 +4,7 @@ public class MainTester {
 
 	public static void main(String[] args) {
 		try {
-			new Thread(new Runnable() {
+			/*new Thread(new Runnable() {
 				public void run() {
 					try {
 						Main.run("d", "F:\\CommonTemplate\\test\\test_yaml.ctl");
@@ -12,8 +12,8 @@ public class MainTester {
 						e.printStackTrace();
 					}
 				}
-			}).start();
-			Main.run("d", "F:\\CommonTemplate\\test\\test_xml.ctl");
+			}).start();*/
+			Main.run("v", "F:\\CommonTemplate\\test\\xxx.ctl");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
