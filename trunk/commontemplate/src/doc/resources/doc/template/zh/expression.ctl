@@ -203,6 +203,7 @@ $!
 								base64Code BASE64编码, 如:  ${"mail".base64Code}<br/>
 								escapeHtml HTML转码, 将&lt;和&gt;分别转成&amp;lt;和&amp;gt;等, 如:  ${"&lt;b&gt;".escapeHtml}<br/>
 								escapeXml XML转码, 如:  ${"&lt;book&gt;&lt;book&gt;".escapeXml}<br/>
+								escapeXhtml XHTML转码, 如:  ${"&lt;book&gt;&lt;book&gt;".escapeXhtml}<br/>
 								escapeUrl URL转码, 如:  ${"http://xxx.com?xx=xx&yy=yy".escapeUrl}<br/>
 								escapeJs JS转码, 如:  ${"\"\n\"".escapeJs}<br/>
 								toCamelNaming 转为骆驼命名, 如：${"user_name".toCamelNaming} 输出：userName<br/>
