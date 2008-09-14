@@ -18,7 +18,7 @@ public class TemplateRendererTester extends TestCase {
 		assertEquals("YanRongYanRongYanRongYanRongYanRong", templateRender.evaluate());
 	}
 
-	public static class User { // TODO User类为private时通不过, ClassUtils待优化.
+	private static class User {
 
 		String name;
 
