@@ -24,5 +24,8 @@
 	<classpathentry kind="lib" path="lib/jericho-html-2.5.jar"/>
 	<classpathentry kind="lib" path="lib/log4j.jar"/>
 	<classpathentry kind="lib" path="lib/velocity-1.5.jar" sourcepath="F:/workspace/velocity/src"/>
+	<classpathentry kind="lib" path="lib/xstream-1.2.1.jar"/>
+	<classpathentry kind="lib" path="lib/jyaml.jar"/>
+	<classpathentry kind="lib" path="lib/json.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
