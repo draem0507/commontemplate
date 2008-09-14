@@ -1,7 +1,12 @@
 package org.commontemplate.core;
 
 /**
- * 模板结构访问者，用于遍历整个模板指令树
+ * 模板结构访问者，用于遍历整个模板指令树.<br>
+ * 使用如:
+ * <pre>
+ * TemplateVisitor visitor = new MyTemplateVisitor();
+ * template.accept(visitor);
+ * </pre>
  *
  * @author liangfei0201@163.com
  *

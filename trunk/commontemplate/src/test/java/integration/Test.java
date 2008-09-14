@@ -1,12 +1,12 @@
 package integration;
 
-import org.commontemplate.util.ClassUtils;
+import org.commontemplate.standard.directive.filter.escape.XmlEscapeFilter;
 
 public class Test {
 
 	public static void main(String[] args) {
 		try {
-			System.out.println(ClassUtils.forName("boolean"));
+			System.out.println(new XmlEscapeFilter().filter("<html xxx=\"yyy & zzz\"></html>"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

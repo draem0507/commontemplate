@@ -2,7 +2,7 @@ package org.commontemplate.standard.data;
 
 import java.util.Map;
 
-import org.commontemplate.util.json.JSONUtils;
+import org.commontemplate.util.JSONUtils;
 
 /**
  * JSON格式数据供给策略. 如:<br/>

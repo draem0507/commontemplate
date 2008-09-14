@@ -192,8 +192,9 @@ $!
 								任意对象的null属性都返回null，如：obj.null 返回null<br/>
 								null的null属性也返回null，如：null.null 返回null<br/>
 								<b>(2) 对象(Object/Bean):</b><br/>
-								toJson 输出JSON格式的字符串表示，如：${user.toJson}, ${map.toJson}<br/>
-								toXml 输出XML格式的字符串表示，如：${user.toXml}, ${map.toXml}<br/>
+								toJson 输出JSON格式的字符串表示，如：${user.toJson}, ${map.toJson} <font color="green">(注：需json.jar支持)</font><br/>
+								toXml 输出XML格式的字符串表示，如：${user.toXml}, ${map.toXml} <font color="green">(注：采用java.beans.XMLEncoder实现)</font><br/>
+								toXstream 输出Xstream的XML格式的字符串表示，如：${user.toXstream} <font color="green">(注：需xstream.jar支持)</font><br/>
 								<b>(3) 字符串(String):</b><br/>
 								capitalize 首字母大写, eg: ${"james".capitalize} (输出：James)<br/>
 								uncapitalize 首字母小写, eg: ${"James".uncapitalize} (输出：james)<br/>
@@ -227,6 +228,9 @@ $!
 								whitespace 是否为空白字符串, 如：${" ".whitespace} 输出：true<br/>
 								naming 是否为命名字符串, 如：${"abc".naming} 输出：true<br/>
 								number 是否为数字字符串, 如：${"123".number} 输出：true<br/>
+								fromJson 将Json字符串转换为对象值(Map或List), 如：${"{name:'kent'}".fromJson}<br/>
+								fromXml 将XML字符串转换为对象值, 如：${"&lt;int&gt;1&lt;/int&gt;".fromJson}<br/>
+								fromXstream 将Xstream字符串转换为对象值, 如：${"&lt;int&gt;1&lt;/int&gt;".fromXstream}<br/>
 								<b>(4) 日期(Date):</b><br/>
 								year, month, day, hour, minute, second, millisecond 时间各个部分取值, 如: ${createDate.day} ${createDate.hour}<br/>
 								week 星期几， 如: ${createDate.week}<br/>

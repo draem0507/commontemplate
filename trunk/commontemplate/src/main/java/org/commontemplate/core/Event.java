@@ -2,9 +2,11 @@ package org.commontemplate.core;
 
 /**
  * 事件信息
- * 
+ *
+ * @see org.commontemplate.core.EventListener#onEvent(Event)
+ * @see org.commontemplate.core.EventPublisher#publishEvent(Event)
  * @author liangfei0201@163.com
- * 
+ *
  */
 public abstract class Event extends java.util.EventObject {
 
@@ -14,7 +16,7 @@ public abstract class Event extends java.util.EventObject {
 
 	/**
 	 * 事件信息
-	 * 
+	 *
 	 * @param source
 	 *            事件的发起者
 	 */
@@ -25,7 +27,7 @@ public abstract class Event extends java.util.EventObject {
 
 	/**
 	 * 设置上下文
-	 * 
+	 *
 	 * @param context
 	 *            上下文
 	 */
@@ -35,7 +37,7 @@ public abstract class Event extends java.util.EventObject {
 
 	/**
 	 * 事件发布的上下文
-	 * 
+	 *
 	 * @return 上下文
 	 */
 	public Context getContext() {
@@ -44,7 +46,7 @@ public abstract class Event extends java.util.EventObject {
 
 	/**
 	 * 获取事件发布时的时间戳
-	 * 
+	 *
 	 * @return 时间戳
 	 */
 	public long getTimestamp() {

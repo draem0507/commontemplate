@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.util.Map;
 
-import org.commontemplate.util.yaml.Yaml;
+import org.ho.yaml.Yaml;
 
 public class YamlDataProvider implements DataProvider {
 

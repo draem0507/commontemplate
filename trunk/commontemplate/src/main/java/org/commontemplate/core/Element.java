@@ -7,6 +7,8 @@ import org.commontemplate.util.Location;
 /**
  * 模板组成元素 <p/> (线程安全)
  *
+ * @see org.commontemplate.core.Template#getElements()
+ * @see org.commontemplate.core.BlockDirective#getElements()
  * @author liangfei0201@163.com
  *
  */

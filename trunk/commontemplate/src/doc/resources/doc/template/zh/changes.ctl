@@ -22,6 +22,10 @@ $!
 								使用$output代替原有$out指令，$out指令改为与${}空名称指令等价<br/>
 								调试器Output内容与线程绑定, 可切换显示.<br/>
 								修复调试器在处理层级包含模板时, Step Return不能回到上一模板的BUG.<br/>
+								修复toJson防止循环引用的BUG.<br/>
+								实现PropertiesCodeFilter, 使用如: $code{properties}...$end 或者 $code{ini}...$end<br/>
+								增加扩展属性Object.toXstream, String.fromJson, String.fromXml, String.fromXstream<br/>
+								不再内嵌json和jyaml的源码, 直接依赖json.jar和jyaml.jar<br/>
 								<br/>
 								<b>0.8.6 版本更新：(2008-08-26)</b> <a href="downloads.html">下载...</a><br/>
 								Bug Fixed:<br/>

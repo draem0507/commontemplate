@@ -278,7 +278,10 @@ $!
 								$rtrim <font color="green">(注: 只将右端的空白符截掉)</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end <br/>
-								转义特殊符: <font color="green">(注: 内置支持html,js,url,base64等格式，可扩展)</font> <a href="extension.html#escape">扩展...</a><br/>
+								转义特殊符: <font color="green">(注: 内置支持xml,xhtml,html,js,url,base64,newline等格式，可扩展)</font> <a href="extension.html#escape">扩展...</a><br/>
+								$escape{html} <font color="green">(注: 单个过滤器名时，引号可省，如果滤器名需取变量，可使用$escape{\name})</font><br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+								$end<br/>
 								$escape{"html", "js"}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$end<br/>
@@ -382,7 +385,7 @@ $!
 								注：此语法外套因解析HTML语法，有性能损耗，所以未默认开启，需自行配置：<br/>
 								resourceFilters[200]=<font color="#2a00ff">org.commontemplate.standard.coat.AttributeSyntaxCoatFilter()</font><br/>
 								resourceFilters[200].namespace=<font color="#2a00ff">ct</font><br/>
-								<font color="green">(注：此语法外套使用ResourceFilter扩展点实现，在资源加载时使用jericho进行html解析，对不规则HTML语法的兼容性，以jericho的实现为准，转换时间消耗较大)</font><br/>
+								<font color="green">(注：此语法外套使用ResourceFilter扩展点实现，在资源加载时使用jericho进行html解析，对不规则HTML语法的兼容性，以jericho的实现为准，转换时间消耗较大，需jericho.jar支持)</font><br/>
 								<br/>
 								<b>七. 举例:</b><br/>
 								<b>(1) 标准语法：</b><br/>

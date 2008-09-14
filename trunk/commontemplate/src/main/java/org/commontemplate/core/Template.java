@@ -9,6 +9,8 @@ import java.util.List;
  * (线程安全)
  *
  * @see org.commontemplate.core.TemplateLoader
+ * @see org.commontemplate.core.TemplateBudiler
+ * @see org.commontemplate.core.TemplateFactory
  * @see org.commontemplate.core.Factory
  * @author liangfei0201@163.com
  *

@@ -20,7 +20,7 @@ public class Main {
 			} else if (args.length == 2) {
 				run(args[0], args[1]);
 			}
-		} catch (Exception e) {
+		} catch (Throwable e) {
 			MainUI.showException(e);
 		}
 	}
