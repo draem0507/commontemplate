@@ -121,4 +121,9 @@ public abstract class BaseContext implements VariableStorage, StatusStorage, Pro
 		put(key, new Double(value));
 	}
 
+	protected void finalize() throws Throwable {
+		super.finalize();
+		clear(); // 保护性释放
+	}
+
 }
