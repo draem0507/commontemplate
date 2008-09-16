@@ -1,16 +1,14 @@
-<object>
-	<object name="mail">
-		<object name="from">xxx@xxx.com</object>
-		<object name="to">yyy@yyy.com</object>
-	</object>
-	<array name="users">
-		<object>
-			<object name="id">1</object>
-			<object name="name">james</object>
-		</object>
-		<object>
-			<object name="id">2</object>
-			<object name="name">kent</object>
-		</object>
-	</array>
-</object>
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts-config PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+    "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<struts-config>
+    <form-beans>
+        <form-bean name="userForm" type="com.xxx.UserForm" />
+    </form-beans>
+    <action-mappings>
+        <action path="/user/list" name="userForm" type="com.xxx.UserAction">
+            <forward name="success" path="/user/list.ctl" />
+        </action>
+    </action-mappings>
+</struts-config>
