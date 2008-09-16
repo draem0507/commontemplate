@@ -23,7 +23,7 @@ public class XmlCodeFilter implements OutputFilter, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private String textColor = "#000000";
+	private String textColor = null;
 
 	private String commentColor = "#3f5fbf";
 
@@ -41,36 +41,34 @@ public class XmlCodeFilter implements OutputFilter, Serializable {
 
 	public String filter(String text) {
 		String result = text;
+		// 过滤&符号
+		result = result.replaceAll("&", "&amp;");
 		// 过滤CDATA //TODO 应该文本化CDATA里面的标签
-		result = result
-				.replaceAll(
-						"<!\\[CDATA\\[([^(\\]\\])]*)\\]\\]>",
-						"[datatempfont][lesstempsign]![CDATA[[/endtempfont]$1[datatempfont]]][greattempsign][/endtempfont]");
+		result = result.replaceAll(
+						"<!\\[CDATA\\[([^(\\]\\]\\>)]*)\\]\\]>",
+						"\1&lt;![CDATA[\0$1\1]]&gt;\0");
 		// 过滤注释
-		result = result
-				.replaceAll("<!--([^(\\-\\->)]*)-->",
-						"[commenttempfont][lesstempsign]!--$1--[greattempsign][/endtempfont]");
+		result = result.replaceAll("<!--([^(\\-\\->)]*)-->",
+						"\2&lt;!--$1--&gt;\0");
 		// 过滤标签
 		result = result.replaceAll("<([^(<|>)]+)>",
-				"[tagtempfont][lesstempsign]$1[greattempsign]</font>");
+				"\3&lt;$1&gt;</font>");
 		// 过滤属性(双引号)
 		result = result
 				.replaceAll(
 						"(\\s+)([\\w|:]+)(\\s*)\\=(\\s*)(\"[^\"]*\")",
-						"$1[attributetempfont]$2</font>$3[equaltempfont]=</font>$4[stringtempfont]$5</font>");
+						"$1\4$2</font>$3\5=</font>$4\6$5</font>");
 		// 过滤属性(单引号)
 		result = result
 				.replaceAll(
 						"(\\s+)([\\w|:]+)(\\s*)\\=(\\s*)(\'[^\']*\')",
-						"$1[attributetempfont]$2</font>$3[equaltempfont]=</font>$4[stringtempfont]$5</font>");
-		// 过滤&符号
-		// result = result.replaceAll("&", "&amp;");
+						"$1\4$2</font>$3\5=</font>$4\6$5</font>");
+		// 指令字符串(双引号)
+		//result = result.replaceAll("[^\6]\"[^\"]*\"[^<]", "\6$0</font>");
+		// 指令字符串(双引号)
+		//result = result.replaceAll("[^\6]\'[^\']*\'[^<]", "\6$0</font>");
 		// 过滤dtd实体
-		result = result.replaceAll("(&amp;[A-Z|a-z]+;)",
-				"[entitytempfont]$1</font>");
-		// 过滤HtmlUnicode转码
-		result = result.replaceAll("(&amp;#[0-9]+;)",
-				"[entitytempfont]$1</font>");
+		result = result.replaceAll("(&amp;#?[0-9|a-z|A-Z]+;)", "\7$1</font>");
 		// 过滤空格
 		result = result.replaceAll(" ", "&nbsp;");
 		// 过滤缩进
@@ -80,24 +78,16 @@ public class XmlCodeFilter implements OutputFilter, Serializable {
 		// 过滤换行
 		result = result.replaceAll("\n", "<br/>\n");
 		// 下面的替换把上面作的标记换成相应颜色
-		result = result.replaceAll("\\[lesstempsign\\]", "&lt;");
-		result = result.replaceAll("\\[greattempsign\\]", "&gt;");
-		result = result.replaceAll("\\[/endtempfont\\]", "</font>");
-		result = result.replaceAll("\\[commenttempfont\\]", "<font color=\""
-				+ commentColor + "\">");
-		result = result.replaceAll("\\[datatempfont\\]", "<font color=\""
-				+ dataColor + "\">");
-		result = result.replaceAll("\\[tagtempfont\\]", "<font color=\""
-				+ tagColor + "\">");
-		result = result.replaceAll("\\[attributetempfont\\]", "<font color=\""
-				+ attributeColor + "\">");
-		result = result.replaceAll("\\[equaltempfont\\]", "<font color=\""
-				+ equalColor + "\">");
-		result = result.replaceAll("\\[stringtempfont\\]", "<font color=\""
-				+ stringColor + "\">");
-		result = result.replaceAll("\\[entitytempfont\\]", "<font color=\""
-				+ entityColor + "\">");
-		// return "<font color=\"" + textColor + "\">" + result + "</font>";
+		result = result.replaceAll("\0", "</font>");
+		result = result.replaceAll("\1", "<font color=\"" + dataColor + "\">");
+		result = result.replaceAll("\2", "<font color=\"" + commentColor + "\">");
+		result = result.replaceAll("\3", "<font color=\"" + tagColor + "\">");
+		result = result.replaceAll("\4", "<font color=\"" + attributeColor + "\">");
+		result = result.replaceAll("\5", "<font color=\"" + equalColor + "\">");
+		result = result.replaceAll("\6", "<font color=\"" + stringColor + "\">");
+		result = result.replaceAll("\7", "<font color=\"" + entityColor + "\">");
+		if (textColor != null && textColor.length() > 0)
+			return "<font color=\"" + textColor + "\">" + result + "</font>";
 		return result;
 	}
 

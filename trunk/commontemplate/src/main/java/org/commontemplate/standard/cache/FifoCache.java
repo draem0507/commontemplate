@@ -10,9 +10,9 @@ import org.commontemplate.util.Assert;
 
 /**
  * 先进先出原则缓存
- * 
+ *
  * @author liangfei0201@163.com
- * 
+ *
  */
 public class FifoCache implements Cache {
 
@@ -35,8 +35,8 @@ public class FifoCache implements Cache {
 				// 移除链表最前的位置的元素
 				Object oldKey = keyList.removeFirst();
 				cacheMap.remove(oldKey);
-			} catch (IndexOutOfBoundsException e) {
-				// ignore
+			} catch (Exception e) {
+				// 移除最前的元素失败, 忽略
 			}
 		}
 	}

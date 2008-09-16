@@ -10,9 +10,9 @@ import org.commontemplate.util.Assert;
 
 /**
  * 最近最少使用原则缓存
- * 
+ *
  * @author liangfei0201@163.com
- * 
+ *
  */
 public class LruCache implements Cache {
 
@@ -35,18 +35,23 @@ public class LruCache implements Cache {
 				// 移除链表最前的位置的元素，get()方法已保证第一个位置上的元素为最近最少使用
 				Object oldKey = keyList.removeFirst();
 				cacheMap.remove(oldKey);
-			} catch (IndexOutOfBoundsException e) {
-				// ignore
+			} catch (Exception e) {
+				// 移除最前的元素失败, 忽略
 			}
 		}
 	}
 
 	public Object get(Object key) throws CacheException {
 		Object result = cacheMap.get(key);
-		// 当某个元素被命中时，将其调整到链表未尾，保证链表最前的元素就是最近最少使用的元素
-		keyList.remove(key);
-		if (result != null) 
-			keyList.add(key);
+		if (result != null) {
+			// 当某个元素被命中时，将其调整到链表未尾，保证链表最前的元素就是最近最少使用的元素
+			try {
+				keyList.remove(key);
+				keyList.add(key);
+			} catch (Exception e) {
+				// 移动元素失败, 忽略
+			}
+		}
 		return result;
 	}
 
