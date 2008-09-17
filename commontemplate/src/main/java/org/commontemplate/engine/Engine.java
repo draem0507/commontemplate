@@ -50,7 +50,7 @@ public final class Engine implements Factory {
 	public Engine(Configuration config) {
 		Assert.assertNotNull(config, "Engine.config.required");
 		// 创建模板工厂
-		this.templateLoader = new TemplateFactoryImpl(new TemplateEngine(config),
+		this.templateLoader = new TemplateLoaderImpl(new TemplateEngine(config),
 				config.getResourceLoader(), config.getTemplateCache(),
 				config.getReloadController(), config.getResourceComparator());
 		// 创建上下文工厂

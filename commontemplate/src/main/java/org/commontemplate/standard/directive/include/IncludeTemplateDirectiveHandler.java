@@ -22,6 +22,18 @@ public class IncludeTemplateDirectiveHandler extends DirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
+	// TODO 未实现
+	// 是否本地化查找模板, 如: xxx_zh_CN.ctl
+	private boolean localizedLookup;
+
+	public boolean isLocalizedLookup() {
+		return localizedLookup;
+	}
+
+	public void setLocalizedLookup(boolean localizedLookup) {
+		this.localizedLookup = localizedLookup;
+	}
+
 	public void doRender(Context context, String directiveName, Object param) throws Exception {
 		String templateName = null;
 		String templateEncoding = null;
