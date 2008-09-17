@@ -27,12 +27,24 @@ public class IOUtils {
 		return readToString(new InputStreamReader(inputStream));
 	}
 
+	public static String readToString(InputStream inputStream, String encoding) throws IOException {
+		return readToString(new InputStreamReader(inputStream, encoding));
+	}
+
 	public static char[] readToChars(InputStream inputStream) throws IOException {
 		return readToChars(new InputStreamReader(inputStream));
 	}
 
+	public static char[] readToChars(InputStream inputStream, String encoding) throws IOException {
+		return readToChars(new InputStreamReader(inputStream, encoding));
+	}
+
 	public static byte[] readToBytes(InputStream inputStream) throws IOException {
 		return readToBytes(new InputStreamReader(inputStream));
+	}
+
+	public static byte[] readToBytes(InputStream inputStream, String encoding) throws IOException {
+		return readToBytes(new InputStreamReader(inputStream, encoding));
 	}
 
 	public static String readToString(Reader reader) throws IOException {
