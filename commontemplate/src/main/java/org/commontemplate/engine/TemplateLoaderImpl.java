@@ -91,7 +91,7 @@ final class TemplateLoaderImpl implements TemplateLoader {
 	private final Cache cache;
 
 	private Template cache(String name, Locale locale, String encoding)
-			throws IOException, ParsingException {
+			throws IOException, ParsingException { // TODO 未处理locale后缀
 		if (cache == null)
 			return parseTemplate(load(name, encoding));
 
