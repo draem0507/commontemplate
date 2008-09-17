@@ -2,13 +2,36 @@ package concurrent;
 
 import junit.framework.TestCase;
 
+import org.commontemplate.engine.Engine;
+import org.commontemplate.standard.ConfigurationSettings;
+import org.commontemplate.tools.PropertiesConfigurationLoader;
+
 public class ConcurrentTester extends TestCase {
 
-	public void testConcurrent() {
-		Thread th = new Thread(new Runnable(){
-			public void run() {
-			}
-		});
+	private Engine engine;
+
+	public ConcurrentTester() {
+		ConfigurationSettings config = PropertiesConfigurationLoader
+				.loadConfiguration("doc/commontemplate.properties");
+		this.engine = new Engine(config);
+	}
+
+	public void testConcurrent() throws Exception {
+		// FIXME 并发时, 磁盘缓存发生java.io.EOFException, 读取到了不完整的缓存文件
+		for (int i = 0; i < 100; i ++) {
+			new ConcurrentThread(engine, "concurrent/1.ctl", 500 - i * 10).start();
+			new ConcurrentThread(engine, "concurrent/2.ctl", 500 - i * 10).start();
+			new ConcurrentThread(engine, "concurrent/3.ctl", 500 - i * 10).start();
+			new ConcurrentThread(engine, "concurrent/4.ctl", 500 - i * 10).start();
+		}
+	}
+
+	public static void main(String[] args) {
+		try {
+			new ConcurrentTester().testConcurrent();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

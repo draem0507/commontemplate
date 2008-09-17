@@ -24,6 +24,9 @@ import org.commontemplate.util.Assert;
  */
 public class DiskSerialCache implements Cache {
 
+	// FIXME 并发时, 磁盘缓存发生java.io.EOFException, 读取到了不完整的缓存文件
+	// 以及并发创建文件夹：./cache/ 失败！
+
 	private String root;
 
 	/**
