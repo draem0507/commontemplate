@@ -35,7 +35,7 @@ import org.commontemplate.util.UrlUtils;
  * @author liangfei0201@163.com
  *
  */
-final class TemplateFactoryImpl implements TemplateLoader {
+final class TemplateLoaderImpl implements TemplateLoader {
 
 	/**
 	 * 构造模板工厂
@@ -47,7 +47,7 @@ final class TemplateFactoryImpl implements TemplateLoader {
 	 * @param resourceComparator 模板源比较器
 	 *
 	 */
-	TemplateFactoryImpl(TemplateParser templateParser, ResourceLoader resourceLoader,
+	TemplateLoaderImpl(TemplateParser templateParser, ResourceLoader resourceLoader,
 			Cache cache, ReloadController reloadController,
 			ResourceComparator resourceComparator) {
 		Assert.assertNotNull(resourceLoader, "TemplateFactoryImpl.resource.loader.required");
