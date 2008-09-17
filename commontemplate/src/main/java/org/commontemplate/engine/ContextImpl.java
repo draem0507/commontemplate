@@ -461,6 +461,16 @@ final class ContextImpl extends Context {
 		return templateLoader.getTemplate(relateTemplateName(name), encoding);
 	}
 
+	public Template getTemplate(String name, Locale locale) throws IOException,
+			ParsingException {
+		return templateLoader.getTemplate(name, locale);
+	}
+
+	public Template getTemplate(String name, Locale locale, String encoding)
+			throws IOException, ParsingException {
+		return templateLoader.getTemplate(name, locale, encoding);
+	}
+
 	public Resource loadResource(String name)
 			throws IOException {
 		String encoding = getCurrentTemplateEncoding();

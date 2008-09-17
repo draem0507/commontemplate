@@ -70,6 +70,16 @@ public final class Engine implements Factory {
 		return templateLoader.getTemplate(name, encoding);
 	}
 
+	public Template getTemplate(String name, Locale locale) throws IOException,
+			ParsingException {
+		return templateLoader.getTemplate(name, locale);
+	}
+
+	public Template getTemplate(String name, Locale locale, String encoding)
+			throws IOException, ParsingException {
+		return templateLoader.getTemplate(name, locale, encoding);
+	}
+
 	public final Resource loadResource(String name, String encoding)
 			throws IOException {
 		return templateLoader.loadResource(name, encoding);

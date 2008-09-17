@@ -2,6 +2,7 @@ package org.commontemplate.engine;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 import org.commontemplate.config.Cache;
 import org.commontemplate.config.ReloadController;
@@ -64,11 +65,21 @@ final class TemplateLoaderImpl implements TemplateLoader {
 	// 实现TemplateFactory -------
 
 	public Template getTemplate(String name) throws IOException, ParsingException {
-		return cache(filterName(name), null);
+		return cache(filterName(name), null, null);
 	}
 
 	public Template getTemplate(String name, String encoding) throws IOException, ParsingException {
-		return cache(filterName(name), encoding);
+		return cache(filterName(name), null, encoding);
+	}
+
+	public Template getTemplate(String name, Locale locale) throws IOException,
+			ParsingException {
+		return cache(filterName(name), locale, null);
+	}
+
+	public Template getTemplate(String name, Locale locale, String encoding)
+			throws IOException, ParsingException {
+		return cache(filterName(name), locale, encoding);
 	}
 
 	// 缓存同步 -------
@@ -79,7 +90,7 @@ final class TemplateLoaderImpl implements TemplateLoader {
 
 	private final Cache cache;
 
-	private Template cache(String name, String encoding)
+	private Template cache(String name, Locale locale, String encoding)
 			throws IOException, ParsingException {
 		if (cache == null)
 			return parseTemplate(load(name, encoding));

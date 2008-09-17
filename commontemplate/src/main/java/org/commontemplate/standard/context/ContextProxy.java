@@ -524,4 +524,14 @@ public abstract class ContextProxy extends Context {
 		return context.getTemplateStackSize();
 	}
 
+	public Template getTemplate(String name, Locale locale, String encoding)
+			throws IOException, ParsingException {
+		return context.getTemplate(name, locale, encoding);
+	}
+
+	public Template getTemplate(String name, Locale locale) throws IOException,
+			ParsingException {
+		return context.getTemplate(name, locale);
+	}
+
 }
