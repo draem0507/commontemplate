@@ -65,6 +65,9 @@ public class DocumentGenerator {
 								.addChild(
 										new Menu("menu.faq",
 												"faq.html"))
+								.addChild(
+										new Menu("menu.versus",
+												"versus.html"))
 						)
 				.addChild(
 						new Menu("menu.tools")
@@ -209,7 +212,7 @@ public class DocumentGenerator {
 		DocumentGenerator generator = new DocumentGenerator();
 		generator.generateAll(new String[]{"index", "template" , "expression", "coat",
 				"config", "integration", "extension", "api", "dependency", "data",
-				"debugger", "viewer", "editor", "converter", "generator", "ant", "faq", "architecture", "criterion", "planning", "requirement", "downloads",
+				"debugger", "viewer", "editor", "converter", "generator", "ant", "faq", "versus", "architecture", "criterion", "planning", "requirement", "downloads",
 				"uml", "about", "changes", "join", "demo_extends"});
 	}
 

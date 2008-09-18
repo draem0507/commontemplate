@@ -148,6 +148,10 @@ memoryCache.maxSize=1000
 # 自动导入宏模板，以xx为名称空间导入xxx.ctl和yyy.ctl的配置如下：
 autoImport{my}=xxx.ctl,yyy.ctl
 
+# \$embed, \$include, \$display等指令查找模板时，是否本地化查找，不设置默认为true
+# 如：\$include{"xxx.ctl"}，假设本地区域信息为zh_CN，首先查找"xxx_zh_CN.ctl"，不存在则查找"xxx_zh.ctl"，否则查找"xxx.ctl"
+localizedLookup=true
+
 # 响应内容类型, 不设置默认为text/html
 response.contentType=text/html
 $end{code}
