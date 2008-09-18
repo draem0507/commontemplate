@@ -31,10 +31,6 @@ final class BinaryOperatorImpl extends BinaryOperator {
 
 	private final BinaryOperatorHandler handler;
 
-	private final boolean associativeLaw;
-
-	private final boolean commutativeLaw;
-
 	private final boolean rightToLeft;
 
 	private final boolean leftOperandLazy;
@@ -48,6 +44,12 @@ final class BinaryOperatorImpl extends BinaryOperator {
 	private final boolean rightOperandDotNamed;
 
 	private final boolean rightOperandFunctioned;
+
+	private final boolean optimize;
+
+	private final boolean associative;
+
+	private final boolean commutative;
 
 	private final List evaluateInterceptors;
 
@@ -66,8 +68,9 @@ final class BinaryOperatorImpl extends BinaryOperator {
 		this.rightOperandNamed = handler.isRightOperandNamed();
 		this.rightOperandDotNamed = handler.isRightOperandDotNamed();
 		this.rightOperandFunctioned = handler.isRightOperandFunctioned();
-		this.associativeLaw = handler.isAssociative();
-		this.commutativeLaw = handler.isCommutative();
+		this.optimize = handler.isOptimize();
+		this.associative = handler.isAssociative();
+		this.commutative = handler.isCommutative();
 		this.evaluateInterceptors = evaluateInterceptors;
 		this.proxy = new BinaryOperatorProxy(this);
 	}
@@ -111,12 +114,16 @@ final class BinaryOperatorImpl extends BinaryOperator {
 		return priority;
 	}
 
-	boolean isAssociativeLaw() {
-		return associativeLaw;
+	boolean isOptimize() {
+		return optimize;
 	}
 
-	boolean isCommutativeLaw() {
-		return commutativeLaw;
+	boolean isAssociative() {
+		return associative;
+	}
+
+	boolean isCommutative() {
+		return commutative;
 	}
 
 	boolean isRightToLeft() {

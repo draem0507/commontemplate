@@ -220,6 +220,7 @@ $!
 								注意事项：<br/>
 								OperatorHandler应该保证线程安全，方式同上面的DirectiveHandler<br/>
 								OperatorHandler不应该改变操作数的状态，如：两个集合相加，应将两个集合的项添加到一个新的集合中，而不是将其中一个集合的项添加到另一个集合中。<br/>
+								当操作数都为常量时，编译器会在编译期求值，并保存到表达式树，操符符应保证传入相同的参数，总是得到相同的结果<br/>
 								特殊操作数：<br/>
 								(a) 操作数延迟求值：<br/>
 								用于短路情况，声明Lazy后，参数将以LazyOperand的实例传入，需使用operand = ((LazyOperand)operand).evaluate()方式取其真实值。<br/>

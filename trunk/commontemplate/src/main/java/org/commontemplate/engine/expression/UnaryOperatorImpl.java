@@ -39,6 +39,8 @@ final class UnaryOperatorImpl extends UnaryOperator {
 
 	private final boolean operandFunctioned;
 
+	private final boolean optimize;
+
 	private final List evaluateInterceptors;
 
 	private final UnaryOperator proxy;
@@ -53,6 +55,7 @@ final class UnaryOperatorImpl extends UnaryOperator {
 		this.operandNamed  = handler.isOperandNamed();
 		this.operandDotNamed  = handler.isOperandDotNamed();
 		this.operandFunctioned = handler.isOperandFunctioned();
+		this.optimize = handler.isOptimize();
 		this.evaluateInterceptors = evaluateInterceptors;
 		this.proxy = new UnaryOperatorProxy(this);
 	}
@@ -99,8 +102,12 @@ final class UnaryOperatorImpl extends UnaryOperator {
 		return operandDotNamed;
 	}
 
-	public boolean isOperandFunctioned() {
+	boolean isOperandFunctioned() {
 		return operandFunctioned;
+	}
+
+	boolean isOptimize() {
+		return optimize;
 	}
 
 	private Expression operand;

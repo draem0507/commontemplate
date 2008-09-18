@@ -9,6 +9,7 @@ import org.commontemplate.core.Operator;
 import org.commontemplate.core.UnaryOperator;
 import org.commontemplate.core.Variable;
 import org.commontemplate.util.Assert;
+import org.commontemplate.util.Function;
 import org.commontemplate.util.I18nExceptionFactory;
 import org.commontemplate.util.LinkedStack;
 import org.commontemplate.util.Stack;
@@ -176,7 +177,8 @@ final class ExpressionReducer {
 				// 常量优化算法，将常量先计算，如：
 				// 2 * 3 + coins 将被优化为 6 + coins
 				// (注: 表达式应尽量把常量计算写在前面, 如: 24 * 60 * days, 而不要用 days * 24 * 60)
-				if (leftParameter instanceof Constant
+				if (binaryOperator.isOptimize()
+						&& leftParameter instanceof Constant
 						&& rightParameter instanceof Constant)
 					return new ConstantImpl(binaryOperator.evaluate(null),
 							binaryOperator.getLocation(), evaluateInterceptors);
@@ -196,7 +198,9 @@ final class ExpressionReducer {
 			try {
 				// 常量优化算法，将常量先计算，如：
 				// ! true 将被优化为 false
-				if (parameter instanceof Constant)
+				if (unaryOperator.isOptimize()
+						&& parameter instanceof Constant
+						&& ! (((Constant)parameter).getValue() instanceof Function))
 					return new ConstantImpl(unaryOperator.evaluate(null),
 							unaryOperator.getLocation(), evaluateInterceptors);
 			} catch (Exception e) {
