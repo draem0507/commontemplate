@@ -32,12 +32,6 @@ public class User implements Comparable {
 		return "test" + name;
 	}
 
-	private static int inc = 1;
-
-	public static String getInc() {
-		return "test" + (inc ++);
-	}
-
 	public static User getRootUser(){
 		return new User(-1,"admin","admin@gmail.com",0,null);
 	}

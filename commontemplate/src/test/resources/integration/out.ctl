@@ -1,2 +1,3 @@
-$import{my: "included/macro.ctl"}
-$my.form{action: "login.action", name:"username",value:"james"}
+${&com.xxx.yyy.Test.inc(3)}
+${&com.xxx.yyy.Test.inc(2)}
+${&com.xxx.yyy.Test.inc(3)}
