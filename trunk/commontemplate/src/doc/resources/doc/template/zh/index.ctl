@@ -31,10 +31,27 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;(5) 并且解析结果可以被序列化冻结，系统重启后，可以从冻结结果直接还原，不必再解析，也就是说模板只有第一次加载时才需要解析 (当然热加载时也会重新解析)。<br/>
 								18. 站在巨人的肩膀上，参考并借鉴了 WebMacro, Velocity, FreeMarker, JavaFX, OGNL, Perl6, Python/Django, PHP/Smarty, JavaScript/JSON, XML/XPath 等开源项目或规范，感谢它们做出的成果。<br/>
 								<br/>
-								<b>三、怎么书写CommonTemplate模板?</b> <a href="template.html">更多...</a><br/>
-								<b>(1) 标准语法：</b><br/>
+								<b>三、怎么书写CommonTemplate模板?</b><br/>
+								<b>(1) 标准语法：</b> <a href="template.html">更多...</a><br/>
 								CommonTemplate只有一个语法规则: \$指令名{参数表达式}<br/>
-								<b>(a) Java代码生成：</b><br/>
+								<b>(a) HTML页面生成：</b><br/>
+$code{html}$!<html>
+    <body>
+        $if{users != null && users.size &gt; 0}
+        <table border="1">
+            $for{user : users}
+            <tr>
+                <td>${for.index + 1}</td>
+                <td>${user.name}</td>
+                <td>${user.coins}</td>
+            </tr>
+            $end
+        </table>
+        $end
+    </body>
+</html>
+!$$end
+								<b>(b) Java代码生成：</b><br/>
 $code{java}$!package com.${project.company}.${project.name}.domain;
 $if{project.framework != project.name}
 import com.${project.company}.${project.framework}.domain.BaseEntity;
@@ -53,47 +70,11 @@ public class ${entity.name} extends BaseEntity {
 	$end
 }
 !$$end
-								<b>(b) HTML页面生成：</b><br/>
+								<b>(2) 语法外套：</b> <a href="coat.html">更多...</a><br/>
+								<b>(a) HTML标签注释版语法外套：</b><br/>
 $code{html}$!<html>
     <body>
-        $if{users != null && users.size &amp;gt; 0}
-        <table border="1">
-            $for{user : users}
-            <tr>
-                <td>${for.index + 1}</td>
-                <td>${user.name}</td>
-                <td>${user.coins}</td>
-            </tr>
-            $end
-        </table>
-        $end
-    </body>
-</html>
-!$$end
-								<b>(2) 语法外套：</b><br/>
-								<b>(a) Java注释版语法外套：</b><br/>
-$code{java}$!package com./*${project.company}*/./*${project.name}*/.domain;
-/*$if{project.framework != project.name}*/
-import com./*${project.company}*/./*${project.framework}*/.domain.BaseEntity;
-/*$end*/
-public class /*${entity.name}*/ extends BaseEntity {
-	/*$for{field : entity.fields}*/
-	private /*${field.type}*/ /*${field.name}*/;
-
-	public /*${field.type}*/ get/*${field.name.capitalize}*/() {
-		return /*${field.name}*/;
-	}
-
-	public void set/*${field.name.capitalize}*/(/*${field.type}*/ /*${field.name}*/) {
-		this./*${field.name}*/ = /*${field.name}*/;
-	}
-	/*$end*/
-}
-!$$end
-								<b>(b) HTML标签注释版语法外套：</b><br/>
-$code{html}$!<html>
-    <body>
-        <!--$if{users != null && users.size &amp;gt; 0}-->
+        <!--$if{users != null && users.size &gt; 0}-->
         <table border="1">
             <!--$for{user : users}-->
             <tr>
@@ -107,10 +88,29 @@ $code{html}$!<html>
     </body>
 </html>
 !$$end
+								<b>(b) Java注释版语法外套：</b><br/>
+$code{java}$!package com.${project.company}.${project.name}.domain;
+/*$if{project.framework != project.name}*/
+import com.${project.company}.${project.framework}.domain.BaseEntity;
+/*$end*/
+public class ${entity.name} extends BaseEntity {
+	/*$for{field : entity.fields}*/
+	private ${field.type} ${field.name};
+
+	public ${field.type} get${field.name.capitalize}() {
+		return ${field.name};
+	}
+
+	public void set${field.name.capitalize}(${field.type} ${field.name}) {
+		this.${field.name} = ${field.name};
+	}
+	/*$end*/
+}
+!$$end
 								<b>(c) HTML标签版语法外套：</b><br/>
 $code{html}<html>
     <body>
-    	<ct:if param="users != null && users.size &amp;gt; 0">
+    	<ct:if param="users != null && users.size &gt; 0">
 	        <table border="1">
 	        	<ct:for param="user : users">
 	            <tr>
@@ -127,7 +127,7 @@ $end
 								<b>(d) HTML标签属性版语法外套：</b><br/>
 $code{html}<html>
     <body>
-        <table ct:if="users != null && users.size &amp;gt; 0" border="1">
+        <table ct:if="users != null && users.size &gt; 0" border="1">
             <tr ct:for="user : users">
                 <td><span ct:output="for.index + 1">1</span></td>
                 <td><span ct:output="user.name">james</span></td>

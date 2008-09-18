@@ -150,6 +150,15 @@ public final class Engine implements Factory {
 		return templateLoader.createTemplate(name, elements);
 	}
 
+	public Resource loadResource(String name, Locale locale) throws IOException {
+		return templateLoader.loadResource(name, locale);
+	}
+
+	public Resource loadResource(String name, Locale locale, String encoding)
+			throws IOException {
+		return templateLoader.loadResource(name, locale, encoding);
+	}
+
 	public final Context createContext(Writer out) {
 		return contextFactory.createContext(out);
 	}

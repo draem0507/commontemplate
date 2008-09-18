@@ -42,6 +42,9 @@ public class DocumentGenerator {
 										new Menu("menu.expression",
 												"expression.html"))
 								.addChild(
+										new Menu("menu.coat",
+												"coat.html"))
+								.addChild(
 										new Menu("menu.configuration",
 												"config.html"))
 								.addChild(
@@ -204,7 +207,7 @@ public class DocumentGenerator {
 
 	public static void main(String[] args) {
 		DocumentGenerator generator = new DocumentGenerator();
-		generator.generateAll(new String[]{"index", "template", "expression",
+		generator.generateAll(new String[]{"index", "template" , "expression", "coat",
 				"config", "integration", "extension", "api", "dependency", "data",
 				"debugger", "viewer", "editor", "converter", "generator", "ant", "faq", "architecture", "criterion", "planning", "requirement", "downloads",
 				"uml", "about", "changes", "join", "demo_extends"});

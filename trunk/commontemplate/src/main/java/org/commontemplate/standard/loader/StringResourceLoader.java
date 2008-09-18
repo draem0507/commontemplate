@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.commontemplate.core.Resource;
-import org.commontemplate.core.ResourceLoader;
 import org.commontemplate.util.Assert;
 import org.commontemplate.util.UrlUtils;
 
@@ -16,13 +15,9 @@ import org.commontemplate.util.UrlUtils;
  * @author liangfei0201@163.com
  *
  */
-public class StringResourceLoader implements ResourceLoader {
+public class StringResourceLoader extends AbstractResourceLoader {
 
 	private final Map resources = new HashMap();
-
-	public StringResourceLoader() {
-
-	}
 
 	public boolean hasTemplate(String name) {
 		return resources.containsKey(name);
@@ -39,13 +34,12 @@ public class StringResourceLoader implements ResourceLoader {
 		this.resources.put(name, new StringResource(name, source));
 	}
 
-	public Resource loadResource(String name, String encoding)
+	protected Resource loadResource(String path, String name, String encoding)
 			throws IOException {
-		return loadResource(name);
-	}
-
-	public Resource loadResource(String name) throws IOException {
-		return (Resource) resources.get(name);
+		Resource resource = (Resource) resources.get(name);
+		if (resource == null)
+			throw new IOException("Not fount resouce: " + path);
+		return resource;
 	}
 
 }
