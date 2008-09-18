@@ -28,6 +28,7 @@ $!
 								不再内嵌json和jyaml的源码, 直接依赖json.jar和jyaml.jar<br/>
 								增加$escape{xhtml}和${String.escapeXhtml}, 类似XML, 但"&amp;apos;"改为"&amp;#39;"<br/>
 								修复LruCache在移动Key顺序时出现的空指针异常.<br/>
+								$embed, $include, $display 支持国际化后缀查找, 如: xxx.ctl, 首先查找xxx_zh_CN.ctl, 再查找xxx_zh.ctl, 否则查找xxx.ctl, 配置项: localizedLookup=true 决定否开启此功能.<br/>
 								-----------------<br/>
 								感谢JRest4Guice开发小组的支持.<br/>
 								<br/>
