@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import org.commontemplate.core.Resource;
 import org.commontemplate.core.ResourceLoader;
@@ -62,6 +63,34 @@ public class ResourceLoaderChain implements ResourceLoader {
 		throw I18nExceptionFactory.createFileNotFoundException("ResourceLoaderChain.resource.not.found", new Object[]{name});
 	}
 
+	public Resource loadResource(String name, Locale locale) throws IOException {
+		for (Iterator iterator = resourceLoaders.iterator(); iterator.hasNext();) {
+			try {
+				ResourceLoader resourceLoader = (ResourceLoader)iterator.next();
+				Resource resource = resourceLoader.loadResource(name, locale);
+				if (resource != null)
+					return resource;
+			} catch (IOException e) {
+				// 忽略，继续取下一loader
+			}
+		}
+		throw I18nExceptionFactory.createFileNotFoundException("ResourceLoaderChain.resource.not.found", new Object[]{name});
+	}
+
+	public Resource loadResource(String name, Locale locale, String encoding)
+			throws IOException {
+		for (Iterator iterator = resourceLoaders.iterator(); iterator.hasNext();) {
+			try {
+				ResourceLoader resourceLoader = (ResourceLoader)iterator.next();
+				Resource resource = resourceLoader.loadResource(name, locale, encoding);
+				if (resource != null)
+					return resource;
+			} catch (IOException e) {
+				// 忽略，继续取下一loader
+			}
+		}
+		throw I18nExceptionFactory.createFileNotFoundException("ResourceLoaderChain.resource.not.found", new Object[]{name});
+	}
 	public String toString() {
 		return resourceLoaders.toString();
 	}

@@ -41,6 +41,15 @@ public abstract class ContextProxy extends Context {
 
 	protected final Context context;
 
+	public Resource loadResource(String name, Locale locale, String encoding)
+			throws IOException {
+		return context.loadResource(name, locale, encoding);
+	}
+
+	public Resource loadResource(String name, Locale locale) throws IOException {
+		return context.loadResource(name, locale);
+	}
+
 	public Map getProperties() {
 		return context.getProperties();
 	}

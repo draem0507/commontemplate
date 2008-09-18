@@ -463,12 +463,12 @@ final class ContextImpl extends Context {
 
 	public Template getTemplate(String name, Locale locale) throws IOException,
 			ParsingException {
-		return templateLoader.getTemplate(name, locale);
+		return templateLoader.getTemplate(relateTemplateName(name), locale);
 	}
 
 	public Template getTemplate(String name, Locale locale, String encoding)
 			throws IOException, ParsingException {
-		return templateLoader.getTemplate(name, locale, encoding);
+		return templateLoader.getTemplate(relateTemplateName(name), locale, encoding);
 	}
 
 	public Resource loadResource(String name)
@@ -483,6 +483,19 @@ final class ContextImpl extends Context {
 	public Resource loadResource(String name, String encoding)
 			throws IOException {
 		return templateLoader.loadResource(relateTemplateName(name), encoding);
+	}
+
+	public Resource loadResource(String name, Locale locale) throws IOException {
+		String encoding = getCurrentTemplateEncoding();
+		if (encoding != null)
+			return templateLoader.loadResource(relateTemplateName(name), locale, encoding);
+		else
+			return templateLoader.loadResource(relateTemplateName(name), locale);
+	}
+
+	public Resource loadResource(String name, Locale locale, String encoding)
+			throws IOException {
+		return templateLoader.loadResource(relateTemplateName(name), locale, encoding);
 	}
 
 	public Expression parseExpression(String expression) throws ParsingException {

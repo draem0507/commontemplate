@@ -93,7 +93,7 @@ final class TemplateLoaderImpl implements TemplateLoader {
 	private Template cache(String name, Locale locale, String encoding)
 			throws IOException, ParsingException { // TODO 未处理locale后缀
 		if (cache == null)
-			return parseTemplate(load(name, encoding));
+			return parseTemplate(load(name, locale, encoding));
 
 		ResourceEntry entry = (ResourceEntry)cache.get(name);
 		if (entry == null) {
@@ -112,12 +112,12 @@ final class TemplateLoaderImpl implements TemplateLoader {
 		synchronized (entry) {
 			Template template = (Template)entry.get();
 			if (template == null) { // 不存在，解析加载
-				Resource resource = load(name, encoding);
+				Resource resource = load(name, locale, encoding);
 				template = parseTemplate(resource);
 				entry.set(template);
 			} else { // 已存在，检查热加载
 				if (reloadController != null && reloadController.shouldReload(name)) { // 是否需要检查热加载
-					Resource resource = load(name, encoding);
+					Resource resource = load(name, locale, encoding);
 					if (resourceComparator != null && resourceComparator.isModified(template, resource)) { // 比较是否已更改
 						template = parseTemplate(resource);
 						entry.set(template);
@@ -133,21 +133,47 @@ final class TemplateLoaderImpl implements TemplateLoader {
 
 	private final ResourceLoader resourceLoader;
 
-	private Resource load(String name, String encoding) throws IOException {
+	private Resource load(String name, Locale locale, String encoding) throws IOException {
+		if (locale == null) {
+			if(encoding == null)
+				return loadResource(name);
+			return loadResource(name, encoding);
+		}
 		if(encoding == null)
-			return loadResource(name);
-		return loadResource(name, encoding);
+			return loadResource(name, locale);
+		return loadResource(name, locale, encoding);
 	}
 
 	// 代理TemplateLoader -------
 
 	public Resource loadResource(String name) throws IOException {
-		return resourceLoader.loadResource(filterName(name));
+		Resource resource = resourceLoader.loadResource(filterName(name));
+		if (resource == null)
+			throw new IOException("Not found resource: " + name);
+		return resource;
 	}
 
 	public Resource loadResource(String name, String encoding)
 			throws IOException {
-		return resourceLoader.loadResource(filterName(name), encoding);
+		Resource resource = resourceLoader.loadResource(filterName(name), encoding);
+		if (resource == null)
+			throw new IOException("Not found resource: " + name);
+		return resource;
+	}
+
+	public Resource loadResource(String name, Locale locale) throws IOException {
+		Resource resource = resourceLoader.loadResource(filterName(name), locale);
+		if (resource == null)
+			throw new IOException("Not found resource: " + name);
+		return resource;
+	}
+
+	public Resource loadResource(String name, Locale locale, String encoding)
+			throws IOException {
+		Resource resource = resourceLoader.loadResource(filterName(name), locale, encoding);
+		if (resource == null)
+			throw new IOException("Not found resource: " + name);
+		return resource;
 	}
 
 	private String filterName(String name) throws IOException {
