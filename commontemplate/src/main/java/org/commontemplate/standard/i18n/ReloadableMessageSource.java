@@ -2,6 +2,7 @@ package org.commontemplate.standard.i18n;
 
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * 国际化信息源热加载实现
@@ -16,6 +17,8 @@ public class ReloadableMessageSource extends MessageSourceSupport {
 	private String basename;
 	
 	private ReloadableResourceProvider reloadResourceProvider;
+	
+	private Map extInfo;
 
 	public String getMessage(Locale locale, String key) throws NoSuchMessageException {
 		if (key == null)
@@ -26,7 +29,10 @@ public class ReloadableMessageSource extends MessageSourceSupport {
 		}
 
 		try {
-			String msg = (String) reloadResourceProvider.getObject(basename, locale, key, new HashMap());
+			if(extInfo == null) {
+				extInfo = new HashMap();
+			}
+			String msg = (String) reloadResourceProvider.getObject(basename, locale, key, extInfo);
 			if (msg == null)
 				throw new NoSuchMessageException(key, locale);
 			return msg;
@@ -46,6 +52,14 @@ public class ReloadableMessageSource extends MessageSourceSupport {
 
 	public void setBasename(String basename) {
 		this.basename = basename;
+	}
+
+	public Map getExtInfo() {
+		return extInfo;
+	}
+
+	public void setExtInfo(Map extInfo) {
+		this.extInfo = extInfo;
 	}
 
 }
