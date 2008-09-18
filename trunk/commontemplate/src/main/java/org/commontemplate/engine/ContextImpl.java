@@ -471,31 +471,31 @@ final class ContextImpl extends Context {
 		return templateLoader.getTemplate(relateTemplateName(name), locale, encoding);
 	}
 
-	public Resource loadResource(String name)
+	public Resource getResource(String name)
 			throws IOException {
 		String encoding = getCurrentTemplateEncoding();
 		if (encoding != null)
-			return templateLoader.loadResource(relateTemplateName(name), encoding);
+			return templateLoader.getResource(relateTemplateName(name), encoding);
 		else
-			return templateLoader.loadResource(relateTemplateName(name));
+			return templateLoader.getResource(relateTemplateName(name));
 	}
 
-	public Resource loadResource(String name, String encoding)
+	public Resource getResource(String name, String encoding)
 			throws IOException {
-		return templateLoader.loadResource(relateTemplateName(name), encoding);
+		return templateLoader.getResource(relateTemplateName(name), encoding);
 	}
 
-	public Resource loadResource(String name, Locale locale) throws IOException {
+	public Resource getResource(String name, Locale locale) throws IOException {
 		String encoding = getCurrentTemplateEncoding();
 		if (encoding != null)
-			return templateLoader.loadResource(relateTemplateName(name), locale, encoding);
+			return templateLoader.getResource(relateTemplateName(name), locale, encoding);
 		else
-			return templateLoader.loadResource(relateTemplateName(name), locale);
+			return templateLoader.getResource(relateTemplateName(name), locale);
 	}
 
-	public Resource loadResource(String name, Locale locale, String encoding)
+	public Resource getResource(String name, Locale locale, String encoding)
 			throws IOException {
-		return templateLoader.loadResource(relateTemplateName(name), locale, encoding);
+		return templateLoader.getResource(relateTemplateName(name), locale, encoding);
 	}
 
 	public Expression parseExpression(String expression) throws ParsingException {

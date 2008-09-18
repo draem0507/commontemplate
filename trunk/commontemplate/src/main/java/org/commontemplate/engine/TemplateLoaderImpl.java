@@ -136,41 +136,41 @@ final class TemplateLoaderImpl implements TemplateLoader {
 	private Resource load(String name, Locale locale, String encoding) throws IOException {
 		if (locale == null) {
 			if(encoding == null)
-				return loadResource(name);
-			return loadResource(name, encoding);
+				return getResource(name);
+			return getResource(name, encoding);
 		}
 		if(encoding == null)
-			return loadResource(name, locale);
-		return loadResource(name, locale, encoding);
+			return getResource(name, locale);
+		return getResource(name, locale, encoding);
 	}
 
 	// 代理TemplateLoader -------
 
-	public Resource loadResource(String name) throws IOException {
-		Resource resource = resourceLoader.loadResource(filterName(name));
+	public Resource getResource(String name) throws IOException {
+		Resource resource = resourceLoader.getResource(filterName(name));
 		if (resource == null)
 			throw new IOException("Not found resource: " + name);
 		return resource;
 	}
 
-	public Resource loadResource(String name, String encoding)
+	public Resource getResource(String name, String encoding)
 			throws IOException {
-		Resource resource = resourceLoader.loadResource(filterName(name), encoding);
+		Resource resource = resourceLoader.getResource(filterName(name), encoding);
 		if (resource == null)
 			throw new IOException("Not found resource: " + name);
 		return resource;
 	}
 
-	public Resource loadResource(String name, Locale locale) throws IOException {
-		Resource resource = resourceLoader.loadResource(filterName(name), locale);
+	public Resource getResource(String name, Locale locale) throws IOException {
+		Resource resource = resourceLoader.getResource(filterName(name), locale);
 		if (resource == null)
 			throw new IOException("Not found resource: " + name);
 		return resource;
 	}
 
-	public Resource loadResource(String name, Locale locale, String encoding)
+	public Resource getResource(String name, Locale locale, String encoding)
 			throws IOException {
-		Resource resource = resourceLoader.loadResource(filterName(name), locale, encoding);
+		Resource resource = resourceLoader.getResource(filterName(name), locale, encoding);
 		if (resource == null)
 			throw new IOException("Not found resource: " + name);
 		return resource;
