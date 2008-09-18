@@ -129,6 +129,16 @@ public class BinaryOperatorHandlerChain extends BinaryOperatorHandler {
 		this.rightToLeft = rightToLeft;
 	}
 
+	private boolean optimize;
+
+	public boolean isOptimize() {
+		return optimize;
+	}
+
+	public void setOptimize(boolean optimize) {
+		this.optimize = optimize;
+	}
+
 	private boolean associative;
 
 	public boolean isAssociative() {
