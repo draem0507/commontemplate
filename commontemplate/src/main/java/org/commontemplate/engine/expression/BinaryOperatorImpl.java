@@ -45,8 +45,6 @@ final class BinaryOperatorImpl extends BinaryOperator {
 
 	private final boolean rightOperandFunctioned;
 
-	private final boolean optimize;
-
 	private final boolean associative;
 
 	private final boolean commutative;
@@ -68,7 +66,6 @@ final class BinaryOperatorImpl extends BinaryOperator {
 		this.rightOperandNamed = handler.isRightOperandNamed();
 		this.rightOperandDotNamed = handler.isRightOperandDotNamed();
 		this.rightOperandFunctioned = handler.isRightOperandFunctioned();
-		this.optimize = handler.isOptimize();
 		this.associative = handler.isAssociative();
 		this.commutative = handler.isCommutative();
 		this.evaluateInterceptors = evaluateInterceptors;
@@ -114,8 +111,8 @@ final class BinaryOperatorImpl extends BinaryOperator {
 		return priority;
 	}
 
-	boolean isOptimize() {
-		return optimize;
+	boolean isOptimize(Object leftOperand, Object rightOperand) {
+		return handler.isOptimize(leftOperand, rightOperand);
 	}
 
 	boolean isAssociative() {

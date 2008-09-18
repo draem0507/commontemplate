@@ -177,9 +177,9 @@ final class ExpressionReducer {
 				// 常量优化算法，将常量先计算，如：
 				// 2 * 3 + coins 将被优化为 6 + coins
 				// (注: 表达式应尽量把常量计算写在前面, 如: 24 * 60 * days, 而不要用 days * 24 * 60)
-				if (binaryOperator.isOptimize()
-						&& leftParameter instanceof Constant
-						&& rightParameter instanceof Constant)
+				if (leftParameter instanceof Constant
+						&& rightParameter instanceof Constant
+						&& binaryOperator.isOptimize(((Constant)leftParameter).getValue(), ((Constant)rightParameter).getValue()))
 					return new ConstantImpl(binaryOperator.evaluate(null),
 							binaryOperator.getLocation(), evaluateInterceptors);
 			} catch (Exception e) {
@@ -198,9 +198,9 @@ final class ExpressionReducer {
 			try {
 				// 常量优化算法，将常量先计算，如：
 				// ! true 将被优化为 false
-				if (unaryOperator.isOptimize()
-						&& parameter instanceof Constant
-						&& ! (((Constant)parameter).getValue() instanceof Function))
+				if (parameter instanceof Constant
+						&& unaryOperator.isOptimize(((Constant)parameter).getValue())
+						&& ! (((Constant)parameter).getValue() instanceof Function)) // Function不优化
 					return new ConstantImpl(unaryOperator.evaluate(null),
 							unaryOperator.getLocation(), evaluateInterceptors);
 			} catch (Exception e) {

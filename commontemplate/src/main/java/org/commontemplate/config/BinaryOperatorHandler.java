@@ -99,6 +99,17 @@ public abstract class BinaryOperatorHandler implements Serializable {
 	}
 
 	/**
+	 * 根据参数类型判断是否允许编译器优化.
+	 *
+	 * @param leftOperand 左操作数
+	 * @param rightOperand 右操作数
+	 * @return 是否允许编译器优化，默认返回isOptimize()的值
+	 */
+	public boolean isOptimize(Object leftOperand, Object rightOperand) {
+		return isOptimize();
+	}
+
+	/**
 	 * 是否允许编译器优化.
 	 * 当操作数都为常量时，编译器会在编译期求值，并保存到表达式树，操符符应保证传入相同的参数，总是得到相同的结果.
 	 *
