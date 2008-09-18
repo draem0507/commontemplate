@@ -32,13 +32,13 @@ public class ResourceLoaderChain implements ResourceLoader {
 		this.resourceLoaders.add(resourceLoader);
 	}
 
-	public Resource loadResource(String name, String encoding)
+	public Resource getResource(String name, String encoding)
 			throws IOException {
 		for (Iterator iterator = resourceLoaders.iterator(); iterator.hasNext();) {
 			try {
 				ResourceLoader resourceLoader = (ResourceLoader)iterator.next();
 				if (resourceLoader != null) {
-					Resource resource = resourceLoader.loadResource(name, encoding);
+					Resource resource = resourceLoader.getResource(name, encoding);
 					if (resource != null)
 						return resource;
 				}
@@ -49,11 +49,11 @@ public class ResourceLoaderChain implements ResourceLoader {
 		throw I18nExceptionFactory.createFileNotFoundException("ResourceLoaderChain.resource.not.found", new Object[]{name});
 	}
 
-	public Resource loadResource(String name) throws IOException {
+	public Resource getResource(String name) throws IOException {
 		for (Iterator iterator = resourceLoaders.iterator(); iterator.hasNext();) {
 			try {
 				ResourceLoader resourceLoader = (ResourceLoader)iterator.next();
-				Resource resource = resourceLoader.loadResource(name);
+				Resource resource = resourceLoader.getResource(name);
 				if (resource != null)
 					return resource;
 			} catch (IOException e) {
@@ -63,11 +63,11 @@ public class ResourceLoaderChain implements ResourceLoader {
 		throw I18nExceptionFactory.createFileNotFoundException("ResourceLoaderChain.resource.not.found", new Object[]{name});
 	}
 
-	public Resource loadResource(String name, Locale locale) throws IOException {
+	public Resource getResource(String name, Locale locale) throws IOException {
 		for (Iterator iterator = resourceLoaders.iterator(); iterator.hasNext();) {
 			try {
 				ResourceLoader resourceLoader = (ResourceLoader)iterator.next();
-				Resource resource = resourceLoader.loadResource(name, locale);
+				Resource resource = resourceLoader.getResource(name, locale);
 				if (resource != null)
 					return resource;
 			} catch (IOException e) {
@@ -77,12 +77,12 @@ public class ResourceLoaderChain implements ResourceLoader {
 		throw I18nExceptionFactory.createFileNotFoundException("ResourceLoaderChain.resource.not.found", new Object[]{name});
 	}
 
-	public Resource loadResource(String name, Locale locale, String encoding)
+	public Resource getResource(String name, Locale locale, String encoding)
 			throws IOException {
 		for (Iterator iterator = resourceLoaders.iterator(); iterator.hasNext();) {
 			try {
 				ResourceLoader resourceLoader = (ResourceLoader)iterator.next();
-				Resource resource = resourceLoader.loadResource(name, locale, encoding);
+				Resource resource = resourceLoader.getResource(name, locale, encoding);
 				if (resource != null)
 					return resource;
 			} catch (IOException e) {

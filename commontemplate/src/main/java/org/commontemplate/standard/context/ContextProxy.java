@@ -41,13 +41,13 @@ public abstract class ContextProxy extends Context {
 
 	protected final Context context;
 
-	public Resource loadResource(String name, Locale locale, String encoding)
+	public Resource getResource(String name, Locale locale, String encoding)
 			throws IOException {
-		return context.loadResource(name, locale, encoding);
+		return context.getResource(name, locale, encoding);
 	}
 
-	public Resource loadResource(String name, Locale locale) throws IOException {
-		return context.loadResource(name, locale);
+	public Resource getResource(String name, Locale locale) throws IOException {
+		return context.getResource(name, locale);
 	}
 
 	public Map getProperties() {
@@ -245,13 +245,13 @@ public abstract class ContextProxy extends Context {
 		return context.isVariablesLocked();
 	}
 
-	public Resource loadResource(String name, String encoding)
+	public Resource getResource(String name, String encoding)
 			throws IOException {
-		return context.loadResource(name, encoding);
+		return context.getResource(name, encoding);
 	}
 
-	public Resource loadResource(String name) throws IOException {
-		return context.loadResource(name);
+	public Resource getResource(String name) throws IOException {
+		return context.getResource(name);
 	}
 
 	public void lockVariables() {

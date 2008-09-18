@@ -65,9 +65,9 @@ public class DisplayFileDirectiveHandler extends DirectiveHandlerSupport {
 	private void readFile(Context context, String name) throws IOException {
 		Resource resource;
 		if (localizedLookup)
-			resource = context.loadResource(name, context.getLocale());
+			resource = context.getResource(name, context.getLocale());
 		else
-			resource = context.loadResource(name);
+			resource = context.getResource(name);
 
 		read(context, resource.getReader());
 	}
@@ -77,9 +77,9 @@ public class DisplayFileDirectiveHandler extends DirectiveHandlerSupport {
 		Resource resource;
 		if (localizedLookup)
 			resource = context
-					.loadResource(name, context.getLocale(), encoding);
+					.getResource(name, context.getLocale(), encoding);
 		else
-			resource = context.loadResource(name, encoding);
+			resource = context.getResource(name, encoding);
 
 		read(context, resource.getReader());
 	}

@@ -13,11 +13,11 @@ public abstract class AbstractResourceLoader implements ResourceLoader {
 
 	private String rootDirectory;
 
-	public Resource loadResource(String name) throws IOException {
-		return loadResource(name, getDefaultEncoding());
+	public Resource getResource(String name) throws IOException {
+		return getResource(name, getDefaultEncoding());
 	}
 
-	public Resource loadResource(String name, String encoding) throws IOException {
+	public Resource getResource(String name, String encoding) throws IOException {
 		Assert.assertNotNull(name, "AbstractResourceLoader.resource.name.required");
 		String path = name;
 		if (getRootDirectory() != null)
@@ -25,29 +25,29 @@ public abstract class AbstractResourceLoader implements ResourceLoader {
 		return loadResource(path, name, encoding);
 	}
 
-	public Resource loadResource(String name, Locale locale) throws IOException {
-		return loadResource(name, locale, getDefaultEncoding());
+	public Resource getResource(String name, Locale locale) throws IOException {
+		return getResource(name, locale, getDefaultEncoding());
 	}
 
-	public Resource loadResource(String name, Locale locale, String encoding)
+	public Resource getResource(String name, Locale locale, String encoding)
 			throws IOException {
 		if (locale != null) {
 			try {
-				Resource resource = loadResource(getLanguageCountryName(name, locale));
+				Resource resource = getResource(getLanguageCountryName(name, locale));
 				if (resource != null)
 					return resource;
 			} catch (IOException e) {
 				// ignore
 			}
 			try {
-				Resource resource = loadResource(getLanguageName(name, locale));
+				Resource resource = getResource(getLanguageName(name, locale));
 				if (resource != null)
 					return resource;
 			} catch (IOException e) {
 				// ignore
 			}
 		}
-		return loadResource(name, encoding);
+		return getResource(name, encoding);
 	}
 
 	private String getLanguageCountryName(String name, Locale locale) {

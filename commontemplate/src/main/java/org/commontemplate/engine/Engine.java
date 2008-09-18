@@ -80,13 +80,13 @@ public final class Engine implements Factory {
 		return templateLoader.getTemplate(name, locale, encoding);
 	}
 
-	public final Resource loadResource(String name, String encoding)
+	public final Resource getResource(String name, String encoding)
 			throws IOException {
-		return templateLoader.loadResource(name, encoding);
+		return templateLoader.getResource(name, encoding);
 	}
 
-	public final Resource loadResource(String name) throws IOException {
-		return templateLoader.loadResource(name);
+	public final Resource getResource(String name) throws IOException {
+		return templateLoader.getResource(name);
 	}
 
 	public BinaryOperator createBinaryOperator(String operatorName,
@@ -150,13 +150,13 @@ public final class Engine implements Factory {
 		return templateLoader.createTemplate(name, elements);
 	}
 
-	public Resource loadResource(String name, Locale locale) throws IOException {
-		return templateLoader.loadResource(name, locale);
+	public Resource getResource(String name, Locale locale) throws IOException {
+		return templateLoader.getResource(name, locale);
 	}
 
-	public Resource loadResource(String name, Locale locale, String encoding)
+	public Resource getResource(String name, Locale locale, String encoding)
 			throws IOException {
-		return templateLoader.loadResource(name, locale, encoding);
+		return templateLoader.getResource(name, locale, encoding);
 	}
 
 	public final Context createContext(Writer out) {
