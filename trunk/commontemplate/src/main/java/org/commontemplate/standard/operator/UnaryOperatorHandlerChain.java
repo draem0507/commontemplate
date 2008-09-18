@@ -108,4 +108,14 @@ public class UnaryOperatorHandlerChain extends UnaryOperatorHandler {
 		this.keyword = keyword;
 	}
 
+	private boolean optimize;
+
+	public boolean isOptimize() {
+		return optimize;
+	}
+
+	public void setOptimize(boolean optimize) {
+		this.optimize = optimize;
+	}
+
 }

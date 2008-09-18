@@ -215,12 +215,19 @@ $!
 								addBinaryOperatorPriority(String name, int priority) <font color="green">(注：不设置将默认为0)</font><br/>
 								addUnaryOperatorPriority(String name, int priority) <font color="green">(注：不设置，符号型默认为0，名称型默认为functionPriority)</font><br/>
 								setFunctionPriority(int priority)<br/>
+								配置方法：<br/>
+								binaryOperator{*}=com.xxx.XXXBinaryOperatorHandler()<br/>
+								unaryOperator{-}=com.xxx.XXXUnaryOperatorHandler()<br/>
+								如果一个操作符针对不同的操作数类型有不同的处理类，可以使用Chain封装:<br/>
+								binaryOperator{*}=org.commontemplate.standard.operator.BinaryOperatorHandlerChain()<br/>
+								binaryOperator{*}.binaryOperatorHandlers=multiplyBinaryOperator[]<br/>
+								multiplyBinaryOperator[100]=com.xxx.NumberMultiplyOperatorHandler()<br/>
+								multiplyBinaryOperator[200]=com.xxx.StringRepeatOperatorHandler()<br/>
 								参考实现：<br/>
 								org.commontemplate.standard.operator及其子包下相关类<br/>
 								注意事项：<br/>
 								OperatorHandler应该保证线程安全，方式同上面的DirectiveHandler<br/>
 								OperatorHandler不应该改变操作数的状态，如：两个集合相加，应将两个集合的项添加到一个新的集合中，而不是将其中一个集合的项添加到另一个集合中。<br/>
-								当操作数都为常量时，编译器会在编译期求值，并保存到表达式树，操符符应保证传入相同的参数，总是得到相同的结果<br/>
 								特殊操作数：<br/>
 								(a) 操作数延迟求值：<br/>
 								用于短路情况，声明Lazy后，参数将以LazyOperand的实例传入，需使用operand = ((LazyOperand)operand).evaluate()方式取其真实值。<br/>
@@ -236,7 +243,7 @@ $!
 								如：对象的属性${bean.function()} <br/>
 								与加号对比：bean + function()，bean将与function()的返回值相加，<br/>
 								相关标识：BinaryOperatorHandler.isRightOperandFunctioned(), UnaryOperatorHandler.isOperandFunctioned()<br/>
-								关于函数：<br/>
+								(d) 关于函数：<br/>
 								函数其实就是非符号(与变量名规则相同)的一元操作符，注册及使用方式与一元操作符一致，<br/>
 								非符号一元操作符UnaryOperatorHandler.isKeyword()的返回值：<br/>
 								为true时，该操作符名称将不可作为变量名。<br/>
@@ -244,6 +251,9 @@ $!
 								如：注册“abs”一元操作符，则必需用abs(operand)， 而不能用abs operand，否则在复杂表达式中与变量引起歧义，<br/>
 								如果abs的isKeyword()为true, 则可以用abs operand, 但abs将不能再作为变量名。<br/>
 								对比：符号一元操作符“!”，可以用“! operand”，也可以用“!(operand)”<br/>
+								(e) 编译器优化：<br/>
+								当操作数都为常量时，编译器会在编译期求值，并保存到表达式树，操符符应保证传入相同的参数，总是得到相同的结果<br/>
+								如果不希望被优化，覆写isOptimize()方法，使其返回false<br/>
 								<br/>
 								<a name="property"/><b>16. 属性扩展</b><br/>
 								用于为"."点号操作符提供数据<br/>
