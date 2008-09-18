@@ -114,7 +114,7 @@ final class ExpressionOptimizer {
 				}
 				BinaryOperatorImpl preBinaryOperator = ((BinaryOperatorImpl) prevOperator);
 				// 是否满足结合率
-				if(!preBinaryOperator.isAssociativeLaw()) {
+				if(!preBinaryOperator.isAssociative()) {
 					continue;
 				}
 				// 取当前操作符
