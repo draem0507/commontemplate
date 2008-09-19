@@ -114,9 +114,9 @@ $code{html}<html>
 	        <table border="1">
 	        	<ct:for param="user : users">
 	            <tr>
-	                <td><ct:out param="for.index + 1"/></td>
-	                <td><ct:out param="user.name"/></td>
-	                <td><ct:out param="user.coins"/></td>
+	                <td><ct:output param="for.index + 1">1</ct:output></td>
+	                <td><ct:output param="user.name">james</ct:output></td>
+	                <td><ct:output param="user.coins">2.00</ct:output></td>
 	            </tr>
 	            </ct:for>
 	        </table>

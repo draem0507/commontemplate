@@ -1,3 +1,8 @@
-${&com.xxx.yyy.Test.inc(3)}
-${&com.xxx.yyy.Test.inc(2)}
-${&com.xxx.yyy.Test.inc(3)}
+<html>
+	<body>
+	<table>
+		<tr ct:for="user: users">
+			<td>${user.name}</td>
+		</tr>
+	</table>
+<html>
