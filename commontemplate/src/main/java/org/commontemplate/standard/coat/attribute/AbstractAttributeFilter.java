@@ -22,7 +22,7 @@ import org.commontemplate.standard.syntax.SyntaxSettings;
  */
 public abstract class AbstractAttributeFilter implements ResourceFilter, Serializable {
 
-	private boolean attributeSyntaxCoatAvailable;
+	private boolean attributeSyntaxCoatAvailable = true;
 
 	public boolean isAttributeSyntaxCoatAvailable() {
 		return attributeSyntaxCoatAvailable;

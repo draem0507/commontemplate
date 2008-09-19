@@ -27,7 +27,7 @@ public class TagSyntaxCoatFilter extends StringResourceFilter {
 
 	private String namespace = DEFAULT_NAMESPACE;
 
-	private boolean tagSyntaxCoatAvailable;
+	private boolean tagSyntaxCoatAvailable = true;
 
 	public boolean isTagSyntaxCoatAvailable() {
 		return tagSyntaxCoatAvailable;
