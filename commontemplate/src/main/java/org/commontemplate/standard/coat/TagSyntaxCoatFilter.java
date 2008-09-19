@@ -1,5 +1,8 @@
 package org.commontemplate.standard.coat;
 
+import java.io.IOException;
+import java.io.Reader;
+
 import org.commontemplate.config.Syntax;
 import org.commontemplate.standard.filter.StringResourceFilter;
 import org.commontemplate.standard.syntax.SyntaxSettings;
@@ -23,6 +26,16 @@ public class TagSyntaxCoatFilter extends StringResourceFilter {
 	public static final String DEFAULT_NAMESPACE = "ct";
 
 	private String namespace = DEFAULT_NAMESPACE;
+
+	private boolean tagSyntaxCoatAvailable;
+
+	public boolean isTagSyntaxCoatAvailable() {
+		return tagSyntaxCoatAvailable;
+	}
+
+	public void setTagSyntaxCoatAvailable(boolean tagSyntaxCoatAvailable) {
+		this.tagSyntaxCoatAvailable = tagSyntaxCoatAvailable;
+	}
 
 	public String getNamespace() {
 		return namespace;
@@ -60,6 +73,12 @@ public class TagSyntaxCoatFilter extends StringResourceFilter {
 	public void setSyntaxSettings(SyntaxSettings syntaxSettings) {
 		if (syntaxSettings != null)
 			this.syntax = syntaxSettings.toSyntax();
+	}
+
+	public Reader filter(Reader reader) throws IOException {
+		if (! tagSyntaxCoatAvailable)
+			return reader;
+		return super.filter(reader);
 	}
 
 	public String filter(String text) {
