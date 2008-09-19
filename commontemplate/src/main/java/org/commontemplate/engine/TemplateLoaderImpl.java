@@ -99,7 +99,7 @@ final class TemplateLoaderImpl implements TemplateLoader {
 		if (entry == null) {
 			// 缓存总锁，锁定缓存中各条目获取过程
 			synchronized(cache) {
-				entry = (ResourceEntry)cache.get(name);
+				entry = (ResourceEntry)cache.get(name); // 必需重取
 				if(entry == null) { // 双重检查，因entry是线程栈内定义的，所以双重检查是有效的
 					entry = new ResourceEntry();
 					cache.put(name, entry);
