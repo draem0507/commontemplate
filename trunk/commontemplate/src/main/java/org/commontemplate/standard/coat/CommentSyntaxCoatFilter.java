@@ -16,6 +16,16 @@ public class CommentSyntaxCoatFilter implements TextFilter, java.io.Serializable
 
 	private static final long serialVersionUID = 1L;
 
+	private boolean commentSyntaxCoatAvailable;
+
+	public boolean isCommentSyntaxCoatAvailable() {
+		return commentSyntaxCoatAvailable;
+	}
+
+	public void setCommentSyntaxCoatAvailable(boolean commentSyntaxCoatAvailable) {
+		this.commentSyntaxCoatAvailable = commentSyntaxCoatAvailable;
+	}
+
 	// 注释起始符
 	private String begin = "";
 
@@ -54,6 +64,8 @@ public class CommentSyntaxCoatFilter implements TextFilter, java.io.Serializable
 	}
 
 	public String filter(String text, boolean isFirst, boolean isLast) {
+		if (! commentSyntaxCoatAvailable)
+			return text;
 		if (text.startsWith(end)) {
 			text = trimEnd(text);
 			if (clearSpaceline)

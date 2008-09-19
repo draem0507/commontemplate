@@ -22,7 +22,19 @@ import org.commontemplate.standard.syntax.SyntaxSettings;
  */
 public abstract class AbstractAttributeFilter implements ResourceFilter, Serializable {
 
+	private boolean attributeSyntaxCoatAvailable;
+
+	public boolean isAttributeSyntaxCoatAvailable() {
+		return attributeSyntaxCoatAvailable;
+	}
+
+	public void setAttributeSyntaxCoatAvailable(boolean attributeSyntaxCoatAvailable) {
+		this.attributeSyntaxCoatAvailable = attributeSyntaxCoatAvailable;
+	}
+
 	public Reader filter(final Reader reader) throws IOException {
+		if (! attributeSyntaxCoatAvailable)
+			return reader;
 		final StringBuffer sb = new StringBuffer();
 		final Document document = getDocument(reader);
 		if (document != null) {
