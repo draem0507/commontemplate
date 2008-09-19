@@ -16,7 +16,7 @@ public class CommentSyntaxCoatFilter implements TextFilter, java.io.Serializable
 
 	private static final long serialVersionUID = 1L;
 
-	private boolean commentSyntaxCoatAvailable;
+	private boolean commentSyntaxCoatAvailable = true;
 
 	public boolean isCommentSyntaxCoatAvailable() {
 		return commentSyntaxCoatAvailable;
