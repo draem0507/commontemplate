@@ -1,8 +1,6 @@
+$var{role="xxx"}
 <html>
 	<body>
-	<table>
-		<tr ct:for="user: users">
-			<td>${user.name}</td>
-		</tr>
-	</table>
+		<a ct:role="'admin', 'manager'">aaa</a>
+	</body>
 <html>

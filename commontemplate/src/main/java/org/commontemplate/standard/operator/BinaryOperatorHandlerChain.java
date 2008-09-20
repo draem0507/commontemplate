@@ -43,6 +43,8 @@ public class BinaryOperatorHandlerChain extends BinaryOperatorHandler {
 					return handler.doEvaluate(leftOperand, rightOperand);
 				} catch (NullPointerException e) {
 					return null;
+				} catch (ArrayIndexOutOfBoundsException e) {
+					return null;
 				} catch (UnhandleException e) {
 					exception = e;
 					// continue next handler

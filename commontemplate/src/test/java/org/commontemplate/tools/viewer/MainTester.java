@@ -13,7 +13,7 @@ public class MainTester {
 					}
 				}
 			}).start();*/
-			Main.run("v", "F:\\CommonTemplate\\test\\xxx.ctl");
+			Main.run("d", "F:\\CommonTemplate\\test\\test_xml.ctl");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
