@@ -2,7 +2,6 @@ package org.commontemplate.tools.bean;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -203,55 +202,143 @@ public class PropertiesBeanFactory implements BeanFactory {
 			props.load(inputStream);
 			return props;
 		} catch (IOException e) {
-			throw new BeanException(e);
+			throw new BeanException(e.getMessage(), e);
 		}
 	}
 
 	public Object getBean(String name) throws BeanException {
-		return getProperty(name);
+		try {
+			return parseValue(name, properties.getProperty(name));
+		} catch (BeanException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new BeanException("PropertiesBeanFactory.config.item.error", new Object[]{name}, e);
+		}
 	}
 
-	private void initProperty(String parent, Object bean) {
+	private Object getVariable(String variableName) throws Exception {
+		String value = properties.getProperty(variableName);
+		if (value != null && value.trim().length() > 0)
+			return parseValue(variableName, value);
+		else if (variables != null)
+			return variables.get(variableName);
+		return null;
+	}
+
+	private Object getClassMeta(String className) throws Exception {
+		return ClassUtils.forName(className);
+	}
+
+	private Object getObjectByStaticField(String classAndFieldName, String parent) throws Exception {
+		int i = classAndFieldName.lastIndexOf('.');
+		if (i <= 0 || i > classAndFieldName.length() - 1)
+			throw new BeanException("PropertiesBeanFactory.invalid.static.name", new Object[]{classAndFieldName});
+
+		String className = classAndFieldName.substring(0, i);
+		String filedName = classAndFieldName.substring(i + 1);
+
+		Object bean = ClassUtils.forName(className).getField(filedName).get(null);
+		initBean(parent, bean);
+		return bean;
+	}
+
+	private Object getObjectByStaticMethod(String classAndMethodName, String parent) throws Exception {
+		int i = classAndMethodName.lastIndexOf('.');
+		if (i <= 0 || i > classAndMethodName.length() - 1)
+			throw new BeanException("PropertiesBeanFactory.invalid.static.name", new Object[]{classAndMethodName});
+
+		String className = classAndMethodName.substring(0, i);
+		String methodName = classAndMethodName.substring(i + 1);
+
+		Object bean = ClassUtils.forName(className).getMethod(methodName, new Class[0]).invoke(null, new Object[0]);
+		initBean(parent, bean);
+		return bean;
+	}
+
+	private Object getObject(String className, String parent) throws Exception {
+		Object bean = ClassUtils.forName(className).newInstance();
+		initBean(parent, bean);
+		return bean;
+	}
+
+	private Set getSet(String setName) throws Exception {
+		if (! TypeUtils.isNamed(setName))
+			throw new BeanException("PropertiesBeanFactory.invalid.set.name", new Object[]{setName});
+
+		Set set = new HashSet();
+		String prefix = setName + "<";
+		for (Iterator iterator = properties.entrySet().iterator(); iterator.hasNext();) {
+    		Entry entry = (Entry)iterator.next();
+    		String key = (String)entry.getKey();
+    		String value = (String)entry.getValue();
+    		if (key.startsWith(prefix) && key.endsWith(">"))
+    			set.add(parseValue(key, value));
+    	}
+		return set;
+	}
+
+	private List getList(String listName) throws Exception {
+		if (! TypeUtils.isNamed(listName))
+			throw new BeanException("PropertiesBeanFactory.invalid.list.name", new Object[]{listName});
+
+		String prefix = listName + "[";
+		int len = prefix.length();
+		SortedMap map = new TreeMap();
+		for (Iterator iterator = properties.entrySet().iterator(); iterator.hasNext();) {
+    		Entry entry = (Entry)iterator.next();
+    		String key = (String)entry.getKey();
+    		String value = (String)entry.getValue();
+    		if (key.startsWith(prefix) && key.endsWith("]"))
+    			map.put(new Integer(key.substring(len, key.length() - 1)), parseValue(key, value));
+    	}
+		List list = new ArrayList();
+		list.addAll(map.values());
+		return list;
+	}
+
+	private Map getMap(String mapName) throws Exception {
+		if (! TypeUtils.isNamed(mapName))
+			throw new BeanException("PropertiesBeanFactory.invalid.map.name", new Object[]{mapName});
+
+		String prefix = mapName + "{";
+		int len = prefix.length();
+		Map map = new HashMap();
+		for (Iterator iterator = properties.entrySet().iterator(); iterator.hasNext();) {
+    		Entry entry = (Entry)iterator.next();
+    		String key = (String)entry.getKey();
+    		String value = (String)entry.getValue();
+    		if (key.startsWith(prefix) && key.endsWith("}"))
+    			map.put(key.substring(len, key.length() - 1), parseValue(key, value));
+    	}
+		return map;
+	}
+
+	private void initBean(String parent, Object bean) {
 		String prefix = "";
 		if (parent != null)
 			prefix = parent + ".";
 		Method[] methods = bean.getClass().getMethods();
 		for (int i = 0, n = methods.length; i < n; i ++) {
 			Method method = methods[i];
-			String name = method.getName();
-			if (name.length() > 3 && name.startsWith("set") && method.getParameterTypes().length == 1) {
-				String property = castProperty(name);
-				if (hasProperty(prefix + property)) {
-					Object arg = getProperty(prefix + property);
+			String methodName = method.getName();
+			if (methodName.length() > 3
+					&& methodName.startsWith("set")
+					&& method.getParameterTypes().length == 1) {
+				String name = prefix + methodName.substring(3, 4).toLowerCase() + methodName.substring(4);
+				String value = properties.getProperty(name);
+				if (value != null && value.trim().length() > 0) {
+					Object arg = getBean(name);
 					try {
 						method.invoke(bean, new Object[]{arg});
-					} catch (IllegalArgumentException e) {
-						throw new BeanException("PropertiesBeanFactory.config.item.error", new Object[]{prefix + property}, e);
-					} catch (IllegalAccessException e) {
-						throw new BeanException("PropertiesBeanFactory.config.item.error", new Object[]{prefix + property}, e);
-					} catch (InvocationTargetException e) {
-						throw new BeanException("PropertiesBeanFactory.config.item.error", new Object[]{prefix + property}, e);
+					} catch (Exception e) {
+						throw new BeanException("PropertiesBeanFactory.config.item.error", new Object[]{name}, e);
 					}
 				}
 			}
 		}
 	}
 
-	private boolean hasProperty(String property) {
-		String value = properties.getProperty(property);
-		return value != null && value.trim().length() > 0;
-	}
-
-	private String castProperty(String name) {
-		String property = name.substring(3);
-		return property.substring(0, 1).toLowerCase() + property.substring(1);
-	}
-
-	private Object getProperty(String property) {
-		return parseProperty(property, properties.getProperty(property));
-	}
-
-	private Object parseProperty(String property, String value) {
+	private Object parseValue(String name, String value) throws Exception {
 		if (value == null || value.trim().length() == 0)
 			return null;
 		value = value.trim();
@@ -274,11 +361,11 @@ public class PropertiesBeanFactory implements BeanFactory {
 		if (value.length() > 6 && value.endsWith(".class"))
 			return getClassMeta(value.substring(0, value.length() - 6));
 		if (value.length() > 9 && value.endsWith("().static"))
-			return getObjectByStaticMethod(value.substring(0, value.length() - 9), property);
+			return getObjectByStaticMethod(value.substring(0, value.length() - 9), name);
 		if (value.length() > 7 && value.endsWith(".static"))
-			return getObjectByStaticField(value.substring(0, value.length() - 9), property);
+			return getObjectByStaticField(value.substring(0, value.length() - 9), name);
 		if (value.length() > 2 && value.endsWith("()"))
-			return getObject(value.substring(0, value.length() - 2), property);
+			return getObject(value.substring(0, value.length() - 2), name);
 		if (value.length() > 2 && value.endsWith("<>"))
 			return getSet(value.substring(0, value.length() - 2));
 		if (value.length() > 2 && value.endsWith("[]"))
@@ -287,141 +374,6 @@ public class PropertiesBeanFactory implements BeanFactory {
 			return getMap(value.substring(0, value.length() - 2));
 
 		return value;
-	}
-
-	private Object getVariable(String name) {
-		String value = properties.getProperty(name);
-		if (value != null && value.trim().length() > 0)
-			return parseProperty(name, value);
-		else if (variables != null)
-			return variables.get(name);
-		return null;
-	}
-
-	private Object getClassMeta(String className) {
-		try {
-			return ClassUtils.forName(className);
-		} catch (ClassNotFoundException e) {
-			throw new BeanException(e);
-		}
-	}
-
-	private Object getObjectByStaticField(String classAndFieldName, String property) {
-		try {
-			int i = classAndFieldName.lastIndexOf('.');
-			if (i <= 0 || i > classAndFieldName.length() - 1)
-				throw new BeanException("PropertiesBeanFactory.invalid.static.name", new Object[]{classAndFieldName});
-
-			String className = classAndFieldName.substring(0, i);
-			String filedName = classAndFieldName.substring(i + 1);
-
-			Object bean = ClassUtils.forName(className).getField(filedName).get(null);
-			initProperty(property, bean);
-			return bean;
-		} catch (IllegalAccessException e) {
-			throw new BeanException(e);
-		} catch (ClassNotFoundException e) {
-			throw new BeanException(e);
-		} catch (IllegalArgumentException e) {
-			throw new BeanException(e);
-		} catch (SecurityException e) {
-			throw new BeanException(e);
-		} catch (NoSuchFieldException e) {
-			throw new BeanException(e);
-		}
-	}
-
-	private Object getObjectByStaticMethod(String classAndMethodName, String property) {
-		try {
-			int i = classAndMethodName.lastIndexOf('.');
-			if (i <= 0 || i > classAndMethodName.length() - 1)
-				throw new BeanException("PropertiesBeanFactory.invalid.static.name", new Object[]{classAndMethodName});
-
-			String className = classAndMethodName.substring(0, i);
-			String methodName = classAndMethodName.substring(i + 1);
-
-			Object bean = ClassUtils.forName(className).getMethod(methodName, new Class[0]).invoke(null, new Object[0]);
-			initProperty(property, bean);
-			return bean;
-		} catch (IllegalAccessException e) {
-			throw new BeanException(e);
-		} catch (ClassNotFoundException e) {
-			throw new BeanException(e);
-		} catch (IllegalArgumentException e) {
-			throw new BeanException(e);
-		} catch (SecurityException e) {
-			throw new BeanException(e);
-		} catch (InvocationTargetException e) {
-			throw new BeanException(e);
-		} catch (NoSuchMethodException e) {
-			throw new BeanException(e);
-		}
-	}
-
-	private Object getObject(String className, String property) {
-		try {
-			Object bean = ClassUtils.forName(className).newInstance();
-			initProperty(property, bean);
-			return bean;
-		} catch (InstantiationException e) {
-			throw new BeanException(e);
-		} catch (IllegalAccessException e) {
-			throw new BeanException(e);
-		} catch (ClassNotFoundException e) {
-			throw new BeanException(e);
-		}
-	}
-
-	private Set getSet(String setName) {
-		if (! TypeUtils.isNamed(setName))
-			throw new BeanException("PropertiesBeanFactory.invalid.set.name", new Object[]{setName});
-
-		Set set = new HashSet();
-		String prefix = setName + "<";
-		for (Iterator iterator = properties.entrySet().iterator(); iterator.hasNext();) {
-    		Entry entry = (Entry)iterator.next();
-    		String key = (String)entry.getKey();
-    		String value = (String)entry.getValue();
-    		if (key.startsWith(prefix) && key.endsWith(">"))
-    			set.add(parseProperty(key, value));
-    	}
-		return set;
-	}
-
-	private List getList(String listName) {
-		if (! TypeUtils.isNamed(listName))
-			throw new BeanException("PropertiesBeanFactory.invalid.list.name", new Object[]{listName});
-
-		String prefix = listName + "[";
-		int len = prefix.length();
-		SortedMap map = new TreeMap();
-		for (Iterator iterator = properties.entrySet().iterator(); iterator.hasNext();) {
-    		Entry entry = (Entry)iterator.next();
-    		String key = (String)entry.getKey();
-    		String value = (String)entry.getValue();
-    		if (key.startsWith(prefix) && key.endsWith("]"))
-    			map.put(new Integer(key.substring(len, key.length() - 1)), parseProperty(key, value));
-    	}
-		List list = new ArrayList();
-		list.addAll(map.values());
-		return list;
-	}
-
-	private Map getMap(String mapName) {
-		if (! TypeUtils.isNamed(mapName))
-			throw new BeanException("PropertiesBeanFactory.invalid.map.name", new Object[]{mapName});
-
-		String prefix = mapName + "{";
-		int len = prefix.length();
-		Map map = new HashMap();
-		for (Iterator iterator = properties.entrySet().iterator(); iterator.hasNext();) {
-    		Entry entry = (Entry)iterator.next();
-    		String key = (String)entry.getKey();
-    		String value = (String)entry.getValue();
-    		if (key.startsWith(prefix) && key.endsWith("}"))
-    			map.put(key.substring(len, key.length() - 1), parseProperty(key, value));
-    	}
-		return map;
 	}
 
 }

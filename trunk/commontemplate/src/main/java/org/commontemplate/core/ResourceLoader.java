@@ -16,7 +16,7 @@ public interface ResourceLoader {
 	 *
 	 * @param name
 	 *            模板名
-	 * @return 模板源，(注：后验条件不返回null，不存在时抛异常)
+	 * @return 模板源，(注：后验条件不返回null并且资源存在，不存在时抛异常)
 	 * @throws IOException
 	 *             当模板不存在时抛出
 	 */
@@ -29,7 +29,7 @@ public interface ResourceLoader {
 	 *            模板名
 	 * @param encoding
 	 *            加载编码方式
-	 * @return 模板源，(注：后验条件不返回null，不存在时抛异常)
+	 * @return 模板源，(注：后验条件不返回null并且资源存在，不存在时抛异常)
 	 * @throws IOException
 	 *             当模板不存在时抛出
 	 */
@@ -43,7 +43,7 @@ public interface ResourceLoader {
 	 *            模板名
 	 * @param locale
 	 *            国际化区域信息
-	 * @return 模板源，(注：后验条件不返回null，不存在时抛异常)
+	 * @return 模板源，(注：后验条件不返回null并且资源存在，不存在时抛异常)
 	 * @throws IOException
 	 *             当模板不存在时抛出
 	 */
@@ -58,7 +58,7 @@ public interface ResourceLoader {
 	 *            国际化区域信息
 	 * @param encoding
 	 *            加载编码方式
-	 * @return 模板源，(注：后验条件不返回null，不存在时抛异常)
+	 * @return 模板源，(注：后验条件不返回null并且资源存在，不存在时抛异常)
 	 * @throws IOException
 	 *             当模板不存在时抛出
 	 */
