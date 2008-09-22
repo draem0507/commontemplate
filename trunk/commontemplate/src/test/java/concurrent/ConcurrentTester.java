@@ -1,19 +1,16 @@
 package concurrent;
 
+import integration.TestEngineProvider;
 import junit.framework.TestCase;
 
 import org.commontemplate.engine.Engine;
-import org.commontemplate.standard.ConfigurationSettings;
-import org.commontemplate.tools.PropertiesConfigurationLoader;
 
 public class ConcurrentTester extends TestCase {
 
 	private Engine engine;
 
 	public ConcurrentTester() {
-		ConfigurationSettings config = PropertiesConfigurationLoader
-				.loadConfiguration("doc/commontemplate.properties");
-		this.engine = new Engine(config);
+		this.engine = TestEngineProvider.getTestEngine();
 	}
 
 	public void testConcurrent() throws Exception {
