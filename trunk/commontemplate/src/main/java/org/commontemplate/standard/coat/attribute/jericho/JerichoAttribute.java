@@ -9,7 +9,7 @@ import org.commontemplate.standard.coat.attribute.Attribute;
  * @author GL
  * @since 2008-4-5 下午05:34:50
  */
-public class JerichoAttribute extends Attribute{
+public class JerichoAttribute implements Attribute {
 
 	private final au.id.jericho.lib.html.Attribute attr;
 
@@ -30,5 +30,9 @@ public class JerichoAttribute extends Attribute{
 
 	public String getValue() {
 		return attr.getValue();
+	}
+
+	public String toString() {
+		return getText();
 	}
 }

@@ -9,7 +9,7 @@ package org.commontemplate.standard.coat.attribute;
  * @author GuiLeen
  * @since 2008-4-4 下午11:24:11
  */
-public abstract class Attribute extends Segment {
+public interface Attribute extends Segment {
 
 	/**
 	 * 获取属性名

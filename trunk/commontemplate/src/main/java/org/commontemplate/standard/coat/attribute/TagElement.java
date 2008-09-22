@@ -11,7 +11,7 @@ import java.util.List;
  * @author GuiLeen
  * @since 2008-4-4 下午11:20:44
  */
-public abstract class TagElement extends Attributes {
+public interface TagElement extends Attributes {
 
 	public abstract List getSegments();
 

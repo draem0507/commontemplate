@@ -9,7 +9,7 @@ package org.commontemplate.standard.coat.attribute;
  * @author GuiLeen
  * @since 2008-4-4 下午11:24:11
  */
-public class StandardAttribute extends Attribute {
+public class StandardAttribute implements Attribute {
 
 	private final String name;
 
