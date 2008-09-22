@@ -95,7 +95,7 @@ public final class ExpressionEngine implements ExpressionParser {
 		return expressionFactory.createVariable(variableName);
 	}
 
-	public ExpressionBuilder getExpressionBuilder() {
+	public ExpressionBuilder createExpressionBuilder() {
 		return new ExpressionBuilderImpl(operatorHandlerProvider, evaluateInterceptors);
 	}
 

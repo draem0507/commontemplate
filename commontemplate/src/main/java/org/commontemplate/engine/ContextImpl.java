@@ -38,6 +38,7 @@ import org.commontemplate.core.UnaryOperator;
 import org.commontemplate.core.Variable;
 import org.commontemplate.core.VariableException;
 import org.commontemplate.util.Assert;
+import org.commontemplate.util.LocaleUtils;
 
 /**
  * 上下文实现
@@ -49,8 +50,7 @@ final class ContextImpl extends Context {
 
 	private static final long serialVersionUID = 1L;
 
-	ContextImpl(Writer out, Locale locale, TimeZone timeZone,
-			boolean debug, TemplateLoader templateLoader, ContextFactory contextFactory, TemplateNameFilter templateNameFilter,
+	ContextImpl(Writer out, TemplateLoader templateLoader, ContextFactory contextFactory, TemplateNameFilter templateNameFilter,
 			OutputFormatter defaultFormater, EventListener eventListener, Keywords keywords) {
 		Assert.assertNotNull(out);
 		Assert.assertNotNull(templateLoader);
@@ -58,14 +58,11 @@ final class ContextImpl extends Context {
 		Assert.assertNotNull(keywords);
 
 		this.out = out;
-		this.locale = locale;
-		this.timeZone = timeZone;
 		this.templateLoader = templateLoader;
 		this.contextFactory = contextFactory;
 		this.templateNameFilter = templateNameFilter;
 		this.defaultFormater = defaultFormater;
 		this.eventListener = eventListener;
-		this.debug = debug;
 		this.keywords = keywords;
 
 		eventPublisher = new EventPublisherImpl(eventListener, this);
@@ -84,7 +81,11 @@ final class ContextImpl extends Context {
 	private final OutputFormatter defaultFormater;
 
 	public Context createContext() {
-		return new ContextImpl(out, locale, timeZone, debug, templateLoader, contextFactory, templateNameFilter, defaultFormater, eventListener, keywords);
+		Context context = new ContextImpl(out, templateLoader, contextFactory, templateNameFilter, defaultFormater, eventListener, keywords);
+		context.setLocale(locale);
+		context.setTimeZone(timeZone);
+		context.setDebug(debug);
+		return context;
 	}
 
 	private transient final Writer out;
@@ -107,6 +108,8 @@ final class ContextImpl extends Context {
 
 	public void setLocale(Locale locale) {
 		this.locale = locale;
+		if (timeZone == null)
+			timeZone = LocaleUtils.getDefaultTimeZone(locale);
 	}
 
 	public void setTimeZone(TimeZone timeZone) {
@@ -124,6 +127,7 @@ final class ContextImpl extends Context {
 	}
 
 	public void clear() {
+		super.clear();
 		// 清理栈
 		clearLocalContexts(); // 此清理将调用各级LocalContext的clear();
 		clearTemplates();
@@ -528,12 +532,12 @@ final class ContextImpl extends Context {
 		return templateLoader.createText(text);
 	}
 
-	public ExpressionBuilder getExpressionBuilder() {
-		return templateLoader.getExpressionBuilder();
+	public ExpressionBuilder createExpressionBuilder() {
+		return templateLoader.createExpressionBuilder();
 	}
 
-	public TemplateBudiler getTemplateBudiler(String templateName) {
-		return templateLoader.getTemplateBudiler(templateName);
+	public TemplateBudiler createTemplateBudiler() {
+		return templateLoader.createTemplateBudiler();
 	}
 
 	public BinaryOperator createBinaryOperator(String operatorName,
@@ -560,14 +564,6 @@ final class ContextImpl extends Context {
 	}
 
 	private transient final ContextFactory contextFactory;
-
-	public Context createContext(Writer out, Locale locale, TimeZone timeZone) {
-		return contextFactory.createContext(out, locale, timeZone);
-	}
-
-	public Context createContext(Writer out, Locale locale) {
-		return contextFactory.createContext(out, locale);
-	}
 
 	public Context createContext(Writer out) {
 		return contextFactory.createContext(out);

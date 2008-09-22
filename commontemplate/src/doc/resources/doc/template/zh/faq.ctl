@@ -6,13 +6,14 @@ $!
 								resourceLoader在加载模板文件时，需得知以何种编码读取文件。<br/>
 								如果各模板文件的编码一致，可以设置加载器的默认编码：<br/>
 								defaultEncoding=UTF-8<br/>
-								注：如果defaultEncoding=null将使用System.getProperty("file.encoding")作为默认编码。<br/>
+								如果希望使用操作系统编码，可以将默认编码设为空：<br/>
+								defaultEncoding=null<br/>
 								以下调用方式会用到默认编码：<br/>
 								engine.getTemplate(name);<br/>
-								engine.loadResource(name);<br/>
-								如果各模板文件的编码不一致，需单独指定编码，则应该使用：<br/>
+								engine.getResource(name);<br/>
+								如果各模板文件的编码不一致，需单独指定编码，可以使用：<br/>
 								engine.getTemplate(name, encoding);<br/>
-								engine.loadResource(name, encoding);<br/>
+								engine.getResource(name, encoding);<br/>
 								<b>输出：</b><br/>
 								输出尽可能与模板保持编码一致：<br/>
 								response.setCharacterEncoding("UTF-8");<br/>

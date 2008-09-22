@@ -15,7 +15,7 @@ public interface TemplateParser extends ExpressionParser, TemplateFactory {
 	 *
 	 * @param resource
 	 *            模板源
-	 * @return 模板
+	 * @return 模板，后验条件不返回null
 	 * @throws ParsingException
 	 *             模板解析出错时抛出
 	 * @throws IOException
@@ -28,17 +28,16 @@ public interface TemplateParser extends ExpressionParser, TemplateFactory {
 	 *
 	 * @param template
 	 *            模板内容
-	 * @return 匿名模板
+	 * @return 匿名模板，后验条件不返回null
 	 * @throws ParsingException
 	 *             模板解析出错时抛出
 	 */
 	public Template parseTemplate(String template) throws ParsingException;
 
 	/**
-	 * 获取模块构建器
+	 * 创建模块构建器
 	 *
-	 * @param templateName 模板名称
 	 * @return 模块构建器
 	 */
-	public TemplateBudiler getTemplateBudiler(String templateName);
+	public TemplateBudiler createTemplateBudiler();
 }

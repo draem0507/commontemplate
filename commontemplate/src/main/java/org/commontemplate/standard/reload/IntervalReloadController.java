@@ -1,11 +1,11 @@
 package org.commontemplate.standard.reload;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.commontemplate.config.ReloadController;
 import org.commontemplate.util.Assert;
+import org.commontemplate.util.CollectionUtils;
 
 /**
  * 按时间间隔热加载
@@ -32,15 +32,15 @@ public class IntervalReloadController implements ReloadController, Serializable 
 		this.modificationCheckInterval = modificationCheckInterval;
 	}
 
-	private Map checkedTimes = new HashMap();
+	private Map checkedTimes = CollectionUtils.getConcurrentMap();
 
-	public boolean shouldReload(String templateName) {
+	public boolean shouldReload(Object key) {
 		if (modificationCheckInterval == NO_CHECK_MODIFICATION)
 			return false;
-		Long time = (Long)checkedTimes.get(templateName);
+		Long time = (Long)checkedTimes.get(key);
 		long before = (time == null ? 0 : time.longValue());
 		long now = System.currentTimeMillis();
-		checkedTimes.put(templateName, new Long(now));
+		checkedTimes.put(key, new Long(now));
 		return now - before - modificationCheckInterval > 0;
 	}
 

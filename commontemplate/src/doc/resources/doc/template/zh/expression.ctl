@@ -1,7 +1,7 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
 	<!--$zone{"content"}-->
 $!
-								<b>一. 表达式规则:</b><br/>
+								<b>一. 表达式规则:</b> <a href="template.html">模板指南...</a><br/>
 								(1) 常规中缀表达式规则<br/>
 								(2) 支持Java所有表达式<br/>
 								<br/>
@@ -28,7 +28,7 @@ $!
 								this 代表当前LocalContext<br/>
 								super 代表上级LocalContext<br/>
 								context 代表当前Context<br/>
-								<b>5. 操作符关键字： <font color="green">(注：不可以作为变量名)</font></b>
+								<b>5. 操作符关键字： <font color="green">(注：不可以作为变量名)</font></b><br/>
 								new 一元操作符(优先于变量)<br/>
 								<br/>
 								<b>三. 标准操作符:</b> <a href="extension.html#operator">扩展...</a><br/>

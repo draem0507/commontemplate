@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
 
 import org.commontemplate.config.Configuration;
 import org.commontemplate.core.BinaryOperator;
@@ -57,8 +56,8 @@ public final class Engine implements Factory {
 		this.contextFactory = new ContextFactoryImpl(
 				this.templateLoader, config.getContextInitializer(),
 				config.getTemplateNameFilter(), config.getDefaultOutputFormatter(),
-				config.getEventListener(), config.isDebug(),
-				config.getKeywords());
+				config.getEventListener(), config.getKeywords(),
+				config.isDebug());
 	}
 
 	public final Template getTemplate(String name) throws IOException, ParsingException {
@@ -138,12 +137,12 @@ public final class Engine implements Factory {
 		return templateLoader.createText(text);
 	}
 
-	public ExpressionBuilder getExpressionBuilder() {
-		return templateLoader.getExpressionBuilder();
+	public ExpressionBuilder createExpressionBuilder() {
+		return templateLoader.createExpressionBuilder();
 	}
 
-	public TemplateBudiler getTemplateBudiler(String templateName) {
-		return templateLoader.getTemplateBudiler(templateName);
+	public TemplateBudiler createTemplateBudiler() {
+		return templateLoader.createTemplateBudiler();
 	}
 
 	public Template createTemplate(String name, List elements) {
@@ -161,14 +160,6 @@ public final class Engine implements Factory {
 
 	public final Context createContext(Writer out) {
 		return contextFactory.createContext(out);
-	}
-
-	public final Context createContext(Writer out, Locale locale) {
-		return contextFactory.createContext(out, locale);
-	}
-
-	public final Context createContext(Writer out, Locale locale, TimeZone timeZone) {
-		return contextFactory.createContext(out, locale, timeZone);
 	}
 
 	public final GlobalContext getGlobalContext() {

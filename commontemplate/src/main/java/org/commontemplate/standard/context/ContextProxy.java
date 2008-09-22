@@ -501,24 +501,16 @@ public abstract class ContextProxy extends Context {
 		return context.createVariable(variableName);
 	}
 
-	public ExpressionBuilder getExpressionBuilder() {
-		return context.getExpressionBuilder();
+	public ExpressionBuilder createExpressionBuilder() {
+		return context.createExpressionBuilder();
 	}
 
-	public TemplateBudiler getTemplateBudiler(String templateName) {
-		return context.getTemplateBudiler(templateName);
+	public TemplateBudiler createTemplateBudiler() {
+		return context.createTemplateBudiler();
 	}
 
 	public Template createTemplate(String name, List elements) {
 		return context.createTemplate(name, elements);
-	}
-
-	public Context createContext(Writer out, Locale locale, TimeZone timeZone) {
-		return context.createContext(out, locale, timeZone);
-	}
-
-	public Context createContext(Writer out, Locale locale) {
-		return context.createContext(out, locale);
 	}
 
 	public Context createContext(Writer out) {

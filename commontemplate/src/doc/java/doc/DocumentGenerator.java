@@ -173,8 +173,8 @@ public class DocumentGenerator {
 				dir.mkdirs();
 			System.out.println(file.getAbsolutePath());
 			output = new FileWriter(file);
-			Context context = factory
-					.createContext(output, l);
+			Context context = factory.createContext(output);
+			context.setLocale(l);
 			context.pushLocalContext(getModel());
 			context.put("locale", l);
 			context.put("release", Boolean.valueOf(release));

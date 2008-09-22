@@ -119,8 +119,8 @@ public final class TemplateEngine implements TemplateParser {
 		}
 	}
 
-	public TemplateBudiler getTemplateBudiler(String templateName) {
-		return new TemplateBudilerImpl(templateName, syntax, directiveHandlerProvider, renderInterceptors);
+	public TemplateBudiler createTemplateBudiler() {
+		return new TemplateBudilerImpl(syntax, directiveHandlerProvider, renderInterceptors);
 	}
 
 	public BinaryOperator createBinaryOperator(String operatorName,
@@ -142,8 +142,8 @@ public final class TemplateEngine implements TemplateParser {
 		return expressionParser.createVariable(variableName);
 	}
 
-	public ExpressionBuilder getExpressionBuilder() {
-		return expressionParser.getExpressionBuilder();
+	public ExpressionBuilder createExpressionBuilder() {
+		return expressionParser.createExpressionBuilder();
 	}
 
 	public BlockDirective createBlockDirective(String name,

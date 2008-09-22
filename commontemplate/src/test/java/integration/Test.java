@@ -5,7 +5,7 @@ public class Test {
 
 	public static void main(String[] args) {
 		try {
-			System.out.println("<html xxx=\"yyy & zzz\"></html>".replaceAll("(\")[^\"]*\"", "<font>$0</font>"));
+			System.out.println(Class.forName("java.util.concurrent.ConcurrentHashMap").newInstance());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

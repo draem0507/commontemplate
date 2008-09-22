@@ -26,10 +26,14 @@
 								Email: <img src="../images/mail/mail_czq.gif" border="0" /><br/>
 								<br/>
 								<b>4. $msg{'page.about.project.logo'}</b><br/>
-								$msg{'page.about.link.code'}:<br/>
-								<textarea id="txtLink" row="3" col="60" readonly="readonly">&lt;a href="http://www.commontemplate.org" target="_blank"&gt;&lt;img src="http://www.commontemplate.org/images/logo.gif" border="0" width="88" height="31" /&gt;&lt;/a&gt;</textarea><input type="button" value="$msg{'page.about.copy'}" onclick="clipboardData.setData('text',document.getElementById('txtLink').value);alert('$msg{'page.about.copy.prompt'}');" /><br/>
-								$msg{'page.about.link.effect'}:<br/>
+								$msg{'page.about.website.link.code'}:<br/>
+								<textarea id="txtWebsiteLink" row="3" col="60" readonly="readonly">&lt;a href="http://www.commontemplate.org" target="_blank"&gt;&lt;img src="http://www.commontemplate.org/images/logo.gif" border="0" width="88" height="31" /&gt;&lt;/a&gt;</textarea><input type="button" value="$msg{'page.about.copy'}" onclick="clipboardData.setData('text',document.getElementById('txtWebsiteLink').value);alert('$msg{'page.about.copy.prompt'}');" /><br/>
+								$msg{'page.about.website.link.effect'}:<br/>
 								<a href="http://www.commontemplate.org" target="_blank"><img src="../images/logo.gif" border="0" width="88" height="31" /></a><br/>
+								$msg{'page.about.powered.link.code'}:<br/>
+								<textarea id="txtPoweredLink" row="3" col="60" readonly="readonly">&lt;a href="http://www.commontemplate.org" target="_blank"&gt;&lt;img src="http://www.commontemplate.org/images/powered.gif" border="0" width="88" height="31" /&gt;&lt;/a&gt;</textarea><input type="button" value="$msg{'page.about.copy'}" onclick="clipboardData.setData('text',document.getElementById('txtPoweredLink').value);alert('$msg{'page.about.copy.prompt'}');" /><br/>
+								$msg{'page.about.powered.link.effect'}:<br/>
+								<a href="http://www.commontemplate.org" target="_blank"><img src="../images/powered.gif" border="0" width="88" height="31" /></a><br/>
 								$msg{'page.about.logo.desc'}:<br/>
 								$msg{'page.about.logo.desc.content'}<br/>
 								<br/>
@@ -60,12 +64,12 @@
 								<b>6. $msg{'page.about.project.tools'}</b><br/>
 								<table border="0" cellpadding="2" cellspacing="0">
 									<tr>
-										<td><a href="http://www.eclipse.org" target="_blank"><img src="../images/eclipse.jpg" border="0" width="88" height="31" /></a></td>
-										<td>Eclipse: <a href="http://www.eclipse.org" target="_blank">http://www.eclipse.org</a></td>
-									</tr>
-									<tr>
 										<td><a href="http://java.sun.com/j2se/1.4.2" target="_blank"><img src="../images/javase.gif" border="0" width="88" height="31" /></a></td>
 										<td>JavaSE: <a href="http://java.sun.com/j2se/1.4.2" target="_blank">http://java.sun.com/j2se/1.4.2</a></td>
+									</tr>
+									<tr>
+										<td><a href="http://www.eclipse.org" target="_blank"><img src="../images/eclipse.jpg" border="0" width="88" height="31" /></a></td>
+										<td>Eclipse: <a href="http://www.eclipse.org" target="_blank">http://www.eclipse.org</a></td>
 									</tr>
 									<tr>
 										<td><a href="http://ant.apache.org" target="_blank"><img src="../images/ant.gif" border="0" width="88" height="31" /></a></td>
@@ -84,7 +88,7 @@
 										<td>FindBugs: <a href="http://findbugs.sourceforge.net" target="_blank">http://findbugs.sourceforge.net</a></td>
 									</tr>
 									<tr>
-										<td><a href="http://findbugs.sourceforge.net" target="_blank"><img src="../images/jdepend.gif" border="0" width="88" height="31" /></a></td>
+										<td><a href="http://andrei.gmxhome.de/jdepend4eclipse" target="_blank"><img src="../images/jdepend.gif" border="0" width="88" height="31" /></a></td>
 										<td>Jdepend4eclipse: <a href="http://andrei.gmxhome.de/jdepend4eclipse" target="_blank">http://andrei.gmxhome.de/jdepend4eclipse</a></td>
 									</tr>
 									<tr>
@@ -98,8 +102,10 @@
 								</table>
 								<br/>
 								<b>7. $msg{'page.about.in.use'}</b> <a href="join.html">$msg{'page.about.contact.us'}...</a><br/>
+								CommonTemplate: <a href="http://www.commontemplate.org">http://www.commontemplate.org</a><br/>
 								Jwebap: <a href="http://jwebap.sourceforge.net">http://jwebap.sourceforge.net</a><br/>
 								EasyJF: <a href="http://www.easyjf.com">http://www.easyjf.com</a><br/>
+								Jrest4Guice: <a href="http://code.google.com/p/jrest4guice">http://code.google.com/p/jrest4guice</a><br/>
 								......<br/>
 	<!--$end-->
 <!--$end-->

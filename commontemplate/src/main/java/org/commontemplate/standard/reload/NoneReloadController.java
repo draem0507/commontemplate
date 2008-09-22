@@ -14,7 +14,7 @@ public class NoneReloadController implements ReloadController, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public boolean shouldReload(String templateName) {
+	public boolean shouldReload(Object key) {
 		return false;
 	}
 

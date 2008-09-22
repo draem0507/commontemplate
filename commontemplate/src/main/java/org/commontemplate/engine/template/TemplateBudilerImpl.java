@@ -19,8 +19,6 @@ import org.commontemplate.core.TemplateBudiler;
  */
 final class TemplateBudilerImpl implements TemplateBudiler {
 
-	private final String templateName;
-
 	private final Syntax syntax;
 
 	private final DirectiveHandlerProvider directiveHandlerProvider;
@@ -29,11 +27,28 @@ final class TemplateBudilerImpl implements TemplateBudiler {
 
 	private final DirectiveReducer directiveReducer = new DirectiveReducer();
 
-	TemplateBudilerImpl(String templateName, Syntax syntax, DirectiveHandlerProvider directiveHandlerProvider, List renderInterceptors) {
-		this.templateName = templateName;
+	TemplateBudilerImpl(Syntax syntax, DirectiveHandlerProvider directiveHandlerProvider, List renderInterceptors) {
 		this.syntax = syntax;
 		this.directiveHandlerProvider = directiveHandlerProvider;
 		this.renderInterceptors = renderInterceptors;
+	}
+
+	private String templateName;
+
+	public void setTemplateName(String templateName) {
+		this.templateName = templateName;
+	}
+
+	private String templateEncoding;
+
+	public void setTemplateEncoding(String templateEncoding) {
+		this.templateEncoding = templateEncoding;
+	}
+
+	private long templateLastModified = -1;
+
+	public void setTemplateLastModified(long templateLastModified) {
+		this.templateLastModified = templateLastModified;
 	}
 
 	private List elements = new ArrayList();
@@ -56,13 +71,13 @@ final class TemplateBudilerImpl implements TemplateBudiler {
 	public Template getTemplate() {
 		RootBlockDirectiveImpl rootBlockDirective = directiveReducer.reduce(elements);
 		try {
-			return new TemplateImpl(new ResourceImpl("", templateName), rootBlockDirective, renderInterceptors);
+			return new TemplateImpl(new ResourceImpl("", templateName, templateEncoding, templateLastModified), rootBlockDirective, renderInterceptors);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	public void beginBlockDirective(String directiveName, Expression expression) {
+	public void addBlockDirective(String directiveName, Expression expression) {
 		elements.add(new BlockDirectiveImpl(directiveName, null, expression, (BlockDirectiveHandler)directiveHandlerProvider.getDirectiveHandler(directiveName),
 				String.valueOf(syntax.getDirectiveLeader())
 				+ directiveName + String.valueOf(syntax.getExpressionBegin())

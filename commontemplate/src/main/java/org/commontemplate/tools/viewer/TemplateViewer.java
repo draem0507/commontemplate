@@ -13,8 +13,7 @@ public class TemplateViewer {
 	}
 
 	public void view(File sourceFile) throws Exception {
-		File targetFile = generator.getSuffixFile(sourceFile, "html"); // 目标文件
-		generator.generate(sourceFile, targetFile);
+		File targetFile = generator.generateDefault(sourceFile);
 		Runtime.getRuntime().exec("cmd /c start " + UrlUtils.cleanWindowsPath(targetFile.getCanonicalPath()));
 	}
 

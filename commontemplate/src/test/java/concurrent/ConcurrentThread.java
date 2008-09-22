@@ -43,7 +43,8 @@ public class ConcurrentThread extends Thread {
 			try {
 				Template template = engine.getTemplate(templateName);
 				Locale locale = Locale.CHINA;
-				Context context = engine.createContext(out, locale);
+				Context context = engine.createContext(out);
+				context.setLocale(locale);
 				context.pushLocalContext(getModel());
 				context.put("locale", locale);
 				context.put("release", Boolean.valueOf(true));

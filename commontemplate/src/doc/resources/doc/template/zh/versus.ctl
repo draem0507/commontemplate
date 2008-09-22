@@ -33,9 +33,9 @@ $!
 								<a name="freemarker" /><b>3. 与FreeMarker特性对比清单</b><br/>
 								FreeMarker项目地址：<a href="http://www.freemarker.org">http://www.freemarker.org</a><br/>
 								(1) 语法<br/>
-								CommonTemplate有更一致的语法规则$name{expression}, 而FreeMarker的&lt;#&gt;,${},#{},&lt;@&gt;等各式各样的前导符实在有点多.<br/>
+								CommonTemplate有更一致的语法规则: $指令{表达式}, 而FreeMarker的&lt;#&gt;,${},#{},&lt;@&gt;等各式各样的前导符实在有点多.<br/>
 								(2) 表达式<br/>
-								CommonTemplate中所有指令的表达式模型是一致的, 所有操作符在所有指令中有效, 而FreeMarker每个指令表达式均不相同, 如: &lt;#list xxx as x&lt;中的"as"<br/>
+								CommonTemplate中所有指令的表达式模型是一致的, 所有操作符在所有指令中有效, 而FreeMarker每个指令表达式均不相同, 如: &lt;#list xxx as x&gt;中的"as"<br/>
 								(3) 外部属性<br/>
 								对于不可变类, FreeMarker采用?号操作符进行BuildIn处理, 而CommonTemplate采用属性扩展, 保持与原有属性一样的调用方式, 如: ${"james".capitalize}, 并且可以自行扩展.<br/>
 								(4) 扩展点<br/>

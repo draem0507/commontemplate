@@ -74,8 +74,11 @@ final class LocalContextStackImpl implements LocalContextStack, Serializable {
 
 	public void popLocalContext() {
 		LocalContext previous = (LocalContext)localContextStack.pop();
-		eventPublisher.publishEvent(new LocalContextPopedEvent(this, previous, getCurrentLocalContext()));
-		previous.clear();
+		try {
+			eventPublisher.publishEvent(new LocalContextPopedEvent(this, previous, getCurrentLocalContext()));
+		} finally {
+			previous.clear();
+		}
 	}
 
 	public LocalContext getCurrentLocalContext() {
@@ -108,7 +111,8 @@ final class LocalContextStackImpl implements LocalContextStack, Serializable {
 	}
 
 	public void clearLocalContexts() {
-		while (! localContextStack.isEmpty()) popLocalContext();
+		while (! localContextStack.isEmpty())
+			popLocalContext();
 		localContextStack.clear();
 	}
 
