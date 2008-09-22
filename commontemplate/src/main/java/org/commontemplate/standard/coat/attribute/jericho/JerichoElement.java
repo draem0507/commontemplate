@@ -15,7 +15,7 @@ import au.id.jericho.lib.html.*;
  * @author GL
  * @since 2008-4-5 上午02:37:05
  */
-public class JerichoElement extends TagElement {
+public class JerichoElement implements TagElement {
 
 	private final Attributes attributes;
 
@@ -27,7 +27,7 @@ public class JerichoElement extends TagElement {
 		segments = new ArrayList();
 		int pos = element.getBegin();
 
-		au.id.jericho.lib.html.Attributes attrs = element.getAttributes();
+		au.id.jericho.lib.html.Attributes attrs = element.getAttributes(); // FIXME 有注释时，attrs为null
 		segments.add(new TextSegment(source.subSequence(pos, attrs.getBegin()).toString()));
 		attributes = new JerichoAttributes(attrs);
 		segments.add(attributes);

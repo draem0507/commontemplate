@@ -11,7 +11,7 @@ import org.commontemplate.util.Assert;
  * @author GuiLeen
  * @since 2008-4-5 上午02:36:24
  */
-public class TextSegment extends Segment {
+public class TextSegment implements Segment {
 
 	private final String text;
 

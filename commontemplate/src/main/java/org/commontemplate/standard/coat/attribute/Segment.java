@@ -9,7 +9,7 @@ package org.commontemplate.standard.coat.attribute;
  * @author GuiLeen
  * @since 2008-4-5 上午12:42:54
  */
-public abstract class Segment {
+public interface Segment {
 
 	/**
 	 * 获取片段文本内容
@@ -17,9 +17,5 @@ public abstract class Segment {
 	 * @return 片段文本内容
 	 */
 	public abstract String getText();
-
-	public String toString() {
-		return getText();
-	}
 
 }
