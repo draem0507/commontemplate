@@ -10,11 +10,11 @@ import org.commontemplate.config.CacheException;
 
 /**
  * 软引用缓存，当内存不够时，VM将首先回收它们
- * 
+ *
  * 声明: 此类引自<a href="http://www.freemarker.org">FreeMarker</a>的freemarker.cache.SoftCacheStorage
- * 
+ *
  */
-public class SoftCache implements Cache {
+public class SoftCache extends Cache {
 
 	private final Map cacheMap = new HashMap();
 

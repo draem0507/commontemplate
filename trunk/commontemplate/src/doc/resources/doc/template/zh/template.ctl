@@ -4,7 +4,7 @@ $!
 								<b>一. 语法规则:</b><br/>
 								整个模板语言只有一个语法规则：<br/>
 								<b>$指令名{<a href="expression.html">参数表达式</a>}</b><br/>
-								<font color="green">(注：指令名只能包含字母，下划线，数字，点号，并且标准指令名全部采用全小写)</font><br/>
+								<font color="green">(注：指令名只能包含字母，下划线，数字，点号)</font><br/>
 								<font color="green">(注：指令名或参数表达式均可以为空，参数表达式为空时，大括号可省)</font><br/>
 								<font color="green">(注：如果指令名称与字母相连，大括号不可省，如：$else{}xxxx，而不能为$elsexxxx，否则引起歧义)</font><br/>
 								<br/>
@@ -48,7 +48,7 @@ $!
 								<font color="green">(注: 参数表示被结束块指令的名称, 编译时将进行检查(不匹配将抛出异常), 没有参数表示自动匹配)</font><br/>
 								<font color="green">(注: $end总是与最近的块指令匹配，如：$if...$end{if} 或 $if...$else...$end{else})</font><br/>
 								<br/>
-								<b>四. 标准指令:</b> <a href="extension.html#directive">扩展...</a><br/>
+								<b>四. 标准指令:</b> <font color="green">(注：全部采用全小写命名)</font> <a href="extension.html#directive">扩展...</a><br/>
 								<b>(1) 输出指令:</b><br/>
 								表达式结果输出: <font color="green">(注：指令名称为空的指令)</font><br/>
 								${user.name}<br/>

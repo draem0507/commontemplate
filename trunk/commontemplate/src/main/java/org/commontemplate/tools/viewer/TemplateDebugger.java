@@ -8,17 +8,17 @@ import org.commontemplate.util.UrlUtils;
 
 public class TemplateDebugger {
 
-	private final TemplateViewer templateViewer;
+	private final TemplateGenerator templateGenerator;
 
-	public TemplateDebugger(TemplateViewer templateViewer) {
-		this.templateViewer = templateViewer;
+	public TemplateDebugger(TemplateGenerator templateGenerator) {
+		this.templateGenerator = templateGenerator;
 	}
 
 	public void debug(File sourceFile) throws Exception {
 		String sourcePath = sourceFile.getCanonicalPath();
 		sourcePath = UrlUtils.cleanUrl(sourcePath);
 		DebugManager.getInstance().addBreakpoint(new Breakpoint(sourcePath, 0));
-		templateViewer.view(sourceFile);
+		templateGenerator.generateDefault(sourceFile);
 	}
 
 }

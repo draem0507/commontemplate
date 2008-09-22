@@ -6,7 +6,6 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.StringWriter;
-import java.util.Locale;
 
 import junit.framework.TestCase;
 
@@ -22,7 +21,7 @@ public class SerializableTester extends TestCase {
 
 		// 执行模板
 		StringWriter output = new StringWriter();
-		Context context = factory.createContext(output, Locale.getDefault());
+		Context context = factory.createContext(output);
 		context.pushLocalContext("session", ModelProvider.getSessionModel());
 		context.pushLocalContext(ModelProvider.getModel());
 		Template t1 = factory.getTemplate("/integration/serial.ctl");

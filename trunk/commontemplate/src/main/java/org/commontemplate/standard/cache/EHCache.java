@@ -12,7 +12,7 @@ import org.commontemplate.util.Assert;
  * @author liangfei0201@163.com
  *
  */
-public class EHCache implements org.commontemplate.config.Cache {
+public class EHCache extends org.commontemplate.config.Cache {
 
 	private static final String GROUP = "CommonTemplateCache";
 

@@ -1,5 +1,6 @@
 package org.commontemplate.tools.swing;
 
+import java.awt.Component;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
@@ -7,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -30,15 +32,26 @@ public class MenuBuilder {
 	}
 
 	public static void buildReadonlyTextMenu(final JTextComponent component, final JPopupMenu menu) {
-		final JMenuItem copyItem = new JMenuItem(I18nMessages.getMessage("TextPopupMenu.copy.menu.item"));
+		final MyMenuItem copyItem = new MyMenuItem(I18nMessages.getMessage("TextPopupMenu.copy.menu.item")) {
+			private static final long serialVersionUID = 1L;
+			protected boolean isShow(final JComponent comp, final JPopupMenu menu, final int x, final int y) {
+				String select = component.getSelectedText();
+				return select != null && select.length() > 0;
+			}
+		};
 		menu.add(copyItem)
 			.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent ae) {
-					StringSelection stringSelection = new StringSelection(component.getSelectedText());
-					Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, stringSelection);
+					component.copy();
 				}
 			});
-		final JMenuItem copyAllItem = new JMenuItem(I18nMessages.getMessage("TextPopupMenu.copy.all.menu.item"));
+		final MyMenuItem copyAllItem = new MyMenuItem(I18nMessages.getMessage("TextPopupMenu.copy.all.menu.item")) {
+			private static final long serialVersionUID = 1L;
+			protected boolean isShow(final JComponent comp, final JPopupMenu menu, final int x, final int y) {
+				String all = component.getText();
+				return all != null && all.length() > 0;
+			}
+		};
 		menu.add(copyAllItem)
 			.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent ae) {
@@ -51,10 +64,12 @@ public class MenuBuilder {
 				 if (me.getModifiers() == MouseEvent.META_MASK) {
 					 int x = me.getX();
 					 int y = me.getY();
-					 String sel = component.getSelectedText();
-					 copyItem.setEnabled((sel != null && sel.length() > 0));
-					 String all = component.getText();
-					 copyAllItem.setEnabled((all != null && all.length() > 0));
+					 for (int i = 0, n = menu.getComponentCount(); i < n; i ++) {
+						 Component child = menu.getComponent(i);
+						 if (child instanceof MyMenuItem) {
+							 ((MyMenuItem)child).checkShow(component, menu, x, y);
+						 }
+					 }
 					 menu.show(component, x, y);
 				 }
 			 }
@@ -68,7 +83,34 @@ public class MenuBuilder {
 	}
 
 	public static void buildEditableTextMenu(final JTextComponent component, final JPopupMenu menu) {
-		// TODO 构造可编辑框菜单
+		final MyMenuItem pasteItem = new MyMenuItem(I18nMessages
+				.getMessage("DebugFrame.paste.menu.item")){
+			private static final long serialVersionUID = 1L;
+			protected boolean isShow(final JComponent comp, final JPopupMenu menu, final int x, final int y) {
+				return Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null) != null;
+			}
+		};
+		menu.add(pasteItem);
+		pasteItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				component.paste();
+			}
+		});
+		final MyMenuItem cutItem = new MyMenuItem(I18nMessages
+				.getMessage("DebugFrame.cut.menu.item")) {
+			private static final long serialVersionUID = 1L;
+			protected boolean isShow(final JComponent comp, final JPopupMenu menu, final int x, final int y) {
+				String sel = component.getSelectedText();
+				return sel != null && sel.length() > 0;
+			}
+		};
+		menu.add(cutItem);
+		cutItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				component.cut();
+			}
+		});
+		buildReadonlyTextMenu(component, menu);
 	}
 
 	public static JPopupMenu buildReadonlyTreeMenu(final JTree component) {
@@ -180,6 +222,7 @@ public class MenuBuilder {
 
 	public static void buildEditableTreeMenu(final JTree component, final JPopupMenu menu) {
 		// TODO 构造可编辑树菜单
+		buildReadonlyTreeMenu(component, menu);
 	}
 
 	public static JPopupMenu buildReadonlyListMenu(final JList component) {
@@ -245,6 +288,7 @@ public class MenuBuilder {
 
 	public static void buildEditableListMenu(final JList component, final JPopupMenu menu) {
 		// TODO 构造可编辑列表菜单
+		buildReadonlyListMenu(component, menu);
 	}
 
 }

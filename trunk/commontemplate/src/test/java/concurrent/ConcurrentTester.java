@@ -17,7 +17,7 @@ public class ConcurrentTester extends TestCase {
 	}
 
 	public void testConcurrent() throws Exception {
-		// FIXME 并发时, 磁盘缓存发生java.io.EOFException, 读取到了不完整的缓存文件
+		System.out.println("----begin----");
 		for (int i = 0; i < 100; i ++) {
 			new ConcurrentThread(engine, "concurrent/1.ctl", 500 - i * 10).start();
 			new ConcurrentThread(engine, "concurrent/2.ctl", 500 - i * 10).start();

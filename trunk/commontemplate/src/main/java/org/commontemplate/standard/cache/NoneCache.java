@@ -5,11 +5,11 @@ import org.commontemplate.config.Cache;
 
 /**
  * 不缓存
- * 
+ *
  * @author liangfei0201@163.com
- * 
+ *
  */
-public class NoneCache implements Cache {
+public class NoneCache extends Cache {
 
 	public Object get(Object key) throws CacheException {
 		return null;

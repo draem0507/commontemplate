@@ -19,10 +19,10 @@ public interface ExpressionParser extends ExpressionFactory {
 	public Expression parseExpression(String expression) throws ParsingException;
 
 	/**
-	 * 获取表达式构建器
+	 * 创建表达式构建器
 	 *
 	 * @return 表达式构建器
 	 */
-	public ExpressionBuilder getExpressionBuilder();
+	public ExpressionBuilder createExpressionBuilder();
 
 }

@@ -163,13 +163,13 @@
 					<table border="0" cellpadding="0" cellspacing="0">
 						<tr>
 							<td>
-								$msg{'frame.copyright'} <a href="about.html">$msg{'frame.commontemplate.team'}</a>
+								$msg{'frame.copyright'} 2007 - ${.now.year} <a href="about.html">$msg{'frame.commontemplate.team'}</a> $msg{'frame.last.updated'}: ${.now # 'yyyy-MM-dd HH:mm:ss'}
 							</td>
 							<td width="100" align="right">
 								<a href="http://www.commontemplate.org"><img src="../images/logo.gif" border="0" /></a>
 							</td>
 							<td width="100" align="right">
-								<a target="_blank" href="http://sourceforge.net" target="_blank"><img src="../images/sourceforge.jpg" border="0" /></a>
+								<a href="http://www.commontemplate.org"><img src="../images/powered.gif" border="0" /></a>
 							</td>
 						<tr>
 					</table>

@@ -2,7 +2,6 @@ package org.commontemplate.standard.cache;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -22,12 +21,9 @@ import org.commontemplate.util.Assert;
  * @author liangfei0201@163.com
  *
  */
-public class DiskSerialCache implements Cache {
+public class DiskSerialCache extends Cache {
 
-	// FIXME 并发时, 磁盘缓存发生java.io.EOFException, 读取到了不完整的缓存文件
-	// 以及并发创建文件夹：./cache/ 失败！
-
-	private String root;
+	private String root = "";
 
 	/**
 	 * 根目录
@@ -36,9 +32,10 @@ public class DiskSerialCache implements Cache {
 	 */
 	public void setRootDirectory(String root) {
 		this.root = filterDirectory(root);
+		initCacheDirectoryPath();
 	}
 
-	private String directory;
+	private String directory = "";
 
 	/**
 	 * 设置缓存存储路径
@@ -48,11 +45,12 @@ public class DiskSerialCache implements Cache {
 	 */
 	public void setDirectory(String directory) {
 		this.directory = filterDirectory(directory);
+		initCacheDirectoryPath();
 	}
 
 	private String filterDirectory(String directory) {
 		if (directory == null)
-			return null;
+			return "";
 		directory = directory.trim();
 		if (directory.length() > 0) {
 			char end = directory.charAt(directory.length() - 1);
@@ -62,19 +60,10 @@ public class DiskSerialCache implements Cache {
 		return directory;
 	}
 
-	private File getDirectory() {
-		String cacheDirectoryPath = directory;
-		if (root != null)
-			cacheDirectoryPath = root + cacheDirectoryPath;
-		Assert.assertNotEmpty(cacheDirectoryPath, "DiskSerialCache.cache.directory.required");
-		File cacheDirectory = new File(cacheDirectoryPath);
-		if (cacheDirectory.exists() && ! cacheDirectory.isDirectory())
-			if (! cacheDirectory.delete())
-				throw new CacheException(null, "DiskSerialCache.delete.directory.error", new Object[]{cacheDirectoryPath});
-		if (! cacheDirectory.exists())
-			if (! cacheDirectory.mkdirs())
-				throw new CacheException(null, "DiskSerialCache.create.directory.error", new Object[]{cacheDirectoryPath});
-		return cacheDirectory;
+	private String cacheDirectoryPath = "";
+
+	private void initCacheDirectoryPath() {
+		cacheDirectoryPath = root + directory;
 	}
 
 	private String prefix;
@@ -101,7 +90,7 @@ public class DiskSerialCache implements Cache {
 		this.suffix = suffix;
 	}
 
-	private Cache memoryCache;
+	private Cache memoryCache = new LruCache();
 
 	/**
 	 * 设置内存缓存
@@ -114,16 +103,28 @@ public class DiskSerialCache implements Cache {
 		this.memoryCache = memoryCache;
 	}
 
+	private File getCacheDirectory() {
+		Assert.assertNotEmpty(cacheDirectoryPath, "DiskSerialCache.cache.directory.required");
+		File cacheDirectory = new File(cacheDirectoryPath);
+		if (cacheDirectory.exists() && ! cacheDirectory.isDirectory())
+			if (! cacheDirectory.delete())
+				throw new CacheException(null, "DiskSerialCache.delete.directory.error", new Object[]{cacheDirectoryPath});
+		if (! cacheDirectory.exists())
+			if (! cacheDirectory.mkdirs())
+				throw new CacheException(null, "DiskSerialCache.create.directory.error", new Object[]{cacheDirectoryPath});
+		return cacheDirectory;
+	}
+
 	private File getCacheFile(Object key) {
-		String name = String.valueOf(key);
+		String name = encodePath(String.valueOf(key));
 		if (prefix != null)
 			name = prefix + name;
 		if (suffix != null)
 			name = name + suffix;
-		return new File(getDirectory(), replacePath(name));
+		return new File(cacheDirectoryPath + name);
 	}
 
-	private String replacePath(String path) {
+	private String encodePath(String path) {
 		try {
 			return URLEncoder.encode(path, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
@@ -137,19 +138,18 @@ public class DiskSerialCache implements Cache {
 			return t;
 		try {
 			File file = getCacheFile(key);
-			if (!file.exists())
+			if (! file.exists())
 				return null;
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(
-					file));
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
 			Object t2 = ois.readObject();
 			if (t2 == null)
 				return null;
 			memoryCache.put(key, t2);
 			return t2;
-		} catch (FileNotFoundException e) {
+		} catch (ClassNotFoundException e) { // 当模板反序列化不兼容时, 忽略
 			return null;
 		} catch (IOException e) {
-			throw new CacheException(key, e);
+			return null;
 		} catch (Exception e) {
 			throw new CacheException(key, e);
 		}
@@ -158,8 +158,8 @@ public class DiskSerialCache implements Cache {
 	public void put(Object key, Object value) throws CacheException {
 		memoryCache.put(key, value);
 		try {
-			ObjectOutputStream oos = new ObjectOutputStream(
-					new FileOutputStream(getCacheFile(key)));
+			getCacheDirectory(); // 确保缓存目录存在
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(getCacheFile(key)));
 			oos.writeObject(value);
 		} catch (Exception e) {
 			throw new CacheException(key, e);
@@ -168,16 +168,21 @@ public class DiskSerialCache implements Cache {
 
 	public void remove(Object key) throws CacheException {
 		File file = getCacheFile(key);
-		if (file.exists())
-			if (!file.delete())
-				throw new CacheException(key, "DiskSerialCache.delete.directory.error", new Object[]{file.getPath()});
+		if (file.exists()) {
+			if (! file.delete())
+				throw new CacheException(key, "DiskSerialCache.delete.file.error", new Object[]{file.getPath()});
+		}
 	}
 
 	public void clear() throws CacheException {
-		File[] files = getDirectory().listFiles();
-		for (int i = 0, n = files.length; i < n; i++)
-			if (!files[i].delete())
-				throw new CacheException(null, "DiskSerialCache.delete.directory.error", new Object[]{files[i].getPath()});
+		File[] files = getCacheDirectory().listFiles();
+		for (int i = 0, n = files.length; i < n; i++) {
+			File file = files[i];
+			if (file.exists()) {
+				if (! file.delete())
+					throw new CacheException(null, "DiskSerialCache.delete.file.error", new Object[]{files[i].getPath()});
+			}
+		}
 	}
 
 }

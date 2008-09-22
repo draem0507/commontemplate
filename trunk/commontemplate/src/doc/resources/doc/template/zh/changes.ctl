@@ -30,6 +30,8 @@ $!
 								修复LruCache在移动Key顺序时出现的空指针异常.<br/>
 								$embed, $include, $display 支持国际化后缀查找, 如: xxx.ctl, 首先查找xxx_zh_CN.ctl, 再查找xxx_zh.ctl, 否则查找xxx.ctl, 配置项: localizedLookup=true 决定否开启此功能.<br/>
 								修复静态函数被编译器优化后缓存了结果的问题，排除对函数的优化.<br/>
+								修复磁盘缓存并发异常, 并忽略乐观并发无锁读取时的异常.<br/>
+								修复ContextImpl.clear()未调用super.clear()的BUG.<br/>
 								-----------------<br/>
 								感谢JRest4Guice开发小组的支持.<br/>
 								<br/>

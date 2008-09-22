@@ -4,6 +4,7 @@ package org.commontemplate.core;
  * 表达式	构建器, 为外部引擎或存储方式提供自顶向下的构建方式.
  * (非线程安全)
  *
+ * @see org.commontemplate.core.ExpressionParser#createExpressionBuilder()
  * @author liangfei0201@163.com
  *
  */

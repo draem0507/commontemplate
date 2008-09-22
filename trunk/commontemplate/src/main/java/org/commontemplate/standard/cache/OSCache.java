@@ -12,7 +12,7 @@ import com.opensymphony.oscache.general.GeneralCacheAdministrator;
  * @author liangfei0201@63.com
  *
  */
-public class OSCache implements org.commontemplate.config.Cache {
+public class OSCache extends org.commontemplate.config.Cache {
 
 	private static final String GROUP = "CommonTemplateCache";
 

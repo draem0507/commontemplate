@@ -46,7 +46,8 @@ public class TemplateTag extends BodyTagSupport {
 	}
 
 	protected Context getContext() {
-		Context context = EngineHolder.getEngine().createContext(pageContext.getOut(), ((HttpServletRequest)pageContext.getRequest()).getLocale());
+		Context context = EngineHolder.getEngine().createContext(pageContext.getOut());
+		context.setLocale(((HttpServletRequest)pageContext.getRequest()).getLocale());
 		context.pushLocalContext("application", new JspMap(pageContext, PageContext.APPLICATION_SCOPE));
 		context.pushLocalContext("session", new JspMap(pageContext, PageContext.SESSION_SCOPE));
 		context.pushLocalContext("request", new JspMap(pageContext, PageContext.REQUEST_SCOPE));

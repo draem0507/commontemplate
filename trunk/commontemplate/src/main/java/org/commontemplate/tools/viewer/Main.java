@@ -9,7 +9,7 @@ public class Main {
 
 	private static TemplateViewer viewer = new TemplateViewer(generator);
 
-	private static final TemplateDebugger debugger = new TemplateDebugger(viewer);
+	private static final TemplateDebugger debugger = new TemplateDebugger(generator);
 
 	public static void main(String[] args) {
 		try {

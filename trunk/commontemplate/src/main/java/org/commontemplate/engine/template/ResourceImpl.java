@@ -16,26 +16,41 @@ final class ResourceImpl extends Resource implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	public static final String DEFAULT_ENCODING = "UTF-8";
+
 	private final String templateName;
 
 	private final String template;
 
+	private final String templateEncoding;
+
+	private final long templateLastModified;
+
 	ResourceImpl(String template) {
-		this.template = template;
-		this.templateName = "";
+		this(template, null, null, -1);
 	}
 
 	ResourceImpl(String template, String templateName) {
-		this.template = template;
-		this.templateName = templateName;
+		this(template, templateName, null, -1);
+	}
+
+	ResourceImpl(String template, String templateName, String templateEncoding) {
+		this(template, templateName, templateEncoding, -1);
+	}
+
+	ResourceImpl(String template, String templateName, String templateEncoding, long templateLastModified) {
+		this.template = (template == null ? "" : template);
+		this.templateName = (templateName == null ? "" : templateName);
+		this.templateEncoding = (templateEncoding == null ? DEFAULT_ENCODING : templateEncoding);
+		this.templateLastModified = (templateLastModified < UNKOWN_MODIFIED ? UNKOWN_MODIFIED : templateLastModified);
 	}
 
 	public final String getEncoding() {
-		return "UTF-8";
+		return templateEncoding;
 	}
 
 	public final long getLastModified() {
-		return UNKOWN_MODIFIED;
+		return templateLastModified;
 	}
 
 	public final String getName() {

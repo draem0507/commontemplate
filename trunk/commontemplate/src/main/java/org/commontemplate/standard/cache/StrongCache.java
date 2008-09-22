@@ -8,11 +8,11 @@ import org.commontemplate.config.CacheException;
 
 /**
  * 强引用缓存，总不过期，简单的HashMap缓存
- * 
+ *
  * @author liangfei@163.com
- * 
+ *
  */
-public class StrongCache implements Cache {
+public class StrongCache extends Cache {
 
 	private final Map cacheMap = new HashMap();
 

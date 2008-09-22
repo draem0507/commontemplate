@@ -36,7 +36,8 @@ public class TemplateTester extends TestCase {
 		try {
 			output = new StringWriter();
 			Template template = factory.getTemplate(templateFile);
-			Context context = factory.createContext(output, Locale.CHINA);
+			Context context = factory.createContext(output);
+			context.setLocale(Locale.CHINA);
 			context.pushLocalContext("session", ModelProvider.getSessionModel());
 			context.pushLocalContext(ModelProvider.getModel());
 			template.render(context);

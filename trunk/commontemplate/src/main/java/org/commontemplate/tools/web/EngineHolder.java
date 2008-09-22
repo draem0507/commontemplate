@@ -260,7 +260,8 @@ public final class EngineHolder {
 		Assert.assertNotNull(response, "EngineHolder.response.required");
 		if (locale == null)
 			locale = request.getLocale();
-		Context context = getEngine().createContext(response.getWriter(), locale);
+		Context context = getEngine().createContext(response.getWriter());
+		context.setLocale(locale);
 		context.pushLocalContext(APPLICATION_SCOPE_NAME, new ApplicationMap(request));
 		context.pushLocalContext(COOKIE_SCOPE_NAME, new CookieMap(request));
 		context.pushLocalContext(SESSION_SCOPE_NAME, new SessionMap(request));

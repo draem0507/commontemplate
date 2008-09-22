@@ -12,10 +12,8 @@ import java.util.Iterator;
 import java.util.Map;
 
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
 
 import org.commontemplate.core.Context;
 import org.commontemplate.core.Template;
@@ -27,16 +25,21 @@ import org.commontemplate.tools.bean.BeanFactory;
 import org.commontemplate.tools.bean.FileClassResourceLoader;
 import org.commontemplate.tools.bean.PropertiesBeanFactory;
 import org.commontemplate.tools.swing.CommonTemplateFrame;
+import org.commontemplate.tools.swing.JFileField;
 
 public class TemplateGenerator {
 
 	public void generate(final File sourceFile) throws Exception {
+		generate(sourceFile, false);
+	}
+
+	public void generate(final File sourceFile, final boolean debug) throws Exception {
 		File targetFile = getSuffixFile(sourceFile, "html"); // 目标文件
-		final File targetDir = targetFile.getParentFile();
 		final CommonTemplateFrame frame = new CommonTemplateFrame();
-		frame.setTitle("CommonTemplateViewer - Choose");
+		frame.setTitle("CommonTemplate模板生成器");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(530, 180);
+		frame.setSize(440, 150);
+		frame.setResizable(false);
 		Dimension scr = Toolkit.getDefaultToolkit().getScreenSize();
 		Dimension fra = frame.getSize();
 		frame.setLocation((scr.width - fra.width) / 2,
@@ -45,42 +48,22 @@ public class TemplateGenerator {
 		frame.getRootPane().setFocusCycleRoot(true);
 		frame.getContentPane().setLayout(null);
 
-		JLabel chooseLabel = new JLabel("请选择模板生成目标位置");
-		chooseLabel.setBounds(20, 20, 400, 24);
-		final JTextField fileField = new JTextField(targetFile.getCanonicalPath());
-		fileField.setBounds(20, 60, 400, 24);
-		JButton browseButton = new JButton("浏览"); // TODO 未国际化
-		browseButton.setBounds(430, 60, 80, 24);
-		browseButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				File file = null;
-				File dir = null;
-				String txt = fileField.getText();
-				if (txt != null && txt.length() > 0) {
-					try {
-						file = new File(txt);
-						dir = file.getParentFile();
-					} catch (Exception ex) {
-						// ignore
-					}
-				}
-				JFileChooser fc = new JFileChooser(dir != null && dir.exists() ? dir : targetDir); //以上次打开的文件为默认路径打开文件选取择框图
-				fc.setDialogTitle("请选择模板生成目标位置"); // TODO 未国际化
-				fc.setApproveButtonText("选择");
-				if (file != null)
-					fc.setSelectedFile(file);
-				int ch = fc.showOpenDialog(null);
-				if (ch == JFileChooser.APPROVE_OPTION)
-					fileField.setText(fc.getSelectedFile().getAbsolutePath());
-			}
-		});
+		JLabel chooseLabel = new JLabel("生成后文件:");
+		chooseLabel.setBounds(20, 20, 100, 24);
+		frame.getContentPane().add(chooseLabel);
+
+		final JFileField fileField = new JFileField(targetFile);
+		fileField.setBounds(120, 20, 300, 24);
+		frame.getContentPane().add(fileField);
+
 		JButton generateButton = new JButton("生成"); // TODO 未国际化
-		generateButton.setBounds(20, 100, 80, 24);
+		generateButton.setBounds(120, 60, 80, 24);
+		frame.getContentPane().add(generateButton);
 		generateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
 				try {
-					TemplateGenerator.this.generate(sourceFile, new File(fileField.getText()));
+					TemplateGenerator.this.generate(sourceFile, new File(fileField.getTextField().getText()), debug);
 				} catch (RuntimeException e1) {
 					throw e1;
 				} catch (Exception e2) {
@@ -88,16 +71,24 @@ public class TemplateGenerator {
 				}
 			}
 		});
-		frame.getContentPane().add(chooseLabel);
-		frame.getContentPane().add(fileField);
-		frame.getContentPane().add(browseButton);
-		frame.getContentPane().add(generateButton);
+
 		frame.setVisible(true);
+		generateButton.requestFocus();
 	}
 
 	public static final String STANDARD_CONFIG_PATH = TemplateGenerator.class.getPackage().getName().replace('.', '/') + "/commontemplate.properties";
 
-	public void generate(File sourceFile, File targetFile) throws Exception {
+	public File generateDefault(File sourceFile) throws Exception {
+		return generateDefault(sourceFile, false);
+	}
+
+	public File generateDefault(File sourceFile, boolean debug) throws Exception {
+		File targetFile = getSuffixFile(sourceFile, "html"); // 目标文件
+		generate(sourceFile, targetFile, debug);
+		return targetFile;
+	}
+
+	private void generate(File sourceFile, File targetFile, boolean debug) throws Exception {
 		BeanFactory beanFactory;
 		// 首先查找模板所在目录的commontemplate.properties
 		File configFile = getFile(sourceFile, "commontemplate.properties");
@@ -124,6 +115,8 @@ public class TemplateGenerator {
 			Context context = null;
 			try {
 				context = engine.createContext(writer);
+				if (debug)
+					context.setDebug(true);
 				context.pushLocalContext(data);
 				Template template = engine.getTemplate(sourceFile.getCanonicalPath());
 				template.render(context);
@@ -139,7 +132,7 @@ public class TemplateGenerator {
 		}
 	}
 
-	public File getSuffixFile(File sourceFile, String suffix) throws Exception {
+	private File getSuffixFile(File sourceFile, String suffix) throws Exception {
 		String prefix;
 		String name = sourceFile.getName();
 		int i = name.lastIndexOf('.');

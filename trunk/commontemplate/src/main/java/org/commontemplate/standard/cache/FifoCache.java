@@ -14,7 +14,7 @@ import org.commontemplate.util.Assert;
  * @author liangfei0201@163.com
  *
  */
-public class FifoCache implements Cache {
+public class FifoCache extends Cache {
 
 	private final Map cacheMap = new HashMap();
 

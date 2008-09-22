@@ -1,8 +1,8 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
 	<!--$zone{"content"}-->
 $!
-								<b>一. 模板引擎使用</b> <a href="../javadoc/index.html">JavaDoc&gt;&gt;</a><br/>
-								<b>(1) Java版: </b><font color="green">(环境需求JRE1.4.2以上)</font> <a href="http://java.sun.com/j2se/1.4.2/downloads.html" target="_blank">下载...</a><br/>
+								<b>一. 模板引擎使用</b> <a href="../javadoc/index.html">JavaDoc...</a><br/>
+								<b>(1) Java版: </b><font color="green">(环境需求JRE1.4.2以上)</font> <a href="http://java.sun.com/j2se/1.4.2/downloads.html" target="_blank">下载jre...</a><br/>
 								<font color="#7f0055"><b>import</b></font> java.util.*; <br/>
 								<br/>
 								<font color="#3f7f5f">// 导入commontemplate模块 </font><br/>

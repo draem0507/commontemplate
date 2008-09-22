@@ -15,7 +15,7 @@ import org.commontemplate.util.Assert;
  * 声明: 此类引自<a href="http://www.freemarker.org">FreeMarker</a>的freemarker.cache.MruCacheStorage
  *
  */
-public class MruCache implements Cache {
+public class MruCache extends Cache {
 	private final MruEntry strongHead = new MruEntry();
 	private final MruEntry softHead = new MruEntry();
 	{
@@ -248,4 +248,5 @@ public class MruCache implements Cache {
 			return key;
 		}
 	}
+
 }

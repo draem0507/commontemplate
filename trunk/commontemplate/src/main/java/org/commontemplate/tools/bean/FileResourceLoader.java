@@ -15,7 +15,7 @@ import java.net.URL;
 public class FileResourceLoader implements ResourceLoader {
 
 	public URL getResource(String name) throws IOException {
-		return new File(name).toURL();
+		return new File(name).toURI().toURL();
 	}
 
 	public InputStream getResourceAsStream(String name) throws IOException {

@@ -25,7 +25,6 @@ import org.commontemplate.core.Text;
 import org.commontemplate.core.UnaryOperator;
 import org.commontemplate.core.Variable;
 import org.commontemplate.util.Assert;
-import org.commontemplate.util.ResourceEntry;
 import org.commontemplate.util.UrlUtils;
 
 /**
@@ -91,42 +90,78 @@ final class TemplateLoaderImpl implements TemplateLoader {
 	private final Cache cache;
 
 	private Template cache(String name, Locale locale, String encoding)
-			throws IOException, ParsingException { // TODO 未处理locale后缀
-		if (cache == null)
-			return parseTemplate(load(name, locale, encoding));
-
-		ResourceEntry entry = (ResourceEntry)cache.get(name);
-		if (entry == null) {
-			// 缓存总锁，锁定缓存中各条目获取过程
-			synchronized(cache) {
-				entry = (ResourceEntry)cache.get(name); // 必需重取
-				if(entry == null) { // 双重检查，因entry是线程栈内定义的，所以双重检查是有效的
-					entry = new ResourceEntry();
-					cache.put(name, entry);
-				}
-				//assert(entry != null); // 后验条件
-			}
+			throws IOException, ParsingException {
+		if (cache == null) { // 如果没有缓存策略，直接读取并编译模板
+			Resource resource = load(name, locale, encoding);
+			return parseTemplate(resource);
 		}
 
-		// 单条目锁，锁定资源获取过程
-		synchronized (entry) {
-			Template template = (Template)entry.get();
-			if (template == null) { // 不存在，解析加载
-				Resource resource = load(name, locale, encoding);
-				template = parseTemplate(resource);
-				entry.set(template);
-			} else { // 已存在，检查热加载
-				if (reloadController != null && reloadController.shouldReload(name)) { // 是否需要检查热加载
-					Resource resource = load(name, locale, encoding);
-					if (resourceComparator != null && resourceComparator.isModified(template, resource)) { // 比较是否已更改
-						template = parseTemplate(resource);
-						entry.set(template);
+		TemplateCacheKey key = new TemplateCacheKey(name, locale, encoding);
+		TemplateCacheEntry entry = null;
+		if (cache.isConcurrent()) { // 如果缓存本身已支持并发
+			entry = (TemplateCacheEntry)cache.get(key);
+			if (entry == null) { // TODO 此检测未在同步锁内，可能多个线程同时重复创建条目，但不影响正常运行，考虑读取次数远大于创建次数，可容忍。
+				entry = new TemplateCacheEntry();
+				cache.put(key, entry);
+			}
+		} else {
+			if (cache.isOptimism()) { // 该状态表示缓存策略的get()函数未修改任何状态(即无副作用)
+				try {
+					// 尝试乐观并发，无锁读取
+					entry = (TemplateCacheEntry)cache.get(key);
+				} catch (Throwable t) { // 有异常则放弃读取
+					// ignore
+				}
+			}
+			if (entry == null) {
+				// 缓存总锁，只锁定缓存中各条目获取过程，使缓存锁定过程最小化
+				synchronized(cache) {
+					entry = (TemplateCacheEntry)cache.get(key); // 必需在锁内获取并检查，确保条目唯一性
+					if (entry == null) {
+						entry = new TemplateCacheEntry(); // 创建简单的条目容器，条目中的内容，在下面条目锁内进行处理，以保证其它条目可以正常存取
+						cache.put(key, entry); // 在锁内将条目放入缓存
 					}
 				}
 			}
-			//assert(template != null); // 后验条件
-			return template;
 		}
+		Assert.assertNotNull(entry); // 后验条件
+
+		// 单条目锁，锁定资源获取过程，保证在资源获取时各条目之间互不影响。
+		// 前面的缓存总锁，已保证条目在缓存中是唯一的，故此条目锁在整个缓存中有效。
+		Template template = entry.getTemplate(); // 条目中模板获取过程无状态修改，尝试乐观并发，无锁读取
+		if (template == null) {
+			synchronized (entry) {
+				template = entry.getTemplate();
+				if (template == null) { // 不存在，解析加载
+					Resource resource = load(name, locale, encoding);
+					template = parseTemplate(resource); // 此函数调用时间较长，为缓存目标
+					entry.setTemplate(template);
+				} else { // 已存在，检查热加载
+					if (reloadController != null
+							&& reloadController.shouldReload(template.getName())) { // 是否需要检查热加载
+						Resource resource = load(name, locale, encoding);
+						if (resourceComparator != null
+								&& resourceComparator.isModified(template, resource)) { // 比较是否已更改
+							template = parseTemplate(resource);
+							entry.setTemplate(template);
+						}
+					}
+				}
+			}
+		} else { // 已存在，检查热加载
+			if (reloadController != null
+					&& reloadController.shouldReload(template.getName())) { // 是否需要检查热加载
+				Resource resource = load(name, locale, encoding);
+				if (resourceComparator != null
+						&& resourceComparator.isModified(template, resource)) { // 比较是否已更改
+					template = parseTemplate(resource);
+					synchronized (entry) {
+						entry.setTemplate(template); // TODO 可能重复热加载，但都在条目锁内，不影响正常运行，可容忍。
+					}
+				}
+			}
+		}
+		return template;
 	}
 
 	// 加载 --------
@@ -215,12 +250,12 @@ final class TemplateLoaderImpl implements TemplateLoader {
 		return templateParser.createText(text);
 	}
 
-	public ExpressionBuilder getExpressionBuilder() {
-		return templateParser.getExpressionBuilder();
+	public ExpressionBuilder createExpressionBuilder() {
+		return templateParser.createExpressionBuilder();
 	}
 
-	public TemplateBudiler getTemplateBudiler(String templateName) {
-		return templateParser.getTemplateBudiler(templateName);
+	public TemplateBudiler createTemplateBudiler() {
+		return templateParser.createTemplateBudiler();
 	}
 
 	public BinaryOperator createBinaryOperator(String operatorName,

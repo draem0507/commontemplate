@@ -10,11 +10,11 @@ import org.commontemplate.config.CacheException;
 
 /**
  * 弱引用缓存，比SoftCache更易失的缓存策略
- * 
+ *
  * @author liangfei0201@163.com
- * 
+ *
  */
-public class WeakCache implements Cache {
+public class WeakCache extends Cache {
 
 	private final Map cacheMap = new HashMap();
 

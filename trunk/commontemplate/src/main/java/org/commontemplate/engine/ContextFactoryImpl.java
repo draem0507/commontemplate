@@ -2,7 +2,6 @@ package org.commontemplate.engine;
 
 import java.io.Writer;
 import java.util.Locale;
-import java.util.TimeZone;
 
 import org.commontemplate.config.ContextInitializer;
 import org.commontemplate.config.Keywords;
@@ -14,7 +13,6 @@ import org.commontemplate.core.GlobalContext;
 import org.commontemplate.core.OutputFormatter;
 import org.commontemplate.core.TemplateLoader;
 import org.commontemplate.util.Assert;
-import org.commontemplate.util.LocaleUtils;
 
 /**
  * 上下文工厂实现
@@ -36,7 +34,7 @@ final class ContextFactoryImpl implements ContextFactory {
 
 	private final EventListener eventListener;
 
-	private final boolean debugMode;
+	private final boolean debug;
 
 	private final Keywords keywords;
 
@@ -45,8 +43,8 @@ final class ContextFactoryImpl implements ContextFactory {
 			TemplateNameFilter templateNameFilter,
 			OutputFormatter defaultFormater,
 			EventListener eventListener,
-			boolean debugMode,
-			Keywords keywords) {
+			Keywords keywords,
+			boolean debug) {
 		Assert.assertNotNull(templateLoader);
 		Assert.assertNotNull(keywords);
 		this.globalContext = new GlobalContextImpl(keywords);
@@ -55,7 +53,7 @@ final class ContextFactoryImpl implements ContextFactory {
 		this.templateNameFilter = templateNameFilter;
 		this.defaultFormater = defaultFormater;
 		this.eventListener = eventListener;
-		this.debugMode = debugMode;
+		this.debug = debug;
 		this.keywords = keywords;
 	}
 
@@ -64,16 +62,9 @@ final class ContextFactoryImpl implements ContextFactory {
 	}
 
 	public Context createContext(Writer out) {
-		return createContext(out, Locale.getDefault(), TimeZone.getDefault());
-	}
-
-	public Context createContext(Writer out, Locale locale) {
-		return createContext(out, locale, LocaleUtils.getDefaultTimeZone(locale));
-	}
-
-	public Context createContext(Writer out, Locale locale, TimeZone timeZone) {
-		Context context = new ContextImpl(out, locale,
-				timeZone, debugMode, templateLoader, this, templateNameFilter, defaultFormater, eventListener, keywords);
+		Context context = new ContextImpl(out, templateLoader, this, templateNameFilter, defaultFormater, eventListener, keywords);
+		context.setLocale(Locale.getDefault());
+		context.setDebug(debug);
 		if (contextInitializer != null)
 			contextInitializer.initialize(context);
 		return context;

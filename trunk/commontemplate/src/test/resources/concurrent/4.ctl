@@ -1,4 +1,4 @@
-<!--$extends{"/doc/template/frame.ctl"}-->
+<!--$extends{"frame.ctl"}-->
 	<!--$zone{"content"}-->
 $!
 		$for{num : (1..100)}

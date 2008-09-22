@@ -6,10 +6,11 @@
 								内置提供生成Struts/WebWork/Struts2 + Spring2 + JPA/Hibernate3/Ibatis2等常规方案的代码模板。<br/>
 								支持独立exe运行，Eclipse插件，NetBeans插件，三种方式使用。<br/>
 								<br/>
-								<b>2. 安装使用</b> <font color="green">(需JRE1.6以上版本支持)</font><br/>
-								(1)下载CodeGeneratorSetup.exe <a href="downloads.html">下载...</a><br/>
-								(2)双击CodeGeneratorSetup.exe，按向导完成安装，安装后，将在桌面添加快捷方式<br/>
-								(3)双击桌面快捷方式启动代码生成器<br/>
+								<b>2. 安装使用</b><br/>
+								(1) 需JDK1.5.0以上版本支持 <a href="http://java.sun.com/j2se/1.5.0" target="_blank">下载jre...</a><br/>
+								(2) 下载CodeGeneratorSetup.exe <a href="downloads.html">下载...</a><br/>
+								(3) 双击CodeGeneratorSetup.exe，按向导完成安装，安装后，将在桌面添加快捷方式<br/>
+								(4) 双击桌面快捷方式启动代码生成器<br/>
 								<br/>
 								<b>3. 模板方案配置</b><br/>
 $code{"xml"}<case name="方案名称" desc="方案描述" icon="显示在工具栏上的图标">
