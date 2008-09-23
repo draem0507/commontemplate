@@ -2,8 +2,10 @@ package org.commontemplate.standard.operator.sequence;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.commontemplate.standard.operator.BinaryOperatorHandlerChain;
+import org.commontemplate.util.MapEntry;
 
 /**
  * 合并展开式序列操作符。
@@ -64,6 +66,10 @@ public class MergeSequenceOperatorHandlerChain extends BinaryOperatorHandlerChai
 			}
 			// 返回列表
 			return list;
+		} else if (leftOperand instanceof Entry) { // 降低":"相对于".."的优先级，如：$for{num : 1..10}
+			Entry entry = (Entry)leftOperand;
+			Object value = super.doEvaluate(entry.getValue(), rightOperand);
+			return new MapEntry(entry.getKey(), value);
 		} else {
 			return super.doEvaluate(leftOperand, rightOperand);
 		}
