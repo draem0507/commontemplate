@@ -1,10 +1,11 @@
-package org.commontemplate.standard.operator.collection;
+package org.commontemplate.standard.operator.map;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
+import org.commontemplate.standard.operator.collection.Filter;
 import org.commontemplate.util.TypeUtils;
 
 /**

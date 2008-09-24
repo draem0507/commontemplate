@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.commontemplate.config.BinaryOperatorHandler;
+import org.commontemplate.standard.operator.map.MapGetterOperatorHandler;
 
 import junit.framework.TestCase;
 /**

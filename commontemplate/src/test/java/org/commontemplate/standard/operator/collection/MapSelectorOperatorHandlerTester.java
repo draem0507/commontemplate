@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 import org.commontemplate.config.BinaryOperatorHandler;
+import org.commontemplate.standard.operator.map.MapSelectorOperatorHandler;
 import org.commontemplate.util.MapEntry;
 
 import junit.framework.TestCase;

@@ -7,6 +7,7 @@ import java.util.Map;
 import junit.framework.TestCase;
 
 import org.commontemplate.config.BinaryOperatorHandler;
+import org.commontemplate.standard.operator.map.MapAddOperatorHandler;
 /**
  * MapAddOperatorHandler 的测试。
  * @author YanRong

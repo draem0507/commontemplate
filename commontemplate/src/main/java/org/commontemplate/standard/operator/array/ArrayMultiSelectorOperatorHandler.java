@@ -1,4 +1,4 @@
-package org.commontemplate.standard.operator.collection;
+package org.commontemplate.standard.operator.array;
 
 import java.util.Iterator;
 import java.util.Map;

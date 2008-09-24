@@ -1,6 +1,7 @@
 package org.commontemplate.standard.operator.collection;
 
 import org.commontemplate.config.BinaryOperatorHandler;
+import org.commontemplate.standard.operator.array.ArrayGetterOperatorHandler;
 
 import junit.framework.TestCase;
 /**
