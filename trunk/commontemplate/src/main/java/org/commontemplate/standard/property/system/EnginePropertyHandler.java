@@ -1,6 +1,6 @@
 package org.commontemplate.standard.property.system;
 
-import org.commontemplate.standard.property.StaticPropertyHandler;
+import org.commontemplate.standard.property.StaticPropertyHandlerSupport;
 
 /**
  * 引擎属性
@@ -8,7 +8,9 @@ import org.commontemplate.standard.property.StaticPropertyHandler;
  * @author liangfei0201@163.com
  *
  */
-public class EnginePropertyHandler implements StaticPropertyHandler {
+public class EnginePropertyHandler extends StaticPropertyHandlerSupport {
+
+	private static final long serialVersionUID = 1L;
 
 	private static final EngineBean engineBean = new EngineBean();
 

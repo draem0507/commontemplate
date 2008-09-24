@@ -1,10 +1,13 @@
 package org.commontemplate.standard.property.system;
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.Properties;
 
-public class SystemBean {
-	
+public class SystemBean implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	public long getCurrentTimeMillis() {
 		return System.currentTimeMillis();
 	}
@@ -17,7 +20,7 @@ public class SystemBean {
 	public Properties getProperties() {
 		return System.getProperties();
 	}
-	
+
 	public Map getEnv() {
 		return System.getProperties();
 		// return System.getenv(); // JDK1.5
