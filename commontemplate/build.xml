@@ -1,4 +1,4 @@
-<project name="commontemplate" default="jar" basedir=".">
+<project name="commontemplate" default="jar-all" basedir=".">
 
 	<description>Common Template Engine Ant Build File</description>
 
@@ -46,6 +46,37 @@
 			</manifest>
 		</jar>
 		<delete dir="${build}" failonerror="false" />
+	</target>
+
+	<target name="compile-debud">
+		<delete dir="${build}" failonerror="false" />
+		<mkdir dir="${build}" />
+		<javac srcdir="${src}" destdir="${build}" debug="true" fork="true" classpathref="project.class.path" encoding="UTF-8" />
+		<copy todir="${build}" includeEmptyDirs="no">
+			<fileset dir="${res}">
+				<include name="**/*.*" />
+			</fileset>
+			<fileset dir="${src}">
+				<include name="**/*.java" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="jar-debug" depends="compile-debud">
+		<mkdir dir="${dist}" />
+		<delete file="${dist}/commontemplate-debug-SNAPSHOT.jar" failonerror="false" />
+		<jar destfile="${dist}/commontemplate-debug-SNAPSHOT.jar" basedir="${build}" encoding="UTF-8">
+			<manifest>
+				<attribute name="Implementation-Title" value="${app.name}" />
+				<attribute name="Implementation-Version" value="${versionNumber}" />
+				<attribute name="Implementation-Vendor" value="${vendor}" />
+				<attribute name="Main-Class" value="${mainclass}" />
+			</manifest>
+		</jar>
+		<delete dir="${build}" failonerror="false" />
+	</target>
+
+	<target name="jar-all" depends="jar,jar-debug">
 	</target>
 
 	<target name="javadoc">
