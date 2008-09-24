@@ -43,12 +43,13 @@ final class TemplateLoaderImpl implements TemplateLoader {
 	 * @param templateParser 模板指令解释器
 	 * @param resourceLoader 模板加载器
 	 * @param cache 模板缓存策略
+	 * @param persistentCahce 模板持久化缓存策略
 	 * @param reloadController 热加载控制器
 	 * @param resourceComparator 模板源比较器
 	 *
 	 */
 	TemplateLoaderImpl(TemplateParser templateParser, ResourceLoader resourceLoader,
-			Cache memoryCache, Cache persistentCahce, ReloadController reloadController,
+			Cache cache, Cache persistentCahce, ReloadController reloadController,
 			ResourceComparator resourceComparator) {
 		Assert.assertNotNull(resourceLoader, "TemplateFactoryImpl.resource.loader.required");
 		Assert.assertNotNull(templateParser, "TemplateFactoryImpl.template.parser.required");
@@ -56,7 +57,7 @@ final class TemplateLoaderImpl implements TemplateLoader {
 		this.resourceLoader = resourceLoader;
 
 		this.templateParser = templateParser;
-		this.memoryCache = memoryCache;
+		this.cache = cache;
 		this.persistentCahce = persistentCahce;
 		this.reloadController = reloadController;
 		this.resourceComparator = resourceComparator;
@@ -68,13 +69,13 @@ final class TemplateLoaderImpl implements TemplateLoader {
 
 	private final ResourceComparator resourceComparator;
 
-	private final Cache memoryCache;
+	private final Cache cache;
 
 	private final Cache persistentCahce;
 
 	private Template cacheTemplate(String name, Locale locale, String encoding)
 			throws IOException, ParsingException {
-		if (memoryCache == null) { // 如果没有缓存策略，直接读取并编译模板
+		if (cache == null) { // 如果没有缓存策略，直接读取并编译模板
 			Resource resource = loadResource(name, locale, encoding);
 			return persistentTemplate(resource);
 		}
@@ -85,11 +86,11 @@ final class TemplateLoaderImpl implements TemplateLoader {
 		Template template; // 缓存模板
 
 		// 缓存总锁，只锁定缓存中各条目获取过程，使缓存锁定过程最小化
-		synchronized(memoryCache) {
-			entry = (TemplateCacheEntry)memoryCache.get(key);
+		synchronized(cache) {
+			entry = (TemplateCacheEntry)cache.get(key);
 			if (entry == null) {
 				entry = new TemplateCacheEntry(); // 创建最简单的条目容器，条目中的内容，在下面条目锁内进行处理，以保证其它条目可以正常存取
-				memoryCache.put(key, entry);
+				cache.put(key, entry);
 			}
 		}
 
