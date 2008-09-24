@@ -48,9 +48,6 @@ public class DocumentGenerator {
 										new Menu("menu.configuration",
 												"config.html"))
 								.addChild(
-										new Menu("menu.integration",
-												"integration.html"))
-								.addChild(
 										new Menu("menu.extension",
 												"extension.html"))
 								.addChild(
@@ -70,6 +67,21 @@ public class DocumentGenerator {
 												"versus.html"))
 						)
 				.addChild(
+						new Menu("menu.integration")
+								.addChild(
+										new Menu("menu.mvc",
+												"mvc.html"))
+								.addChild(
+										new Menu("menu.jsp",
+												"jsp.html"))
+								.addChild(
+										new Menu("menu.javaxscript",
+												"javaxscript.html"))
+								.addChild(
+										new Menu("menu.ant",
+												"ant.html"))
+						)
+				.addChild(
 						new Menu("menu.tools")
 								.addChild(
 										new Menu("menu.debugger",
@@ -86,9 +98,6 @@ public class DocumentGenerator {
 								.addChild(
 										new Menu("menu.generator",
 												"generator.html"))
-								.addChild(
-										new Menu("menu.ant",
-												"ant.html"))
 						)
 				.addChild(
 						new Menu("menu.development")
@@ -211,8 +220,8 @@ public class DocumentGenerator {
 	public static void main(String[] args) {
 		DocumentGenerator generator = new DocumentGenerator();
 		generator.generateAll(new String[]{"index", "template" , "expression", "coat",
-				"config", "integration", "extension", "api", "dependency", "data",
-				"debugger", "viewer", "editor", "converter", "generator", "ant", "faq", "versus", "architecture", "criterion", "planning", "requirement", "downloads",
+				"config", "extension", "api", "dependency", "data", "faq", "versus", "mvc", "jsp", "javaxscript",
+				"debugger", "viewer", "editor", "converter", "generator", "ant", "architecture", "criterion", "planning", "requirement", "downloads",
 				"uml", "about", "changes", "join", "demo_extends"});
 	}
 
