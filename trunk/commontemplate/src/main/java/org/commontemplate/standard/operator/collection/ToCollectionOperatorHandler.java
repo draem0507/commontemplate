@@ -29,7 +29,8 @@ public class ToCollectionOperatorHandler extends UnaryOperatorHandlerSupport {
 		if (operand == null)
 			return new ArrayList(0);
 		Object model = operand;
-		if (model instanceof List
+		if (model.getClass().isArray()
+				|| model instanceof List
 				|| model instanceof Map) {
 			return model;
 		}

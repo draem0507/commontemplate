@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 import org.commontemplate.config.BinaryOperatorHandler;
+import org.commontemplate.standard.operator.array.ArraySelectorOperatorHandler;
 
 import junit.framework.TestCase;
 /**

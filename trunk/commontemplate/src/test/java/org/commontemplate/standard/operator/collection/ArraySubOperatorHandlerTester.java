@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.commontemplate.config.BinaryOperatorHandler;
+import org.commontemplate.standard.operator.array.ArraySubOperatorHandler;
 
 import junit.framework.TestCase;
 /**

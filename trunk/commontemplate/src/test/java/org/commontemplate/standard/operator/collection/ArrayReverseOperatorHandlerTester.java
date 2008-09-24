@@ -3,6 +3,7 @@ package org.commontemplate.standard.operator.collection;
 import junit.framework.TestCase;
 
 import org.commontemplate.config.UnaryOperatorHandler;
+import org.commontemplate.standard.operator.array.ArrayReverseOperatorHandler;
 /**
  * ArrayReverseOperatorHandler 的测试。
  * @author YanRong

@@ -1,8 +1,9 @@
-package org.commontemplate.standard.operator.collection;
+package org.commontemplate.standard.operator.array;
 
 import java.lang.reflect.Array;
 import java.util.List;
 
+import org.commontemplate.standard.operator.collection.IndexedBinaryOperatorHandlerSupport;
 import org.commontemplate.standard.operator.sequence.IntegerSequence;
 
 /**

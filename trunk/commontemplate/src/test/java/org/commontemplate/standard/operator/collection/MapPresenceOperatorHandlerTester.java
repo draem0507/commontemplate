@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.commontemplate.config.UnaryOperatorHandler;
 import org.commontemplate.standard.operator.UnaryOperatorHandlerTester;
+import org.commontemplate.standard.operator.map.MapPresenceOperatorHandler;
 /**
  * MapPresenceOperatorHandler 的测试。
  * @author YanRong
