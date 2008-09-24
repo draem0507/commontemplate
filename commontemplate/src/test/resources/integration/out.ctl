@@ -1,3 +1,1 @@
-$for{num : 1..9}
-${num}
-$end
+$include{"/xxx/yyy/zzz/*/aaa.ctl"}

@@ -48,7 +48,7 @@ final class TemplateLoaderImpl implements TemplateLoader {
 	 *
 	 */
 	TemplateLoaderImpl(TemplateParser templateParser, ResourceLoader resourceLoader,
-			Cache cache, ReloadController reloadController,
+			Cache memoryCache, Cache persistentCahce, ReloadController reloadController,
 			ResourceComparator resourceComparator) {
 		Assert.assertNotNull(resourceLoader, "TemplateFactoryImpl.resource.loader.required");
 		Assert.assertNotNull(templateParser, "TemplateFactoryImpl.template.parser.required");
@@ -56,29 +56,10 @@ final class TemplateLoaderImpl implements TemplateLoader {
 		this.resourceLoader = resourceLoader;
 
 		this.templateParser = templateParser;
-		this.cache = cache;
+		this.memoryCache = memoryCache;
+		this.persistentCahce = persistentCahce;
 		this.reloadController = reloadController;
 		this.resourceComparator = resourceComparator;
-	}
-
-	// 实现TemplateFactory -------
-
-	public Template getTemplate(String name) throws IOException, ParsingException {
-		return cache(filterName(name), null, null);
-	}
-
-	public Template getTemplate(String name, String encoding) throws IOException, ParsingException {
-		return cache(filterName(name), null, encoding);
-	}
-
-	public Template getTemplate(String name, Locale locale) throws IOException,
-			ParsingException {
-		return cache(filterName(name), locale, null);
-	}
-
-	public Template getTemplate(String name, Locale locale, String encoding)
-			throws IOException, ParsingException {
-		return cache(filterName(name), locale, encoding);
 	}
 
 	// 缓存同步 -------
@@ -87,88 +68,84 @@ final class TemplateLoaderImpl implements TemplateLoader {
 
 	private final ResourceComparator resourceComparator;
 
-	private final Cache cache;
+	private final Cache memoryCache;
 
-	private Template cache(String name, Locale locale, String encoding)
+	private final Cache persistentCahce;
+
+	private Template cacheTemplate(String name, Locale locale, String encoding)
 			throws IOException, ParsingException {
-		if (cache == null) { // 如果没有缓存策略，直接读取并编译模板
-			Resource resource = load(name, locale, encoding);
-			return parseTemplate(resource);
+		if (memoryCache == null) { // 如果没有缓存策略，直接读取并编译模板
+			Resource resource = loadResource(name, locale, encoding);
+			return persistentTemplate(resource);
 		}
 
-		TemplateCacheKey key = new TemplateCacheKey(name, locale, encoding);
-		TemplateCacheEntry entry = null;
-		if (cache.isConcurrent()) { // 如果缓存本身已支持并发
-			entry = (TemplateCacheEntry)cache.get(key);
-			if (entry == null) { // TODO 此检测未在同步锁内，可能多个线程同时重复创建条目，但不影响正常运行，考虑读取次数远大于创建次数，可容忍。
-				entry = new TemplateCacheEntry();
-				cache.put(key, entry);
-			}
-		} else {
-			if (cache.isOptimism()) { // 该状态表示缓存策略的get()函数未修改任何状态(即无副作用)
-				try {
-					// 尝试乐观并发，无锁读取
-					entry = (TemplateCacheEntry)cache.get(key);
-				} catch (Throwable t) { // 有异常则放弃读取
-					// ignore
-				}
-			}
+		// 缓存参数
+		TemplateCacheKey key = new TemplateCacheKey(name, locale, encoding); // 缓存索引键
+		TemplateCacheEntry entry; // 缓存条目
+		Template template; // 缓存模板
+
+		// 缓存总锁，只锁定缓存中各条目获取过程，使缓存锁定过程最小化
+		synchronized(memoryCache) {
+			entry = (TemplateCacheEntry)memoryCache.get(key);
 			if (entry == null) {
-				// 缓存总锁，只锁定缓存中各条目获取过程，使缓存锁定过程最小化
-				synchronized(cache) {
-					entry = (TemplateCacheEntry)cache.get(key); // 必需在锁内获取并检查，确保条目唯一性
-					if (entry == null) {
-						entry = new TemplateCacheEntry(); // 创建简单的条目容器，条目中的内容，在下面条目锁内进行处理，以保证其它条目可以正常存取
-						cache.put(key, entry); // 在锁内将条目放入缓存
-					}
-				}
+				entry = new TemplateCacheEntry(); // 创建最简单的条目容器，条目中的内容，在下面条目锁内进行处理，以保证其它条目可以正常存取
+				memoryCache.put(key, entry);
 			}
 		}
-		Assert.assertNotNull(entry); // 后验条件
 
 		// 单条目锁，锁定资源获取过程，保证在资源获取时各条目之间互不影响。
 		// 前面的缓存总锁，已保证条目在缓存中是唯一的，故此条目锁在整个缓存中有效。
-		Template template = entry.getTemplate(); // 条目中模板获取过程无状态修改，尝试乐观并发，无锁读取
-		if (template == null) {
-			synchronized (entry) {
-				template = entry.getTemplate();
-				if (template == null) { // 不存在，解析加载
-					Resource resource = load(name, locale, encoding);
-					template = parseTemplate(resource); // 此函数调用时间较长，为缓存目标
-					entry.setTemplate(template);
-				} else { // 已存在，检查热加载
-					if (reloadController != null
-							&& reloadController.shouldReload(template.getName())) { // 是否需要检查热加载
-						Resource resource = load(name, locale, encoding);
-						if (resourceComparator != null
-								&& resourceComparator.isModified(template, resource)) { // 比较是否已更改
-							template = parseTemplate(resource);
-							entry.setTemplate(template);
+		synchronized (entry) {
+			template = entry.getTemplate();
+			if (template == null) { // 不存在，解析加载
+				Resource resource = loadResource(name, locale, encoding);
+				template = persistentTemplate(resource); // 此函数调用时间较长，为主要缓存目标
+				entry.setTemplate(template);
+			} else { // 已存在，检查热加载
+				if (reloadController != null
+						&& reloadController.shouldReload(template.getName())) { // 是否需要检查热加载
+					Resource resource = loadResource(name, locale, encoding);
+					if (resourceComparator != null
+							&& resourceComparator.isModified(template, resource)) { // 比较是否已更改
+						template = parseTemplate(resource); // 热加载
+						if (persistentCahce != null) {
+							synchronized(persistentCahce) {
+								persistentCahce.put(resource.getName(), template);
+							}
 						}
+						entry.setTemplate(template);
 					}
 				}
 			}
-		} else { // 已存在，检查热加载
-			if (reloadController != null
-					&& reloadController.shouldReload(template.getName())) { // 是否需要检查热加载
-				Resource resource = load(name, locale, encoding);
-				if (resourceComparator != null
-						&& resourceComparator.isModified(template, resource)) { // 比较是否已更改
+		}
+
+		return template;
+	}
+
+	private Template persistentTemplate(Resource resource) throws ParsingException, IOException {
+		System.out.println("save:" + resource.getName());
+		Template template;
+		if (persistentCahce != null) {
+			synchronized(persistentCahce) {
+				template = (Template)persistentCahce.get(resource.getName());
+				if (template == null) {
 					template = parseTemplate(resource);
-					synchronized (entry) {
-						entry.setTemplate(template); // TODO 可能重复热加载，但都在条目锁内，不影响正常运行，可容忍。
-					}
+					persistentCahce.put(resource.getName(), template);
 				}
 			}
+		} else {
+			template = parseTemplate(resource);
 		}
 		return template;
 	}
 
-	// 加载 --------
+	// 加载资源 --------
 
 	private final ResourceLoader resourceLoader;
 
-	private Resource load(String name, Locale locale, String encoding) throws IOException {
+	// 注：返回的Resource中的getName()并不一定等于传入的name参数。
+	private Resource loadResource(String name, Locale locale, String encoding) throws IOException {
+		System.out.println("load:" + name);
 		if (locale == null) {
 			if(encoding == null)
 				return getResource(name);
@@ -179,10 +156,35 @@ final class TemplateLoaderImpl implements TemplateLoader {
 		return getResource(name, locale, encoding);
 	}
 
+	private String cleanName(String name) throws IOException {
+		Assert.assertNotEmpty(name, "TemplateFactoryImpl.template.name.required");
+		return UrlUtils.cleanUrl(name);
+	}
+
+	// 实现TemplateFactory -------
+
+	public Template getTemplate(String name) throws IOException, ParsingException {
+		return cacheTemplate(cleanName(name), null, null);
+	}
+
+	public Template getTemplate(String name, String encoding) throws IOException, ParsingException {
+		return cacheTemplate(cleanName(name), null, encoding);
+	}
+
+	public Template getTemplate(String name, Locale locale) throws IOException,
+			ParsingException {
+		return cacheTemplate(cleanName(name), locale, null);
+	}
+
+	public Template getTemplate(String name, Locale locale, String encoding)
+			throws IOException, ParsingException {
+		return cacheTemplate(cleanName(name), locale, encoding);
+	}
+
 	// 代理TemplateLoader -------
 
 	public Resource getResource(String name) throws IOException {
-		Resource resource = resourceLoader.getResource(filterName(name));
+		Resource resource = resourceLoader.getResource(cleanName(name));
 		if (resource == null)
 			throw new IOException("Not found resource: " + name);
 		return resource;
@@ -190,14 +192,14 @@ final class TemplateLoaderImpl implements TemplateLoader {
 
 	public Resource getResource(String name, String encoding)
 			throws IOException {
-		Resource resource = resourceLoader.getResource(filterName(name), encoding);
+		Resource resource = resourceLoader.getResource(cleanName(name), encoding);
 		if (resource == null)
 			throw new IOException("Not found resource: " + name);
 		return resource;
 	}
 
 	public Resource getResource(String name, Locale locale) throws IOException {
-		Resource resource = resourceLoader.getResource(filterName(name), locale);
+		Resource resource = resourceLoader.getResource(cleanName(name), locale);
 		if (resource == null)
 			throw new IOException("Not found resource: " + name);
 		return resource;
@@ -205,15 +207,10 @@ final class TemplateLoaderImpl implements TemplateLoader {
 
 	public Resource getResource(String name, Locale locale, String encoding)
 			throws IOException {
-		Resource resource = resourceLoader.getResource(filterName(name), locale, encoding);
+		Resource resource = resourceLoader.getResource(cleanName(name), locale, encoding);
 		if (resource == null)
 			throw new IOException("Not found resource: " + name);
 		return resource;
-	}
-
-	private String filterName(String name) throws IOException {
-		Assert.assertNotEmpty(name, "TemplateFactoryImpl.template.name.required");
-		return UrlUtils.cleanUrl(name);
 	}
 
 	// 代理TemplateParser ----
@@ -230,6 +227,7 @@ final class TemplateLoaderImpl implements TemplateLoader {
 
 	public Template parseTemplate(Resource resource)
 			throws ParsingException, IOException {
+		System.out.println("parse:" + resource.getName());
 		return templateParser.parseTemplate(resource);
 	}
 

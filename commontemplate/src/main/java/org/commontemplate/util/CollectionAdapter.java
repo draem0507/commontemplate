@@ -4,6 +4,8 @@ import java.util.Iterator;
 
 public class CollectionAdapter extends CollectionSupport {
 
+	private static final long serialVersionUID = 1L;
+
 	private Iterator iterator;
 
 	private int size;

@@ -161,6 +161,10 @@ $!
 								$load{"xxx.xml"} <font color="green">(注：根据文件扩展名识别类型)</font><br/>
 								$load{xml: "xxx.ctl", "utf-8"} <font color="green">(注：指定加载文件编码)</font><br/>
 								$load{"xxx.ctl", "utf-8"}<br/>
+								<font color="green">(注：如果配置项: localizedLookup=true (缺省为true)，假设locale为zh_CN，则：首先查找xxx_zh_CN.txt，不存在则查找xxx_zh.txt，否则查找xxx.ctl)</font><br/>
+								<font color="green">(注：支持"./"当前目录：$load{"./xxx.ctl"} 在当前目录查找xxx.ctl)</font><br/>
+								<font color="green">(注：支持"../"上级目录：$load{"../xxx.ctl"} 在当前目录的上级目录中查找xxx.ctl)</font><br/>
+								<font color="green">(注：支持"*/"通配目录：$load{"*/xxx.ctl"} 在当前目录以上的目录中逐级查找xxx.ctl)</font><br/>
 								<b>(7) 宏指令:</b><br/>
 								宏定义:<br/>
 								$macro{button} <font color="green">(注：参数名称化指令，如果名称需取变量，可使用"\"一元操作符：$macro{\name})</font><br/>
@@ -211,6 +215,9 @@ $!
 								内嵌其它模板的一部分: <font color="green">(注：#后为zone的名称, 参见$zone指令)</font><br/>
 								$embed{"common.ctl#body"} <font color="green">(注：查找时，如果区域的名称不是常量，则在当前上下文中执行)</font><br/>
 								<font color="green">(注：如果配置项: localizedLookup=true (缺省为true)，假设locale为zh_CN，则：首先查找common_zh_CN.ctl，不存在则查找common_zh.ctl，否则查找common.ctl)</font><br/>
+								<font color="green">(注：支持"./"当前目录：$embed{"./xxx.ctl"} 在当前目录查找xxx.ctl)</font><br/>
+								<font color="green">(注：支持"../"上级目录：$embed{"../xxx.ctl"} 在当前目录的上级目录中查找xxx.ctl)</font><br/>
+								<font color="green">(注：支持"*/"通配目录：$embed{"*/xxx.ctl"} 在当前目录以上的目录中逐级查找xxx.ctl)</font><br/>
 								包含其它模板的输出: <font color="green">(注：只包含输出，<b>不可以</b>访问当前上下文的变量，<b>可以</b>传参)</font><br/>
 								$include{"header.ctl"}<br/>
 								$include{"header.ctl", "UTF-8"}<br/>
@@ -219,10 +226,16 @@ $!
 								包含其它模板的一部分: <font color="green">(注：#后为zone的名称, 参见$zone指令)</font><br/>
 								$include{"header.ctl#title"} <font color="green">(注：查找时，如果区域的名称不是常量，则在当前上下文中执行)</font><br/>
 								<font color="green">(注：如果配置项: localizedLookup=true (缺省为true)，假设locale为zh_CN，则：首先查找header_zh_CN.ctl，不存在则查找header_zh.ctl，否则查找header.ctl)</font><br/>
+								<font color="green">(注：支持"./"当前目录：$include{"./xxx.ctl"} 在当前目录查找xxx.ctl)</font><br/>
+								<font color="green">(注：支持"../"上级目录：$include{"../xxx.ctl"} 在当前目录的上级目录中查找xxx.ctl)</font><br/>
+								<font color="green">(注：支持"*/"通配目录：$include{"*/xxx.ctl"} 在当前目录以上的目录中逐级查找xxx.ctl)</font><br/>
 								显示文件的内容: <font color="green">(注：不解析其内容)</font><br/>
 								$display{"article.txt"}<br/>
 								$display{"article.txt", "UTF-8"}<br/>
 								<font color="green">(注：如果配置项: localizedLookup=true (缺省为true)，假设locale为zh_CN，则：首先查找article_zh_CN.txt，不存在则查找article_zh.txt，否则查找article.txt)</font><br/>
+								<font color="green">(注：支持"./"当前目录：$display{"./xxx.ctl"} 在当前目录查找xxx.ctl)</font><br/>
+								<font color="green">(注：支持"../"上级目录：$display{"../xxx.ctl"} 在当前目录的上级目录中查找xxx.ctl)</font><br/>
+								<font color="green">(注：支持"*/"通配目录：$display{"*/xxx.ctl"} 在当前目录以上的目录中逐级查找xxx.ctl)</font><br/>
 								抓取远程文件的内容: <font color="green">(注：非Web环境只支持完整URL的远程页面)</font><br/>
 								$snatch{"list.jsp"} 相对于当前页面路径目录<br/>
 								$snatch{"../list.jsp"} 相对于当前页面路径的上级目录<br/>

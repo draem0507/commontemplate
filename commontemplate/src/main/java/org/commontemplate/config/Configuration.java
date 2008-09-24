@@ -27,6 +27,13 @@ public abstract class Configuration extends TemplateConfiguration {
 	public abstract Cache getTemplateCache();
 
 	/**
+	 * 获取模板持久化缓存器
+	 *
+	 * @return 缓存器
+	 */
+	public abstract Cache getTemplatePersistentCache();
+
+	/**
 	 * 获取输出缓存器
 	 *
 	 * @return 缓存器

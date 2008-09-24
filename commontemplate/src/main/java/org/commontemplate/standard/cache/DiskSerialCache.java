@@ -3,7 +3,6 @@ package org.commontemplate.standard.cache;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.UnsupportedEncodingException;
@@ -90,19 +89,6 @@ public class DiskSerialCache extends Cache {
 		this.suffix = suffix;
 	}
 
-	private Cache memoryCache = new LruCache();
-
-	/**
-	 * 设置内存缓存
-	 *
-	 * @param memoryCache
-	 *            内存缓存
-	 */
-	public void setMemoryCache(Cache memoryCache) {
-		Assert.assertNotNull(memoryCache, "DiskSerialCache.memory.cache.required");
-		this.memoryCache = memoryCache;
-	}
-
 	private File getCacheDirectory() {
 		Assert.assertNotEmpty(cacheDirectoryPath, "DiskSerialCache.cache.directory.required");
 		File cacheDirectory = new File(cacheDirectoryPath);
@@ -133,36 +119,26 @@ public class DiskSerialCache extends Cache {
 	}
 
 	public Object get(Object key) throws CacheException {
-		Object t = memoryCache.get(key);
-		if (t != null)
-			return t;
 		try {
 			File file = getCacheFile(key);
 			if (! file.exists())
 				return null;
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
-			Object t2 = ois.readObject();
-			if (t2 == null)
-				return null;
-			memoryCache.put(key, t2);
-			return t2;
-		} catch (ClassNotFoundException e) { // 当模板反序列化不兼容时, 忽略
+			return ois.readObject();
+		} catch (Exception e) { // 读取对象流失败, 忽略, 不影响运行
+			e.printStackTrace();
 			return null;
-		} catch (IOException e) {
-			return null;
-		} catch (Exception e) {
-			throw new CacheException(key, e);
 		}
 	}
 
 	public void put(Object key, Object value) throws CacheException {
-		memoryCache.put(key, value);
 		try {
 			getCacheDirectory(); // 确保缓存目录存在
 			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(getCacheFile(key)));
 			oos.writeObject(value);
-		} catch (Exception e) {
-			throw new CacheException(key, e);
+		} catch (Exception e) { // 写入对象失败, 忽略, 不影响运行
+			e.printStackTrace();
+			// ignore
 		}
 	}
 

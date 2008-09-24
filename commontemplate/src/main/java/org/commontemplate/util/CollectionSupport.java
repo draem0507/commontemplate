@@ -1,5 +1,6 @@
 package org.commontemplate.util;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -9,7 +10,7 @@ import java.util.Iterator;
  * @author liangfei0201@163.com
  *
  */
-public abstract class CollectionSupport implements Collection {
+public abstract class CollectionSupport implements Collection, Serializable {
 
 	public boolean add(Object o) {
 		throw new UnsupportedOperationException();

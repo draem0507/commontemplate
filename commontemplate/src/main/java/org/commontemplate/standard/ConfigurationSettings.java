@@ -224,6 +224,16 @@ public class ConfigurationSettings extends Configuration {
 		this.templateCache = templateCache;
 	}
 
+	private transient Cache templatePersistentCache;
+
+	public Cache getTemplatePersistentCache() {
+		return templatePersistentCache;
+	}
+
+	public void setTemplatePersistentCache(Cache templatePersistentCache) {
+		this.templatePersistentCache = templatePersistentCache;
+	}
+
 	// 输出缓存 -------
 
 	private transient Cache outCache;

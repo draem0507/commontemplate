@@ -49,8 +49,9 @@ public final class Engine implements Factory {
 	public Engine(Configuration config) {
 		Assert.assertNotNull(config, "Engine.config.required");
 		// 创建模板工厂
-		this.templateLoader = new TemplateLoaderImpl(new TemplateEngine(config),
-				config.getResourceLoader(), config.getTemplateCache(),
+		this.templateLoader = new TemplateLoaderImpl(
+				new TemplateEngine(config), config.getResourceLoader(),
+				config.getTemplateCache(), config.getTemplatePersistentCache(),
 				config.getReloadController(), config.getResourceComparator());
 		// 创建上下文工厂
 		this.contextFactory = new ContextFactoryImpl(
