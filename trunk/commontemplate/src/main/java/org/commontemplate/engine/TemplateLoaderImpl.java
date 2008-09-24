@@ -123,7 +123,6 @@ final class TemplateLoaderImpl implements TemplateLoader {
 	}
 
 	private Template persistentTemplate(Resource resource) throws ParsingException, IOException {
-		System.out.println("save:" + resource.getName());
 		Template template;
 		if (persistentCahce != null) {
 			synchronized(persistentCahce) {
@@ -145,7 +144,6 @@ final class TemplateLoaderImpl implements TemplateLoader {
 
 	// 注：返回的Resource中的getName()并不一定等于传入的name参数。
 	private Resource loadResource(String name, Locale locale, String encoding) throws IOException {
-		System.out.println("load:" + name);
 		if (locale == null) {
 			if(encoding == null)
 				return getResource(name);
@@ -227,7 +225,6 @@ final class TemplateLoaderImpl implements TemplateLoader {
 
 	public Template parseTemplate(Resource resource)
 			throws ParsingException, IOException {
-		System.out.println("parse:" + resource.getName());
 		return templateParser.parseTemplate(resource);
 	}
 
