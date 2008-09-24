@@ -160,8 +160,8 @@ $!
 								<b>配置说明：</b><br/>
 								<b>(1)</b> 非web应用，如代码生成器等，可以设置：<br/>
 								@extends=<font color="#2a00ff">org/commontemplate/tools/commontemplate.properties</font><br/>
-								<b>(2)</b> 如果需去掉磁盘缓存，通常用于已在OSCache/EHCache中配置磁盘缓存，可以设置：<br/>
-								templateCache=<font color="#2a00ff">$memoryCache</font><br/>
+								<b>(2)</b> 如果需去掉磁盘缓存，可以设置：<br/>
+								diskCache=<font color="#2a00ff">null</font><br/>
 								<b>(3)</b> 如果需将缓存放在非web应用目录，可以设置：<br/>
 								diskCache.rootDirectory=<font color="#2a00ff">C:/xxx/</font><br/>
 								<b>(4)</b> 默认是开启(非void函数)函数调用的，若需要禁止所有函数调用，可以设置：<br/>
