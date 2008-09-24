@@ -34,6 +34,7 @@ $!
 								修复ContextImpl.clear()未调用super.clear()的BUG.<br/>
 								支持"*/"通配目录：$include{"*/xxx.ctl"} 在当前目录以上的目录中逐级查找xxx.ctl<br/>
 								修复磁盘缓存无效的BUG.<br/>
+								改为通过配置状态开闭语法外套: commentSyntaxCoatAvailable=true, tagSyntaxCoatAvailable=false, attributeSyntaxCoatAvailable=false<br/>
 								-----------------<br/>
 								感谢JRest4Guice开发小组的支持.<br/>
 								<br/>
