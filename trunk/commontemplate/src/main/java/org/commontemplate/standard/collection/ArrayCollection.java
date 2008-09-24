@@ -7,6 +7,8 @@ import org.commontemplate.util.CollectionSupport;
 
 public class ArrayCollection extends CollectionSupport {
 
+	private static final long serialVersionUID = 1L;
+
 	private final Object array;
 
 	private final int length;

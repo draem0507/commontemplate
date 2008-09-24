@@ -18,6 +18,34 @@ public abstract class AbstractResourceLoader implements ResourceLoader {
 	}
 
 	public Resource getResource(String name, String encoding) throws IOException {
+		int i = name.indexOf("/*/");
+		if (i > -1) {
+			Assert.assertTrue(i == name.lastIndexOf("/*/"), "不支持多个*号通配文件夹! 请检查文件名: {0}", new Object[]{name});
+			String path = name.substring(0, i + 1) + name.substring(i + 3);
+			try {
+				return loadResource(path, encoding);
+			} catch (IOException e) {
+				if (i > 0) {
+					int j = path.lastIndexOf('/', i - 1);
+					while (j > -1) {
+						path = path.substring(0, j) + path.substring(i);
+						try {
+							return loadResource(path, encoding);
+						} catch (IOException e1) {
+							if (j == 0)
+								break;
+							i = j;
+							j = path.lastIndexOf('/', i - 1);
+						}
+					}
+				}
+			}
+			throw new IOException("通配目录查找失败，*号之上的所有目录均没有找到该文件: " + name);
+		}
+		return loadResource(name, encoding);
+	}
+
+	private Resource loadResource(String name, String encoding) throws IOException {
 		Assert.assertNotNull(name, "AbstractResourceLoader.resource.name.required");
 		String path = name;
 		if (getRootDirectory() != null)
