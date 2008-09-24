@@ -1,9 +1,11 @@
 package org.commontemplate.standard.property;
 
+import java.io.Serializable;
+
 import org.commontemplate.util.Assert;
 import org.commontemplate.util.ClassUtils;
 
-public class PropertyMatcher implements java.io.Serializable {
+public class PropertyMatcher implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
