@@ -33,6 +33,7 @@ $!
 								修复磁盘缓存并发异常, 并忽略乐观并发无锁读取时的异常.<br/>
 								修复ContextImpl.clear()未调用super.clear()的BUG.<br/>
 								支持"*/"通配目录：$include{"*/xxx.ctl"} 在当前目录以上的目录中逐级查找xxx.ctl<br/>
+								修复磁盘缓存无效的BUG.<br/>
 								-----------------<br/>
 								感谢JRest4Guice开发小组的支持.<br/>
 								<br/>
