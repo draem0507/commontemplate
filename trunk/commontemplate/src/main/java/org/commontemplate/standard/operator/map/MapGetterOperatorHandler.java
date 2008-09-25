@@ -5,8 +5,8 @@ import java.util.Map;
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 
 /**
- * Map按Key索引取值操作符: "[]"<br/>
- * 如: ${map[key="value"]}<br/>
+ * Map按Key索引取值操作符: "[]"或"."<br/>
+ * 如: ${map["key"]} 或 ${map.key}<br/>
  *
  * @author liangfei0201@163.com
  *

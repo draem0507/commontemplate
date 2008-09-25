@@ -7,7 +7,7 @@ javax.script是JDK标准的脚本引擎接口，为各种脚本引擎统一入�
 如果使用JDK1.6以前的版本，需JSR223支持：<a href="http://www.jcp.org/en/jsr/detail?id=223" target="_blank">http://www.jcp.org/en/jsr/detail?id=223</a><br/>
 <br/>
 <b>2. 集成方式</b><br/>
-导入集成jar包: commontemplate-javaxscript.jar <a href="download.html">下载...</a><br/>
+导入集成jar包: commontemplate-javaxscript.jar <a href="downloads.html">下载...</a><br/>
 此jar包采用javax.script所规定的方式打包，JDK将自动发现其中的引擎实现。<br/>
 <br/>
 <b>3. 调用方式</b><br/>

@@ -75,11 +75,11 @@ public class DocumentGenerator {
 										new Menu("menu.jsp",
 												"jsp.html"))
 								.addChild(
+										new Menu("menu.cache",
+												"cache.html"))
+								.addChild(
 										new Menu("menu.javaxscript",
 												"javaxscript.html"))
-								.addChild(
-										new Menu("menu.ant",
-												"ant.html"))
 						)
 				.addChild(
 						new Menu("menu.tools")
@@ -98,6 +98,9 @@ public class DocumentGenerator {
 								.addChild(
 										new Menu("menu.generator",
 												"generator.html"))
+								.addChild(
+										new Menu("menu.ant",
+												"ant.html"))
 						)
 				.addChild(
 						new Menu("menu.development")
@@ -220,7 +223,7 @@ public class DocumentGenerator {
 	public static void main(String[] args) {
 		DocumentGenerator generator = new DocumentGenerator();
 		generator.generateAll(new String[]{"index", "template" , "expression", "coat",
-				"config", "extension", "api", "dependency", "data", "faq", "versus", "mvc", "jsp", "javaxscript",
+				"config", "extension", "api", "dependency", "data", "faq", "versus", "mvc", "jsp", "cache", "javaxscript",
 				"debugger", "viewer", "editor", "converter", "generator", "ant", "architecture", "criterion", "planning", "requirement", "downloads",
 				"uml", "about", "changes", "join", "demo_extends"});
 	}
