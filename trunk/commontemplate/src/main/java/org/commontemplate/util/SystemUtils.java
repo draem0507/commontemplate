@@ -163,6 +163,15 @@ public final class SystemUtils {
 	}
 
 	/**
+	 * 获取Class版本
+	 *
+	 * @return Class版本
+	 */
+	public static String getClassVersion() {
+		return System.getProperties().getProperty("java.class.version");
+	}
+
+	/**
 	 * 获取JRE名称
 	 *
 	 * @return JRE名称

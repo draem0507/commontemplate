@@ -140,6 +140,7 @@ memoryCache=org.commontemplate.standard.cache.LruCache()
 #memoryCache=org.commontemplate.standard.cache.StrongCache()
 #memoryCache=org.commontemplate.standard.cache.OSCache()
 #memoryCache=org.commontemplate.standard.cache.EHCache()
+#memoryCache=org.commontemplate.standard.cache.JCache()
 #<a href="extension.html#cache">扩展...</a>
 
 # 内存缓存容量，用于：LruCache, MruCache, FifoCache
