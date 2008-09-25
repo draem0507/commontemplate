@@ -267,6 +267,7 @@ $!
 								not 取反, 如: ${true.not} ${user.allow.not}<br/>
 								toInteger false为0, true为1, 如: ${true.toInteger} 输出：1<br/>
 								<b>(7) 数组(Array):</b><br/>
+								asList 数组转换为List，如：${arr.asList}<br/>
 								size 数组长度，保持与List统一，如：${arr.size}<br/>
 								sort 数组或List排序，如：${arr.sort} ${list.sort} ${['f','a','d'].sort} <font color="green">(注：集合中的项需实现Comparable接口)</font><br/>
 								<br/>
