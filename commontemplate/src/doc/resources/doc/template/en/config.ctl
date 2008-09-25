@@ -20,8 +20,8 @@ virtualDirectory=<font color="#2a00ff">WEB-INF/views/</font><br/>
 <br/>
 modificationCheckInterval=<font color="#2a00ff">30000</font><br/>
 <br/>
-logger=<font color="#2a00ff">org.commontemplate.standard.log.SimpleLogger()</font><br/>
-<font color="#3f7f5f">#logger=org.commontemplate.standard.log.CommonsLogging()</font><br/>
+loggerProvider=<font color="#2a00ff">org.commontemplate.util.log.SimpleLoggerProvider()</font><br/>
+<font color="#3f7f5f">#loggerProvider=org.commontemplate.util.log.CommonsLoggingProvider()</font><br/>
 <br/>
 diskCache.directory=<font color="#2a00ff">WEB-INF/cache/</font><br/>
 <br/>

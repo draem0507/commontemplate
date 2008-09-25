@@ -160,11 +160,11 @@ $!
 <font color="#3f7f5f">&lt;/ct:template&gt;</font><br/>
 								<br/>
 								<br/>
-								<b>2. Config</b> <a href="dependency .html">��5��&gt;&gt;</a><br/>
+								<b>2. Config</b> <a href="dependency.html">Dependency&gt;&gt;</a><br/>
 								<b>(1) CommonsLogging/Log4J</b><br/>
 								commontemplate-my.properties:<br/>
 								@extends=<font color="#2a00ff">org/commontemplate/tools/web/commontemplate.properties</font><br/>
-								logger=<font color="#2a00ff">org.commontemplate.standard.log.CommonsLogging()</font><br/>
+								loggerProvider=<font color="#2a00ff">org.commontemplate.util.log.CommonsLoggingProvider()</font><br/>
 								<br/>
 								commons-logging.properties:<br/>
 								logger=<font color="#2a00ff">org.apache.commons.logging.impl.Log4JLogger</font><br/>

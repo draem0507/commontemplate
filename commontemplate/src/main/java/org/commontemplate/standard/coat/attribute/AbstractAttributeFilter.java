@@ -10,6 +10,7 @@ import java.io.StringReader;
 import java.util.Iterator;
 import java.util.List;
 
+import org.commontemplate.config.DirectiveHandlerProvider;
 import org.commontemplate.config.ResourceFilter;
 import org.commontemplate.config.Syntax;
 import org.commontemplate.standard.syntax.SyntaxSettings;
@@ -21,16 +22,6 @@ import org.commontemplate.standard.syntax.SyntaxSettings;
  * @since 2008-4-5 上午12:10:05
  */
 public abstract class AbstractAttributeFilter implements ResourceFilter, Serializable {
-
-	private boolean attributeSyntaxCoatAvailable = true;
-
-	public boolean isAttributeSyntaxCoatAvailable() {
-		return attributeSyntaxCoatAvailable;
-	}
-
-	public void setAttributeSyntaxCoatAvailable(boolean attributeSyntaxCoatAvailable) {
-		this.attributeSyntaxCoatAvailable = attributeSyntaxCoatAvailable;
-	}
 
 	public Reader filter(final Reader reader) throws IOException {
 		if (! attributeSyntaxCoatAvailable)
@@ -133,6 +124,27 @@ public abstract class AbstractAttributeFilter implements ResourceFilter, Seriali
 	public void setSyntaxSettings(SyntaxSettings syntaxSettings) {
 		if (syntaxSettings != null)
 			this.syntax = syntaxSettings.toSyntax();
+	}
+
+	private DirectiveHandlerProvider directiveHandlerProvider;
+
+	public DirectiveHandlerProvider getDirectiveHandlerProvider() {
+		return directiveHandlerProvider;
+	}
+
+	public void setDirectiveHandlerProvider(
+			DirectiveHandlerProvider directiveHandlerProvider) {
+		this.directiveHandlerProvider = directiveHandlerProvider;
+	}
+
+	private boolean attributeSyntaxCoatAvailable = true;
+
+	public boolean isAttributeSyntaxCoatAvailable() {
+		return attributeSyntaxCoatAvailable;
+	}
+
+	public void setAttributeSyntaxCoatAvailable(boolean attributeSyntaxCoatAvailable) {
+		this.attributeSyntaxCoatAvailable = attributeSyntaxCoatAvailable;
 	}
 
 }

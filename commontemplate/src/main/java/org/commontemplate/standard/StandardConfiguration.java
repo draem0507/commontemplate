@@ -9,19 +9,16 @@ import java.util.Map;
 
 import org.commontemplate.config.BinaryOperatorHandler;
 import org.commontemplate.config.BlockDirectiveHandler;
-import org.commontemplate.config.Cache;
 import org.commontemplate.config.ConfigurationException;
 import org.commontemplate.config.DirectiveHandler;
 import org.commontemplate.config.DirectiveHandlerProvider;
 import org.commontemplate.config.EvaluateInterceptor;
 import org.commontemplate.config.ExpressionFilter;
-import org.commontemplate.config.Keywords;
 import org.commontemplate.config.OperatorHandlerProvider;
 import org.commontemplate.config.ReloadController;
 import org.commontemplate.config.RenderInterceptor;
 import org.commontemplate.config.ResourceComparator;
 import org.commontemplate.config.ResourceFilter;
-import org.commontemplate.config.Syntax;
 import org.commontemplate.config.TemplateNameFilter;
 import org.commontemplate.config.TextFilter;
 import org.commontemplate.config.UnaryOperatorHandler;
@@ -47,7 +44,6 @@ import org.commontemplate.standard.format.OutputFormatterChain;
 import org.commontemplate.standard.i18n.PropertiesResourceBundleProvider;
 import org.commontemplate.standard.i18n.ResourceBundleProvider;
 import org.commontemplate.standard.listener.EventListenerChain;
-import org.commontemplate.standard.log.Logger;
 import org.commontemplate.standard.operator.StandardOperatorHandlerProvider;
 import org.commontemplate.standard.reload.IntervalReloadController;
 import org.commontemplate.util.Assert;
@@ -112,70 +108,6 @@ public class StandardConfiguration extends ConfigurationSettings {
 
 	public void setDefaultNullValue(String nullValue) {
 		addDefaultOutputFormatter(null, new NullFormatter(nullValue));
-	}
-
-	// ==========================
-
-	private boolean debug;
-
-	public boolean isDebug() {
-		return debug;
-	}
-
-	/**
-	 * 设置是否为调试模式，调试模式将输出更多信息，默认为非调试模式。
-	 *
-	 * @param debug 是否为调试模式
-	 */
-	public void setDebug(boolean debug) {
-		this.debug = debug;
-	}
-
-	private boolean functionAvailable;
-
-	public boolean isFunctionAvailable() {
-		return functionAvailable;
-	}
-
-	/**
-	 * 设置是否允许调用函数，如：${xxx.yyy(zzz)}
-	 *
-	 * @param functionAvailable true为允许调用，false为不允许调用
-	 */
-	public void setFunctionAvailable(boolean functionAvailable) {
-		this.functionAvailable = functionAvailable;
-	}
-
-	private Logger logger;
-
-	public Logger getLogger() {
-		return logger;
-	}
-
-	/**
-	 * 设置日志记录端
-	 *
-	 * @param logger 日志记录端
-	 */
-	public void setLogger(Logger logger) {
-		this.logger = logger;
-	}
-
-	// 缓存策略 -------
-
-	private transient Cache templateCache;
-
-	public Cache getTemplateCache() {
-		return templateCache;
-	}
-
-	/**
-	 * 设置模板缓存策略
-	 *
-	 * @param templateCache 模板缓存策略
-	 */
-	public void setTemplateCache(Cache templateCache) {
-		this.templateCache = templateCache;
 	}
 
 	// 国际化信息束工厂 -----
@@ -511,39 +443,6 @@ public class StandardConfiguration extends ConfigurationSettings {
 		ExpressionFilterChain chain = new ExpressionFilterChain();
 		chain.setExpressionFilters(getExpressionFilters());
 		return chain;
-	}
-
-	// 语法设置 --------------
-
-	private Syntax syntax = Syntax.DEFAULT;
-
-	public Syntax getSyntax() {
-		return syntax;
-	}
-
-	/**
-	 * 设置指令语法，不设置将默认使用DirectiveSyntax.DEFAULT
-	 *
-	 * @param syntax 指令语法
-	 */
-	public void setSyntax(Syntax syntax) {
-		Assert.assertNotNull(syntax, "StandardConfiguration.syntax.required");
-		this.syntax = syntax;
-	}
-
-	private Keywords keywords = Keywords.DEFAULT;
-
-	public Keywords getKeywords() {
-		return keywords;
-	}
-
-	/**
-	 * 设置表达式关键字
-	 *
-	 * @param keywords 表达式关键字
-	 */
-	public void setKeywords(Keywords keywords) {
-		this.keywords = keywords;
 	}
 
 	// 指令处理器 -------------

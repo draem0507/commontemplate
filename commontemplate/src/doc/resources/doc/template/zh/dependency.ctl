@@ -10,7 +10,7 @@ $!
 								(6) org.commontemplate.tools.web.ant.TemplateTask依赖于ant.jar包<br/>
 								<br/>
 								<b>二、standard包依赖第三方包情况：</b><br/>
-								(1) org.commontemplate.standard.log.CommonsLogging依赖于commons-logging.jar包<br/>
+								(1) org.commontemplate.util.log.CommonsLogging和CommonsLoggingProvider依赖于commons-logging.jar包<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;影响：配置项：logger=org.commontemplate.standard.log.CommonsLogging()<br/>
 								(2) org.commontemplate.standard.cache.EHCache依赖于ehcache.jar包<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;影响：配置项：memoryCache=org.commontemplate.standard.cache.EHCache()<br/>
