@@ -60,7 +60,7 @@ public class UnaryOperatorHandlerChain extends UnaryOperatorHandler {
 				new Object[]{operand.getClass().getName(), operand, unaryOperatorHandlers});
 	}
 
-	private boolean operandLazy = false;
+	private boolean operandLazy;
 
 	public boolean isOperandLazy() {
 		return operandLazy;
@@ -70,7 +70,7 @@ public class UnaryOperatorHandlerChain extends UnaryOperatorHandler {
 		this.operandLazy = operandLazy;
 	}
 
-	private boolean operandNamed = false;
+	private boolean operandNamed;
 
 	public boolean isOperandNamed() {
 		return operandNamed;
@@ -90,7 +90,7 @@ public class UnaryOperatorHandlerChain extends UnaryOperatorHandler {
 		this.operandFunctioned = operandFunctioned;
 	}
 
-	private boolean operandDotNamed = false;
+	private boolean operandDotNamed;
 
 	public boolean isOperandDotNamed() {
 		return operandDotNamed;
@@ -110,7 +110,7 @@ public class UnaryOperatorHandlerChain extends UnaryOperatorHandler {
 		this.keyword = keyword;
 	}
 
-	private boolean optimize;
+	private boolean optimize = true; // 缺省为true
 
 	public boolean isOptimize() {
 		return optimize;
