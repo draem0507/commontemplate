@@ -5,12 +5,19 @@ import java.util.Map;
 
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 
+/**
+ * Map乘法运算<br>
+ * 如：${map * 3} 或 ${3 * map}<br>
+ *
+ * @author liangfei0201@163.com
+ *
+ */
 public class MapRepeatOpreatorHandler extends BinaryOperatorHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
 	public MapRepeatOpreatorHandler() {
-		super(Map.class, Integer.class, false, false, true); // 左右参数可交换
+		super(Map.class, Integer.class, false, false, true); // 左右参数类型可交换
 	}
 
 	public Object doEvaluate(Object leftOperand, Object rightOperand) throws Exception {

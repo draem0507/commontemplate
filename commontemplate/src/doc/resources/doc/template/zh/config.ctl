@@ -176,24 +176,6 @@ $!
 								log4j.appender.stdout.layout=<font color="#2a00ff">org.apache.log4j.PatternLayout</font><br/>
 								log4j.appender.stdout.layout.ConversionPattern=<font color="#2a00ff">%-5p [%d] %C - %m\n</font><br/>
 								log4j.logger.CommonTemplate=<font color="#2a00ff">DEBUG</font><br/>
-								<b>(6)</b> 若需使用OSCache作为缓存方案，可以设置：<br/>
-								templateCache=<font color="#2a00ff">org.commontemplate.standard.cache.OSCache()</font><br/>
-								当然，你可能还需要配置oscache.properties:<br/>
-								cache.algorithm=<font color="#2a00ff">com.opensymphony.oscache.base.algorithm.LRUCache</font><br/>
-								cache.capacity=<font color="#2a00ff">1000</font><br/>
-								<b>(7)</b> 若需使用EHCache作为缓存方案，可以设置：<br/>
-								templateCache=<font color="#2a00ff">org.commontemplate.standard.cache.EHCache()</font><br/>
-								当然，你可能还需要配置ehcache.xml:<br/>
-								<font color="#3f7f5f">&lt;ehcache&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;diskStore&nbsp;<font color="#7f0055">path</font><font color="#000000">=</font><font color="#2a00ff">"java.io.tmpdir"</font>&nbsp;/&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;defaultCache&nbsp;<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055">maxElementsInMemory</font><font color="#000000">=</font><font color="#2a00ff">"10000"</font>&nbsp;<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055">eternal</font><font color="#000000">=</font><font color="#2a00ff">"false"</font>&nbsp;<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055">timeToIdleSeconds</font><font color="#000000">=</font><font color="#2a00ff">"120"</font>&nbsp;<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055">timeToLiveSeconds</font><font color="#000000">=</font><font color="#2a00ff">"120"</font>&nbsp;<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055">overflowToDisk</font><font color="#000000">=</font><font color="#2a00ff">"true"</font>&nbsp;<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;/&gt;</font><br/>
-<font color="#3f7f5f">&lt;/ehcache&gt;</font><br/>
 								<br/>
 								<b>二. Spring 配置</b><br/>
 								使用SpringIoC容器组装配置，需spring.jar支持。<br/>

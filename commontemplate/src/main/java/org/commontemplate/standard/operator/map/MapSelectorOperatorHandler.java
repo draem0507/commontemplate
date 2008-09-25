@@ -10,7 +10,7 @@ import org.commontemplate.util.MapEntry;
 
 /**
  * Map条件选择操作符: "[]"<br/>
- * 如: ${map[key="x"].value} ${map[value="x"].key}<br/>
+ * 如: ${map[key:"x"].value} ${map[value:"x"].key}<br/>
  *
  * @author liangfei0201@163.com
  *

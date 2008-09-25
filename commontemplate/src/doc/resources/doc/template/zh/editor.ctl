@@ -7,7 +7,7 @@
 								<b>2. 安装使用</b><br/>
 								(1) 需JDK1.5.0以上版本支持 <a href="http://java.sun.com/j2se/1.5.0" target="_blank">下载jre...</a><br/>
 								(2) 需Eclipse3.3.2以上版本支持. <a href="http://www.eclipse.org" target="_blank">下载Eclipse...</a><br/>
-								(2) 下载编辑器插件包：Eclipse-CommonTemplate-PlugIn.zip <a href="download.html">下载...</a><br/>
+								(2) 下载编辑器插件包：Eclipse-CommonTemplate-PlugIn.zip <a href="downloads.html">下载...</a><br/>
 								(3) 解压到Eclipse的安装目录即可<br/>
 								(4) 在线安装：通过Eclipse的Software Update功能自动下载，<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;更新地址：http://www.commontemplate.org/eclipse/update<br/>
