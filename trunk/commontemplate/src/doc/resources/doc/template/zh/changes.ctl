@@ -37,6 +37,7 @@ $!
 								改为通过配置状态开闭语法外套: commentSyntaxCoatAvailable=true, tagSyntaxCoatAvailable=false, attributeSyntaxCoatAvailable=false<br/>
 								增加与JDK1.6中的javax.script的脚本引擎集成. <a href="javaxscript.html">脚本引擎集成...</a><br/>
 								增加Object[].asList扩展属性, 数组转列表.<br/>
+								增加与JCache的集成适配. <a href="cache.html">缓存集成...</a><br/>
 								-----------------<br/>
 								感谢JRest4Guice开发小组的支持.<br/>
 								<br/>
