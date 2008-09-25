@@ -131,7 +131,7 @@ public class BinaryOperatorHandlerChain extends BinaryOperatorHandler {
 		this.rightToLeft = rightToLeft;
 	}
 
-	private boolean optimize;
+	private boolean optimize = true; // 缺省为true
 
 	public boolean isOptimize() {
 		return optimize;
