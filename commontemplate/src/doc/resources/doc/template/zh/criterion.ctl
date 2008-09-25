@@ -59,6 +59,12 @@
 								(5) 行为与状态统一，防止贫血类<br/>
 								待补充...<br/>
 								<br/>
+								<b>6. 日志处理</b><br/>
+								项目中统一使用:<br/>
+								import org.commontemplate.util.log.LoggerFactory;<br/>
+								import org.commontemplate.util.log.Logger;<br/>
+								private static Logger logger = LoggerFactory.getLogger(XXX.class);<br/>
+								<br/>
 								<font color="green">(注: 部分说明只适用本项目)</font>
 								<br/>
 	<!--$end-->
