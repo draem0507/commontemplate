@@ -38,7 +38,7 @@ public abstract class Configuration extends TemplateConfiguration {
 	 *
 	 * @return 缓存器
 	 */
-	public abstract Cache getOutCache();
+	public abstract Cache getOutputCache();
 
 	/**
 	 * 获取热加载检查器

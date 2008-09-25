@@ -1,42 +1,69 @@
-package org.commontemplate.standard.log;
+package org.commontemplate.util.log;
 
 import java.io.Serializable;
 
-
+/**
+ * 简单Logger实现
+ *
+ * @author liangfei0201@163.com
+ *
+ */
 public class SimpleLogger implements Logger, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	private String key;
+
+	public SimpleLogger() {
+		this.key = null;
+	}
+
+	public SimpleLogger(String key) {
+		this.key = key;
+	}
+
+	private String getMessage(String msg) {
+		if (key == null)
+			return msg;
+		return "[" + key + "]" + msg;
+	}
+
 	public void debug(String msg) {
-		System.out.println(msg);
+		System.out.println(getMessage(msg));
 	}
 
 	public void debug(String msg, Throwable e) {
-		System.out.println(msg);
+		System.out.println(getMessage(msg));
 		if (e != null)
 			e.printStackTrace();
 	}
 
 	public void info(String msg) {
-		System.out.println(msg);
+		System.out.println(getMessage(msg));
+	}
+
+	public void info(String msg, Throwable e) {
+		System.out.println(getMessage(msg));
+		if (e != null)
+			e.printStackTrace();
 	}
 
 	public void warn(String msg) {
-		System.err.println(msg);
+		System.err.println(getMessage(msg));
 	}
 
 	public void warn(String msg, Throwable e) {
-		System.err.println(msg);
+		System.err.println(getMessage(msg));
 		if (e != null)
 			e.printStackTrace();
 	}
 
 	public void error(String msg) {
-		System.err.println(msg);
+		System.err.println(getMessage(msg));
 	}
 
 	public void error(String msg, Throwable e) {
-		System.err.println(msg);
+		System.err.println(getMessage(msg));
 		if (e != null)
 			e.printStackTrace();
 	}

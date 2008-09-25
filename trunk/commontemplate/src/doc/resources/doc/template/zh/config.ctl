@@ -117,8 +117,8 @@ rootDirectory=WEB-INF/views/
 modificationCheckInterval=30000
 
 # 模板运行日志输出端
-logger=org.commontemplate.standard.log.SimpleLogger()
-#logger=org.commontemplate.standard.log.CommonsLogging()
+loggerProvider=org.commontemplate.util.log.SimpleLoggerProvider()
+#loggerProvider=org.commontemplate.util.log.CommonsLoggingProvider()
 #<a href="extension.html#logger">扩展...</a>
 
 # 磁盘缓存目录，用于缓存模板编译结果

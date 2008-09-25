@@ -1,4 +1,4 @@
-package org.commontemplate.standard.log;
+package org.commontemplate.util.log;
 
 import java.io.Serializable;
 
@@ -17,7 +17,23 @@ public class CommonsLogging implements Logger, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final Log log = LogFactory.getLog(CommonsLogging.class);
+	private final Log log;
+
+	public CommonsLogging() {
+		 log = LogFactory.getLog(CommonsLogging.class);
+	}
+
+	public CommonsLogging(String logKey) {
+		this.log = LogFactory.getLog(logKey);
+	}
+
+	public CommonsLogging(Class logKeyClass) {
+		this.log = LogFactory.getLog(logKeyClass);
+	}
+
+	public CommonsLogging(Log log) {
+		this.log = log;
+	}
 
 	public void debug(String msg) {
 		log.debug(msg);
@@ -29,6 +45,10 @@ public class CommonsLogging implements Logger, Serializable {
 
 	public void info(String msg) {
 		log.info(msg);
+	}
+
+	public void info(String msg, Throwable e) {
+		log.info(msg, e);
 	}
 
 	public void warn(String msg) {

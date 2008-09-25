@@ -4,17 +4,21 @@ import java.util.Map.Entry;
 
 import org.commontemplate.core.Context;
 import org.commontemplate.standard.directive.DirectiveHandlerSupport;
-import org.commontemplate.standard.log.Logger;
 import org.commontemplate.util.Assert;
+import org.commontemplate.util.log.Logger;
+import org.commontemplate.util.log.LoggerFactory;
+import org.commontemplate.util.log.LoggerProvider;
 
 public class LogDirectiveHandler extends DirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	private Logger logger;
+	private Logger logger = LoggerFactory.getLogger(LogDirectiveHandler.class);
 
-	public void setLogger(Logger logger) {
-		this.logger = logger;
+	public void setLoggerProvider(LoggerProvider loggerProvider) {
+		if (loggerProvider != null) {
+			this.logger = loggerProvider.getLogger(LogDirectiveHandler.class.getName());
+		}
 	}
 
 	public void doRender(Context context, String directiveName, Object param) throws Exception {

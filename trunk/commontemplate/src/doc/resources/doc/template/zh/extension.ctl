@@ -316,15 +316,12 @@ $!
 								<a name="logger"/><b>20. 日志扩展</b><br/>
 								用于$log指令的输出.<br/>
 								相关接口：<br/>
-								org.commontemplate.standard.log.Logger<br/>
-								注册方法：<br/>
-								setLogger(Logger)<br/>
-								setCommonsLogging()<br/>
+								org.commontemplate.util.log.LoggerProvider<br/>
+								org.commontemplate.util.log.Logger<br/>
 								配置方法：<br/>
-								logger=org.commontemplate.standard.log.CommonsLogging()<br/>
+								loggerProvider=org.commontemplate.standard.log.CommonsLoggingProvider()<br/>
 								参考实现：<br/>
-								org.commontemplate.standard.log.Logger.DEFAULT<br/>
-								org.commontemplate.standard.log包下相关类<br/>
+								org.commontemplate.util.log包下相关类<br/>
 								<br/>
 								<a name="converter"/><b>21. 迭代数据集合转换器扩展</b><br/>
 								用于为"$for"指令提供迭代数据<br/>

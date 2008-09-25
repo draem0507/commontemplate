@@ -19,8 +19,6 @@ import org.commontemplate.config.TextFilter;
 import org.commontemplate.core.EventListener;
 import org.commontemplate.core.OutputFormatter;
 import org.commontemplate.core.ResourceLoader;
-import org.commontemplate.standard.i18n.ResourceBundleProvider;
-import org.commontemplate.standard.log.Logger;
 import org.commontemplate.standard.syntax.KeywordsSettings;
 import org.commontemplate.standard.syntax.SyntaxSettings;
 
@@ -192,21 +190,6 @@ public class ConfigurationSettings extends Configuration {
 		this.debug = debug;
 	}
 
-	private Logger logger;
-
-	public Logger getLogger() {
-		return logger;
-	}
-
-	/**
-	 * 设置日志记录端
-	 *
-	 * @param logger 日志记录端
-	 */
-	public void setLogger(Logger logger) {
-		this.logger = logger;
-	}
-
 	// 模板缓存 -------
 
 	private transient Cache templateCache;
@@ -236,37 +219,19 @@ public class ConfigurationSettings extends Configuration {
 
 	// 输出缓存 -------
 
-	private transient Cache outCache;
+	private transient Cache outputCache;
 
-	public Cache getOutCache() {
-		return outCache;
+	public Cache getOutputCache() {
+		return outputCache;
 	}
 
 	/**
 	 * 设置输出缓存策略
 	 *
-	 * @param outCache 输出缓存策略
+	 * @param outputCache 输出缓存策略
 	 */
-	public void setOutCache(Cache outCache) {
-		this.outCache = outCache;
-	}
-
-	// 国际化信息束工厂 -----
-
-	private ResourceBundleProvider resourceBundleProvider;
-
-	public ResourceBundleProvider getResourceBundleProvider() {
-		return resourceBundleProvider;
-	}
-
-	/**
-	 * 设置国际化信息包供给器
-	 *
-	 * @param resourceBundleProvider 国际化信息包供给器
-	 */
-	public void setResourceBundleProvider(
-			ResourceBundleProvider resourceBundleProvider) {
-		this.resourceBundleProvider = resourceBundleProvider;
+	public void setOutputCache(Cache outputCache) {
+		this.outputCache = outputCache;
 	}
 
 	// 模板加载器 --------

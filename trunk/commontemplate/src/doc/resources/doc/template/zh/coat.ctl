@@ -29,6 +29,7 @@ $end<br/>
 其它环境需配置：<br/>
 $code{properties}
 resourceFilters[100]=org.commontemplate.standard.coat.TagSyntaxCoatFilter()
+resourceFilters[100].syntaxSettings=$syntax
 resourceFilters[100].namespace=ct
 resourceFilters[100].expressionAttributeName=param
 $end<br/>
@@ -43,6 +44,8 @@ $end<br/>
 其它环境需配置：<br/>
 $code{properties}
 resourceFilters[200]=org.commontemplate.standard.coat.AttributeSyntaxCoatFilter()
+resourceFilters[200].syntaxSettings=$syntax
+resourceFilters[200].directiveHandlerProvider=$directiveHandlerProvider
 resourceFilters[200].namespace=ct
 $end<br/>
 <font color="green">(注：此语法外套使用ResourceFilter扩展点实现，在资源加载时使用jericho进行html解析，对不规则HTML语法的兼容性，以jericho的实现为准，转换时间消耗较大，需jericho.jar支持)</font><br/>
