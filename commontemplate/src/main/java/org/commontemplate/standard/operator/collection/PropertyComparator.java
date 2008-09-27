@@ -25,6 +25,7 @@ public class PropertyComparator implements Comparator, java.io.Serializable {
 	}
 
 	public static int compareProperty(Object o1, Object o2, String property) {
+		
 		try {
 			boolean isDesc = false;
 			if ('-' == property.charAt(0)) {
@@ -38,13 +39,20 @@ public class PropertyComparator implements Comparator, java.io.Serializable {
 			if (pro1 instanceof java.lang.Comparable) {
 				int comp = ((Comparable)pro1).compareTo(pro2);
 				if (isDesc)
-					return - comp;
-				return comp;
+					return - reset(comp);
+				return reset(comp);
 			}
 		} catch (Exception e) {
 			// Ignore, return 0;
 		}
-		return 0;
+		return reset(0);
+	}
+	
+	private static int reset(int comp) {
+		if(comp == 0) {
+			return 1;
+		}
+		return comp;
 	}
 
 }
