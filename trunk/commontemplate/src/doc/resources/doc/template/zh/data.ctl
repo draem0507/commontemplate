@@ -6,6 +6,7 @@
 								<br/>
 								<b>2. 标准数据格式:</b> <a href="extension.html#data">数据格式扩展...</a><br/>
 								<b>(1) XML数据格式:</b><br/>
+								XML规范地址：<a href="http://xml.w3c.org">http://xml.w3c.org</a><br/>
 								语法：&lt;object&gt;表示对象，&lt;array&gt;表示数组，name属性表示其名称。 注：根标签必需为&lt;object&gt;<br/>
 								举例：<br/>
 <!--$code{"xml"}--><?xml version="1.0" encoding="UTF-8" ?>
@@ -38,11 +39,13 @@
 								users.1.name=kent<br/>
 								<br/>
 								<b>(3) JSON数据格式:</b> <font color="green">(注：依赖于json.jar)</font><br/>
+								JSON项目地址：<a href="http://www.json.org">http://www.json.org</a><br/>
 								语法：大括号表示对象，冒号表示属性，方括号表示数组，逗号表示项，引号表示字符串。<br/>
 								举例：<br/>
 								{mail: {from: "xxx@xxx.com", to: "yyy@yyy.com"}, users: [{id: 1, name: "james"},{id: 2, name: "kent"}]}<br/>
 								<br/>
 								<b>(4) YAML数据格式:</b> <font color="green">(注：依赖于jyaml.jar)</font><br/>
+								YAML项目地址：<a href="http://www.yaml.org">http://www.yaml.org</a><br/>
 								语法：冒号表示对象属性，横线表示数组项，引号表示字符串。<br/>
 								举例：<br/>
 								mail:<br/>

@@ -13,7 +13,7 @@ import org.commontemplate.standard.operator.BinaryOperatorHandlerTester;
 public class ContainOperatorHandlerTester extends BinaryOperatorHandlerTester {
 
 	protected BinaryOperatorHandler newBinaryOperatorHandler() {
-		return new ContainOperatorHandler();
+		return new CollectionContainOperatorHandler();
 	}
 	
 	/**

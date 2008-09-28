@@ -1,4 +1,4 @@
-package org.commontemplate.standard.operator.collection;
+package org.commontemplate.standard.operator.array;
 
 import org.commontemplate.config.BinaryOperatorHandler;
 import org.commontemplate.standard.operator.array.ArrayGetterOperatorHandler;

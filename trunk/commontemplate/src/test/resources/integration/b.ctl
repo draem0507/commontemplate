@@ -1,2 +1,1 @@
-bb
-$embed{"a.ctl"}
+${super.super.template.name}

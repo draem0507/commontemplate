@@ -116,10 +116,14 @@ rootDirectory=WEB-INF/views/
 # 默认为30秒(30000mm)，调试时可设成1秒(1000mm)
 modificationCheckInterval=30000
 
-# 模板运行日志输出端
-loggerProvider=org.commontemplate.util.log.SimpleLoggerProvider()
-#loggerProvider=org.commontemplate.util.log.CommonsLoggingProvider()
-#<a href="extension.html#logger">扩展...</a>
+# 模板运行日志输出端(可扩展)
+loggerProvider=org.commontemplate.util.log.CommonsLoggerProvider()
+#loggerProvider=org.commontemplate.util.log.Log4jLoggerProvider()
+#loggerProvider=org.commontemplate.util.log.AvalonLoggerProvider()
+#loggerProvider=org.commontemplate.util.log.Slf4jLoggerProvider()
+#loggerProvider=org.commontemplate.util.log.JdkLoggerProvider()
+#loggerProvider=org.commontemplate.util.log.SimpleLoggerProvider()
+#loggerProvider=org.commontemplate.util.log.NoneLoggerProvider()
 
 # 磁盘缓存目录，用于缓存模板编译结果
 diskCache.directory=WEB-INF/cache/
@@ -130,18 +134,17 @@ diskCache.filePrefix=
 # 缓存文件后缀
 diskCache.fileSuffix=.template
 
-# 内存缓存策略，OSCache, EHCache需要另外的配置
+# 内存缓存策略，OSCache, EHCache需要另外的配置(可扩展)
 memoryCache=org.commontemplate.standard.cache.LruCache()
 #memoryCache=org.commontemplate.standard.cache.MruCache()
 #memoryCache=org.commontemplate.standard.cache.FifoCache()
-#memoryCache=org.commontemplate.standard.cache.NoneCache()
 #memoryCache=org.commontemplate.standard.cache.WeakCache()
 #memoryCache=org.commontemplate.standard.cache.SoftCache()
 #memoryCache=org.commontemplate.standard.cache.StrongCache()
 #memoryCache=org.commontemplate.standard.cache.OSCache()
 #memoryCache=org.commontemplate.standard.cache.EHCache()
 #memoryCache=org.commontemplate.standard.cache.JCache()
-#<a href="extension.html#cache">扩展...</a>
+#memoryCache=org.commontemplate.standard.cache.NoneCache()
 
 # 内存缓存容量，用于：LruCache, MruCache, FifoCache
 memoryCache.maxSize=1000
@@ -167,16 +170,6 @@ $!
 								diskCache.rootDirectory=<font color="#2a00ff">C:/xxx/</font><br/>
 								<b>(4)</b> 默认是开启(非void函数)函数调用的，若需要禁止所有函数调用，可以设置：<br/>
 								functionAvailable=<font color="#2a00ff">false</font><br/>
-								<b>(5)</b> 使用CommonsLogging/Log4J作为日志输出端，可以设置：<br/>
-								logger=<font color="#2a00ff">org.commontemplate.standard.log.CommonsLogging()</font><br/>
-								当然，你可能还需要配置commons-logging.properties:<br/>
-								logger=<font color="#2a00ff">org.apache.commons.logging.impl.Log4JLogger</font><br/>
-								以及配置log4j.properties:<br/>
-								log4j.rootLogger=<font color="#2a00ff">DEBUG,stdout</font><br/>
-								log4j.appender.stdout=<font color="#2a00ff">org.apache.log4j.ConsoleAppender</font><br/>
-								log4j.appender.stdout.layout=<font color="#2a00ff">org.apache.log4j.PatternLayout</font><br/>
-								log4j.appender.stdout.layout.ConversionPattern=<font color="#2a00ff">%-5p [%d] %C - %m\n</font><br/>
-								log4j.logger.CommonTemplate=<font color="#2a00ff">DEBUG</font><br/>
 								<br/>
 								<b>二. Spring 配置</b><br/>
 								使用SpringIoC容器组装配置，需spring.jar支持。<br/>

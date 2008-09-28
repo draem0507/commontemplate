@@ -1,22 +1,23 @@
 非标准起始文字
 some text
+<!-- 注释块 -->
 <html>
-	$if{yy}<input type="text">$end{if}
+	$if{yy}<input type="text" >$end{if}
 	<something>
 	asdfasdf;<"&<,>&lt;&gt;
-
+	<!-- 注释块 -->
     <body>
-        $if{users != null && users.size> 0}$for{xx}<table border="1">
-            $for{user : users}<tr>
-                <td>$out{for.index + 1}<span>1</span>$end{out}</td>
-                <td>$out{user.name}<span>james</span>$end{out}</td>
-                <td>$out{user.coins}<span>2.00</span>$end{out}</td>
+        $if{users != null && users.size> 0}$for{xx}<table   border="1">
+            $for{user : users}<tr >
+                <td>$if{for.index > 0}$out{for.index + 1}$end{if}</td>
+                <td>$out{user.name}</td>
+                <td>$out{user.coins}</td>
             </tr>$end{for}
-        </table>$end{if}$end{for}
+        </table>$end{for}$end{if}
     </body>
 </html>
-$if{xx}<tag>
-	$if{yy}<tag/>$end{if}
+$if{xx}<tag >
+	$if{yy}<tag />$end{if}
 </tag>$end{if}
 some text
 非标准结束

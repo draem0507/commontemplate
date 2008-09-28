@@ -1,4 +1,4 @@
-package org.commontemplate.standard.operator.collection;
+package org.commontemplate.standard.operator.array;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -53,7 +53,6 @@ $!
 								表达式结果输出: <font color="green">(注：指令名称为空的指令)</font><br/>
 								${user.name}<br/>
 								${user.coins + 100}<br/>
-								 <font color="red">(注：0.8.7版本使用$output代替原有$out指令，$out指令改为与${}空名称指令等价，原语法外套的使用受影响)</font><br/>
 								$out{user.name} 等价于 ${user.name} <font color="green">(注：用于指令名不能为空的语法外套中)</font><br/>
 								表达式结果输出块指令：忽略指令内部块内容 <font color="green">(注：用于语法外套)</font><br/>
 								$output{user.name} James $end<br/>
@@ -361,14 +360,7 @@ $!
 								$. <font color="green">(注: 指令名称为点号的指令)</font><br/>
 								$breakpoint 等价于 $. <font color="green">(注: 用于指令名不能为特殊符的语法外套中)</font><br/>
 								<br/>
-								<b>五. 变量区间:</b><br/>
-								页面内的每一个块指令(如$if,$for等)都会创建相应的LocalContext, 变量取值时逐级向上查找, <br/>
-								如果当前LocalContext中的变量与上级变量重名，可以使用super关键字跳到上级取值，如：${super.var}<br/>
-								Web应用中变量查找顺序：页面内, root, model, request, parameter, header, session, cookie, application, global<br/>
-								可以用context["区域名"]在指定范围内查找，如：${context["session"].loginUser}<br/>
-								另外，也可以用context["指令名"]查找最近的某个块指令区域内的变量，如：${context["for"].xxx} ${context["if"].xxx}<br/>
-								<br/>
-								<b>六. 举例:</b> <a href="coat.html">语法外套说明...</a><br/>
+								<b>五. 举例:</b> <a href="coat.html">语法外套说明...</a><br/>
 !$
 								<b>(1) HTML页面生成：</b> <font color="green">(注：WEB环境下表达式支持："&amp;lt;"等价于"&lt;"，"&amp;gt;"等价于"&gt;"，包括："-&amp;gt;"等价于"-&gt;")</font><br/>
 $code{html}$!<html>
@@ -408,7 +400,7 @@ public class ${entity.name} extends BaseEntity {
 !$$end
 $!
 								<br/>
-								<b>七. 遗留：</b> <font color="green">(注: 将在1.0版本统一删除)</font><br/>
+								<b>六. 遗留：</b> <font color="green">(注: 将在1.0版本统一删除)</font><br/>
 								(1) $local<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.8.3加入，0.8.5废弃<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>与$var功能重复，并且不能像$global一样达到简化作用<br/>
@@ -434,7 +426,7 @@ $!
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>语法规则不统一，比$指令名{参数名}方式并不简化多少，而且存在与字母内容无法分隔的问题<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">替代方案：</font>名称定义性指令(如：$block, $macro, $zone等)参数名引号可省，如：$指令名{参数名} 等价于 $指令名{"参数名"}<br/>
 								<br/>
-								<b>八. 不兼容：</b> <font color="green">(注: 升级版本请注意)</font><br/>
+								<b>七. 不兼容：</b> <font color="green">(注: 升级版本请注意)</font><br/>
 								(1) 0.8.5版本使用$using代替原有$import指令，$import指令重新实现<br/>
 								(2) 0.8.5版本宏指令块调用默认后缀由"_block"改为".block"，可配置.<br/>
 								(3) 0.8.7版本使用$output代替原有$out指令，$out指令改为与${}空名称指令等价<br/>

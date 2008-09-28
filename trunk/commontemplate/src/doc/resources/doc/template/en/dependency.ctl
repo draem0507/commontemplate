@@ -7,7 +7,7 @@ $!
 								(3). org.commontemplate.tools.web.webwork.TemplateResult depend on webwork.jar and xwork.jar<br/>
 								(4). org.commontemplate.tools.web.struts2.TemplateResult depend on struts2.jar and xwork2.jar<br/>
 								<b>2. standard package:</b><br/>
-								(1). org.commontemplate.util.log.CommonsLogging and CommonsLoggingProvider depend on commons-logging.jar<br/>
+								(1). org.commontemplate.util.log.CommonsLogger and CommonsLoggerProvider depend on commons-logging.jar<br/>
 								(3). org.commontemplate.standard.cache.EHCache depend on ehcache.jar<br/>
 								(4). org.commontemplate.standard.cache.OSCache depend on oscache.jar<br/>
 								(5). org.commontemplate.standard.coat.attribute.jericho.JerichoAttributeCoatFilter depend on jericho.jar<br/>
