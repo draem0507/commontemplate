@@ -21,7 +21,7 @@ public class MacroImporter implements Serializable {
 	public void importMacro(Context context, String namespace, String templateName) throws Exception {
 		if (namespace != null && namespaceSeparator != null)
 			namespace = namespace + namespaceSeparator;
-		Template template = context.getTemplate(templateName);
+		Template template = context.getTemplateLoader().getTemplate(templateName);
 		Context newContext = context.createContext();
 		try {
 			newContext.setOutputFilter(IgnoreOutputFilter.getInstance());

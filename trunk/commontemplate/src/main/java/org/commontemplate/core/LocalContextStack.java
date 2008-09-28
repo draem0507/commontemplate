@@ -1,6 +1,6 @@
 package org.commontemplate.core;
 
-import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -76,16 +76,9 @@ public interface LocalContextStack {
 	/**
 	 * 查看局部上下文栈值
 	 *
-	 * @return LocalContext栈值, 类型: Iterator&lt;LocalContext&gt;
+	 * @return LocalContext栈值, 类型: List&lt;LocalContext&gt;
 	 */
-	public Iterator getLocalContextStackValues();
-
-	/**
-	 * 获取上下文栈大小
-	 *
-	 * @return 上下文栈大小
-	 */
-	public int getLocalContextStackSize();
+	public List getLocalContextStackValues();
 
 	/**
 	 * 清空所有局部上下文

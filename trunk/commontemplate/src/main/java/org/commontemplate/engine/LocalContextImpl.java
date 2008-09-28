@@ -31,13 +31,13 @@ final class LocalContextImpl extends LocalContext {
 	private final String localContextName;
 
 	LocalContextImpl(LocalContext parentLocalContext,
-			String localContextName, Map variablesContainer, Context context, Writer out, Keywords keywords) {
+			String localContextName, Map variablesContainer, Context context, Writer out, Keywords keywords, Map scopeHandlers) {
 		Assert.assertNotNull(context);
 		Assert.assertNotNull(keywords);
 
 		this.parentLocalContext = parentLocalContext;
 		this.localContextName = localContextName;
-		variableStorage = new LocalVariableStorageImpl(parentLocalContext, variablesContainer, context, keywords);
+		variableStorage = new LocalVariableStorageImpl(parentLocalContext, variablesContainer, context, keywords, scopeHandlers);
 		statusStorage = new LocalStatusStorageImpl(context);
 		propertyStorage = new LocalPropertyStorageImpl(parentLocalContext, context);
 		outputController = new OutputControllerImpl(parentLocalContext, context, out);

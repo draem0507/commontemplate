@@ -1,5 +1,6 @@
 package org.commontemplate.standard.operator.array;
 
+import java.lang.reflect.Array;
 import java.util.Map.Entry;
 
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
@@ -17,16 +18,17 @@ public class ArraySelectorOperatorHandler extends BinaryOperatorHandlerSupport {
 	private static final long serialVersionUID = 1L;
 
 	public ArraySelectorOperatorHandler() {
-		super(Object[].class, Entry.class);
+		super(new Class[]{boolean[].class, char[].class, byte[].class,
+				short[].class, int[].class, long[].class,
+				float[].class, double[].class, Object[].class}, new Class[]{Entry.class});
 	}
 
 	public Object doEvaluate(Object leftOperand, Object rightOperand) throws Exception {
-		Object[] array = (Object[])leftOperand;
 		Entry entry = (Entry)rightOperand;
 		String peoperty = (String)entry.getKey();
 		Object value = entry.getValue();
-		for (int i = 0, n = array.length; i < n; i ++) {
-			Object obj = array[i];
+		for (int i = 0, n = Array.getLength(leftOperand); i < n; i ++) {
+			Object obj = Array.get(leftOperand, i);
 			try {
 				Object pro = BeanUtils.getProperty(obj, peoperty);
 				if ((value == null && pro == null) ||

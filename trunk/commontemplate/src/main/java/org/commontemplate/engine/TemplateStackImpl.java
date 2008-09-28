@@ -2,6 +2,7 @@ package org.commontemplate.engine;
 
 import java.io.Serializable;
 import java.util.Iterator;
+import java.util.List;
 
 import org.commontemplate.config.TemplateNameFilter;
 import org.commontemplate.core.EventPublisher;
@@ -32,45 +33,37 @@ final class TemplateStackImpl implements TemplateStack, Serializable {
 		this.templateNameFilter = templateNameFilter;
 	}
 
-	private final Stack templateNameStack = new LinkedStack();
+	private final Stack stack = new LinkedStack();
 
 	public Template getCurrentTemplate() {
-		if (templateNameStack.isEmpty())
+		if (stack.isEmpty())
 			return null;
-		return (Template)templateNameStack.peek();
+		return (Template)stack.peek();
 	}
 
 	public void pushTemplate(Template template) {
 		Template old = getCurrentTemplate();
-		templateNameStack.push(template);
+		stack.push(template);
 		eventPublisher.publishEvent(new TemplatePushedEvent(this, old, template));
 	}
 
 	public void popTemplate() {
-		Template old = (Template)templateNameStack.pop();
-		eventPublisher.publishEvent(new TemplatePopedEvent(this, old, getCurrentTemplate()));
+		if (! stack.isEmpty()) {
+			Template old = (Template)stack.pop();
+			eventPublisher.publishEvent(new TemplatePopedEvent(this, old, getCurrentTemplate()));
+		}
 	}
 
 	public int getTemplateStackSize() {
-		return templateNameStack.size();
+		return stack.size();
 	}
 
-	public Iterator getTemplateStackValues() {
-		return templateNameStack.iterator();
+	public List getTemplateStackValues() {
+		return stack.list();
 	}
 
 	public void clearTemplates() {
-		templateNameStack.clear();
-	}
-
-	public boolean containsTemplate(String name) {
-		for (Iterator iterator =  templateNameStack.iterator(); iterator.hasNext();) {
-			Template template = (Template)iterator.next();
-			if (template != null
-					&& name.equals(template.getName()))
-				return true;
-		}
-		return false;
+		stack.clear();
 	}
 
 	public String relateTemplateName(String name) {
@@ -83,14 +76,15 @@ final class TemplateStackImpl implements TemplateStack, Serializable {
 
 	public Template findTemplate(String name) {
 		Assert.assertNotEmpty(name, "不能查找空的模板名称!");
-
 		Template result = null;
 		// 因LinkedStack使用LinkedList, 从头开始迭代快于倒序get()
-		for (Iterator iterator = templateNameStack.iterator(); iterator.hasNext();) {
+		for (Iterator iterator = stack.iterator(); iterator.hasNext();) {
 			Template template = (Template)iterator.next();
 			if (template != null
-					&& name.equals(template.getName()))
+					&& name.equals(template.getName())) {
 				result = template;
+				break;
+			}
 		}
 		return result;
 	}

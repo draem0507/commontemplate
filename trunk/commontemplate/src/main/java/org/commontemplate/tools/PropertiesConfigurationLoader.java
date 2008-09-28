@@ -114,7 +114,7 @@ public final class PropertiesConfigurationLoader {
 	/**
 	 * 标准表达式配置路径
 	 */
-	public static final String STANDARD_EXPRESSION_CONFIG_PATH = "org/commontemplate/tools/commontemplate-expression.properties";
+	public static final String STANDARD_EXPRESSION_CONFIG_PATH = "org/commontemplate/tools/commonexpression.properties";
 
 	/**
 	 * 载入标准表达式配置

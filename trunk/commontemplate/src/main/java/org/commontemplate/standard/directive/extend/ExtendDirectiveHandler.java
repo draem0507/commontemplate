@@ -32,7 +32,7 @@ public class ExtendDirectiveHandler extends BlockDirectiveHandlerSupport {
 		}
 		context.putProperty(EXTEND_INNER_PROPERTY, Boolean.FALSE);
 		try {
-			context.getTemplate((String)param).render(context);
+			context.getTemplateLoader().getTemplate((String)param).render(context);
 		} finally {
 			context.removeProperty(EXTEND_INNER_PROPERTY);
 		}

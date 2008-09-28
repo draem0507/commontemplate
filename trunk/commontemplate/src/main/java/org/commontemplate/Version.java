@@ -7,14 +7,16 @@ import java.util.Properties;
 
 /**
  * 当前模板引擎的版本
- * 
+ *
  * @author liangfei0201@163.com
- * 
+ *
  */
 public final class Version {
-	
+
+	// TODO 待加入模板语言版本
+
 	private Version(){}
-	
+
 	private static void assertVersionNumber(String version) {
 		if (version == null)
 			throw new NullPointerException("版本号为空");
@@ -24,7 +26,7 @@ public final class Version {
 
 	/**
 	 * 版本比较
-	 * 
+	 *
 	 * @param v1 版本1
 	 * @param v2 版本2
 	 * @return 版本间差值. 等于0表示版本相同, 大于0表示v1比v2新, 大于0表示v1比v2旧
@@ -44,15 +46,15 @@ public final class Version {
 				s2 = Integer.parseInt(vs2[i]);
 			if (s1 > s2)
 				return 1;
-			else if (s1 < s2) 
+			else if (s1 < s2)
 				return -1;
 		}
 		return 0;
 	}
-	
+
 	/**
 	 * 将当前版本与其它版本比较
-	 * 
+	 *
 	 * @param otherVersion 其它版本
 	 * @return 版本间差值. 等于0表示版本相同, 大于0表示当前版本新, 大于0表示当前版本旧
 	 */
@@ -62,7 +64,7 @@ public final class Version {
 
 	/**
 	 * 获取当前模板引擎的版本号
-	 * 
+	 *
 	 * @return 版本号, 未知时返回null
 	 */
 	public static String getVersion() {
@@ -80,10 +82,10 @@ public final class Version {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * 获取当前版本发行日期
-	 * 
+	 *
 	 * @return 发行日期, 未知时返回null
 	 */
 	public static Date getReleased() {
@@ -100,7 +102,7 @@ public final class Version {
 
 	/**
 	 * 获取发行者信息
-	 * 
+	 *
 	 * @return 发行者信息, 未知时返回null
 	 */
 	public static String getVendor() {

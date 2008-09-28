@@ -2,6 +2,7 @@ package org.commontemplate.util;
 
 import java.io.Serializable;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * 同步栈
@@ -56,6 +57,10 @@ public class SynchronizationStack implements Stack, Serializable {
 
 	public int size() {
 		return targetStack.size();
+	}
+
+	public List list() {
+		return targetStack.list();
 	}
 
 }

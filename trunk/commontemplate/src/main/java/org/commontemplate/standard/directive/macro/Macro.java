@@ -45,10 +45,12 @@ public final class Macro {
 	public void render(Context context, Object param, List innerElements) throws RenderingException {
 		Map variables = ParameterUtils.getParameters(param);
 		context.pushLocalContext(variables);
-		context.putProperty(InnerDirectiveHandler.INNER_BLOCK, innerElements);
-		if (namespace != null)
-			context.putProperty(NAMESPACE_TYPE, namespace);
+		Object obj = context.getVariable("name");
+		System.out.println(obj);
 		try {
+			context.putProperty(InnerDirectiveHandler.INNER_BLOCK, innerElements);
+			if (namespace != null)
+				context.putProperty(NAMESPACE_TYPE, namespace);
 			DirectiveUtils.renderAll(elements, context);
 		} catch (ReturnException e) {
 			// ignore

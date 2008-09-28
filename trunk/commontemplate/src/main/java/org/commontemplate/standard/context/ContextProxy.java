@@ -2,33 +2,23 @@ package org.commontemplate.standard.context;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.Iterator;
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.TimeZone;
 
-import org.commontemplate.core.BinaryOperator;
-import org.commontemplate.core.BlockDirective;
-import org.commontemplate.core.Comment;
-import org.commontemplate.core.Constant;
 import org.commontemplate.core.Context;
-import org.commontemplate.core.Directive;
+import org.commontemplate.core.Element;
 import org.commontemplate.core.Event;
 import org.commontemplate.core.EventListener;
-import org.commontemplate.core.Expression;
-import org.commontemplate.core.ExpressionBuilder;
 import org.commontemplate.core.GlobalContext;
 import org.commontemplate.core.LocalContext;
 import org.commontemplate.core.OutputFilter;
 import org.commontemplate.core.OutputFormatter;
-import org.commontemplate.core.ParsingException;
-import org.commontemplate.core.Resource;
 import org.commontemplate.core.Template;
-import org.commontemplate.core.TemplateBudiler;
-import org.commontemplate.core.Text;
-import org.commontemplate.core.UnaryOperator;
-import org.commontemplate.core.Variable;
+import org.commontemplate.core.TemplateLoader;
 import org.commontemplate.core.VariableException;
 
 /**
@@ -41,28 +31,8 @@ public abstract class ContextProxy extends Context {
 
 	protected final Context context;
 
-	public Resource getResource(String name, Locale locale, String encoding)
-			throws IOException {
-		return context.getResource(name, locale, encoding);
-	}
-
-	public Resource getResource(String name, Locale locale) throws IOException {
-		return context.getResource(name, locale);
-	}
-
-	public Map getProperties() {
-		return context.getProperties();
-	}
-
-	public Map getStatuses() {
-		return context.getStatuses();
-	}
-
-	public Map getProperties(String type) {
-		return context.getProperties(type);
-	}
-
 	public ContextProxy(Context context) {
+		super();
 		this.context = context;
 	}
 
@@ -111,12 +81,24 @@ public abstract class ContextProxy extends Context {
 		context.clearVariables();
 	}
 
-	public boolean containsTemplate(String name) {
-		return context.containsTemplate(name);
+	public boolean containsKey(Object key) {
+		return context.containsKey(key);
+	}
+
+	public boolean containsValue(Object value) {
+		return context.containsValue(value);
 	}
 
 	public Context createContext() {
 		return context.createContext();
+	}
+
+	public Context createContext(Writer out) {
+		return context.createContext(out);
+	}
+
+	public Set entrySet() {
+		return context.entrySet();
 	}
 
 	public boolean equals(Object obj) {
@@ -133,6 +115,10 @@ public abstract class ContextProxy extends Context {
 
 	public String format(Object content) {
 		return context.format(content);
+	}
+
+	public Object get(Object key) {
+		return context.get(key);
 	}
 
 	public boolean getBooleanStatus(String name) {
@@ -163,7 +149,7 @@ public abstract class ContextProxy extends Context {
 		return context.getLocalContextName();
 	}
 
-	public Iterator getLocalContextStackValues() {
+	public List getLocalContextStackValues() {
 		return context.getLocalContextStackValues();
 	}
 
@@ -183,6 +169,22 @@ public abstract class ContextProxy extends Context {
 		return context.getOutputFormatter(type);
 	}
 
+	public LocalContext getParentLocalContext() {
+		return context.getParentLocalContext();
+	}
+
+	public Map getProperties() {
+		return context.getProperties();
+	}
+
+	public Map getProperties(String type) {
+		return context.getProperties(type);
+	}
+
+	public Object getProperty(String type, String name) {
+		return context.getProperty(type, name);
+	}
+
 	public Object getProperty(String name) {
 		return context.getProperty(name);
 	}
@@ -195,21 +197,15 @@ public abstract class ContextProxy extends Context {
 		return context.getStatus(name);
 	}
 
-	public LocalContext getParentLocalContext() {
-		return context.getParentLocalContext();
+	public Map getStatuses() {
+		return context.getStatuses();
 	}
 
-	public Template getTemplate(String name, String encoding)
-			throws IOException, ParsingException {
-		return context.getTemplate(name, encoding);
+	public TemplateLoader getTemplateLoader() {
+		return context.getTemplateLoader();
 	}
 
-	public Template getTemplate(String name) throws IOException,
-			ParsingException {
-		return context.getTemplate(name);
-	}
-
-	public Iterator getTemplateStackValues() {
+	public List getTemplateStackValues() {
 		return context.getTemplateStackValues();
 	}
 
@@ -233,6 +229,10 @@ public abstract class ContextProxy extends Context {
 		return context.isDebug();
 	}
 
+	public boolean isEmpty() {
+		return context.isEmpty();
+	}
+
 	public boolean isVariableContained(String name) throws VariableException {
 		return context.isVariableContained(name);
 	}
@@ -245,39 +245,16 @@ public abstract class ContextProxy extends Context {
 		return context.isVariablesLocked();
 	}
 
-	public Resource getResource(String name, String encoding)
-			throws IOException {
-		return context.getResource(name, encoding);
-	}
-
-	public Resource getResource(String name) throws IOException {
-		return context.getResource(name);
+	public Set keySet() {
+		return context.keySet();
 	}
 
 	public void lockVariables() {
 		context.lockVariables();
 	}
 
-	public Object getProperty(String type, String name) {
-		return context.getProperty(type, name);
-	}
-
 	public void output(Object content) throws IOException {
 		context.output(content);
-	}
-
-	public Expression parseExpression(String expression)
-			throws ParsingException {
-		return context.parseExpression(expression);
-	}
-
-	public Template parseTemplate(Resource resource) throws ParsingException,
-			IOException {
-		return context.parseTemplate(resource);
-	}
-
-	public Template parseTemplate(String template) throws ParsingException {
-		return context.parseTemplate(template);
 	}
 
 	public void popLocalContext() {
@@ -310,6 +287,10 @@ public abstract class ContextProxy extends Context {
 
 	public void pushTemplate(Template template) {
 		context.pushTemplate(template);
+	}
+
+	public Object put(Object key, Object value) {
+		return context.put(key, value);
 	}
 
 	public void put(String key, boolean value) {
@@ -379,6 +360,10 @@ public abstract class ContextProxy extends Context {
 
 	public String relateTemplateName(String name) {
 		return context.relateTemplateName(name);
+	}
+
+	public Object remove(Object key) {
+		return context.remove(key);
 	}
 
 	public void removeEventListener(EventListener listener) {
@@ -457,6 +442,10 @@ public abstract class ContextProxy extends Context {
 		context.setVariable(name, value);
 	}
 
+	public int size() {
+		return context.size();
+	}
+
 	public String toString() {
 		return context.toString();
 	}
@@ -465,74 +454,32 @@ public abstract class ContextProxy extends Context {
 		context.unlockVariables();
 	}
 
-	public BinaryOperator createBinaryOperator(String operatorName,
-			Expression leftOprand, Expression rightOprand) {
-		return context.createBinaryOperator(operatorName, leftOprand,
-				rightOprand);
+	public Collection values() {
+		return context.values();
 	}
 
-	public BlockDirective createBlockDirective(String name,
-			Expression expression, List elements) {
-		return context.createBlockDirective(name, expression, elements);
+	public void clearElements() {
+		context.clearElements();
 	}
 
-	public Comment createComment(String comment) {
-		return context.createComment(comment);
+	public Element findElement(String name) {
+		return context.findElement(name);
 	}
 
-	public Constant createConstant(Object constantValue) {
-		return context.createConstant(constantValue);
+	public Element getCurrentElement() {
+		return context.getCurrentElement();
 	}
 
-	public Directive createDirective(String name, Expression expression) {
-		return context.createDirective(name, expression);
+	public List getElementStackValues() {
+		return context.getElementStackValues();
 	}
 
-	public Text createText(String text) {
-		return context.createText(text);
+	public void popElement() {
+		context.popElement();
 	}
 
-	public UnaryOperator createUnaryOperator(String operatorName,
-			Expression oprand) {
-		return context.createUnaryOperator(operatorName, oprand);
-	}
-
-	public Variable createVariable(String variableName) {
-		return context.createVariable(variableName);
-	}
-
-	public ExpressionBuilder createExpressionBuilder() {
-		return context.createExpressionBuilder();
-	}
-
-	public TemplateBudiler createTemplateBudiler() {
-		return context.createTemplateBudiler();
-	}
-
-	public Template createTemplate(String name, List elements) {
-		return context.createTemplate(name, elements);
-	}
-
-	public Context createContext(Writer out) {
-		return context.createContext(out);
-	}
-
-	public int getLocalContextStackSize() {
-		return context.getLocalContextStackSize();
-	}
-
-	public int getTemplateStackSize() {
-		return context.getTemplateStackSize();
-	}
-
-	public Template getTemplate(String name, Locale locale, String encoding)
-			throws IOException, ParsingException {
-		return context.getTemplate(name, locale, encoding);
-	}
-
-	public Template getTemplate(String name, Locale locale) throws IOException,
-			ParsingException {
-		return context.getTemplate(name, locale);
+	public void pushElement(Element element) {
+		context.pushElement(element);
 	}
 
 }

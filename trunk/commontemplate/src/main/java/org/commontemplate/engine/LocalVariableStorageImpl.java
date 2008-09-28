@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.commontemplate.config.Keywords;
+import org.commontemplate.config.ScopeHandler;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.GlobalContext;
 import org.commontemplate.core.LocalContext;
@@ -35,6 +36,8 @@ final class LocalVariableStorageImpl extends VariableStorageSupport {
 	// 全局上下文, 不为空
 	private final GlobalContext globalContext;
 
+	private final Map scopeHandlers;
+
 	// 变量容器, 不为空
 	private final Map variablesContainer;
 
@@ -47,10 +50,11 @@ final class LocalVariableStorageImpl extends VariableStorageSupport {
 	// 变量容器只读锁
 	private boolean lock = false;
 
-	LocalVariableStorageImpl(LocalContext superLocalContext, Map variablesContainer, Context context, Keywords keywords) {
+	LocalVariableStorageImpl(LocalContext superLocalContext, Map variablesContainer, Context context, Keywords keywords, Map scopeHandlers) {
 		super(keywords);
 		this.superLocalContext = superLocalContext;
 		this.context = context;
+		this.scopeHandlers = scopeHandlers;
 		Assert.assertNotNull(this.context);
 		this.globalContext = context.getGlobalContext();
 		Assert.assertNotNull(this.globalContext);
@@ -151,15 +155,24 @@ final class LocalVariableStorageImpl extends VariableStorageSupport {
 	}
 
 	public Object getVariable(String name) throws VariableException {
-		if (keywords.getParentLocalContextKeyword().equals(name)) {
-			if (superLocalContext != null)
-				return superLocalContext;
-			else
-				return globalContext;
-		}
-		if (keywords.getContextKeyword().equals(name))
-			return context;
+		if (keywords.getParentKeyword().equals(name))
+			return new Scope(scopeHandlers, keywords, context, 1);
+		if (keywords.getCurrentKeyword().equals(name))
+			return new Scope(scopeHandlers, keywords, context, 0);
 		assertVariableName(name);
+		Object obj = _getVariable(name);
+		if (obj == null) {
+			if (scopeHandlers != null) {
+				ScopeHandler scopeHandler = (ScopeHandler)scopeHandlers.get(name);
+				if (scopeHandler != null) {
+					return scopeHandler.getScopeVariable(context, 0);
+				}
+			}
+		}
+		return obj;
+	}
+
+	private Object _getVariable(String name) throws VariableException {
 		if (variablesContainer.containsKey(name)) {
 			return variablesContainer.get(name);
 		} else if (aliasContainer.containsKey(name)) {

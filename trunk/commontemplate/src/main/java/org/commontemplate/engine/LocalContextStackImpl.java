@@ -3,6 +3,7 @@ package org.commontemplate.engine;
 import java.io.Serializable;
 import java.io.Writer;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.commontemplate.config.Keywords;
@@ -33,17 +34,20 @@ final class LocalContextStackImpl implements LocalContextStack, Serializable {
 
 	private final Context context;
 
-	LocalContextStackImpl(Writer out, OutputFormatter defaultFormater, EventPublisher eventPublisher, Context context, Keywords keywords) {
+	private final Map scopeHandlers;
+
+	LocalContextStackImpl(Writer out, OutputFormatter defaultFormater, EventPublisher eventPublisher, Context context, Keywords keywords, Map scopeHandlers) {
 		this.keywords = keywords;
 		this.out = out;
 		this.context = context;
+		this.scopeHandlers = scopeHandlers;
 		this.eventPublisher = eventPublisher;
-		this.rootLocalContext = new LocalContextImpl(null, ROOT_LOCAL_CONTEXT_NAME, null, context, out, keywords);
+		this.rootLocalContext = new LocalContextImpl(null, ROOT_LOCAL_CONTEXT_NAME, null, context, out, keywords, scopeHandlers);
 		this.rootLocalContext.setGeneralOutputFormatter(defaultFormater);
-		this.localContextStack.push(this.rootLocalContext);
+		this.stack.push(this.rootLocalContext);
 	}
 
-	private final Stack localContextStack = new LinkedStack();
+	private final Stack stack = new LinkedStack();
 
 	private final LocalContext rootLocalContext;
 
@@ -67,32 +71,34 @@ final class LocalContextStackImpl implements LocalContextStack, Serializable {
 
 	public void pushLocalContext(String name, Map variablesContainer) {
 		LocalContext previous = getCurrentLocalContext();
-		LocalContext localContext = new LocalContextImpl(previous, name, variablesContainer, context, out, keywords);
-		localContextStack.push(localContext);
+		LocalContext localContext = new LocalContextImpl(previous, name, variablesContainer, context, out, keywords, scopeHandlers);
+		stack.push(localContext);
 		eventPublisher.publishEvent(new LocalContextPushedEvent(this, previous, localContext));
 	}
 
 	public void popLocalContext() {
-		LocalContext previous = (LocalContext)localContextStack.pop();
-		try {
-			eventPublisher.publishEvent(new LocalContextPopedEvent(this, previous, getCurrentLocalContext()));
-		} finally {
-			previous.clear();
+		if (! stack.isEmpty()) {
+			LocalContext previous = (LocalContext)stack.pop();
+			try {
+				eventPublisher.publishEvent(new LocalContextPopedEvent(this, previous, getCurrentLocalContext()));
+			} finally {
+				previous.clear();
+			}
 		}
 	}
 
 	public LocalContext getCurrentLocalContext() {
-		if (localContextStack.isEmpty())
+		if (stack.isEmpty())
 			return rootLocalContext;
-		return (LocalContext)localContextStack.peek();
+		return (LocalContext)stack.peek();
 	}
 
 	public LocalContext findLocalContext(String name) {
 		Assert.assertNotEmpty(name, "LocalContextStackImpl.context.name.required");
 		LocalContext result = null;
 		// 因LinkedStack使用LinkedList, 从头开始迭代快于倒序get()
-		if (! localContextStack.isEmpty()) {
-			for (Iterator iterator = localContextStack.iterator(); iterator.hasNext();) {
+		if (! stack.isEmpty()) {
+			for (Iterator iterator = stack.iterator(); iterator.hasNext();) {
 				LocalContext localContext = (LocalContext)iterator.next();
 				if (localContext != null
 						&& name.equals(localContext.getLocalContextName()))
@@ -102,18 +108,18 @@ final class LocalContextStackImpl implements LocalContextStack, Serializable {
 		return result;
 	}
 
-	public Iterator getLocalContextStackValues() {
-		return localContextStack.iterator();
+	public List getLocalContextStackValues() {
+		return stack.list();
 	}
 
 	public int getLocalContextStackSize() {
-		return localContextStack.size();
+		return stack.size();
 	}
 
 	public void clearLocalContexts() {
-		while (! localContextStack.isEmpty())
+		while (! stack.isEmpty())
 			popLocalContext();
-		localContextStack.clear();
+		stack.clear();
 	}
 
 }

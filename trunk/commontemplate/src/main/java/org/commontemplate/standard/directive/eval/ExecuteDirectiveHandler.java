@@ -15,7 +15,7 @@ public class ExecuteDirectiveHandler extends DirectiveHandlerSupport {
 
 	public void doRender(Context context, String directiveName, Object param) throws Exception {
 		if (param != null)
-			context.parseTemplate((String)param).render(context);
+			context.getTemplateLoader().parseTemplate((String)param).render(context);
 	}
 
 	public boolean isExpressionRequired() {

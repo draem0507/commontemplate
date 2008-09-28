@@ -31,7 +31,7 @@ public class AutoEmbedInitializer implements ContextInitializer, Serializable {
 				String templateName = (String)iterator.next();
 				if (templateName != null) {
 					try {
-						context.getTemplate(templateName).render(context);
+						context.getTemplateLoader().getTemplate(templateName).render(context);
 					} catch (RuntimeException e) {
 						throw e;
 					} catch (Exception e) {

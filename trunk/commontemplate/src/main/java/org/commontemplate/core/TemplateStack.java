@@ -1,6 +1,6 @@
 package org.commontemplate.core;
 
-import java.util.Iterator;
+import java.util.List;
 
 /**
  * 路径上下文
@@ -31,15 +31,6 @@ public interface TemplateStack {
 	public Template getCurrentTemplate();
 
 	/**
-	 * 栈内是否包含模板名称
-	 *
-	 * @param name 模板名称
-	 *
-	 * @return 是否包含
-	 */
-	public boolean containsTemplate(String name);
-
-	/**
 	 * 查找模板
 	 *
 	 * @param name 模板名称
@@ -50,16 +41,9 @@ public interface TemplateStack {
 	/**
 	 * 获取模板包含关系栈
 	 *
-	 * @return 模板包含关系栈的值, 类型: Iterator&lt;Template&gt;
+	 * @return 模板包含关系栈的值, 类型: List&lt;Template&gt;
 	 */
-	public Iterator getTemplateStackValues();
-
-	/**
-	 * 获取模板栈大写
-	 *
-	 * @return 模板栈大写
-	 */
-	public int getTemplateStackSize();
+	public List getTemplateStackValues();
 
 	/**
 	 * 清空模板名称栈

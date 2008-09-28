@@ -15,7 +15,6 @@ import org.commontemplate.core.ContextFactory;
 import org.commontemplate.core.Directive;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.ExpressionBuilder;
-import org.commontemplate.core.Factory;
 import org.commontemplate.core.GlobalContext;
 import org.commontemplate.core.ParsingException;
 import org.commontemplate.core.Resource;
@@ -25,7 +24,7 @@ import org.commontemplate.core.TemplateLoader;
 import org.commontemplate.core.Text;
 import org.commontemplate.core.UnaryOperator;
 import org.commontemplate.core.Variable;
-import org.commontemplate.engine.template.TemplateEngine;
+import org.commontemplate.engine.resource.ResourceEngine;
 import org.commontemplate.util.Assert;
 
 /**
@@ -34,7 +33,7 @@ import org.commontemplate.util.Assert;
  * @author liangfei0201@163.com
  *
  */
-public final class Engine implements Factory {
+public class Engine extends org.commontemplate.core.Factory {
 
 	private final TemplateLoader templateLoader;
 
@@ -49,23 +48,20 @@ public final class Engine implements Factory {
 	public Engine(Configuration config) {
 		Assert.assertNotNull(config, "Engine.config.required");
 		// 创建模板工厂
-		this.templateLoader = new TemplateLoaderImpl(
-				new TemplateEngine(config), config.getResourceLoader(),
-				config.getTemplateCache(), config.getTemplatePersistentCache(),
-				config.getReloadController(), config.getResourceComparator());
+		this.templateLoader = new ResourceEngine(config);
 		// 创建上下文工厂
 		this.contextFactory = new ContextFactoryImpl(
 				this.templateLoader, config.getContextInitializer(),
 				config.getTemplateNameFilter(), config.getDefaultOutputFormatter(),
 				config.getEventListener(), config.getKeywords(),
-				config.isDebug());
+				config.getScopeHandlers(), config.isDebug());
 	}
 
-	public final Template getTemplate(String name) throws IOException, ParsingException {
+	public Template getTemplate(String name) throws IOException, ParsingException {
 		return templateLoader.getTemplate(name);
 	}
 
-	public final Template getTemplate(String name, String encoding)
+	public Template getTemplate(String name, String encoding)
 			throws IOException, ParsingException {
 		return templateLoader.getTemplate(name, encoding);
 	}
@@ -80,12 +76,12 @@ public final class Engine implements Factory {
 		return templateLoader.getTemplate(name, locale, encoding);
 	}
 
-	public final Resource getResource(String name, String encoding)
+	public Resource getResource(String name, String encoding)
 			throws IOException {
 		return templateLoader.getResource(name, encoding);
 	}
 
-	public final Resource getResource(String name) throws IOException {
+	public Resource getResource(String name) throws IOException {
 		return templateLoader.getResource(name);
 	}
 
@@ -108,15 +104,15 @@ public final class Engine implements Factory {
 		return templateLoader.createVariable(variableName);
 	}
 
-	public final Expression parseExpression(String expression) throws ParsingException {
+	public Expression parseExpression(String expression) throws ParsingException {
 		return templateLoader.parseExpression(expression);
 	}
 
-	public final Template parseTemplate(String template) throws ParsingException {
+	public Template parseTemplate(String template) throws ParsingException {
 		return templateLoader.parseTemplate(template);
 	}
 
-	public final Template parseTemplate(Resource resource)
+	public Template parseTemplate(Resource resource)
 			throws ParsingException, IOException {
 		return templateLoader.parseTemplate(resource);
 	}
@@ -159,11 +155,11 @@ public final class Engine implements Factory {
 		return templateLoader.getResource(name, locale, encoding);
 	}
 
-	public final Context createContext(Writer out) {
+	public Context createContext(Writer out) {
 		return contextFactory.createContext(out);
 	}
 
-	public final GlobalContext getGlobalContext() {
+	public GlobalContext getGlobalContext() {
 		return contextFactory.getGlobalContext();
 	}
 

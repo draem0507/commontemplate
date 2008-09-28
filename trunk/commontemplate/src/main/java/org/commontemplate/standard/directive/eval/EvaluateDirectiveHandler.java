@@ -15,7 +15,7 @@ public class EvaluateDirectiveHandler extends DirectiveHandlerSupport {
 	private static final long serialVersionUID = 1L;
 
 	public void doRender(Context context, String directiveName, Object param) throws Exception {
-		Expression expression = context.parseExpression((String)param);
+		Expression expression = context.getTemplateLoader().parseExpression((String)param);
 		if (expression != null)
 			context.output(expression.evaluate(context));
 	}

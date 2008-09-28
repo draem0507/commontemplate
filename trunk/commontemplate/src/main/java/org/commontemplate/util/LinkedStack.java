@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Collections;
+import java.util.List;
 
 
 /**
@@ -53,6 +54,10 @@ public class LinkedStack implements Stack, Serializable {
 
 	public Iterator iterator() {
 		return Collections.unmodifiableList(stack).iterator();
+	}
+
+	public List list() {
+		return Collections.unmodifiableList(stack);
 	}
 
 	public String toString() {

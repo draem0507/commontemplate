@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
-import org.commontemplate.standard.operator.collection.Filter;
+import org.commontemplate.standard.operator.filter.Filter;
 import org.commontemplate.util.TypeUtils;
 
 /**

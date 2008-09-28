@@ -10,12 +10,32 @@ public class LoggerFactory {
 
 	private LoggerFactory() {}
 
-	static {
+	static { // 查找常用的日志框架
 		try {
-			Class.forName("org.apache.commons.logging.LogFactory", true, Thread.currentThread().getContextClassLoader());
-			setLoggerProvider(new CommonsLoggingProvider());
-		} catch (ClassNotFoundException e) {
-			setLoggerProvider(new SimpleLoggerProvider());
+			Class.forName("org.apache.commons.logging.Log", true, Thread.currentThread().getContextClassLoader());
+			setLoggerProvider(new CommonsLoggerProvider());
+		} catch (Throwable e) {
+			try {
+				Class.forName("org.apache.log4j.Logger", true, Thread.currentThread().getContextClassLoader());
+				setLoggerProvider(new Log4jLoggerProvider());
+			} catch (Throwable e2) {
+				try {
+					Class.forName("org.apache.log.Logger", true, Thread.currentThread().getContextClassLoader());
+					setLoggerProvider(new AvalonLoggerProvider());
+				} catch (Throwable e3) {
+					try {
+						Class.forName("org.slf4j.Logger", true, Thread.currentThread().getContextClassLoader());
+						setLoggerProvider(new Log4jLoggerProvider());
+					} catch (Throwable e4) {
+						try {
+							Class.forName("java.util.logging.Logger", true, Thread.currentThread().getContextClassLoader());
+							setLoggerProvider(new Log4jLoggerProvider());
+						} catch (Throwable e5) {
+							setLoggerProvider(new SimpleLoggerProvider());
+						}
+					}
+				}
+			}
 		}
 	}
 

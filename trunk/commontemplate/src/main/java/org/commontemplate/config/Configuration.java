@@ -1,8 +1,10 @@
 package org.commontemplate.config;
 
+import java.util.Map;
+
 import org.commontemplate.core.EventListener;
 import org.commontemplate.core.OutputFormatter;
-import org.commontemplate.core.ResourceLoader;
+
 
 /**
  * 总配置，上下文配置
@@ -10,49 +12,7 @@ import org.commontemplate.core.ResourceLoader;
  * @author liangfei0201@163.com
  *
  */
-public abstract class Configuration extends TemplateConfiguration {
-
-	/**
-	 * 获取模板加载器
-	 *
-	 * @return 模板加载器
-	 */
-	public abstract ResourceLoader getResourceLoader();
-
-	/**
-	 * 获取模板缓存器
-	 *
-	 * @return 缓存器
-	 */
-	public abstract Cache getTemplateCache();
-
-	/**
-	 * 获取模板持久化缓存器
-	 *
-	 * @return 缓存器
-	 */
-	public abstract Cache getTemplatePersistentCache();
-
-	/**
-	 * 获取输出缓存器
-	 *
-	 * @return 缓存器
-	 */
-	public abstract Cache getOutputCache();
-
-	/**
-	 * 获取热加载检查器
-	 *
-	 * @return 热加载检查器
-	 */
-	public abstract ReloadController getReloadController();
-
-	/**
-	 * 获取模板源比较器
-	 *
-	 * @return 模板源比较器
-	 */
-	public abstract ResourceComparator getResourceComparator();
+public abstract class Configuration extends ResourceConfiguration {
 
 	/**
 	 * 获取是否为调试模式设置
@@ -78,17 +38,24 @@ public abstract class Configuration extends TemplateConfiguration {
 	public abstract EventListener getEventListener();
 
 	/**
-	 * 获取路径过滤器
-	 *
-	 * @return 路径过滤器
-	 */
-	public abstract TemplateNameFilter getTemplateNameFilter();
-
-	/**
 	 * 获取上下文初始化器
 	 *
 	 * @return 上下文初始化器
 	 */
 	public abstract ContextInitializer getContextInitializer();
+
+	/**
+	 * 获取区域变量处理器
+	 *
+	 * @return 区域变量处理器
+	 */
+	public abstract Map getScopeHandlers();
+
+	/**
+	 * 获取输出缓存器
+	 *
+	 * @return 缓存器
+	 */
+	// public abstract Cache getOutputCache();
 
 }

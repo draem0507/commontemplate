@@ -1,5 +1,6 @@
 package org.commontemplate.standard.operator.array;
 
+import java.lang.reflect.Array;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -11,14 +12,15 @@ public class ArrayMultiSelectorOperatorHandler extends BinaryOperatorHandlerSupp
 	private static final long serialVersionUID = 1L;
 
 	public ArrayMultiSelectorOperatorHandler() {
-		super(Object[].class, Map.class);
+		super(new Class[]{boolean[].class, char[].class, byte[].class,
+				short[].class, int[].class, long[].class,
+				float[].class, double[].class, Object[].class}, new Class[]{Map.class});
 	}
 
 	public Object doEvaluate(Object leftOperand, Object rightOperand) throws Exception {
-		Object[] array = (Object[])leftOperand;
 		Map map = (Map)rightOperand;
-		for (int i = 0, n = array.length; i < n; i ++) {
-			Object obj = array[i];
+		for (int i = 0, n = Array.getLength(leftOperand); i < n; i ++) {
+			Object obj = Array.get(leftOperand, i);
 			if (match(obj, map))
 				return obj;
 		}

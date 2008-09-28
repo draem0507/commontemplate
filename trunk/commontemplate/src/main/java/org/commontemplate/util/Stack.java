@@ -1,6 +1,7 @@
 package org.commontemplate.util;
 
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * 数据栈
@@ -65,5 +66,12 @@ public interface Stack {
 	 * @return 栈数据迭代器
 	 */
 	public abstract Iterator iterator();
+
+	/**
+	 * 迭代栈数据
+	 *
+	 * @return 栈数据迭代器
+	 */
+	public abstract List list();
 
 }

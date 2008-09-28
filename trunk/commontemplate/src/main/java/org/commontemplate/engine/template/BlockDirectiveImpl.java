@@ -65,7 +65,7 @@ class BlockDirectiveImpl extends BlockDirectiveSupport {
 	}
 
 	void doRender(Context context) throws RenderingException {
-		context.pushLocalContext(name);
+		context.pushElement(this);
 		try {
 			blockDirectiveHandler.doRender(context, proxy);
 		} catch (RenderingException e) {
@@ -75,7 +75,7 @@ class BlockDirectiveImpl extends BlockDirectiveSupport {
 		} catch (Exception e) {
 			throw new RenderingException(this, context, e);
 		} finally {
-			context.popLocalContext();
+			context.popElement();
 		}
 	}
 
