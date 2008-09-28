@@ -47,7 +47,7 @@ $!
 								修复orderby操作符PropertyComparator值覆盖的BUG.<br/>
 								-----------------<br/>
 								感谢吴勇智加入开发插件.<br/>
-								感谢JRest4Guice开发小组的支持.<br/>
+								感谢<a href="http://code.google.com/p/jrest4guice">JRest4Guice</a>开发小组的支持.<br/>
 								<br/>
 								<b>0.8.6 版本更新：(2008-08-26)</b> <a href="downloads.html">下载...</a><br/>
 								Bug Fixed:<br/>
