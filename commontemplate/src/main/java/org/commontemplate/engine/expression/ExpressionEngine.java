@@ -20,12 +20,12 @@ import org.commontemplate.util.Location;
 import org.commontemplate.util.scanner.ScanningException;
 
 /**
- * 表达式引擎 (线程安全)
+ * 表达式引擎. (线程安全)
  *
  * @author liangfei0201@163.com
  *
  */
-public final class ExpressionEngine implements ExpressionParser {
+public class ExpressionEngine implements ExpressionParser {
 
 	private final ExpressionFilter expressionFilter;
 
@@ -58,7 +58,7 @@ public final class ExpressionEngine implements ExpressionParser {
 		expressionOptimizer = new ExpressionOptimizer(evaluateInterceptors);
 	}
 
-	public final Expression parseExpression(String expressionText) throws ParsingException {
+	public Expression parseExpression(String expressionText) throws ParsingException {
 		try {
 			if (expressionFilter != null)
 				expressionText = expressionFilter.filter(expressionText);

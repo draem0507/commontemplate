@@ -221,7 +221,7 @@ public class DebugFrame {
 							|| execution.getContext() == null)
 						return;
 					try {
-						Template template = execution.getContext().getTemplate(templateName);
+						Template template = execution.getContext().getTemplateLoader().getTemplate(templateName);
 						templatePane.addTemplate(template);
 					} catch (IOException ex) {
 						JOptionPane.showMessageDialog(frame, "加载模板：\"" + templateName + "\"失败，错误信息：" + ex.getMessage()); // TODO 未国际化

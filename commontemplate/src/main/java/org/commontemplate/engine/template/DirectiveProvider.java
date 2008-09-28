@@ -11,9 +11,9 @@ import org.commontemplate.config.Syntax;
 import org.commontemplate.config.TextFilter;
 import org.commontemplate.core.Element;
 import org.commontemplate.core.Expression;
+import org.commontemplate.core.ExpressionParser;
 import org.commontemplate.core.ParsingException;
 import org.commontemplate.core.Variable;
-import org.commontemplate.engine.expression.ExpressionEngine;
 import org.commontemplate.util.Assert;
 import org.commontemplate.util.Location;
 import org.commontemplate.util.TypeUtils;
@@ -31,17 +31,17 @@ final class DirectiveProvider {
 
 	private final DirectiveHandlerProvider directiveHandlerProvider;
 
-	private final ExpressionEngine expressionEngine;
+	private final ExpressionParser expressionParser;
 
 	private final TextFilter textFilter;
 
 	private final List renderInterceptors;
 
 	DirectiveProvider(Syntax syntax, DirectiveHandlerProvider directiveHandlerProvider,
-			ExpressionEngine expressionParser, TextFilter textFilter, List renderInterceptors) {
+			ExpressionParser expressionParser, TextFilter textFilter, List renderInterceptors) {
 		this.syntax = syntax;
 		this.directiveHandlerProvider = directiveHandlerProvider;
-		this.expressionEngine = expressionParser;
+		this.expressionParser = expressionParser;
 		this.textFilter = textFilter;
 		this.renderInterceptors = renderInterceptors;
 	}
@@ -223,7 +223,7 @@ final class DirectiveProvider {
 				String param = message.substring(j + 1);
 				expressionSource = param.trim();
 				if (! syntax.getEndDirectiveName().equals(name)) { // 结束指令不解析表达式
-					expression = expressionEngine.createConstant(expressionSource);
+					expression = expressionParser.createConstant(expressionSource);
 				}
 			} else {
 				name = message.substring(1, message.length());
@@ -235,7 +235,7 @@ final class DirectiveProvider {
 	// 解析表达式
 	private Expression parseExpression(String expr, Location location) throws ParsingException {
 		try {
-			return expressionEngine.parseExpression(expr);
+			return expressionParser.parseExpression(expr);
 		} catch (ParsingException e) {
 			throw e;
 		} catch (Exception e) {
@@ -259,7 +259,7 @@ final class DirectiveProvider {
 		if (handler == null) // 指令处理器不能为空
 			throw new ParsingException(token.getLocation(), "DirectiveFactory.handler.not.such", new Object[]{name});
 		if (handler.isExpressionNamed() && expression instanceof Variable) // 将名称指令的变量参数转为字符串常量
-			expression = expressionEngine.createConstant(((Variable)expression).getName());
+			expression = expressionParser.createConstant(((Variable)expression).getName());
 		if (handler instanceof MiddleBlockDirectiveHandler) // 中间块指令
 			return new MiddleBlockDirectiveImpl(name, token.getLocation(), expression,
 					(MiddleBlockDirectiveHandler)handler, token.getMessage(),

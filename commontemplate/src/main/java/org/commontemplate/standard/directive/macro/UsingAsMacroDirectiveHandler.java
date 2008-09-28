@@ -50,7 +50,7 @@ public class UsingAsMacroDirectiveHandler extends DirectiveHandlerSupport {
 			zoneName = templateName.substring(index + 1);
 			templateName = templateName.substring(0, index);
 		}
-		Template template = context.getTemplate(templateName);
+		Template template = context.getTemplateLoader().getTemplate(templateName);
 		List elements = null;
 		if (zoneName != null && zoneName.length() > 0) {
 			elements = BlockDirectiveVisitor.findBlockDirectiveElements(template, (macroDirectiveName == null ? DEFAULT_MACRO_DIRECTIVE_NAME : macroDirectiveName), zoneName, context);

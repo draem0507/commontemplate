@@ -6,7 +6,7 @@ import org.commontemplate.core.Context;
 import org.commontemplate.standard.directive.BlockDirectiveHandlerSupport;
 import org.commontemplate.standard.directive.DirectiveUtils;
 import org.commontemplate.standard.filter.BufferedOutputFilter;
-import org.commontemplate.standard.operator.collection.Filter;
+import org.commontemplate.standard.operator.filter.Filter;
 
 public class BufferDirectiveHandler extends BlockDirectiveHandlerSupport {
 

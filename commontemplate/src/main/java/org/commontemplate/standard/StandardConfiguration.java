@@ -19,6 +19,7 @@ import org.commontemplate.config.ReloadController;
 import org.commontemplate.config.RenderInterceptor;
 import org.commontemplate.config.ResourceComparator;
 import org.commontemplate.config.ResourceFilter;
+import org.commontemplate.config.ScopeHandler;
 import org.commontemplate.config.TemplateNameFilter;
 import org.commontemplate.config.TextFilter;
 import org.commontemplate.config.UnaryOperatorHandler;
@@ -794,6 +795,21 @@ public class StandardConfiguration extends ConfigurationSettings {
 	// 子类可以重写此函数进行相应配置有效性检查，如果不需要检查则忽略
 	public void validate() {
 		// Empty Implement
+	}
+
+	private Map scopeHandlers = new HashMap();
+
+	public Map getScopeHandlers() {
+		return scopeHandlers;
+	}
+
+	public void setScopeHandlers(Map scopeHandlers) {
+		if (scopeHandlers != null)
+			this.scopeHandlers = scopeHandlers;
+	}
+
+	public void addScopeHandler(String name, ScopeHandler scopeHandler) {
+		scopeHandlers.put(name, scopeHandler);
 	}
 
 }

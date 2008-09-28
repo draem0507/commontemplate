@@ -60,6 +60,7 @@ final class DirectiveImpl extends Directive {
 	}
 
 	void doRender(Context context) throws RenderingException {
+		context.pushElement(this);
 		try {
 			directiveHandler.doRender(context, proxy);
 		} catch (RenderingException e) {
@@ -68,6 +69,8 @@ final class DirectiveImpl extends Directive {
 			throw e;
 		} catch (Exception e) {
 			throw new RenderingException(this, context, e);
+		} finally {
+			context.popElement();
 		}
 	}
 

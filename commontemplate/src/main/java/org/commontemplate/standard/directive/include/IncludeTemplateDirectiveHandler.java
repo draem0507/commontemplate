@@ -88,10 +88,10 @@ public class IncludeTemplateDirectiveHandler extends DirectiveHandlerSupport {
 		}
 		Template template;
 		if (localizedLookup)
-			template = context.getTemplate(templateName, context.getLocale(),
+			template = context.getTemplateLoader().getTemplate(templateName, context.getLocale(),
 					templateEncoding);
 		else
-			template = context.getTemplate(templateName, templateEncoding);
+			template = context.getTemplateLoader().getTemplate(templateName, templateEncoding);
 		// assert(template != null); // getTemplate的后验条件已保证不返回null
 		templateName = template.getName();
 		// 在新的上下文执行

@@ -12,20 +12,21 @@ public class SimpleLogger implements Logger, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private String key;
-
-	public SimpleLogger() {
-		this.key = null;
-	}
+	private String prefix;
 
 	public SimpleLogger(String key) {
-		this.key = key;
+		if (key != null) {
+			int i = key.lastIndexOf('.');
+			if (i > -1)
+				key = key.substring(i + 1);
+			this.prefix = "[" + key + "]";
+		}
 	}
 
 	private String getMessage(String msg) {
-		if (key == null)
+		if (prefix == null)
 			return msg;
-		return "[" + key + "]" + msg;
+		return prefix + msg;
 	}
 
 	public void debug(String msg) {

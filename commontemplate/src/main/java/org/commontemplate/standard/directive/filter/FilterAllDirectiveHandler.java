@@ -6,7 +6,7 @@ import org.commontemplate.core.Context;
 import org.commontemplate.core.Element;
 import org.commontemplate.core.OutputFilter;
 import org.commontemplate.standard.directive.BlockDirectiveHandlerSupport;
-import org.commontemplate.standard.operator.collection.Filter;
+import org.commontemplate.standard.operator.filter.Filter;
 
 public class FilterAllDirectiveHandler extends BlockDirectiveHandlerSupport {
 

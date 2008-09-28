@@ -63,14 +63,14 @@ public class EmbedTemplateDirectiveHandler extends DirectiveHandlerSupport {
 		}
 		Template template;
 		if (localizedLookup)
-			template = context.getTemplate(templateName, context.getLocale(),
+			template = context.getTemplateLoader().getTemplate(templateName, context.getLocale(),
 					templateEncoding);
 		else
-			template = context.getTemplate(templateName, templateEncoding);
+			template = context.getTemplateLoader().getTemplate(templateName, templateEncoding);
 		// assert(template != null);
 		templateName = template.getName();
 		// 循环内嵌检测
-		Assert.assertFalse(context.containsTemplate(templateName),
+		Assert.assertTrue(context.findTemplate(templateName) == null,
 				"EmbedTemplateDirectiveHandler.cycle.embed", new Object[] {
 						templateName, context.getCurrentTemplate() });
 		if (zoneName != null && zoneName.length() > 0) {

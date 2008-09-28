@@ -26,11 +26,9 @@ public final class Keywords implements Serializable {
 
 	// 上下文区域信息关键字
 
-	private final String currentLocalContextKeyword;
+	private final String currentKeyword;
 
-	private final String parentLocalContextKeyword;
-
-	private final String contextKeyword;
+	private final String parentKeyword;
 
 	/**
 	 * 关键字定义
@@ -41,33 +39,26 @@ public final class Keywords implements Serializable {
 	 *            true关键字
 	 * @param falseKeyword
 	 *            false关键字
-	 * @param currentLocalContextKeyword
+	 * @param currentKeyword
 	 *            this关键字
-	 * @param parentLocalContextKeyword
+	 * @param parentKeyword
 	 *            super关键字
-	 * @param contextKeyword
-	 *            context关键字
 	 */
 	public Keywords(String nullKeyword, String trueKeyword,
-			String falseKeyword, String currentLocalContextKeyword,
-			String parentLocalContextKeyword, String contextKeyword) {
+			String falseKeyword, String currentKeyword, String parentKeyword) {
 		super();
 		Assert.assertNotEmpty(nullKeyword, "NullKeyword不能为空!"); // TODO 未国际化
 		Assert.assertNotEmpty(trueKeyword, "TrueKeyword不能为空!"); // TODO 未国际化
 		Assert.assertNotEmpty(falseKeyword, "FalseKeyword不能为空!"); // TODO 未国际化
-		Assert.assertNotEmpty(currentLocalContextKeyword,
-				"CurrentLocalContextKeyword不能为空!"); // TODO 未国际化
-		Assert.assertNotEmpty(parentLocalContextKeyword,
-				"ParentLocalContextKeyword不能为空!"); // TODO 未国际化
-		Assert.assertNotEmpty(contextKeyword, "ContextKeyword不能为空!"); // TODO 未国际化
+		Assert.assertNotEmpty(currentKeyword, "CurrentKeyword不能为空!"); // TODO 未国际化
+		Assert.assertNotEmpty(parentKeyword, "ParentKeyword不能为空!"); // TODO 未国际化
 		assertMutex(new String[] { nullKeyword, trueKeyword, falseKeyword,
-				parentLocalContextKeyword, contextKeyword });
+				currentKeyword, parentKeyword });
 		this.nullKeyword = nullKeyword;
 		this.trueKeyword = trueKeyword;
 		this.falseKeyword = falseKeyword;
-		this.currentLocalContextKeyword = currentLocalContextKeyword;
-		this.parentLocalContextKeyword = parentLocalContextKeyword;
-		this.contextKeyword = contextKeyword;
+		this.currentKeyword = currentKeyword;
+		this.parentKeyword = parentKeyword;
 	}
 
 	private final void assertMutex(String[] strs) {
@@ -92,16 +83,12 @@ public final class Keywords implements Serializable {
 		return falseKeyword;
 	}
 
-	public final String getCurrentLocalContextKeyword() {
-		return currentLocalContextKeyword;
+	public final String getCurrentKeyword() {
+		return currentKeyword;
 	}
 
-	public final String getParentLocalContextKeyword() {
-		return parentLocalContextKeyword;
-	}
-
-	public final String getContextKeyword() {
-		return contextKeyword;
+	public final String getParentKeyword() {
+		return parentKeyword;
 	}
 
 	public final boolean isKeyword(String name) {
@@ -109,8 +96,8 @@ public final class Keywords implements Serializable {
 			return false;
 		return nullKeyword.equals(name) || trueKeyword.equals(name)
 				|| falseKeyword.equals(name)
-				|| parentLocalContextKeyword.equals(name)
-				|| contextKeyword.equals(name);
+				|| currentKeyword.equals(name)
+				|| parentKeyword.equals(name);
 	}
 
 	public static final String DEFAULT_NULL_KEYWORD = "null";
@@ -119,15 +106,13 @@ public final class Keywords implements Serializable {
 
 	public static final String DEFAULT_FALSE_KEYWORD = "false";
 
-	public static final String DEFAULT_CURRENT_LOCAL_CONTEXT_KEYWORD = "this";
+	public static final String DEFAULT_CURRENT_KEYWORD = "this";
 
-	public static final String DEFAULT_PARENT_LOCAL_CONTEXT_KEYWORD = "super";
-
-	public static final String DEFAULT_CONTEXT_KEYWORD = "context";
+	public static final String DEFAULT_PARENT_KEYWORD = "super";
 
 	public static final Keywords DEFAULT = new Keywords(DEFAULT_NULL_KEYWORD,
 			DEFAULT_TRUE_KEYWORD, DEFAULT_FALSE_KEYWORD,
-			DEFAULT_CURRENT_LOCAL_CONTEXT_KEYWORD,
-			DEFAULT_PARENT_LOCAL_CONTEXT_KEYWORD, DEFAULT_CONTEXT_KEYWORD);
+			DEFAULT_CURRENT_KEYWORD,
+			DEFAULT_PARENT_KEYWORD);
 
 }

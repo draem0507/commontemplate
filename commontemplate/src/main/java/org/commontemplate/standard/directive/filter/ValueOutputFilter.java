@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.commontemplate.core.OutputFilter;
-import org.commontemplate.standard.operator.collection.Filter;
+import org.commontemplate.standard.operator.filter.Filter;
 
 public class ValueOutputFilter implements OutputFilter, Serializable {
 

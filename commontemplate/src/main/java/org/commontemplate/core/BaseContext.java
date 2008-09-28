@@ -1,7 +1,9 @@
 package org.commontemplate.core;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 基础上下文，提供仿Map注册接口
@@ -9,7 +11,7 @@ import java.util.Map;
  * @author liangfei0201@163.com
  *
  */
-public abstract class BaseContext implements VariableStorage, StatusStorage, PropertyStorage, Serializable {
+public abstract class BaseContext implements Map, VariableStorage, StatusStorage, PropertyStorage, Serializable {
 
 	/**
 	 * 清空上下文, 此动作将清空该上下文持有的所有数据.
@@ -20,13 +22,9 @@ public abstract class BaseContext implements VariableStorage, StatusStorage, Pro
 		clearProperties();
 	}
 
-	/**
-	 * 变量集设值
-	 *
-	 * @param map 变量集
-	 */
-	public void putAll(Map map) {
-		putAllVariables(map);
+	protected void finalize() throws Throwable {
+		super.finalize();
+		clear(); // 保护性释放
 	}
 
 	/**
@@ -121,9 +119,58 @@ public abstract class BaseContext implements VariableStorage, StatusStorage, Pro
 		put(key, new Double(value));
 	}
 
-	protected void finalize() throws Throwable {
-		super.finalize();
-		clear(); // 保护性释放
+	// ---- 适配Map接口 ----
+
+	public Object put(Object key, Object value) {
+		String name = (key == null ? null : String.valueOf(key));
+		Object old = getVariable(name);
+		putVariable(name, value);
+		return old;
+	}
+
+	public void putAll(Map map) {
+		putAllVariables(map);
+	}
+
+	public Object get(Object key) {
+		String name = (key == null ? null : String.valueOf(key));
+		return getVariable(name);
+	}
+
+	public Object remove(Object key) {
+		String name = (key == null ? null : String.valueOf(key));
+		Object old = getVariable(name);
+		removeVariable(name);
+		return old;
+	}
+
+	public boolean containsKey(Object key) {
+		String name = (key == null ? null : String.valueOf(key));
+		return isVariableContained(name);
+	}
+
+	public boolean containsValue(Object value) {
+		return getVariables().containsValue(value);
+	}
+
+	public int size() {
+		return getVariables().size();
+	}
+
+	public boolean isEmpty() {
+		return getVariables().isEmpty();
+	}
+
+	public Set entrySet() {
+		return getVariables().entrySet();
+	}
+
+	public Set keySet() {
+		return getVariables().keySet();
+	}
+
+	public Collection values() {
+		return getVariables().values();
 	}
 
 }

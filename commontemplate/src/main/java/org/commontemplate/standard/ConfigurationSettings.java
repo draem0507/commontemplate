@@ -1,6 +1,7 @@
 package org.commontemplate.standard;
 
 import java.util.List;
+import java.util.Map;
 
 import org.commontemplate.config.Cache;
 import org.commontemplate.config.Configuration;
@@ -416,6 +417,16 @@ public class ConfigurationSettings extends Configuration {
 
 	public void setExpressionFilter(ExpressionFilter expressionFilter) {
 		this.expressionFilter = expressionFilter;
+	}
+
+	private Map scopeHandlers;
+
+	public Map getScopeHandlers() {
+		return scopeHandlers;
+	}
+
+	public void setScopeHandlers(Map scopeHandlers) {
+		this.scopeHandlers = scopeHandlers;
 	}
 
 }

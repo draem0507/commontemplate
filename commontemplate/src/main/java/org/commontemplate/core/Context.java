@@ -16,8 +16,10 @@ import java.util.TimeZone;
  *
  */
 public abstract class Context extends LocalContext
-			implements LocalContextStack, TemplateStack,
-			Factory, EventPublisher, Serializable {
+			implements LocalContextStack, ElementStack, TemplateStack,
+			ContextFactory, EventPublisher, Serializable {
+
+	public abstract TemplateLoader getTemplateLoader();
 
 	/**
 	 * 以当前上下文构造条件重建新的上下文 (共享Writer,不共享数据)

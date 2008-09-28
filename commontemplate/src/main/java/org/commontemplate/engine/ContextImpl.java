@@ -2,7 +2,6 @@ package org.commontemplate.engine;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -10,32 +9,21 @@ import java.util.TimeZone;
 
 import org.commontemplate.config.Keywords;
 import org.commontemplate.config.TemplateNameFilter;
-import org.commontemplate.core.BinaryOperator;
-import org.commontemplate.core.BlockDirective;
-import org.commontemplate.core.Comment;
-import org.commontemplate.core.Constant;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.ContextFactory;
-import org.commontemplate.core.Directive;
+import org.commontemplate.core.Element;
+import org.commontemplate.core.ElementStack;
 import org.commontemplate.core.Event;
 import org.commontemplate.core.EventListener;
 import org.commontemplate.core.EventPublisher;
-import org.commontemplate.core.Expression;
-import org.commontemplate.core.ExpressionBuilder;
 import org.commontemplate.core.GlobalContext;
 import org.commontemplate.core.LocalContext;
 import org.commontemplate.core.LocalContextStack;
 import org.commontemplate.core.OutputFilter;
 import org.commontemplate.core.OutputFormatter;
-import org.commontemplate.core.ParsingException;
-import org.commontemplate.core.Resource;
 import org.commontemplate.core.Template;
-import org.commontemplate.core.TemplateBudiler;
 import org.commontemplate.core.TemplateLoader;
 import org.commontemplate.core.TemplateStack;
-import org.commontemplate.core.Text;
-import org.commontemplate.core.UnaryOperator;
-import org.commontemplate.core.Variable;
 import org.commontemplate.core.VariableException;
 import org.commontemplate.util.Assert;
 import org.commontemplate.util.LocaleUtils;
@@ -51,28 +39,32 @@ final class ContextImpl extends Context {
 	private static final long serialVersionUID = 1L;
 
 	ContextImpl(Writer out, TemplateLoader templateLoader, ContextFactory contextFactory, TemplateNameFilter templateNameFilter,
-			OutputFormatter defaultFormater, EventListener eventListener, Keywords keywords) {
+			OutputFormatter defaultFormater, EventListener eventListener, Keywords keywords, Map scopeHandlers) {
 		Assert.assertNotNull(out);
 		Assert.assertNotNull(templateLoader);
 		Assert.assertNotNull(contextFactory);
 		Assert.assertNotNull(keywords);
 
 		this.out = out;
-		this.templateLoader = templateLoader;
+		this.templateLoader = new TemplateLoaderProxy(templateLoader, this);
 		this.contextFactory = contextFactory;
 		this.templateNameFilter = templateNameFilter;
 		this.defaultFormater = defaultFormater;
 		this.eventListener = eventListener;
 		this.keywords = keywords;
+		this.scopeHandlers = scopeHandlers;
 
-		eventPublisher = new EventPublisherImpl(eventListener, this);
-		templateNameStack = new TemplateStackImpl(eventPublisher, templateNameFilter);
-		localContextStack = new LocalContextStackImpl(out, defaultFormater, eventPublisher, this, keywords);
+		this.eventPublisher = new EventPublisherImpl(eventListener, this);
+		this.localContextStack = new LocalContextStackImpl(out, defaultFormater, eventPublisher, this, keywords, scopeHandlers);
+		this.elementStack = new ElementStackImpl(eventPublisher, localContextStack);
+		this.templateNameStack = new TemplateStackImpl(eventPublisher, templateNameFilter);
 	}
 
 	private final TemplateNameFilter templateNameFilter;
 
 	// 实现 Context -----------
+
+	private final Map scopeHandlers;
 
 	private final Keywords keywords;
 
@@ -81,7 +73,7 @@ final class ContextImpl extends Context {
 	private final OutputFormatter defaultFormater;
 
 	public Context createContext() {
-		Context context = new ContextImpl(out, templateLoader, contextFactory, templateNameFilter, defaultFormater, eventListener, keywords);
+		Context context = new ContextImpl(out, templateLoader, contextFactory, templateNameFilter, defaultFormater, eventListener, keywords, scopeHandlers);
 		context.setLocale(locale);
 		context.setTimeZone(timeZone);
 		context.setDebug(debug);
@@ -154,7 +146,35 @@ final class ContextImpl extends Context {
 		eventPublisher.removeEventListener(listener);
 	}
 
-	// 代理 TemplateNameStack --------------
+	// 代理ElementStack ---------------------
+
+	private final ElementStack elementStack;
+
+	public void clearElements() {
+		elementStack.clearElements();
+	}
+
+	public Element findElement(String name) {
+		return elementStack.findElement(name);
+	}
+
+	public Element getCurrentElement() {
+		return elementStack.getCurrentElement();
+	}
+
+	public List getElementStackValues() {
+		return elementStack.getElementStackValues();
+	}
+
+	public void popElement() {
+		elementStack.popElement();
+	}
+
+	public void pushElement(Element element) {
+		elementStack.pushElement(element);
+	}
+
+	// 代理 TemplateStack --------------
 
 	private final TemplateStack templateNameStack;
 
@@ -166,7 +186,7 @@ final class ContextImpl extends Context {
 		return templateNameStack.getCurrentTemplate();
 	}
 
-	public Iterator getTemplateStackValues() {
+	public List getTemplateStackValues() {
 		return templateNameStack.getTemplateStackValues();
 	}
 
@@ -180,10 +200,6 @@ final class ContextImpl extends Context {
 
 	public void pushTemplate(Template template) {
 		templateNameStack.pushTemplate(template);
-	}
-
-	public boolean containsTemplate(String name) {
-		return templateNameStack.containsTemplate(name);
 	}
 
 	public String relateTemplateName(String name) {
@@ -206,7 +222,7 @@ final class ContextImpl extends Context {
 		return localContextStack.getCurrentLocalContext();
 	}
 
-	public Iterator getLocalContextStackValues() {
+	public List getLocalContextStackValues() {
 		return localContextStack.getLocalContextStackValues();
 	}
 
@@ -445,124 +461,6 @@ final class ContextImpl extends Context {
 
 	private transient final TemplateLoader templateLoader;
 
-	private String getCurrentTemplateEncoding() {// 获取当前模板编码
-		Template template = this.getCurrentTemplate();
-		if (template != null)
-			return template.getEncoding();
-		return null;
-	}
-
-	public Template getTemplate(String name) throws IOException, ParsingException {
-		String encoding = getCurrentTemplateEncoding();
-		if (encoding != null)
-			return templateLoader.getTemplate(relateTemplateName(name), encoding);
-		else
-			return templateLoader.getTemplate(relateTemplateName(name));
-	}
-
-	public Template getTemplate(String name, String encoding)
-			throws IOException, ParsingException {
-		return templateLoader.getTemplate(relateTemplateName(name), encoding);
-	}
-
-	public Template getTemplate(String name, Locale locale) throws IOException,
-			ParsingException {
-		return templateLoader.getTemplate(relateTemplateName(name), locale);
-	}
-
-	public Template getTemplate(String name, Locale locale, String encoding)
-			throws IOException, ParsingException {
-		return templateLoader.getTemplate(relateTemplateName(name), locale, encoding);
-	}
-
-	public Resource getResource(String name)
-			throws IOException {
-		String encoding = getCurrentTemplateEncoding();
-		if (encoding != null)
-			return templateLoader.getResource(relateTemplateName(name), encoding);
-		else
-			return templateLoader.getResource(relateTemplateName(name));
-	}
-
-	public Resource getResource(String name, String encoding)
-			throws IOException {
-		return templateLoader.getResource(relateTemplateName(name), encoding);
-	}
-
-	public Resource getResource(String name, Locale locale) throws IOException {
-		String encoding = getCurrentTemplateEncoding();
-		if (encoding != null)
-			return templateLoader.getResource(relateTemplateName(name), locale, encoding);
-		else
-			return templateLoader.getResource(relateTemplateName(name), locale);
-	}
-
-	public Resource getResource(String name, Locale locale, String encoding)
-			throws IOException {
-		return templateLoader.getResource(relateTemplateName(name), locale, encoding);
-	}
-
-	public Expression parseExpression(String expression) throws ParsingException {
-		return templateLoader.parseExpression(expression);
-	}
-
-	public Template parseTemplate(String template) throws ParsingException {
-		return templateLoader.parseTemplate(template);
-	}
-
-	public Template parseTemplate(Resource resource)
-			throws ParsingException, IOException {
-		return templateLoader.parseTemplate(resource);
-	}
-
-	public BlockDirective createBlockDirective(String name,
-			Expression expression, List elements) {
-		return templateLoader.createBlockDirective(name, expression, elements);
-	}
-
-	public Comment createComment(String comment) {
-		return templateLoader.createComment(comment);
-	}
-
-	public Directive createDirective(String name, Expression expression) {
-		return templateLoader.createDirective(name, expression);
-	}
-
-	public Text createText(String text) {
-		return templateLoader.createText(text);
-	}
-
-	public ExpressionBuilder createExpressionBuilder() {
-		return templateLoader.createExpressionBuilder();
-	}
-
-	public TemplateBudiler createTemplateBudiler() {
-		return templateLoader.createTemplateBudiler();
-	}
-
-	public BinaryOperator createBinaryOperator(String operatorName,
-			Expression leftOprand, Expression rightOprand) {
-		return templateLoader.createBinaryOperator(operatorName, leftOprand,
-				rightOprand);
-	}
-
-	public Constant createConstant(Object constantValue) {
-		return templateLoader.createConstant(constantValue);
-	}
-
-	public UnaryOperator createUnaryOperator(String operatorName,
-			Expression oprand) {
-		return templateLoader.createUnaryOperator(operatorName, oprand);
-	}
-
-	public Variable createVariable(String variableName) {
-		return templateLoader.createVariable(variableName);
-	}
-
-	public Template createTemplate(String name, List elements) {
-		return templateLoader.createTemplate(name, elements);
-	}
-
 	private transient final ContextFactory contextFactory;
 
 	public Context createContext(Writer out) {
@@ -573,12 +471,8 @@ final class ContextImpl extends Context {
 		return contextFactory.getGlobalContext();
 	}
 
-	public int getLocalContextStackSize() {
-		return localContextStack.getLocalContextStackSize();
-	}
-
-	public int getTemplateStackSize() {
-		return templateNameStack.getTemplateStackSize();
+	public TemplateLoader getTemplateLoader() {
+		return templateLoader;
 	}
 
 }
