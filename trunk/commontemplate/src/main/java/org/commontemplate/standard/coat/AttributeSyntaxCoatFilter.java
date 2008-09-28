@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.commontemplate.config.BlockDirectiveHandler;
+import org.commontemplate.config.ConfigurationException;
 import org.commontemplate.config.DirectiveHandler;
 import org.commontemplate.config.DirectiveHandlerProvider;
 import org.commontemplate.config.ResourceFilter;
@@ -95,6 +96,8 @@ public class AttributeSyntaxCoatFilter implements ResourceFilter, Serializable {
 
 	// 是否为块指令判断
 	private boolean isBlockDirective(String name) {
+		if (directiveHandlerProvider == null)
+			throw new ConfigurationException("HTML标签属性语法外套处理类的directiveHandlerProvider属性不能为空! 请配置类似如: resourceFilters[200].directiveHandlerProvider=$directiveHandlerProvider"); // TODO 未国际化
 		DirectiveHandler directiveHandler = directiveHandlerProvider.getDirectiveHandler(name);
 		return (directiveHandler instanceof BlockDirectiveHandler);
 	}
