@@ -14,7 +14,7 @@ $!
 								(4) commontemplate-doc-x.x.jar 文档包，当前网站内容<br/>
 								(5) CommonTemplateSetup-x.x.exe 查看器安装程序，请参见：<a href="viewer.html">查看器说明...</a><br/>
 								(6) struts-commontemplate-plugin-x.x.jar 与<a href="http://struts.apache.org/2.x/" target="_blank">Struts2</a>的集成包，采用Struts2约定的插件方式打包<br/>
-								(7) commontemplate-javascript-x.x.jar 与<a href="http://java.sun.com/javase/6/docs/api/javax/script/package-summary.html" target="_blank">javax.script</a>的集成包，采用javax.script约定的自发现方式打包 <a href="javaxscript.html">集成说明...</a><br/>
+								(7) commontemplate-javaxscript-x.x.jar 与<a href="http://java.sun.com/javase/6/docs/api/javax/script/package-summary.html" target="_blank">javax.script</a>的集成包，采用javax.script约定的自发现方式打包 <a href="javaxscript.html">集成说明...</a><br/>
 								(8) ct_struts2-x.x.war 与<a href="http://struts.apache.org/2.x/" target="_blank">Struts2</a>框架集成示例应用，请参见：<a href="integration.html">Web框架集成...</a><br/>
 								(9) ct_struts-x.x.war 与<a href="http://struts.apache.org/1.x/" target="_blank">Struts(1.x)</a>框架集成示例应用<br/>
 								(10) ct_webwork-x.x.war 与<a href="http://webwork.opensymphony.com/" target="_blank">WebWork</a>框架集成示例应用<br/>
@@ -32,7 +32,7 @@ $!
 								(2) commontemplate-debug-SNAPSHOT.jar 便于调试二进制包，采用保留行号方式编译，并包含源代码<br/>
 								(3) CommonTemplateSetup-SNAPSHOT.exe 查看器安装程序，请参见：<a href="viewer.html">查看器说明...</a><br/>
 								(4) struts-commontemplate-plugin-SNAPSHOT.jar 与<a href="http://struts.apache.org/2.x/" target="_blank">Struts2</a>的集成包，采用Struts2约定的插件方式打包<br/>
-								(5) commontemplate-javascript-SNAPSHOT.jar 与<a href="http://java.sun.com/javase/6/docs/api/javax/script/package-summary.html" target="_blank">javax.script</a>的集成包，采用javax.script约定的自发现方式打包 <a href="javaxscript.html">集成说明...</a><br/>
+								(5) commontemplate-javaxscript-SNAPSHOT.jar 与<a href="http://java.sun.com/javase/6/docs/api/javax/script/package-summary.html" target="_blank">javax.script</a>的集成包，采用javax.script约定的自发现方式打包 <a href="javaxscript.html">集成说明...</a><br/>
 								<font color="green">(注：每日构建版本可以使用所有最新功能特性，但也可能出现不稳定问题)</font><br/>
 								<br/>
 								<b>三、源码控制 (SVN)</b><br/>

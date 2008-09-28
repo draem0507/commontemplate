@@ -1,21 +1,22 @@
-package org.commontemplate.standard.operator.collection;
+package org.commontemplate.standard.operator.map;
 
 import junit.framework.TestCase;
 
 import org.commontemplate.config.BinaryOperatorHandler;
+import org.commontemplate.standard.operator.map.EntryOperatorHandler;
 import org.commontemplate.util.MapEntry;
 /**
  * LiteralEntryOperatorHandler 的测试。
  * @author YanRong
  *
  */
-public class LiteralEntryOperatorHandlerTester extends TestCase {
+public class EntryOperatorHandlerTester extends TestCase {
 
 	BinaryOperatorHandler handler;
 	
 	public void setUp() {
 
-		handler = new LiteralEntryOperatorHandler();
+		handler = new EntryOperatorHandler();
 	}
 	
 	/**

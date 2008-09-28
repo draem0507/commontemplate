@@ -25,13 +25,31 @@ $!
 								<b>4. 关键字：</b>表示特殊值 <font color="green">(注：不可以作为变量名)</font> <a href="extension.html#keywords">配置...</a><br/>
 								null 空值<br/>
 								true, false 布尔值<br/>
-								this 代表当前LocalContext<br/>
-								super 代表上级LocalContext<br/>
-								context 代表当前Context<br/>
-								<b>5. 操作符关键字： <font color="green">(注：不可以作为变量名)</font></b><br/>
+								this 代表当前区域<br/>
+								super 代表上级区域<br/>
+								<b>5. 操作符关键字：</b> <font color="green">(注：不可以作为变量名)</font><br/>
 								new 一元操作符(优先于变量)<br/>
+								<b>6. 区域特殊变量：</b> <a href="extension.html#scope">扩展...</a><br/>
+								this.global 代表当前GlobalContext<br/>
+								this.context 代表当前Context<br/>
+								this.root 代表当前RootContext<br/>
+								this.local 代表当前LocalContext<br/>
+								this.template 代表当前Template<br/>
+								this.element 代表当前Element<br/>
+								如果模板中没有同名变量，this前缀可省。<br/>
+								super.super 代表上级的上级(可递归)<br/>
+								super.local 代表变量栈的上级LocalContext<br/>
+								super.template 代表包含关系的上级Template，如果当前模板未被其它模板所包含，则为null<br/>
+								super.element 代表上级Element，通常为BlockDirective<br/>
 								<br/>
-								<b>三. 标准操作符:</b> <a href="extension.html#operator">扩展...</a><br/>
+								<b>三. 变量区间:</b><br/>
+								页面内的每一个块指令(如$if,$for等)都会创建相应的LocalContext, 变量取值时逐级向上查找, <br/>
+								如果当前LocalContext中的变量与上级变量重名，可以使用super关键字跳到上级取值，如：${super.var}<br/>
+								Web应用中变量查找顺序：页面内, root, model, request, parameter, header, session, cookie, application, global<br/>
+								可以用context["区域名"]在指定范围内查找，如：${context["session"].loginUser}<br/>
+								另外，也可以用context["指令名"]查找最近的某个块指令区域内的变量，如：${context["for"].xxx} ${context["if"].xxx}<br/>
+								<br/>
+								<b>四. 标准操作符:</b> <a href="extension.html#operator">扩展...</a><br/>
 								<b>(1) 对象(Object)：</b><br/>
 								. 点号, 属性取值, 如: ${user.name}<br/>
 								[ ] 方括号, 索引属性, 如: ${user["name"]} ${user[variable]}<br/>
@@ -142,7 +160,7 @@ $!
 								<b>(7) 系统(System)：</b><br/>
 								. 一元点号，取系统属性，如：${.now} ${.random} ${.uuid} ${.system.currentTimeMillis} ${.system.properties["user.dir"]} ${.engine.version} ${.engine.released} ${.engine.vendor} <br/>
 								<br/>
-								<b>四. 操作符结合律及优先级</b><br/>
+								<b>五. 操作符结合律及优先级</b><br/>
 								<b>结合律：</b><font color="green">(注：可以用括号改变结合)</font><br/>
 								优先级高的先结合，<br/>
 								一元操作符之间总是从右到左结合，<br/>
@@ -174,7 +192,7 @@ $!
 									一元：".", "[ ]", "\", "&", "$", "max", "min", "sum", "avg"<br/>
 									"( )"<br/>
 								<br/>
-								<b>五. 对象属性及扩展属性</b> <a href="extension.html#property">扩展...</a><br/>
+								<b>六. 对象属性及扩展属性</b> <a href="extension.html#property">扩展...</a><br/>
 								<b>属性调用格式</b><br/>
 								${对象.属性}<br/>
 								<b>属性查找顺序</b><br/>
@@ -271,7 +289,7 @@ $!
 								size 数组长度，保持与List统一，如：${arr.size}<br/>
 								sort 数组或List排序，如：${arr.sort} ${list.sort} ${['f','a','d'].sort} <font color="green">(注：集合中的项需实现Comparable接口)</font><br/>
 								<br/>
-								<b>六. 对象函数及扩展函数</b> <a href="extension.html#function">扩展...</a><br/>
+								<b>七. 对象函数及扩展函数</b> <a href="extension.html#function">扩展...</a><br/>
 								<b>函数调用格式</b><br/>
 								${对象.函数(参数1, 参数2)}<br/>
 								<font color="green">(注：不允许调用返回类型为void的函数)</font><br/>
@@ -299,14 +317,14 @@ $!
 								${"ab.cd.ef" / "."} 等价于 ${"ab.cd.ef".split("\\.")}<br/>
 								${"abcdefghijk" % 6} 等价于 ${"abcdefghijk".abbreviate(6)}<br/>
 								<br/>
-								<b>七. 序列扩展</b> <a href="extension.html#sequence">扩展...</a><br/>
+								<b>八. 序列扩展</b> <a href="extension.html#sequence">扩展...</a><br/>
 								(1) 数字: ${1 .. 20} ${20 .. -12}<br/>
 								(2) 字母: ${'a' .. 'z'} ${'z' .. 'a'} ${'A' .. 'Z'} ${'b' .. 'k'}<br/>
 								(3) 季度: ${"Spring" .. "Winter"}<br/>
 								(4) 月份: ${"January" .. "December"}<br/>
 								(5) 星期: ${"Sunday" .. "Saturday"}<br/>
 								<br/>
-								<b>八. 遗留：</b> <font color="green">(注: 将在1.0版本统一删除)</font><br/>
+								<b>九. 遗留：</b> <font color="green">(注: 将在1.0版本统一删除)</font><br/>
 								(1) @ 一元操作符<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">起止版本：</font>0.8.3加入，0.8.5废弃<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;<font color="gray">废弃原因：</font>用动态操作符实现不转义字符串有BUG，并且不希望特殊化@操作符<br/>

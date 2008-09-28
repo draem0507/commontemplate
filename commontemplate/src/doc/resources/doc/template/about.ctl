@@ -2,18 +2,26 @@
 	<!--$zone{"content"}-->
 								<b>1. $msg{'page.about.developer.team'}</b> <a href="join.html">$msg{'page.about.join.develop'}...</a><br/>
 								<b>$msg{'page.about.developer.liangfei'}</b><br/>
+								$msg{'page.about.responsibility.liangfei'}<br/>
 								Email/MSN: <img src="../images/mail/mail_lf.gif" border="0" /><br/>
 								QQ: 229056138<br/>
 								Blog: <a href="http://javatar.javaeye.com/" target="_blank">http://javatar.javaeye.com</a><br/>
 								<b>$msg{'page.about.developer.yananay'}</b><br/>
+								$msg{'page.about.responsibility.yananay'}<br/>
 								Email: <img src="../images/mail/mail_yr.gif" border="0" /><br/>
 								Blog: <a href="http://yananay.javaeye.com/" target="_blank">http://yananay.javaeye.com</a><br/>
 								<b>$msg{'page.about.developer.guileen'}</b><br/>
+								$msg{'page.about.responsibility.guileen'}<br/>
 								Email/MSN: <img src="../images/mail/mail_gl.gif" border="0" /><br/>
 								Blog: <a href="http://jasongreen.javaeye.com/" target="_blank">http://jasongreen.javaeye.com</a><br/>
+								<b>$msg{'page.about.developer.srdrm'}</b><br/>
+								$msg{'page.about.responsibility.srdrm'}<br/>
+								Email/MSN: <img src="../images/mail/mail_wyz.gif" border="0" /><br/>
+								Blog: <a href="http://srdrm.javaeye.com/" target="_blank">http://srdrm.javaeye.com</a><br/>
 								<br/>
-								<b>2. $msg{'page.about.open.design.group'}</b><br/>
-								$msg{'page.about.qq.group'}: 38918204<br/>
+								<b>2. $msg{'page.about.group'}</b><br/>
+								Group Email: <img src="../images/mail/mail_ct.gif" border="0" /><br/>
+								QQ Group: 38918204<br/>
 								<br/>
 								<b>3. $msg{'page.about.contributor.list'}</b><br/>
 								<b>Saro</b><br/>

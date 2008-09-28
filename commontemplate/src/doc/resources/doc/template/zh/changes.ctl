@@ -38,8 +38,13 @@ $!
 								增加与JDK1.6中的javax.script的脚本引擎集成. <a href="javaxscript.html">脚本引擎集成...</a><br/>
 								增加Object[].asList扩展属性, 数组转列表.<br/>
 								增加与JCache的集成适配. <a href="cache.html">缓存集成...</a><br/>
-								将log相应类从standard包移至util包.<br/>
+								将log相应类从standard包移至util包，并增加对Log4J, Avalon, SLF4J, JDKLogging等的集成. <a href="logger.html">日志集成...</a><br/>
+								补全List有，而Array没有的操作符，使Array和List的处理一致，如："~","!~","orderby"等.<br/>
+								引擎分层结构增加ResourceEngine,处理资源加载与缓存.<br/>
+								增加与Map接口适配的ExpressionContext,方便表达式引擎使用.<br/>
+								修改属性语法外套在处理HTML注释时空指针异常，并重新简化实现属性语法外套.<br/>
 								-----------------<br/>
+								感谢吴勇智加入开发插件.<br/>
 								感谢JRest4Guice开发小组的支持.<br/>
 								<br/>
 								<b>0.8.6 版本更新：(2008-08-26)</b> <a href="downloads.html">下载...</a><br/>
@@ -166,7 +171,7 @@ $!
 								core包增加ExpressionFactory, ExpressionBuilder, TemplateElementFactory, TemplateBuidler, 使第三方工具能脱离模板解析过程构建模板.<br/>
 								Element增加getTemplate(),获取元素所在模板的引用.<br/>
 								------------<br/>
-								感谢Guileen参与开发<br/>
+								感谢Guileen加入开发<br/>
 								<br/>
 								<b>0.8.3 版本更新：(2008-03-30)</b> <a href="downloads.html">下载...</a><br/>
 								此版本新功能较少, 主要为加强测试与BUG修复. <br/>

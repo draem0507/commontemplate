@@ -10,10 +10,10 @@ import org.commontemplate.standard.operator.BinaryOperatorHandlerTester;
  * @author YanRong
  *
  */
-public class NotContainOperatorHandlerTester extends BinaryOperatorHandlerTester {
+public class CollectionNotContainOperatorHandlerTester extends BinaryOperatorHandlerTester {
 
 	protected BinaryOperatorHandler newBinaryOperatorHandler() {
-		return new NotContainOperatorHandler();
+		return new CollectionNotContainOperatorHandler();
 	}
 	
 	/**

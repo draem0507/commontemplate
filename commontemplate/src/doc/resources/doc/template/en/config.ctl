@@ -21,7 +21,7 @@ virtualDirectory=<font color="#2a00ff">WEB-INF/views/</font><br/>
 modificationCheckInterval=<font color="#2a00ff">30000</font><br/>
 <br/>
 loggerProvider=<font color="#2a00ff">org.commontemplate.util.log.SimpleLoggerProvider()</font><br/>
-<font color="#3f7f5f">#loggerProvider=org.commontemplate.util.log.CommonsLoggingProvider()</font><br/>
+<font color="#3f7f5f">#loggerProvider=org.commontemplate.util.log.CommonsLoggerProvider()</font><br/>
 <br/>
 diskCache.directory=<font color="#2a00ff">WEB-INF/cache/</font><br/>
 <br/>

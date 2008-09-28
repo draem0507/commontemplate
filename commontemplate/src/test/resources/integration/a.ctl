@@ -1,2 +1,1 @@
-aa
 $embed{"b.ctl"}

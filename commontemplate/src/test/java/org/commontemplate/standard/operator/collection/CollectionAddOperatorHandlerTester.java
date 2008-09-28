@@ -14,13 +14,13 @@ import org.commontemplate.config.BinaryOperatorHandler;
  * @author YanRong
  *
  */
-public class ListAddOperatorHandlerTester extends TestCase {
+public class CollectionAddOperatorHandlerTester extends TestCase {
 
 	BinaryOperatorHandler handler;
 	
 	public void setUp() {
 
-		handler = new ListAddOperatorHandler();
+		handler = new CollectionAddOperatorHandler();
 	}
 	
 	/**

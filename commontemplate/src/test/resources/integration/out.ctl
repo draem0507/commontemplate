@@ -1,1 +1,1 @@
-$log{"aa"}
+${context.debug}

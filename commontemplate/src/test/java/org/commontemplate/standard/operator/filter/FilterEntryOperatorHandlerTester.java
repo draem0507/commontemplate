@@ -1,4 +1,4 @@
-package org.commontemplate.standard.operator.collection;
+package org.commontemplate.standard.operator.filter;
 
 import junit.framework.TestCase;
 
@@ -10,6 +10,7 @@ import org.commontemplate.core.Expression;
 import org.commontemplate.core.ExpressionVisitor;
 import org.commontemplate.standard.operator.BinaryOperatorHandlerChain;
 import org.commontemplate.standard.operator.LazyOperandMock;
+import org.commontemplate.standard.operator.filter.Filter;
 import org.commontemplate.tools.PropertiesConfigurationLoader;
 import org.commontemplate.util.Location;
 /**

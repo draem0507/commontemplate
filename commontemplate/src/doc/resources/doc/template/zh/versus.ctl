@@ -8,7 +8,7 @@ $!
 								CommonTemplate的设计目标是高度可扩展和功能完备，所以它提供较多的扩展点。<br/>
 								<br/>
 								<a name="velocity" /><b>2. 与Velocity特性对比清单</b><br/>
-								Velocity项目地址：<a href="http://velocity.apache.org">http://velocity.apache.org</a> (Apache一级项目)<br/>
+								Velocity项目地址：<a href="http://velocity.apache.org">http://velocity.apache.org</a><br/>
 								Java Side:<br/>
 								Velocity只支持Tools扩展, 可外部扩展函数.<br/>
 								Velocity未作微核处理, 第三方包扩展较困难.<br/>

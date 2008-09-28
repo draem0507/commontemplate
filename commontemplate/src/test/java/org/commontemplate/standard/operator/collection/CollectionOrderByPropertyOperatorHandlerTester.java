@@ -13,13 +13,13 @@ import junit.framework.TestCase;
  * @author YanRong
  *
  */
-public class OrderByPropertyOperatorHandlerTester extends TestCase {
+public class CollectionOrderByPropertyOperatorHandlerTester extends TestCase {
 
 	BinaryOperatorHandler handler;
 	
 	public void setUp() {
 
-		handler = new OrderByPropertyOperatorHandler();
+		handler = new CollectionOrderByPropertyOperatorHandler();
 	}
 	
 	/**

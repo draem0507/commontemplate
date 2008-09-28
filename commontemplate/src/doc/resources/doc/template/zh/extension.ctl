@@ -1,7 +1,7 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
 	<!--$zone{"content"}-->
 $!
-								<b>一. 扩展总接口</b><br/>
+								<b>一. 扩展总接口</b> <a href="architecture.html">整体设计...</a><br/>
 								org.commontemplate.config.Configuration<br/>
 								配置总接口，通过getXXX方式向引擎提供配置<br/>
 								org.commontemplate.standard.ConfigurationSettings<br/>
@@ -170,13 +170,22 @@ $!
 								keywords.null="null"<br/>
 								keywords.true="true"<br/>
 								keywords.false="false"<br/>
-								keywords.currentLocalContext=this<br/>
-								keywords.parentLocalContext=super<br/>
-								keywords.context=context<br/>
+								keywords.current="this"<br/>
+								keywords.parent="super"<br/>
 								默认使用：<br/>
 								Keywords.DEFAULT<br/>
 								<br/>
-								<a name="directive"/><b>14. 指令扩展</b><br/>
+								<a name="scope"/><b>14. 区域变量扩展</b><br/>
+								相关接口：<br/>
+								org.commontemplate.config.ScopeHandler<br/>
+								注册方法：<br/>
+								addScopeHandler(name, ScopeHandler)<br/>
+								配置方法：<br/>
+								scopeHandler{xxx}=com.xxx.XXXScopeHandler()<br/>
+								参考实现：<br/>
+								org.commontemplate.standard.scope包下相关类<br/>
+								<br/>
+								<a name="directive"/><b>15. 指令扩展</b><br/>
 								相关接口和基类：<br/>
 								org.commontemplate.config.DirectiveHandler<br/>
 								org.commontemplate.config.BlockDirectiveHandler<br/>
@@ -203,7 +212,7 @@ $!
 								(b) 表达式是否必需：<br/>
 								如果处理类的isExpressionRequired()方法返回true，表示当指令必需有表达式，否则报错。<br/>
 								<br/>
-								<a name="operator"/><b>15. 操作符扩展</b><br/>
+								<a name="operator"/><b>16. 操作符扩展</b><br/>
 								相关接口和基类：<br/>
 								org.commontemplate.config.BinaryOperatorHandler<br/>
 								org.commontemplate.config.UnaryOperatorHandler<br/>
@@ -255,7 +264,7 @@ $!
 								当操作数都为常量时，编译器会在编译期求值，并保存到表达式树，操符符应保证传入相同的参数，总是得到相同的结果<br/>
 								如果不希望被优化，覆写isOptimize()方法，使其返回false<br/>
 								<br/>
-								<a name="property"/><b>16. 属性扩展</b><br/>
+								<a name="property"/><b>17. 属性扩展</b><br/>
 								用于为"."点号操作符提供数据<br/>
 								属性调用方式如: ${bean.property}<br/>
 								静态属性调用方式如: ${.now}<br/>
@@ -271,7 +280,7 @@ $!
 								参考实现：<br/>
 								org.commontemplate.standard.property包及其子包相关类<br/>
 								<br/>
-								<a name="function"/><b>17. 方法扩展</b><br/>
+								<a name="function"/><b>18. 方法扩展</b><br/>
 								用于为"."点号操作符提供数据，并且只有在配置functionAvailable=true时才有效<br/>
 								方法调用方式如: ${obj.func(arg1,arg2)}<br/>
 								静态方法调用方式如: ${.func(arg1,arg2)}<br/>
@@ -287,7 +296,7 @@ $!
 								参考实现：<br/>
 								org.commontemplate.standard.function包及其子包相关类<br/>
 								<br/>
-								<a name="sequence"/><b>18. 序列扩展</b><br/>
+								<a name="sequence"/><b>19. 序列扩展</b><br/>
 								用于为".."双点号操作符提供数据<br/>
 								相关接口：<br/>
 								org.commontemplate.standard.operator.sequence.StringSequenceOperatorHandler<br/>
@@ -300,7 +309,7 @@ $!
 								参考实现：<br/>
 								org.commontemplate.standard.operator.sequence包下相关类<br/>
 								<br/>
-								<a name="message"/><b>19. 国际化扩展</b><br/>
+								<a name="message"/><b>20. 国际化扩展</b><br/>
 								用于为$msg或$message指令提供国际化信息内容<br/>
 								相关接口：<br/>
 								org.commontemplate.standard.i18n.ResourceBundleProvider<br/>
@@ -313,17 +322,17 @@ $!
 								参考实现：<br/>
 								org.commontemplate.standard.i18n.PropertiesResourceBundleProvider<br/>
 								<br/>
-								<a name="logger"/><b>20. 日志扩展</b><br/>
+								<a name="logger"/><b>21. 日志扩展</b><br/>
 								用于$log指令的输出.<br/>
 								相关接口：<br/>
 								org.commontemplate.util.log.LoggerProvider<br/>
 								org.commontemplate.util.log.Logger<br/>
 								配置方法：<br/>
-								loggerProvider=org.commontemplate.standard.log.CommonsLoggingProvider()<br/>
+								loggerProvider=org.commontemplate.standard.log.CommonsLoggerProvider()<br/>
 								参考实现：<br/>
 								org.commontemplate.util.log包下相关类<br/>
 								<br/>
-								<a name="converter"/><b>21. 迭代数据集合转换器扩展</b><br/>
+								<a name="converter"/><b>22. 迭代数据集合转换器扩展</b><br/>
 								用于为"$for"指令提供迭代数据<br/>
 								相关接口和基类：<br/>
 								org.commontemplate.standard.collection.CollectionConverter<br/>
@@ -332,7 +341,7 @@ $!
 								参考实现：<br/>
 								org.commontemplate.standard.collection包下相关类<br/>
 								<br/>
-								<a name="data"/><b>22. 数据加载类型扩展</b><br/>
+								<a name="data"/><b>23. 数据加载类型扩展</b><br/>
 								用于为"$data"指令提供数据<br/>
 								相关接口和基类：<br/>
 								org.commontemplate.standard.data.DataProvider<br/>
@@ -343,7 +352,7 @@ $!
 								参考实现：<br/>
 								org.commontemplate.standard.data包下相关类<br/>
 								<br/>
-								<a name="code"/><b>23. 代码过滤扩展</b><br/>
+								<a name="code"/><b>24. 代码过滤扩展</b><br/>
 								用于为"$code"指令提供过滤器<br/>
 								相关接口和基类：<br/>
 								org.commontemplate.core.OutputFilter<br/>
@@ -352,7 +361,7 @@ $!
 								参考实现：<br/>
 								org.commontemplate.standard.directive.filter.code包下相关类<br/>
 								<br/>
-								<a name="escape"/><b>24. 转义过滤扩展</b><br/>
+								<a name="escape"/><b>25. 转义过滤扩展</b><br/>
 								用于为"$escape"指令提供过滤器<br/>
 								相关接口和基类：<br/>
 								org.commontemplate.core.OutputFilter<br/>
