@@ -43,6 +43,8 @@ $!
 								引擎分层结构增加ResourceEngine,处理资源加载与缓存.<br/>
 								增加与Map接口适配的ExpressionContext,方便表达式引擎使用.<br/>
 								修改属性语法外套在处理HTML注释时空指针异常，并重新简化实现属性语法外套.<br/>
+								重新实现this和super语义, 并增加ScopeHandler扩展点.<br/>
+								修复orderby操作符PropertyComparator值覆盖的BUG.<br/>
 								-----------------<br/>
 								感谢吴勇智加入开发插件.<br/>
 								感谢JRest4Guice开发小组的支持.<br/>
