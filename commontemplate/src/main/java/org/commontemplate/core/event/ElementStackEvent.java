@@ -3,7 +3,7 @@ package org.commontemplate.core.event;
 import org.commontemplate.core.Event;
 import org.commontemplate.core.Element;
 
-public class ElementStackEvent extends Event {
+public abstract class ElementStackEvent extends Event {
 
 	private static final long serialVersionUID = 1L;
 
