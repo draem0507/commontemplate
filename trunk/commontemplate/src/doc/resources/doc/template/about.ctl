@@ -113,7 +113,7 @@
 								CommonTemplate: <a href="http://www.commontemplate.org">http://www.commontemplate.org</a><br/>
 								Jwebap: <a href="http://jwebap.sourceforge.net">http://jwebap.sourceforge.net</a><br/>
 								EasyJF: <a href="http://www.easyjf.com">http://www.easyjf.com</a><br/>
-								Jrest4Guice: <a href="http://code.google.com/p/jrest4guice">http://code.google.com/p/jrest4guice</a><br/>
+								JRest4Guice: <a href="http://code.google.com/p/jrest4guice">http://code.google.com/p/jrest4guice</a><br/>
 								......<br/>
 	<!--$end-->
 <!--$end-->
