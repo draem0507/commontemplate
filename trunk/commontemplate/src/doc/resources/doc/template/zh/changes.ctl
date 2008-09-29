@@ -46,6 +46,8 @@ $!
 								重新实现this和super语义, 并增加ScopeHandler扩展点.<br/>
 								修复orderby操作符PropertyComparator值覆盖的BUG.<br/>
 								修复${super.super.for}，在$for指令嵌套$if指令时，将$if指令也作为一层super的BUG.<br/>
+								修复${super.super.for}，在$for指令嵌套$if指令时，将$if指令也作为一层super的BUG.<br/>
+								完成TemplateRenderTask，使用户可以通过ant调用模板解析任务。<a href="renderer.html">模板渲染器说明...</a><br/>
 								-----------------<br/>
 								感谢吴勇智加入开发插件.<br/>
 								感谢<a href="http://code.google.com/p/jrest4guice">JRest4Guice</a>开发小组的支持.<br/>
