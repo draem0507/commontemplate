@@ -14,7 +14,7 @@ public interface ScopeHandler {
 	 * 获取区域变量
 	 *
 	 * @param context 上下文信息
-	 * @param level 区域级别
+	 * @param level 区域级别, 每一次super, level都会增一
 	 * @return 变量值
 	 */
 	Object getScopeVariable(Context context, int level);

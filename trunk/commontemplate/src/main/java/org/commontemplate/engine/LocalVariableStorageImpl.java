@@ -11,8 +11,10 @@ import org.commontemplate.config.Keywords;
 import org.commontemplate.config.ScopeHandler;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.GlobalContext;
+import org.commontemplate.core.InvaildVariableNameException;
 import org.commontemplate.core.LocalContext;
 import org.commontemplate.core.ReadonlyException;
+import org.commontemplate.core.UndefinedException;
 import org.commontemplate.core.VariableException;
 import org.commontemplate.core.event.VariableChangedEvent;
 import org.commontemplate.util.Assert;
@@ -48,7 +50,7 @@ final class LocalVariableStorageImpl extends VariableStorageSupport {
 	private final Set readonlyContainer = new HashSet();
 
 	// 变量容器只读锁
-	private boolean lock = false;
+	private boolean readonly = false;
 
 	LocalVariableStorageImpl(LocalContext superLocalContext, Map variablesContainer, Context context, Keywords keywords, Map scopeHandlers) {
 		super(keywords);
@@ -87,7 +89,7 @@ final class LocalVariableStorageImpl extends VariableStorageSupport {
 
 	public void putVariable(String name, Object value) throws VariableException {
 		assertVariableName(name);
-		if (lock)
+		if (readonly)
 			throw new ReadonlyException(name, "LocalVariableStorageImpl.locked.error");
 		if (readonlyContainer.contains(name))
 			throw new ReadonlyException(name, "LocalVariableStorageImpl.readonly.error");
@@ -112,7 +114,7 @@ final class LocalVariableStorageImpl extends VariableStorageSupport {
 				Object key = entry.getKey();
 				Object value = entry.getValue();
 				if (! (key instanceof String))
-					throw new VariableException(String.valueOf(key), "LocalVariableStorageImpl.variable.type.error");
+					throw new InvaildVariableNameException(String.valueOf(key), "LocalVariableStorageImpl.variable.type.error");
 				String name = (String)key;
 				putVariable(name, value);
 			}
@@ -131,16 +133,12 @@ final class LocalVariableStorageImpl extends VariableStorageSupport {
 		aliasContainer.remove(alias);
 	}
 
-	public boolean isVariablesLocked() {
-		return lock;
+	public boolean isVariablesReadonly() {
+		return readonly;
 	}
 
-	public void lockVariables() {
-		this.lock = true;
-	}
-
-	public void unlockVariables() {
-		lock = false;
+	public void setVariablesReadonly(boolean readonly) {
+		this.readonly = readonly;
 	}
 
 	public void setVariable(String name, Object value) throws VariableException {
@@ -160,16 +158,17 @@ final class LocalVariableStorageImpl extends VariableStorageSupport {
 		if (keywords.getCurrentKeyword().equals(name))
 			return new Scope(scopeHandlers, keywords, context, 0);
 		assertVariableName(name);
-		Object obj = _getVariable(name);
-		if (obj == null) {
+		try {
+			return _getVariable(name);
+		} catch (UndefinedException e) {
 			if (scopeHandlers != null) {
 				ScopeHandler scopeHandler = (ScopeHandler)scopeHandlers.get(name);
 				if (scopeHandler != null) {
 					return scopeHandler.getScopeVariable(context, 0);
 				}
 			}
+			return null;
 		}
-		return obj;
 	}
 
 	private Object _getVariable(String name) throws VariableException {
@@ -187,7 +186,7 @@ final class LocalVariableStorageImpl extends VariableStorageSupport {
 
 	public void removeVariable(String name) throws VariableException {
 		assertVariableName(name);
-		if (lock)
+		if (readonly)
 			throw new ReadonlyException(name, "LocalVariableStorageImpl.locked.error");
 		Object old = variablesContainer.get(name);
 		variablesContainer.remove(name); // 移除变量
@@ -202,7 +201,7 @@ final class LocalVariableStorageImpl extends VariableStorageSupport {
 	}
 
 	public void clearVariables() {
-		unlockVariables();
+		setVariablesReadonly(false);
 		variablesContainer.clear();
 		aliasContainer.clear();
 		readonlyContainer.clear();
@@ -212,38 +211,38 @@ final class LocalVariableStorageImpl extends VariableStorageSupport {
 		return Collections.unmodifiableMap(variablesContainer);
 	}
 
-	public Map getExistedVariables() {
+	public Map getDefinedVariables() {
 		Map map = new HashMap();
 		if (superLocalContext != null)
-			map.putAll(superLocalContext.getExistedVariables());
+			map.putAll(superLocalContext.getDefinedVariables());
 		else
-			map.putAll(globalContext.getExistedVariables());
+			map.putAll(globalContext.getDefinedVariables());
 		map.putAll(variablesContainer);
 		return Collections.unmodifiableMap(map);
 	}
 
-	public boolean isVariableExisted(String name) throws VariableException {
+	public boolean isVariableDefined(String name) throws VariableException {
 		if (isVariableContained(name))
 			return true;
 		if (superLocalContext != null)
-			return superLocalContext.isVariableExisted(name);
-		return globalContext.isVariableExisted(name);
+			return superLocalContext.isVariableDefined(name);
+		return globalContext.isVariableDefined(name);
 	}
 
-	public void clearExistedVariables() {
+	public void clearDefinedVariables() {
 		clearVariables();
 		if (superLocalContext != null)
-			superLocalContext.clearExistedVariables();
+			superLocalContext.clearDefinedVariables();
 		else
-			globalContext.clearExistedVariables();
+			globalContext.clearDefinedVariables();
 	}
 
-	public void removeExistedVariable(String name) throws VariableException {
+	public void removeDefinedVariable(String name) throws VariableException {
 		removeVariable(name);
 		if (superLocalContext != null)
-			superLocalContext.removeExistedVariable(name);
+			superLocalContext.removeDefinedVariable(name);
 		else
-			globalContext.removeExistedVariable(name);
+			globalContext.removeDefinedVariable(name);
 	}
 
 }

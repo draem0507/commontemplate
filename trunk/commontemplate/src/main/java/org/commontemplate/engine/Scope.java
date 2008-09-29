@@ -27,17 +27,12 @@ class Scope implements Map {
 		this.level = level;
 	}
 
-	private BaseContext local() {
+	private LocalContext local() {
 		if (level == 0)
 			return context.getCurrentLocalContext();
-		LocalContext root = context.getRootLocalContext();
 		LocalContext local = context.getCurrentLocalContext();
-		for (int i = 0; i < level; i ++) {
+		for (int i = 0; i < level && local != null; i ++) {
 			local = local.getParentLocalContext();
-			if (local == root)
-				return root;
-			if (local == null)
-				return context.getGlobalContext();
 		}
 		return local;
 	}
@@ -55,7 +50,7 @@ class Scope implements Map {
 		}
 		BaseContext local = local();
 		if (local == null)
-			return null;
+			return context.getGlobalContext().get(key);
 		return local.get(key);
 	}
 

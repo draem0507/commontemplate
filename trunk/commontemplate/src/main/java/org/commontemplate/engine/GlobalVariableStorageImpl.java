@@ -8,7 +8,9 @@ import java.util.Map;
 import java.util.Set;
 
 import org.commontemplate.config.Keywords;
+import org.commontemplate.core.InvaildVariableNameException;
 import org.commontemplate.core.ReadonlyException;
+import org.commontemplate.core.UndefinedException;
 import org.commontemplate.core.VariableException;
 
 /**
@@ -31,22 +33,18 @@ final class GlobalVariableStorageImpl extends VariableStorageSupport {
 	private final Set readonlyContainer = new HashSet();
 
 	// 变量容器只读锁
-	private boolean lock = false;
+	private boolean readonly = false;
 
 	GlobalVariableStorageImpl(Keywords keywords) {
 		super(keywords);
 	}
 
-	public synchronized void lockVariables() {
-		this.lock = true;
+	public synchronized void setVariablesReadonly(boolean readonly) {
+		this.readonly = readonly;
 	}
 
-	public synchronized void unlockVariables() {
-		this.lock = false;
-	}
-
-	public synchronized boolean isVariablesLocked() {
-		return lock;
+	public synchronized boolean isVariablesReadonly() {
+		return readonly;
 	}
 
 	public synchronized boolean isVariableContained(String name) throws VariableException {
@@ -57,7 +55,7 @@ final class GlobalVariableStorageImpl extends VariableStorageSupport {
 	public synchronized void putVariable(String name, Object value)
 			throws VariableException {
 		assertVariableName(name);
-		if (lock)
+		if (readonly)
 			throw new ReadonlyException(name, "GlobalVariableStorageImpl.locked.error");
 		if (readonlyContainer.contains(name))
 			throw new ReadonlyException(name, "GlobalVariableStorageImpl.readonly.error");
@@ -81,7 +79,7 @@ final class GlobalVariableStorageImpl extends VariableStorageSupport {
 				Object key = entry.getKey();
 				Object value = entry.getValue();
 				if (! (key instanceof String))
-					throw new VariableException(String.valueOf(key), "GlobalVariableStorageImpl.variable.type.error");
+					throw new InvaildVariableNameException(String.valueOf(key), "GlobalVariableStorageImpl.variable.type.error");
 				String name = (String)key;
 				putVariable(name, value);
 			}
@@ -98,7 +96,7 @@ final class GlobalVariableStorageImpl extends VariableStorageSupport {
 	public synchronized void setVariable(String name, Object value)
 			throws VariableException {
 		if (isVariableContained(name)) {
-			if (lock)
+			if (readonly)
 				throw new ReadonlyException(name, "GlobalVariableStorageImpl.locked.error");
 			variablesContainer.put(name, value);
 		}
@@ -106,6 +104,8 @@ final class GlobalVariableStorageImpl extends VariableStorageSupport {
 
 	public synchronized Object getVariable(String name) throws VariableException {
 		assertVariableName(name);
+		if (! variablesContainer.containsKey(name))
+			throw new UndefinedException(name);
 		return variablesContainer.get(name);
 	}
 
@@ -120,7 +120,7 @@ final class GlobalVariableStorageImpl extends VariableStorageSupport {
 
 	public synchronized void removeVariable(String name) throws VariableException {
 		assertVariableName(name);
-		if (lock)
+		if (readonly)
 			throw new ReadonlyException(name, "GlobalVariableStorageImpl.locked.error");
 		variablesContainer.remove(name);
 		readonlyContainer.remove(name);
@@ -133,25 +133,25 @@ final class GlobalVariableStorageImpl extends VariableStorageSupport {
 	}
 
 	public synchronized void clearVariables() {
-		unlockVariables();
+		setVariablesReadonly(false);
 		variablesContainer.clear();
 		aliasContainer.clear();
 		readonlyContainer.clear();
 	}
 
-	public synchronized Map getExistedVariables() {
+	public synchronized Map getDefinedVariables() {
 		return getVariables();
 	}
 
-	public synchronized boolean isVariableExisted(String name) throws VariableException {
+	public synchronized boolean isVariableDefined(String name) throws VariableException {
 		return isVariableContained(name);
 	}
 
-	public synchronized void clearExistedVariables() {
+	public synchronized void clearDefinedVariables() {
 		clearVariables();
 	}
 
-	public synchronized void removeExistedVariable(String name) throws VariableException {
+	public synchronized void removeDefinedVariable(String name) throws VariableException {
 		removeVariable(name);
 	}
 

@@ -9,7 +9,7 @@ import org.apache.tools.ant.taskdefs.MatchingTask;
  * @author liangfei0201@163.com
  *
  */
-public class TemplateConverterTask extends MatchingTask {
+public class TemplateConvertTask extends MatchingTask {
 
 	public void execute() throws BuildException {
 		// TODO 实现模板转换Ant任务

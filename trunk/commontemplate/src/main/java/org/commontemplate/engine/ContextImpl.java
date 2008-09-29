@@ -313,12 +313,12 @@ final class ContextImpl extends Context {
 
 	// 代理 VariableStorage ------------
 
-	public Map getExistedVariables() {
-		return getCurrentLocalContext().getExistedVariables();
+	public Map getDefinedVariables() {
+		return getCurrentLocalContext().getDefinedVariables();
 	}
 
-	public boolean isVariableExisted(String name) throws VariableException {
-		return getCurrentLocalContext().isVariableExisted(name);
+	public boolean isVariableDefined(String name) throws VariableException {
+		return getCurrentLocalContext().isVariableDefined(name);
 	}
 
 	public boolean isVariableContained(String name) throws VariableException {
@@ -369,24 +369,20 @@ final class ContextImpl extends Context {
 		getCurrentLocalContext().putAllVariables(variables);
 	}
 
-	public void lockVariables() {
-		getCurrentLocalContext().lockVariables();
+	public void setVariablesReadonly(boolean readonly) {
+		getCurrentLocalContext().setVariablesReadonly(true);
 	}
 
-	public void unlockVariables() {
-		getCurrentLocalContext().unlockVariables();
+	public boolean isVariablesReadonly() {
+		return getCurrentLocalContext().isVariablesReadonly();
 	}
 
-	public boolean isVariablesLocked() {
-		return getCurrentLocalContext().isVariablesLocked();
+	public void clearDefinedVariables() {
+		getCurrentLocalContext().clearDefinedVariables();
 	}
 
-	public void clearExistedVariables() {
-		getCurrentLocalContext().clearExistedVariables();
-	}
-
-	public void removeExistedVariable(String name) throws VariableException {
-		getCurrentLocalContext().removeExistedVariable(name);
+	public void removeDefinedVariable(String name) throws VariableException {
+		getCurrentLocalContext().removeDefinedVariable(name);
 	}
 
 	// 代理 StatusStorage ----------

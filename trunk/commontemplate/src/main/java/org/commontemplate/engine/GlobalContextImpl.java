@@ -71,8 +71,8 @@ final class GlobalContextImpl extends GlobalContext {
 		return variableStorage.isVariableContained(name);
 	}
 
-	public void lockVariables() {
-		variableStorage.lockVariables();
+	public void setVariablesReadonly(boolean readonly) {
+		variableStorage.setVariablesReadonly(true);
 	}
 
 	public Object getVariable(String name) throws VariableException {
@@ -83,28 +83,24 @@ final class GlobalContextImpl extends GlobalContext {
 		variableStorage.removeVariable(name);
 	}
 
-	public void unlockVariables() {
-		variableStorage.unlockVariables();
+	public Map getDefinedVariables() {
+		return variableStorage.getDefinedVariables();
 	}
 
-	public Map getExistedVariables() {
-		return variableStorage.getExistedVariables();
+	public boolean isVariableDefined(String name) throws VariableException {
+		return variableStorage.isVariableDefined(name);
 	}
 
-	public boolean isVariableExisted(String name) throws VariableException {
-		return variableStorage.isVariableExisted(name);
+	public boolean isVariablesReadonly() {
+		return variableStorage.isVariablesReadonly();
 	}
 
-	public boolean isVariablesLocked() {
-		return variableStorage.isVariablesLocked();
+	public void clearDefinedVariables() {
+		variableStorage.clearDefinedVariables();
 	}
 
-	public void clearExistedVariables() {
-		variableStorage.clearExistedVariables();
-	}
-
-	public void removeExistedVariable(String name) throws VariableException {
-		variableStorage.removeExistedVariable(name);
+	public void removeDefinedVariable(String name) throws VariableException {
+		variableStorage.removeDefinedVariable(name);
 	}
 
 	// 状态管理 ------------

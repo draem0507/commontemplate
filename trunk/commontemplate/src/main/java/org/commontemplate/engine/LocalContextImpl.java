@@ -99,8 +99,8 @@ final class LocalContextImpl extends LocalContext {
 		return variableStorage.isVariableContained(name);
 	}
 
-	public void lockVariables() {
-		variableStorage.lockVariables();
+	public void setVariablesReadonly(boolean readonly) {
+		variableStorage.setVariablesReadonly(true);
 	}
 
 	public Object getVariable(String name) throws VariableException {
@@ -111,20 +111,16 @@ final class LocalContextImpl extends LocalContext {
 		variableStorage.removeVariable(name);
 	}
 
-	public void unlockVariables() {
-		variableStorage.unlockVariables();
+	public boolean isVariablesReadonly() {
+		return variableStorage.isVariablesReadonly();
 	}
 
-	public boolean isVariablesLocked() {
-		return variableStorage.isVariablesLocked();
+	public void clearDefinedVariables() {
+		variableStorage.clearDefinedVariables();
 	}
 
-	public void clearExistedVariables() {
-		variableStorage.clearExistedVariables();
-	}
-
-	public void removeExistedVariable(String name) throws VariableException {
-		variableStorage.removeExistedVariable(name);
+	public void removeDefinedVariable(String name) throws VariableException {
+		variableStorage.removeDefinedVariable(name);
 	}
 
 	// 状态管理 ---------------
@@ -199,12 +195,12 @@ final class LocalContextImpl extends LocalContext {
 		return propertyStorage.getProperties(type);
 	}
 
-	public Map getExistedVariables() {
-		return variableStorage.getExistedVariables();
+	public Map getDefinedVariables() {
+		return variableStorage.getDefinedVariables();
 	}
 
-	public boolean isVariableExisted(String name) throws VariableException {
-		return variableStorage.isVariableExisted(name);
+	public boolean isVariableDefined(String name) throws VariableException {
+		return variableStorage.isVariableDefined(name);
 	}
 
 	// 输出控制器 -------------

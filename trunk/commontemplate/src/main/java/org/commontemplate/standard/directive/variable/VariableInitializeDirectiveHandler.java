@@ -3,6 +3,7 @@ package org.commontemplate.standard.directive.variable;
 import java.util.Map.Entry;
 
 import org.commontemplate.core.Context;
+import org.commontemplate.core.UndefinedException;
 import org.commontemplate.standard.directive.DirectiveHandlerSupport;
 
 /**
@@ -19,7 +20,10 @@ public class VariableInitializeDirectiveHandler extends DirectiveHandlerSupport 
 		Entry model = (Entry)param;
 		String var = model.getKey().toString();
 		Object value = model.getValue();
-		if (context.getVariable(var) == null) {
+		try {
+			if (context.getVariable(var) == null)
+				context.putVariable(var, value);
+		} catch (UndefinedException e) {
 			context.putVariable(var, value);
 		}
 	}

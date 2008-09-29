@@ -47,8 +47,8 @@ $!
 								4.如果ClassPath根目录也没有，则使用标准配置：org/commontemplate/tools/web/commontemplate.properties<br/>
 								<font color="green">(注：如果自定义配置文件中未配置@extends项，则缺省为：@extends=org/commontemplate/tools/web/commontemplate.properties)</font><br/>
 								<br/>
-								<b>2. 与Struts集成</b><br/>
-								项目地址：<a href="http://struts.apache.org/1.x/" target="_blank">http://struts.apache.org/1.x/</a><br/>
+								<b>2. 与Struts集成</b> <a href="dependency.html">依赖...</a><br/>
+								Struts项目地址：<a href="http://struts.apache.org/1.x/" target="_blank">http://struts.apache.org/1.x/</a><br/>
 								同上面配置好Servlet，在Struts中直接forward到相应.ctl页面<br/>
 								<font color="green">(注：与Struts的集成方案请参见下载列表中：ct_struts.war)</font> <a href="downloads.html">下载&gt;&gt;</a><br/>
 								配置web.xml:<br/>
@@ -127,8 +127,8 @@ $!
 								<b>CommonTemplate在MVC中的位置：</b><br/>
 								<img src="../images/frame/mvc.gif" alt="CommonTemplate In MVC" /><br/>
 								<br/>
-								<b>3. 与SpringMVC集成</b><br/>
-								项目地址：<a href="http://www.springframework.org/" target="_blank">http://www.springframework.org/</a><br/>
+								<b>3. 与SpringMVC集成</b> <a href="dependency.html">依赖...</a><br/>
+								Spring项目地址：<a href="http://www.springframework.org/" target="_blank">http://www.springframework.org/</a><br/>
 								<font color="green">(注：与SpringMVC的集成方案请参见下载列表中：ct_springmvc.war)</font> <a href="downloads.html">下载&gt;&gt;</a><br/>
 								配置web.xml:<br/>
 <font color="#3f5fbf">&lt;!--&nbsp;Spring容器初始化配置&nbsp;--&gt;</font><br/>
@@ -182,8 +182,8 @@ $!
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;/bean&gt;</font><br/>
 <font color="#3f7f5f">&lt;/beans&gt;</font><br/>
 								<br/>
-								<b>4. 与WebWork集成</b><br/>
-								项目地址：<a href="http://webwork.opensymphony.com/" target="_blank">http://webwork.opensymphony.com/</a><br/>
+								<b>4. 与WebWork集成</b> <a href="dependency.html">依赖...</a><br/>
+								WebWork项目地址：<a href="http://webwork.opensymphony.com/" target="_blank">http://webwork.opensymphony.com/</a><br/>
 								<font color="green">(注：与WebWork的集成方案请参见下载列表中：ct_webwork.war)</font> <a href="downloads.html">下载&gt;&gt;</a><br/>
 								配置web.xml:<br/>
 <font color="#3f5fbf">&lt;!--&nbsp;模板引擎初始化配置&nbsp;--&gt;</font><br/>
@@ -233,8 +233,8 @@ $!
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;/package&gt;</font><br/>
 <font color="#3f7f5f">&lt;/xwork&gt;</font><br/>
 								<br/>
-								<b>5. 与Struts2集成</b><br/>
-								项目地址：<a href="http://struts.apache.org/2.x/" target="_blank">http://struts.apache.org/2.x/</a><br/>
+								<b>5. 与Struts2集成</b> <a href="dependency.html">依赖...</a><br/>
+								Struts2项目地址：<a href="http://struts.apache.org/2.x/" target="_blank">http://struts.apache.org/2.x/</a><br/>
 								<font color="green">(注：与Struts2的集成方案请参见下载列表中：ct_struts2.war)</font> <a href="downloads.html">下载&gt;&gt;</a><br/>
 								配置web.xml:<br/>
 <font color="#3f5fbf">&lt;!--&nbsp;模板引擎初始化配置&nbsp;--&gt;</font><br/>

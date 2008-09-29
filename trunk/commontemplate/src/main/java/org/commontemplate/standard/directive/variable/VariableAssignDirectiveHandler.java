@@ -19,7 +19,7 @@ public class VariableAssignDirectiveHandler extends DirectiveHandlerSupport {
 		Entry entry = (Entry)param;
 		String key = String.valueOf(entry.getKey());
 		Object value = entry.getValue();
-		if (context.isVariableExisted(key))
+		if (context.isVariableDefined(key))
 			context.setVariable(key, value);
 		else
 			context.putVariable(key, value);

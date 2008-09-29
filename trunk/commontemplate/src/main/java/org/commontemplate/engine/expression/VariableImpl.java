@@ -5,6 +5,7 @@ import java.util.List;
 import org.commontemplate.core.EvaluationException;
 import org.commontemplate.core.ExpressionVisitor;
 import org.commontemplate.core.StopVisitException;
+import org.commontemplate.core.UndefinedException;
 import org.commontemplate.core.Variable;
 import org.commontemplate.core.VariableResolver;
 import org.commontemplate.util.Location;
@@ -42,7 +43,11 @@ final class VariableImpl extends Variable {
 	}
 
 	Object doEvaluate(VariableResolver context) throws EvaluationException {
-		return context.getVariable(getName());
+		try {
+			return context.getVariable(getName());
+		} catch (UndefinedException e) {
+			return null;
+		}
 	}
 
 	public String getName() {
