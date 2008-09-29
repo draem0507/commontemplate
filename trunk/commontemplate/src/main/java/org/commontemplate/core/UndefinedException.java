@@ -8,4 +8,8 @@ public class UndefinedException extends VariableException {
 		super(variableName, "Undefined Variable: " + variableName);
 	}
 
+	public UndefinedException(String variableName, String message) {
+		super(variableName, message);
+	}
+
 }
