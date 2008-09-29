@@ -1,5 +1,6 @@
 package org.commontemplate.standard.operator.context;
 
+import org.commontemplate.core.UndefinedException;
 import org.commontemplate.core.VariableStorage;
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 
@@ -19,7 +20,11 @@ public class LocalContextGetterOperatorHandler extends BinaryOperatorHandlerSupp
 	}
 
 	public Object doEvaluate(Object leftOperand, Object rightOperand) throws Exception {
-		return ((VariableStorage)leftOperand).getVariable((String)rightOperand);
+		try {
+			return ((VariableStorage)leftOperand).getVariable((String)rightOperand);
+		} catch (UndefinedException e) {
+			return null;
+		}
 	}
 
 }

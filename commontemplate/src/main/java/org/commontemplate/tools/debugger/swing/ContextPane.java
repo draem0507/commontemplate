@@ -140,7 +140,7 @@ public class ContextPane extends JSplitPane {
 	public void initContextPane(Context context) {
 		if (context == null)
 			return;
-		VariableTreeNode root = new VariableTreeNode("variables", context.getExistedVariables());
+		VariableTreeNode root = new VariableTreeNode("variables", context.getDefinedVariables());
 		buildContextTree(root);
 		contextTree.setModel(new DefaultTreeModel(root));
 	}

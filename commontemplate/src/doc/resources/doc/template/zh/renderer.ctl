@@ -1,20 +1,25 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
-	<!--$zone{"content"}-->
-<b>1. 模板Task定义</b><br/>
-$code{"xml"}<taskdef name="commontemplate" classname="org.commontemplate.tools.ant.TemplateTask" classpath="commontemplate.jar"/>
-$end
+<!--$zone{"content"}-->
+<b>1. 功能说明:</b><br/>
+执行CommonTemplate模板渲染，并将结果保存到另一目录。<br/>
 <br/>
-<b>2. 模板Task调用</b><br/>
+<b>2. 命令行</b><br/>
+ctlrender "F:/ctl/" "F:html/"<br/>
+<br/>
+<b>3. Ant任务</b><br/>
+(1) 模板任务定义<br/>
+$code{"xml"}<taskdef name="ctlrender" classname="org.commontemplate.tools.renderer.TemplateRenderTask" classpath="commontemplate.jar"/>
+$end
+(2) 模板任务调用<br/>
 $code{"xml"}<target name="generate">
-	<commontemplate destdir="\${bin}" configfile="\${config}">
+	<ctlrender destdir="\${bin}" configfile="\${config}">
 		<fileset dir="\${src}">
 			<include name="**/*.java.ctl" />
 		</fileset>
-	</commontemplate>
+	</ctlrender>
 </target>
 $end
-<br/>
-<b>3. 模板Task属性</b><br/>
+(3) 模板任务属性<br/>
 $!
 <table border="1">
 	<tr bgcolor="#CCF1D5">
@@ -66,7 +71,7 @@ $!
 		<td>可选, 与classpath二选一</td>
 	</tr>
 	<tr>
-		<td>dir</td>
+		<td>srcdir</td>
 		<td>File</td>
 		<td>模板所在目录, 等同于子标签&lt;fileset dir="XXX"&gt;</td>
 		<td><b>必需</b>, 与fileset子标签二选一</td>
@@ -150,7 +155,12 @@ $!
 		<td>可选</td>
 	</tr>
 </table>
+<br/>
+<b>4. 图形工具安装</b><br/>
+<br/>
+<b>5. 图形工具截图</b><br/>
+<br/>
 !$
 <br/>
-	<!--$end-->
+<!--$end-->
 <!--$end-->

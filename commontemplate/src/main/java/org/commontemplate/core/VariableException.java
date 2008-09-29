@@ -8,9 +8,7 @@ import org.commontemplate.util.I18nRuntimeException;
  * @author liangfei0201@163.com
  *
  */
-public class VariableException extends I18nRuntimeException {
-
-	private static final long serialVersionUID = 1L;
+public abstract class VariableException extends I18nRuntimeException {
 
 	private String variableName;
 

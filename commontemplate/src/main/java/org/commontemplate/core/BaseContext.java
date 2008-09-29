@@ -123,7 +123,12 @@ public abstract class BaseContext implements Map, VariableStorage, StatusStorage
 
 	public Object put(Object key, Object value) {
 		String name = (key == null ? null : String.valueOf(key));
-		Object old = getVariable(name);
+		Object old;
+		try {
+			old = getVariable(name);
+		} catch (UndefinedException e) {
+			old = null;
+		}
 		putVariable(name, value);
 		return old;
 	}
@@ -134,12 +139,21 @@ public abstract class BaseContext implements Map, VariableStorage, StatusStorage
 
 	public Object get(Object key) {
 		String name = (key == null ? null : String.valueOf(key));
-		return getVariable(name);
+		try {
+			return getVariable(name);
+		} catch (UndefinedException e) {
+			return null;
+		}
 	}
 
 	public Object remove(Object key) {
 		String name = (key == null ? null : String.valueOf(key));
-		Object old = getVariable(name);
+		Object old;
+		try {
+			old = getVariable(name);
+		} catch (UndefinedException e) {
+			old = null;
+		}
 		removeVariable(name);
 		return old;
 	}

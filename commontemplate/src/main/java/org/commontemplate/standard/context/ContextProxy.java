@@ -53,8 +53,8 @@ public abstract class ContextProxy extends Context {
 		context.clearEventListeners();
 	}
 
-	public void clearExistedVariables() {
-		context.clearExistedVariables();
+	public void clearDefinedVariables() {
+		context.clearDefinedVariables();
 	}
 
 	public void clearLocalContexts() {
@@ -133,8 +133,8 @@ public abstract class ContextProxy extends Context {
 		return context.getCurrentTemplate();
 	}
 
-	public Map getExistedVariables() {
-		return context.getExistedVariables();
+	public Map getDefinedVariables() {
+		return context.getDefinedVariables();
 	}
 
 	public OutputFormatter getGeneralOutputFormatter() {
@@ -237,20 +237,20 @@ public abstract class ContextProxy extends Context {
 		return context.isVariableContained(name);
 	}
 
-	public boolean isVariableExisted(String name) throws VariableException {
-		return context.isVariableExisted(name);
+	public boolean isVariableDefined(String name) throws VariableException {
+		return context.isVariableDefined(name);
 	}
 
-	public boolean isVariablesLocked() {
-		return context.isVariablesLocked();
+	public boolean isVariablesReadonly() {
+		return context.isVariablesReadonly();
 	}
 
 	public Set keySet() {
 		return context.keySet();
 	}
 
-	public void lockVariables() {
-		context.lockVariables();
+	public void setVariablesReadonly(boolean readonly) {
+		context.setVariablesReadonly(true);
 	}
 
 	public void output(Object content) throws IOException {
@@ -370,8 +370,8 @@ public abstract class ContextProxy extends Context {
 		context.removeEventListener(listener);
 	}
 
-	public void removeExistedVariable(String name) throws VariableException {
-		context.removeExistedVariable(name);
+	public void removeDefinedVariable(String name) throws VariableException {
+		context.removeDefinedVariable(name);
 	}
 
 	public void removeGeneralOutputFormatter() {
@@ -448,10 +448,6 @@ public abstract class ContextProxy extends Context {
 
 	public String toString() {
 		return context.toString();
-	}
-
-	public void unlockVariables() {
-		context.unlockVariables();
 	}
 
 	public Collection values() {

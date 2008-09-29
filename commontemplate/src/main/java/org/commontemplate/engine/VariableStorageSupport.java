@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.commontemplate.config.Keywords;
+import org.commontemplate.core.InvaildVariableNameException;
 import org.commontemplate.core.VariableException;
 import org.commontemplate.core.VariableStorage;
 import org.commontemplate.util.Assert;
@@ -29,13 +30,13 @@ abstract class VariableStorageSupport implements VariableStorage, Serializable {
 
 	protected void assertVariableName(String name) throws VariableException {
 		if (name == null)
-			throw new VariableException(null, "VariableStorageSupport.variable.name.required");
+			throw new InvaildVariableNameException(null, "VariableStorageSupport.variable.name.required");
 
 		if (! TypeUtils.isNamed(name))
-			throw new VariableException(name, "VariableStorageSupport.invaild.variable.name");
+			throw new InvaildVariableNameException(name, "VariableStorageSupport.invaild.variable.name");
 
 		if (keywords.isKeyword(name))
-			throw new VariableException(name, "VariableStorageSupport.variable.name.is.keyword");
+			throw new InvaildVariableNameException(name, "VariableStorageSupport.variable.name.is.keyword");
 	}
 
 	protected void assertAllVariableNames(Map model) throws VariableException {
@@ -43,7 +44,7 @@ abstract class VariableStorageSupport implements VariableStorage, Serializable {
 			for (Iterator iterator = model.keySet().iterator(); iterator.hasNext();) {
 				Object obj = iterator.next();
 				if (! (obj instanceof String))
-					throw new VariableException(String.valueOf(obj), "VariableStorageSupport.variable.type.error");
+					throw new InvaildVariableNameException(String.valueOf(obj), "VariableStorageSupport.variable.type.error");
 				String name = (String)obj;
 				assertVariableName(name);
 			}

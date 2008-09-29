@@ -1,23 +1,23 @@
-package org.commontemplate.tools.ant;
+package org.commontemplate.tools.renderer;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.MatchingTask;
 
 /**
- * 模板生成ANT任务.
+ * 模板渲染ANT任务.
  * <p/>
  * 定义如:<br/>
  * <pre>
- * &lt;taskdef name="commontemplate" classname="org.commontemplate.tools.ant.TemplateTask" classpath="commontemplate.jar"/&gt;
+ * &lt;taskdef name="ctlrender" classname="org.commontemplate.tools.renderer.TemplateRenderTask" classpath="commontemplate.jar"/&gt;
  * </pre>
  * 调用如:<br/>
  * <pre>
  *  &lt;target name="generate"&gt;
- *    &lt;commontemplate destDir="${bin}" configFile="commontemplate.properties"&gt;
+ *    &lt;ctlrender destDir="${bin}" configFile="commontemplate.properties"&gt;
  *      &lt;fileset dir="${src}"&gt;
  *        &lt;include name="** / *.java.ctl" /&gt;
  *      &lt;/fileset&gt;
- *    &lt;/commontemplate&gt;
+ *    &lt;/ctlrender&gt;
  *  &lt;/target&gt;
  * </pre>
  * 属性列表:<br/>
@@ -71,7 +71,7 @@ import org.apache.tools.ant.taskdefs.MatchingTask;
  * 		<td>可选, 与classpath二选一</td>
  * 	</tr>
  * 	<tr>
- * 		<td>dir</td>
+ * 		<td>srcdir</td>
  * 		<td>File</td>
  * 		<td>模板所在目录, 等同于子标签&lt;fileset dir="XXX"&gt;&lt;/fileset&gt;</td>
  * 		<td><b>必需</b>, 与fileset子标签二选一</td>
@@ -159,7 +159,7 @@ import org.apache.tools.ant.taskdefs.MatchingTask;
  * @author liangfei0201@163.com
  *
  */
-public class TemplateTask extends MatchingTask {
+public class TemplateRenderTask extends MatchingTask {
 
 	// TODO 未完成
 
