@@ -93,14 +93,14 @@ public class DocumentGenerator {
 										new Menu("menu.viewer",
 												"viewer.html"))
 								.addChild(
+										new Menu("menu.renderer",
+												"renderer.html"))
+								.addChild(
 										new Menu("menu.editor",
 												"editor.html"))
 								.addChild(
 										new Menu("menu.converter",
 												"converter.html"))
-								.addChild(
-										new Menu("menu.renderer",
-												"renderer.html"))
 								.addChild(
 										new Menu("menu.generator",
 												"generator.html"))
