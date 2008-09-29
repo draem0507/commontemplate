@@ -58,6 +58,7 @@ public abstract class FileTask extends MatchingTask {
 
 	public void execute() throws BuildException {
 		try {
+			Thread.currentThread().setContextClassLoader(getClass().getClassLoader());
 			doExecute();
 		} catch (BuildException e) {
 			super.getProject().demuxOutput(ExceptionUtils.getDetailMessage(e), true);
