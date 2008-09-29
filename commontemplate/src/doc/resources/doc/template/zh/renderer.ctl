@@ -3,16 +3,13 @@
 <b>1. 功能说明:</b><br/>
 执行CommonTemplate模板渲染，并将结果保存到另一目录。<br/>
 <br/>
-<b>2. 命令行</b><br/>
-ctlrender "F:/ctl/" "F:html/"<br/>
-<br/>
-<b>3. Ant任务</b><br/>
+<b>2. Ant任务</b><br/>
 (1) 模板任务定义<br/>
 $code{"xml"}<taskdef name="ctlrender" classname="org.commontemplate.tools.renderer.TemplateRenderTask" classpath="commontemplate.jar"/>
 $end
 (2) 模板任务调用<br/>
 $code{"xml"}<target name="xxx">
-	<ctlrender srcdir="F:/ctl/" destdir="F:/html/" classpath="commontemplate.jar"/>
+	<ctlrender srcdir="F:/ctl/" destdir="F:/html/"/>
 </target>
 $end
 (3) 模板任务属性<br/>
@@ -98,9 +95,13 @@ $!
 	</tr>
 </table>
 <br/>
-<b>4. 图形工具安装</b><br/>
+<b>3. 命令行</b> (未完成)<br/>
+ctlrender "F:/ctl/" "F:html/"<br/>
 <br/>
-<b>5. 图形工具截图</b><br/>
+<b>4. 图形工具</b> (未完成)<br/>
+<b>(1) 图形工具安装</b><br/>
+<br/>
+<b>(2) 图形工具截图</b><br/>
 <br/>
 !$
 <br/>
