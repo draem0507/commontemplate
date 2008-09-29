@@ -23,7 +23,6 @@ import org.commontemplate.tools.bean.BeanFactory;
 import org.commontemplate.tools.bean.ClassLoaderResourceLoader;
 import org.commontemplate.tools.bean.FileClassResourceLoader;
 import org.commontemplate.tools.bean.PropertiesBeanFactory;
-import org.commontemplate.util.ExceptionUtils;
 import org.commontemplate.util.IOUtils;
 
 /**
@@ -126,6 +125,27 @@ import org.commontemplate.util.IOUtils;
  */
 public class TemplateRenderTask extends FileTask {
 
+	// 输入编码
+	protected String inputencoding;
+
+	public void setInputencoding(String inputencoding) {
+		this.inputencoding = inputencoding;
+	}
+
+	// 输出编码
+	protected String outputencoding;
+
+	public void setOutputencoding(String outputencoding) {
+		this.outputencoding = outputencoding;
+	}
+
+	// 数据文件编码
+	protected String dataencoding;
+
+	public void setDataencoding(String dataencoding) {
+		this.dataencoding = dataencoding;
+	}
+
 	// 是否为动态模板名称
 	protected boolean dynamicname;
 
@@ -161,27 +181,6 @@ public class TemplateRenderTask extends FileTask {
 		this.datatype = datatype;
 	}
 
-	// 输入编码
-	protected String inputencoding;
-
-	public void setInputencoding(String inputencoding) {
-		this.inputencoding = inputencoding;
-	}
-
-	// 输出编码
-	protected String outputencoding;
-
-	public void setOutputencoding(String outputencoding) {
-		this.outputencoding = outputencoding;
-	}
-
-	// 数据文件编码
-	protected String dataencoding;
-
-	public void setDataencoding(String dataencoding) {
-		this.dataencoding = dataencoding;
-	}
-
 	protected File datadirFile;
 
 	protected File srcdirFile;
@@ -194,8 +193,7 @@ public class TemplateRenderTask extends FileTask {
 
 	protected Map dataProviders;
 
-	public void execute() throws BuildException {
-		try {
+	public void doExecute() throws Exception {
 		// 文件夹检查
 		datadirFile = getProject().resolveFile(datadir);
 		if (! datadirFile.exists())
@@ -249,9 +247,6 @@ public class TemplateRenderTask extends FileTask {
 				}
 			}
 		}
-		} catch (Throwable t) {
-			super.getProject().demuxOutput(ExceptionUtils.getDetailMessage(t), true);
-		}
 	}
 
 	private String[] getDataFiles() {
@@ -270,7 +265,7 @@ public class TemplateRenderTask extends FileTask {
         return ds.getIncludedFiles();
 	}
 
-	private Map getData(File dataFile) throws BuildException {
+	private Map getData(File dataFile) throws Exception {
 		if (dataProviders == null)
 			throw new BuildException("没有找到任何数据处理器!");
 		String datafilename = dataFile.getAbsolutePath();
@@ -286,44 +281,40 @@ public class TemplateRenderTask extends FileTask {
 		DataProvider dataProvider = (DataProvider)dataProviders.get(type);
 		if (dataProvider == null)
 			throw new BuildException("不能处理的数据类型：" + type);
-		try {
-			File file = getProject().resolveFile(datafilename);
-			if (dataencoding != null) {
-				return dataProvider.getData(IOUtils.readToString(new InputStreamReader(new FileInputStream(file), dataencoding)));
-			} else {
-				return dataProvider.getData(file);
-			}
-		} catch (Exception e) {
-			throw new BuildException(e.getMessage(), e);
+		File file = getProject().resolveFile(datafilename);
+		if (dataencoding != null) {
+			return dataProvider.getData(IOUtils.readToString(new InputStreamReader(new FileInputStream(file), dataencoding)));
+		} else {
+			return dataProvider.getData(file);
 		}
 	}
 
 	public void renderTemplate(String tempalteName, String dataName)
-			throws BuildException {
-		try {
-			String destName;
-			if (dynamicname) {
-				StringWriter out = new StringWriter();
-				Context context = engine.createContext(out);
-				if (dataName != null) {
-					Map map = getData(getProject().resolveFile(getDirPath(datadirFile) + dataName));
-					context.putAll(map);
-				}
-				engine.parseTemplate(tempalteName).render(context);
-				context.clear();
-				destName = out.getBuffer().toString();
-			} else {
-				destName = tempalteName;
+			throws Exception {
+		String destName;
+		if (dynamicname) {
+			StringWriter out = new StringWriter();
+			Context context = engine.createContext(out);
+			if (dataName != null) {
+				Map map = getData(getProject().resolveFile(getDirPath(datadirFile) + dataName));
+				context.putAll(map);
 			}
-			File destFile = new File(getDirPath(destdirFile) + destName);
-			File parentFile = destFile.getParentFile();
-			if (! parentFile.exists())
-				parentFile.mkdirs();
-			Writer out;
-			if (outputencoding != null)
-				out = new OutputStreamWriter(new FileOutputStream(destFile), outputencoding);
-			else
-				out = new OutputStreamWriter(new FileOutputStream(destFile));
+			engine.parseTemplate(tempalteName).render(context);
+			context.clear();
+			destName = out.getBuffer().toString();
+		} else {
+			destName = tempalteName;
+		}
+		File destFile = new File(getDirPath(destdirFile) + destName);
+		File parentFile = destFile.getParentFile();
+		if (! parentFile.exists())
+			parentFile.mkdirs();
+		Writer out;
+		if (outputencoding != null)
+			out = new OutputStreamWriter(new FileOutputStream(destFile), outputencoding);
+		else
+			out = new OutputStreamWriter(new FileOutputStream(destFile));
+		try {
 			Template template = engine.getTemplate(tempalteName);
 			Context context = engine.createContext(out);
 			if (dataName != null) {
@@ -333,11 +324,8 @@ public class TemplateRenderTask extends FileTask {
 			template.render(context);
 			context.clear();
 			out.flush();
+		} finally {
 			out.close();
-		} catch (BuildException e) {
-			throw e;
-		} catch (Exception e) {
-			throw new BuildException(e.getMessage(), e);
 		}
 	}
 
