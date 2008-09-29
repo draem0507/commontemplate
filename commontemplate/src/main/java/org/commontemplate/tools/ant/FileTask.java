@@ -3,11 +3,13 @@ package org.commontemplate.tools.ant;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.taskdefs.MatchingTask;
 import org.apache.tools.ant.types.FileSet;
 import org.apache.tools.ant.types.Path;
 import org.apache.tools.ant.types.Reference;
 import org.apache.tools.ant.util.ClasspathUtils;
+import org.commontemplate.util.ExceptionUtils;
 
 public abstract class FileTask extends MatchingTask {
 
@@ -53,5 +55,19 @@ public abstract class FileTask extends MatchingTask {
 	public void addFileset(FileSet fileset) {
 	    filesets.add(fileset);
 	}
+
+	public void execute() throws BuildException {
+		try {
+			doExecute();
+		} catch (BuildException e) {
+			super.getProject().demuxOutput(ExceptionUtils.getDetailMessage(e), true);
+			throw e;
+		} catch (Throwable e) {
+			super.getProject().demuxOutput(ExceptionUtils.getDetailMessage(e), true);
+			throw new BuildException(e.getMessage(), e);
+		}
+	}
+
+	public abstract void doExecute() throws Exception;
 
 }

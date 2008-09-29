@@ -1,6 +1,5 @@
 package org.commontemplate.tools.converter;
 
-import org.apache.tools.ant.BuildException;
 import org.commontemplate.tools.ant.FileTask;
 
 /**
@@ -11,7 +10,7 @@ import org.commontemplate.tools.ant.FileTask;
  */
 public class TemplateConvertTask extends FileTask {
 
-	public void execute() throws BuildException {
+	public void doExecute() throws Exception {
 		// TODO 实现模板转换Ant任务
 	}
 
