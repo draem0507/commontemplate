@@ -1,7 +1,7 @@
 package org.commontemplate.tools.converter;
 
 import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.taskdefs.MatchingTask;
+import org.commontemplate.tools.ant.FileTask;
 
 /**
  * 模板转换Ant任务
@@ -9,7 +9,7 @@ import org.apache.tools.ant.taskdefs.MatchingTask;
  * @author liangfei0201@163.com
  *
  */
-public class TemplateConvertTask extends MatchingTask {
+public class TemplateConvertTask extends FileTask {
 
 	public void execute() throws BuildException {
 		// TODO 实现模板转换Ant任务

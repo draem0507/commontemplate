@@ -133,17 +133,17 @@
 									<!--$end-->
 								</table>
 								<br/>
-								<form method="get" action="http://www.google.com/custom" target="_blank">
+								<form method="GET" action="http://www.google.com/custom" target="_blank">
 								<table border="0" cellspacing="0" cellpadding="4">
 									<tr>
-										<td align="right">
+										<td>
+											<input type="text" name="q" maxlength="128" style="width: 120px;" />
 											<input type="hidden" name="domains" value="commontemplate.org" />
 											<input type="hidden" name="sitesearch" value="commontemplate.org" />
-											<input type="hidden" name="cof" value="LH:50;LW:400;L:http://www.commontemplate.org/images/banner.gif;S:http://www.commontemplate.org;" />
 											<input type="hidden" name="hl" value="${locale.language}-${locale.country}" />
-											<input type="text" name="q" maxlength="128" style="width: 120px;" />
+											<input type="hidden" name="cof" value="LH:50;LW:400;L:http://www.commontemplate.org/images/banner.gif;S:http://www.commontemplate.org;" />
 										</td>
-										<td align="left">
+										<td>
 											<input type="submit" name="sa" value="$msg{'frame.search'}" />
 										</td>
 									</tr>

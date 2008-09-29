@@ -16,7 +16,7 @@ public class FileClassResourceLoader implements ResourceLoader {
 	private final ResourceLoader engineResourceLoader; // 模板引擎资源加载，考虑到jar包可能和项目被不同的ClassLoader所加载
 
 	public FileClassResourceLoader() {
-		this(FileClassResourceLoader.class.getClassLoader());
+		this(Thread.currentThread().getContextClassLoader());
 	}
 
 	public FileClassResourceLoader(ClassLoader classLoader) {
