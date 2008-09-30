@@ -27,7 +27,7 @@ public class TemplateTester extends TestCase {
 		for (int i = 0, n = templateFiles.length; i < n; i ++) {
 			File templateFile = templateFiles[i];
 			System.out.println(templateFile.getName());
-			super.assertEquals(FileContentReader.getResultContent("integration/result/" + templateFile.getName()), getTemplateContent("integration/template/" + templateFile.getName()));
+			super.assertEquals("模板" +  templateFile.getName() + "验证失败，与预期结果不一致。", FileContentReader.getResultContent("integration/result/" + templateFile.getName()), getTemplateContent("integration/template/" + templateFile.getName()));
 		}
 	}
 
