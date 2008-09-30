@@ -14,7 +14,17 @@ public class SourceFilterChain implements SourceFilter, Serializable {
 	private List sourceFilters;
 
 	public void setSourceFilters(List sourceFilters) {
-		this.sourceFilters = sourceFilters;
+		if (sourceFilters != null)
+			sourceFilters.addAll(sourceFilters);
+		else
+			this.sourceFilters = sourceFilters;
+	}
+
+	public void setResourceFilters(List sourceFilters) {
+		if (sourceFilters != null)
+			sourceFilters.addAll(sourceFilters);
+		else
+			this.sourceFilters = sourceFilters;
 	}
 
 	public Reader filter(Reader reader) throws IOException {

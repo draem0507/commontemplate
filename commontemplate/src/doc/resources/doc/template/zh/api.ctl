@@ -16,7 +16,7 @@ import org.commontemplate.tools.*;
 ConfigurationSettings config = PropertiesConfigurationLoader.loadConfiguration("commontemplate.properties");
 // 或者：ConfigurationSettings config = PropertiesConfigurationLoader.loadStandardConfiguration();
 // 或者：StandardConfiguration config = new StandardConfiguration();
-// config.setResourceLoader(xxx);
+// config.setXXX();
 Engine engine = new Engine(config);
 
 // 设置全局上下文 (GlobalContext在同一Engine创建的Context间共享)

@@ -11,7 +11,7 @@ $!
 								如果服务器不支持Servlet2.4或以上版本, 需在web.xml中配置tld的引用:<br/>
 <font color="#3f7f5f">&lt;taglib&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;taglib-uri&gt;</font>commontemplate<font color="#3f7f5f">&lt;/taglib-uri&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;taglib-location&gt;</font>/WEB-INF/<a href="../resource/commontemplate.tld">commontemplate.tld</a><font color="#3f7f5f">&lt;/taglib-location&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;taglib-location&gt;</font>/WEB-INF/<a href="../resources/commontemplate.tld">commontemplate.tld</a><font color="#3f7f5f">&lt;/taglib-location&gt;</font><br/>
 <font color="#3f7f5f">&lt;/taglib&gt;</font><br/>
 								<br/>
 								<b>2. 与TagLib集成</b> <font color="green">(注：在CTL中使用JSP标签)</font><br/>
