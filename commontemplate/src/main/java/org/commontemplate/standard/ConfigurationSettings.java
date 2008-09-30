@@ -12,14 +12,14 @@ import org.commontemplate.config.ExpressionFilter;
 import org.commontemplate.config.Keywords;
 import org.commontemplate.config.OperatorHandlerProvider;
 import org.commontemplate.config.ReloadController;
-import org.commontemplate.config.ResourceComparator;
-import org.commontemplate.config.ResourceFilter;
+import org.commontemplate.config.SourceComparator;
+import org.commontemplate.config.SourceFilter;
 import org.commontemplate.config.Syntax;
 import org.commontemplate.config.TemplateNameFilter;
 import org.commontemplate.config.TextFilter;
 import org.commontemplate.core.EventListener;
 import org.commontemplate.core.OutputFormatter;
-import org.commontemplate.core.ResourceLoader;
+import org.commontemplate.core.SourceLoader;
 import org.commontemplate.standard.syntax.KeywordsSettings;
 import org.commontemplate.standard.syntax.SyntaxSettings;
 
@@ -237,41 +237,41 @@ public class ConfigurationSettings extends Configuration {
 
 	// 模板加载器 --------
 
-	private transient ResourceLoader resourceLoader;
+	private transient SourceLoader sourceLoader;
 
-	public ResourceLoader getResourceLoader() {
-		return resourceLoader;
+	public SourceLoader getSourceLoader() {
+		return sourceLoader;
 	}
 
 	/**
 	 * 设置模板源加载器
 	 *
-	 * @param templateLoader 模板源加载器
+	 * @param sourceLoader 模板源加载器
 	 */
-	public void setResourceLoader(ResourceLoader templateLoader) {
-		this.resourceLoader = templateLoader;
+	public void setSourceLoader(SourceLoader sourceLoader) {
+		this.sourceLoader = sourceLoader;
 	}
 
 	// 模板过滤器 ------------
 
-	private ResourceFilter resourceFilter;
+	private SourceFilter sourceFilter;
 
 	/**
 	 * 获取模板源过滤器
 	 *
 	 * @return 模板源过滤器
 	 */
-	public ResourceFilter getResourceFilter() {
-		return resourceFilter;
+	public SourceFilter getSourceFilter() {
+		return sourceFilter;
 	}
 
 	/**
 	 * 设置模板源过滤器
 	 *
-	 * @param resourceFilter 模板源过滤器
+	 * @param sourceFilter 模板源过滤器
 	 */
-	public void setResourceFilter(ResourceFilter resourceFilter) {
-		this.resourceFilter = resourceFilter;
+	public void setSourceFilter(SourceFilter sourceFilter) {
+		this.sourceFilter = sourceFilter;
 	}
 
 	// 路径过滤器 -------------
@@ -340,26 +340,26 @@ public class ConfigurationSettings extends Configuration {
 		this.reloadController = reloadController;
 	}
 
-	private ResourceComparator resourceComparator;
+	private SourceComparator sourceComparator;
 
 	/**
 	 * 获取模板源比较器
 	 *
 	 * @return 模板源比较器
 	 */
-	public ResourceComparator getResourceComparator() {
-		return resourceComparator;
+	public SourceComparator getSourceComparator() {
+		return sourceComparator;
 	}
 
 	/**
 	 * 设置模板源比较器
 	 *
-	 * @param resourceComparator 模板源比较器
+	 * @param sourceComparator 模板源比较器
 	 */
-	public void setResourceComparator(ResourceComparator resourceComparator) {
-		if (resourceComparator == null)
+	public void setSourceComparator(SourceComparator sourceComparator) {
+		if (sourceComparator == null)
 			throw new ConfigurationException("ConfigurationSettings.resource.comparator.required");
-		this.resourceComparator = resourceComparator;
+		this.sourceComparator = sourceComparator;
 	}
 
 	// 事件监听器管理

@@ -17,15 +17,13 @@ import org.commontemplate.config.ExpressionFilter;
 import org.commontemplate.config.OperatorHandlerProvider;
 import org.commontemplate.config.ReloadController;
 import org.commontemplate.config.RenderInterceptor;
-import org.commontemplate.config.ResourceComparator;
-import org.commontemplate.config.ResourceFilter;
 import org.commontemplate.config.ScopeHandler;
+import org.commontemplate.config.SourceFilter;
 import org.commontemplate.config.TemplateNameFilter;
 import org.commontemplate.config.TextFilter;
 import org.commontemplate.config.UnaryOperatorHandler;
 import org.commontemplate.core.EventListener;
 import org.commontemplate.core.OutputFormatter;
-import org.commontemplate.core.ResourceLoader;
 import org.commontemplate.standard.cache.FifoCache;
 import org.commontemplate.standard.cache.LruCache;
 import org.commontemplate.standard.cache.MruCache;
@@ -35,7 +33,7 @@ import org.commontemplate.standard.cache.StrongCache;
 import org.commontemplate.standard.cache.WeakCache;
 import org.commontemplate.standard.directive.StandardDirectiveHandlerProvider;
 import org.commontemplate.standard.filter.ExpressionFilterChain;
-import org.commontemplate.standard.filter.ResourceFilterChain;
+import org.commontemplate.standard.filter.SourceFilterChain;
 import org.commontemplate.standard.filter.TemplateNameFilterChain;
 import org.commontemplate.standard.filter.TextFilterChain;
 import org.commontemplate.standard.format.DateFormatter;
@@ -141,53 +139,36 @@ public class StandardConfiguration extends ConfigurationSettings {
 		setResourceBundleProvider(provider);
 	}
 
-	// 模板加载器 --------
-
-	private transient ResourceLoader resourceLoader;
-
-	public ResourceLoader getResourceLoader() {
-		return resourceLoader;
-	}
-
-	/**
-	 * 设置模板源加载器
-	 *
-	 * @param templateLoader 模板源加载器
-	 */
-	public void setResourceLoader(ResourceLoader templateLoader) {
-		this.resourceLoader = templateLoader;
-	}
-
 	// 模板过滤器 ------------
 
-	private List resourceFilters = new ArrayList();
+	private List sourceFilters = new ArrayList();
 
 	/**
 	 * 获取已添加的模板源过滤器链
 	 *
 	 * @return 模板源过滤器链
 	 */
-	public List getResourceFilters() {
-		return resourceFilters;
+	public List getSourceFilters() {
+		return sourceFilters;
 	}
 
 	/**
 	 * 设置模板源过滤器链
 	 * 注：为IoC(setter方式)保留
 	 *
-	 * @param resourceFilters 模板源过滤器链
+	 * @param sourceFilters 模板源过滤器链
 	 */
-	public void setResourceFilters(List resourceFilters) {
-		this.resourceFilters.addAll(resourceFilters);
+	public void setSourceFilters(List sourceFilters) {
+		this.sourceFilters.addAll(sourceFilters);
 	}
 
 	/**
 	 * 添加模板源过滤器到链中
 	 *
-	 * @param resourceFilter 待添加的模板源过滤器
+	 * @param sourceFilter 待添加的模板源过滤器
 	 */
-	public void addResourceFilter(ResourceFilter resourceFilter) {
-		resourceFilters.add(resourceFilter);
+	public void addSourceFilter(SourceFilter sourceFilter) {
+		sourceFilters.add(sourceFilter);
 	}
 
 	/**
@@ -195,16 +176,16 @@ public class StandardConfiguration extends ConfigurationSettings {
 	 *
 	 * @param resourceFilter 待删除的模板源过滤器
 	 */
-	public void removeResourceFilter(ResourceFilter resourceFilter) {
-		resourceFilters.remove(resourceFilter);
+	public void removeResourceFilter(SourceFilter resourceFilter) {
+		sourceFilters.remove(resourceFilter);
 	}
 
 	/**
 	 * 供给组装后的模板源过滤器给引擎
 	 */
-	public ResourceFilter getResourceFilter() {
-		ResourceFilterChain chain = new ResourceFilterChain();
-		chain.setResourceFilters(getResourceFilters());
+	public SourceFilter getSourceFilter() {
+		SourceFilterChain chain = new SourceFilterChain();
+		chain.setSourceFilters(getSourceFilters());
 		return chain;
 	}
 
@@ -330,24 +311,6 @@ public class StandardConfiguration extends ConfigurationSettings {
 	 */
 	public void setReloadController(ReloadController reloadController) {
 		this.reloadController = reloadController;
-	}
-
-	private ResourceComparator resourceComparator;
-
-	public ResourceComparator getResourceComparator() {
-		return resourceComparator;
-	}
-
-	/**
-	 * 设置模板源比较器
-	 *
-	 * @param resourceComparator 模板源比较器
-	 */
-	public void setResourceComparator(
-			ResourceComparator resourceComparator) {
-		if (resourceComparator == null)
-			throw new ConfigurationException("StandardConfiguration.resource.comparator.required");
-		this.resourceComparator = resourceComparator;
 	}
 
 	// 纯文本指令过滤器 -----------

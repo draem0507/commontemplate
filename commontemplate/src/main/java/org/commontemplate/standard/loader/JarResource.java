@@ -8,7 +8,7 @@ import java.util.jar.JarFile;
 
 import org.commontemplate.util.Assert;
 
-public class JarResource extends AbstractResource {
+public class JarResource extends AbstractSource {
 
 	private static final long serialVersionUID = 1L;
 

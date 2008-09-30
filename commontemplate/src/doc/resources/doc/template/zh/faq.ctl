@@ -10,10 +10,10 @@ $!
 								defaultEncoding=null<br/>
 								以下调用方式会用到默认编码：<br/>
 								engine.getTemplate(name);<br/>
-								engine.getResource(name);<br/>
+								engine.getSource(name);<br/>
 								如果各模板文件的编码不一致，需单独指定编码，可以使用：<br/>
 								engine.getTemplate(name, encoding);<br/>
-								engine.getResource(name, encoding);<br/>
+								engine.getSource(name, encoding);<br/>
 								<b>输出：</b><br/>
 								输出尽可能与模板保持编码一致：<br/>
 								response.setCharacterEncoding("UTF-8");<br/>

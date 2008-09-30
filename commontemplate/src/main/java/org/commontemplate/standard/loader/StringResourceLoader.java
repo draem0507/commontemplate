@@ -5,7 +5,7 @@ import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.commontemplate.core.Resource;
+import org.commontemplate.core.Source;
 import org.commontemplate.util.Assert;
 import org.commontemplate.util.UrlUtils;
 
@@ -15,7 +15,7 @@ import org.commontemplate.util.UrlUtils;
  * @author liangfei0201@163.com
  *
  */
-public class StringResourceLoader extends AbstractResourceLoader {
+public class StringResourceLoader extends AbstractSourceLoader {
 
 	private final Map resources = new HashMap();
 
@@ -34,9 +34,9 @@ public class StringResourceLoader extends AbstractResourceLoader {
 		this.resources.put(name, new StringResource(name, source));
 	}
 
-	protected Resource loadResource(String path, String name, String encoding)
+	protected Source loadResource(String path, String name, String encoding)
 			throws IOException {
-		Resource resource = (Resource) resources.get(name);
+		Source resource = (Source) resources.get(name);
 		if (resource == null)
 			throw new IOException("Not fount resouce: " + path);
 		return resource;

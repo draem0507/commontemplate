@@ -13,7 +13,7 @@ import org.commontemplate.util.Assert;
  * @author liangfei0201@163.com
  *
  */
-public class FileResource extends AbstractResource {
+public class FileResource extends AbstractSource {
 
 	private static final long serialVersionUID = 1L;
 

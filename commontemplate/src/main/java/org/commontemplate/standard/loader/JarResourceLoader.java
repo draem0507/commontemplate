@@ -3,7 +3,7 @@ package org.commontemplate.standard.loader;
 import java.io.File;
 import java.io.IOException;
 
-import org.commontemplate.core.Resource;
+import org.commontemplate.core.Source;
 
 /**
  * 从Jar文件中加载模板
@@ -11,7 +11,7 @@ import org.commontemplate.core.Resource;
  * @author liangfei0201@163.com
  *
  */
-public class JarResourceLoader extends AbstractResourceLoader {
+public class JarResourceLoader extends AbstractSourceLoader {
 	
 	private File jarFile; 
 	
@@ -31,7 +31,7 @@ public class JarResourceLoader extends AbstractResourceLoader {
 		this.jarFile = new File(jarFilePath);
 	}
 
-	public Resource loadResource(String path, String name, String encoding)
+	public Source loadResource(String path, String name, String encoding)
 			throws IOException {
 		return new JarResource(jarFile, name, encoding);
 	}

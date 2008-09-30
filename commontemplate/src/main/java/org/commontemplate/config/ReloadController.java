@@ -3,7 +3,7 @@ package org.commontemplate.config;
 /**
  * 热加载时机控制器
  *
- * @see org.commontemplate.config.ResourceComparator
+ * @see org.commontemplate.config.SourceComparator
  * @author liangfei0201@163.com
  *
  */

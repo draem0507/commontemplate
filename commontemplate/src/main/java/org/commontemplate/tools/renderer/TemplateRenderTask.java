@@ -221,7 +221,7 @@ public class TemplateRenderTask extends FileTask {
 		FileResourceLoader fileResourceLoader = new FileResourceLoader();
 		fileResourceLoader.setDefaultEncoding(inputencoding);
 		fileResourceLoader.setRootDirectory(srcdirFile.getAbsolutePath());
-		settings.setResourceLoader(fileResourceLoader);
+		settings.setSourceLoader(fileResourceLoader);
 		engine = new Engine(settings);
 
 		// 全局数据加载

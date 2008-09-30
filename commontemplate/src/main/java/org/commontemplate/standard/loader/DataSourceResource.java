@@ -3,7 +3,7 @@ package org.commontemplate.standard.loader;
 import java.io.IOException;
 import java.io.Reader;
 
-import org.commontemplate.core.Resource;
+import org.commontemplate.core.Source;
 import org.commontemplate.util.Assert;
 
 /**
@@ -12,7 +12,7 @@ import org.commontemplate.util.Assert;
  * @author liangfei0201@163.com
  *
  */
-public class DataSourceResource extends Resource {
+public class DataSourceResource extends Source {
 
 	private static final long serialVersionUID = 1L;
 

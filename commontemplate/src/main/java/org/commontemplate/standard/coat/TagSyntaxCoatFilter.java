@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.Reader;
 
 import org.commontemplate.config.Syntax;
-import org.commontemplate.standard.filter.StringResourceFilter;
+import org.commontemplate.standard.filter.StringSourceFilter;
 import org.commontemplate.standard.syntax.SyntaxSettings;
 
 /**
@@ -19,7 +19,7 @@ import org.commontemplate.standard.syntax.SyntaxSettings;
  * @author liangfei0201@163.com
  *
  */
-public class TagSyntaxCoatFilter extends StringResourceFilter {
+public class TagSyntaxCoatFilter extends StringSourceFilter {
 
 	private static final long serialVersionUID = 1L;
 

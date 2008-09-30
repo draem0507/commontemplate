@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.commontemplate.core.Context;
-import org.commontemplate.core.Resource;
+import org.commontemplate.core.Source;
 import org.commontemplate.standard.data.DataProvider;
 import org.commontemplate.standard.directive.DirectiveHandlerSupport;
 import org.commontemplate.util.Assert;
@@ -69,7 +69,7 @@ public class LoadDataDirectiveHandler extends DirectiveHandlerSupport {
 					+ "数据类型. 配置中只支持数据类型: " + dataProviders.keySet()
 					+ ", 可以通过实现:"+DataProvider.class.getName()
 					+ "接口扩展数据供给类型. 然后在commontemplate.properties中注册, 如: dataProvider{xxx}=com.xxx.XXXDataProvider()"); // TODO 未国际化
-		Resource resource = context.getTemplateLoader().getResource(path, encoding);
+		Source resource = context.getTemplateLoader().getSource(path, encoding);
 		Map data = dataProvider.getData(IOUtils.readToString(resource.getReader()));
 		context.getRootLocalContext().putAllVariables(data);
 	}

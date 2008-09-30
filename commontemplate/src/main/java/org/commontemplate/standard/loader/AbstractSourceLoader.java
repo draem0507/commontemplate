@@ -3,21 +3,21 @@ package org.commontemplate.standard.loader;
 import java.io.IOException;
 import java.util.Locale;
 
-import org.commontemplate.core.Resource;
-import org.commontemplate.core.ResourceLoader;
+import org.commontemplate.core.Source;
+import org.commontemplate.core.SourceLoader;
 import org.commontemplate.util.Assert;
 
-public abstract class AbstractResourceLoader implements ResourceLoader {
+public abstract class AbstractSourceLoader implements SourceLoader {
 
 	private String defaultEncoding;
 
 	private String rootDirectory;
 
-	public Resource getResource(String name) throws IOException {
-		return getResource(name, getDefaultEncoding());
+	public Source getSource(String name) throws IOException {
+		return getSource(name, getDefaultEncoding());
 	}
 
-	public Resource getResource(String name, String encoding) throws IOException {
+	public Source getSource(String name, String encoding) throws IOException {
 		int i = name.indexOf("/*/");
 		if (i > -1) {
 			Assert.assertTrue(i == name.lastIndexOf("/*/"), "不支持多个*号通配文件夹! 请检查文件名: {0}", new Object[]{name});
@@ -45,35 +45,35 @@ public abstract class AbstractResourceLoader implements ResourceLoader {
 		return loadResource(name, encoding);
 	}
 
-	private Resource loadResource(String name, String encoding) throws IOException {
+	private Source loadResource(String name, String encoding) throws IOException {
 		Assert.assertNotNull(name, "AbstractResourceLoader.resource.name.required");
 		String path = name;
 		if (getRootDirectory() != null)
 			path = getRootDirectory() + path;
-		Resource resource = loadResource(path, name, encoding);
+		Source resource = loadResource(path, name, encoding);
 		if (resource != null && resource.getReader() != null)
 			return resource;
 		throw new IOException("Not found resource: " + name);
 	}
 
-	public Resource getResource(String name, Locale locale) throws IOException {
-		return getResource(name, locale, getDefaultEncoding());
+	public Source getSource(String name, Locale locale) throws IOException {
+		return getSource(name, locale, getDefaultEncoding());
 	}
 
-	public Resource getResource(String name, Locale locale, String encoding)
+	public Source getSource(String name, Locale locale, String encoding)
 			throws IOException {
 		if (locale != null) {
 			try {
-				return  getResource(getLanguageCountryName(name, locale.getLanguage(), locale.getCountry()));
+				return  getSource(getLanguageCountryName(name, locale.getLanguage(), locale.getCountry()));
 			} catch (IOException e) {
 				try {
-					return getResource(getLanguageName(name, locale.getLanguage()));
+					return getSource(getLanguageName(name, locale.getLanguage()));
 				} catch (IOException e2) {
-					return getResource(name, encoding);
+					return getSource(name, encoding);
 				}
 			}
 		}
-		return getResource(name, encoding);
+		return getSource(name, encoding);
 	}
 
 	private String getLanguageCountryName(String name, String language, String country) {
@@ -90,7 +90,7 @@ public abstract class AbstractResourceLoader implements ResourceLoader {
 		return name + "_" + language;
 	}
 
-	protected abstract Resource loadResource(String path, String name, String encoding) throws IOException;
+	protected abstract Source loadResource(String path, String name, String encoding) throws IOException;
 
 	public final String getDefaultEncoding() {
 		if (defaultEncoding != null)

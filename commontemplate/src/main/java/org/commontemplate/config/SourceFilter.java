@@ -9,7 +9,7 @@ import java.io.Reader;
  * @author liangfei0201@163.com
  * 
  */
-public interface ResourceFilter {
+public interface SourceFilter {
 
 	/**
 	 * 过滤模板供给读取器

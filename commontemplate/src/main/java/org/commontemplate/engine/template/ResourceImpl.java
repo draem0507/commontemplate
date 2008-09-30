@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 
-import org.commontemplate.core.Resource;
+import org.commontemplate.core.Source;
 
 /**
  * 匿名模板源
@@ -12,7 +12,7 @@ import org.commontemplate.core.Resource;
  * @author liangfei0201@163.com
  *
  */
-final class ResourceImpl extends Resource implements java.io.Serializable {
+final class ResourceImpl extends Source implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 
