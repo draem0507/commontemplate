@@ -10,13 +10,13 @@ import org.commontemplate.util.Location;
 /**
  * 模板源
  *
- * @see org.commontemplate.core.ResourceLoader
+ * @see org.commontemplate.core.SourceLoader
  * @see org.commontemplate.core.TemplateLoader
  * @see org.commontemplate.core.Factory
  * @author liangfei0201@163.com
  *
  */
-public abstract class Resource {
+public abstract class Source {
 
 	/**
 	 * 获取模板读取器, 此方法可重复调用.

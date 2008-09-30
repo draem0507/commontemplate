@@ -3,8 +3,8 @@ package org.commontemplate.standard.reload;
 import java.io.IOException;
 import java.io.Serializable;
 
-import org.commontemplate.config.ResourceComparator;
-import org.commontemplate.core.Resource;
+import org.commontemplate.config.SourceComparator;
+import org.commontemplate.core.Source;
 import org.commontemplate.core.Template;
 
 /**
@@ -13,11 +13,11 @@ import org.commontemplate.core.Template;
  * @author liangfei0201@163.com
  *
  */
-public class ResourceLastModifiedComparator implements ResourceComparator, Serializable {
+public class LastModifiedSourceComparator implements SourceComparator, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public boolean isModified(Template oldSource, Resource newSource) throws IOException {
+	public boolean isModified(Template oldSource, Source newSource) throws IOException {
 		return oldSource.getLastModified() - newSource.getLastModified() < 0;
 	}
 

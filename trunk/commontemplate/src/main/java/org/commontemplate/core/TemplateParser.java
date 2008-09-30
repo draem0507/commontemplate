@@ -21,7 +21,7 @@ public interface TemplateParser extends ExpressionParser, TemplateFactory {
 	 * @throws IOException
 	 *             模板不存在或读取失败时抛出
 	 */
-	public Template parseTemplate(Resource resource) throws ParsingException, IOException;
+	public Template parseTemplate(Source resource) throws ParsingException, IOException;
 
 	/**
 	 * 将字符串解析为匿名模板

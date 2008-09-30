@@ -1,4 +1,4 @@
-package org.commontemplate.engine.resource;
+package org.commontemplate.engine.template;
 
 import java.io.IOException;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.Locale;
 
 import org.commontemplate.config.Cache;
 import org.commontemplate.config.ReloadController;
-import org.commontemplate.config.ResourceComparator;
+import org.commontemplate.config.SourceComparator;
 import org.commontemplate.core.BinaryOperator;
 import org.commontemplate.core.BlockDirective;
 import org.commontemplate.core.Comment;
@@ -15,8 +15,8 @@ import org.commontemplate.core.Directive;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.ExpressionBuilder;
 import org.commontemplate.core.ParsingException;
-import org.commontemplate.core.Resource;
-import org.commontemplate.core.ResourceLoader;
+import org.commontemplate.core.Source;
+import org.commontemplate.core.SourceLoader;
 import org.commontemplate.core.Template;
 import org.commontemplate.core.TemplateBudiler;
 import org.commontemplate.core.TemplateLoader;
@@ -48,9 +48,9 @@ final class TemplateLoaderImpl implements TemplateLoader {
 	 * @param resourceComparator 模板源比较器
 	 *
 	 */
-	TemplateLoaderImpl(TemplateParser templateParser, ResourceLoader resourceLoader,
+	TemplateLoaderImpl(TemplateParser templateParser, SourceLoader resourceLoader,
 			Cache cache, Cache persistentCahce, ReloadController reloadController,
-			ResourceComparator resourceComparator) {
+			SourceComparator resourceComparator) {
 		Assert.assertNotNull(resourceLoader, "TemplateFactoryImpl.resource.loader.required");
 		Assert.assertNotNull(templateParser, "TemplateFactoryImpl.template.parser.required");
 
@@ -67,7 +67,7 @@ final class TemplateLoaderImpl implements TemplateLoader {
 
 	private final ReloadController reloadController;
 
-	private final ResourceComparator resourceComparator;
+	private final SourceComparator resourceComparator;
 
 	private final Cache cache;
 
@@ -76,7 +76,7 @@ final class TemplateLoaderImpl implements TemplateLoader {
 	private Template cacheTemplate(String name, Locale locale, String encoding)
 			throws IOException, ParsingException {
 		if (cache == null) { // 如果没有缓存策略，直接读取并编译模板
-			Resource resource = loadResource(name, locale, encoding);
+			Source resource = loadResource(name, locale, encoding);
 			return persistentTemplate(resource);
 		}
 
@@ -99,13 +99,13 @@ final class TemplateLoaderImpl implements TemplateLoader {
 		synchronized (entry) {
 			template = entry.getTemplate();
 			if (template == null) { // 不存在，解析加载
-				Resource resource = loadResource(name, locale, encoding);
+				Source resource = loadResource(name, locale, encoding);
 				template = persistentTemplate(resource); // 此函数调用时间较长，为主要缓存目标
 				entry.setTemplate(template);
 			} else { // 已存在，检查热加载
 				if (reloadController != null
 						&& reloadController.shouldReload(template.getName())) { // 是否需要检查热加载
-					Resource resource = loadResource(name, locale, encoding);
+					Source resource = loadResource(name, locale, encoding);
 					if (resourceComparator != null
 							&& resourceComparator.isModified(template, resource)) { // 比较是否已更改
 						template = parseTemplate(resource); // 热加载
@@ -123,7 +123,7 @@ final class TemplateLoaderImpl implements TemplateLoader {
 		return template;
 	}
 
-	private Template persistentTemplate(Resource resource) throws ParsingException, IOException {
+	private Template persistentTemplate(Source resource) throws ParsingException, IOException {
 		Template template;
 		if (persistentCahce != null) {
 			synchronized(persistentCahce) {
@@ -141,18 +141,18 @@ final class TemplateLoaderImpl implements TemplateLoader {
 
 	// 加载资源 --------
 
-	private final ResourceLoader resourceLoader;
+	private final SourceLoader resourceLoader;
 
 	// 注：返回的Resource中的getName()并不一定等于传入的name参数。
-	private Resource loadResource(String name, Locale locale, String encoding) throws IOException {
+	private Source loadResource(String name, Locale locale, String encoding) throws IOException {
 		if (locale == null) {
 			if(encoding == null)
-				return getResource(name);
-			return getResource(name, encoding);
+				return getSource(name);
+			return getSource(name, encoding);
 		}
 		if(encoding == null)
-			return getResource(name, locale);
-		return getResource(name, locale, encoding);
+			return getSource(name, locale);
+		return getSource(name, locale, encoding);
 	}
 
 	private String cleanName(String name) throws IOException {
@@ -182,31 +182,31 @@ final class TemplateLoaderImpl implements TemplateLoader {
 
 	// 代理TemplateLoader -------
 
-	public Resource getResource(String name) throws IOException {
-		Resource resource = resourceLoader.getResource(cleanName(name));
+	public Source getSource(String name) throws IOException {
+		Source resource = resourceLoader.getSource(cleanName(name));
 		if (resource == null)
 			throw new IOException("Not found resource: " + name);
 		return resource;
 	}
 
-	public Resource getResource(String name, String encoding)
+	public Source getSource(String name, String encoding)
 			throws IOException {
-		Resource resource = resourceLoader.getResource(cleanName(name), encoding);
+		Source resource = resourceLoader.getSource(cleanName(name), encoding);
 		if (resource == null)
 			throw new IOException("Not found resource: " + name);
 		return resource;
 	}
 
-	public Resource getResource(String name, Locale locale) throws IOException {
-		Resource resource = resourceLoader.getResource(cleanName(name), locale);
+	public Source getSource(String name, Locale locale) throws IOException {
+		Source resource = resourceLoader.getSource(cleanName(name), locale);
 		if (resource == null)
 			throw new IOException("Not found resource: " + name);
 		return resource;
 	}
 
-	public Resource getResource(String name, Locale locale, String encoding)
+	public Source getSource(String name, Locale locale, String encoding)
 			throws IOException {
-		Resource resource = resourceLoader.getResource(cleanName(name), locale, encoding);
+		Source resource = resourceLoader.getSource(cleanName(name), locale, encoding);
 		if (resource == null)
 			throw new IOException("Not found resource: " + name);
 		return resource;
@@ -224,7 +224,7 @@ final class TemplateLoaderImpl implements TemplateLoader {
 		return templateParser.parseTemplate(template);
 	}
 
-	public Template parseTemplate(Resource resource)
+	public Template parseTemplate(Source resource)
 			throws ParsingException, IOException {
 		return templateParser.parseTemplate(resource);
 	}

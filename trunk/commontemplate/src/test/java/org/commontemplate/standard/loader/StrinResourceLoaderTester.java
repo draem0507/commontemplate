@@ -17,7 +17,7 @@ public class StrinResourceLoaderTester extends TestCase {
 		super.setUp();
 		loader = new StringResourceLoader();
 		ConfigurationSettings config = PropertiesConfigurationLoader.loadStandardConfiguration();
-		config.setResourceLoader(loader);
+		config.setSourceLoader(loader);
 		engine = new Engine(config);
 	}
 

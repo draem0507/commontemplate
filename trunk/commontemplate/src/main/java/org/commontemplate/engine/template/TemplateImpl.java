@@ -9,7 +9,7 @@ import java.util.List;
 import org.commontemplate.core.Context;
 import org.commontemplate.core.IgnoreException;
 import org.commontemplate.core.RenderingException;
-import org.commontemplate.core.Resource;
+import org.commontemplate.core.Source;
 import org.commontemplate.core.StopVisitException;
 import org.commontemplate.core.Template;
 import org.commontemplate.core.TemplateVisitor;
@@ -42,11 +42,11 @@ final class TemplateImpl extends Template implements Serializable {
 
 	private final Template proxy;
 
-	TemplateImpl(Resource resource, RootBlockDirectiveImpl rootDirective, List renderInterceptors) throws IOException {
+	TemplateImpl(Source resource, RootBlockDirectiveImpl rootDirective, List renderInterceptors) throws IOException {
 		this(resource == null ? null : resource.getReader(), resource, rootDirective, renderInterceptors);
 	}
 
-	TemplateImpl(Reader reader, Resource resource, RootBlockDirectiveImpl rootDirective, List renderInterceptors) throws IOException {
+	TemplateImpl(Reader reader, Source resource, RootBlockDirectiveImpl rootDirective, List renderInterceptors) throws IOException {
 		Assert.assertNotNull(resource, "TemplateImpl.resource.required");
 		Assert.assertNotNull(rootDirective, "TemplateImpl.elements.required");
 

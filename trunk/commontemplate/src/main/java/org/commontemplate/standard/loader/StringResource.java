@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 
-import org.commontemplate.core.Resource;
+import org.commontemplate.core.Source;
 import org.commontemplate.util.Assert;
 
 /**
@@ -13,7 +13,7 @@ import org.commontemplate.util.Assert;
  * @author liangfei0201@163.com
  *
  */
-public class StringResource extends Resource implements java.io.Serializable {
+public class StringResource extends Source implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 

@@ -5,7 +5,7 @@ import java.io.Reader;
 import java.util.List;
 
 import org.commontemplate.core.Context;
-import org.commontemplate.core.Resource;
+import org.commontemplate.core.Source;
 import org.commontemplate.standard.directive.DirectiveHandlerSupport;
 import org.commontemplate.util.Assert;
 
@@ -63,23 +63,23 @@ public class DisplayFileDirectiveHandler extends DirectiveHandlerSupport {
 	}
 
 	private void readFile(Context context, String name) throws IOException {
-		Resource resource;
+		Source resource;
 		if (localizedLookup)
-			resource = context.getTemplateLoader().getResource(name, context.getLocale());
+			resource = context.getTemplateLoader().getSource(name, context.getLocale());
 		else
-			resource = context.getTemplateLoader().getResource(name);
+			resource = context.getTemplateLoader().getSource(name);
 
 		read(context, resource.getReader());
 	}
 
 	private void readFile(Context context, String name, String encoding)
 			throws IOException {
-		Resource resource;
+		Source resource;
 		if (localizedLookup)
 			resource = context.getTemplateLoader()
-					.getResource(name, context.getLocale(), encoding);
+					.getSource(name, context.getLocale(), encoding);
 		else
-			resource = context.getTemplateLoader().getResource(name, encoding);
+			resource = context.getTemplateLoader().getSource(name, encoding);
 
 		read(context, resource.getReader());
 	}

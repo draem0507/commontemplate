@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 
 import javax.sql.DataSource;
 
-import org.commontemplate.core.Resource;
+import org.commontemplate.core.Source;
 import org.commontemplate.util.I18nExceptionFactory;
 
 /**
@@ -19,7 +19,7 @@ import org.commontemplate.util.I18nExceptionFactory;
  * @author liangfei0201@163.com
  *
  */
-public class DataSourceResourceLoader extends AbstractResourceLoader {
+public class DataSourceResourceLoader extends AbstractSourceLoader {
 
 	private DataSource dataSource;
 
@@ -51,9 +51,9 @@ public class DataSourceResourceLoader extends AbstractResourceLoader {
 		this.lastModifiedColumn = lastModifiedColumn;
 	}
 
-	protected Resource loadResource(String path, String name, String encoding) throws IOException {
+	protected Source loadResource(String path, String name, String encoding) throws IOException {
 		try {
-			Resource t = query(path, name, encoding);
+			Source t = query(path, name, encoding);
 			if (t != null)
 				return t;
 			throw I18nExceptionFactory.createFileNotFoundException("DataSourceResourceLoader.template.not.found", new Object[]{name});
@@ -62,7 +62,7 @@ public class DataSourceResourceLoader extends AbstractResourceLoader {
 		}
 	}
 
-	private Resource query(String path, String name, String encoding) throws SQLException {
+	private Source query(String path, String name, String encoding) throws SQLException {
 		Connection conn = null;
 		ResultSet rs = null;
 		PreparedStatement ps = null;

@@ -15,7 +15,7 @@ import java.util.List;
  * @author liangfei0201@163.com
  *
  */
-public abstract class Template extends Resource implements Serializable {
+public abstract class Template extends Source implements Serializable {
 
 	/**
 	 * 模板元素渲染接口

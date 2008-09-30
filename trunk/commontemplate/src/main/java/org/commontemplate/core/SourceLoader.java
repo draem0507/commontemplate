@@ -9,7 +9,7 @@ import java.util.Locale;
  * @author liangfei0201@163.com
  *
  */
-public interface ResourceLoader {
+public interface SourceLoader {
 
 	/**
 	 * 通过模板名获取相应模板源
@@ -20,7 +20,7 @@ public interface ResourceLoader {
 	 * @throws IOException
 	 *             当模板不存在时抛出
 	 */
-	public Resource getResource(String name) throws IOException;
+	public Source getSource(String name) throws IOException;
 
 	/**
 	 * 通过模板名获取相应模板源, 并指定加载编码方式
@@ -33,7 +33,7 @@ public interface ResourceLoader {
 	 * @throws IOException
 	 *             当模板不存在时抛出
 	 */
-	public Resource getResource(String name, String encoding)
+	public Source getSource(String name, String encoding)
 			throws IOException;
 
 	/**
@@ -47,7 +47,7 @@ public interface ResourceLoader {
 	 * @throws IOException
 	 *             当模板不存在时抛出
 	 */
-	public Resource getResource(String name, Locale locale) throws IOException;
+	public Source getSource(String name, Locale locale) throws IOException;
 
 	/**
 	 * 通过模板名获取相应模板源, 并指定加载编码方式
@@ -62,7 +62,7 @@ public interface ResourceLoader {
 	 * @throws IOException
 	 *             当模板不存在时抛出
 	 */
-	public Resource getResource(String name, Locale locale, String encoding)
+	public Source getSource(String name, Locale locale, String encoding)
 			throws IOException;
 
 }

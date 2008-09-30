@@ -9,7 +9,7 @@ import java.util.Locale;
  * @author liangfei0201@163.com
  *
  */
-public interface TemplateLoader extends ResourceLoader, TemplateParser {
+public interface TemplateLoader extends SourceLoader, TemplateParser {
 
 	/**
 	 * 通过名称获取模板. 使用默认编码加载

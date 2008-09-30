@@ -3,7 +3,7 @@ package org.commontemplate.standard.loader;
 import java.io.IOException;
 import java.net.URL;
 
-import org.commontemplate.core.Resource;
+import org.commontemplate.core.Source;
 import org.commontemplate.util.I18nExceptionFactory;
 
 /**
@@ -12,9 +12,9 @@ import org.commontemplate.util.I18nExceptionFactory;
  * @author liangfei0201@163.com
  *
  */
-public abstract class URLResourceLoader extends AbstractResourceLoader {
+public abstract class URLResourceLoader extends AbstractSourceLoader {
 
-	public Resource loadResource(String path, String name, String encoding)
+	public Source loadResource(String path, String name, String encoding)
 			throws IOException {
 		URL url = getURL(path);
 		if (url == null)

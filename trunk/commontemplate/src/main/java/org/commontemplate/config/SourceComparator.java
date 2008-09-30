@@ -2,7 +2,7 @@ package org.commontemplate.config;
 
 import java.io.IOException;
 
-import org.commontemplate.core.Resource;
+import org.commontemplate.core.Source;
 import org.commontemplate.core.Template;
 
 /**
@@ -11,7 +11,7 @@ import org.commontemplate.core.Template;
  * @author liangfei0201@163.com
  *
  */
-public interface ResourceComparator {
+public interface SourceComparator {
 
 	/**
 	 * 比较Template和Resource的新旧
@@ -26,7 +26,7 @@ public interface ResourceComparator {
 	 * @throws IOException
 	 *             读取Resource信息出错时抛出
 	 */
-	public boolean isModified(Template template, Resource reource)
+	public boolean isModified(Template template, Source reource)
 			throws IOException;
 
 }

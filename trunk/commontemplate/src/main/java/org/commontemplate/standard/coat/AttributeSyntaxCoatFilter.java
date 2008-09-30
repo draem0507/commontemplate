@@ -12,7 +12,7 @@ import org.commontemplate.config.BlockDirectiveHandler;
 import org.commontemplate.config.ConfigurationException;
 import org.commontemplate.config.DirectiveHandler;
 import org.commontemplate.config.DirectiveHandlerProvider;
-import org.commontemplate.config.ResourceFilter;
+import org.commontemplate.config.SourceFilter;
 import org.commontemplate.config.Syntax;
 import org.commontemplate.standard.syntax.SyntaxSettings;
 
@@ -40,7 +40,7 @@ import au.id.jericho.lib.html.Source;
  * @author GuiLeen
  * @author liangfei0201@163.com
  */
-public class AttributeSyntaxCoatFilter implements ResourceFilter, Serializable {
+public class AttributeSyntaxCoatFilter implements SourceFilter, Serializable {
 
 	private static final long serialVersionUID = 1L;
 

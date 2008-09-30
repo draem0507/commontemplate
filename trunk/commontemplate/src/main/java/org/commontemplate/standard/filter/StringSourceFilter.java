@@ -5,7 +5,7 @@ import java.io.Reader;
 import java.io.Serializable;
 import java.io.StringReader;
 
-import org.commontemplate.config.ResourceFilter;
+import org.commontemplate.config.SourceFilter;
 import org.commontemplate.util.IOUtils;
 
 /**
@@ -14,7 +14,7 @@ import org.commontemplate.util.IOUtils;
  * @author liangfei0201@163.com
  *
  */
-public abstract class StringResourceFilter implements ResourceFilter, Serializable {
+public abstract class StringSourceFilter implements SourceFilter, Serializable {
 
 	public Reader filter(Reader reader) throws IOException {
 		return new StringReader(filter(IOUtils.readToString(reader)));

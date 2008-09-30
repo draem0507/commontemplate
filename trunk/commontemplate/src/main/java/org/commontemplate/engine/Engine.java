@@ -15,16 +15,17 @@ import org.commontemplate.core.ContextFactory;
 import org.commontemplate.core.Directive;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.ExpressionBuilder;
+import org.commontemplate.core.Factory;
 import org.commontemplate.core.GlobalContext;
 import org.commontemplate.core.ParsingException;
-import org.commontemplate.core.Resource;
+import org.commontemplate.core.Source;
 import org.commontemplate.core.Template;
 import org.commontemplate.core.TemplateBudiler;
 import org.commontemplate.core.TemplateLoader;
 import org.commontemplate.core.Text;
 import org.commontemplate.core.UnaryOperator;
 import org.commontemplate.core.Variable;
-import org.commontemplate.engine.resource.ResourceEngine;
+import org.commontemplate.engine.template.TemplateEngine;
 import org.commontemplate.util.Assert;
 
 /**
@@ -33,7 +34,7 @@ import org.commontemplate.util.Assert;
  * @author liangfei0201@163.com
  *
  */
-public class Engine extends org.commontemplate.core.Factory {
+public class Engine extends Factory {
 
 	private final TemplateLoader templateLoader;
 
@@ -48,7 +49,7 @@ public class Engine extends org.commontemplate.core.Factory {
 	public Engine(Configuration config) {
 		Assert.assertNotNull(config, "Engine.config.required");
 		// 创建模板工厂
-		this.templateLoader = new ResourceEngine(config);
+		this.templateLoader = new TemplateEngine(config);
 		// 创建上下文工厂
 		this.contextFactory = new ContextFactoryImpl(
 				this.templateLoader, config.getContextInitializer(),
@@ -76,13 +77,13 @@ public class Engine extends org.commontemplate.core.Factory {
 		return templateLoader.getTemplate(name, locale, encoding);
 	}
 
-	public Resource getResource(String name, String encoding)
+	public Source getSource(String name, String encoding)
 			throws IOException {
-		return templateLoader.getResource(name, encoding);
+		return templateLoader.getSource(name, encoding);
 	}
 
-	public Resource getResource(String name) throws IOException {
-		return templateLoader.getResource(name);
+	public Source getSource(String name) throws IOException {
+		return templateLoader.getSource(name);
 	}
 
 	public BinaryOperator createBinaryOperator(String operatorName,
@@ -112,7 +113,7 @@ public class Engine extends org.commontemplate.core.Factory {
 		return templateLoader.parseTemplate(template);
 	}
 
-	public Template parseTemplate(Resource resource)
+	public Template parseTemplate(Source resource)
 			throws ParsingException, IOException {
 		return templateLoader.parseTemplate(resource);
 	}
@@ -146,13 +147,13 @@ public class Engine extends org.commontemplate.core.Factory {
 		return templateLoader.createTemplate(name, elements);
 	}
 
-	public Resource getResource(String name, Locale locale) throws IOException {
-		return templateLoader.getResource(name, locale);
+	public Source getSource(String name, Locale locale) throws IOException {
+		return templateLoader.getSource(name, locale);
 	}
 
-	public Resource getResource(String name, Locale locale, String encoding)
+	public Source getSource(String name, Locale locale, String encoding)
 			throws IOException {
-		return templateLoader.getResource(name, locale, encoding);
+		return templateLoader.getSource(name, locale, encoding);
 	}
 
 	public Context createContext(Writer out) {

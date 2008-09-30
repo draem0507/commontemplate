@@ -49,9 +49,9 @@ public class ParsingException extends I18nRuntimeException {
 		this.location = location;
 	}
 
-	private Resource resource;
+	private Source resource;
 
-	public void setResource(Resource resource) {
+	public void setResource(Source resource) {
 		this.resource = resource;
 	}
 
@@ -60,7 +60,7 @@ public class ParsingException extends I18nRuntimeException {
 	 *
 	 * @return 出错解析源
 	 */
-	public Resource getResource() {
+	public Source getResource() {
 		return resource;
 	}
 

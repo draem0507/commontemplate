@@ -12,7 +12,7 @@ import org.commontemplate.core.OutputFormatter;
  * @author liangfei0201@163.com
  *
  */
-public abstract class Configuration extends ResourceConfiguration {
+public abstract class Configuration extends TemplateConfiguration {
 
 	/**
 	 * 获取是否为调试模式设置

@@ -14,7 +14,7 @@ import org.commontemplate.util.Assert;
  * @author liangfei0201@163.com
  *
  */
-public class ZipResource extends AbstractResource {
+public class ZipResource extends AbstractSource {
 
 	private static final long serialVersionUID = 1L;
 

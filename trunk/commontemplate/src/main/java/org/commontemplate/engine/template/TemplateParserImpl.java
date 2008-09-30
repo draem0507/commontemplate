@@ -5,7 +5,7 @@ import java.io.Reader;
 import java.util.List;
 
 import org.commontemplate.config.DirectiveHandlerProvider;
-import org.commontemplate.config.ResourceFilter;
+import org.commontemplate.config.SourceFilter;
 import org.commontemplate.config.Syntax;
 import org.commontemplate.config.TextFilter;
 import org.commontemplate.core.BinaryOperator;
@@ -17,7 +17,7 @@ import org.commontemplate.core.Expression;
 import org.commontemplate.core.ExpressionBuilder;
 import org.commontemplate.core.ExpressionParser;
 import org.commontemplate.core.ParsingException;
-import org.commontemplate.core.Resource;
+import org.commontemplate.core.Source;
 import org.commontemplate.core.Template;
 import org.commontemplate.core.TemplateBudiler;
 import org.commontemplate.core.TemplateFactory;
@@ -39,7 +39,7 @@ class TemplateParserImpl implements TemplateParser {
 
 	private final DirectiveReducer directiveReducer;
 
-	private final ResourceFilter resourceFilter;
+	private final SourceFilter resourceFilter;
 
 	private final TemplateFactory elementFactory;
 
@@ -50,7 +50,7 @@ class TemplateParserImpl implements TemplateParser {
 	private final DirectiveHandlerProvider directiveHandlerProvider;
 
 	public TemplateParserImpl(ExpressionParser expressionParser, DirectiveHandlerProvider directiveHandlerProvider,
-			Syntax syntax, List renderInterceptors, TextFilter textFilter, ResourceFilter resourceFilter) {
+			Syntax syntax, List renderInterceptors, TextFilter textFilter, SourceFilter resourceFilter) {
 		this.directiveHandlerProvider = directiveHandlerProvider;
 		this.syntax = syntax;
 		this.renderInterceptors = renderInterceptors;
@@ -86,7 +86,7 @@ class TemplateParserImpl implements TemplateParser {
 		}
 	}
 
-	public final Template parseTemplate(Resource resource)
+	public final Template parseTemplate(Source resource)
 			throws ParsingException, IOException {
 		try {
 			return new TemplateImpl(getReader(resource), resource, parseDirective(getReader(resource)), renderInterceptors);
@@ -96,7 +96,7 @@ class TemplateParserImpl implements TemplateParser {
 		}
 	}
 
-	private final Reader getReader(Resource resource) throws IOException {
+	private final Reader getReader(Source resource) throws IOException {
 		Reader reader = resource.getReader();
 		if (resourceFilter != null)
 			reader = resourceFilter.filter(reader);
@@ -105,7 +105,7 @@ class TemplateParserImpl implements TemplateParser {
 
 	public final Template parseTemplate(String template) throws ParsingException {
 		Assert.assertNotNull(template, "TemplateEngine.template.name.required");
-		Resource resource = new ResourceImpl(template);
+		Source resource = new ResourceImpl(template);
 		try {
 			return parseTemplate(resource);
 		} catch (IOException e) { // 因为是字符串模板，一般不会出现IOException

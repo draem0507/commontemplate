@@ -11,7 +11,7 @@ import org.commontemplate.core.BlockDirective;
 import org.commontemplate.core.Comment;
 import org.commontemplate.core.Directive;
 import org.commontemplate.core.Expression;
-import org.commontemplate.core.Resource;
+import org.commontemplate.core.Source;
 import org.commontemplate.core.Template;
 import org.commontemplate.core.TemplateFactory;
 import org.commontemplate.core.Text;
@@ -52,7 +52,7 @@ final class TemplateFactoryImpl implements TemplateFactory {
 
 	public Template createTemplate(String name, List elements) {
 		try {
-			Resource resource = new ResourceImpl("", name);
+			Source resource = new ResourceImpl("", name);
 			RootBlockDirectiveImpl rootBlockDirective = new RootBlockDirectiveImpl();
 			rootBlockDirective.setElements(elements);
 			return new TemplateImpl(resource, rootBlockDirective, renderInterceptors);

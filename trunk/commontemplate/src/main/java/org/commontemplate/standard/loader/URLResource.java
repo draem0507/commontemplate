@@ -12,7 +12,7 @@ import org.commontemplate.util.Assert;
  * @author liangfei0201@163.com
  *
  */
-public class URLResource extends AbstractResource {
+public class URLResource extends AbstractSource {
 
 	private static final long serialVersionUID = 1L;
 

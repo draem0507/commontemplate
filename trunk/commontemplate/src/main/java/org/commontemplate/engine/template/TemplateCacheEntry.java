@@ -1,4 +1,4 @@
-package org.commontemplate.engine.resource;
+package org.commontemplate.engine.template;
 
 import java.io.Serializable;
 
