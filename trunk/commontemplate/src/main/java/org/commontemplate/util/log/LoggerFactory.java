@@ -12,26 +12,39 @@ public class LoggerFactory {
 
 	static { // 查找常用的日志框架
 		try {
-			Class.forName("org.apache.commons.logging.Log", true, Thread.currentThread().getContextClassLoader());
-			setLoggerProvider(new CommonsLoggerProvider());
+			LoggerProvider loggerProvider = new CommonsLoggerProvider();
+			Logger logger = loggerProvider.getLogger(LoggerFactory.class.getName());
+			logger.info("using LoggerProvider:" + CommonsLoggerProvider.class.getName());
+			setLoggerProvider(loggerProvider);
 		} catch (Throwable e) {
 			try {
-				Class.forName("org.apache.log4j.Logger", true, Thread.currentThread().getContextClassLoader());
-				setLoggerProvider(new Log4jLoggerProvider());
+				LoggerProvider loggerProvider = new Log4jLoggerProvider();
+				Logger logger = loggerProvider.getLogger(LoggerFactory.class.getName());
+				logger.info("using LoggerProvider:" + Log4jLoggerProvider.class.getName());
+				setLoggerProvider(loggerProvider);
 			} catch (Throwable e2) {
 				try {
-					Class.forName("org.apache.log.Logger", true, Thread.currentThread().getContextClassLoader());
-					setLoggerProvider(new AvalonLoggerProvider());
+					LoggerProvider loggerProvider = new AvalonLoggerProvider();
+					Logger logger = loggerProvider.getLogger(LoggerFactory.class.getName());
+					logger.info("using LoggerProvider:" + AvalonLoggerProvider.class.getName());
+					setLoggerProvider(loggerProvider);
 				} catch (Throwable e3) {
 					try {
-						Class.forName("org.slf4j.Logger", true, Thread.currentThread().getContextClassLoader());
-						setLoggerProvider(new Log4jLoggerProvider());
+						LoggerProvider loggerProvider = new Slf4jLoggerProvider();
+						Logger logger = loggerProvider.getLogger(LoggerFactory.class.getName());
+						logger.info("using LoggerProvider:" + Slf4jLoggerProvider.class.getName());
+						setLoggerProvider(loggerProvider);
 					} catch (Throwable e4) {
 						try {
-							Class.forName("java.util.logging.Logger", true, Thread.currentThread().getContextClassLoader());
-							setLoggerProvider(new Log4jLoggerProvider());
+							LoggerProvider loggerProvider = new JdkLoggerProvider();
+							Logger logger = loggerProvider.getLogger(LoggerFactory.class.getName());
+							logger.info("using LoggerProvider:" + JdkLoggerProvider.class.getName());
+							setLoggerProvider(loggerProvider);
 						} catch (Throwable e5) {
-							setLoggerProvider(new SimpleLoggerProvider());
+							LoggerProvider loggerProvider = new SimpleLoggerProvider();
+							Logger logger = loggerProvider.getLogger(LoggerFactory.class.getName());
+							logger.info("using LoggerProvider:" + SimpleLoggerProvider.class.getName());
+							setLoggerProvider(loggerProvider);
 						}
 					}
 				}
