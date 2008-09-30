@@ -12,7 +12,7 @@ import org.commontemplate.engine.*;
 import org.commontemplate.standard.*;
 import org.commontemplate.tools.*;
 
-// 配置并建造引擎 (Engine是内同步线程安全的，可单例重用)
+// 配置并建造引擎 (Engine是内同步线程安全的，并且Engine的装配比较耗时，请单实例重用Engine类)
 ConfigurationSettings config = PropertiesConfigurationLoader.loadConfiguration("commontemplate.properties");
 // 或者：ConfigurationSettings config = PropertiesConfigurationLoader.loadStandardConfiguration();
 // 或者：StandardConfiguration config = new StandardConfiguration();
