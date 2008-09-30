@@ -1,5 +1,6 @@
 package org.commontemplate.tools.swing;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -16,6 +17,12 @@ public class JFileField extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
+	public static final int FILES_AND_DIRECTORIES = JFileChooser.FILES_AND_DIRECTORIES;
+
+	public static final int FILES_ONLY = JFileChooser.FILES_ONLY;
+
+	public static final int DIRECTORIES_ONLY = JFileChooser.DIRECTORIES_ONLY;
+
 	private final JTextField textField;
 
 	private final JButton button;
@@ -25,42 +32,61 @@ public class JFileField extends JPanel {
 	private int height = 24;
 
 	public JFileField() {
-		this(null, null, true);
+		this(null, FILES_AND_DIRECTORIES, null, true);
 	}
 
 	public JFileField(File defaultFile) {
-		this(defaultFile, null, true);
+		this(defaultFile, FILES_AND_DIRECTORIES, null, true);
+	}
+
+	public JFileField(int mode) {
+		this(null, mode, null, true);
 	}
 
 	public JFileField(FileFilter fileFilter) {
-		this(null, fileFilter, true);
+		this(null, FILES_AND_DIRECTORIES, fileFilter, true);
+	}
+
+	public JFileField(File defaultFile, int mode) {
+		this(defaultFile, mode, null, true);
 	}
 
 	public JFileField(File defaultFile, FileFilter fileFilter) {
-		this(defaultFile, fileFilter, true);
+		this(defaultFile, FILES_AND_DIRECTORIES, fileFilter, true);
 	}
 
 	public JFileField(boolean editable) {
-		this(null, null, true);
+		this(null, FILES_AND_DIRECTORIES, null, true);
 	}
 
 	public JFileField(File defaultFile, boolean editable) {
-		this(defaultFile, null, editable);
+		this(defaultFile, FILES_AND_DIRECTORIES, null, editable);
+	}
+
+	public JFileField(File defaultFile, int mode, boolean editable) {
+		this(defaultFile, mode, null, editable);
+	}
+
+	public JFileField(int mode, boolean editable) {
+		this(null, mode, null, editable);
 	}
 
 	public JFileField(FileFilter fileFilter, boolean editable) {
-		this(null, fileFilter, editable);
+		this(null, FILES_AND_DIRECTORIES, fileFilter, editable);
 	}
 
-	public JFileField(final File defaultFile, final FileFilter fileFilter, boolean editable) {
+	public JFileField(final File defaultFile, final int mode, final FileFilter fileFilter, final boolean editable) {
 		this.setSize(width, height);
 		this.setLayout(null);
 
 		textField = new JTextField(defaultFile != null ? defaultFile.getAbsolutePath() : "");
-		if (editable)
+		if (editable) {
 			MenuBuilder.buildEditableTextMenu(textField);
-		else
+		} else {
+			textField.setEditable(false);
+			textField.setBackground(Color.WHITE);
 			MenuBuilder.buildReadonlyTextMenu(textField);
+		}
 		textField.setBounds(0, 0, 200, 24);
 		this.add(textField);
 
@@ -86,6 +112,7 @@ public class JFileField extends JPanel {
 				JFileChooser fc = new JFileChooser(dir != null && dir.exists() ? dir : new File(".")); //以上次打开的文件为默认路径打开文件选取择框图
 				fc.setDialogTitle("请选择"); // TODO 未国际化
 				fc.setApproveButtonText("选择");
+				fc.setFileSelectionMode(mode);
 				if (file != null && dir != file)
 					fc.setSelectedFile(file);
 				int ch = fc.showOpenDialog(null);
