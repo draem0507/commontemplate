@@ -1,4 +1,4 @@
-package org.commontemplate.tools.renderer;
+package org.commontemplate.tools.generator;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,12 +30,12 @@ import org.commontemplate.util.IOUtils;
  * <p/>
  * 定义如:<br/>
  * <pre>
- * &lt;taskdef name="ctlrender" classname="org.commontemplate.tools.renderer.TemplateRenderTask" classpath="commontemplate.jar"/&gt;
+ * &lt;taskdef name="ctlgenerate" classname="org.commontemplate.tools.generator.TemplateGeneratorTask" classpath="commontemplate.jar"/&gt;
  * </pre>
  * 调用如:<br/>
  * <pre>
  *  &lt;target name="xxx"&gt;
- *    &lt;ctlrender srcdir="F:/ctl/" destdir="F:/html/" /&gt;
+ *    &lt;ctlgenerate srcdir="F:/ctl/" destdir="F:/html/" /&gt;
  *  &lt;/target&gt;
  * </pre>
  * 属性列表:<br/>
@@ -123,7 +123,7 @@ import org.commontemplate.util.IOUtils;
  * @author liangfei0201@163.com
  *
  */
-public class TemplateRenderTask extends FileTask {
+public class TemplateGenerateTask extends FileTask {
 
 	// 输入编码
 	protected String inputencoding;
