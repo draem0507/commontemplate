@@ -33,12 +33,12 @@ tagSyntaxCoatAvailable=true
 $end<br/>
 其它环境需配置：<br/>
 $code{properties}
-resourceFilters[100]=org.commontemplate.standard.coat.TagSyntaxCoatFilter()
-resourceFilters[100].syntaxSettings=\$syntax
-resourceFilters[100].namespace=ct
-resourceFilters[100].expressionAttributeName=param
+sourceFilters[100]=org.commontemplate.standard.coat.TagSyntaxCoatFilter()
+sourceFilters[100].syntaxSettings=\$syntax
+sourceFilters[100].namespace=ct
+sourceFilters[100].expressionAttributeName=param
 $end<br/>
-<font color="green">(注：此语法外套使用ResourceFilter扩展点实现，在资源加载时使用简单的正则表达式替换，不解析HTML语法，没有不规则HTML语法兼容问题，加载模板资源时有内存消耗和转换时间消耗，但消耗不是很大，如需关闭可配置：resourceFilters[100]=null)</font><br/>
+<font color="green">(注：此语法外套使用SourceFilter扩展点实现，在资源加载时使用简单的正则表达式替换，不解析HTML语法，没有不规则HTML语法兼容问题，加载模板资源时有内存消耗和转换时间消耗，但消耗不是很大，如需关闭可配置：sourceFilters[100]=null)</font><br/>
 <b>(3) XML/HTML标签属性版语法外套</b><br/>
 自动将名称空间为"ct:"的XML/HTML标签属性转换成指令，<br/>
 <b>块指令</b>将按先后顺序扩充到标签的两端，<b>行指令</b>将替换整个标签及其内部块，一个标签上<b>只能有一个</b>行指令属性。<br/>
@@ -53,12 +53,12 @@ attributeSyntaxCoatAvailable=true
 $end<br/>
 其它环境需配置：<br/>
 $code{properties}
-resourceFilters[200]=org.commontemplate.standard.coat.AttributeSyntaxCoatFilter()
-resourceFilters[200].syntaxSettings=\$syntax
-resourceFilters[200].directiveHandlerProvider=\$directiveHandlerProvider
-resourceFilters[200].namespace=ct
+sourceFilters[200]=org.commontemplate.standard.coat.AttributeSyntaxCoatFilter()
+sourceFilters[200].syntaxSettings=\$syntax
+sourceFilters[200].directiveHandlerProvider=\$directiveHandlerProvider
+sourceFilters[200].namespace=ct
 $end<br/>
-<font color="green">(注：此语法外套使用ResourceFilter扩展点实现，在资源加载时使用jericho进行html解析，对不规则HTML语法的兼容性，以jericho的实现为准，转换时间消耗较大，需jericho.jar支持)</font><br/>
+<font color="green">(注：此语法外套使用SourceFilter扩展点实现，在资源加载时使用jericho进行html解析，对不规则HTML语法的兼容性，以jericho的实现为准，转换时间消耗较大，需jericho.jar支持)</font><br/>
 <b>(4) Java/C++/C#代码注释版语法外套</b> <font color="green">(注：与上面的(1)语法外套实现相同)</font><br/>
 编译模板时自动去除指令两边的Java/C++/C#代码注释符。<br/>
 如： <font color="green">(注: 注释符与指令间不能有空格)</font><br/>

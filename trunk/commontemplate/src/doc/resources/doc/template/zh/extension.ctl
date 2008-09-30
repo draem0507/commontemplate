@@ -30,12 +30,12 @@ $!
 								<br/>
 								<a name="loader"/><b>2. 模板资源加载器扩展</b><br/>
 								相关接口：<br/>
-								org.commontemplate.core.ResourceLoader (模板源加载接口)<br/>
-								org.commontemplate.core.Resource (模板源)<br/>
+								org.commontemplate.core.SourceLoader (模板源加载接口)<br/>
+								org.commontemplate.core.Source (模板源)<br/>
 								注册方法：<br/>
-								setResourceLoader(ResourceLoader)<br/>
+								setSourceLoader(SourceLoader)<br/>
 								配置方法：<br/>
-								resourceLoader=com.xxx.YourResourceLoader()<br/>
+								sourceLoader=com.xxx.YourSourceLoader()<br/>
 								参考实现：<br/>
 								org.commontemplate.standard.loader包下相关类<br/>
 								<br/>
@@ -54,25 +54,28 @@ $!
 								org.commontemplate.config.Cache<br/>
 								注册方法：<br/>
 								setTemplateCache(Cache)<br/>
+								setTemplatePersistentCache(Cache)<br/>
 								setStandardCache(String cacheStrategy, int cacheMaxSize) <font color="green">(注：标准cacheStrategy支持NONE, STRONG, SOFT, WEAK, FIFO, LRU, MRU, OSCACHE, EHCACHE)</font><br/>
 								配置方法：<br/>
 								templateCache=org.commontemplate.standard.cache.LRUCache()<br/>
 								templateCache.maxSize=1000<br/>
+								templatePersistentCache=org.commontemplate.standard.cache.DiskSerialCache()<br/>
+								templatePersistentCache.directory=C:/cache<br/>
 								参考实现：<br/>
 								org.commontemplate.standard.cache包下相关类<br/>
 								<br/>
 								<a name="reload"/><b>5. 热加载控制</b><br/>
 								引擎在每次从缓存中返回模板之前都会回调ReloadController.shouldReload(String templateName)，<br/>
 								如果返回true，引擎将重新读取模板源，<br/>
-								并调用ResourceComparator.isModified(Resource oldSource, Resource newSource)进行比较，<br/>
+								并调用SourceComparator.isModified(Template template, Source source)进行比较，<br/>
 								若模板源已更改，则重新解析模板源并刷新缓存。<br/>
 								相关接口：<br/>
 								org.commontemplate.config.ReloadController<br/>
-								org.commontemplate.config.ResourceComparator<br/>
+								org.commontemplate.config.SourceComparator<br/>
 								注册方法：<br/>
 								setReloadController(ReloadController)<br/>
 								setModificationCheckInterval(long) <font color="green">(注：使用内置的org.commontemplate.standard.reload.IntervalReloadController)</font><br/>
-								setResourceComparator(ResourceComparator)<br/>
+								setSourceComparator(SourceComparator)<br/>
 								配置方法：<br/>
 								reloadController.modificationCheckInterval=36000<br/>
 								参考实现：<br/>
@@ -92,11 +95,11 @@ $!
 								<br/>
 								<a name="resouce"/><b>7. 模板源过滤器扩展</b><br/>
 								相关接口：<br/>
-								org.commontemplate.config.ResouceFilter<br/>
+								org.commontemplate.config.SourceFilter<br/>
 								注册方法：<br/>
-								addResouceFilter(ResouceFilter)<br/>
+								addSourceFilter(SourceFilter)<br/>
 								配置方法：<br/>
-								resouceFilter[200]=com.xxx.XxxFilter<br/>
+								sourceFilters[200]=com.xxx.XxxFilter<br/>
 								参考实现：<br/>
 								org.commontemplate.standard.coat.AttributeSyntaxCoatFilter<br/>
 								<br/>

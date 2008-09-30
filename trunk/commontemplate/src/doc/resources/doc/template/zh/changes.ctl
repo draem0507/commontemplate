@@ -40,7 +40,7 @@ $!
 								增加与JCache的集成适配. <a href="cache.html">缓存集成...</a><br/>
 								将log相应类从standard包移至util包，并增加对Log4J, Avalon, SLF4J, JDKLogging等的集成. <a href="logger.html">日志集成...</a><br/>
 								补全List有，而Array没有的操作符，使Array和List的处理一致，如："~","!~","orderby"等.<br/>
-								引擎分层结构增加ResourceEngine,处理资源加载与缓存.<br/>
+								引擎分层结构中，将资源加载与缓存划分到TemplateEngine.<br/>
 								增加与Map接口适配的ExpressionContext,方便表达式引擎使用.<br/>
 								修改属性语法外套在处理HTML注释时空指针异常，并重新简化实现属性语法外套.<br/>
 								重新实现this和super语义, 并增加ScopeHandler扩展点.<br/>

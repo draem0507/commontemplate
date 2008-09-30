@@ -23,7 +23,7 @@ $!
 								<font color="gray">中心类：</font>org.commontemplate.core.Factory<br/>
 								<b>(3) engine包 (引擎实现包)</b><br/>
 								<font color="gray">位置：</font>org.commontemplate.engine及其子包<br/>
-								<font color="gray">职责定义：</font>模板引擎的实现，处理模板加载解析等，实现core包的所有接口，此包隐藏实现细节，只暴露ExpressionEngine, TemplateEngine, ResourceEngine. Engine类，便于后期优化，Engine实现了core包的Factory，core包的其它相关接口都可以通过接口间导航获取。<br/>
+								<font color="gray">职责定义：</font>模板引擎的实现，处理模板加载解析等，实现core包的所有接口，此包隐藏实现细节，只暴露ExpressionEngine, TemplateEngine. Engine类，便于后期优化，Engine实现了core包的Factory，core包的其它相关接口都可以通过接口间导航获取。<br/>
 								<font color="gray">中心类：</font>org.commontemplate.engine.Engine<br/>
 								<font color="gray">依赖于：</font>core包, config包<br/>
 								<b>(4) config包 (配置接口包)</b> <font color="green">(Service Provide Interface(SPI))</font><br/>
@@ -78,7 +78,7 @@ $!
 								核心包采用接口驱动设计，全部为接口或抽象类，只考虑需求与关系，忽略实现。<br/>
 								并按领域驱动设计将其分为三个域：<br/>
 								<b>(1) Template域</b> (实体域)<br/>
-								<font color="gray">范围：</font>包括Resource, Template, Element, Directive, Expression, Operator等。<br/>
+								<font color="gray">范围：</font>包括Template, Source, Element, Directive, Expression, Operator等。<br/>
 								<font color="gray">职责定义：</font>用于表示一个具体的模板，此域是整个引擎的中心，所有功能围绕其展开。<br/>
 								<font color="gray">线程安全性：</font>Template域的领域模型被设计成线程安全的(不变类)，保证在多线程中单实例重用。<br/>
 								<b>(2) Context域</b> (会话域)<br/>
@@ -86,7 +86,7 @@ $!
 								<font color="gray">职责定义：</font>Context域负责状态及外部资源的管理。<br/>
 								<font color="gray">线程安全性：</font>Context域是非线程安全的，应该为每次执行创建新的实例(即在线程栈内使用)。<br/>
 								<b>(3) Factory域</b> (服务域)<br/>
-								<font color="gray">范围：</font>包括Factory, ContextFactory, TemplateLoader等。<br/>
+								<font color="gray">范围：</font>包括Factory, TemplateLoader, ContextFactory等。<br/>
 								<font color="gray">职责定义：</font>Factory域负责管理Template域和Context域的生命周期。<br/>
 								<font color="gray">线程安全性：</font>Factory域是线程安全的(内部同步)，可单实例重用。<br/>
 								<b>核心包设计图如下：</b> <font color="green">(注：省略了部分Factory域对Template域，Template域对Context域的依赖关系)</font><br/>
@@ -100,20 +100,18 @@ $!
 								蓝色：catalog-entry-like description (分类或入口标识)<br/>
 								<b>2. CommonTemplate引擎包类结构：</b><br/>
 								引擎包使用配置包SPI实现核心包API。<br/>
-								引擎包隐藏所有实现细节，只暴露Engine, ResourceEngine, TemplateEngine, ExpressionEngine，便于后期优化。<br/>
+								引擎包隐藏所有实现细节，只暴露Engine, TemplateEngine, ExpressionEngine，便于后期优化。<br/>
 								引擎按重用粒度分级控制：<br/>
 								(1) 通常都直接用Engine，它提供所有功能，包括解析器和Context资源管理等。<br/>
-								(2) 如果使用第三方实现的Context(通常用在与其它模板工具适配时)，则可以只用ResourceEngine，提供模板解析与加载功能。<br/>
-								(3) 如果自行处理模板资源加载，则可以只用TemplateEngine，提供模板解析功能。<br/>
-								(4) 如果只用表达式功能(通常是作为动态表达式求值工具时)，则可以只用ExpressionEnine，提供表达式解析功能。<br/>
+								(2) 如果使用第三方实现的Context(通常用在与其它模板工具适配时)，则可以只用TemplateEngine，提供模板解析与加载功能。<br/>
+								(3) 如果只用表达式功能(通常是作为动态表达式求值工具时)，则可以只用ExpressionEnine，提供表达式解析功能。<br/>
 								<b>引擎包设计图如下：</b> <font color="green">(注：同时列出了engine与core及config的关系)</font><br/>
 								<img src="../images/uml/engine.gif" border="0"/><br/>
 								<b>3. CommonTemplate配置包类结构：</b><br/>
 								配置包用于向引擎供给数据，分为四类配置：<br/>
 								(1) 表达式解析配置<br/>
-								(2) 模板解析配置<br/>
-								(3) 资源加载配置<br/>
-								(4) 上下文初始化配置<br/>
+								(2) 模板解析与资源加载配置<br/>
+								(3) 上下文初始化配置<br/>
 								<b>配置包设计图如下：</b><br/>
 								<img src="../images/uml/config.gif"/><br/>
 								(1) 标签框表示配置分类<br/>
