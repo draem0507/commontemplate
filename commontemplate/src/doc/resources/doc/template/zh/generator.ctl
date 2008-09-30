@@ -1,35 +1,110 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
-	<!--$zone{"content"}-->
-								<b>1. 功能说明</b><br/>
-								代码生器用于设计领域实体属性及关系，并通过<a href="template.html">CTL模板</a>生成结构性代码。<br/>
-								通过配置在代码生器的工具栏上添加模板方案按钮(点击该按钮将调用相应方案的模板进行代码生成)。<br/>
-								内置提供生成Struts/WebWork/Struts2 + Spring2 + JPA/Hibernate3/Ibatis2等常规方案的代码模板。<br/>
-								支持独立exe运行，Eclipse插件，NetBeans插件，三种方式使用。<br/>
-								<br/>
-								<b>2. 安装使用</b><br/>
-								(1) 需JDK1.5.0以上版本支持 <a href="http://java.sun.com/j2se/1.5.0" target="_blank">下载jre...</a><br/>
-								(2) 下载CodeGeneratorSetup.exe <a href="downloads.html">下载...</a><br/>
-								(3) 双击CodeGeneratorSetup.exe，按向导完成安装，安装后，将在桌面添加快捷方式<br/>
-								(4) 双击桌面快捷方式启动代码生成器<br/>
-								<br/>
-								<b>3. 模板方案配置</b><br/>
-$code{"xml"}<case name="方案名称" desc="方案描述" icon="显示在工具栏上的图标">
-	<template name="模板名称" encoding="模板编码"  type="模板类型，支持commontemplate/velocity/freemarker，可扩展，默认为commontemplate" run="执行类型：project或者entity，分别表示每项目执行模板和每实体执行模板" targetName="目标文件名称，可使用CTL模板语言，如：\${entity.name}Dao.java" targetEncoding="目标文件编码"/>
-</case>
+<!--$zone{"content"}-->
+<b>1. 功能说明:</b><br/>
+执行CommonTemplate模板渲染，并将结果保存到另一目录。<br/>
+<br/>
+<b>2. Ant任务</b><br/>
+(1) 模板任务定义<br/>
+$code{"xml"}<taskdef name="ctlgenerate" classname="org.commontemplate.tools.generator.TemplateGeneratorTask" classpath="commontemplate.jar"/>
 $end
-								<br/>
-								<b>3. 界面截图</b><br/>
-								(1) 主界面：(包括菜单，工具栏，模型树，关系视图，缩略视图，属性面板)<br/>
-								<img src="../images/generator/code_main.gif" border="0" /><br/>
-								<br/>
-								(2) 数据库设置：<br/>
-								<img src="../images/generator/code_database.gif" border="0" /><br/>
-								<br/>
-								(3) 视图菜单：(可建立多个视图，分别显示相关联的实体，以防止实体太多而变成蜘蛛网)<br/>
-								<img src="../images/generator/code_view.gif" border="0" /><br/>
-								<br/>
-								(4) 实体树上下文菜单：(用于对Project,Entity,Field进行操作)<br/>
-								<img src="../images/generator/code_menu.gif" border="0" /><br/>
-								<br/>
-	<!--$end-->
+(2) 模板任务调用<br/>
+$code{"xml"}<target name="xxx">
+	<ctlgenerate srcdir="F:/ctl/" destdir="F:/html/"/>
+</target>
+$end
+(3) 模板任务属性<br/>
+$!
+<table border="1">
+	<tr bgcolor="#CCF1D5">
+		<td>属性名</td>
+		<td>类型</td>
+		<td>描述</td>
+		<td>是否必需</td>
+	</tr>
+	<tr>
+		<td>srcdir</td>
+		<td>File</td>
+		<td>模板所在目录</td>
+		<td><b>必需</b></td>
+	</tr>
+	<tr>
+		<td>inputencoding</td>
+		<td>String</td>
+		<td>读取模板的输入编码</td>
+		<td>可选</td>
+	</tr>
+	<tr>
+		<td>destdir</td>
+		<td>File</td>
+		<td>生成结果目标目录</td>
+		<td><b>必需</b></td>
+	</tr>
+	<tr>
+		<td>outputencoding</td>
+		<td>String</td>
+		<td>生成结果的输出编码</td>
+		<td>可选</td>
+	</tr>
+	<tr>
+		<td>dynamicname</td>
+		<td>Boolean</td>
+		<td>是否为动态模板名称，缺省为false，如：F:/ctl/${entity.name}Dao.java</td>
+		<td>可选</td>
+	</tr>
+	<tr>
+		<td>datafile</td>
+		<td>File</td>
+		<td>共享数据文件</td>
+		<td>可选</td>
+	</tr>
+	<tr>
+		<td>datadir</td>
+		<td>File</td>
+		<td>数据文件目录，目录中的每一个数据文件都将重新执行所有模板文件，通常需使用动态模板文件名，即：dynamicname="true"，否则生成的结果会出现覆盖。</td>
+		<td>可选</td>
+	</tr>
+	<tr>
+		<td>dataencoding</td>
+		<td>String</td>
+		<td>读取数据文件的输入编码</td>
+		<td>可选</td>
+	</tr>
+	<tr>
+		<td>datatype</td>
+		<td>String</td>
+		<td>数据类型, 如:xml, json, properties, yaml等，不设置将以数据文件扩展名识别</td>
+		<td>可选</td>
+	</tr>
+	<tr>
+		<td>configfile</td>
+		<td>File</td>
+		<td>commontemplate.properties配置文件, 默认采用标准配置</td>
+		<td>可选</td>
+	</tr>
+	<tr>
+		<td>classpath</td>
+		<td>Path</td>
+		<td>类加载位置设置，直接设置</td>
+		<td>可选</td>
+	</tr>
+	<tr>
+		<td>classpathref</td>
+		<td>Reference</td>
+		<td>类加载位置设置，引用类型</td>
+		<td>可选</td>
+	</tr>
+</table>
+<br/>
+<b>3. 命令行</b> (未完成)<br/>
+ctlrender "F:/ctl/" "F:html/"<br/>
+<br/>
+<b>4. 图形工具</b> (未完成)<br/>
+(1) 图形工具安装<br/>
+......<br/>
+(2) 图形工具截图<br/>
+......<br/>
+<br/>
+!$
+<br/>
+<!--$end-->
 <!--$end-->
