@@ -3,20 +3,16 @@ package org.commontemplate.tools.viewer;
 import java.io.File;
 import java.io.IOException;
 
+import org.commontemplate.tools.generator.TemplateGenerator;
+
 public class Main {
-
-	private static final TemplateGenerator generator = new TemplateGenerator();
-
-	private static TemplateViewer viewer = new TemplateViewer(generator);
-
-	private static final TemplateDebugger debugger = new TemplateDebugger(generator);
 
 	public static void main(String[] args) {
 		try {
 			if (args == null || args.length == 0) {
 				MainUI.showSettings();
 			} else if (args.length == 1) {
-				run("v", args[0]);
+				run("", args[0]);
 			} else if (args.length == 2) {
 				run(args[0], args[1]);
 			}
@@ -27,12 +23,17 @@ public class Main {
 
 	public static void run(String command, String file) throws Exception {
 		File sourceFile = getSourceFile(file);
-		if ("d".equalsIgnoreCase(command)) {
-			debug(sourceFile);
-		} else if ("g".equalsIgnoreCase(command)) {
-			generate(sourceFile);
+		TemplateGenerator templateGenerator = new TemplateGenerator(sourceFile);
+		if (sourceFile.isDirectory()) {
+			new DirectoryGeneratorUI(templateGenerator).generate(sourceFile);
 		} else {
-			view(sourceFile);
+			if ("d".equalsIgnoreCase(command)) {
+				templateGenerator.generateFile(sourceFile, templateGenerator.getDefaultTargetFile(sourceFile), true, true);
+			} else if ("v".equalsIgnoreCase(command)) {
+				templateGenerator.generateFile(sourceFile, templateGenerator.getDefaultTargetFile(sourceFile), false, true);
+			} else {
+				new FileGeneratorUI(templateGenerator).generate(sourceFile);
+			}
 		}
 	}
 
@@ -44,18 +45,6 @@ public class Main {
 		if (! sourceFile.exists())
 			throw new IOException("source file not exists! path:" + sourcePath);
 		return sourceFile;
-	}
-
-	public static void view(File sourceFile) throws Exception {
-		viewer.view(sourceFile);
-	}
-
-	public static void generate(File sourceFile) throws Exception {
-		generator.generate(sourceFile);
-	}
-
-	public static void debug(File sourceFile) throws Exception {
-		debugger.debug(sourceFile);
 	}
 
 }

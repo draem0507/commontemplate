@@ -95,14 +95,8 @@ $!
 	</tr>
 </table>
 <br/>
-<b>3. 命令行</b> (未完成)<br/>
-ctlrender "F:/ctl/" "F:html/"<br/>
-<br/>
-<b>4. 图形工具</b> (未完成)<br/>
-(1) 图形工具安装<br/>
-......<br/>
-(2) 图形工具截图<br/>
-......<br/>
+<b>3. 命令行</b><br/>
+ctlgenerate "F:/ctl/" "F:html/"<br/>
 <br/>
 !$
 <br/>
