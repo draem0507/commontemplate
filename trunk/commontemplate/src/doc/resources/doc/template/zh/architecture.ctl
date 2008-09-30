@@ -108,7 +108,7 @@ $!
 								<b>引擎包设计图如下：</b> <font color="green">(注：同时列出了engine与core及config的关系)</font><br/>
 								<img src="../images/uml/engine.gif" border="0"/><br/>
 								<b>3. CommonTemplate配置包类结构：</b><br/>
-								配置包用于向引擎供给数据，分为四类配置：<br/>
+								配置包用于向引擎供给数据，与引擎包对应分为：<br/>
 								(1) 表达式解析配置<br/>
 								(2) 模板解析与资源加载配置<br/>
 								(3) 上下文初始化配置<br/>
