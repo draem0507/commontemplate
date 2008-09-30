@@ -6,8 +6,6 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -17,6 +15,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import org.commontemplate.tools.swing.CommonTemplateFrame;
+import org.commontemplate.util.ExceptionUtils;
 
 public class MainUI {
 
@@ -92,10 +91,6 @@ public class MainUI {
 	}
 
 	public static void showException(Throwable e) {
-		StringWriter out = new StringWriter();
-		e.printStackTrace(new PrintWriter(out));
-		String msg = out.getBuffer().toString();
-
 		CommonTemplateFrame frame = new CommonTemplateFrame();
 		frame.setTitle("CommonTemplateViewer - Exception");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -111,7 +106,7 @@ public class MainUI {
 		JTextArea area = new JTextArea();
 		area.setEditable(false);
 		area.setBackground(Color.WHITE);
-		area.setText(msg);
+		area.setText(ExceptionUtils.getDetailMessage(e));
 		JScrollPane pane = new JScrollPane();
 		pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		pane.getViewport().setView(area);
