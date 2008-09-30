@@ -58,6 +58,10 @@ public abstract class FileTask extends MatchingTask {
 
 	public void execute() throws BuildException {
 		try {
+			// Ant启用新的线程调用Task的execute()，
+			// 但却没有将AntClassLoader设为当前线程的类加载器，
+			// 使得通过classpath/classpathref引用的jar或类文件无法在当前线程上加载，
+			// 所以在执行前设置一下ContextClassLoader。
 			Thread.currentThread().setContextClassLoader(getClass().getClassLoader());
 			doExecute();
 		} catch (BuildException e) {
