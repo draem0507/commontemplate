@@ -51,6 +51,7 @@ $!
 								将core包的Resource/ResourceLoader改为Source/SourceLoader，避免与tools.bean包的ResourceLoader歧义.<br/>
 								增加文件夹生成系统菜单，可通过右键菜单将一个目录中的所有模板生成到另一目录。<a href="viewer.html">模板查看器说明...</a><br/>
 								增加staticFunction/staticProperty处理器，区分于systemFunction/systemProperty<br/>
+								修正模板错误指令位置信息(错误指令所在行列均基于1显示)<br/>
 								-----------------<br/>
 								感谢吴勇智加入开发插件.<br/>
 								感谢<a href="http://code.google.com/p/jrest4guice">JRest4Guice</a>开发小组的支持.<br/>
