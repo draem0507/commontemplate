@@ -49,11 +49,11 @@ final class TemplateProxy extends Template {
 		return template.getLength();
 	}
 
-	public String getLineSource(int beginLine, int endLine) throws IOException {
+	public String getLineSource(int beginLine, int endLine) {
 		return template.getLineSource(beginLine, endLine);
 	}
 
-	public String getLineSource(Location location) throws IOException {
+	public String getLineSource(Location location) {
 		return template.getLineSource(location);
 	}
 
@@ -65,15 +65,15 @@ final class TemplateProxy extends Template {
 		return template.getReader();
 	}
 
-	public String getSource() throws IOException {
+	public String getSource() {
 		return template.getSource();
 	}
 
-	public String getSource(int beginOffset, int endOffset) throws IOException {
+	public String getSource(int beginOffset, int endOffset) {
 		return template.getSource(beginOffset, endOffset);
 	}
 
-	public String getSource(Location location) throws IOException {
+	public String getSource(Location location) {
 		return template.getSource(location);
 	}
 

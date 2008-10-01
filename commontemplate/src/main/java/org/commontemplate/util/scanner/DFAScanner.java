@@ -74,7 +74,7 @@ public class DFAScanner implements Scanner {
 							ch, new Token(buffer.toString(), last, state).getEndPosition(), "DFAScanner.accepter.error");
 				if (acceptLength != 0) {
 					Token token = new Token(buffer.substring(0, acceptLength), last, state);
-					last = token.getEndPosition(); // 记录当前接收token的结束位置，作为下一token的起始位置
+					last = token.getNextBeginPosition(); // 记录当前接收token的结束位置，作为下一token的起始位置
 					tokenReceiver.receive(token);// 完成接收
 				}
 				if (acceptLength != buffer.length())

@@ -27,7 +27,7 @@ public class PropertiesComparator implements Comparator, java.io.Serializable {
 			if (comp != 0)
 				return comp;
 		}
-		return PropertyComparator.reset(0);
+		return 0;
 	}
 
 }

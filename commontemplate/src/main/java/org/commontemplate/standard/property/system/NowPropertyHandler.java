@@ -2,9 +2,9 @@ package org.commontemplate.standard.property.system;
 
 import java.util.Date;
 
-import org.commontemplate.standard.property.StaticPropertyHandlerSupport;
+import org.commontemplate.standard.property.SystemPropertyHandlerSupport;
 
-public class NowPropertyHandler extends StaticPropertyHandlerSupport {
+public class NowPropertyHandler extends SystemPropertyHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 

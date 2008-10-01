@@ -9,12 +9,13 @@ import org.commontemplate.core.Context;
 import org.commontemplate.core.Element;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.IgnoreException;
+import org.commontemplate.core.ParsingException;
 import org.commontemplate.core.RenderingException;
 import org.commontemplate.core.StopVisitException;
 import org.commontemplate.core.Template;
 import org.commontemplate.core.TemplateVisitor;
 import org.commontemplate.util.Assert;
-import org.commontemplate.util.I18nExceptionFactory;
+import org.commontemplate.util.I18nMessages;
 import org.commontemplate.util.Location;
 
 /**
@@ -46,7 +47,7 @@ class BlockDirectiveImpl extends BlockDirectiveSupport {
 	BlockDirectiveImpl(String name, Location location, Expression expression, BlockDirectiveHandler blockDirectiveHandler, String prototype, String endPrototype, List renderInterceptors) {
 		Assert.assertNotNull(blockDirectiveHandler);
 		if (blockDirectiveHandler.isExpressionRequired() && expression == null)
-			throw I18nExceptionFactory.createIllegalStateException("BlockDirectiveImpl.expression.is.null", new Object[]{name});
+			throw new ParsingException(location, I18nMessages.getMessage("BlockDirectiveImpl.expression.is.null", new Object[]{name}));
 		this.name = name;
 		this.prototype = prototype;
 		this.location = location;

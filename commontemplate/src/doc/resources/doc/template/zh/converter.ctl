@@ -14,13 +14,7 @@ $end
 <b>3. 命令行转换:</b><br/>
 ctlconvert velocity "F:/velocity" "F:/commontemplate"<br/>
 <br/>
-<b>4. 图形工具:</b><br/>
-转换工具安装:<br/>
-(1) 需JDK1.4.2以上版本支持 <a href="http://java.sun.com/j2se/1.4.2" target="_blank">下载jre...</a><br/>
-(2) 下载TemplateConverterSetup.exe <a href="downloads.html">下载...</a><br/>
-(3) 双击TemplateConverterSetup.exe，按向导完成安装，安装后，将在桌面添加快捷方式<br/>
-(4) 双击桌面快捷方式启动模板转换器<br/>
-转换工具界面截图:<br/>
+<b>4. 图形工具转换:</b><br/>
 <img src="../images/converter/converter.gif"/><br/>
 <br/>
 <!--$end-->

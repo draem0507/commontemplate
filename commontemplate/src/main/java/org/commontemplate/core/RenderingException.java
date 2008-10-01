@@ -35,7 +35,7 @@ public class RenderingException extends I18nRuntimeException {
 	}
 
 	public RenderingException(Element element, Context context, Throwable cause) {
-		super(cause);
+		super(cause.getMessage(), cause);
 		this.element = element;
 		this.context = context;
 	}
@@ -100,10 +100,9 @@ public class RenderingException extends I18nRuntimeException {
 		// printStackTrace(new PrintWriter(new OutputStreamWriter(s)));
 		s.println();
 		Template template = getTemplate();
-		if (template != null)
-			s.println("[commontemplate] Error Template Name: " + template.getName()); // TODO 未国际化
-		s.println("[commontemplate] Error Element Source: " + getElement().getSource()); // TODO 未国际化
-		s.println("[commontemplate] Error Element Location: " + getLocation()); // TODO 未国际化
+		s.println("[commontemplate] Error occur to Template: " + (template == null ? null : template.getName())); // TODO 未国际化
+		s.println("[commontemplate] Error occur to Location: " + getLocation()); // TODO 未国际化
+		s.println("[commontemplate] Error occur to Element: " + (element == null ? null : element.getSource())); // TODO 未国际化
 		s.println("[commontemplate] Error Message: " + getMessage()); // TODO 未国际化
 		super.printStackTrace(s);
 	}
@@ -111,10 +110,9 @@ public class RenderingException extends I18nRuntimeException {
 	public void printStackTrace(PrintWriter s) {
 		s.println();
 		Template template = getTemplate();
-		if (template != null)
-			s.println("[commontemplate] Error Template Name: " + template.getName()); // TODO 未国际化
-		s.println("[commontemplate] Error Element Source: " + getElement().getSource()); // TODO 未国际化
-		s.println("[commontemplate] Error Element Location: " + getLocation()); // TODO 未国际化
+		s.println("[commontemplate] Error occur to Template: " + (template == null ? null : template.getName())); // TODO 未国际化
+		s.println("[commontemplate] Error occur to Location: " + getLocation()); // TODO 未国际化
+		s.println("[commontemplate] Error occur to Element: " + (element == null ? null : element.getSource())); // TODO 未国际化
 		s.println("[commontemplate] Error Message: " + getMessage()); // TODO 未国际化
 		super.printStackTrace(s);
 	}

@@ -46,11 +46,11 @@ public final class Location implements Serializable {
 	public Location(Position begin, Position end) {
 		Assert.assertNotNull(begin);
 		Assert.assertNotNull(end);
-		// 不变式，同行Position，offset差值等于column之差.
-		if (begin.getLine() == end.getLine())
-			Assert.assertTrue(end.getOffset() - begin.getOffset() == end.getColumn() - begin.getColumn());
 		this.begin = begin;
 		this.end = end;
+		// 不变式，同行Position，index差值等于column之差
+		if (begin.getLine() == end.getLine())
+			Assert.assertTrue(end.getIndex() - begin.getIndex() == end.getColumn() - begin.getColumn());
 	}
 
 	/**
@@ -128,7 +128,7 @@ public final class Location implements Serializable {
 	public String toString() {
 		if (begin.equals(end))
 			return begin.toString();
-		return begin.toString() + " to " + end.toString();
+		return "(begin:" + begin.toString() + " end:" + end.toString() + ")";
 	}
 
 }

@@ -42,15 +42,15 @@ public class EntryMapOperatorHandlerTester extends TestCase {
 
 		assertEquals(2, map.size());
 		set = map.entrySet();
-		it = set.iterator();
-		Entry entry = (Entry) it.next();
-		assertEquals("a", entry.getKey());
-		assertEquals("1", entry.getValue());
-
-		entry = (Entry) it.next();
-		assertEquals("b", entry.getKey());
-		assertEquals("2", entry.getValue());
-
+		for (it = set.iterator(); it.hasNext();) {
+			Entry entry = (Entry) it.next();
+			if ("a".equals(entry.getKey()))
+				assertEquals("1", entry.getValue());
+			else if ("b".equals(entry.getKey()))
+				assertEquals("2", entry.getValue());
+			else
+				fail("error key:" + entry.getKey());
+		}
 	}
 
 }

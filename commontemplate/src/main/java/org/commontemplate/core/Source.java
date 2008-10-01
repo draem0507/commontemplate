@@ -75,8 +75,12 @@ public abstract class Source {
 	 * @return 原始内容
 	 * @throws IOException 读取内容出错时抛出
 	 */
-	public String getSource() throws IOException {
-		return IOUtils.readToString(getReader());
+	public String getSource() {
+		try {
+			return IOUtils.readToString(getReader());
+		} catch (IOException e) {
+			return null;
+		}
 	}
 
 	/**
@@ -86,45 +90,49 @@ public abstract class Source {
 	 * @return 模板源代码
 	 * @throws IOException
 	 */
-	public String getSource(Location location) throws IOException {
+	public String getSource(Location location) {
 		if (location == null)
 			return "";
-		return getSource(location.getBegin().getOffset(), location.getEnd().getOffset());
+		return getSource(location.getBegin().getIndex(), location.getEnd().getIndex() + 1);
 	}
 
 	/**
 	 * 获取指定位置的模板源代码
 	 *
-	 * @param beginOffset 模板起始位置
-	 * @param endOffset 模板结束位置
+	 * @param beginIndex 模板起始位置
+	 * @param endIndex 模板结束位置
 	 * @return 模板源代码
 	 * @throws IOException
 	 */
-	public String getSource(int beginOffset, int endOffset) throws IOException {
-		if (beginOffset < 0)
-			beginOffset = 0;
-		if (endOffset <= beginOffset)
-			return "";
-		int offset = endOffset - beginOffset;
-		Reader reader = null;
+	public String getSource(int beginIndex, int endIndex) {
 		try {
-			reader = getReader();
-			reader.skip(beginOffset);
-			StringBuffer buf = new StringBuffer();
-			char[] cbuf = new char[4096];
-			int len;
-			while ((len = reader.read(cbuf)) != -1) {
-				if (len >= offset - buf.length()) {
-					buf.append(cbuf, 0, offset - buf.length());
-					break;
-				} else {
-					buf.append(cbuf, 0, len);
+			if (beginIndex < 0)
+				beginIndex = 0;
+			if (endIndex <= beginIndex)
+				return "";
+			int offset = endIndex - beginIndex;
+			Reader reader = null;
+			try {
+				reader = getReader();
+				reader.skip(beginIndex);
+				StringBuffer buf = new StringBuffer();
+				char[] cbuf = new char[4096];
+				int len;
+				while ((len = reader.read(cbuf)) != -1) {
+					if (len >= offset - buf.length()) {
+						buf.append(cbuf, 0, offset - buf.length());
+						break;
+					} else {
+						buf.append(cbuf, 0, len);
+					}
 				}
+				return buf.toString();
+			} finally {
+				if (reader != null)
+					reader.close();
 			}
-			return buf.toString();
-		} finally {
-			if (reader != null)
-				reader.close();
+		} catch (IOException e) {
+			throw new RuntimeException(e.getMessage(), e);
 		}
 	}
 
@@ -135,7 +143,7 @@ public abstract class Source {
 	 * @return 模板源代码
 	 * @throws IOException
 	 */
-	public String getLineSource(Location location) throws IOException {
+	public String getLineSource(Location location) {
 		if (location == null)
 			return "";
 		return getSource(location.getBegin().getLine(), location.getEnd().getLine());
@@ -149,29 +157,33 @@ public abstract class Source {
 	 * @return 模板源代码
 	 * @throws IOException
 	 */
-	public String getLineSource(int beginLine, int endLine) throws IOException {
-		if (beginLine < 0)
-			beginLine = 0;
-		if (endLine <= beginLine)
-			return "";
-		BufferedReader reader = null;
+	public String getLineSource(int beginLine, int endLine) {
 		try {
-			reader = new BufferedReader(getReader());
-			StringBuffer buf = new StringBuffer();
-			String str;
-			int line = 0;
-			do {
-				str = reader.readLine();
-				line ++;
-				if (line > endLine)
-					break;
-				if (line >= beginLine)
-					buf.append(str);
-			} while (str != null);
-			return buf.toString();
-		} finally {
-			if (reader != null)
-				reader.close();
+			if (beginLine < 0)
+				beginLine = 0;
+			if (endLine <= beginLine)
+				return "";
+			BufferedReader reader = null;
+			try {
+				reader = new BufferedReader(getReader());
+				StringBuffer buf = new StringBuffer();
+				String str;
+				int line = 0;
+				do {
+					str = reader.readLine();
+					line ++;
+					if (line > endLine)
+						break;
+					if (line >= beginLine)
+						buf.append(str);
+				} while (str != null);
+				return buf.toString();
+			} finally {
+				if (reader != null)
+					reader.close();
+			}
+		} catch (IOException e) {
+			throw new RuntimeException(e.getMessage(), e);
 		}
 	}
 
@@ -181,11 +193,7 @@ public abstract class Source {
 	 * @return 模板源内容
 	 */
 	public String toString() {
-		try {
-			return getSource();
-		} catch (IOException e) {
-			return "ERROR:" + e.getMessage();
-		}
+		return getSource();
 	}
 
 }

@@ -1,8 +1,9 @@
 package org.commontemplate.standard.operator.collection;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
-import java.util.TreeSet;
 
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
 
@@ -24,9 +25,10 @@ public class CollectionOrderByPropertiesOperatorHandler extends BinaryOperatorHa
 	public Object doEvaluate(Object leftOperand, Object rightOperand) throws Exception {
 		Collection leftCollection = (Collection)leftOperand;
 		List properties = (List)rightOperand;
-		TreeSet sort = new TreeSet(new PropertiesComparator(properties)) ;
-		sort.addAll(leftCollection);
-		return sort;
+		List list = new ArrayList(leftCollection.size());
+		list.addAll(leftCollection);
+		Collections.sort(list, new PropertiesComparator(properties));
+		return list;
 	}
 
 }

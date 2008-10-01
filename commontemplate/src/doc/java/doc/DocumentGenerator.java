@@ -81,6 +81,9 @@ public class DocumentGenerator {
 										new Menu("menu.javaxscript",
 												"javaxscript.html"))
 								.addChild(
+										new Menu("menu.mail",
+												"mail.html"))
+								.addChild(
 										new Menu("menu.dependency",
 												"dependency.html"))
 						)
@@ -96,14 +99,14 @@ public class DocumentGenerator {
 										new Menu("menu.generator",
 												"generator.html"))
 								.addChild(
-										new Menu("menu.editor",
-												"editor.html"))
-								.addChild(
 										new Menu("menu.converter",
 												"converter.html"))
 								.addChild(
-										new Menu("menu.case",
-												"case.html"))
+										new Menu("menu.editor",
+												"editor.html"))
+								.addChild(
+										new Menu("menu.codecase",
+												"codecase.html"))
 						)
 				.addChild(
 						new Menu("menu.development")
@@ -226,8 +229,8 @@ public class DocumentGenerator {
 	public static void main(String[] args) {
 		DocumentGenerator generator = new DocumentGenerator();
 		generator.generateAll(new String[]{"index", "template" , "expression", "coat",
-				"config", "extension", "api", "dependency", "data", "faq", "versus", "mvc", "jsp", "cache", "logger", "javaxscript",
-				"debugger", "viewer", "editor", "converter", "generator", "case", "architecture", "criterion", "planning", "requirement", "downloads",
+				"config", "extension", "api", "dependency", "data", "faq", "versus", "mvc", "jsp", "cache", "logger", "javaxscript", "mail",
+				"debugger", "viewer", "editor", "converter", "generator", "codecase", "architecture", "criterion", "planning", "requirement", "downloads",
 				"uml", "about", "changes", "join", "demo_extends"});
 	}
 
