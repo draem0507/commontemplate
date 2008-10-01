@@ -3,7 +3,7 @@ package org.commontemplate.standard.operator.context;
 import java.util.Map;
 
 import org.commontemplate.standard.operator.UnaryOperatorHandlerSupport;
-import org.commontemplate.standard.property.StaticPropertyHandler;
+import org.commontemplate.standard.property.SystemPropertyHandler;
 
 /**
  * 系统属性取值一元操作符: "."<br/>
@@ -12,11 +12,11 @@ import org.commontemplate.standard.property.StaticPropertyHandler;
  * @author liangfei0201@163.com
  *
  */
-public class StaticPropertyOperatorHandler extends UnaryOperatorHandlerSupport {
+public class SystemPropertyOperatorHandler extends UnaryOperatorHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	public StaticPropertyOperatorHandler() {
+	public SystemPropertyOperatorHandler() {
 		super(String.class);
 	}
 
@@ -25,16 +25,16 @@ public class StaticPropertyOperatorHandler extends UnaryOperatorHandlerSupport {
 	/**
 	 * 设置全局属性
 	 *
-	 * @param propertyHandlers Map<String, StaticPropertyHandler>
+	 * @param propertyHandlers Map<String, SystemPropertyHandler>
 	 */
-	public void setStaticPropertyHandlers(Map propertyHandlers) {
+	public void setSystemPropertyHandlers(Map propertyHandlers) {
 		this.propertyHandlers = propertyHandlers;
 	}
 
 	public Object doEvaluate(Object operand) throws Exception {
 		String property = (String)operand;
 		if (propertyHandlers != null) {
-			StaticPropertyHandler handler = (StaticPropertyHandler)propertyHandlers.get(property);
+			SystemPropertyHandler handler = (SystemPropertyHandler)propertyHandlers.get(property);
 			if (handler != null)
 				return handler.doProperty();
 		}

@@ -52,9 +52,16 @@ public class ModelProvider {
 			e.printStackTrace();
 		}
 
+		Map map = new HashMap();
+		model.put("map", map);
+		map.put("size", "testsize");
+		map.put("length", "testlength");
+		map.put("entrySet", "testentrySet");
+		map.put("xxx", "testxxx");
+		map.put("yyy", null);
+
 		Map mails = new HashMap();
 		model.put("mails", mails);
-
 		mails.put("liangfei", "liangfei0201@163.com");
 		mails.put("zhangyong", "zhangyong@aaa.com");
 		mails.put("bobo", "bobo@bbb.com");

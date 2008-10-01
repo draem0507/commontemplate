@@ -47,8 +47,10 @@ $!
 								修复orderby操作符PropertyComparator值覆盖的BUG.<br/>
 								修复${super.super.for}，在$for指令嵌套$if指令时，将$if指令也作为一层super的BUG.<br/>
 								修复${super.super.for}，在$for指令嵌套$if指令时，将$if指令也作为一层super的BUG.<br/>
-								完成TemplateGenerateTask，使用户可以通过ant调用模板解析任务。<a href="generator.html">模板渲染器说明...</a><br/>
+								完成TemplateGenerateTask，使用户可以通过ant调用模板解析任务。<a href="generator.html">模板生成器说明...</a><br/>
 								将core包的Resource/ResourceLoader改为Source/SourceLoader，避免与tools.bean包的ResourceLoader歧义.<br/>
+								增加文件夹生成系统菜单，可通过右键菜单将一个目录中的所有模板生成到另一目录。<a href="viewer.html">模板查看器说明...</a><br/>
+								增加staticFunction/staticProperty处理器，区分于systemFunction/systemProperty<br/>
 								-----------------<br/>
 								感谢吴勇智加入开发插件.<br/>
 								感谢<a href="http://code.google.com/p/jrest4guice">JRest4Guice</a>开发小组的支持.<br/>

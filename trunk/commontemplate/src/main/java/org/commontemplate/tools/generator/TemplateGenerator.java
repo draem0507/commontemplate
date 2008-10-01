@@ -1,7 +1,8 @@
 package org.commontemplate.tools.generator;
 
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -62,11 +63,16 @@ public class TemplateGenerator {
 		return getSuffixFile(sourceFile, "html");
 	}
 
-	public void generateDirectory(File sourceDirectory, File targetDirectory, String sourceSuffix, String targetSuffix, boolean includeEmptyDirectory) throws Exception {
-		generateDirectory(sourceDirectory, targetDirectory, new TemplateFileFilter(sourceSuffix), targetSuffix, includeEmptyDirectory);
+	public void generateDirectory(File sourceDirectory, File targetDirectory,
+			String sourceSuffix, String targetSuffix, String sourceEncoding, String targetEncoding,
+			boolean includeEmptyDirectory) throws Exception {
+		generateDirectory(sourceDirectory, targetDirectory, new TemplateFileFilter(sourceSuffix), targetSuffix, sourceEncoding, targetEncoding, includeEmptyDirectory);
 	}
 
-	private void generateDirectory(File sourceDirectory, File targetDirectory, TemplateFileFilter templateFileFilter, String targetSuffix, boolean includeEmptyDirectory) throws Exception {
+	private void generateDirectory(File sourceDirectory, File targetDirectory,
+			TemplateFileFilter templateFileFilter, String targetSuffix,
+			String sourceEncoding, String targetEncoding,
+			boolean includeEmptyDirectory) throws Exception {
 		if (sourceDirectory == null || targetDirectory == null)
 			return;
 		if (includeEmptyDirectory) {
@@ -78,15 +84,17 @@ public class TemplateGenerator {
 			for (int i = 0, n = files.length; i < n; i ++) {
 				File file = files[i];
 				if (file.isDirectory()) {
-					generateDirectory(file, new File(targetDirectory, file.getName()), templateFileFilter, targetSuffix, includeEmptyDirectory);
+					generateDirectory(file, new File(targetDirectory, file.getName()), templateFileFilter, targetSuffix, sourceEncoding, targetEncoding, includeEmptyDirectory);
 				} else {
-					generateFile(file, getSuffixFile(new File(targetDirectory, file.getName()), targetSuffix), false, false);
+					generateFile(file, getSuffixFile(new File(targetDirectory, file.getName()), targetSuffix), sourceEncoding, targetEncoding, false, false);
 				}
 			}
 		}
 	}
 
-	public void generateFile(File sourceFile, File targetFile, boolean debug, boolean view) throws Exception {
+	public void generateFile(File sourceFile, File targetFile,
+			String sourceEncoding, String targetEncoding,
+			boolean debug, boolean view) throws Exception {
 		if (sourceFile == null || targetFile == null)
 			return;
 		if (debug) {
@@ -100,14 +108,21 @@ public class TemplateGenerator {
 			targetDir.mkdirs();
 		Writer writer = null;
 		try {
-			writer = new FileWriter(targetFile);
+			if (targetEncoding != null)
+				writer = new OutputStreamWriter(new FileOutputStream(targetFile), targetEncoding);
+			else
+				writer = new OutputStreamWriter(new FileOutputStream(targetFile));
+			Template template;
+			if (sourceEncoding != null && sourceEncoding.length() > 0)
+				template = engine.getTemplate(sourceFile.getCanonicalPath(), sourceEncoding);
+			else
+				template = engine.getTemplate(sourceFile.getCanonicalPath());
 			Context context = null;
 			try {
 				context = engine.createContext(writer);
 				if (debug)
 					context.setDebug(true);
 				context.pushLocalContext(data);
-				Template template = engine.getTemplate(sourceFile.getCanonicalPath());
 				template.render(context);
 				writer.flush();
 				context.clear();

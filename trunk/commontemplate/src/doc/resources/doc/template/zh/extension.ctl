@@ -270,32 +270,38 @@ $!
 								<a name="property"/><b>17. 属性扩展</b><br/>
 								用于为"."点号操作符提供数据<br/>
 								属性调用方式如: ${bean.property}<br/>
-								静态属性调用方式如: ${.now}<br/>
+								静态属性调用方式如: ${cls.PROPERTY}<br/>
+								系统属性调用方式如: ${.now}<br/>
 								相关接口：<br/>
 								org.commontemplate.standard.property.PropertyHandler<br/>
 								org.commontemplate.standard.property.StaticPropertyHandler<br/>
-								注册方法：<br/>
-								addPropertyHandler(Class beanClass, String propertyName, PropertyHandler)<br/>
-								addStaticPropertyHandler(String propertyName, StaticPropertyHandler)<br/>
+								org.commontemplate.standard.property.SystemPropertyHandler<br/>
+								org.commontemplate.standard.property.PropertyHandlerSupport<br/>
+								org.commontemplate.standard.property.StaticPropertyHandlerSupport<br/>
+								org.commontemplate.standard.property.SystemPropertyHandlerSupport<br/>
 								配置方法：<br/>
 								property{java.lang.String.xxx}=com.xxx.XXXPropertyHandler<br/>
-								staticProperty{xxx}=com.xxx.XXXPropertyHandler<br/>
+								staticProperty{java.lang.String.xxx}=com.xxx.XXXPropertyHandler<br/>
+								systemProperty{xxx}=com.xxx.XXXPropertyHandler<br/>
 								参考实现：<br/>
 								org.commontemplate.standard.property包及其子包相关类<br/>
 								<br/>
 								<a name="function"/><b>18. 方法扩展</b><br/>
 								用于为"."点号操作符提供数据，并且只有在配置functionAvailable=true时才有效<br/>
 								方法调用方式如: ${obj.func(arg1,arg2)}<br/>
-								静态方法调用方式如: ${.func(arg1,arg2)}<br/>
+								静态方法调用方式如: ${cls.func(arg1,arg2)}<br/>
+								系统方法调用方式如: ${.func(arg1,arg2)}<br/>
 								相关接口：<br/>
 								org.commontemplate.standard.function.FunctionHandler<br/>
 								org.commontemplate.standard.function.StaticFunctionHandler<br/>
-								注册方法：<br/>
-								addFunctionHandler(Class beanClass, String functionName, FunctionHandler)<br/>
-								addStaticFunctionHandler(String functionName, StaticFunctionHandler)<br/>
+								org.commontemplate.standard.function.SystemFunctionHandler<br/>
+								org.commontemplate.standard.function.FunctionHandlerSupport<br/>
+								org.commontemplate.standard.function.StaticFunctionHandlerSupport<br/>
+								org.commontemplate.standard.function.SystemFunctionHandlerSupport<br/>
 								配置方法：<br/>
 								function{java.lang.String.xxx}=com.xxx.XXXFunctionHandler<br/>
-								staticFunction{xxx}=com.xxx.XXXFunctionHandler<br/>
+								staticFunction{java.lang.String.xxx}=com.xxx.XXXFunctionHandler<br/>
+								systemFunction{xxx}=com.xxx.XXXFunctionHandler<br/>
 								参考实现：<br/>
 								org.commontemplate.standard.function包及其子包相关类<br/>
 								<br/>

@@ -50,13 +50,6 @@ public abstract class Element implements Serializable {
 	public abstract String getName();
 
 	/**
-	 * 获取模板元素的标准组成
-	 *
-	 * @return 模板元素的标准组成
-	 */
-	public abstract String getSource();
-
-	/**
 	 * 获取元素所属模板
 	 *
 	 * @return 模板
@@ -69,6 +62,19 @@ public abstract class Element implements Serializable {
 	 * @return 元素在模板中的位置
 	 */
 	public abstract Location getLocation();
+
+	/**
+	 * 获取模板元素的标准组成
+	 *
+	 * @return 模板元素的标准组成
+	 */
+	public String getSource() {
+		Template template = getTemplate();
+		Location location = getLocation();
+		if (template != null && location != null)
+			return template.getSource(location);
+		return null;
+	}
 
 	/**
 	 * 返回模板元素的标准组成, 同getCanonicalForm()

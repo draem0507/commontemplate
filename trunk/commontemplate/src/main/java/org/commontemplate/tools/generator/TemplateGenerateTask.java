@@ -219,7 +219,6 @@ public class TemplateGenerateTask extends FileTask {
 		dataProviders = (Map)beanFactory.getBean("dataProviders");
 		ConfigurationSettings settings = PropertiesConfigurationLoader.loadConfiguration(beanFactory);
 		FileResourceLoader fileResourceLoader = new FileResourceLoader();
-		fileResourceLoader.setDefaultEncoding(inputencoding);
 		fileResourceLoader.setRootDirectory(srcdirFile.getAbsolutePath());
 		settings.setSourceLoader(fileResourceLoader);
 		engine = new Engine(settings);
@@ -309,23 +308,33 @@ public class TemplateGenerateTask extends FileTask {
 		File parentFile = destFile.getParentFile();
 		if (! parentFile.exists())
 			parentFile.mkdirs();
-		Writer out;
-		if (outputencoding != null)
-			out = new OutputStreamWriter(new FileOutputStream(destFile), outputencoding);
-		else
-			out = new OutputStreamWriter(new FileOutputStream(destFile));
+		Writer out = null;
 		try {
-			Template template = engine.getTemplate(tempalteName);
-			Context context = engine.createContext(out);
-			if (dataName != null) {
-				Map map = getData(getProject().resolveFile(getDirPath(datadirFile) + dataName));
-				context.putAll(map);
+			if (outputencoding != null)
+				out = new OutputStreamWriter(new FileOutputStream(destFile), outputencoding);
+			else
+				out = new OutputStreamWriter(new FileOutputStream(destFile));
+			Template template;
+			if (inputencoding != null && inputencoding.length() > 0)
+				template = engine.getTemplate(tempalteName, inputencoding);
+			else
+				template = engine.getTemplate(tempalteName);
+			Context context = null;
+			try {
+				context = engine.createContext(out);
+				if (dataName != null) {
+					Map map = getData(getProject().resolveFile(getDirPath(datadirFile) + dataName));
+					context.putAll(map);
+				}
+				template.render(context);
+				out.flush();
+			} finally {
+				if (context != null)
+					context.clear();
 			}
-			template.render(context);
-			context.clear();
-			out.flush();
 		} finally {
-			out.close();
+			if (out != null)
+				out.close();
 		}
 	}
 

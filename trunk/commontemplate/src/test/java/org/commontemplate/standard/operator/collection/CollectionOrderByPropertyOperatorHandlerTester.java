@@ -1,13 +1,13 @@
 package org.commontemplate.standard.operator.collection;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.TreeSet;
-
-import org.commontemplate.config.BinaryOperatorHandler;
 
 import junit.framework.TestCase;
+
+import org.commontemplate.config.BinaryOperatorHandler;
 /**
  * OrderByPropertyOperatorHandler 的测试。
  * @author YanRong
@@ -16,12 +16,12 @@ import junit.framework.TestCase;
 public class CollectionOrderByPropertyOperatorHandlerTester extends TestCase {
 
 	BinaryOperatorHandler handler;
-	
+
 	public void setUp() {
 
 		handler = new CollectionOrderByPropertyOperatorHandler();
 	}
-	
+
 	/**
 	 * 对2元操作符 orderby 的测试。<br>
 	 * @condition
@@ -33,37 +33,37 @@ public class CollectionOrderByPropertyOperatorHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testDoEvaluateASC() throws Exception{
-		
+
 		List list = new ArrayList();
 		list.add(new UserInfo("Tom", 22));
 		list.add(new UserInfo("jack", 20));
 		list.add(new UserInfo("Rose", 18));
 		list.add(new UserInfo("Aman", 30));
-		
-		TreeSet treeSet = (TreeSet) handler.doEvaluate(list, "+userName");
-		
+
+		Collection collection = (Collection) handler.doEvaluate(list, "+userName");
+
 		String[] expectUserName = new String[]{"Aman","Rose", "Tom", "jack"};
-		Iterator it = treeSet.iterator();
+		Iterator it = collection.iterator();
 		int i = 0;
 		while(it.hasNext()) {
-			
+
 			UserInfo userInfo = (UserInfo) it.next();
 			assertEquals(expectUserName[i], userInfo.getUserName());
 			i++;
 		}
-		
+
 		expectUserName = new String[]{"Rose","jack", "Tom", "Aman"};
-		treeSet = (TreeSet) handler.doEvaluate(list, "+userAge");
-		it = treeSet.iterator();
+		collection = (Collection) handler.doEvaluate(list, "+userAge");
+		it = collection.iterator();
 		i = 0;
 		while(it.hasNext()) {
-			
+
 			UserInfo userInfo = (UserInfo) it.next();
 			assertEquals(expectUserName[i], userInfo.getUserName());
 			i++;
 		}
 	}
-	
+
 	/**
 	 * 对2元操作符 orderby 的测试。<br>
 	 * @condition
@@ -75,34 +75,34 @@ public class CollectionOrderByPropertyOperatorHandlerTester extends TestCase {
 	 * @throws Exception
 	 */
 	public void testDoEvaluateDESC() throws Exception{
-		
+
 		List list = new ArrayList();
 		list.add(new UserInfo("Tom", 22));
 		list.add(new UserInfo("jack", 20));
 		list.add(new UserInfo("Rose", 18));
 		list.add(new UserInfo("Aman", 30));
-		
-		TreeSet treeSet = (TreeSet) handler.doEvaluate(list, "-userName");
-		
+
+		Collection collection = (Collection) handler.doEvaluate(list, "-userName");
+
 		String[] expectUserName = new String[]{"jack", "Tom", "Rose", "Aman"};
-		Iterator it = treeSet.iterator();
+		Iterator it = collection.iterator();
 		int i = 0;
 		while(it.hasNext()) {
-			
+
 			UserInfo userInfo = (UserInfo) it.next();
 			assertEquals(expectUserName[i], userInfo.getUserName());
 			i++;
 		}
-		
+
 		expectUserName = new String[]{"Aman", "Tom", "jack", "Rose"};
-		treeSet = (TreeSet) handler.doEvaluate(list, "-userAge");
-		it = treeSet.iterator();
+		collection = (Collection) handler.doEvaluate(list, "-userAge");
+		it = collection.iterator();
 		i = 0;
 		while(it.hasNext()) {
-			
+
 			UserInfo userInfo = (UserInfo) it.next();
 			assertEquals(expectUserName[i], userInfo.getUserName());
 			i++;
 		}
-	}	
+	}
 }

@@ -9,17 +9,24 @@
 								(2) 下载CommonTemplateSetup.exe <a href="downloads.html">下载...</a><br/>
 								(3) 双击CommonTemplateSetup.exe，按向导完成安装，安装后，将自动关联*.ctl文件<br/>
 								(4) 在*.ctl文件上双击打开，或右键菜单中选“CommonTemplate”打开<br/>
-								<img src="../images/viewer/open_with.gif" alt="Open With CommonTemplate"/><br/>
-								CommonTemplate(view) 编译运行，并用浏览器打开<br/>
-								CommonTemplate(debug) 以调试模式打开，并在模板的第一行设置断点<br/>
-								CommonTemplate(generate) 生成模板到指定文件<br/>
+								文件夹菜单：<br/>
+								<img src="../images/viewer/folder_menu.gif" /><br/>
+								文件夹菜单选择框：<br/>
+								<img src="../images/viewer/folder_window.gif" /><br/>
+								ctl文件菜单：<br/>
+								<img src="../images/viewer/file_menu.gif" /><br/>
+								ctl文件菜单选择框：<br/>
+								<img src="../images/viewer/file_window.gif" /><br/>
+								ctl文件快捷菜单：(不弹出选择框)<br/>
+								CommonTemplate(view) 以默认名称生成，并用浏览器打开<br/>
+								CommonTemplate(debug) 以默认名称生成，并在模板的第一行设置断点<br/>
 								<br/>
 								<b>3. 类加载</b><br/>
 								(1) 加载安装目录中的class文件或jar包<br/>
-								(2) 加载模板所在目录中的class文件或jar包<br/>
+								(2) 加载模板所在目录中的class文件或jar包 <font color="green">(注：如果是目录转换，此目录是指待转换目录的上级目录)</font><br/>
 								<br/>
 								<b>4. 配置加载</b><br/>
-								(1) 首先，查找模板所在目录的commontemplate.properties<br/>
+								(1) 首先，查找模板所在目录的commontemplate.properties <font color="green">(注：如果是目录转换，此目录是指待转换目录的上级目录)</font><br/>
 								(2) 其次，查找安装目录的commontemplate.properties<br/>
 								(3) 否则，使用默认的org/commontemplate/tools/viewer/commontemplate.properties<br/>
 								<font color="green">(注：如果自定义配置文件中未配置@extends项，则缺省为：@extends=org/commontemplate/tools/viewer/commontemplate.properties)</font><br/>

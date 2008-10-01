@@ -10,11 +10,11 @@ import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
  * @author liangfei0201@163.com
  *
  */
-public class ScopesGetterOperatorHandler extends BinaryOperatorHandlerSupport {
+public class ContextGetterOperatorHandler extends BinaryOperatorHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
-	public ScopesGetterOperatorHandler() {
+	public ContextGetterOperatorHandler() {
 		super(Context.class, String.class);
 	}
 
@@ -23,6 +23,10 @@ public class ScopesGetterOperatorHandler extends BinaryOperatorHandlerSupport {
 		String scopeName = (String)rightOperand;
 		if ("global".equals(scopeName))
 			return context.getGlobalContext();
+		if ("root".equals(scopeName))
+			return context.getRootLocalContext();
+		if ("super".equals(scopeName))
+			return context.getParentLocalContext();
 		return context.findLocalContext(scopeName);
 	}
 

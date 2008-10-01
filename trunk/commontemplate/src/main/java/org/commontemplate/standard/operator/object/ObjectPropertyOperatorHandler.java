@@ -10,6 +10,7 @@ import org.commontemplate.standard.operator.UnhandleException;
 import org.commontemplate.standard.property.PropertyHandler;
 import org.commontemplate.standard.property.PropertyMatcher;
 import org.commontemplate.util.BeanUtils;
+import org.commontemplate.util.NoSuchPropertyException;
 
 /**
  * 对象属性取值操作符: "."<br/>
@@ -22,11 +23,11 @@ public class ObjectPropertyOperatorHandler extends BinaryOperatorHandlerSupport 
 
 	private static final long serialVersionUID = 1L;
 
-	private Map propertyHandlers;
-
 	public ObjectPropertyOperatorHandler() {
 		super(Object.class, String.class, true);
 	}
+
+	private Map propertyHandlers;
 
 	public void setPropertyHandlers(Map handlers) {
 		this.propertyHandlers = new HashMap(handlers.size());
@@ -39,14 +40,12 @@ public class ObjectPropertyOperatorHandler extends BinaryOperatorHandlerSupport 
 	public Object doEvaluate(Object leftOperand, Object rightOperand) throws Exception {
 		if (rightOperand == null)
 			return null;
-
 		String property = (String)rightOperand;
 		if (leftOperand == null) { // 允许调用null.toString
 			if ("toString".equals(property))
 				return "null";
 			return null;
 		}
-
 		if (propertyHandlers != null) {
 			for (Iterator iterator = propertyHandlers.entrySet().iterator(); iterator.hasNext();) {
 				Entry entry = (Entry)iterator.next();
@@ -55,10 +54,9 @@ public class ObjectPropertyOperatorHandler extends BinaryOperatorHandlerSupport 
 				}
 			}
 		}
-
 		try {
 			return BeanUtils.getProperty(leftOperand, property);
-		} catch (Exception e) {
+		} catch (NoSuchPropertyException e) {
 			throw new UnhandleException("ObjectPropertyOperatorHandler.property.no.such", new Object[]{leftOperand.getClass().getName(), property});
 		}
 	}

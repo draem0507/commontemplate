@@ -10,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -62,11 +61,7 @@ public class TemplateEditorPane extends JTextArea implements Border,
 			final TemplateTabPane tabbedPane) {
 		super();
 		template = t;
-		try {
-			setText(template.getSource());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		setText(template.getSource());
 		propertiesDialog = new PropertiesDialog(frame);
 		setHighlighter(highlighter);
 		templateViewMenu = new JPopupMenu();
@@ -182,8 +177,8 @@ public class TemplateEditorPane extends JTextArea implements Border,
 			return;
 		}
 		this.element = element;
-		int begin = element.getLocation().getBegin().getOffset();
-		int end = element.getLocation().getEnd().getOffset();
+		int begin = element.getLocation().getBegin().getIndex();
+		int end = element.getLocation().getEnd().getIndex() + 1;
 		try {
 			if (highlight != null)
 				highlighter.removeHighlight(highlight);

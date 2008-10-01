@@ -39,25 +39,34 @@ public final class Token {
 	 * @param type 片断类型
 	 */
 	public Token(String message, Position beginPosition, int type) {
+		Assert.assertTrue(message != null && message.length() > 0);
+		Assert.assertNotNull(beginPosition);
 		this.message = message;
 		this.beginPosition = beginPosition;
 		this.type = type;
-		calculateToken();
-	}
 
-	// 计算结束位置
-	private void calculateToken() {
-		// TODO row基于0, 而col却基于1, 计算offset时, 应忽略不可见符
-		int lines = countLines(message);
-		int last = message.lastIndexOf('\n');
-		int endColumn = 0;
-		if (last == -1)
-			endColumn = beginPosition.getColumn() + message.length();
-		else
-			endColumn = message.length() - last - 1;
-		int endRow = beginPosition.getLine() + lines;
-		endPosition = new Position(beginPosition.getOffset() + message.length(), endRow, endColumn);
-		location = new Location(beginPosition, endPosition);
+		int endRow = beginPosition.getLine() + countLines(message);
+		int endIndex = beginPosition.getIndex() + message.length();
+		if (message.endsWith("\n")) { // 如果最后一个字符为换行，则当前块不包含该行.
+			int last = message.length() < 2 ? -1 : message.lastIndexOf('\n', message.length() - 2);
+			int endColumn;
+			if (last == -1)
+				endColumn = beginPosition.getColumn() + message.length();
+			else
+				endColumn = message.length() - last - 1;
+			endPosition = new Position(endIndex - 1, endRow - 1, endColumn - 1);
+			nextBeginPosition = new Position(endIndex, endRow, 0);
+		} else {
+			int last = message.lastIndexOf('\n');
+			int endColumn;
+			if (last == -1)
+				endColumn = beginPosition.getColumn() + message.length();
+			else
+				endColumn = message.length() - last - 1;
+			endPosition = new Position(endIndex - 1, endRow, endColumn - 1);
+			nextBeginPosition = new Position(endIndex, endRow, endColumn);
+		}
+		this.location = new Location(beginPosition, endPosition);
 	}
 
 	// 统计行数
@@ -95,7 +104,7 @@ public final class Token {
 		return beginPosition;
 	}
 
-	private Position endPosition;
+	private final Position endPosition;
 
 	/**
 	 * 获取片断的结束位置
@@ -106,7 +115,18 @@ public final class Token {
 		return endPosition;
 	}
 
-	private Location location;
+	private final Position nextBeginPosition;
+
+	/**
+	 * 获取下一片断的起始位置
+	 *
+	 * @return 下一片断的起始位置
+	 */
+	public Position getNextBeginPosition() {
+		return nextBeginPosition;
+	}
+
+	private final Location location;
 
 	/**
 	 * 获取片断的位置区域
@@ -145,24 +165,15 @@ public final class Token {
 	 * @return 子片断
 	 */
 	public Token subToken(int start, int end) {
-		Assert.assertTrue(start < end, "Token.rang.error", new Object[]{new Integer(start), new Integer(end)});
-		if (start < 0 || start > message.length() || end > message.length())
+		if (start < 0 || start > message.length())
 			throw new java.lang.ArrayIndexOutOfBoundsException(start);
-		String sub = message.substring(start, end);
-		int row = beginPosition.getLine();
-		int col = beginPosition.getColumn();
-		if (start > 0) {
-			// 计算起始行
-			row += countLines(message.substring(0, start));
-
-			// 计算起始列
-			int last = sub.lastIndexOf('\n');
-			if (last == -1)
-				col += start;
-			else
-				col = sub.length() - last - 1;
-		}
-		return new Token(sub, new Position(getBeginPosition().getOffset() + start, row, col));
+		if (end < 0 || end > message.length())
+			throw new java.lang.ArrayIndexOutOfBoundsException(end);
+		Assert.assertTrue(start <= end, "Token.rang.error", new Object[]{new Integer(start), new Integer(end)});
+		if (start == 0)
+			return new Token(message.substring(start, end), beginPosition);
+		else
+			return new Token(message.substring(start, end), new Token(message.substring(0, start), beginPosition).getNextBeginPosition());
 	}
 
 	public String toString() {

@@ -1,6 +1,6 @@
 package org.commontemplate.standard.property.system;
 
-import org.commontemplate.standard.property.StaticPropertyHandlerSupport;
+import org.commontemplate.standard.property.SystemPropertyHandlerSupport;
 
 /**
  * 引擎属性
@@ -8,7 +8,7 @@ import org.commontemplate.standard.property.StaticPropertyHandlerSupport;
  * @author liangfei0201@163.com
  *
  */
-public class EnginePropertyHandler extends StaticPropertyHandlerSupport {
+public class EnginePropertyHandler extends SystemPropertyHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 

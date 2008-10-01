@@ -88,7 +88,37 @@ $code{html}$!<html>
     </body>
 </html>
 !$$end
-								<b>(b) Java注释版语法外套：</b><br/>
+								<b>(b) HTML标签版语法外套：</b><br/>
+$code{html}<html>
+    <body>
+    	<ct:if param="users != null && users.size &gt; 0">
+	        <table border="1">
+	        	<ct:for param="user : users">
+	            <tr>
+	                <td><ct:output param="for.index + 1">1</ct:output></td>
+	                <td><ct:output param="user.name">james</ct:output></td>
+	                <td><ct:output param="user.coins">2.00</ct:output></td>
+	            </tr>
+	            </ct:for>
+	        </table>
+        </ct:if>
+    </body>
+</html>
+$end
+								<b>(c) HTML标签属性版语法外套：</b><br/>
+$code{html}<html>
+    <body>
+        <table ct:if="users != null && users.size &gt; 0" border="1">
+            <tr ct:for="user : users">
+                <td><span ct:output="for.index + 1">1</span></td>
+                <td><span ct:output="user.name">james</span></td>
+                <td><span ct:output="user.coins">2.00</span></td>
+            </tr>
+        </table>
+    </body>
+</html>
+$end
+								<b>(d) Java注释版语法外套：</b><br/>
 $code{java}$!package com.${project.company}.${project.name}.domain;
 /*$if{project.framework != project.name}*/
 import com.${project.company}.${project.framework}.domain.BaseEntity;
@@ -107,36 +137,6 @@ public class ${entity.name} extends BaseEntity {
 	/*$end*/
 }
 !$$end
-								<b>(c) HTML标签版语法外套：</b><br/>
-$code{html}<html>
-    <body>
-    	<ct:if param="users != null && users.size &gt; 0">
-	        <table border="1">
-	        	<ct:for param="user : users">
-	            <tr>
-	                <td><ct:output param="for.index + 1">1</ct:output></td>
-	                <td><ct:output param="user.name">james</ct:output></td>
-	                <td><ct:output param="user.coins">2.00</ct:output></td>
-	            </tr>
-	            </ct:for>
-	        </table>
-        </ct:if>
-    </body>
-</html>
-$end
-								<b>(d) HTML标签属性版语法外套：</b><br/>
-$code{html}<html>
-    <body>
-        <table ct:if="users != null && users.size &gt; 0" border="1">
-            <tr ct:for="user : users">
-                <td><span ct:output="for.index + 1">1</span></td>
-                <td><span ct:output="user.name">james</span></td>
-                <td><span ct:output="user.coins">2.00</span></td>
-            </tr>
-        </table>
-    </body>
-</html>
-$end
 								<br/>
 								<b>四、特性语法举例</b><br/>
 								(1) 并行迭代：\$for{i : (1..10), user : users} \$end 多个集合并行取next值，以最长的集合作为结束，短集合自动补null值<br/>

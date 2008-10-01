@@ -31,7 +31,7 @@ public class ConfigurationException extends I18nRuntimeException {
 	}
 
 	public ConfigurationException(Throwable cause) {
-		super(cause);
+		super(cause.getMessage(), cause);
 	}
 
 	public ConfigurationException(String messageKey, Throwable cause) {

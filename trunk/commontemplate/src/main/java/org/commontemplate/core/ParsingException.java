@@ -1,6 +1,5 @@
 package org.commontemplate.core;
 
-import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 
@@ -30,7 +29,7 @@ public class ParsingException extends I18nRuntimeException {
 
 	public ParsingException(Location location,
 			Throwable cause) {
-		super(cause);
+		super(cause.getMessage(), cause);
 		this.location = location;
 	}
 
@@ -79,15 +78,11 @@ public class ParsingException extends I18nRuntimeException {
 		// printStackTrace(new PrintWriter(new OutputStreamWriter(s)));
 		s.println();
 		if (resource != null)
-			s.println("[commontemplate] Error Template Name: " + resource.getName());
+			s.println("[commontemplate] Error occur to Template: " + resource.getName());
 		if (location != null)
-			s.println("[commontemplate] Error Template Location: " + location);
+			s.println("[commontemplate] Error occur to Location: " + location);
 		if (resource != null && location != null) {
-			try {
-				s.println("[commontemplate] Error Template Block: " + resource.getSource(location));
-			} catch (IOException e) {
-				// ignore
-			}
+			s.println("[commontemplate] Error occur to Block: " + resource.getSource(location));
 		}
 		s.println("[commontemplate] Error Message: " + getMessage());
 		super.printStackTrace(s);
@@ -96,15 +91,11 @@ public class ParsingException extends I18nRuntimeException {
 	public void printStackTrace(PrintWriter s) {
 		s.println();
 		if (resource != null)
-			s.println("[commontemplate] Error Template Name: " + resource.getName());
+			s.println("[commontemplate] Error occur to Template: " + resource.getName());
 		if (location != null)
-			s.println("[commontemplate] Error Template Location: " + location);
+			s.println("[commontemplate] Error occur to Location: " + location);
 		if (resource != null && location != null) {
-			try {
-				s.println("[commontemplate] Error Template Block: " + resource.getSource(location));
-			} catch (IOException e) {
-				// ignore
-			}
+			s.println("[commontemplate] Error occur to Block: " + resource.getSource(location));
 		}
 		s.println("[commontemplate] Error Message: " + getMessage());
 		super.printStackTrace(s);

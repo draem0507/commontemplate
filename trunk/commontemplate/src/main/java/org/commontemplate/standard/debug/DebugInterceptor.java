@@ -110,9 +110,6 @@ public class DebugInterceptor implements RenderInterceptor, Serializable {
 						&& ! "\n".equals(src) && ! "\r\n".equals(src)
 						&& (src.startsWith("\n") || src.startsWith("\r\n")))
 					beginLine ++;
-				if (endLine > beginLine
-						&& location.getEnd().getColumn() == 0)
-					endLine --;
 				if (beginLine <= line && endLine >= line)
 					return true;
 			}

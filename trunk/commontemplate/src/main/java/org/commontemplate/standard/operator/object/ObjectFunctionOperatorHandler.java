@@ -45,22 +45,20 @@ public class ObjectFunctionOperatorHandler extends BinaryOperatorHandlerSupport 
 
 	public Object doEvaluate(Object leftOperand, Object rightOperand) throws Exception {
 		Function function = (Function)rightOperand;
-		String functionName = function.getName();
-		Object[] args = ArgumentUtils.getArgumentArray(function.getArgument());
-
+		String name = function.getName();
+		Object argument = function.getArgument();
 		if (functionHandlers != null) {
 			for (Iterator iterator = functionHandlers.entrySet().iterator(); iterator.hasNext();) {
 				Entry entry = (Entry)iterator.next();
-				if (((FunctionMatcher)entry.getKey()).isMatch(leftOperand.getClass(), function.getName())) {
-					return ((FunctionHandler)entry.getValue()).doFunction(leftOperand, function.getArgument());
+				if (((FunctionMatcher)entry.getKey()).isMatch(leftOperand.getClass(), name)) {
+					return ((FunctionHandler)entry.getValue()).doFunction(leftOperand, argument);
 				}
 			}
 		}
-
 		try {
-			return ClassUtils.invokeMethod(leftOperand, functionName, args);
+			return ClassUtils.invokeMethod(leftOperand, name, ArgumentUtils.getArgumentArray(function.getArgument()));
 		} catch (NoSuchMethodException e) {
-			throw new UnhandleException("ObjectFunctionOperatorHandler.function.no.such", new Object[]{leftOperand.getClass().getName(), functionName});
+			throw new UnhandleException("ObjectFunctionOperatorHandler.function.no.such", new Object[]{leftOperand.getClass().getName(), name});
 		}
 	}
 

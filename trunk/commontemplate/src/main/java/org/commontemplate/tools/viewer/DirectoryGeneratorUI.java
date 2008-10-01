@@ -29,7 +29,7 @@ public class DirectoryGeneratorUI {
 		final CommonTemplateFrame frame = new CommonTemplateFrame();
 		frame.setTitle("CommonTemplate模板生成器");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(440, 200);
+		frame.setSize(440, 220);
 		frame.setResizable(false);
 		Dimension scr = Toolkit.getDefaultToolkit().getScreenSize();
 		Dimension fra = frame.getSize();
@@ -43,7 +43,7 @@ public class DirectoryGeneratorUI {
 		chooseLabel.setBounds(20, 20, 100, 24);
 		frame.getContentPane().add(chooseLabel);
 
-		final JFileField dirField = new JFileField(new File(sourceDir.getAbsolutePath() + "_target"), JFileField.DIRECTORIES_ONLY, false);
+		final JFileField dirField = new JFileField(new File(sourceDir.getAbsolutePath() + "_result"), JFileField.DIRECTORIES_ONLY, true);
 		dirField.setBounds(120, 20, 300, 24);
 		frame.getContentPane().add(dirField);
 
@@ -61,12 +61,26 @@ public class DirectoryGeneratorUI {
 		targetSuffixField.setBounds(320, 50, 80, 24);
 		frame.getContentPane().add(targetSuffixField);
 
+		final JLabel sourceEncodingLabel = new JLabel("源文件编码:");
+		sourceEncodingLabel.setBounds(20, 80, 100, 24);
+		frame.getContentPane().add(sourceEncodingLabel);
+		final JTextField sourceEncodingField = new JTextField("UTF-8");
+		sourceEncodingField.setBounds(120, 80, 80, 24);
+		frame.getContentPane().add(sourceEncodingField);
+
+		final JLabel targetEncodingLabel = new JLabel("目标文件编码:");
+		targetEncodingLabel.setBounds(220, 80, 100, 24);
+		frame.getContentPane().add(targetEncodingLabel);
+		final JTextField targetEncodingField = new JTextField("UTF-8");
+		targetEncodingField.setBounds(320, 80, 80, 24);
+		frame.getContentPane().add(targetEncodingField);
+
 		final JCheckBox emptyCheckBox = new JCheckBox("是否包含空目录", false);
-		emptyCheckBox.setBounds(20, 80, 180, 24);
+		emptyCheckBox.setBounds(20, 110, 180, 24);
 		frame.getContentPane().add(emptyCheckBox);
 
 		JButton generateButton = new JButton("生成"); // TODO 未国际化
-		generateButton.setBounds(120, 110, 80, 24);
+		generateButton.setBounds(180, 150, 80, 24);
 		frame.getContentPane().add(generateButton);
 		generateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -78,7 +92,10 @@ public class DirectoryGeneratorUI {
 								JOptionPane.showMessageDialog(frame, "目标文件夹不能为空!", "提示", JOptionPane.INFORMATION_MESSAGE);
 								return;
 							}
-							templateGenerator.generateDirectory(sourceDir, new File(dirField.getTextField().getText()), sourceSuffixField.getText(), targetSuffixField.getText(), emptyCheckBox.isSelected());
+							templateGenerator.generateDirectory(sourceDir, new File(dirField.getTextField().getText().trim()),
+									sourceSuffixField.getText().trim(), targetSuffixField.getText().trim(),
+									sourceEncodingField.getText().trim(), targetEncodingField.getText().trim(),
+									emptyCheckBox.isSelected());
 						} catch (RuntimeException e1) {
 							throw e1;
 						} catch (Exception e2) {

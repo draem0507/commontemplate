@@ -28,9 +28,9 @@ public class Main {
 			new DirectoryGeneratorUI(templateGenerator).generate(sourceFile);
 		} else {
 			if ("d".equalsIgnoreCase(command)) {
-				templateGenerator.generateFile(sourceFile, templateGenerator.getDefaultTargetFile(sourceFile), true, true);
+				templateGenerator.generateFile(sourceFile, templateGenerator.getDefaultTargetFile(sourceFile), null, null, true, true);
 			} else if ("v".equalsIgnoreCase(command)) {
-				templateGenerator.generateFile(sourceFile, templateGenerator.getDefaultTargetFile(sourceFile), false, true);
+				templateGenerator.generateFile(sourceFile, templateGenerator.getDefaultTargetFile(sourceFile), null, null, false, true);
 			} else {
 				new FileGeneratorUI(templateGenerator).generate(sourceFile);
 			}

@@ -114,20 +114,20 @@ final class TemplateImpl extends Template implements Serializable {
 		return new CharArrayReader(data);
 	}
 
-	public final String getSource() throws IOException {
+	public final String getSource() {
 		return new String(data);
 	}
 
-	public String getSource(int begin, int end) {
-		if (begin < 0)
-			begin = 0;
-		if (end > data.length)
-			end = data.length;
-		if (end <= begin)
+	public String getSource(int beginIndex, int endIndex) {
+		if (beginIndex < 0)
+			beginIndex = 0;
+		if (endIndex > data.length)
+			endIndex = data.length;
+		if (endIndex <= beginIndex)
 			return "";
-		int len = end - begin;
+		int len = endIndex - beginIndex;
 		char[] block = new char[len];
-		System.arraycopy(data, begin, block, 0, len);
+		System.arraycopy(data, beginIndex, block, 0, len);
 		return new String(block);
 	}
 

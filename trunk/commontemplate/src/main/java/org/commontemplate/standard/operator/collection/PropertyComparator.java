@@ -21,12 +21,19 @@ public class PropertyComparator implements Comparator, java.io.Serializable {
 	}
 
 	public int compare(Object o1, Object o2) {
-		return reset(compareProperty(o1, o2, property));
+		return compareProperty(o1, o2, property);
 	}
 
 	public static int compareProperty(Object o1, Object o2, String property) {
-		
 		try {
+			if (o1 == null && o2 == null)
+				return 0;
+			if (o1 == null)
+				return 1;
+			if (o2 == null)
+				return -1;
+			if (property == null || property.length() == 0)
+				return 0;
 			boolean isDesc = false;
 			if ('-' == property.charAt(0)) {
 				isDesc = true;
@@ -43,24 +50,9 @@ public class PropertyComparator implements Comparator, java.io.Serializable {
 				return (comp);
 			}
 		} catch (Exception e) {
-			// Ignore, return 0;
+			// ignore, return 0;
 		}
-		return (0);
-	}
-	
-	/**
-	 * 对于TreeSet，是不允许放入相同的元素的，而如何判断相同，是通过传入的 Comparator来决定的。<br>
-	 * 所以，如果比较器发现比较的结果是 0 的时候，就应该返回 1 或 －1，以保证集合的内容不丢失。
-	 * @see PropertyComparator
-	 * @see PropertiesComparator
-	 * @param comp
-	 * @return
-	 */
-	public static int reset(int comp) {
-		if(comp == 0) {
-			return 1;
-		}
-		return comp;
+		return 0;
 	}
 
 }

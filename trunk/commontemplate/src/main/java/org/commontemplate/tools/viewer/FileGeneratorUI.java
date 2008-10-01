@@ -11,6 +11,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 import org.commontemplate.tools.generator.TemplateGenerator;
 import org.commontemplate.tools.swing.CommonTemplateFrame;
@@ -29,7 +30,7 @@ public class FileGeneratorUI {
 		final CommonTemplateFrame frame = new CommonTemplateFrame();
 		frame.setTitle("CommonTemplate模板生成器");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(440, 200);
+		frame.setSize(440, 220);
 		frame.setResizable(false);
 		Dimension scr = Toolkit.getDefaultToolkit().getScreenSize();
 		Dimension fra = frame.getSize();
@@ -47,16 +48,30 @@ public class FileGeneratorUI {
 		fileField.setBounds(120, 20, 300, 24);
 		frame.getContentPane().add(fileField);
 
-		final JCheckBox debugCheckBox = new JCheckBox("是否调试", false);
-		debugCheckBox.setBounds(20, 60, 100, 24);
+		final JLabel sourceEncodingLabel = new JLabel("源文件编码:");
+		sourceEncodingLabel.setBounds(20, 50, 100, 24);
+		frame.getContentPane().add(sourceEncodingLabel);
+		final JTextField sourceEncodingField = new JTextField("UTF-8");
+		sourceEncodingField.setBounds(120, 50, 80, 24);
+		frame.getContentPane().add(sourceEncodingField);
+
+		final JLabel targetEncodingLabel = new JLabel("目标文件编码:");
+		targetEncodingLabel.setBounds(220, 50, 100, 24);
+		frame.getContentPane().add(targetEncodingLabel);
+		final JTextField targetEncodingField = new JTextField("UTF-8");
+		targetEncodingField.setBounds(320, 50, 80, 24);
+		frame.getContentPane().add(targetEncodingField);
+
+		final JCheckBox debugCheckBox = new JCheckBox("是否调试(在模板的第一行设置断点)", false);
+		debugCheckBox.setBounds(20, 80, 300, 24);
 		frame.getContentPane().add(debugCheckBox);
 
 		final JCheckBox viewCheckBox = new JCheckBox("是否用浏览器打开", false);
-		viewCheckBox.setBounds(120, 60, 180, 24);
+		viewCheckBox.setBounds(20, 110, 200, 24);
 		frame.getContentPane().add(viewCheckBox);
 
 		JButton generateButton = new JButton("生成"); // TODO 未国际化
-		generateButton.setBounds(120, 100, 80, 24);
+		generateButton.setBounds(180, 150, 80, 24);
 		frame.getContentPane().add(generateButton);
 		generateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -68,7 +83,9 @@ public class FileGeneratorUI {
 								JOptionPane.showMessageDialog(frame, "目标文件名不能为空!", "提示", JOptionPane.INFORMATION_MESSAGE);
 								return;
 							}
-							templateGenerator.generateFile(sourceFile, new File(fileField.getTextField().getText()), debugCheckBox.isSelected(), viewCheckBox.isSelected());
+							templateGenerator.generateFile(sourceFile, new File(fileField.getTextField().getText().trim()),
+									sourceEncodingField.getText().trim(), targetEncodingField.getText().trim(),
+									debugCheckBox.isSelected(), viewCheckBox.isSelected());
 						} catch (RuntimeException e1) {
 							throw e1;
 						} catch (Exception e2) {
