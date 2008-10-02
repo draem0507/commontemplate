@@ -82,18 +82,23 @@ Section -Post
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayVersion" "${PRODUCT_VERSION}"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "URLInfoAbout" "${PRODUCT_WEB_SITE}"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "Publisher" "${PRODUCT_PUBLISHER}"
+
+  DeleteRegKey HKCR "Folder\shell\ctlgenerate"
+  WriteRegStr HKCR "Folder\shell\ctlgenerate" "" "CommonTemplate"
+  WriteRegStr HKCR "Folder\shell\ctlgenerate\command" "" "$INSTDIR\CommonTemplate.exe %1"
+
   DeleteRegKey HKCR ".ctl"
   DeleteRegKey HKCR "ctlfile"
   WriteRegStr HKCR "ctlfile\DefaultIcon" "" "$INSTDIR\CommonTemplate.exe"
-  WriteRegStr HKCR "ctlfile\shell\open\command" "" "$INSTDIR\CommonTemplate.exe %1"
+  WriteRegStr HKCR "ctlfile\shell\open\command" "" "$INSTDIR\CommonTemplate.exe v %1"
   WriteRegStr HKCR "ctlfile\shell\0edit" "" "Edit"
   WriteRegStr HKCR "ctlfile\shell\0edit\command" "" "$WINDIR\notepad.exe %1"
-  WriteRegStr HKCR "ctlfile\shell\1view" "" "CommonTemplate(view)"
-  WriteRegStr HKCR "ctlfile\shell\1view\command" "" "$INSTDIR\CommonTemplate.exe %1"
-  WriteRegStr HKCR "ctlfile\shell\2debug" "" "CommonTemplate(debug)"
-  WriteRegStr HKCR "ctlfile\shell\2debug\command" "" "$INSTDIR\CommonTemplate.exe d %1"
-  WriteRegStr HKCR "ctlfile\shell\3generate" "" "CommonTemplate(generate)"
-  WriteRegStr HKCR "ctlfile\shell\3generate\command" "" "$INSTDIR\CommonTemplate.exe g %1"
+  WriteRegStr HKCR "ctlfile\shell\1generate" "" "CommonTemplate"
+  WriteRegStr HKCR "ctlfile\shell\1generate\command" "" "$INSTDIR\CommonTemplate.exe %1"
+  WriteRegStr HKCR "ctlfile\shell\2view" "" "CommonTemplate(view)"
+  WriteRegStr HKCR "ctlfile\shell\2view\command" "" "$INSTDIR\CommonTemplate.exe v %1"
+  WriteRegStr HKCR "ctlfile\shell\3debug" "" "CommonTemplate(debug)"
+  WriteRegStr HKCR "ctlfile\shell\3debug\command" "" "$INSTDIR\CommonTemplate.exe d %1"
   WriteRegStr HKCR ".ctl" "" "ctlfile"
 SectionEnd
 
@@ -125,6 +130,7 @@ Section Uninstall
 
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   DeleteRegKey HKLM "${PRODUCT_DIR_REGKEY}"
+  DeleteRegKey HKCR "Folder\shell\ctlgenerate"
   DeleteRegKey HKCR ".ctl"
   DeleteRegKey HKCR "ctlfile"
   SetAutoClose true
