@@ -43,13 +43,13 @@ public final class Syntax implements Serializable {
 	 * @param noParse
 	 * @param endDirectiveName
 	 */
-	public Syntax(char leader, char expressionBegin, char expressionEnd,
+	public Syntax(char directiveLeader, char expressionBegin, char expressionEnd,
 			char lineComment, char blockComment, char noParse,
 			String endDirectiveName) {
 		Assert.assertNotEmpty(endDirectiveName, "结束指令名不能为空!"); // TODO 未国际化
-		assertMutex(new char[] { leader, expressionBegin, expressionEnd,
+		assertMutex(new char[] { directiveLeader, expressionBegin, expressionEnd,
 				noParse, lineComment, blockComment });
-		this.directiveLeader = leader;
+		this.directiveLeader = directiveLeader;
 		this.expressionBegin = expressionBegin;
 		this.expressionEnd = expressionEnd;
 		this.noParse = noParse;

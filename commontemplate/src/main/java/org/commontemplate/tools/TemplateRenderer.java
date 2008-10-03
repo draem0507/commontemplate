@@ -70,7 +70,7 @@ public class TemplateRenderer {
 	/**
 	 * 解析并运行模板
 	 *
-	 * @return 解析结果
+	 * @param out 输出端
 	 */
 	public void render(Writer out) {
 		Context context = engine.createContext(out);

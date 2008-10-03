@@ -38,7 +38,7 @@ public abstract class Expression implements Serializable {
 	 * 接收访问者, 并带领访问者遍历整个树 (前序遍历)<br>
 	 * 通常直接使用accept(Visitor visitor)<br>
 	 *
-	 * @see org.commontemplate.core.Expression#accept(TemplateVisitor)
+	 * @see org.commontemplate.core.Expression#accept(ExpressionVisitor)
 	 * @param visitor 访问者
 	 * @param isEnter 是否为入口, 在入口处忽略StopVisitException
 	 */

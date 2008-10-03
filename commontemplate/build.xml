@@ -100,7 +100,6 @@
 			<bottom>
 				<![CDATA[<i>Copyright &#169; 2007-2008 www.commontemplate.org All Rights Reserved.</i>]]>
 			</bottom>
-			<link href="http://www.commontemplate.org/javadoc/" />
 		</javadoc>
 	</target>
 

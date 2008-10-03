@@ -37,9 +37,8 @@ public class BlockDirectivesVisitor extends TemplateVisitor {
 	/**
 	 * 查找模板元素
 	 *
-	 * @param node 模板
+	 * @param template 模板
 	 * @param type 块指令类型名
-	 * @param name 块名
 	 * @return 块指令的内部元素集;
 	 */
 	public static List findBlockDirectives(Template template, String type) {

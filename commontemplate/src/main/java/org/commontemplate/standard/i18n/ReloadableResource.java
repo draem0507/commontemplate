@@ -17,13 +17,13 @@ public interface ReloadableResource {
 	 * 编码方式。
 	 * @see ReloadableResourceProvider
 	 * @throws IOException
-	 * 
+	 *
 	 */
 	public void loadFromURL(URL url, String encoding) throws IOException;
 	/**
 	 * 根据 key 得到 value 的处理方法。
 	 * @param key
-	 * @return
+	 * @return value
 	 */
 	public Object handleGetObject(String key);
 }

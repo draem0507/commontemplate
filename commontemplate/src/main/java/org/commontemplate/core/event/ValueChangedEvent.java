@@ -4,15 +4,14 @@ import org.commontemplate.core.Event;
 
 /**
  * 值变化事件
- * 
- * @see org.commontemplate.core.Storage
+ *
  * @author liangfei0201@163.com
  *
  */
 public abstract class ValueChangedEvent extends Event {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private String name;
 
 	private Object newValue;
