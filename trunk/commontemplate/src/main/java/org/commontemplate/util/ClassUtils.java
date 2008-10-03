@@ -44,7 +44,7 @@ public class ClassUtils {
 	 * 基本类型数组：boolean[], byte[], char[], short[], int[], long[], float[], double[]
 	 * 对象数组：java.lang.Object[], com.xxx.XXX[]
 	 *
-	 * @see java.lang.Class#forName()
+	 * @see java.lang.Class#forName(String)
 	 * @param className 类名
 	 * @return 类元
 	 * @throws ClassNotFoundException 类不存在时抛出
@@ -255,13 +255,12 @@ public class ClassUtils {
 	}
 
 	/**
-	 * 执行类方法
+	 * 执行类构造方法
 	 *
-	 * @param obj 类实例
-	 * @param name 方法名
-	 * @param args 方法参数
-	 * @return 方法返回值
-	 * @throws NoSuchMethodException 方法不存在时抛出
+	 * @param clazz 类元
+	 * @param args 构造方法参数
+	 * @return 类实例
+	 * @throws NoSuchMethodException 构造方法不存在时抛出
 	 */
 	public static Object invokeConstructor(Class clazz, Object[] args) throws NoSuchMethodException {
 		if (clazz == null)

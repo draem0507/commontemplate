@@ -4154,7 +4154,7 @@ public class StringUtils {
      * <p>Capitalizes a String changing the first letter to title case as
      * per {@link Character#toTitleCase(char)}. No other letters are changed.</p>
      *
-     * <p>For a word based algorithm, see {@link WordUtils#capitalize(String)}.
+     * <p>For a word based algorithm.
      * A <code>null</code> input String returns <code>null</code>.</p>
      *
      * <pre>
@@ -4166,7 +4166,6 @@ public class StringUtils {
      *
      * @param str  the String to capitalize, may be null
      * @return the capitalized String, <code>null</code> if null String input
-     * @see WordUtils#capitalize(String)
      * @see #uncapitalize(String)
      * @since 2.0
      */
@@ -4198,7 +4197,7 @@ public class StringUtils {
      * <p>Uncapitalizes a String changing the first letter to title case as
      * per {@link Character#toLowerCase(char)}. No other letters are changed.</p>
      *
-     * <p>For a word based algorithm, see {@link WordUtils#uncapitalize(String)}.
+     * <p>For a word based algorithm.
      * A <code>null</code> input String returns <code>null</code>.</p>
      *
      * <pre>
@@ -4210,7 +4209,6 @@ public class StringUtils {
      *
      * @param str  the String to uncapitalize, may be null
      * @return the uncapitalized String, <code>null</code> if null String input
-     * @see WordUtils#uncapitalize(String)
      * @see #capitalize(String)
      * @since 2.0
      */
@@ -4248,7 +4246,7 @@ public class StringUtils {
      *  <li>Lower case character converts to Upper case</li>
      * </ul>
      *
-     * <p>For a word based algorithm, see {@link WordUtils#swapCase(String)}.
+     * <p>For a word based algorithm.
      * A <code>null</code> input String returns <code>null</code>.</p>
      *
      * <pre>
@@ -4569,7 +4567,6 @@ public class StringUtils {
      * StringUtils.defaultString("bat") = "bat"
      * </pre>
      *
-     * @see ObjectUtils#toString(Object)
      * @see String#valueOf(Object)
      * @param str  the String to check, may be null
      * @return the passed in String, or the empty String if it
@@ -4589,7 +4586,6 @@ public class StringUtils {
      * StringUtils.defaultString("bat", "NULL") = "bat"
      * </pre>
      *
-     * @see ObjectUtils#toString(Object,String)
      * @see String#valueOf(Object)
      * @param str  the String to check, may be null
      * @param defaultStr  the default String to return
