@@ -1,7 +1,7 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
 	<!--$zone{"content"}-->
 $!
-								<b>0.8.7 版本更新：(未发布)</b> <a href="downloads.html">下载...</a><br/>
+								<b>0.8.7 版本更新：(2008-10-03)</b> <a href="downloads.html">下载...</a><br/>
 								注释语法外套, 增加clearSpaceline属性, 如果指令所在行没有其它内容, 则清除该空白行.<br/>
 								完成热加载国际化信息文件.<br/>
 								修复Object.toJson在两对象互相引用时死循环的BUG<br/>
