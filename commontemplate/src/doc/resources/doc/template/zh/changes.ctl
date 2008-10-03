@@ -224,7 +224,7 @@ $!
 								<b>0.8.1 版本更新：(2008-01-30)</b> <a href="downloads.html">下载...</a><br/>
 								增加JspTagLib适配器支持, 可以在CTL使用Jsp标签库。<br/>
 								增加对struts2(ui)标签库的配置, 参见下载列表中commontemplate-example.zip内的ct_struts2.war。<br/>
-								增加对SpringMVC的集成支持，参见下载列表中commontemplate-example.zip内的ct_springmvc.war。参见：<a href="integration.html">集成指南...</a><br/>
+								增加对SpringMVC的集成支持，参见下载列表中commontemplate-example.zip内的ct_springmvc.war。参见：<a href="mvc.html">MVC集成指南...</a><br/>
 								进一步加强EngineHolder.renderTemplate(), 简化Web框架集成, 将Context的创建, response.setContentType()等均内部封装.<br/>
 								核心包增加Constant, Variable, Text, Comment等领域实体。<br/>
 								注释语法采用 $## 和 $** 表示保留在编译结果中, 否则编译后即抛弃。参见：<a href="template.html">模板指南...</a><br/>
@@ -255,7 +255,7 @@ $!
 								Engine engine = org.commontemplate.tools.web.EngineHolder.getEngine();<br/>
 								然后使用engine处理模板...<br/>
 								当然，EngineHolder还有其它一些工具方法，用于辅助常见方案，如：createContext,renderTemplate等。<br/>
-								参见：<a href="integration.html">集成指南...</a><br/>
+								参见：<a href="mvc.html">MVC集成指南...</a><br/>
 !$
 	<!--$end-->
 <!--$end-->

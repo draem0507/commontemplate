@@ -17,7 +17,7 @@ $!
 								(6) struts-commontemplate-plugin-x.x.jar 与<a href="http://struts.apache.org/2.x/" target="_blank">Struts2</a>的集成包，采用Struts2约定的插件方式打包<br/>
 								(7) commontemplate-javaxscript-x.x.jar 与<a href="http://java.sun.com/javase/6/docs/api/javax/script/package-summary.html" target="_blank">javax.script</a>的集成包，采用javax.script约定的自发现方式打包 <a href="javaxscript.html">集成说明...</a><br/>
 								示例包:<br/>
-								(1) ct_struts2-x.x.war 与<a href="http://struts.apache.org/2.x/" target="_blank">Struts2</a>框架集成示例应用，请参见：<a href="integration.html">Web框架集成...</a><br/>
+								(1) ct_struts2-x.x.war 与<a href="http://struts.apache.org/2.x/" target="_blank">Struts2</a>框架集成示例应用，请参见：<a href="mvc.html">MVC框架集成...</a><br/>
 								(2) ct_struts-x.x.war 与<a href="http://struts.apache.org/1.x/" target="_blank">Struts(1.x)</a>框架集成示例应用<br/>
 								(3) ct_webwork-x.x.war 与<a href="http://webwork.opensymphony.com/" target="_blank">WebWork</a>框架集成示例应用<br/>
 								(4) ct_springmvc-x.x.war 与<a href="http://www.springframework.org/" target="_blank">SpringMVC</a>框架集成示例应用<br/>
