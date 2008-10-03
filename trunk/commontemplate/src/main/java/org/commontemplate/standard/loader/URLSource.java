@@ -12,13 +12,13 @@ import org.commontemplate.util.Assert;
  * @author liangfei0201@163.com
  *
  */
-public class URLResource extends AbstractSource {
+public class URLSource extends AbstractSource {
 
 	private static final long serialVersionUID = 1L;
 
 	private final URL url;
 
-	public URLResource(URL url, String name, String encoding) throws IOException {
+	public URLSource(URL url, String name, String encoding) throws IOException {
 		super(name, encoding);
 		Assert.assertNotNull(url, "URLResource.url.required");
 		this.url = url;

@@ -11,11 +11,11 @@ import org.commontemplate.util.Assert;
  * @author liangfei0201@163.com
  *
  */
-public class RemoteResourceLoader extends URLResourceLoader {
+public class RemoteSourceLoader extends URLSourceLoader {
 
 	private final String domain;
 
-	public RemoteResourceLoader() {
+	public RemoteSourceLoader() {
 		this.domain = null;
 	}
 
@@ -25,7 +25,7 @@ public class RemoteResourceLoader extends URLResourceLoader {
 	 * @param domain
 	 *            模板所在域
 	 */
-	public RemoteResourceLoader(String domain) {
+	public RemoteSourceLoader(String domain) {
 		Assert.assertContain(domain, "://", "RemoteResourceLoader.protocol.required");
 		this.domain = domain;
 	}

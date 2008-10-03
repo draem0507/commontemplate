@@ -11,19 +11,19 @@ import org.commontemplate.core.Source;
  * @author liangfei0201@163.com
  *
  */
-public class ZipResourceLoader extends AbstractSourceLoader {
+public class ZipSourceLoader extends AbstractSourceLoader {
 	
 	private File zipFile; 
 	
-	public ZipResourceLoader() {
+	public ZipSourceLoader() {
 		
 	}
 	
-	public ZipResourceLoader(String zipFilePath) throws IOException {
+	public ZipSourceLoader(String zipFilePath) throws IOException {
 		this(new File(zipFilePath));
 	}
 	
-	public ZipResourceLoader(File zipFile) throws IOException {
+	public ZipSourceLoader(File zipFile) throws IOException {
 		this.zipFile = zipFile;
 	}
 	
@@ -33,7 +33,7 @@ public class ZipResourceLoader extends AbstractSourceLoader {
 
 	public Source loadResource(String path, String name, String encoding)
 			throws IOException {
-		return new ZipResource(zipFile, name, encoding);
+		return new ZipSource(zipFile, name, encoding);
 	}
 
 }

@@ -15,7 +15,7 @@ import org.commontemplate.util.UrlUtils;
  * @author liangfei0201@163.com
  *
  */
-public class StringResourceLoader extends AbstractSourceLoader {
+public class StringSourceLoader extends AbstractSourceLoader {
 
 	private final Map resources = new HashMap();
 
@@ -31,7 +31,7 @@ public class StringResourceLoader extends AbstractSourceLoader {
 		} catch (MalformedURLException e) {
 			throw new RuntimeException(e); // TODO 异常待定义
 		}
-		this.resources.put(name, new StringResource(name, source));
+		this.resources.put(name, new StringSource(name, source));
 	}
 
 	protected Source loadResource(String path, String name, String encoding)

@@ -8,13 +8,13 @@ import java.util.jar.JarFile;
 
 import org.commontemplate.util.Assert;
 
-public class JarResource extends AbstractSource {
+public class JarSource extends AbstractSource {
 
 	private static final long serialVersionUID = 1L;
 
 	private final File file;
 
-	public JarResource(File file, String name, String encoding) {
+	public JarSource(File file, String name, String encoding) {
 		super(name, encoding);
 		Assert.assertNotNull(file, "JarResource.file.required");
 		this.file = file;

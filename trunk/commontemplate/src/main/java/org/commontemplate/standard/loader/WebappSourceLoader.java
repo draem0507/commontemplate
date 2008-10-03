@@ -13,15 +13,15 @@ import javax.servlet.ServletContext;
  * @author liangfei0201@163.com
  *
  */
-public class WebappResourceLoader extends URLResourceLoader {
+public class WebappSourceLoader extends URLSourceLoader {
 
 	private ServletContext servletContext;
 
-	public WebappResourceLoader() {
+	public WebappSourceLoader() {
 
 	}
 
-	public WebappResourceLoader(ServletContext servletContext) {
+	public WebappSourceLoader(ServletContext servletContext) {
 		this.servletContext = servletContext;
 	}
 

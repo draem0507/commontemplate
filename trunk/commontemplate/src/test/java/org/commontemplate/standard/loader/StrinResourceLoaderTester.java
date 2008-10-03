@@ -9,13 +9,13 @@ import org.commontemplate.tools.PropertiesConfigurationLoader;
 
 public class StrinResourceLoaderTester extends TestCase {
 
-	private StringResourceLoader loader;
+	private StringSourceLoader loader;
 
 	private Engine engine = new Engine(PropertiesConfigurationLoader.loadStandardConfiguration());
 
 	protected void setUp() throws Exception {
 		super.setUp();
-		loader = new StringResourceLoader();
+		loader = new StringSourceLoader();
 		ConfigurationSettings config = PropertiesConfigurationLoader.loadStandardConfiguration();
 		config.setSourceLoader(loader);
 		engine = new Engine(config);

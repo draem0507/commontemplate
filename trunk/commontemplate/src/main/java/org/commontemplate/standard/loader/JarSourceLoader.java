@@ -11,19 +11,19 @@ import org.commontemplate.core.Source;
  * @author liangfei0201@163.com
  *
  */
-public class JarResourceLoader extends AbstractSourceLoader {
+public class JarSourceLoader extends AbstractSourceLoader {
 	
 	private File jarFile; 
 	
-	public JarResourceLoader() {
+	public JarSourceLoader() {
 		
 	}
 	
-	public JarResourceLoader(String jarFilePath) throws IOException {
+	public JarSourceLoader(String jarFilePath) throws IOException {
 		this(new File(jarFilePath));
 	}
 	
-	public JarResourceLoader(File jarFile) throws IOException {
+	public JarSourceLoader(File jarFile) throws IOException {
 		this.jarFile = jarFile;
 	}
 	
@@ -33,7 +33,7 @@ public class JarResourceLoader extends AbstractSourceLoader {
 
 	public Source loadResource(String path, String name, String encoding)
 			throws IOException {
-		return new JarResource(jarFile, name, encoding);
+		return new JarSource(jarFile, name, encoding);
 	}
 
 }

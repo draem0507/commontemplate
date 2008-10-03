@@ -14,13 +14,13 @@ import org.commontemplate.util.Assert;
  * @author liangfei0201@163.com
  *
  */
-public class ZipResource extends AbstractSource {
+public class ZipSource extends AbstractSource {
 
 	private static final long serialVersionUID = 1L;
 
 	private final File file;
 
-	public ZipResource(File file, String name, String encoding) {
+	public ZipSource(File file, String name, String encoding) {
 		super(name, encoding);
 		Assert.assertNotNull(file, "ZipResource.file.required");
 		this.file = file;

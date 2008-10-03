@@ -11,15 +11,15 @@ import org.commontemplate.util.Assert;
  * @author liangfei0201@163.com
  *
  */
-public class ClasspathResourceLoader extends URLResourceLoader {
+public class ClasspathSourceLoader extends URLSourceLoader {
 
 	private final ClassLoader classLoader;
 
-	public ClasspathResourceLoader() {
+	public ClasspathSourceLoader() {
 		this.classLoader = Thread.currentThread().getContextClassLoader();
 	}
 
-	public ClasspathResourceLoader(ClassLoader classLoader) {
+	public ClasspathSourceLoader(ClassLoader classLoader) {
 		Assert.assertNotNull(classLoader, "ClasspathResourceLoader.class.loader.required");
 		this.classLoader = classLoader;
 	}
