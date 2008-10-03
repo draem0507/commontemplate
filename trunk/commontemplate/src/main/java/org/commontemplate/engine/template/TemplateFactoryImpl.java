@@ -52,10 +52,10 @@ final class TemplateFactoryImpl implements TemplateFactory {
 
 	public Template createTemplate(String name, List elements) {
 		try {
-			Source resource = new ResourceImpl("", name);
+			Source source = new SourceImpl("", name);
 			RootBlockDirectiveImpl rootBlockDirective = new RootBlockDirectiveImpl();
 			rootBlockDirective.setElements(elements);
-			return new TemplateImpl(resource, rootBlockDirective, renderInterceptors);
+			return new TemplateImpl(source, rootBlockDirective, renderInterceptors);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}

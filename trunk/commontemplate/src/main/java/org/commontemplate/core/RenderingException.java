@@ -104,6 +104,7 @@ public class RenderingException extends I18nRuntimeException {
 		s.println("[commontemplate] Error occur to Location: " + getLocation()); // TODO 未国际化
 		s.println("[commontemplate] Error occur to Element: " + (element == null ? null : element.getSource())); // TODO 未国际化
 		s.println("[commontemplate] Error Message: " + getMessage()); // TODO 未国际化
+		s.println("[commontemplate] Error Stack: ");
 		super.printStackTrace(s);
 	}
 
@@ -114,6 +115,7 @@ public class RenderingException extends I18nRuntimeException {
 		s.println("[commontemplate] Error occur to Location: " + getLocation()); // TODO 未国际化
 		s.println("[commontemplate] Error occur to Element: " + (element == null ? null : element.getSource())); // TODO 未国际化
 		s.println("[commontemplate] Error Message: " + getMessage()); // TODO 未国际化
+		s.println("[commontemplate] Error Stack: ");
 		super.printStackTrace(s);
 	}
 

@@ -237,7 +237,7 @@ final class DirectiveProvider {
 		try {
 			return expressionParser.parseExpression(expr);
 		} catch (ParsingException e) {
-			throw e;
+			throw new ParsingException(location, e);
 		} catch (Exception e) {
 			throw new ParsingException(location, e);
 		}

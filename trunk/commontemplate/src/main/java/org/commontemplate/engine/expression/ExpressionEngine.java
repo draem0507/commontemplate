@@ -17,7 +17,9 @@ import org.commontemplate.core.UnaryOperator;
 import org.commontemplate.core.Variable;
 import org.commontemplate.util.Assert;
 import org.commontemplate.util.Location;
+import org.commontemplate.util.Position;
 import org.commontemplate.util.scanner.ScanningException;
+import org.commontemplate.util.scanner.Token;
 
 /**
  * 表达式引擎. (线程安全)
@@ -68,11 +70,16 @@ public class ExpressionEngine implements ExpressionParser {
 			Expression root = expressionReducer.reduce(expressions);
 			return root;
 		} catch (ParsingException e) {
+			e.setSource(new SourceImpl(expressionText));
 			throw e;
 		} catch (ScanningException e) {
-			throw new ParsingException(new Location(e.getPosition(), e.getPosition()), e);
+			ParsingException pe = new ParsingException(new Location(e.getPosition(), e.getPosition()), e);
+			pe.setSource(new SourceImpl(expressionText));
+			throw pe;
 		} catch (IOException e) { // 因为是字符串输入，一般不会出现IOException
-			throw new RuntimeException(e);
+			ParsingException pe = new ParsingException(new Token(expressionText, Position.ZERO).getLocation(), e);
+			pe.setSource(new SourceImpl(expressionText));
+			throw pe;
 		}
 	}
 

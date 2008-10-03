@@ -15,11 +15,13 @@ import org.commontemplate.standard.operator.sequence.IntegerSequence;
 public abstract class NumbersUnaryOperatorHandlerSupport extends UnaryOperatorHandlerSupport {
 
 	public NumbersUnaryOperatorHandlerSupport() {
-		super(Collection.class);
+		super(new Class[]{Number.class, Collection.class});
 	}
 
 	public boolean isMatch(Object operand) {
 		boolean m = super.isMatch(operand);
+		if (operand instanceof Number)
+			return m;
 		if (! m)
 			return false;
 		if (operand instanceof IntegerSequence)
@@ -32,5 +34,13 @@ public abstract class NumbersUnaryOperatorHandlerSupport extends UnaryOperatorHa
 		}
 		return true;
 	}
+
+	public Object doEvaluate(Object operand) throws Exception {
+		if (operand instanceof Number)
+			return operand;
+		return doEvaluateNumbers((Collection)operand);
+	}
+
+	public abstract Object doEvaluateNumbers(Collection numbers) throws Exception;
 
 }

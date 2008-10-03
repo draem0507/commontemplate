@@ -11,7 +11,7 @@ public interface ReloadController {
 
 	/**
 	 * 是否需要检查模板源 <p/> 引擎在每次从缓存中返回模板之前都会回调该接口函数，<br/> 如果返回true，引擎将重新读取模板源，<br/>
-	 * 并调用<code>org.commontemplate.config.ResourceComparator#isModified</code>进行比较，<br/>
+	 * 并调用<code>org.commontemplate.config.SourceComparator#isModified</code>进行比较，<br/>
 	 * 若模板源已更新，则重新解析模板源并刷新缓存。<br/>
 	 *
 	 * @param key
