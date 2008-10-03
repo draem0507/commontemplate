@@ -9,7 +9,8 @@ import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.Vector;
 
-import sun.misc.SoftCache;
+import org.commontemplate.standard.cache.SoftCache;
+
 /**
  * 处理可重载的国际化资源的标准实现。实现了 ReloadResourceProvider 接口。<br>
  * 使用者可以根据需要实现自定义的可重载的实现，具体标准请参考 ReloadResourceProvider 接口。
@@ -17,14 +18,8 @@ import sun.misc.SoftCache;
  * @see ReloadableResourceProvider
  */
 public class StandardReloadableResourceProvider implements ReloadableResourceProvider, Serializable {
-	
+
 	private static final long serialVersionUID = -7692930294944755410L;
-
-	/** initial size of the bundle cache */
-    private static final int INITIAL_CACHE_SIZE = 25;
-
-    /** capacity of cache consumed before it should grow */
-    private static final float CACHE_LOAD_FACTOR = (float)1.0;
 
     private static final int MAX_BUNDLES_SEARCHED = 3;
 
@@ -32,40 +27,38 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 
     private static final ResourceCacheKey cacheKey = new ResourceCacheKey();
 
-    private static SoftCache cacheList = new SoftCache(INITIAL_CACHE_SIZE, CACHE_LOAD_FACTOR);
+    private static SoftCache cacheList = new SoftCache();
 
     /**
 	 * 对每一个basename,都保存最新的修改的时间<br>
 	 * key 是 .properties文件，包含全路径<br>
 	 * value 是 最后的修改时间。
 	 */
-	private static SoftCache baseNameModifyCache = new SoftCache(INITIAL_CACHE_SIZE,
-			CACHE_LOAD_FACTOR);
+	private static SoftCache baseNameModifyCache = new SoftCache();
 
 	/**
 	 * 对每一个basename,都保存最后的读取的时间<br>
 	 * key 是 baseName<br>
 	 * value 是 最后的读取时间。
 	 */
-	private static SoftCache baseNameIntervalCache = new SoftCache(INITIAL_CACHE_SIZE,
-			CACHE_LOAD_FACTOR);
+	private static SoftCache baseNameIntervalCache = new SoftCache();
 
     // private ClassLoader resourceClassLoader;
 
     /** 可以处理的文件的名字，默认是 .properties 文件 */
     private static String DEFAULT_FILE_EXT_NAME = ".properties";
-    
+
     public static final String MAP_FILE_EXT_NAME_KEY = "MAP_FILE_EXT_NAME_KEY";
     public static final String MAP_CLASS_LOADER_KEY = "MAP_CLASS_LOADER_KEY";
     public static final String MAP_RELOADABLE_RESOURCE_KEY = "MAP_RELOADABLE_RESOURCE_KEY";
-    public static final String MAP_ENCODING_KEY = "MAP_ENCODING_KEY";    
+    public static final String MAP_ENCODING_KEY = "MAP_ENCODING_KEY";
 
     /**
 	 * 刷新间隔的时间
 	 */
 	private long refreshInterval;
-	
-	
+
+
 	/**
 	 * 根据 resourceBaseName,locale,key,extInfo 得到一个对象。<br>
 	 * 关于 extInfo, 可以进行如下的设置: <br>
@@ -83,17 +76,17 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 	 * 如果不设置的话，则使用 Java 默认的 Unicode<br>
 	 */
 	public Object getObject(String resourceBaseName, Locale locale, String key, Map extInfo) {
-		
+
 		ClassLoader resourceClassLoader = getClassLoader(extInfo);
 
 		if(resourceClassLoader == null || locale == null || resourceBaseName == null) {
 			throw new NullPointerException();
-		}		
-		
+		}
+
 		ReloadableResource resource = getResource(resourceBaseName, locale, extInfo);
-		
+
 		Object value = resource.handleGetObject(key);
-		
+
 		if(value == null) {
 			throwMissingResourceException(key, locale);
 		}
@@ -101,11 +94,11 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 	}
 
 	private ReloadableResource getResource(String baseName, Locale resourceLocale, Map extInfo) {
-		
+
 		ClassLoader resourceClassLoader = getClassLoader(extInfo);
 		final Object NOTFOUND = (resourceClassLoader != null) ? (Object) resourceClassLoader
 				: (Object) DEFAULT_NOT_FOUND;
-		
+
 		Locale defaultLocale = Locale.getDefault();
 
 		ReloadableResource resource = findResourceInCache(baseName, defaultLocale, resourceLocale, extInfo);
@@ -118,7 +111,7 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 		try {
 			//locate the root bundle and work toward the desired child
 			resource = findResource(baseName, defaultLocale, resourceLocale, NOTFOUND, NOTFOUND, extInfo);
-			
+
 		} catch (Exception e) {
 
 			throwMissingResourceException(baseName, resourceLocale);
@@ -137,11 +130,11 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 
 	private ReloadableResource findResource(String baseName, Locale defaultLocale, Locale resourceLocale,
 			Object parent, final Object NOTFOUND, Map extInfo) {
-		
+
 		synchronized (cacheList) {
 			//try loading the bundle via the class loader
 			boolean result = loadResource(baseName, extInfo);
-			
+
 			// Search the main branch of the search tree.
 			// We need to keep references to the bundles we find on the main path
 			// so they don't get garbage collected before we get to propagate().
@@ -158,8 +151,8 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 					}
 				}
 			}
-			
-			if (!foundInMainBranch) {				
+
+			if (!foundInMainBranch) {
 				//we didn't find anything on the main branch, so we do the fallback branch
 				final Vector fallbackNames = calculateBundleNames(baseName,
 						defaultLocale);
@@ -168,10 +161,10 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 					if (names.contains(bundleName)) {
 						continue;
 					}
-					result = loadResource(bundleName, extInfo);					
+					result = loadResource(bundleName, extInfo);
 				}
 			}
-			
+
 			putResourceInCache(baseName, getReloadableResource(extInfo), extInfo);
 		}
 		return getReloadableResource(extInfo);
@@ -180,7 +173,7 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 	private boolean loadResource(String bundleName, Map extInfo) {
 		// Search for class file using class loader
 		final ClassLoader resourceClassLoader = getClassLoader(extInfo);
-		
+
 		// Next search for a Properties file.
 		final String resName = bundleName.replace('.', '/') + getFileExtName(extInfo);
 		URL url= (URL) java.security.AccessController
@@ -266,7 +259,7 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 		}
 
 		Vector names = calculateBundleNames(baseName, resourceLocale);
-		
+
 		for(int i = 0, size = names.size(); i < size; i++) {
 
 			String name = (String) names.get(i);
@@ -278,7 +271,7 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 		}
 
 		names = calculateBundleNames(baseName, defaultLocale);
-		
+
 		for(int i = 0, size = names.size(); i < size; i++) {
 
 			String name = (String) names.get(i);
@@ -489,7 +482,7 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 		}
 		return loader;
 	}
-	
+
 	private String getFileExtName(Map extInfo) {
 		String value = (String) extInfo.get(MAP_FILE_EXT_NAME_KEY);
 		if(value == null) {
@@ -498,7 +491,7 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 		}
 		return value;
 	}
-	
+
 	private ReloadableResource getReloadableResource(Map extInfo) {
 		ReloadableResource resource = (ReloadableResource) extInfo.get(MAP_RELOADABLE_RESOURCE_KEY);
 		if(resource == null) {
@@ -507,12 +500,12 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 		}
 		return resource;
 	}
-	
+
 	private String getEncoding(Map extInfo) {
 		return (String) extInfo.get(MAP_ENCODING_KEY);
 	}
-	
-	
+
+
 	public long getRefreshInterval() {
 		return refreshInterval;
 	}
