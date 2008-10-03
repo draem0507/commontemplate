@@ -136,10 +136,10 @@ public class DocumentGenerator {
 								.addChild(
 										new Menu("menu.uml", "uml.html"))
 								.addChild(
-										new Menu("menu.javadoc", "../javadoc"))
+										new Menu("menu.javadoc", "../javadoc/index.html"))
 								.addChild(
 										new Menu("menu.coverage.report",
-												"../coverage")))
+												"../coverage/index.html")))
 				.addChild(
 						new Menu("menu.community")
 								.addChild(
