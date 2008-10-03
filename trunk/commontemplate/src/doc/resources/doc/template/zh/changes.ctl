@@ -2,56 +2,58 @@
 	<!--$zone{"content"}-->
 $!
 								<b>0.8.7 版本更新：(2008-10-03)</b> <a href="downloads.html">下载...</a><br/>
-								注释语法外套, 增加clearSpaceline属性, 如果指令所在行没有其它内容, 则清除该空白行.<br/>
-								完成热加载国际化信息文件.<br/>
+								<b>问题修复：</b><br/>
 								修复Object.toJson在两对象互相引用时死循环的BUG<br/>
-								增加ExpressionFilter扩展点, 在表达式编译之前过滤表达式字符串.<br/>
-								Web环境中, 表达式增加支持&amp;lt; &amp;gt;等XML转义符, 如: $var{session -&amp;gt; name = "kent"}<br/>
-								拆分Visitor为TemplateVisitor和ExpressionVisitor<br/>
 								修复静态方法不能调用的BUG, 如: ${&com.xxx.Utils.calc(xxx)}<br/>
-								操作符处理器增加isOperandDotNamed()状态设置,用于将点号作为名称处理.<br/>
 								修复$setting指令String到Locale转换的BUG.<br/>
-								UnaryOperatorHandler扩展点增加isKeyword()状态的设置, 如: new操作符, 设为关键字的操作符名不能再作为变量名使用.<br/>
-								将$操符符改为new, 与Java保持一致.<br/>
 								修复"&"和"new"在处理类元和属性上的歧义, 最大匹配类元, 如: ${new com.xxx.User.name} ${&com.xxx.User.PREFIX}<br/>
-								增加String.newInstance扩展属性和String.newInstance(args)方法<br/>
-								is或instanceof操作符的右参字符串引号可省，如：${user is com.xxx.User} 或者 ${user is "com.xxx.User"}<br/>
-								实现ReloadMessageSource, 热加载国际化配置.<br/>
-								$load指令加入指定编码支持. 如: $load{xml: "xxx.ctl", "utf-8"} 或 $load{"xxx.ctl", "utf-8"}<br/>
-								加入标签语法外套支持，如：&lt;ct:if param="users != null && users.size &gt; 0"&gt;...&lt;/cf:if&gt;<br/>
-								使用$output代替原有$out指令，$out指令改为与${}空名称指令等价<br/>
-								调试器Output内容与线程绑定, 可切换显示.<br/>
 								修复调试器在处理层级包含模板时, Step Return不能回到上一模板的BUG.<br/>
-								修复toJson防止循环引用的BUG.<br/>
-								实现PropertiesCodeFilter, 使用如: $code{properties}...$end 或者 $code{ini}...$end<br/>
-								增加扩展属性Object.toXstream, String.fromJson, String.fromXml, String.fromXstream<br/>
-								不再内嵌json和jyaml的源码, 直接依赖json.jar和jyaml.jar<br/>
-								增加$escape{xhtml}和${String.escapeXhtml}, 类似XML, 但"&amp;apos;"改为"&amp;#39;"<br/>
 								修复LruCache在移动Key顺序时出现的空指针异常.<br/>
-								$embed, $include, $display 支持国际化后缀查找, 如: xxx.ctl, 首先查找xxx_zh_CN.ctl, 再查找xxx_zh.ctl, 否则查找xxx.ctl, 配置项: localizedLookup=true 决定否开启此功能.<br/>
 								修复静态函数被编译器优化后缓存了结果的问题，排除对函数的优化.<br/>
 								修复磁盘缓存并发异常, 并忽略乐观并发无锁读取时的异常.<br/>
 								修复ContextImpl.clear()未调用super.clear()的BUG.<br/>
-								支持"*/"通配目录：$include{"*/xxx.ctl"} 在当前目录以上的目录中逐级查找xxx.ctl<br/>
 								修复磁盘缓存无效的BUG.<br/>
-								改为通过配置状态开闭语法外套: commentSyntaxCoatAvailable=true, tagSyntaxCoatAvailable=false, attributeSyntaxCoatAvailable=false<br/>
-								增加与JDK1.6中的javax.script的脚本引擎集成. <a href="javaxscript.html">脚本引擎集成...</a><br/>
-								增加Object[].asList扩展属性, 数组转列表.<br/>
-								增加与JCache的集成适配. <a href="cache.html">缓存集成...</a><br/>
-								将log相应类从standard包移至util包，并增加对Log4J, Avalon, SLF4J, JDKLogging等的集成. <a href="logger.html">日志集成...</a><br/>
 								补全List有，而Array没有的操作符，使Array和List的处理一致，如："~","!~","orderby"等.<br/>
-								引擎分层结构中，将资源加载与缓存划分到TemplateEngine.<br/>
-								增加与Map接口适配的ExpressionContext,方便表达式引擎使用.<br/>
-								修改属性语法外套在处理HTML注释时空指针异常，并重新简化实现属性语法外套.<br/>
-								重新实现this和super语义, 并增加ScopeHandler扩展点.<br/>
 								修复orderby操作符PropertyComparator值覆盖的BUG.<br/>
 								修复${super.super.for}，在$for指令嵌套$if指令时，将$if指令也作为一层super的BUG.<br/>
 								修复${super.super.for}，在$for指令嵌套$if指令时，将$if指令也作为一层super的BUG.<br/>
-								完成TemplateGenerateTask，使用户可以通过ant调用模板解析任务。<a href="generator.html">模板生成器说明...</a><br/>
-								将core包的Resource/ResourceLoader改为Source/SourceLoader，避免与tools.bean包的ResourceLoader歧义.<br/>
-								增加文件夹生成系统菜单，可通过右键菜单将一个目录中的所有模板生成到另一目录。<a href="viewer.html">模板查看器说明...</a><br/>
-								增加staticFunction/staticProperty处理器，区分于systemFunction/systemProperty<br/>
 								修正模板错误指令位置信息(错误指令所在行列均基于1显示)<br/>
+								<b>功能变化：</b><br/>
+								拆分Visitor为TemplateVisitor和ExpressionVisitor<br/>
+								将$操符符改为new, 与Java保持一致.<br/>
+								is或instanceof操作符的右参字符串引号可省，如：${user is com.xxx.User} 或者 ${user is "com.xxx.User"}<br/>
+								使用$output代替原有$out指令，$out指令改为与${}空名称指令等价<br/>
+								调试器Output内容与线程绑定, 可切换显示.<br/>
+								不再内嵌json和jyaml的源码, 直接依赖json.jar和jyaml.jar<br/>
+								改为通过配置状态开闭语法外套: commentSyntaxCoatAvailable=true, tagSyntaxCoatAvailable=false, attributeSyntaxCoatAvailable=false<br/>
+								将log相应类从standard包移至util包，并增加对Log4J, Avalon, SLF4J, JDKLogging等的集成. <a href="logger.html">日志集成...</a><br/>
+								引擎分层结构中，将资源加载与缓存划分到TemplateEngine.<br/>
+								修改属性语法外套在处理HTML注释时空指针异常，并重新简化实现属性语法外套.<br/>
+								重新实现this和super语义, 并增加ScopeHandler扩展点.<br/>
+								将core包的Resource/ResourceLoader改为Source/SourceLoader，避免与tools.bean包的ResourceLoader歧义.<br/>
+								增加staticFunction/staticProperty处理器，区分于systemFunction/systemProperty<br/>
+								<b>新增特性：</b><br/>
+								注释语法外套, 增加clearSpaceline属性, 如果指令所在行没有其它内容, 则清除该空白行.<br/>
+								完成热加载国际化信息文件.<br/>
+								增加ExpressionFilter扩展点, 在表达式编译之前过滤表达式字符串.<br/>
+								Web环境中, 表达式增加支持&amp;lt; &amp;gt;等XML转义符, 如: $var{session -&amp;gt; name = "kent"}<br/>
+								操作符处理器增加isOperandDotNamed()状态设置,用于将点号作为名称处理.<br/>
+								UnaryOperatorHandler扩展点增加isKeyword()状态的设置, 如: new操作符, 设为关键字的操作符名不能再作为变量名使用.<br/>
+								增加String.newInstance扩展属性和String.newInstance(args)方法<br/>
+								实现ReloadMessageSource, 热加载国际化配置.<br/>
+								$load指令加入指定编码支持. 如: $load{xml: "xxx.ctl", "utf-8"} 或 $load{"xxx.ctl", "utf-8"}<br/>
+								加入标签语法外套支持，如：&lt;ct:if param="users != null && users.size &gt; 0"&gt;...&lt;/cf:if&gt;<br/>
+								实现PropertiesCodeFilter, 使用如: $code{properties}...$end 或者 $code{ini}...$end<br/>
+								增加扩展属性Object.toXstream, String.fromJson, String.fromXml, String.fromXstream<br/>
+								增加$escape{xhtml}和${String.escapeXhtml}, 类似XML, 但"&amp;apos;"改为"&amp;#39;"<br/>
+								$embed, $include, $display 支持国际化后缀查找, 如: xxx.ctl, 首先查找xxx_zh_CN.ctl, 再查找xxx_zh.ctl, 否则查找xxx.ctl, 配置项: localizedLookup=true 决定否开启此功能.<br/>
+								支持"*/"通配目录：$include{"*/xxx.ctl"} 在当前目录以上的目录中逐级查找xxx.ctl<br/>
+								增加与JDK1.6中的javax.script的脚本引擎集成. <a href="javaxscript.html">脚本引擎集成...</a><br/>
+								增加Object[].asList扩展属性, 数组转列表.<br/>
+								增加与JCache的集成适配. <a href="cache.html">缓存集成...</a><br/>
+								增加与Map接口适配的ExpressionContext,方便表达式引擎使用.<br/>
+								完成TemplateGenerateTask，使用户可以通过ant调用模板解析任务。<a href="generator.html">模板生成器说明...</a><br/>
+								增加文件夹生成系统菜单，可通过右键菜单将一个目录中的所有模板生成到另一目录。<a href="viewer.html">模板查看器说明...</a><br/>
 								-----------------<br/>
 								感谢吴勇智加入开发插件.<br/>
 								感谢<a href="http://code.google.com/p/jrest4guice">JRest4Guice</a>开发小组的支持.<br/>
