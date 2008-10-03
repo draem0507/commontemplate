@@ -16,7 +16,6 @@ $!
 								补全List有，而Array没有的操作符，使Array和List的处理一致，如："~","!~","orderby"等.<br/>
 								修复orderby操作符PropertyComparator值覆盖的BUG.<br/>
 								修复${super.super.for}，在$for指令嵌套$if指令时，将$if指令也作为一层super的BUG.<br/>
-								修复${super.super.for}，在$for指令嵌套$if指令时，将$if指令也作为一层super的BUG.<br/>
 								修正模板错误指令位置信息(错误指令所在行列均基于1显示)<br/>
 								<b>功能变化：</b><br/>
 								拆分Visitor为TemplateVisitor和ExpressionVisitor<br/>
