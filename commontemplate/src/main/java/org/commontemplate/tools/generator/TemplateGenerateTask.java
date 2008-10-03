@@ -16,7 +16,7 @@ import org.commontemplate.core.Template;
 import org.commontemplate.engine.Engine;
 import org.commontemplate.standard.ConfigurationSettings;
 import org.commontemplate.standard.data.DataProvider;
-import org.commontemplate.standard.loader.FileResourceLoader;
+import org.commontemplate.standard.loader.FileSourceLoader;
 import org.commontemplate.tools.PropertiesConfigurationLoader;
 import org.commontemplate.tools.ant.FileTask;
 import org.commontemplate.tools.bean.BeanFactory;
@@ -218,7 +218,7 @@ public class TemplateGenerateTask extends FileTask {
 			beanFactory = new PropertiesBeanFactory(configfile, PropertiesConfigurationLoader.STANDARD_CONFIG_PATH, new FileClassResourceLoader());
 		dataProviders = (Map)beanFactory.getBean("dataProviders");
 		ConfigurationSettings settings = PropertiesConfigurationLoader.loadConfiguration(beanFactory);
-		FileResourceLoader fileResourceLoader = new FileResourceLoader();
+		FileSourceLoader fileResourceLoader = new FileSourceLoader();
 		fileResourceLoader.setRootDirectory(srcdirFile.getAbsolutePath());
 		settings.setSourceLoader(fileResourceLoader);
 		engine = new Engine(settings);

@@ -19,7 +19,7 @@ import org.commontemplate.util.I18nExceptionFactory;
  * @author liangfei0201@163.com
  *
  */
-public class DataSourceResourceLoader extends AbstractSourceLoader {
+public class DataSourceLoader extends AbstractSourceLoader {
 
 	private DataSource dataSource;
 
@@ -75,7 +75,7 @@ public class DataSourceResourceLoader extends AbstractSourceLoader {
 				 Timestamp ts = rs.getTimestamp(lastModifiedColumn);
                  long timeStamp = ts != null ? ts.getTime() : 0;
                  Reader reader =  rs.getCharacterStream(bodyColumn);
-                 return new DataSourceResource(reader, timeStamp, name, encoding);
+                 return new ReaderSource(reader, timeStamp, name, encoding);
 			}
 			return null;
 		} finally {

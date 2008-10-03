@@ -13,13 +13,13 @@ import org.commontemplate.util.Assert;
  * @author liangfei0201@163.com
  *
  */
-public class FileResource extends AbstractSource {
+public class FileSource extends AbstractSource {
 
 	private static final long serialVersionUID = 1L;
 
 	private final File file;
 
-	public FileResource(File file, String name, String encoding) {
+	public FileSource(File file, String name, String encoding) {
 		super(name, encoding);
 		Assert.assertNotNull(file, "FileResource.file.required");
 		this.file = file;

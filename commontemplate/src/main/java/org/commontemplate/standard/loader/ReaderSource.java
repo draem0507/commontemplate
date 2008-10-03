@@ -12,7 +12,7 @@ import org.commontemplate.util.Assert;
  * @author liangfei0201@163.com
  *
  */
-public class DataSourceResource extends Source {
+public class ReaderSource extends Source {
 
 	private static final long serialVersionUID = 1L;
 
@@ -24,7 +24,7 @@ public class DataSourceResource extends Source {
 
 	private final String encoding;
 
-	public DataSourceResource(Reader reader, long lastModified, String name, String encoding) {
+	public ReaderSource(Reader reader, long lastModified, String name, String encoding) {
 		Assert.assertNotNull(reader, "DataSourceResource.resource.reader.required");
 		this.reader = reader;
 		this.lastModified = lastModified;

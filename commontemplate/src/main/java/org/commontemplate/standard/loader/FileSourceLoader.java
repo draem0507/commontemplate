@@ -11,11 +11,11 @@ import org.commontemplate.core.Source;
  * @author liangfei0201@163.com
  *
  */
-public class FileResourceLoader extends AbstractSourceLoader {
+public class FileSourceLoader extends AbstractSourceLoader {
 
 	public Source loadResource(String path, String name, String encoding)
 			throws IOException {
-		return new FileResource(new File(path), name, encoding);
+		return new FileSource(new File(path), name, encoding);
 	}
 
 }

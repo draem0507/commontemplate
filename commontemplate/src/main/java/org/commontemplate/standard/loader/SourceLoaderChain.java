@@ -17,7 +17,7 @@ import org.commontemplate.util.I18nExceptionFactory;
  * @author liangfei0201@163.com
  *
  */
-public class ResourceLoaderChain implements SourceLoader {
+public class SourceLoaderChain implements SourceLoader {
 
 	private List resourceLoaders;
 

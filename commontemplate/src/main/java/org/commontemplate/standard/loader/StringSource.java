@@ -13,7 +13,7 @@ import org.commontemplate.util.Assert;
  * @author liangfei0201@163.com
  *
  */
-public class StringResource extends Source implements java.io.Serializable {
+public class StringSource extends Source implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -25,7 +25,7 @@ public class StringResource extends Source implements java.io.Serializable {
 
 	private static final String STRING_ENCODING = "UTF-8";
 
-	public StringResource(String name, String source) {
+	public StringSource(String name, String source) {
 		Assert.assertNotNull(source, "StringResource.template.source.required");
 		this.source = source;
 		this.name = name;
