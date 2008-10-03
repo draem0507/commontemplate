@@ -1,5 +1,6 @@
 package concurrent;
 
+import integration.ModelProvider;
 import integration.TestEngineProvider;
 
 import org.commontemplate.engine.Engine;
@@ -10,6 +11,7 @@ public class ConcurrentTester {
 
 	public ConcurrentTester() {
 		this.engine = TestEngineProvider.getTestEngine();
+		engine.getGlobalContext().putAll(ModelProvider.getGlobalModel());
 	}
 
 	public void testConcurrent() throws Exception {
