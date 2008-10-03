@@ -126,7 +126,6 @@ public class DiskSerialCache extends Cache {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
 			return ois.readObject();
 		} catch (Exception e) { // 读取对象流失败, 忽略, 不影响运行
-			e.printStackTrace();
 			return null;
 		}
 	}
