@@ -93,6 +93,7 @@ final class BinaryOperatorImpl extends BinaryOperator {
 				right = getRightOperand().evaluate(context);
 			return handler.doEvaluate(left, right);
 		} catch (EvaluationException e) {
+			e.setRootExpression(this);
 			throw e;
 		} catch (Exception e) {
 			throw new EvaluationException(this, e);

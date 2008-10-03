@@ -71,7 +71,7 @@ final class TemplateBudilerImpl implements TemplateBudiler {
 	public Template getTemplate() {
 		RootBlockDirectiveImpl rootBlockDirective = directiveReducer.reduce(elements);
 		try {
-			return new TemplateImpl(new ResourceImpl("", templateName, templateEncoding, templateLastModified), rootBlockDirective, renderInterceptors);
+			return new TemplateImpl(new SourceImpl("", templateName, templateEncoding, templateLastModified), rootBlockDirective, renderInterceptors);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}

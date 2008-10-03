@@ -39,7 +39,7 @@ class TemplateParserImpl implements TemplateParser {
 
 	private final DirectiveReducer directiveReducer;
 
-	private final SourceFilter resourceFilter;
+	private final SourceFilter sourceFilter;
 
 	private final TemplateFactory elementFactory;
 
@@ -60,7 +60,7 @@ class TemplateParserImpl implements TemplateParser {
 				syntax, directiveHandlerProvider,
 				expressionParser, textFilter, renderInterceptors));
 		directiveReducer = new DirectiveReducer();
-		this.resourceFilter = resourceFilter;
+		this.sourceFilter = resourceFilter;
 		elementFactory = new TemplateFactoryImpl(directiveHandlerProvider, renderInterceptors);
 	}
 
@@ -78,12 +78,7 @@ class TemplateParserImpl implements TemplateParser {
 	}
 
 	public final Expression parseExpression(String text) throws ParsingException {
-		try {
-			return expressionParser.parseExpression(text);
-		} catch (ParsingException e) {
-			e.setResource(new ResourceImpl(text));
-			throw e;
-		}
+		return expressionParser.parseExpression(text);
 	}
 
 	public final Template parseTemplate(Source resource)
@@ -91,25 +86,25 @@ class TemplateParserImpl implements TemplateParser {
 		try {
 			return new TemplateImpl(getReader(resource), resource, parseDirective(getReader(resource)), renderInterceptors);
 		} catch (ParsingException e) {
-			e.setResource(resource);
+			e.setSource(resource);
 			throw e;
 		}
 	}
 
 	private final Reader getReader(Source resource) throws IOException {
 		Reader reader = resource.getReader();
-		if (resourceFilter != null)
-			reader = resourceFilter.filter(reader);
+		if (sourceFilter != null)
+			reader = sourceFilter.filter(reader);
 		return reader;
 	}
 
 	public final Template parseTemplate(String template) throws ParsingException {
 		Assert.assertNotNull(template, "TemplateEngine.template.name.required");
-		Source resource = new ResourceImpl(template);
+		Source resource = new SourceImpl(template);
 		try {
 			return parseTemplate(resource);
 		} catch (IOException e) { // 因为是字符串模板，一般不会出现IOException
-			throw new RuntimeException(e);
+			throw new RuntimeException(e.getMessage(), e);
 		}
 	}
 

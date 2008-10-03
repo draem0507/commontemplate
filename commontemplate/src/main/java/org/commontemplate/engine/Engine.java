@@ -113,9 +113,9 @@ public class Engine extends Factory {
 		return templateLoader.parseTemplate(template);
 	}
 
-	public Template parseTemplate(Source resource)
+	public Template parseTemplate(Source source)
 			throws ParsingException, IOException {
-		return templateLoader.parseTemplate(resource);
+		return templateLoader.parseTemplate(source);
 	}
 
 	public BlockDirective createBlockDirective(String name,

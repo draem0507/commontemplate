@@ -13,8 +13,7 @@ public class MaxOperatorHandler extends NumbersUnaryOperatorHandlerSupport {
 		super();
 	}
 
-	public Object doEvaluate(Object operand) throws Exception {
-		Collection numbers = (Collection)operand;
+	public Object doEvaluateNumbers(Collection numbers) throws Exception {
 		if (numbers instanceof IntegerSequence) {
 			IntegerSequence seq = (IntegerSequence)numbers;
 			return new Integer(seq.getMax());

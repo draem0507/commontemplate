@@ -136,9 +136,9 @@ public class TemplateEngine implements TemplateLoader {
 		return templateLoader.parseExpression(expression);
 	}
 
-	public Template parseTemplate(Source resource) throws ParsingException,
+	public Template parseTemplate(Source source) throws ParsingException,
 			IOException {
-		return templateLoader.parseTemplate(resource);
+		return templateLoader.parseTemplate(source);
 	}
 
 	public Template parseTemplate(String template) throws ParsingException {

@@ -13,8 +13,7 @@ public class AvgOperatorHandler extends NumbersUnaryOperatorHandlerSupport {
 		super();
 	}
 
-	public Object doEvaluate(Object operand) throws Exception {
-		Collection numbers = (Collection)operand;
+	public Object doEvaluateNumbers(Collection numbers) throws Exception {
 		if (numbers.size() == 0)
 			return new Integer(0);
 		if (numbers instanceof IntegerSequence) {

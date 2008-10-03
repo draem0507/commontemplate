@@ -1,4 +1,4 @@
-package org.commontemplate.engine.template;
+package org.commontemplate.engine.expression;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -12,7 +12,7 @@ import org.commontemplate.core.Source;
  * @author liangfei0201@163.com
  *
  */
-final class ResourceImpl extends Source implements java.io.Serializable {
+final class SourceImpl extends Source implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -26,19 +26,19 @@ final class ResourceImpl extends Source implements java.io.Serializable {
 
 	private final long templateLastModified;
 
-	ResourceImpl(String template) {
+	SourceImpl(String template) {
 		this(template, null, null, -1);
 	}
 
-	ResourceImpl(String template, String templateName) {
+	SourceImpl(String template, String templateName) {
 		this(template, templateName, null, -1);
 	}
 
-	ResourceImpl(String template, String templateName, String templateEncoding) {
+	SourceImpl(String template, String templateName, String templateEncoding) {
 		this(template, templateName, templateEncoding, -1);
 	}
 
-	ResourceImpl(String template, String templateName, String templateEncoding, long templateLastModified) {
+	SourceImpl(String template, String templateName, String templateEncoding, long templateLastModified) {
 		this.template = (template == null ? "" : template);
 		this.templateName = (templateName == null ? "" : templateName);
 		this.templateEncoding = (templateEncoding == null ? DEFAULT_ENCODING : templateEncoding);

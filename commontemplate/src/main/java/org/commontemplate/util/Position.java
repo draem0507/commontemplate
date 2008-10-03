@@ -66,6 +66,10 @@ public final class Position implements Serializable {
 		return new Position(this.index + pos.index, this.line + pos.line, this.column + pos.column);
 	}
 
+	public Position offsetColumn(int column) {
+		return new Position(this.index + column, this.line, this.column + column);
+	}
+
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;

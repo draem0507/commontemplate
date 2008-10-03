@@ -48,10 +48,48 @@ public class ParsingException extends I18nRuntimeException {
 		this.location = location;
 	}
 
-	private Source resource;
+	public ParsingException(Source source, Location location) {
+		super();
+		this.source = source;
+		this.location = location;
+	}
 
-	public void setResource(Source resource) {
-		this.resource = resource;
+	public ParsingException(Source source, Location location,
+			String message) {
+		super(message);
+		this.source = source;
+		this.location = location;
+	}
+
+	public ParsingException(Source source, Location location,
+			Throwable cause) {
+		super(cause.getMessage(), cause);
+		this.source = source;
+		this.location = location;
+	}
+
+	public ParsingException(Source source, Location location, String messageKey, Object[] messageArgs) {
+		super(messageKey, messageArgs);
+		this.source = source;
+		this.location = location;
+	}
+
+	public ParsingException(Source source, Location location, String messageKey, Object[] messageArgs, Throwable cause) {
+		super(messageKey, messageArgs, cause);
+		this.source = source;
+		this.location = location;
+	}
+
+	public ParsingException(Source source, Location location, String message, Throwable cause) {
+		super(message, cause);
+		this.source = source;
+		this.location = location;
+	}
+
+	private Source source;
+
+	public void setSource(Source source) {
+		this.source = source;
 	}
 
 	/**
@@ -59,8 +97,8 @@ public class ParsingException extends I18nRuntimeException {
 	 *
 	 * @return 出错解析源
 	 */
-	public Source getResource() {
-		return resource;
+	public Source getSource() {
+		return source;
 	}
 
 	private Location location;
@@ -77,27 +115,29 @@ public class ParsingException extends I18nRuntimeException {
 	public void printStackTrace(PrintStream s) {
 		// printStackTrace(new PrintWriter(new OutputStreamWriter(s)));
 		s.println();
-		if (resource != null)
-			s.println("[commontemplate] Error occur to Template: " + resource.getName());
+		if (source != null)
+			s.println("[commontemplate] Error occur to Template: " + source.getName());
 		if (location != null)
 			s.println("[commontemplate] Error occur to Location: " + location);
-		if (resource != null && location != null) {
-			s.println("[commontemplate] Error occur to Block: " + resource.getSource(location));
+		if (source != null && location != null) {
+			s.println("[commontemplate] Error occur to Block: " + source.getSource(location));
 		}
 		s.println("[commontemplate] Error Message: " + getMessage());
+		s.println("[commontemplate] Error Stack: ");
 		super.printStackTrace(s);
 	}
 
 	public void printStackTrace(PrintWriter s) {
 		s.println();
-		if (resource != null)
-			s.println("[commontemplate] Error occur to Template: " + resource.getName());
+		if (source != null)
+			s.println("[commontemplate] Error occur to Template: " + source.getName());
 		if (location != null)
 			s.println("[commontemplate] Error occur to Location: " + location);
-		if (resource != null && location != null) {
-			s.println("[commontemplate] Error occur to Block: " + resource.getSource(location));
+		if (source != null && location != null) {
+			s.println("[commontemplate] Error occur to Block: " + source.getSource(location));
 		}
 		s.println("[commontemplate] Error Message: " + getMessage());
+		s.println("[commontemplate] Error Stack: ");
 		super.printStackTrace(s);
 	}
 

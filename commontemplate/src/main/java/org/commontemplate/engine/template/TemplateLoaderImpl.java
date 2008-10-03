@@ -41,33 +41,33 @@ final class TemplateLoaderImpl implements TemplateLoader {
 	 * 构造模板工厂
 	 *
 	 * @param templateParser 模板指令解释器
-	 * @param resourceLoader 模板加载器
+	 * @param sourceLoader 模板加载器
 	 * @param cache 模板缓存策略
 	 * @param persistentCahce 模板持久化缓存策略
 	 * @param reloadController 热加载控制器
-	 * @param resourceComparator 模板源比较器
+	 * @param sourceComparator 模板源比较器
 	 *
 	 */
-	TemplateLoaderImpl(TemplateParser templateParser, SourceLoader resourceLoader,
+	TemplateLoaderImpl(TemplateParser templateParser, SourceLoader sourceLoader,
 			Cache cache, Cache persistentCahce, ReloadController reloadController,
-			SourceComparator resourceComparator) {
-		Assert.assertNotNull(resourceLoader, "TemplateFactoryImpl.resource.loader.required");
+			SourceComparator sourceComparator) {
+		Assert.assertNotNull(sourceLoader, "TemplateFactoryImpl.resource.loader.required");
 		Assert.assertNotNull(templateParser, "TemplateFactoryImpl.template.parser.required");
 
-		this.resourceLoader = resourceLoader;
+		this.sourceLoader = sourceLoader;
 
 		this.templateParser = templateParser;
 		this.cache = cache;
 		this.persistentCahce = persistentCahce;
 		this.reloadController = reloadController;
-		this.resourceComparator = resourceComparator;
+		this.sourceComparator = sourceComparator;
 	}
 
 	// 缓存同步 -------
 
 	private final ReloadController reloadController;
 
-	private final SourceComparator resourceComparator;
+	private final SourceComparator sourceComparator;
 
 	private final Cache cache;
 
@@ -106,8 +106,8 @@ final class TemplateLoaderImpl implements TemplateLoader {
 				if (reloadController != null
 						&& reloadController.shouldReload(template.getName())) { // 是否需要检查热加载
 					Source resource = loadResource(name, locale, encoding);
-					if (resourceComparator != null
-							&& resourceComparator.isModified(template, resource)) { // 比较是否已更改
+					if (sourceComparator != null
+							&& sourceComparator.isModified(template, resource)) { // 比较是否已更改
 						template = parseTemplate(resource); // 热加载
 						if (persistentCahce != null) {
 							synchronized(persistentCahce) {
@@ -141,7 +141,7 @@ final class TemplateLoaderImpl implements TemplateLoader {
 
 	// 加载资源 --------
 
-	private final SourceLoader resourceLoader;
+	private final SourceLoader sourceLoader;
 
 	// 注：返回的Resource中的getName()并不一定等于传入的name参数。
 	private Source loadResource(String name, Locale locale, String encoding) throws IOException {
@@ -183,7 +183,7 @@ final class TemplateLoaderImpl implements TemplateLoader {
 	// 代理TemplateLoader -------
 
 	public Source getSource(String name) throws IOException {
-		Source resource = resourceLoader.getSource(cleanName(name));
+		Source resource = sourceLoader.getSource(cleanName(name));
 		if (resource == null)
 			throw new IOException("Not found resource: " + name);
 		return resource;
@@ -191,14 +191,14 @@ final class TemplateLoaderImpl implements TemplateLoader {
 
 	public Source getSource(String name, String encoding)
 			throws IOException {
-		Source resource = resourceLoader.getSource(cleanName(name), encoding);
+		Source resource = sourceLoader.getSource(cleanName(name), encoding);
 		if (resource == null)
 			throw new IOException("Not found resource: " + name);
 		return resource;
 	}
 
 	public Source getSource(String name, Locale locale) throws IOException {
-		Source resource = resourceLoader.getSource(cleanName(name), locale);
+		Source resource = sourceLoader.getSource(cleanName(name), locale);
 		if (resource == null)
 			throw new IOException("Not found resource: " + name);
 		return resource;
@@ -206,7 +206,7 @@ final class TemplateLoaderImpl implements TemplateLoader {
 
 	public Source getSource(String name, Locale locale, String encoding)
 			throws IOException {
-		Source resource = resourceLoader.getSource(cleanName(name), locale, encoding);
+		Source resource = sourceLoader.getSource(cleanName(name), locale, encoding);
 		if (resource == null)
 			throw new IOException("Not found resource: " + name);
 		return resource;

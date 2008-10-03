@@ -1,12 +1,13 @@
 package integration;
 
+import org.commontemplate.core.Expression;
 
 public class Test {
 
 	public static void main(String[] args) {
 		try {
-			String str = "aa\naa\n\n";
-			System.out.println(str.lastIndexOf('\n', str.length() - 1));
+			Expression expression = TestEngineProvider.getTestEngine().parseExpression("'x' & 2 * 4");
+			expression.evaluate(null);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

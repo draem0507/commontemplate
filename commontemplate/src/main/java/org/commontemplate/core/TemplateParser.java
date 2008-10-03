@@ -13,7 +13,7 @@ public interface TemplateParser extends ExpressionParser, TemplateFactory {
 	/**
 	 * 将模板源解析为模板
 	 *
-	 * @param resource
+	 * @param source
 	 *            模板源
 	 * @return 模板，后验条件不返回null
 	 * @throws ParsingException
@@ -21,7 +21,7 @@ public interface TemplateParser extends ExpressionParser, TemplateFactory {
 	 * @throws IOException
 	 *             模板不存在或读取失败时抛出
 	 */
-	public Template parseTemplate(Source resource) throws ParsingException, IOException;
+	public Template parseTemplate(Source source) throws ParsingException, IOException;
 
 	/**
 	 * 将字符串解析为匿名模板

@@ -42,17 +42,17 @@ final class TemplateImpl extends Template implements Serializable {
 
 	private final Template proxy;
 
-	TemplateImpl(Source resource, RootBlockDirectiveImpl rootDirective, List renderInterceptors) throws IOException {
-		this(resource == null ? null : resource.getReader(), resource, rootDirective, renderInterceptors);
+	TemplateImpl(Source source, RootBlockDirectiveImpl rootDirective, List renderInterceptors) throws IOException {
+		this(source == null ? null : source.getReader(), source, rootDirective, renderInterceptors);
 	}
 
-	TemplateImpl(Reader reader, Source resource, RootBlockDirectiveImpl rootDirective, List renderInterceptors) throws IOException {
-		Assert.assertNotNull(resource, "TemplateImpl.resource.required");
+	TemplateImpl(Reader reader, Source source, RootBlockDirectiveImpl rootDirective, List renderInterceptors) throws IOException {
+		Assert.assertNotNull(source, "TemplateImpl.resource.required");
 		Assert.assertNotNull(rootDirective, "TemplateImpl.elements.required");
 
-		this.name = resource.getName();
-		this.encoding = resource.getEncoding();
-		this.lastModified = resource.getLastModified();
+		this.name = source.getName();
+		this.encoding = source.getEncoding();
+		this.lastModified = source.getLastModified();
 		this.data = IOUtils.readToChars(reader);
 		this.rootDirective = rootDirective;
 		this.rootDirective.setTemplate(this);

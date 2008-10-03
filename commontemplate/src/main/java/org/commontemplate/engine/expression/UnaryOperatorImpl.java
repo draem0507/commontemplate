@@ -73,6 +73,7 @@ final class UnaryOperatorImpl extends UnaryOperator {
 				operand = getOperand().evaluate(context);
 			return handler.doEvaluate(operand);
 		} catch (EvaluationException e) {
+			e.setRootExpression(this);
 			throw e;
 		} catch (Exception e) {
 			throw new EvaluationException(this, e);
