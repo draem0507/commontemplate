@@ -14,8 +14,8 @@ public class SourceFilterChain implements SourceFilter, Serializable {
 	private List sourceFilters;
 
 	public void setSourceFilters(List sourceFilters) {
-		if (sourceFilters != null)
-			sourceFilters.addAll(sourceFilters);
+		if (this.sourceFilters != null)
+			this.sourceFilters.addAll(sourceFilters);
 		else
 			this.sourceFilters = sourceFilters;
 	}
@@ -24,8 +24,8 @@ public class SourceFilterChain implements SourceFilter, Serializable {
 	 * @deprecated 兼容函数，建议使用setSourceFilters
 	 */
 	public void setResourceFilters(List sourceFilters) {
-		if (sourceFilters != null)
-			sourceFilters.addAll(sourceFilters);
+		if (this.sourceFilters != null)
+			this.sourceFilters.addAll(sourceFilters);
 		else
 			this.sourceFilters = sourceFilters;
 	}
