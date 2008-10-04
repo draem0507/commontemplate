@@ -1,6 +1,9 @@
 package org.commontemplate.standard.i18n;
 
+import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -23,6 +26,7 @@ public class StrandardReloadResourceProviderTester extends TestCase {
 	private static final String OLD_CONTENT = "old_content"; 
 	private static final String NEW_CONTENT_1 = "new_content_1";
 	private static final String NEW_CONTENT_2 = "new_content_2";
+	private static final String NEW_CONTENT_3 = "UTF-8编码的内容3";
 	
 	private static final String ROOT_PROPERTY_FILE = "integration/i18n/StrandardReloadResourceProviderTester.properties";
 	private static final String ZH_PROPERTY_FILE = "integration/i18n/StrandardReloadResourceProviderTester_zh.properties";
@@ -150,16 +154,32 @@ public class StrandardReloadResourceProviderTester extends TestCase {
 		Thread.sleep(((StandardReloadableResourceProvider) resourceProvider).getRefreshInterval() + EXT_WAIT_TIMES + 2000);
 		assertEquals(NEW_CONTENT_2, resourceProvider.getObject(BASE_NAME, locale, KEY2, extInfoMap));
 	}
+	
+	public void testReloadPropertiesWithEncoding() throws Exception {
+		
+		// 父properties
+		createResourceFile(ROOT_PROPERTY_FILE, KEY2, OLD_CONTENT);
+		
+		// 设置编码格式为 utf-8
+		extInfoMap.put(StandardReloadableResourceProvider.MAP_ENCODING_KEY, "UTF-8");
+		
+		assertEquals(OLD_CONTENT, resourceProvider.getObject(BASE_NAME, locale, KEY2, extInfoMap));
+		
+		// 修改父properties
+		createResourceFile(ROOT_PROPERTY_FILE, KEY2, NEW_CONTENT_3);
+		Thread.sleep(((StandardReloadableResourceProvider) resourceProvider).getRefreshInterval() + EXT_WAIT_TIMES + 2000);
+		assertEquals(NEW_CONTENT_3, resourceProvider.getObject(BASE_NAME, locale, KEY2, extInfoMap));
+	}
 		
 	private void createResourceFile(String fileName, String key, String content) throws Exception {
-		FileWriter file = null;
-		
+		OutputStreamWriter os = new OutputStreamWriter(
+				new FileOutputStream(StrandardReloadResourceProviderTester.class.getClassLoader().getResource(fileName).getFile()), 
+				"UTF-8");
 		try {
-			file = new FileWriter(StrandardReloadResourceProviderTester.class.getClassLoader().getResource(fileName).getFile());
-			file.write(key + "=" + content); 
+			os.write(key + "=" + content);
 		} finally {
-			if(file != null) {
-				file.close();
+			if(os != null) {
+				os.close();
 			}
 		}
 	}

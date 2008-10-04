@@ -6,7 +6,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
+
+import org.commontemplate.util.ExProperties;
+
+import com.opensymphony.oscache.util.StringUtil;
 
 public class ReloadablePropertyResource implements ReloadableResource {
 	
@@ -18,14 +21,18 @@ public class ReloadablePropertyResource implements ReloadableResource {
 	}
 
 	public void loadFromURL(URL url, String encoding) throws IOException{
-		// 如果 encoding 为空，那么就使用默认的编码。
 		
-		Properties properties = new Properties();
-		properties.load(new FileInputStream(new File(url.getFile())));
+		ExProperties exProperties = new ExProperties();
+		if(StringUtil.isEmpty(encoding)) {
+			// 如果 encoding 为空，那么就使用默认的编码。
+			exProperties.load(new FileInputStream(new File(url.getFile())));
+		} else {
+			exProperties.load(new FileInputStream(new File(url.getFile())), encoding);
+		}
 		if(map == null) {
-			map = new HashMap(properties);
+			map = new HashMap(exProperties);
 		}else{
-			map.putAll(new HashMap(properties));
+			map.putAll(new HashMap(exProperties));
 		}
 	}
 
