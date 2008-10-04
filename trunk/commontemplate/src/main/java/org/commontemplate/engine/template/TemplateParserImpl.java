@@ -81,18 +81,18 @@ class TemplateParserImpl implements TemplateParser {
 		return expressionParser.parseExpression(text);
 	}
 
-	public final Template parseTemplate(Source resource)
+	public final Template parseTemplate(Source source)
 			throws ParsingException, IOException {
 		try {
-			return new TemplateImpl(getReader(resource), resource, parseDirective(getReader(resource)), renderInterceptors);
+			return new TemplateImpl(getReader(source), source, parseDirective(getReader(source)), renderInterceptors);
 		} catch (ParsingException e) {
-			e.setSource(resource);
+			e.setSource(source);
 			throw e;
 		}
 	}
 
-	private final Reader getReader(Source resource) throws IOException {
-		Reader reader = resource.getReader();
+	private final Reader getReader(Source source) throws IOException {
+		Reader reader = source.getReader();
 		if (sourceFilter != null)
 			reader = sourceFilter.filter(reader);
 		return reader;
