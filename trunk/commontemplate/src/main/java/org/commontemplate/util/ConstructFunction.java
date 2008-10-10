@@ -10,6 +10,7 @@ public class ConstructFunction extends Function {
 
 	public ConstructFunction(Class clazz, Object argument) {
 		super(clazz == null ? null : clazz.getName(), argument);
+		this.clazz = clazz;
 	}
 
 	private Class clazz;

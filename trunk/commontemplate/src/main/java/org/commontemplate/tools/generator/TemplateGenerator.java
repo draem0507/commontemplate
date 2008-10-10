@@ -19,7 +19,6 @@ import org.commontemplate.tools.PropertiesConfigurationLoader;
 import org.commontemplate.tools.bean.BeanFactory;
 import org.commontemplate.tools.bean.FileClassResourceLoader;
 import org.commontemplate.tools.bean.PropertiesBeanFactory;
-import org.commontemplate.tools.viewer.TemplateFileFilter;
 import org.commontemplate.util.UrlUtils;
 
 public class TemplateGenerator {
