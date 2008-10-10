@@ -1,6 +1,10 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
 	<!--$zone{"content"}-->
 $!
+								<b>0.8.7 sp1 补丁版本更新：(2008-10-10)</b> <a href="downloads.html">下载...</a><br/>
+								<b>问题修复：</b><br/>
+								修复属性语法外套attributeSyntaxCoatAvailable设置无效的BUG. 此BUG导致引擎启用了jericho-html-2.5.jar, 没有此jar包的应用将报错.<br/>
+								<br/>
 								<b>0.8.7 版本更新：(2008-10-03)</b> <a href="downloads.html">下载...</a><br/>
 								<b>问题修复：</b><br/>
 								修复Object.toJson在两对象互相引用时死循环的BUG<br/>
