@@ -15,7 +15,7 @@ import java.util.Properties;
  * @since 2008-8-7
  * @see Properties
  */
-public class ExProperties extends Properties {
+public class EncodingProperties extends Properties {
 
 	/**
 	 * 
@@ -25,7 +25,7 @@ public class ExProperties extends Properties {
 	/**
 	 * Creates an empty property list with no default values.
 	 */
-	public ExProperties() {
+	public EncodingProperties() {
 		super();
 	}
 	

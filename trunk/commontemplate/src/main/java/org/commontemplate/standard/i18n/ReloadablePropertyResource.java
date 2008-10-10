@@ -7,7 +7,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.commontemplate.util.ExProperties;
+import org.commontemplate.util.EncodingProperties;
 
 import com.opensymphony.oscache.util.StringUtil;
 
@@ -22,7 +22,7 @@ public class ReloadablePropertyResource implements ReloadableResource {
 
 	public void loadFromURL(URL url, String encoding) throws IOException{
 		
-		ExProperties exProperties = new ExProperties();
+		EncodingProperties exProperties = new EncodingProperties();
 		if(StringUtil.isEmpty(encoding)) {
 			// 如果 encoding 为空，那么就使用默认的编码。
 			exProperties.load(new FileInputStream(new File(url.getFile())));
