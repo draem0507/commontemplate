@@ -8,6 +8,8 @@ package org.commontemplate.util;
  */
 public class ConstructFunction extends Function {
 
+	private static final long serialVersionUID = 1L;
+
 	public ConstructFunction(Class clazz, Object argument) {
 		super(clazz == null ? null : clazz.getName(), argument);
 		this.clazz = clazz;
