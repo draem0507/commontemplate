@@ -82,6 +82,8 @@ public class AttributeSyntaxCoatFilter implements SourceFilter, Serializable {
 	}
 
 	public Reader filter(Reader reader) throws IOException {
+		if (! attributeSyntaxCoatAvailable)
+			return reader;
 		return new StringReader(new JerichoFilter(namespace, syntax, directiveHandlerProvider).filter(reader));
 	}
 
