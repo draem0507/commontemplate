@@ -10,6 +10,8 @@ import org.commontemplate.util.Assert;
 
 public abstract class AbstractSource extends Source implements java.io.Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private final String name;
 
 	private final String encoding;

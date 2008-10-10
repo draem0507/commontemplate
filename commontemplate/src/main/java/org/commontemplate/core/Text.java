@@ -10,6 +10,8 @@ import java.io.IOException;
  */
 public abstract class Text extends Content {
 
+	private static final long serialVersionUID = 1L;
+	
 	// 语义的默认实现
 	public void render(Context context) throws RenderingException {
 		try {

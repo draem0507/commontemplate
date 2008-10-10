@@ -10,6 +10,8 @@ import org.commontemplate.config.BinaryOperatorHandler;
  */
 public abstract class BinaryOperatorHandlerMatcher extends BinaryOperatorHandler {
 
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * 判断操作符是否匹配操作数
 	 *

@@ -11,6 +11,8 @@ import java.util.List;
  */
 public abstract class ExpressionConfiguration implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * 获取表达式关键字配置
 	 *

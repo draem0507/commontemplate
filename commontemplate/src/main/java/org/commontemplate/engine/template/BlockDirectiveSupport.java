@@ -15,6 +15,8 @@ import org.commontemplate.core.TemplateVisitor;
  */
 abstract class BlockDirectiveSupport extends BlockDirective implements java.io.Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private List elements;
 
 	public List getElements() {

@@ -10,6 +10,8 @@ import java.util.List;
  */
 public abstract class Operator extends Expression {
 
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * 获取操作数列表
 	 * 

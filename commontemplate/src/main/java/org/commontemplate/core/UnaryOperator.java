@@ -8,6 +8,8 @@ package org.commontemplate.core;
  */
 public abstract class UnaryOperator extends Operator {
 
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * 获取参数
 	 *

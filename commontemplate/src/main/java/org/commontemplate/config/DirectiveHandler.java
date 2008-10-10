@@ -13,6 +13,8 @@ import org.commontemplate.core.Directive;
  */
 public abstract class DirectiveHandler implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * 行指令渲染处理
 	 *

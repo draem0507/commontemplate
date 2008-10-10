@@ -10,6 +10,8 @@ import java.io.Serializable;
  */
 public abstract class UnaryOperatorHandler implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * 处理一元操作符求值
 	 *

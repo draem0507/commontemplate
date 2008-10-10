@@ -6,6 +6,8 @@ import org.commontemplate.core.Directive;
 
 public abstract class DirectiveHandlerSupport extends DirectiveHandler {
 
+	private static final long serialVersionUID = 1L;
+	
 	public void doRender(Context context, Directive directive) throws Exception {
 		doRender(context, directive.getName(),
 				directive.getExpression() == null

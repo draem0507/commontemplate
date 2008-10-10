@@ -13,6 +13,8 @@ import java.util.Set;
  */
 public abstract class BaseContext implements Map, VariableStorage, StatusStorage, PropertyStorage, Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * 清空上下文, 此动作将清空该上下文持有的所有数据.
 	 */

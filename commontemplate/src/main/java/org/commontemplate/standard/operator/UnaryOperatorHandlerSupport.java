@@ -8,6 +8,8 @@ package org.commontemplate.standard.operator;
  */
 public abstract class UnaryOperatorHandlerSupport extends UnaryOperatorHandlerMatcher {
 
+	private static final long serialVersionUID = 1L;
+	
 	private Class[] operandClass;
 
 	private boolean operandNullable;

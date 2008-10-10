@@ -8,6 +8,8 @@ package org.commontemplate.core;
  */
 public abstract class Variable extends Parameter {
 
+	private static final long serialVersionUID = 1L;
+	
 	// 语义的默认实现
 	public Object evaluate(VariableResolver context) throws EvaluationException {
 		try {

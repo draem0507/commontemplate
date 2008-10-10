@@ -8,4 +8,6 @@ package org.commontemplate.core;
  */
 public abstract class Parameter extends Expression {
 
+	private static final long serialVersionUID = 1L;
+	
 }

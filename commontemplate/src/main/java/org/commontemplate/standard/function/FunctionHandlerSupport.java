@@ -7,6 +7,8 @@ import org.commontemplate.util.ArgumentUtils;
 
 public abstract class FunctionHandlerSupport implements FunctionHandler, Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	public Object doFunction(Object bean, Object argument) throws Exception {
 		return doFunction(bean, ArgumentUtils.getArgumentList(argument));
 	}

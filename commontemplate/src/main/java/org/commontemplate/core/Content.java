@@ -8,6 +8,8 @@ package org.commontemplate.core;
  */
 public abstract class Content extends Element {
 
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * 获取内容
 	 *

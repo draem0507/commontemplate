@@ -11,4 +11,6 @@ package org.commontemplate.core;
  */
 public abstract class GlobalContext extends BaseContext {
 
+	private static final long serialVersionUID = 1L;
+	
 }
