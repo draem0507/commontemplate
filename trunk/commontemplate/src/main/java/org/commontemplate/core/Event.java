@@ -10,6 +10,8 @@ package org.commontemplate.core;
  */
 public abstract class Event extends java.util.EventObject {
 
+	private static final long serialVersionUID = 1L;
+	
 	private Context context;
 
 	private long timestamp;

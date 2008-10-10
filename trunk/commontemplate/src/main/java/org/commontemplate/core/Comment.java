@@ -8,6 +8,8 @@ package org.commontemplate.core;
  */
 public abstract class Comment extends Content {
 
+	private static final long serialVersionUID = 1L;
+	
 	// 语义的默认实现
 	public void render(Context context) throws RenderingException {
 		// do nothing

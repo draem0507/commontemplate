@@ -13,6 +13,8 @@ import java.util.MissingResourceException;
  */
 public abstract class MessageSourceSupport implements MessageSource, Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	public String getMessage(Locale locale, String key, Object[] args)
 			throws NoSuchMessageException {
 		return formatMessage(locale, getMessage(locale, key), args);

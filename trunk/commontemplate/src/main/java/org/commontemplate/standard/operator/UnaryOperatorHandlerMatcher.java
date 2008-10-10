@@ -10,6 +10,8 @@ import org.commontemplate.config.UnaryOperatorHandler;
  */
 public abstract class UnaryOperatorHandlerMatcher extends UnaryOperatorHandler {
 
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * 判断操作符是否匹配操作数
 	 *

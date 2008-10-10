@@ -8,4 +8,6 @@ package org.commontemplate.config;
  */
 public abstract class MiddleBlockDirectiveHandler extends BlockDirectiveHandler {
 
+	private static final long serialVersionUID = 1L;
+	
 }

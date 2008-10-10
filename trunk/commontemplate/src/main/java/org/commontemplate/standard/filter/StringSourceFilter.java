@@ -16,6 +16,8 @@ import org.commontemplate.util.IOUtils;
  */
 public abstract class StringSourceFilter implements SourceFilter, Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	public Reader filter(Reader reader) throws IOException {
 		return new StringReader(filter(IOUtils.readToString(reader)));
 	}

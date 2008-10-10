@@ -14,6 +14,8 @@ import org.commontemplate.util.Location;
  */
 public abstract class Element implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * 模板元素渲染接口
 	 *

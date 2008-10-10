@@ -14,6 +14,8 @@ import org.commontemplate.core.OutputFormatter;
  */
 public abstract class Configuration extends TemplateConfiguration {
 
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * 获取是否为调试模式设置
 	 *

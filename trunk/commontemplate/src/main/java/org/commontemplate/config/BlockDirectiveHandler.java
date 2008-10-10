@@ -12,6 +12,8 @@ import org.commontemplate.core.Directive;
  */
 public abstract class BlockDirectiveHandler extends DirectiveHandler {
 
+	private static final long serialVersionUID = 1L;
+	
 	// 接口适配
 	public final void doRender(Context context, Directive directive) throws Exception {
 		doRender(context, (BlockDirective)directive);

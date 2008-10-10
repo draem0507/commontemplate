@@ -12,6 +12,8 @@ import org.commontemplate.core.SourceLoader;
  */
 public abstract class TemplateConfiguration extends ExpressionConfiguration {
 
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * 获取指令语法
 	 *

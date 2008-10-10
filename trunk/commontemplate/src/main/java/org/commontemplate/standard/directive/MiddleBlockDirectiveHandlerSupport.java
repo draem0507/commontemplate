@@ -8,6 +8,8 @@ import org.commontemplate.core.Context;
 
 public abstract class MiddleBlockDirectiveHandlerSupport extends MiddleBlockDirectiveHandler {
 
+	private static final long serialVersionUID = 1L;
+	
 	public void doRender(Context context, BlockDirective directive) throws Exception {
 		doRender(context, directive.getName(),
 				directive.getExpression() == null

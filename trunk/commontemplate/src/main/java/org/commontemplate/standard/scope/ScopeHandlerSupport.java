@@ -8,6 +8,8 @@ import org.commontemplate.core.LocalContext;
 
 public abstract class ScopeHandlerSupport implements ScopeHandler, Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	// 工具函数
 	protected final Object getLocalVariable(Context context, LocalContext local, String name) {
 		context.pushLocalContext();

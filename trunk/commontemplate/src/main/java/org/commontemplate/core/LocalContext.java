@@ -8,6 +8,8 @@ package org.commontemplate.core;
  */
 public abstract class LocalContext extends BaseContext implements OutputController {
 
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * 获取上级变量上下文
 	 *

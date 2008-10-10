@@ -29,6 +29,8 @@ import org.commontemplate.core.VariableException;
  */
 public abstract class ContextProxy extends Context {
 
+	private static final long serialVersionUID = 1L;
+	
 	protected final Context context;
 
 	public ContextProxy(Context context) {

@@ -8,6 +8,8 @@ package org.commontemplate.core;
  */
 public abstract class Directive extends Element {
 
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * 获取指令的参数表达式
 	 *

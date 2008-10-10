@@ -10,6 +10,8 @@ import java.util.List;
  */
 public abstract class BlockDirective extends Directive {
 
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * 获取块内部元素
 	 *

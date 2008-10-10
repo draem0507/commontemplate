@@ -12,6 +12,8 @@ import java.util.Iterator;
  */
 public abstract class CollectionSupport implements Collection, Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	public boolean add(Object o) {
 		throw new UnsupportedOperationException();
 	}

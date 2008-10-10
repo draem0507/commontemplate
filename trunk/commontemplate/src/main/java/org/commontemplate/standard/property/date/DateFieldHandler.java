@@ -7,6 +7,8 @@ import org.commontemplate.standard.property.PropertyHandlerSupport;
 
 public abstract class DateFieldHandler extends PropertyHandlerSupport {
 
+	private static final long serialVersionUID = 1L;
+	
 	private final int field;
 	
 	public DateFieldHandler(int field) {

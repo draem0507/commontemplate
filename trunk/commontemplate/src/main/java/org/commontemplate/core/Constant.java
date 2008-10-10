@@ -8,6 +8,8 @@ package org.commontemplate.core;
  */
 public abstract class Constant extends Parameter {
 
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * 获取常量值
 	 *

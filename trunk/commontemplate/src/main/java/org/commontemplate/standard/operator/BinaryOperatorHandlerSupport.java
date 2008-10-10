@@ -8,6 +8,8 @@ package org.commontemplate.standard.operator;
  */
 public abstract class BinaryOperatorHandlerSupport extends BinaryOperatorHandlerMatcher {
 
+	private static final long serialVersionUID = 1L;
+	
 	private Class[] leftOperandClass;
 
 	private Class[] rightOperandClass;

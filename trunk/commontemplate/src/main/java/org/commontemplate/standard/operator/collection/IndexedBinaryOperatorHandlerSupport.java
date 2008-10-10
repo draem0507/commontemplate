@@ -13,6 +13,8 @@ import org.commontemplate.standard.operator.sequence.IntegerSequence;
  */
 public abstract class IndexedBinaryOperatorHandlerSupport extends BinaryOperatorHandlerSupport {
 
+	private static final long serialVersionUID = 1L;
+	
 	public IndexedBinaryOperatorHandlerSupport(Class leftOperandClass) {
 		super(leftOperandClass, List.class);
 	}

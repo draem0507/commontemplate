@@ -19,6 +19,8 @@ public abstract class Context extends LocalContext
 			implements LocalContextStack, ElementStack, TemplateStack,
 			ContextFactory, EventPublisher, Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	public abstract TemplateLoader getTemplateLoader();
 
 	/**

@@ -13,6 +13,8 @@ import org.commontemplate.util.Location;
  */
 public abstract class Expression implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * 表达式求值
 	 *

@@ -19,6 +19,8 @@ import org.commontemplate.util.TypeUtils;
  */
 abstract class VariableStorageSupport implements VariableStorage, Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	protected final Keywords keywords;
 
 	VariableStorageSupport(Keywords keywords) {

@@ -14,6 +14,8 @@ import org.commontemplate.standard.operator.sequence.IntegerSequence;
  */
 public abstract class NumbersUnaryOperatorHandlerSupport extends UnaryOperatorHandlerSupport {
 
+	private static final long serialVersionUID = 1L;
+	
 	public NumbersUnaryOperatorHandlerSupport() {
 		super(new Class[]{Number.class, Collection.class});
 	}
