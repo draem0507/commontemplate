@@ -94,7 +94,7 @@ public class ExProperties extends Properties {
 	 * and \u000c) from the beginning of a "natural line". Method returns the
 	 * char length of the "logical line" and stores the line in "lineBuf".
 	 */
-	class LineReader {
+	static class LineReader {
 		public LineReader(InputStream inStream,String encoding) {
 			try {
 				this.reader = new BufferedReader(new InputStreamReader(inStream,encoding));

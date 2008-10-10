@@ -1,4 +1,4 @@
-package org.commontemplate.tools.viewer;
+package org.commontemplate.tools.generator;
 
 import java.io.File;
 import java.io.FileFilter;

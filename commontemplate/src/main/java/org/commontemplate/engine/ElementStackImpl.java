@@ -1,5 +1,6 @@
 package org.commontemplate.engine;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 
@@ -14,7 +15,9 @@ import org.commontemplate.util.Assert;
 import org.commontemplate.util.LinkedStack;
 import org.commontemplate.util.Stack;
 
-class ElementStackImpl implements ElementStack {
+class ElementStackImpl implements ElementStack, Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private final EventPublisher eventPublisher;
 

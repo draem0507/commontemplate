@@ -212,22 +212,7 @@ public class DebugFrame {
 			menuFile.add(itemOpen);
 			itemOpen.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e) {
-					String templateName = JOptionPane.showInputDialog(frame,
-							"请输入模板名称：(以\"/\"开头表示绝对路径，否则相对于当前模板路径，可以使用\"../\")", "打开模板",
-							JOptionPane.QUESTION_MESSAGE); // TODO 未国际化
-					if (templateName == null || templateName.length() == 0)
-						return;
-					if (execution == null
-							|| execution.getContext() == null)
-						return;
-					try {
-						Template template = execution.getContext().getTemplateLoader().getTemplate(templateName);
-						templatePane.addTemplate(template);
-					} catch (IOException ex) {
-						JOptionPane.showMessageDialog(frame, "加载模板：\"" + templateName + "\"失败，错误信息：" + ex.getMessage()); // TODO 未国际化
-					} catch (ParsingException ex) {
-						JOptionPane.showMessageDialog(frame, "编译模板：\"" + templateName + "\"失败，错误信息：" + ex.getMessage()); // TODO 未国际化
-					}
+					openTemplate();
 				}
 			});
 			menuFile.addSeparator();
@@ -280,18 +265,7 @@ public class DebugFrame {
 			menuOut.add(itemFlush);
 			itemFlush.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e) {
-					Context context = execution.getContext();
-					if (context != null) {
-						Writer out = context.getOut();
-						if (out != null) {
-							try {
-								out.flush();
-							} catch (IOException ioe) {
-								ioe.printStackTrace();
-								// ignore
-							}
-						}
-					}
+					refreshOutput();
 				}
 			});
 
@@ -323,6 +297,40 @@ public class DebugFrame {
 				}
 			});
 		return mainMenuBar;
+	}
+	
+	private synchronized void openTemplate() {
+		String templateName = JOptionPane.showInputDialog(frame,
+				"请输入模板名称：(以\"/\"开头表示绝对路径，否则相对于当前模板路径，可以使用\"../\")", "打开模板",
+				JOptionPane.QUESTION_MESSAGE); // TODO 未国际化
+		if (templateName == null || templateName.length() == 0)
+			return;
+		if (execution == null
+				|| execution.getContext() == null)
+			return;
+		try {
+			Template template = execution.getContext().getTemplateLoader().getTemplate(templateName);
+			templatePane.addTemplate(template);
+		} catch (IOException ex) {
+			JOptionPane.showMessageDialog(frame, "加载模板：\"" + templateName + "\"失败，错误信息：" + ex.getMessage()); // TODO 未国际化
+		} catch (ParsingException ex) {
+			JOptionPane.showMessageDialog(frame, "编译模板：\"" + templateName + "\"失败，错误信息：" + ex.getMessage()); // TODO 未国际化
+		}
+	}
+	
+	private synchronized void refreshOutput() {
+		Context context = execution.getContext();
+		if (context != null) {
+			Writer out = context.getOut();
+			if (out != null) {
+				try {
+					out.flush();
+				} catch (IOException ioe) {
+					ioe.printStackTrace();
+					// ignore
+				}
+			}
+		}
 	}
 
 	// ---- 动态结构 ----
