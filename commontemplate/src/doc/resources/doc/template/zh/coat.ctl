@@ -27,6 +27,8 @@ $end<br/>
 &lt;ct:if param="users != null && users.size &amp;gt; 0"&gt;...&lt;/cf:if&gt;<br/>
 行指令：<font color="green">(注：必须使用&lt;xxx/&gt;方式调用)</font><br/>
 &lt;ct:out param="user.name" /&gt;<br/>
+字符串参数：<font color="green">(注：字符串参数必须再加一层单引号, 否则表示变量)</font><br/>
+&lt;ct:msg param="'project.title'" /&gt;<br/>
 注：如果在Web环境下，即：@extends=org/commontemplate/tools/<b>web</b>/commontemplate.properties，则只需配置开关：<br/>
 $code{properties}
 tagSyntaxCoatAvailable=true
@@ -47,6 +49,8 @@ $end<br/>
 等价于：<br/>
 \$if{users != null && users.size &gt; 0}&lt;table&gt;&lt;tr&gt;&lt;td&gt;\$out{user.name}&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;\$end{if}<br/>
 "if"<b>块指令</b>向外扩充到&lt;table&gt;标签的外面(如果有多个块指令，按顺序排列)，而"out"<b>行指令</b>替换了整个&lt;span&gt;标签及其内部块<br/>
+字符串参数：<font color="green">(注：字符串参数必须再加一层单引号, 否则表示变量)</font><br/>
+&lt;span ct:msg="'project.title'"&gt;XXX&lt;/span&gt;<br/>
 注：如果在Web环境下，即：@extends=org/commontemplate/tools/<b>web</b>/commontemplate.properties，则只需配置开关：<br/>
 $code{properties}
 attributeSyntaxCoatAvailable=true
