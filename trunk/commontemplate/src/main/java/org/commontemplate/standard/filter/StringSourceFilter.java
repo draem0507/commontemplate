@@ -22,6 +22,6 @@ public abstract class StringSourceFilter implements SourceFilter, Serializable {
 		return new StringReader(filter(IOUtils.readToString(reader)));
 	}
 
-	public abstract String filter(String text);
+	protected abstract String filter(String text);
 
 }

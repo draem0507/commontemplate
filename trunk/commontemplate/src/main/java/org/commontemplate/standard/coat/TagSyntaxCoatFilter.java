@@ -81,7 +81,7 @@ public class TagSyntaxCoatFilter extends StringSourceFilter {
 		return super.filter(reader);
 	}
 
-	public String filter(String text) {
+	protected String filter(String text) {
 		// 替换开始标签为指令
 		String directiveRegex = "\\<" + namespace
 				+ "\\s*\\:\\s*([0-9|_|A-Z|a-z]+)\\s+" + expressionAttributeName
