@@ -3,7 +3,7 @@ package org.commontemplate.core;
 import java.util.List;
 
 /**
- * 路径上下文
+ * 模板上下文栈
  *
  * @author liangfei0201@163.com
  *

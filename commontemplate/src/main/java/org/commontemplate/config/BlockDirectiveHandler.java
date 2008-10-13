@@ -13,7 +13,7 @@ import org.commontemplate.core.Directive;
 public abstract class BlockDirectiveHandler extends DirectiveHandler {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	// 接口适配
 	public final void doRender(Context context, Directive directive) throws Exception {
 		doRender(context, (BlockDirective)directive);
@@ -25,7 +25,7 @@ public abstract class BlockDirectiveHandler extends DirectiveHandler {
 	 * @param context
 	 *            上下文
 	 * @param directive
-	 *            指令
+	 *            块指令
 	 * @throws Exception
 	 *             处理过程中的任意异常都应向上抛出, 由引擎统一处理
 	 */
