@@ -19,13 +19,20 @@ import au.id.jericho.lib.html.OutputDocument;
 import au.id.jericho.lib.html.Segment;
 import au.id.jericho.lib.html.Source;
 
+/**
+ * Jericho属性语法外套实现.
+ *
+ * @author GuiLeen
+ * @author liangfei0201@163.com
+ *
+ */
 class JerichoFilter {
 
-	private String namespace;
+	private final String namespace;
 
-	private Syntax syntax;
+	private final Syntax syntax;
 
-	private DirectiveHandlerProvider directiveHandlerProvider;
+	private final DirectiveHandlerProvider directiveHandlerProvider;
 
 	public JerichoFilter(String namespace, Syntax syntax,
 			DirectiveHandlerProvider directiveHandlerProvider) {

@@ -15,7 +15,7 @@ import org.commontemplate.standard.syntax.SyntaxSettings;
  * 将HTML标签的特殊属性转换为指令.<br>
  * 如:<br>
  * <pre>
- * &lt;table ct:if="users != null && users.size &gt; 0" border="1"&gt;
+ * &lt;table ct:if="users != null && users.size &amp;gt; 0" border="1"&gt;
  *     &lt;tr ct:for="user : users"&gt;
  *         &lt;td&gt;&lt;span ct:out="for.index + 1"&gt;1&lt;/span&gt;&lt;/td&gt;
  *         &lt;td&gt;&lt;span ct:out="user.name"&gt;james&lt;/span&gt;&lt;/td&gt;
