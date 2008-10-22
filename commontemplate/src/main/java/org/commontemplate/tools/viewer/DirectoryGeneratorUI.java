@@ -75,8 +75,12 @@ public class DirectoryGeneratorUI {
 		targetEncodingField.setBounds(320, 80, 80, 24);
 		frame.getContentPane().add(targetEncodingField);
 
+		final JCheckBox childCheckBox = new JCheckBox("是否包含子目录", true);
+		childCheckBox.setBounds(20, 110, 180, 24);
+		frame.getContentPane().add(childCheckBox);
+
 		final JCheckBox emptyCheckBox = new JCheckBox("是否包含空目录", false);
-		emptyCheckBox.setBounds(20, 110, 180, 24);
+		emptyCheckBox.setBounds(220, 110, 180, 24);
 		frame.getContentPane().add(emptyCheckBox);
 
 		JButton generateButton = new JButton("生成"); // TODO 未国际化
@@ -95,7 +99,7 @@ public class DirectoryGeneratorUI {
 							templateGenerator.generateDirectory(sourceDir, new File(dirField.getTextField().getText().trim()),
 									sourceSuffixField.getText().trim(), targetSuffixField.getText().trim(),
 									sourceEncodingField.getText().trim(), targetEncodingField.getText().trim(),
-									emptyCheckBox.isSelected());
+									emptyCheckBox.isSelected(), emptyCheckBox.isSelected());
 						} catch (RuntimeException e1) {
 							throw e1;
 						} catch (Exception e2) {

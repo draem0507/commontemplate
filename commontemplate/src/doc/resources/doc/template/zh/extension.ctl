@@ -161,6 +161,8 @@ $!
 								syntax.blockComment='*'<br/>
 								syntax.noParse='!'<br/>
 								syntax.endDirectiveName=end<br/>
+								注意事项：<br/>
+								各符号不能重复<br/>
 								默认使用：<br/>
 								Syntax.DEFAULT<br/>
 								<br/>
@@ -175,6 +177,8 @@ $!
 								keywords.false="false"<br/>
 								keywords.current="this"<br/>
 								keywords.parent="super"<br/>
+								注意事项：<br/>
+								各关键字不能重复<br/>
 								默认使用：<br/>
 								Keywords.DEFAULT<br/>
 								<br/>

@@ -1,7 +1,7 @@
 <!--$extends{"/doc/template/frame.ctl"}-->
 	<!--$zone{"content"}-->
 								<b>1. 编码规范</b><br/>
-								(1) 遵守JAVA所有命名约定<br/>
+								(1) 遵守JAVA所有命名约定 <a href="http://java.sun.com/docs/codeconv/html/CodeConvTOC.doc.html" target="_blank">JAVA命名规范...</a><br/>
 								(2) 采用Eclipse默认的缩进风格<br/>
 								(3) 数据抽象耦合度 (DAC) &lt;=7<br/>
 								(4) 类扇出(CFO) &lt;=20<br/>

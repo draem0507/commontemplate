@@ -13,7 +13,7 @@ LoggerFactory通过在ClassPath搜索常用日志框架的类文件是否存在�
 <br/>
 <b>2. 内部实现</b><br/>
 <b>(1)NoneLogger</b><br/>
-空的实现，当不需要日志输出时使用。br/>
+空的实现，当不需要日志输出时使用。<br/>
 配置commontemplate.properties:<br/>
 $code{properties}
 loggerProvider=org.commontemplate.util.log.NoneLoggerProvider()
