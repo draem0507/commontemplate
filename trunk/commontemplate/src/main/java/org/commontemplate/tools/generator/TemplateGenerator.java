@@ -64,14 +64,14 @@ public class TemplateGenerator {
 
 	public void generateDirectory(File sourceDirectory, File targetDirectory,
 			String sourceSuffix, String targetSuffix, String sourceEncoding, String targetEncoding,
-			boolean includeEmptyDirectory) throws Exception {
-		generateDirectory(sourceDirectory, targetDirectory, new TemplateFileFilter(sourceSuffix), targetSuffix, sourceEncoding, targetEncoding, includeEmptyDirectory);
+			boolean includeChildDirectory, boolean includeEmptyDirectory) throws Exception {
+		generateDirectory(sourceDirectory, targetDirectory, new TemplateFileFilter(sourceSuffix), targetSuffix, sourceEncoding, targetEncoding, includeChildDirectory, includeEmptyDirectory);
 	}
 
 	private void generateDirectory(File sourceDirectory, File targetDirectory,
 			TemplateFileFilter templateFileFilter, String targetSuffix,
 			String sourceEncoding, String targetEncoding,
-			boolean includeEmptyDirectory) throws Exception {
+			boolean includeChildDirectory, boolean includeEmptyDirectory) throws Exception {
 		if (sourceDirectory == null || targetDirectory == null)
 			return;
 		if (includeEmptyDirectory) {
@@ -82,10 +82,10 @@ public class TemplateGenerator {
 		if (files != null && files.length > 0) {
 			for (int i = 0, n = files.length; i < n; i ++) {
 				File file = files[i];
-				if (file.isDirectory()) {
-					generateDirectory(file, new File(targetDirectory, file.getName()), templateFileFilter, targetSuffix, sourceEncoding, targetEncoding, includeEmptyDirectory);
-				} else {
+				if (file.isFile()) {
 					generateFile(file, getSuffixFile(new File(targetDirectory, file.getName()), targetSuffix), sourceEncoding, targetEncoding, false, false);
+				} else if (includeChildDirectory) {
+					generateDirectory(file, new File(targetDirectory, file.getName()), templateFileFilter, targetSuffix, sourceEncoding, targetEncoding, includeChildDirectory, includeEmptyDirectory);
 				}
 			}
 		}

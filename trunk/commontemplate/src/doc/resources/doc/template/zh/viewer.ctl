@@ -22,8 +22,8 @@
 								CommonTemplate(debug) 以默认名称生成，并在模板的第一行设置断点<br/>
 								<br/>
 								<b>3. 类加载</b><br/>
-								(1) 加载安装目录中的class文件或jar包<br/>
-								(2) 加载模板所在目录中的class文件或jar包 <font color="green">(注：如果是目录转换，此目录是指待转换目录的上级目录)</font><br/>
+								(1) 加载安装目录中的jar包<br/>
+								(2) 加载模板所在目录中的jar包 <font color="green">(注：如果是目录转换，此目录是指待转换目录的上级目录)</font><br/>
 								<br/>
 								<b>4. 配置加载</b><br/>
 								(1) 首先，查找模板所在目录的commontemplate.properties <font color="green">(注：如果是目录转换，此目录是指待转换目录的上级目录)</font><br/>
