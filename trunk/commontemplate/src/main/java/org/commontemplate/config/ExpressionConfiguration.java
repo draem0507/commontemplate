@@ -12,7 +12,7 @@ import java.util.List;
 public abstract class ExpressionConfiguration implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * 获取表达式关键字配置
 	 *
@@ -46,6 +46,11 @@ public abstract class ExpressionConfiguration implements Serializable {
 	 */
 	public abstract List getEvaluateInterceptors();
 
+	/**
+	 * 获取表达式过滤器
+	 *
+	 * @return 表达式过滤器
+	 */
 	public abstract ExpressionFilter getExpressionFilter();
 
 	/**
