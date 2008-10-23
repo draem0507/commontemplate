@@ -7,12 +7,12 @@ $!
 								org.commontemplate.standard.ConfigurationSettings<br/>
 								配置的setter实现，提供与Configuration的getter配对的setter，通常用于IoC注入方式，也可以编程调用setter<br/>
 								org.commontemplate.standard.StandardConfiguration<br/>
-								标准配置实现，内置了chain的封装，可以直接调用addXXX方法，简化编程设置方式<br/>
+								标准配置实现，内置了chain的封装，可以直接调用addXXX方法，简化编程设置方式。<br/>
 								<br/>
 								<b>二. 扩展点</b><br/>
 								说明：<br/>
-								“注册方法”均指：StandardConfiguration的设置函数<br/>
-								“配置方法”均指：内置的properties配置方案，并且继承了标准配置<br/>
+								“注册方法”均指：StandardConfiguration的设置函数。<br/>
+								“配置方法”均指：内置的properties配置方案，并且继承了标准配置。 <a href="config.html">配置...</a><br/>
 								<br/>
 								<a name="event"/><b>1. 事件监听与扩展</b><br/>
 								相关接口：<br/>
