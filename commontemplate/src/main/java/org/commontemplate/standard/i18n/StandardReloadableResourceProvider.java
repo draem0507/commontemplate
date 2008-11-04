@@ -10,6 +10,8 @@ import java.util.MissingResourceException;
 import java.util.Vector;
 
 import org.commontemplate.standard.cache.SoftCache;
+import org.commontemplate.util.log.Logger;
+import org.commontemplate.util.log.LoggerFactory;
 
 /**
  * 处理可重载的国际化资源的标准实现。实现了 ReloadResourceProvider 接口。<br>
@@ -20,6 +22,8 @@ import org.commontemplate.standard.cache.SoftCache;
 public class StandardReloadableResourceProvider implements ReloadableResourceProvider, Serializable {
 
 	private static final long serialVersionUID = -7692930294944755410L;
+	
+	private static Logger logger = LoggerFactory.getLogger(StandardReloadableResourceProvider.class);
 
     private static final int MAX_BUNDLES_SEARCHED = 3;
 
@@ -176,6 +180,9 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 
 		// Next search for a Properties file.
 		final String resName = bundleName.replace('.', '/') + getFileExtName(extInfo);
+		if(logger.isDebugEnabled()) {
+			logger.debug("loadResource . resName = " + resName);
+		}
 		URL url= (URL) java.security.AccessController
 				.doPrivileged(new java.security.PrivilegedAction() {
 					public Object run() {
@@ -186,7 +193,11 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 						}
 					}
 				});
-
+		
+		if(url == null) {
+			throw new RuntimeException("无法找到资源 : " + resName); //TODO: 未国际化
+		}
+		
 		if (url != null) {
 			// make sure it is buffered
 			try {
