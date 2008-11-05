@@ -106,16 +106,7 @@ final class TemplateLoaderImpl implements TemplateLoader {
 				if (reloadController != null
 						&& reloadController.shouldReload(template.getName())) { // 是否需要检查热加载
 					Source source = loadSource(name, locale, encoding);
-					if (sourceComparator != null
-							&& sourceComparator.isModified(template, source)) { // 比较是否已更改
-						template = parseTemplate(source); // 热加载
-						if (persistentCahce != null) {
-							synchronized(persistentCahce) {
-								persistentCahce.put(source.getName(), template);
-							}
-						}
-						entry.setTemplate(reloadTemplate(template, source));
-					}
+					entry.setTemplate(reloadTemplate(template, source));
 				}
 			}
 		}
