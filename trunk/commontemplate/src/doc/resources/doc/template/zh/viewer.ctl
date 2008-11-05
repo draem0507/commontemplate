@@ -17,8 +17,8 @@
 								<img src="../images/viewer/file_menu.gif" /><br/>
 								ctl文件菜单选择框：<br/>
 								<img src="../images/viewer/file_window.gif" /><br/>
-								ctl文件快捷菜单：(不弹出选择框)<br/>
-								CommonTemplate(view) 以默认名称生成，并用浏览器打开<br/>
+								ctl文件快捷菜单：<font color="green">(注：不弹出选择框)</font><br/>
+								CommonTemplate(view) 以默认名称生成，并用浏览器打开 <font color="green">(注：与双击相同)</font><br/>
 								CommonTemplate(debug) 以默认名称生成，并在模板的第一行设置断点<br/>
 								<br/>
 								<b>3. 类加载</b><br/>
