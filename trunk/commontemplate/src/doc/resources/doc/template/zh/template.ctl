@@ -80,12 +80,13 @@ $!
 								$if{list} 等价于 $if{list != null && list.size > 0}<br/>
 								$if{string} 等价于 $if{string != null && string.length > 0}<br/>
 								<b>(3) 迭代指令:</b> <a href="extension.html#converter">扩展...</a><br/>
-								定义循环显示项:<br/>
-								$cycle{color: ("red", "blue", "green")}<br/>
+								定义循环变量:<br/>
+								$cycle{color = ("red", "blue", "green")}<br/>
+								$cycle{global -&gt; color = ("red", "blue", "green")}<br/>
 								迭代集合或数组:<br/>
 								$for{user : users}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;从循环显示项中取值 <font color="green">(注：可用于交替颜色的表格行)</font><br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;${color.next} <font color="green">(注：cycle变量每次next取值时向后滚动，到最后一个值时将循环到第一个值)</font><br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;${color.next} <font color="green">(注：取值并向后滚动，cycle变量每次next取值时向后滚动，到最后一个值时将循环到第一个值)</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;${color.value} ${color.index} <font color="green">(注：取值但不滚动)</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;${color.values} <font color="green">(注：取原始定义数据集合)</font><br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;中断循环<br/>
@@ -119,95 +120,7 @@ $!
 								<b>f.</b> 过滤迭代：$for{item : list[=> item != 'xxx']}，$for{user : users[u => u.name != 'guest']}，过滤掉用户名为"guest"的用户，参见"=&gt;"操作符使用<br/>
 								<b>g.</b> 排序迭代：$for{item : list orderby ("+property1", "-property2")}，$for{book : books orderby "+price"} 将books内的元素按price属性值升序排列后再迭代 (参见orderby操作符使用)<br/>
 								<b>h.</b> 非空选择迭代：$for{item : list1 || list2 || list3}，从左至右选第一个非空的集合进行迭代<br/>
-								<b>(4) 变量指令:</b><br/>
-								变量定义:<br/>
-								局部变量定义<br/>
-								$var{name = "james"} <font color="green">(注：通常用于隐藏上级同名变量)</font><br/>
-								在上一级上下文定义变量<br/>
-								$var{super -&gt; name = "james"}<br/>
-								在根级上下文定义变量<br/>
-								$var{root -&gt; name = "james"}<br/>
-								在全局上下文定义变量(整个引擎内共享)<br/>
-								$var{global -&gt; name = "james"}<br/>
-								在指定上下文定义变量<br/>
-								$var{session -&gt; name = "james"}<br/>
-								常见上下文简化指令:<br/>
-								$super{name = "james"} 等价于 $var{super -> name = "james"}<br/>
-								$root{name = "james"} 等价于 $var{root -> name = "james"}<br/>
-								$global{name = "james"} 等价于 $var{global -> name = "james"}<br/>
-								给最近区域的变量赋值: <font color="green">(注：若直到根区域均未找到相应变量，则在当前区域创建局部变量)</font><br/>
-								$set{name = "james"} <font color="green">(注：不能修改即有数据模型状态，也就是不能使用像：$set{user.name = "james"}的层级设值方式，以遵守模板无副作用契约，避免引入业务逻辑)</font><br/>
-								如果变量为空或未定义，则给其赋初始值: <br/>
-								$init{name = "guest"}<br/>
-								<b>(5) 块变量指令:</b><br/>
-								将模板块定义为变量: <font color="green">(注: 如果需要将模板块传递到宏或其它模板中, 可以使用块变量)</font><br/>
-								$block{myblock} <font color="green">(注：参数名称化指令，如果名称需取变量，可使用"\"一元操作符：$block{\name})</font><br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
-								$end<br/>
-								$block{global -&gt; myblock} <font color="green">(注: 将块变量定义到指定区域)</font><br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
-								$end<br/>
-								显示块变量: <font color="green">(注：执行块变量所指模板块，模板块可以通过变量传递到其它模板中再show)</font><br/>
-								$show{myblock}<br/>
-								<b>(6) 数据指令:</b> <a href="data.html">数据格式说明...</a> <a href="extension.html#data">扩展...</a><br/>
-								<font color="green">(注：内置支持xml,json,properties,yaml等数据格式，数据格式可扩展)</font><br/>
-								数据块：<br/>
-								$data{xml} <font color="green">(注：参数名称化指令，如果类型需取变量，可使用"\"一元操作符：$data{\type})</font><br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
-								$end<br/>
-								装载外部数据：<br/>
-								$load{xml: "xxx.xml"} <br/>
-								$load{"xxx.xml"} <font color="green">(注：根据文件扩展名识别类型)</font><br/>
-								$load{xml: "xxx.ctl", "utf-8"} <font color="green">(注：指定加载文件编码)</font><br/>
-								$load{"xxx.ctl", "utf-8"}<br/>
-								<font color="green">(注：如果配置项: localizedLookup=true (缺省为true)，假设locale为zh_CN，则：首先查找xxx_zh_CN.txt，不存在则查找xxx_zh.txt，否则查找xxx.ctl)</font><br/>
-								<font color="green">(注：支持"./"当前目录：$load{"./xxx.ctl"} 在当前目录查找xxx.ctl)</font><br/>
-								<font color="green">(注：支持"../"上级目录：$load{"../xxx.ctl"} 在当前目录的上级目录中查找xxx.ctl)</font><br/>
-								<font color="green">(注：支持"*/"通配目录：$load{"*/xxx.ctl"} 在当前目录以上的目录中逐级查找xxx.ctl)</font><br/>
-								<b>(7) 宏指令:</b><br/>
-								宏定义:<br/>
-								$macro{button} <font color="green">(注：参数名称化指令，如果名称需取变量，可使用"\"一元操作符：$macro{\name})</font><br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;设置参数缺省值<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;$init{name: "submit"}<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;回调调用者的内部块，如果为行指令方式调用，则inner为空<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;$inner{param3: "value3"}<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;表达式结果为真时，中断宏调用<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;$return{name == null}<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
-								$end<br/>
-								宏的行指令方式调用: <font color="green">(注：宏调用既<b>可以</b>传参，也<b>可以</b>访问当前上下文的变量)</font><br/>
-								$button{param1: "value1", param2: "value2"}<br/>
-								宏的块指令方式调用:<br/>
-								$button.block{param1: "value1", param2: "value2"} <font color="green">(注：以".block"结尾表示块指令调用)</font><br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
-								$end<br/>
-								导入模板文件中所有的宏: <font color="green">(注：在新的上下文执行导入的模板, 并忽略输出, 从执行后的上下文取出所定义的宏, 包括层级$import和$embed的宏)</font><br/>
-								$import{"mymacro.ctl"}<br/>
-								$import{my : "mymacro.ctl"} <font color="green">(注：调用时需带上"名称空间.", 如：$my.button{xxx})</font><br/>
-								<font color="green">(注：如果以a为名称空间导入a.ctl，而a.ctl中又以b为名称空间导入b.ctl，且b.ctl中有一个button宏，则可以使用$a.b.button进行调用)</font><br/>
-								使用模板文件作为宏:<br/>
-								$using{button : "button.ctl"}<br/>
-								$using{"button.ctl"} <font color="green">(注：将使用文件名作为宏的名称)</font><br/>
-								使用模板文件中的宏作为宏: <font color="green">(注：查找时，如果宏的名称不是常量，则在当前上下文中执行)</font><br/>
-								$using{button : "mymacro.ctl#button"} <font color="green">(注：#后为macro的名称, 参见$macro指令)</font><br/>
-								$using{"mymacro.ctl#button"} <font color="green">(注：将使用原始宏的名称(#号后的名称)作为宏的名称)</font><br/>
-								<b>(8) 继承指令:</b> <font color="green">(注：通常用于布局layout)</font> <a href="demo_extends.html">示例&gt;&gt;</a><br/>
-								模板区域定义: <font color="green">(注：在父模板中)</font><br/>
-								$zone{body} <font color="green">(注：参数名称化指令，如果名称需取变量，可使用"\"一元操作符：$zone{\name})</font><br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
-								$end<br/>
-								继承模板: <font color="green">(注：在子模板中)</font><br/>
-								$extends{"super.ctl"}<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;覆盖父模板区域:<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;$zone{"body"}<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;调用被覆盖的父模板区域:<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$superzone<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
-								&nbsp;&nbsp;&nbsp;&nbsp;$end<br/>
-								$end<br/>
-								<b>(9) 包含指令:</b><br/>
+								<b>(4) 包含指令:</b><br/>
 								内嵌其它模板: <font color="green">(注：被内嵌的文件，<b>可以</b>访问当前上下文的变量，<b>不可以</b>传参)</font><br/>
 								$embed{"common.ctl"}<br/>
 								$embed{"common.ctl", "UTF-8"}<br/>
@@ -241,6 +154,94 @@ $!
 								$snatch{"/list.jsp"} 相对于Web根目录<br/>
 								$snatch{"/list.jsp", 'UTF-8'} 指定编码<br/>
 								$snatch{"http://www.163.com"} 远程页面<br/>
+								<b>(5) 数据指令:</b> <a href="data.html">数据格式说明...</a> <a href="extension.html#data">扩展...</a><br/>
+								<font color="green">(注：内置支持xml,json,properties,yaml等数据格式，数据格式可扩展)</font><br/>
+								数据块：<br/>
+								$data{xml} <font color="green">(注：参数名称化指令，如果类型需取变量，可使用"\"一元操作符：$data{\type})</font><br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+								$end<br/>
+								装载外部数据：<br/>
+								$load{xml: "xxx.xml"} <br/>
+								$load{"xxx.xml"} <font color="green">(注：根据文件扩展名识别类型)</font><br/>
+								$load{xml: "xxx.ctl", "utf-8"} <font color="green">(注：指定加载文件编码)</font><br/>
+								$load{"xxx.ctl", "utf-8"}<br/>
+								<font color="green">(注：如果配置项: localizedLookup=true (缺省为true)，假设locale为zh_CN，则：首先查找xxx_zh_CN.txt，不存在则查找xxx_zh.txt，否则查找xxx.ctl)</font><br/>
+								<font color="green">(注：支持"./"当前目录：$load{"./xxx.ctl"} 在当前目录查找xxx.ctl)</font><br/>
+								<font color="green">(注：支持"../"上级目录：$load{"../xxx.ctl"} 在当前目录的上级目录中查找xxx.ctl)</font><br/>
+								<font color="green">(注：支持"*/"通配目录：$load{"*/xxx.ctl"} 在当前目录以上的目录中逐级查找xxx.ctl)</font><br/>
+								<b>(6) 变量指令:</b><br/>
+								变量定义:<br/>
+								局部变量定义<br/>
+								$var{name = "james"} <font color="green">(注：通常用于隐藏上级同名变量)</font><br/>
+								在上一级上下文定义变量<br/>
+								$var{super -&gt; name = "james"}<br/>
+								在根级上下文定义变量<br/>
+								$var{root -&gt; name = "james"}<br/>
+								在全局上下文定义变量(整个引擎内共享)<br/>
+								$var{global -&gt; name = "james"}<br/>
+								在指定上下文定义变量<br/>
+								$var{session -&gt; name = "james"}<br/>
+								常见上下文简化指令:<br/>
+								$super{name = "james"} 等价于 $var{super -&gt; name = "james"}<br/>
+								$root{name = "james"} 等价于 $var{root -&gt; name = "james"}<br/>
+								$global{name = "james"} 等价于 $var{global -&gt; name = "james"}<br/>
+								给最近区域的变量赋值: <font color="green">(注：若直到根区域均未找到相应变量，则在当前区域创建局部变量)</font><br/>
+								$set{name = "james"} <font color="green">(注：不能修改即有数据模型状态，也就是不能使用像：$set{user.name = "james"}的层级设值方式，以遵守模板无副作用契约，避免引入业务逻辑)</font><br/>
+								如果变量为空或未定义，则给其赋初始值: <br/>
+								$init{name = "guest"}<br/>
+								<b>(7) 块变量指令:</b><br/>
+								将模板块定义为变量: <font color="green">(注: 如果需要将模板块传递到宏或其它模板中, 可以使用块变量)</font><br/>
+								$block{myblock} <font color="green">(注：参数名称化指令，如果名称需取变量，可使用"\"一元操作符：$block{\name})</font><br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+								$end<br/>
+								$block{global -&gt; myblock} <font color="green">(注: 将块变量定义到指定区域)</font><br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+								$end<br/>
+								显示块变量: <font color="green">(注：执行块变量所指模板块，模板块可以通过变量传递到其它模板中再show)</font><br/>
+								$show{myblock}<br/>
+								<b>(8) 宏指令:</b><br/>
+								宏定义:<br/>
+								$macro{button} <font color="green">(注：参数名称化指令，如果名称需取变量，可使用"\"一元操作符：$macro{\name})</font><br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;设置参数缺省值<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;$init{name: "submit"}<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;回调调用者的内部块，如果为行指令方式调用，则inner为空<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;$inner{param3: "value3"}<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;表达式结果为真时，中断宏调用<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;$return{name == null}<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+								$end<br/>
+								宏的行指令方式调用: <font color="green">(注：宏调用既<b>可以</b>传参，也<b>可以</b>访问当前上下文的变量)</font><br/>
+								$button{param1: "value1", param2: "value2"}<br/>
+								宏的块指令方式调用:<br/>
+								$button.block{param1: "value1", param2: "value2"} <font color="green">(注：以".block"结尾表示块指令调用)</font><br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+								$end<br/>
+								导入模板文件中所有的宏: <font color="green">(注：在新的上下文执行导入的模板, 并忽略输出, 从执行后的上下文取出所定义的宏, 包括层级$import和$embed的宏)</font><br/>
+								$import{"mymacro.ctl"}<br/>
+								$import{my : "mymacro.ctl"} <font color="green">(注：调用时需带上"名称空间.", 如：$my.button{xxx})</font><br/>
+								<font color="green">(注：如果以a为名称空间导入a.ctl，而a.ctl中又以b为名称空间导入b.ctl，且b.ctl中有一个button宏，则可以使用$a.b.button进行调用)</font><br/>
+								使用模板文件作为宏:<br/>
+								$using{button : "button.ctl"}<br/>
+								$using{"button.ctl"} <font color="green">(注：将使用文件名作为宏的名称)</font><br/>
+								使用模板文件中的宏作为宏: <font color="green">(注：查找时，如果宏的名称不是常量，则在当前上下文中执行)</font><br/>
+								$using{button : "mymacro.ctl#button"} <font color="green">(注：#后为macro的名称, 参见$macro指令)</font><br/>
+								$using{"mymacro.ctl#button"} <font color="green">(注：将使用原始宏的名称(#号后的名称)作为宏的名称)</font><br/>
+								<b>(9) 继承指令:</b> <font color="green">(注：通常用于布局layout)</font> <a href="demo_extends.html">示例&gt;&gt;</a><br/>
+								模板区域定义: <font color="green">(注：在父模板中)</font><br/>
+								$zone{body} <font color="green">(注：参数名称化指令，如果名称需取变量，可使用"\"一元操作符：$zone{\name})</font><br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+								$end<br/>
+								继承模板: <font color="green">(注：在子模板中)</font><br/>
+								$extends{"super.ctl"}<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;覆盖父模板区域:<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;$zone{"body"}<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;调用被覆盖的父模板区域:<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$superzone<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;$end<br/>
+								$end<br/>
 								<b>(10) 动态指令:</b><br/>
 								动态执行模板:<br/>
 								$exec{templateString}<br/>
