@@ -1,6 +1,13 @@
 package org.commontemplate.tools.debugger.swing;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import javax.swing.JFrame;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
 
 import org.commontemplate.core.Element;
@@ -16,6 +23,44 @@ public class TemplateTabPane extends JTabbedPane {
 	public TemplateTabPane(JFrame frame) {
 		super();
 		this.frame = frame;
+		final JPopupMenu popupMenu = new JPopupMenu();
+		final JMenuItem closeActivityItem = new JMenuItem("关闭当前模板(可双击标签关闭)"); // TODO 未国际化
+		popupMenu.add(closeActivityItem);
+		closeActivityItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				closeActivityTemplate();
+			}
+		});
+		final JMenuItem closeInactivityItem = new JMenuItem("关闭其它模板"); // TODO 未国际化
+		popupMenu.add(closeInactivityItem);
+		closeInactivityItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				closeInactivityTemplate();
+			}
+		});
+		final JMenuItem closeAllItem = new JMenuItem("关闭所有模板"); // TODO 未国际化
+		popupMenu.add(closeAllItem);
+		closeAllItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				closeAllTemplate();
+			}
+		});
+		this.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (e.getModifiers() == MouseEvent.META_MASK) {
+					int x = e.getX();
+					int y = e.getY();
+					int selected = getSelectedIndex();
+					int count = getTabCount();
+					closeActivityItem.setEnabled(selected >= 0);
+					closeInactivityItem.setEnabled(selected >= 0 && count > 1);
+					closeAllItem.setEnabled(count > 0);
+					popupMenu.show(TemplateTabPane.this, x, y);
+				} else if (e.getClickCount() == 2) {
+					closeActivityTemplate();
+				}
+			}
+		});
 	}
 
 	private TemplatePane getTemplatePane(Template template) {
@@ -77,6 +122,32 @@ public class TemplateTabPane extends JTabbedPane {
 				templatePane.removeElement();
 		}
 		this.prevElement = null;
+	}
+
+	public void closeActivityTemplate() {
+		int selected = getSelectedIndex();
+		if (selected >= 0) {
+			removeTabAt(selected);
+		}
+	}
+
+	public void closeInactivityTemplate() {
+		int selected = getSelectedIndex();
+		if (selected >= 0) {
+			while (getTabCount() > 1) {
+				if (getSelectedIndex() == 0) {
+					removeTabAt(1);
+				} else {
+					removeTabAt(0);
+				}
+			}
+		}
+	}
+
+	public void closeAllTemplate() {
+		while (getTabCount() > 0) {
+			removeTabAt(0);
+		}
 	}
 
 }
