@@ -22,7 +22,7 @@ public class OutputPane extends JScrollPane {
 	private final DefaultHighlighter highlighter = new DefaultHighlighter();
 
 	private final DefaultHighlighter.DefaultHighlightPainter painter = new DefaultHighlighter.DefaultHighlightPainter(
-			Color.decode("0x669900"));
+			Color.decode("0xFFCC33"));
 
 	private Object highlight = null;
 
