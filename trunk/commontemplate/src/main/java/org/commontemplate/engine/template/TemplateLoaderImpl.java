@@ -76,8 +76,8 @@ final class TemplateLoaderImpl implements TemplateLoader {
 	private Template cacheTemplate(String name, Locale locale, String encoding)
 			throws IOException, ParsingException {
 		if (cache == null) { // 如果没有缓存策略，直接读取并编译模板
-			Source resource = loadResource(name, locale, encoding);
-			return persistentTemplate(resource);
+			Source source = loadSource(name, locale, encoding);
+			return persistentTemplate(source);
 		}
 
 		// 缓存参数
@@ -99,22 +99,22 @@ final class TemplateLoaderImpl implements TemplateLoader {
 		synchronized (entry) {
 			template = entry.getTemplate();
 			if (template == null) { // 不存在，解析加载
-				Source resource = loadResource(name, locale, encoding);
-				template = persistentTemplate(resource); // 此函数调用时间较长，为主要缓存目标
+				Source source = loadSource(name, locale, encoding);
+				template = persistentTemplate(source); // 此函数调用时间较长，为主要缓存目标
 				entry.setTemplate(template);
 			} else { // 已存在，检查热加载
 				if (reloadController != null
 						&& reloadController.shouldReload(template.getName())) { // 是否需要检查热加载
-					Source resource = loadResource(name, locale, encoding);
+					Source source = loadSource(name, locale, encoding);
 					if (sourceComparator != null
-							&& sourceComparator.isModified(template, resource)) { // 比较是否已更改
-						template = parseTemplate(resource); // 热加载
+							&& sourceComparator.isModified(template, source)) { // 比较是否已更改
+						template = parseTemplate(source); // 热加载
 						if (persistentCahce != null) {
 							synchronized(persistentCahce) {
-								persistentCahce.put(resource.getName(), template);
+								persistentCahce.put(source.getName(), template);
 							}
 						}
-						entry.setTemplate(template);
+						entry.setTemplate(reloadTemplate(template, source));
 					}
 				}
 			}
@@ -123,18 +123,36 @@ final class TemplateLoaderImpl implements TemplateLoader {
 		return template;
 	}
 
-	private Template persistentTemplate(Source resource) throws ParsingException, IOException {
+	private Template reloadTemplate(Template template, Source source) throws IOException {
+		// assert template != null
+		// assert source != null
+		if (sourceComparator != null
+				&& sourceComparator.isModified(template, source)) { // 比较是否已更改
+			template = parseTemplate(source); // 热加载
+			if (persistentCahce != null) {
+				synchronized(persistentCahce) {
+					persistentCahce.put(source.getName(), template);
+				}
+			}
+		}
+		return template;
+	}
+
+	private Template persistentTemplate(Source source) throws ParsingException, IOException {
+		// assert source != null
 		Template template;
 		if (persistentCahce != null) {
 			synchronized(persistentCahce) {
-				template = (Template)persistentCahce.get(resource.getName());
+				template = (Template)persistentCahce.get(source.getName());
 				if (template == null) {
-					template = parseTemplate(resource);
-					persistentCahce.put(resource.getName(), template);
+					template = parseTemplate(source);
+					persistentCahce.put(source.getName(), template);
+				} else {
+					template = reloadTemplate(template, source);
 				}
 			}
 		} else {
-			template = parseTemplate(resource);
+			template = parseTemplate(source);
 		}
 		return template;
 	}
@@ -143,8 +161,8 @@ final class TemplateLoaderImpl implements TemplateLoader {
 
 	private final SourceLoader sourceLoader;
 
-	// 注：返回的Resource中的getName()并不一定等于传入的name参数。
-	private Source loadResource(String name, Locale locale, String encoding) throws IOException {
+	// 注：返回的Source中的getName()并不一定等于传入的name参数。
+	private Source loadSource(String name, Locale locale, String encoding) throws IOException {
 		if (locale == null) {
 			if(encoding == null)
 				return getSource(name);
@@ -183,33 +201,33 @@ final class TemplateLoaderImpl implements TemplateLoader {
 	// 代理TemplateLoader -------
 
 	public Source getSource(String name) throws IOException {
-		Source resource = sourceLoader.getSource(cleanName(name));
-		if (resource == null)
-			throw new IOException("Not found resource: " + name);
-		return resource;
+		Source source = sourceLoader.getSource(cleanName(name));
+		if (source == null)
+			throw new IOException("Not found template source: " + name);
+		return source;
 	}
 
 	public Source getSource(String name, String encoding)
 			throws IOException {
-		Source resource = sourceLoader.getSource(cleanName(name), encoding);
-		if (resource == null)
-			throw new IOException("Not found resource: " + name);
-		return resource;
+		Source source = sourceLoader.getSource(cleanName(name), encoding);
+		if (source == null)
+			throw new IOException("Not found template source: " + name);
+		return source;
 	}
 
 	public Source getSource(String name, Locale locale) throws IOException {
-		Source resource = sourceLoader.getSource(cleanName(name), locale);
-		if (resource == null)
-			throw new IOException("Not found resource: " + name);
-		return resource;
+		Source source = sourceLoader.getSource(cleanName(name), locale);
+		if (source == null)
+			throw new IOException("Not found template source: " + name);
+		return source;
 	}
 
 	public Source getSource(String name, Locale locale, String encoding)
 			throws IOException {
-		Source resource = sourceLoader.getSource(cleanName(name), locale, encoding);
-		if (resource == null)
-			throw new IOException("Not found resource: " + name);
-		return resource;
+		Source source = sourceLoader.getSource(cleanName(name), locale, encoding);
+		if (source == null)
+			throw new IOException("Not found template source: " + name);
+		return source;
 	}
 
 	// 代理TemplateParser ----
@@ -224,9 +242,9 @@ final class TemplateLoaderImpl implements TemplateLoader {
 		return templateParser.parseTemplate(template);
 	}
 
-	public Template parseTemplate(Source resource)
+	public Template parseTemplate(Source source)
 			throws ParsingException, IOException {
-		return templateParser.parseTemplate(resource);
+		return templateParser.parseTemplate(source);
 	}
 
 	public BlockDirective createBlockDirective(String name,
