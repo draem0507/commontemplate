@@ -25,7 +25,7 @@ public class VariableDefineDirectiveHandler extends DirectiveHandlerSupport {
 			if (key instanceof NamePair) {
 				VariableScopeUtils.putVariable(context, false, (NamePair)key, value);
 			} else {
-				String var = String.valueOf(model.getKey());
+				String var = String.valueOf(key);
 				context.putVariable(var, value);
 			}
 		} else {

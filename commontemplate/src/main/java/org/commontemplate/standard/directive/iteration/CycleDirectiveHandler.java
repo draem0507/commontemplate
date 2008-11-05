@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import org.commontemplate.standard.directive.DirectiveHandlerSupport;
+import org.commontemplate.standard.directive.VariableScopeUtils;
+import org.commontemplate.standard.operator.string.NamePair;
 import org.commontemplate.core.Context;
 
 /**
@@ -17,10 +19,20 @@ public class CycleDirectiveHandler extends DirectiveHandlerSupport {
 	private static final long serialVersionUID = 1L;
 
 	public void doRender(Context context, String directiveName, Object param) throws Exception {
-		Entry params = (Entry)param;
-		String var = params.getKey().toString();
-		List list = (List)params.getValue();
-		context.putVariable(var, new Cycle(list));
+		if (param instanceof Entry) {
+			Entry model = (Entry)param;
+			Object key = model.getKey();
+			List list = (List)model.getValue();
+			Object value = new Cycle(list);
+			if (key instanceof NamePair) {
+				VariableScopeUtils.putVariable(context, false, (NamePair)key, value);
+			} else {
+				String var = String.valueOf(key);
+				context.putVariable(var, value);
+			}
+		} else {
+			throw new IllegalStateException("$cycle指令参数错误!"); // TODO 未国际化
+		}
 	}
 
 	public boolean isExpressionRequired() {
