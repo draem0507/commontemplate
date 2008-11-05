@@ -106,7 +106,8 @@ final class TemplateLoaderImpl implements TemplateLoader {
 				if (reloadController != null
 						&& reloadController.shouldReload(template.getName())) { // 是否需要检查热加载
 					Source source = loadSource(name, locale, encoding);
-					entry.setTemplate(reloadTemplate(template, source));
+					template = reloadTemplate(template, source);
+					entry.setTemplate(template);
 				}
 			}
 		}
