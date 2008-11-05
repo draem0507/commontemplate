@@ -106,8 +106,16 @@ final class TemplateLoaderImpl implements TemplateLoader {
 				if (reloadController != null
 						&& reloadController.shouldReload(template.getName())) { // 是否需要检查热加载
 					Source source = loadSource(name, locale, encoding);
-					template = reloadTemplate(template, source);
-					entry.setTemplate(template);
+					if (sourceComparator != null
+							&& sourceComparator.isModified(template, source)) { // 比较是否已更改
+						template = parseTemplate(source); // 重新解析模板
+						if (persistentCahce != null) {
+							synchronized(persistentCahce) {
+								persistentCahce.put(source.getName(), template); // 加入到持久化缓存中
+							}
+						}
+						entry.setTemplate(template);
+					}
 				}
 			}
 		}
@@ -115,32 +123,18 @@ final class TemplateLoaderImpl implements TemplateLoader {
 		return template;
 	}
 
-	private Template reloadTemplate(Template template, Source source) throws IOException {
-		// assert template != null
-		// assert source != null
-		if (sourceComparator != null
-				&& sourceComparator.isModified(template, source)) { // 比较是否已更改
-			template = parseTemplate(source); // 热加载
-			if (persistentCahce != null) {
-				synchronized(persistentCahce) {
-					persistentCahce.put(source.getName(), template);
-				}
-			}
-		}
-		return template;
-	}
-
+	// 持久化模板
 	private Template persistentTemplate(Source source) throws ParsingException, IOException {
 		// assert source != null
 		Template template;
 		if (persistentCahce != null) {
 			synchronized(persistentCahce) {
 				template = (Template)persistentCahce.get(source.getName());
-				if (template == null) {
+				if (template == null // 模板为空
+						|| (sourceComparator != null // 或者模板源已改变
+								&& sourceComparator.isModified(template, source))) {
 					template = parseTemplate(source);
 					persistentCahce.put(source.getName(), template);
-				} else {
-					template = reloadTemplate(template, source);
 				}
 			}
 		} else {
