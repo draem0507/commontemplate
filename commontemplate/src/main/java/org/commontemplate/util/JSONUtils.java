@@ -91,7 +91,7 @@ public final class JSONUtils {
 	}
 
 	// 判断是否循环引用
-	public static boolean isCycleReferenced(Object object, Stack ref) {
+	private static boolean isCycleReferenced(Object object, Stack ref) {
 		if (! ref.isEmpty()) {
 			for (Iterator i = ref.iterator(); i.hasNext();) {
 				if (i.next() == object)
