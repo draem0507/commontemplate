@@ -20,8 +20,9 @@ Email/MSN: <img src="../images/mail/mail_wyz.gif" border="0" /><br/>
 Blog: <a href="http://srdrm.javaeye.com/" target="_blank">http://srdrm.javaeye.com</a><br/>
 <br/>
 <b>2. $msg{'page.about.group'}</b><br/>
-Group Email: <img src="../images/mail/mail_ct.gif" border="0" /><br/>
-QQ Group: 38918204<br/>
+$msg{'page.about.group.creation.date'}: 2007-04-27<br/>
+$msg{'page.about.group.mail.list'}: <img src="../images/mail/mail_ct.gif" border="0" /><br/>
+$msg{'page.about.group.qq'}: 38918204<br/>
 <br/>
 <b>3. $msg{'page.about.contributor.list'}</b><br/>
 <b>Saro</b><br/>
