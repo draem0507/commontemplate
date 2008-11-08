@@ -106,6 +106,17 @@ $!
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;servlet-name&gt;</font>struts<font color="#3f7f5f">&lt;/servlet-name&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;url-pattern&gt;</font>*.do<font color="#3f7f5f">&lt;/url-pattern&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;/servlet-mapping&gt;</font><br/>
+
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f5fbf">&lt;!--&nbsp;不允许直接访问ctl模板&nbsp;--&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;security-constraint&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;web-resource-collection&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;web-resource-name&gt;</font>CTL&nbsp;Templates<font color="#3f7f5f">&lt;/web-resource-name&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;url-pattern&gt;</font>*.ctl<font color="#3f7f5f">&lt;/url-pattern&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;/web-resource-collection&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;auth-constraint&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;description&gt;</font>Forbidden<font color="#3f7f5f">&lt;/description&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;/auth-constraint&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;/security-constraint&gt;</font><br/>
 <font color="#3f7f5f">&lt;/web-app&gt;</font><br/>
 <br/>
 								配置struts.xml:<br/>
