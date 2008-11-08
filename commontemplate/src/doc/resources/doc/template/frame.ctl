@@ -180,7 +180,7 @@
 					<table border="0" cellpadding="0" cellspacing="0">
 						<tr>
 							<td>
-								$msg{'frame.copyright'} 2007 - ${.now.year} <a href="about.html">$msg{'frame.commontemplate.team'}</a> $msg{'frame.last.updated'}: ${.now # 'yyyy-MM-dd HH:mm:ss'}
+								$msg{'frame.copyright'} 2007 - <script type="text/javascript">document.write(new Date().getYear());</script> <a href="about.html">$msg{'frame.commontemplate.team'}</a>
 							</td>
 							<td width="100" align="right">
 								<a href="http://www.commontemplate.org"><img src="../images/logo.gif" border="0" /></a>
