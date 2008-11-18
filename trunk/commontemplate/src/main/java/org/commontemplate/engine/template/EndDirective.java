@@ -20,12 +20,13 @@ final class EndDirective extends Directive {
 
 	private static final long serialVersionUID = 1L;
 
-	static final EndDirective END_DIRECTIVE = new EndDirective(null);
-
 	private final String blockDirectiveName;
 
-	EndDirective(String blockDirectiveName) {
+	private final Location location;
+
+	EndDirective(String blockDirectiveName, Location location) {
 		this.blockDirectiveName = blockDirectiveName;
+		this.location = location;
 	}
 
 	String getBlockDirectiveName() {
@@ -49,7 +50,7 @@ final class EndDirective extends Directive {
 	}
 
 	public Location getLocation() {
-		return null;
+		return location;
 	}
 
 	public String getName() {

@@ -10,6 +10,7 @@ import org.commontemplate.config.Syntax;
 import org.commontemplate.core.Expression;
 import org.commontemplate.core.Template;
 import org.commontemplate.core.TemplateBudiler;
+import org.commontemplate.util.Location;
 
 /**
  * 模板构建器实现
@@ -85,11 +86,11 @@ final class TemplateBudilerImpl implements TemplateBudiler {
 	}
 
 	public void endBlockDirective() {
-		elements.add(EndDirective.END_DIRECTIVE);
+		elements.add(new EndDirective(null, Location.ZERO));
 	}
 
 	public void endBlockDirective(String directiveName) {
-		elements.add(new EndDirective(directiveName));
+		elements.add(new EndDirective(directiveName, Location.ZERO));
 	}
 
 }

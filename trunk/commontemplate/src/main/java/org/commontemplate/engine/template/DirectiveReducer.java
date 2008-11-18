@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.commontemplate.core.BlockDirective;
 import org.commontemplate.core.Element;
-import org.commontemplate.util.Assert;
+import org.commontemplate.core.ParsingException;
 import org.commontemplate.util.LinkedStack;
 import org.commontemplate.util.Stack;
 
@@ -38,18 +38,19 @@ final class DirectiveReducer {
 			// 弹栈
 			if (directive instanceof EndDirective
 					|| directive instanceof MiddleBlockDirectiveImpl) {
-				Assert.assertFalse(directiveStack.isEmpty(), "DirectiveReducer.block.directive.excrescent.end");
+				if (directiveStack.isEmpty())
+					throw new ParsingException(directive.getLocation(), "DirectiveReducer.block.directive.excrescent.end");
 				BlockDirective blockDirective = ((BlockDirectiveEntry) directiveStack.pop()).popDirective();
 				if (directive instanceof EndDirective) {
 					String blockDirectiveName = ((EndDirective)directive).getBlockDirectiveName();
-					if (blockDirectiveName != null) {
-						Assert.assertTrue(blockDirectiveName.equals(blockDirective.getName()), "DirectiveReducer.block.directive.invaild.end", new Object[]{blockDirectiveName, blockDirective.getName()});
-					}
+					if (blockDirectiveName != null && ! blockDirectiveName.equals(blockDirective.getName()))
+						throw new ParsingException(directive.getLocation(), "DirectiveReducer.block.directive.invaild.end", new Object[]{blockDirectiveName, blockDirective.getName()});
 				}
 			}
 			// 设置树
 			if (! (directive instanceof EndDirective)) { // 排除EndDirective
-				Assert.assertFalse(directiveStack.isEmpty(), "DirectiveReducer.block.directive.excrescent.end");
+				if (directiveStack.isEmpty())
+					throw new ParsingException(directive.getLocation(), "DirectiveReducer.block.directive.excrescent.end");
 				((BlockDirectiveEntry) directiveStack.peek()).appendInnerDirective(directive);
 			}
 			// 压栈
@@ -57,7 +58,9 @@ final class DirectiveReducer {
 				directiveStack.push(new BlockDirectiveEntry((BlockDirective) directive));
 		}
 		Element root = ((BlockDirectiveEntry) directiveStack.pop()).popDirective();
-		Assert.assertTrue(directiveStack.isEmpty(), "DirectiveReducer.block.directive.without.end"); // 后验条件
+		if (! directiveStack.isEmpty()) { // 后验条件
+			throw new ParsingException(root.getLocation(), "DirectiveReducer.block.directive.without.end", new Object[]{root.getName()});
+		}
 		return (RootBlockDirectiveImpl)root;
 	}
 
