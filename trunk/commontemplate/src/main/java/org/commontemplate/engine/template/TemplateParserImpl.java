@@ -74,6 +74,8 @@ class TemplateParserImpl implements TemplateParser {
 			throw e;
 		} catch (ScanningException e) {
 			throw new ParsingException(new Location(e.getPosition(), e.getPosition()), e);
+		} catch (Exception e) {
+			throw new ParsingException(Location.ZERO, e); // TODO 无法判断错误位置
 		}
 	}
 
