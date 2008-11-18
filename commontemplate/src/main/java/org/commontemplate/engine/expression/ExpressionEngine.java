@@ -1,6 +1,5 @@
 package org.commontemplate.engine.expression;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.commontemplate.config.ExpressionConfiguration;
@@ -76,7 +75,7 @@ public class ExpressionEngine implements ExpressionParser {
 			ParsingException pe = new ParsingException(new Location(e.getPosition(), e.getPosition()), e);
 			pe.setSource(new SourceImpl(expressionText));
 			throw pe;
-		} catch (IOException e) { // 因为是字符串输入，一般不会出现IOException
+		} catch (Exception e) {
 			ParsingException pe = new ParsingException(new Token(expressionText, Position.ZERO).getLocation(), e);
 			pe.setSource(new SourceImpl(expressionText));
 			throw pe;
