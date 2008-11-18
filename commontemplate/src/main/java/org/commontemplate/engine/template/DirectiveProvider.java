@@ -250,9 +250,9 @@ final class DirectiveProvider {
 			if (expressionSource != null) { // 结束指令不解析表达式
 				if (TypeUtils.isString(expressionSource)) // 兼容引号字符串参数
 					expressionSource = expressionSource.substring(1, expressionSource.length() - 1);
-				return new EndDirective(expressionSource);
+				return new EndDirective(expressionSource, token.getLocation());
 			}
-			return EndDirective.END_DIRECTIVE;
+			return new EndDirective(null, token.getLocation());
 		}
 		// SPI指令
 		DirectiveHandler handler = directiveHandlerProvider.getDirectiveHandler(name);
