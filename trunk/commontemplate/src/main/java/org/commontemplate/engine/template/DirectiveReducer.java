@@ -41,6 +41,8 @@ final class DirectiveReducer {
 				if (directiveStack.isEmpty())
 					throw new ParsingException(directive.getLocation(), "DirectiveReducer.block.directive.excrescent.end");
 				BlockDirective blockDirective = ((BlockDirectiveEntry) directiveStack.pop()).popDirective();
+				if (blockDirective instanceof RootBlockDirectiveImpl)
+					throw new ParsingException(directive.getLocation(), "DirectiveReducer.block.directive.excrescent.end");
 				if (directive instanceof EndDirective) {
 					String blockDirectiveName = ((EndDirective)directive).getBlockDirectiveName();
 					if (blockDirectiveName != null && ! blockDirectiveName.equals(blockDirective.getName()))
