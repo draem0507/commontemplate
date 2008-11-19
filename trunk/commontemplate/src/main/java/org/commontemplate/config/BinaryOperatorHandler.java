@@ -11,7 +11,7 @@ import java.io.Serializable;
 public abstract class BinaryOperatorHandler implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * 处理二元操作符求值
 	 *
@@ -117,7 +117,7 @@ public abstract class BinaryOperatorHandler implements Serializable {
 	 *
 	 * @return 是否允许编译器优化，默认返回true
 	 */
-	public boolean isOptimize() {
+	protected boolean isOptimize() {
 		return true;
 	}
 
