@@ -144,5 +144,10 @@ public class TemplateEngine implements TemplateLoader {
 	public Template parseTemplate(String template) throws ParsingException {
 		return templateLoader.parseTemplate(template);
 	}
+	
+	public Template parseTemplate(String name, String template)
+			throws ParsingException {
+		return templateLoader.parseTemplate(name, template);
+	}
 
 }
