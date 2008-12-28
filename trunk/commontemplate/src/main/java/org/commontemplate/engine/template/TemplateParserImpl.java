@@ -109,6 +109,17 @@ class TemplateParserImpl implements TemplateParser {
 			throw new RuntimeException(e.getMessage(), e);
 		}
 	}
+	
+	public Template parseTemplate(String name, String template)
+			throws ParsingException {
+		Assert.assertNotNull(template, "TemplateEngine.template.name.required");
+		Source resource = new SourceImpl(template,name);
+		try {
+			return parseTemplate(resource);
+		} catch (IOException e) { // 因为是字符串模板，一般不会出现IOException
+			throw new RuntimeException(e.getMessage(), e);
+		}
+	}
 
 	public TemplateBudiler createTemplateBudiler() {
 		return new TemplateBudilerImpl(syntax, directiveHandlerProvider, renderInterceptors);

@@ -227,6 +227,11 @@ final class TemplateLoaderImpl implements TemplateLoader {
 	public Template parseTemplate(String template) throws ParsingException {
 		return templateParser.parseTemplate(template);
 	}
+	
+	public Template parseTemplate(String name, String template)
+			throws ParsingException {
+		return templateParser.parseTemplate(name, template);
+	}
 
 	public Template parseTemplate(Source source)
 			throws ParsingException, IOException {

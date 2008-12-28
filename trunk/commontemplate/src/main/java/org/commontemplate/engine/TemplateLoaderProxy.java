@@ -97,6 +97,11 @@ class TemplateLoaderProxy implements TemplateLoader {
 		return templateLoader.parseTemplate(template);
 	}
 
+	public Template parseTemplate(String name, String template)
+			throws ParsingException {
+		return templateLoader.parseTemplate(name, template);
+	}
+	
 	public Template parseTemplate(Source source)
 			throws ParsingException, IOException {
 		return templateLoader.parseTemplate(source);
