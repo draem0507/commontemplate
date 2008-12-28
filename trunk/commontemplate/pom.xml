@@ -3,7 +3,7 @@
   <groupId>org.commontemplate</groupId>
   <artifactId>commontemplate</artifactId>
   <name>Commontemplate Module</name>
-  <version>0.8.7</version>
+  <version>0.8.8</version>
   <build>
     <resources>
       <resource>
@@ -145,6 +145,12 @@
       <artifactId>struts2-core</artifactId>
       <version>2.0.11</version>
       <optional>true</optional>
+      <exclusions>
+      	<exclusion>
+      		<groupId>com.sun</groupId>
+      		<artifactId>tools</artifactId>
+      	</exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>de.java2html</groupId>
