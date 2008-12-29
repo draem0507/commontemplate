@@ -3,7 +3,7 @@
   <groupId>org.commontemplate</groupId>
   <artifactId>commontemplate</artifactId>
   <name>Commontemplate Module</name>
-  <version>0.8.8</version>
+  <version>0.8.8-dev</version>
   <build>
     <resources>
       <resource>
@@ -56,6 +56,13 @@
       </plugin>
     </plugins>
   </build>
+    <distributionManagement>
+		<repository>
+			<id>light-commons</id>
+			<name>Local light-commons repositoy</name>
+			<url> file:///c:/repository</url>
+		</repository>
+	</distributionManagement>
   <repositories>
     <repository>
       <id>easyjf</id>
@@ -180,7 +187,6 @@
   		<groupId>xstream</groupId>
   		<artifactId>xstream</artifactId>
   		<version>1.2.1</version>
-  		<optional>true</optional>
   	</dependency>
   	<dependency>
   		<groupId>org.jyaml</groupId>
