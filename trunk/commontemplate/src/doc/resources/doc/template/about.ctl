@@ -21,7 +21,8 @@ Blog: <a href="http://srdrm.javaeye.com/" target="_blank">http://srdrm.javaeye.c
 <br/>
 <b>2. $msg{'page.about.group'}</b><br/>
 $msg{'page.about.group.creation.date'}: 2007-04-27<br/>
-$msg{'page.about.group.mail.list'}: <img src="../images/mail/mail_ct.gif" border="0" /><br/>
+$msg{'page.about.group.user.mail.list'}: <img src="../images/mail/mail_user.gif" border="0" /><br/>
+$msg{'page.about.group.developer.mail.list'}: <img src="../images/mail/mail_developer.gif" border="0" /><br/>
 $msg{'page.about.group.qq'}: 38918204<br/>
 <br/>
 <b>3. $msg{'page.about.contributor.list'}</b><br/>
