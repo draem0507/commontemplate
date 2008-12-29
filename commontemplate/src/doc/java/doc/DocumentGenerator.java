@@ -153,13 +153,13 @@ public class DocumentGenerator {
 												"http://code.google.com/p/commontemplate/w/list"))
 								.addChild(
 										new Menu("menu.mail.list",
-												"http://sourceforge.net/mail/?group_id=193256"))
+												"http://groups.google.com/group/commontemplate-user"))
 								.addChild(
 										new Menu("menu.bugs.list",
 												"http://code.google.com/p/commontemplate/issues/list"))
 								.addChild(
 										new Menu("menu.bugs.report",
-												"http://forum.commontemplate.org/post.php?action=newthread&fid=2&extra=page%3D1")));
+												"http://code.google.com/p/commontemplate/issues/entry")));
 		model.put("leftMenus", leftMenu.getChildren());
 
 		Menu topMenu = new Menu("menu.top").addChild(
