@@ -295,13 +295,13 @@ public class ClassUtils {
 			Method method = getMethod(obj.getClass(), name, args);
 			return method.invoke(obj, args);
 		} catch (SecurityException e) {
-			throw new NoSuchMethodException(e.getMessage());
+			throw new RuntimeException("can't invoke method of "+obj.getClass()+"."+name,e);
 		} catch (IllegalArgumentException e) {
-			throw new NoSuchMethodException(e.getMessage());
+			throw new RuntimeException("can't invoke method of "+obj.getClass()+"."+name,e);
 		} catch (IllegalAccessException e) {
-			throw new NoSuchMethodException(e.getMessage());
+			throw new RuntimeException("can't invoke method of "+obj.getClass()+"."+name,e);
 		} catch (InvocationTargetException e) {
-			throw new NoSuchMethodException(e.getMessage());
+			throw new RuntimeException("can't invoke method of "+obj.getClass()+"."+name,e);
 		}
 	}
 
