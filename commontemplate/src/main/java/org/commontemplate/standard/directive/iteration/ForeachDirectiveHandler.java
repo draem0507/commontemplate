@@ -223,7 +223,7 @@ public class ForeachDirectiveHandler extends BlockDirectiveHandlerSupport {
 				// setCollectionConverters()已保证cls,converter均不为空
 				Class cls = (Class)entry.getKey();
 				CollectionConverter converter = (CollectionConverter)entry.getValue();
-				if (dataCls.isAssignableFrom(cls)) {
+				if (cls.isAssignableFrom(dataCls)) {
 					return converter.convert(obj);
 				}
 			}
