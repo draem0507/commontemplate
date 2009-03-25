@@ -22,8 +22,8 @@ $!
 								addEventListener(EventListener)<br/>
 								addAsynchronousEventListener(EventListener)<br/>
 								配置方法：<br/>
-								eventListeners[100]=com.xxx.XxxListener <font color="green">(注：下标号任意，只用于排序)</font><br/>
-								asynchronousEventListeners[100]=com.xxx.XxxListener<br/>
+								eventListeners[100]=com.xxx.XxxListener() <font color="green">(注：下标号任意，只用于排序)</font><br/>
+								asynchronousEventListeners[100]=com.xxx.XxxListener()<br/>
 								参考实现：<br/>
 								引擎发布的事件：<br/>
 								com.commontemplate.core.event包下相关类<br/>
@@ -89,7 +89,7 @@ $!
 								注册方法：<br/>
 								addTemplateNameFilter(TemplateNameFilter) <font color="green">(注：添加的TemplateNameFilter会按顺序组成过滤链)</font><br/>
 								配置方法：<br/>
-								templateNameFilters[200]=com.xxx.XxxFilter<br/>
+								templateNameFilters[200]=com.xxx.XxxFilter()<br/>
 								参考实现：<br/>
 								org.commontemplate.standard.filter.TemplateNameRelativer <font color="green">(注：此过滤器过滤 ../ 和 ./ 等相对路径)</font><br/>
 								<br/>
@@ -99,7 +99,7 @@ $!
 								注册方法：<br/>
 								addSourceFilter(SourceFilter)<br/>
 								配置方法：<br/>
-								sourceFilters[200]=com.xxx.XxxFilter<br/>
+								sourceFilters[200]=com.xxx.XxxFilter()<br/>
 								参考实现：<br/>
 								org.commontemplate.standard.coat.AttributeSyntaxCoatFilter<br/>
 								<br/>
@@ -110,7 +110,7 @@ $!
 								注册方法：<br/>
 								addTextFilter(TextFilter)<br/>
 								配置方法：<br/>
-								textFilters[200]=com.xxx.XxxFilter<br/>
+								textFilters[200]=com.xxx.XxxFilter()<br/>
 								参考实现：<br/>
 								org.commontemplate.standard.coat.CommentSyntaxCoatFilter<br/>
 								<br/>
@@ -121,7 +121,7 @@ $!
 								注册方法：<br/>
 								addExpressionFilter(ExpressionFilter)<br/>
 								配置方法：<br/>
-								expressionFilters[200]=com.xxx.XxxFilter<br/>
+								expressionFilters[200]=com.xxx.XxxFilter()<br/>
 								expressionReplacement{&amp;lt;}=&lt; <font color="green">(注：使用内置的ExpressionReplacementFilter)</font><br/>
 								参考实现：<br/>
 								org.commontemplate.standard.filter.ExpressionReplacementFilter<br/>
@@ -133,7 +133,7 @@ $!
 								注册方法：<br/>
 								addRenderInterceptor(RenderInterceptor)<br/>
 								配置方法：<br/>
-								renderInterceptors[200]=com.xxx.XxxInterceptor<br/>
+								renderInterceptors[200]=com.xxx.XxxInterceptor()<br/>
 								参考实现：<br/>
 								org.commontemplate.standard.debug.DebugInterceptor<br/>
 								<br/>
@@ -144,7 +144,7 @@ $!
 								注册方法：<br/>
 								addEvaluateInterceptor(EvaluateInterceptor)<br/>
 								配置方法：<br/>
-								evaluateInterceptors[200]=com.xxx.XxxInterceptor<br/>
+								evaluateInterceptors[200]=com.xxx.XxxInterceptor()<br/>
 								参考实现：<br/>
 								无<br/>
 								<br/>
@@ -203,7 +203,7 @@ $!
 								注册方法：<br/>
 								addDirectiveHandler(String name, DirectiveHandler)<br/>
 								配置方法：<br/>
-								directive{xxx}=com.xxx.XXXDirective<br/>
+								directive{xxx}=com.xxx.XXXDirective()<br/>
 								参考实现：<br/>
 								org.commontemplate.standard.directive及其子包下相关类<br/>
 								注意事项：<br/>
@@ -284,9 +284,9 @@ $!
 								org.commontemplate.standard.property.StaticPropertyHandlerSupport<br/>
 								org.commontemplate.standard.property.SystemPropertyHandlerSupport<br/>
 								配置方法：<br/>
-								property{java.lang.String.xxx}=com.xxx.XXXPropertyHandler<br/>
-								staticProperty{java.lang.String.xxx}=com.xxx.XXXPropertyHandler<br/>
-								systemProperty{xxx}=com.xxx.XXXPropertyHandler<br/>
+								property{java.lang.String.xxx}=com.xxx.XXXPropertyHandler()<br/>
+								staticProperty{java.lang.String.xxx}=com.xxx.XXXPropertyHandler()<br/>
+								systemProperty{xxx}=com.xxx.XXXPropertyHandler()<br/>
 								参考实现：<br/>
 								org.commontemplate.standard.property包及其子包相关类<br/>
 								<br/>
@@ -303,9 +303,9 @@ $!
 								org.commontemplate.standard.function.StaticFunctionHandlerSupport<br/>
 								org.commontemplate.standard.function.SystemFunctionHandlerSupport<br/>
 								配置方法：<br/>
-								function{java.lang.String.xxx}=com.xxx.XXXFunctionHandler<br/>
-								staticFunction{java.lang.String.xxx}=com.xxx.XXXFunctionHandler<br/>
-								systemFunction{xxx}=com.xxx.XXXFunctionHandler<br/>
+								function{java.lang.String.xxx}=com.xxx.XXXFunctionHandler()<br/>
+								staticFunction{java.lang.String.xxx}=com.xxx.XXXFunctionHandler()<br/>
+								systemFunction{xxx}=com.xxx.XXXFunctionHandler()<br/>
 								参考实现：<br/>
 								org.commontemplate.standard.function包及其子包相关类<br/>
 								<br/>
@@ -350,7 +350,7 @@ $!
 								相关接口和基类：<br/>
 								org.commontemplate.standard.collection.CollectionConverter<br/>
 								配置方法：<br/>
-								collectionConverter{com.xxx.XXX}=com.xxx.XXXCollectionConverter<br/>
+								collectionConverter{com.xxx.XXX}=com.xxx.XXXCollectionConverter()<br/>
 								参考实现：<br/>
 								org.commontemplate.standard.collection包下相关类<br/>
 								<br/>
@@ -361,7 +361,7 @@ $!
 								org.commontemplate.standard.data.InputStreamDataProvider<br/>
 								org.commontemplate.standard.data.StringDataProvider<br/>
 								配置方法：<br/>
-								dataProvider{xxx}=com.xxx.XXXDataProvider<br/>
+								dataProvider{xxx}=com.xxx.XXXDataProvider()<br/>
 								参考实现：<br/>
 								org.commontemplate.standard.data包下相关类<br/>
 								<br/>
@@ -370,7 +370,7 @@ $!
 								相关接口和基类：<br/>
 								org.commontemplate.core.OutputFilter<br/>
 								配置方法：<br/>
-								codeFilter{xxx}=com.xxx.XXXCodeFilter<br/>
+								codeFilter{xxx}=com.xxx.XXXCodeFilter()<br/>
 								参考实现：<br/>
 								org.commontemplate.standard.directive.filter.code包下相关类<br/>
 								<br/>
@@ -379,7 +379,7 @@ $!
 								相关接口和基类：<br/>
 								org.commontemplate.core.OutputFilter<br/>
 								配置方法：<br/>
-								escapeFilter{xxx}=com.xxx.XXXEscapeFilter<br/>
+								escapeFilter{xxx}=com.xxx.XXXEscapeFilter()<br/>
 								参考实现：<br/>
 								org.commontemplate.standard.directive.filter.escape包下相关类<br/>
 								<br/>

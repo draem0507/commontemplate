@@ -24,7 +24,6 @@ public class CaptureDirectiveHandler extends BlockDirectiveHandlerSupport {
 	private static final long serialVersionUID = 1L;
 
 	public void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
-		Assert.assertTrue(param instanceof String);
 		BufferedOutputFilter bufferedFilter = new BufferedOutputFilter();
 		context.setOutputFilter(bufferedFilter);
 		DirectiveUtils.renderAll(innerElements, context);

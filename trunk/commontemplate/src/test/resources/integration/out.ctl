@@ -1,13 +1,9 @@
-$macro{a}
-	this is a
-	aaa: $inner
-$end{macro}
+$compress
+$capture{global -> xxx}
 
-$macro{b}
-	this is b
-	bbb: $inner
-$end{macro}
+aaa        bbb
 
-$a.block
-	$b
-$end{a.block}
+$end{capture}
+ccc      ddd
+$end{compress}
+${xxx}

@@ -70,7 +70,7 @@ $!
 								如果参数条件为真则执行其内部块:<br/>
 								$if{user.name == "james"}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
-								$elseif{ user.name == "kent"}<br/>
+								$elseif{user.name == "kent"}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
 								$else<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;...<br/>
@@ -111,7 +111,7 @@ $!
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${entry.key} 或者 ${entry.value}<br/>
 								&nbsp;&nbsp;&nbsp;&nbsp;$end<br/>
 								$end<br/>
-								特殊迭代举例：<br/>
+								<b>特殊迭代举例：</b><br/>
 								<b>a.</b> 简单次数迭代：$for{10}，迭代10次，不产生迭代项数据，但可以用状态信息${for.index}等，当次数小于或等于零时不迭代<br/>
 								<b>b.</b> 递归迭代：$for{menu -> children : menus}，递归迭代menu的children属性，直到为空，通常用于输出树结构。<br/>
 								<b>c.</b> 并行迭代：$for{item1 : list1, item2 : list2}，$for{i : (1..10), user : users}，多个集合并行取next值，以最长的集合作为结束，短集合自动补null值<br/>
@@ -173,14 +173,16 @@ $!
 								变量定义:<br/>
 								局部变量定义<br/>
 								$var{name = "james"} <font color="green">(注：通常用于隐藏上级同名变量)</font><br/>
+								在指定上下文定义变量 <a href="expression.html#context">变量上下文说明...</a><br/>
+								$var{session -&gt; name = "james"}<br/>
+								在最近的上级if指令上下文定义变量<br/>
+								$var{if -&gt; name = "james"}<br/>
 								在上一级上下文定义变量<br/>
 								$var{super -&gt; name = "james"}<br/>
 								在根级上下文定义变量<br/>
 								$var{root -&gt; name = "james"}<br/>
 								在全局上下文定义变量(整个引擎内共享)<br/>
 								$var{global -&gt; name = "james"}<br/>
-								在指定上下文定义变量<br/>
-								$var{session -&gt; name = "james"}<br/>
 								常见上下文简化指令:<br/>
 								$super{name = "james"} 等价于 $var{super -&gt; name = "james"}<br/>
 								$root{name = "james"} 等价于 $var{root -&gt; name = "james"}<br/>

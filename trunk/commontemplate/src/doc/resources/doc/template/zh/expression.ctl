@@ -14,6 +14,8 @@ $!
 								引号允许多行字符串<br/>
 								忽略不识别的转义字符，如：${"\h"} 输出两个字符：\h<br/>
 								增加反单引号(`)表示不转义串，内容不能包含反单引号本身，通常用于输出Windows地址，如：${`C:\native\user\file.txt`}<br/>
+								<font color="green">注：不建议用表达式输出字面字符串，建议将其直接写在模板内，如：<br/>
+								${"xxx" + var1 + "yyy" + var2} 建议写成 xxx${var1}yyy${var2}</font><br/>
 								<b>3. 数字：</b>以0-9开头表示数字<br/>
 								以0x开头的为16进制数字，如：0xF5A7<br/>
 								以0开头的整数为8进制数字，如：07<br/>
@@ -36,24 +38,54 @@ $!
 								this.local 代表当前LocalContext<br/>
 								this.template 代表当前Template<br/>
 								this.element 代表当前Element<br/>
-								如果模板中没有同名变量，this前缀可省。<br/>
+								this.for 代表当前迭代状态<br/>
+								<font color="green">(注：如果模板中没有同名变量，this前缀可省)</font><br/>
 								super.super 代表上级的上级(可递归)<br/>
 								super.local 代表变量栈的上级LocalContext<br/>
 								super.template 代表包含关系的上级Template，如果当前模板未被其它模板所包含，则为null<br/>
 								super.element 代表上级Element，通常为BlockDirective<br/>
+								super.for 代表上级迭代状态<br/>
 								<br/>
-								<b>三. 变量区间:</b><br/>
+								<a name="context"/><b>三. 变量上下文:</b><br/>
 								页面内的每一个块指令(如$if,$for等)都会创建相应的LocalContext, 变量取值时逐级向上查找, <br/>
 								如果当前LocalContext中的变量与上级变量重名，可以使用super关键字跳到上级取值，如：${super.var}<br/>
 								Web应用中变量查找顺序：页面内, root, model, request, parameter, header, session, cookie, application, global<br/>
 								可以用context["区域名"]在指定范围内查找，如：${context["session"].loginUser}<br/>
 								另外，也可以用context["指令名"]查找最近的某个块指令区域内的变量，如：${context["for"].xxx} ${context["if"].xxx}<br/>
+								赋值也一样，如：$var{session-&gt;xxx="xxx"} 或 $var{for-&gt;xxx="xxx"}<br/>
+								<b>变量上下文示意图：</b><br/>
+								<img src="../images/frame/context.gif" /><br/>
+								<b>变量上下文举例：</b><br/>
+$var{name="aaa"}<br/>
+$if{true}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;$var{name="bbb"}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;$for{1}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$var{name="ccc"}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"for" name: ${name}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"for" super name: ${super.name}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"for" super super name: ${super.super.name}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"for" if name: ${context["if"].name}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"for" root name: ${context["root"].name}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;$end<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;"if" name: ${name}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;"if" super name: ${super.name}<br/>
+$end<br/>
+"root" name: ${name}<br/>
+<b>输出结果：</b><br/>
+"for" name: ccc<br/>
+"for" super name: bbb<br/>
+"for" super super name: aaa<br/>
+"for" if name: bbb<br/>
+"for" root name: aaa<br/>
+"if" name: bbb<br/>
+"if" super name: aaa<br/>
+"root" name: aaa<br/>
 								<br/>
 								<b>四. 标准操作符:</b> <a href="extension.html#operator">扩展...</a><br/>
 								<b>(1) 对象(Object)：</b><br/>
 								. 点号, 属性取值, 如: ${user.name}<br/>
 								[ ] 方括号, 索引属性, 如: ${user["name"]} ${user[variable]}<br/>
-								$ 一元美元符号，创建类实例, 如: ${$com.xxx.User(1, "james")} 或 ${$com.xxx.User(id: 1, name: "james")} 或 ${$com.xxx.User()} 或 ${$com.xxx.User}<br/>
+								new 创建类实例, 如: ${new com.xxx.User(1, "james")} 或 ${new com.xxx.User(id: 1, name: "james")} 或 ${new com.xxx.User()} 或 ${new com.xxx.User}<br/>
 								<font color="green">(注：参数若为List则传入构造函数, 若为Map则调用无参构造函数, 然后调用setXXX()初始化属性)</font><br/>
 								& 一元与号，包名或类名前缀, 如: ${&com.xxx.AppConstant.PREFIX} 或 ${&com.xxx.AppUtils.calc(xxx)} 等价于 ${"com.xxx.AppUtils".toClass.calc(xxx)}<br/>
 								is 或 instanceof，类型判断，如：${user1 is com.xxx.User} 或 ${user1 instanceof com.xxx.User} <font color="green">(注：建议使用is)</font><br/>
@@ -79,9 +111,9 @@ $!
 								/  除法运算, 如: ${user.coins / 2}<br/>
 								%  求模/求余运算, 如: ${user.coins % 2}<br/>
 								**  求幂次方运算, 如: ${2 ** 2 ** 3}<br/>
-								| 按位与运算，如: ${128 | 256}<br/>
-								& 按位或运算，如: ${128 & 2}<br/>
-								^ 按位异或运算，如: ${~128 ^ 2}<br/>
+								& 按位与运算，如: ${128 & 2}<br/>
+								| 按位或运算，如: ${128 | 256}<br/>
+								^ 按位异或运算，如: ${128 ^ 2}<br/>
 								~ 按位取反运算，如: ${~128}<br/>
 								&gt;&gt; 按位右移运算，如: ${32 &gt;&gt; 2}<br/>
 								&lt;&lt; 按位左移运算，如: ${128 &lt;&lt; 2}<br/>
@@ -120,8 +152,8 @@ $!
 								^~ (忽略大小写比较)字符串是否以另一字符串开头，也就是startsWith, 如: ${"abcd" ^~ "ab"} $if{user1.name ^~ "james"}<br/>
 								$~ (忽略大小写比较)字符串是否以另一字符串结尾，也就是endsWith, 如: ${"abcd" $~ "cd"} $if{user1.name $~ "lee"}<br/>
 								*~ (忽略大小写比较)字符串是否包含另一字符串，也就是containsWith, 如: ${"abcd" *~ "bc"} $if{user1.name *~ "lee"}<br/>
-								^? 从最前开始匹配子串所在位置，也就是indexOf，如：${"aaa.bbb.ccc" ^* "."} 输出：3<br/>
-								$? 从最后开始匹配子串所在位置，也就是lastIndexOf，如：${"aaa.bbb.ccc" $* "."} 输出：7<br/>
+								^? 从最前开始匹配子串所在位置，也就是indexOf，如：${"aaa.bbb.ccc" ^? "."} 输出：3<br/>
+								$? 从最后开始匹配子串所在位置，也就是lastIndexOf，如：${"aaa.bbb.ccc" $? "."} 输出：7<br/>
 								*? 整个字符串中匹配子串的个数，如：${"xxxabcxxxabcxxx" *? "abc"} 输出：2<br/>
 								^- 截取前缀，如：${"note.txt" ^- "."} 输出：note<br/>
 								$- 截取后缀，如：${"note.txt" $- "."} 输出：txt<br/>
@@ -189,7 +221,7 @@ $!
 									"**"<br/>
 									一元："+", "-", "!", "~", "?"<br/>
 									".", "[ ]", "-&gt;"<br/>
-									一元：".", "[ ]", "\", "&", "$", "max", "min", "sum", "avg"<br/>
+									一元：".", "[ ]", "\", "&", "new", "max", "min", "sum", "avg"<br/>
 									"( )"<br/>
 								<br/>
 								<b>六. 对象属性及扩展属性</b> <a href="extension.html#property">扩展...</a><br/>

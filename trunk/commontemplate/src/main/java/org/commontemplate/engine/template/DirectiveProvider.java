@@ -217,17 +217,7 @@ final class DirectiveProvider {
 				}
 			}
 		} else {
-			int j = message.indexOf(":"); // TODO ":"语法待删除
-			if (j > -1) {
-				name = message.substring(1, j);
-				String param = message.substring(j + 1);
-				expressionSource = param.trim();
-				if (! syntax.getEndDirectiveName().equals(name)) { // 结束指令不解析表达式
-					expression = expressionParser.createConstant(expressionSource);
-				}
-			} else {
-				name = message.substring(1, message.length());
-			}
+			name = message.substring(1, message.length());
 		}
 		return resolveDirective(token, name.trim(), expression, expressionSource);
 	}
