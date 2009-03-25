@@ -90,13 +90,13 @@ $code{html}$!<html>
         <table border="1">
             <!--$for{user : users}-->
             <tr>
-                <td><!--$output{for.index + 1}-->1<!--$end--></td>
-                <td><!--$output{user.name}-->james<!--$end--></td>
-                <td><!--$output{user.coins}-->2.00<!--$end--></td>
-                或者
                 <td><!--${for.index + 1}--></td>
                 <td><!--${user.name}--></td>
                 <td><!--${user.coins}--></td>
+                或者：(编辑时，显示占位内容)
+                <td><!--$output{for.index + 1}-->1<!--$end--></td>
+                <td><!--$output{user.name}-->james<!--$end--></td>
+                <td><!--$output{user.coins}-->2.00<!--$end--></td>
             </tr>
             <!--$end-->
         </table>
@@ -111,13 +111,13 @@ $code{html}<html>
 	        <table border="1">
 	        	<ct:for param="user : users">
 	            <tr>
-	                <td><ct:output param="for.index + 1">1</ct:output></td>
-	                <td><ct:output param="user.name">james</ct:output></td>
-	                <td><ct:output param="user.coins">2.00</ct:output></td>
-	                或者: (out为行指令, output为块指令)
 	                <td><ct:out param="for.index + 1"/></td>
 	                <td><ct:out param="user.name"/></td>
 	                <td><ct:out param="user.coins"/></td>
+	                或者: (out为行指令, output为块指令)
+	                <td><ct:output param="for.index + 1">1</ct:output></td>
+	                <td><ct:output param="user.name">james</ct:output></td>
+	                <td><ct:output param="user.coins">2.00</ct:output></td>
 	            </tr>
 	            </ct:for>
 	        </table>
@@ -130,9 +130,9 @@ $code{html}<html>
     <body>
         <table ct:if="users != null && users.size &gt; 0" border="1">
             <tr ct:for="user : users">
-                <td><span ct:output="for.index + 1">1</span></td>
-                <td><span ct:output="user.name">james</span></td>
-                <td><span ct:output="user.coins">2.00</span></td>
+                <td><span ct:out="for.index + 1">1</span></td>
+                <td><span ct:out="user.name">james</span></td>
+                <td><span ct:out="user.coins">2.00</span></td>
             </tr>
         </table>
     </body>

@@ -22,13 +22,12 @@ public class BlockDefineDirectiveHandler extends BlockDirectiveHandlerSupport {
 
 	public void doRender(Context context, String directiveName, Object param, List innerElements) throws Exception {
 		Assert.assertNotNull(param, "BlockDefineDirectiveHandler.parameter.required");
-		Assert.assertTrue(param instanceof String, "BlockDefineDirectiveHandler.parameter.type.error");
 		if (param instanceof String) {
 			context.getParentLocalContext().putProperty(BLOCK_TYPE, (String)param, innerElements);
 		} else if (param instanceof NamePair) {
 			VariableScopeUtils.putVariable(context, true, (NamePair)param, innerElements);
 		} else {
-			Assert.fail("$time指令参数错误, 参数示例: $time{xxx} 或者 $time{global -> xxx}"); // TODO 未国际化
+			Assert.fail("BlockDefineDirectiveHandler.parameter.type.error");
 		}
 	}
 
