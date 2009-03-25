@@ -20,7 +20,8 @@ public class InnerDirectiveHandler extends DirectiveHandlerSupport {
 		if (inner != null) {
 			Map model = ParameterUtils.getParameters(param);
 			context.putAllVariables(model);
-			DirectiveUtils.renderAll(inner, context);
+			context.putProperty(INNER_BLOCK, null);
+	        DirectiveUtils.renderAll(inner, context);
 		}
 	}
 
