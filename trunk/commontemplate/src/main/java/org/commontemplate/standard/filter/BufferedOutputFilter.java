@@ -15,9 +15,9 @@ public class BufferedOutputFilter implements OutputFilter, Serializable {
 
 	public String filter(String text) {
 		buffer.append(text);
-		return null;
+		return "";
 	}
-	
+
 	public String getBuffered() {
 		return buffer.toString();
 	}
