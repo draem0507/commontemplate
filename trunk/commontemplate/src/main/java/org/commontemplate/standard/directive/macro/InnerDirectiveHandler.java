@@ -11,7 +11,7 @@ import org.commontemplate.standard.directive.ParameterUtils;
 public class InnerDirectiveHandler extends DirectiveHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	public static final String INNER_BLOCK = "inner_block";
 
 	public void doRender(Context context, String directiveName, Object param)
@@ -22,6 +22,7 @@ public class InnerDirectiveHandler extends DirectiveHandlerSupport {
 			context.putAllVariables(model);
 			context.putProperty(INNER_BLOCK, null);
 	        DirectiveUtils.renderAll(inner, context);
+	        context.putProperty(INNER_BLOCK, inner);
 		}
 	}
 
