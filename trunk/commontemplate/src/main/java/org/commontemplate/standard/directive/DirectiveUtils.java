@@ -11,10 +11,12 @@ public final class DirectiveUtils {
 	private DirectiveUtils() {}
 	
 	public static void renderAll(List elements, Context context) throws RenderingException {
-		for (int i = 0, n = elements.size(); i < n; i ++) {
-			Element directive = (Element)elements.get(i);
-			directive.render(context);
-		}
+	    if (elements != null && elements.size() > 0) {
+    		for (int i = 0, n = elements.size(); i < n; i ++) {
+    			Element directive = (Element)elements.get(i);
+    			directive.render(context);
+    		}
+	    }
 	}
 
 }

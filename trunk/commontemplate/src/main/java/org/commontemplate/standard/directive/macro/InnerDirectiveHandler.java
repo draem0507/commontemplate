@@ -1,5 +1,6 @@
 package org.commontemplate.standard.directive.macro;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,12 +18,16 @@ public class InnerDirectiveHandler extends DirectiveHandlerSupport {
 	public void doRender(Context context, String directiveName, Object param)
 			throws Exception {
 		List inner = (List)context.getProperty(INNER_BLOCK);
-		if (inner != null) {
+		if (inner != null && inner.size() > 0) {
+			List parentInner = (List)context.getParentLocalContext().getProperty(INNER_BLOCK);
 			Map model = ParameterUtils.getParameters(param);
-			context.putAllVariables(model);
-			context.putProperty(INNER_BLOCK, null);
-	        DirectiveUtils.renderAll(inner, context);
-	        context.putProperty(INNER_BLOCK, inner);
+			context.pushLocalContext(model);
+            try {
+	            context.putProperty(INNER_BLOCK, parentInner == null ? new ArrayList(0) : parentInner);
+    	        DirectiveUtils.renderAll(inner, context);
+	        } finally {
+	            context.popLocalContext();
+	        }
 		}
 	}
 

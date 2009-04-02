@@ -1,10 +1,9 @@
 package org.commontemplate.standard.directive.macro;
 
-import java.util.Map;
+import java.util.ArrayList;
 
 import org.commontemplate.core.Context;
 import org.commontemplate.standard.directive.DirectiveHandlerSupport;
-import org.commontemplate.standard.directive.ParameterUtils;
 import org.commontemplate.util.Assert;
 
 /**
@@ -23,8 +22,7 @@ public class MacroDefaultLineDirectiveHandler extends DirectiveHandlerSupport {
 			name = namespace + name;
 		Macro macro = (Macro)context.getProperty(MacroDirectiveHandler.MACRO_TYPE, name);
 		Assert.assertNotNull(macro, "MacroDefaultLineDirectiveHandler.invaild.macro.name", new Object[]{name});
-		Map variables = ParameterUtils.getParameters(param);
-		macro.render(context, variables, null);
+		macro.render(context, param, new ArrayList(0));
 	}
 
 }
