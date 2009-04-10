@@ -5,17 +5,18 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.commontemplate.standard.operator.BinaryOperatorHandlerSupport;
+import org.commontemplate.util.MapEntry;
 
 public class MapOperatorHandler extends BinaryOperatorHandlerSupport {
 
 	private static final long serialVersionUID = 1L;
 
 	public MapOperatorHandler() {
-		super(Map.class, Entry.class);
+		super(LiteralMap.class, MapEntry.class);
 	}
 
 	public Object doEvaluate(Object leftOperand, Object rightOperand) throws Exception {
-		Map literalMap = (Map)leftOperand;
+	    LiteralMap literalMap = (LiteralMap)leftOperand;
 		Entry literalEntry = (Entry)rightOperand;
 		try {
 			literalMap.put(literalEntry.getKey(), literalEntry.getValue());

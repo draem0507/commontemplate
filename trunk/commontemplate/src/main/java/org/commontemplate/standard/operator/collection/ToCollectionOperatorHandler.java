@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.commontemplate.standard.operator.UnaryOperatorHandlerSupport;
+import org.commontemplate.standard.operator.map.LiteralMap;
 
 /**
  * 单一对象转化成集合一元操作符: "[]"<br/>
@@ -28,20 +29,25 @@ public class ToCollectionOperatorHandler extends UnaryOperatorHandlerSupport {
 	public Object doEvaluate(Object operand) throws Exception {
 		if (operand == null)
 			return new ArrayList(0);
-		Object model = operand;
-		if (model.getClass().isArray()
-				|| model instanceof List
-				|| model instanceof Map) {
-			return model;
+		if (operand instanceof LiteralList) {
+	        return new ArrayList((LiteralList)operand);
 		}
-		if (model instanceof Entry) {
-			Entry entry = (Entry)model;
+		if (operand instanceof LiteralMap) {
+            return new HashMap((LiteralMap)operand);
+        }
+		if (operand.getClass().isArray()
+				|| operand instanceof List
+				|| operand instanceof Map) {
+			return operand;
+		}
+		if (operand instanceof Entry) {
+			Entry entry = (Entry)operand;
 			Map map = new HashMap(1);
 			map.put(entry.getKey(), entry.getValue());
 			return map;
 		}
 		List list = new ArrayList(1);
-		list.add(model);
+		list.add(operand);
 		return list;
 	}
 
