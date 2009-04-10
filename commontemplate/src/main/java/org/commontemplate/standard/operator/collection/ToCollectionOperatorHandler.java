@@ -30,10 +30,10 @@ public class ToCollectionOperatorHandler extends UnaryOperatorHandlerSupport {
 		if (operand == null)
 			return new ArrayList(0);
 		if (operand instanceof LiteralList) {
-	        return new ArrayList((LiteralList)operand);
+	        return ((LiteralList)operand).getList();
 		}
 		if (operand instanceof LiteralMap) {
-            return new HashMap((LiteralMap)operand);
+            return ((LiteralMap)operand).getMap();
         }
 		if (operand.getClass().isArray()
 				|| operand instanceof List
