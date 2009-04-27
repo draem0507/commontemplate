@@ -193,11 +193,7 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 						}
 					}
 				});
-		
-		if(url == null) {
-			throw new RuntimeException("无法找到资源 : " + resName); //TODO: 未国际化
-		}
-		
+				
 		if (url != null) {
 			// make sure it is buffered
 			try {
@@ -211,6 +207,11 @@ public class StandardReloadableResourceProvider implements ReloadableResourcePro
 				url = null;
 			}
 		}
+		/* 2009/4/27 YanRong
+		 * 删除掉了 if(url == null) {throw exception} 的部分。
+		 * 因为这个类默认会查找全部的国际化文件，如 message.properties, message_zh.properties,
+		 * message_zh_CN.properties ，是实际上可能仅仅需要一个。所以，取消掉 url == null 抛出异常的代码。 */
+		
 		return false;
 	}
 
