@@ -45,15 +45,19 @@ public class BeanUtils {
 				return field.get(object);
 			}
 		} catch (SecurityException e) {
+			e.printStackTrace();
 			throw new NoSuchPropertyException(e);
 		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
 			throw new NoSuchPropertyException(e);
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 			throw new NoSuchPropertyException(e);
 		} catch (InvocationTargetException e) {
+			e.printStackTrace();
 			throw new NoSuchPropertyException(e);
 		} catch (NoSuchFieldException e) {
+			e.printStackTrace();
 			throw new NoSuchPropertyException(e);
 		}
 	}
