@@ -1,0 +1,1046 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=gb2312" />
+		<title>Common Template Engine</title>
+		<meta name="keywords" content="commontemplate ctl template language engine code generator" />
+		<style type="text/css">
+			body {
+				margin: 0px;
+				padding: 0px;
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 12px;
+				color: #000000;
+				cursor: url('../images/cursor.cur');
+			}
+
+			td {
+				font-size: 12px;
+				height: 26;
+			}
+
+			img {
+				border: 0px;
+				clear: right;
+			}
+
+			input {
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 12px;
+				color: #000000;
+			}
+
+			a:link {
+				font-size: 12px;
+				color: #003399;
+				text-decoration: none;
+			}
+			a:visited {
+				font-size: 12px;
+				color: #003399;
+				text-decoration: none;
+			}
+			a:active {
+				font-size: 12px;
+				color: #003399;
+				text-decoration: none;
+			}
+			a:hover {
+				font-size: 12px;
+				color: #003399;
+				text-decoration: underline;
+			}
+		</style>
+	</head>
+	<body>
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td height="66">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<td rowspan="2" height="60"><a href="http://www.commontemplate.org"><img src="../images/banner.gif" alt="Common Template Engine" border="0" width="400" height="50" /></a></td>
+							<td height="40" valign="top" align="right">
+								
+								<a href="../../zh/index.html">发布版本</a>
+								|
+								每日构建
+								
+								&gt;&gt;&nbsp;
+								
+								<a href="../en/planning.html">English</a>
+								
+								|
+								
+								&#20013;&#25991;
+								
+							</td>
+						</tr>
+						<tr>
+							<td height="20" valign="bottom" align="right">
+								<table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse; border-style: solid; border-color: #CCCCCC;">
+									<tr align="center">
+										
+										<td width="90" height="20" style="font-weight: bold;"><a href="downloads.html" target="_self">下载</a></td>
+										
+										<td width="90" height="20" style="font-weight: bold;"><a href="changes.html" target="_self">更新</a></td>
+										
+										<td width="90" height="20" style="font-weight: bold;"><a href="http://forum.commontemplate.org/index.php" target="_blank">论坛</a></td>
+										
+										<td width="90" height="20" style="font-weight: bold;"><a href="about.html" target="_self">关于我们</a></td>
+										
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" height="6" style="background-color: #005B88;"></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<td width="200" valign="top">
+								<table width="100%" border="1" style="border-collapse: collapse; border-style: solid; border-color: #CCCCCC;" cellspacing="1" cellpadding="2">
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="4" height="22" style="background-color: #0055CC;"></td>
+													<td width="4"></td>
+													<td style="font-weight: bold;">文档</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="index.html" target="_self">首页概览</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="template.html" target="_self">模板指南</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="expression.html" target="_self">表达式指南</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="coat.html" target="_self">语法外套指南</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="config.html" target="_self">配置指南</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="extension.html" target="_self">扩展指南</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="api.html" target="_self">API使用指南</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="faq.html" target="_self">常见问题</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="versus.html" target="_self">对比其它模板引擎</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="4" height="22" style="background-color: #0055CC;"></td>
+													<td width="4"></td>
+													<td style="font-weight: bold;">集成</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="mvc.html" target="_self">MVC框架集成</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="jsp.html" target="_self">JSP标签集成</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="cache.html" target="_self">缓存策略集成</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="logger.html" target="_self">日志框架集成</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="data.html" target="_self">数据格式集成</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="javaxscript.html" target="_self">脚本引擎集成</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="mail.html" target="_self">邮件发送组件集成</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="dependency.html" target="_self">第三方集成依赖包</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="4" height="22" style="background-color: #0055CC;"></td>
+													<td width="4"></td>
+													<td style="font-weight: bold;">工具</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="debugger.html" target="_self">调试器说明</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="viewer.html" target="_self">查看器说明</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="generator.html" target="_self">模板生成器说明</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="converter.html" target="_self">模板转换器说明</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="editor.html" target="_self">编辑器插件说明</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="codecase.html" target="_self">代码生成器说明</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="4" height="22" style="background-color: #0055CC;"></td>
+													<td width="4"></td>
+													<td style="font-weight: bold;">开发</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="architecture.html" target="_self">架构设计</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="criterion.html" target="_self">开发规范</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="planning.html" target="_self">项目计划</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="requirement.html" target="_self">需求场景</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="4" height="22" style="background-color: #0055CC;"></td>
+													<td width="4"></td>
+													<td style="font-weight: bold;">资源</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="downloads.html" target="_self">下载</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="../resources/license.txt" target="_blank">许可协议</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="changes.html" target="_self">更新日志</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="uml.html" target="_self">UML图</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="../javadoc/index.html" target="_self">Java Doc</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="../coverage/index.html" target="_self">测试覆盖率报告</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="4" height="22" style="background-color: #0055CC;"></td>
+													<td width="4"></td>
+													<td style="font-weight: bold;">社区</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="about.html" target="_self">开发团队</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="http://forum.commontemplate.org/index.php/index.php" target="_blank">论坛</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="http://code.google.com/p/commontemplate/w/list" target="_blank">知识库</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="http://groups.google.com/group/commontemplate-user" target="_blank">邮件列表</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="http://code.google.com/p/commontemplate/issues/list" target="_blank">问题列表</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									<tr>
+										<td height="24" style="background-color: #F4F4F4;">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td width="16"></td>
+													<td><a href="http://code.google.com/p/commontemplate/issues/entry" target="_blank">报告问题</a></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									
+									
+								</table>
+								<br/>
+								<form method="GET" action="http://www.google.com/custom" target="_blank">
+								<table border="0" cellspacing="0" cellpadding="4">
+									<tr>
+										<td>
+											<input type="text" name="q" maxlength="128" style="width: 120px;" />
+											<input type="hidden" name="domains" value="commontemplate.org" />
+											<input type="hidden" name="sitesearch" value="commontemplate.org" />
+											<input type="hidden" name="hl" value="zh-CN" />
+											<input type="hidden" name="cof" value="LH:50;LW:400;L:http://www.commontemplate.org/images/banner.gif;S:http://www.commontemplate.org;" />
+										</td>
+										<td>
+											<input type="submit" name="sa" value="搜索" />
+										</td>
+									</tr>
+								</table>
+								</form>
+							</td>
+							<td width="20">&nbsp;</td>
+							<td align="left" valign="top">
+								<table width="100%" border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td height="32" align="left" valign="bottom"><b><font size="3">CommonTemplate 项目计划</font></b></td>
+									<tr>
+									<tr>
+										<td align="left"><hr width="30%" align="left" /></td>
+									<tr>
+									<tr>
+										<td align="left">
+											
+
+									<table border="1" align="center"
+										style="border-style: solid; border-collapse: collapse; border-width: 1px; border-color: #000000;">
+										<tr style="background-color: #DBEEF3;">
+											<td>任务描述</td>
+											<td>类型</td>
+											<td>工作量</td>
+											<td>紧急性</td>
+											<td>重要性</td>
+										</tr>
+										<tr>
+											<td>完成与AntTask的集成, 可用于代码生成等, 实现:org.commontemplate.tools.ant.TemplateTask</td>
+											<td>需求</td>
+											<td>小</td>
+											<td>低</td>
+											<td>中</td>
+										</tr>
+										<tr>
+											<td>完成Velocity和FreeMarker模板转换为CommonTemplate</td>
+											<td>需求</td>
+											<td>小</td>
+											<td>低</td>
+											<td>中</td>
+										</tr>
+										<tr>
+											<td>实现命令行调试器, 服务器以命令行启动时,Swing不可用 (自动适应命令行调试器).</td>
+											<td>需求</td>
+											<td>中</td>
+											<td>低</td>
+											<td>中</td>
+										</tr>
+										<tr>
+											<td>实现远程调试器,通过配置服务器IP,端口, TCP连接到服务器进行调试,客户端同样可用Swing或命令行.</td>
+											<td>需求</td>
+											<td>中</td>
+											<td>低</td>
+											<td>中</td>
+										</tr>
+										<tr>
+											<td>CTE脱离MVC框架运行. codebehind.</td>
+											<td>需求</td>
+											<td>中</td>
+											<td>低</td>
+											<td>中</td>
+										</tr>
+										<tr>
+											<td>加入commontemplate-plugin.properties支持, 自动抓取.</td>
+											<td>优化</td>
+											<td>小</td>
+											<td>低</td>
+											<td>低</td>
+										</tr>
+										<tr>
+											<td>加入对DOM模型的支持,root,parent,children,ancestors,name,type,namespace.</td>
+											<td>优化</td>
+											<td>小</td>
+											<td>中</td>
+											<td>中</td>
+										</tr>
+										<tr>
+											<td>配置文件容错处理, 可设置当类不存在时忽略.</td>
+											<td>优化</td>
+											<td>小</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>(自动导入)全局宏定义, 全局父模板.</td>
+											<td>优化</td>
+											<td>小</td>
+											<td>中</td>
+											<td>中</td>
+										</tr>
+										<tr>
+											<td>相似函数调用时, String转为char处理.</td>
+											<td>优化</td>
+											<td>小</td>
+											<td>中</td>
+											<td>中</td>
+										</tr>
+										<tr>
+											<td>数字操作符: round 基于有效位四舍五入.</td>
+											<td>优化</td>
+											<td>小</td>
+											<td>低</td>
+											<td>低</td>
+										</tr>
+										<tr>
+											<td>扩展属性也应能处理get和is前缀.</td>
+											<td>BUG</td>
+											<td>小</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>扩展属性number.sin, cos, tan, ctan.</td>
+											<td>优化</td>
+											<td>小</td>
+											<td>低</td>
+											<td>低</td>
+										</tr>
+										<tr>
+											<td>Element不必保持其原生文本, 只要有Location, 到Template中统一读取, 以减小模板树占用的内存大小.</td>
+											<td>优化</td>
+											<td>小</td>
+											<td>中</td>
+											<td>中</td>
+										</tr>
+										<tr>
+											<td>允许函数调用, 禁止void函数调用, 正则表达式匹配禁止, 如delete*,remove*,save*,update*</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>低</td>
+											<td>低</td>
+										</tr>
+										<tr>
+											<td>配置中的集合, 过滤空项.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>明显为List的配置, 将Chain放入引擎中实现.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>可动态编辑Debug窗口中的变量.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>低</td>
+											<td>中</td>
+										</tr>
+										<tr>
+											<td>Debug窗口中的变量, 有变化的用红色显示.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>低</td>
+											<td>中</td>
+										</tr>
+										<tr>
+											<td>属性语法外套实现有BUG, 空指针检测不全.</td>
+											<td>BUG</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>context不作为关键字.</td>
+											<td>优化</td>
+											<td>小</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>清理不明确的操作符,并讨论操作符是否合理.</td>
+											<td>优化</td>
+											<td>大</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>package.name与package["name"],一个先查子包,一个先查属性.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>配置实现外部文件引入List和Map.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>出错位置信息准确性, 当抛出异常时, 应显示准确的出错元素在模板中的行列位置, 并显示出错位置附件的模板内容.</td>
+											<td>BUG</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>错误信息友好性, 抛出来的异常信息应有助于解决错误, 不应该出现底层的无意义信息, 可以通过故意写错模板内容等方式来测试.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>测试JspTagLib的集成方案, 尤其是对上下级关联的Tag测试.</td>
+											<td>测试</td>
+											<td>中</td>
+											<td>高</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>加入对jsp2.1的taglib支持, 主要是EL的转变</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>低</td>
+											<td>低</td>
+										</tr>
+										<tr>
+											<td>指令, 操作符单元测试, 完善边界值测试, 提高测试覆盖率.</td>
+											<td>测试</td>
+											<td>大</td>
+											<td>高</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>操作符重构, 操作符的分包, 命名等都不是很规范, 应尽快做一次全面重构.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>高</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>写一个验证性论坛, 用CT做全部页面, 用CT做代码生成, 用CT做SQL拼接模板. 并做压力测试.</td>
+											<td>集成</td>
+											<td>大</td>
+											<td>低</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>写一个Ant脚本, 自动提取EL相关类打成jar包</td>
+											<td>集成</td>
+											<td>中</td>
+											<td>低</td>
+											<td>低</td>
+										</tr>
+										<tr>
+											<td>使用Maven发布</td>
+											<td>集成</td>
+											<td>中</td>
+											<td>低</td>
+											<td>低</td>
+										</tr>
+										<tr>
+											<td>全面检查序列化, 任何接口都不应继承Serializable, 但要保证整个模板树都是可序列化的.</td>
+											<td>优化</td>
+											<td>中</td>
+											<td>低</td>
+											<td>中</td>
+										</tr>
+										<tr>
+											<td>完成.Net版的基础实现, 先从Java版导过去, 再重构. 工作量比较大.</td>
+											<td>需求</td>
+											<td>大</td>
+											<td>低</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>使用Spring作为配置工具. 通过<beans>配置完成ConfigurationSettings的组装.
+											可以写一个转换器, 从现有的properies配置转换过去.</td>
+											<td>需求</td>
+											<td>大</td>
+											<td>低</td>
+											<td>低</td>
+										</tr>
+										<tr>
+											<td>实现XSLT解析, Velocity和FreeMarker都支持对XSLT的解析, CT也考虑实现, 但延后.</td>
+											<td>需求</td>
+											<td>大</td>
+											<td>低</td>
+											<td>低</td>
+										</tr>
+										<tr>
+											<td>Html标签属性语法外套优化, 主要是对不合法html标签的容错性的良好支持. 此功能可单独提取,
+											作为Velocity和FreeMarker等的扩展.</td>
+											<td>需求</td>
+											<td>大</td>
+											<td>中</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>"实现热加载国际化信息:org.commontemplate.standard.i18n.ReloadablePropertiesResourceBundleProvider"</td>
+											<td>需求</td>
+											<td>小</td>
+											<td>低</td>
+											<td>低</td>
+										</tr>
+										<tr>
+											<td>实现国际化信息与struts2的集成, 也就是可分包, 分级放置properties文件,
+											而不是单一的properties文件, 并保证集成的简便性, 如需要, 可重构ResourceBundleProvider接口.</td>
+											<td>需求</td>
+											<td>中</td>
+											<td>低</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>写Eclipse/NetBeans的编辑器插件, 可在某Html编辑器插件的基础上扩展. 完成高亮显示, 自动提示.</td>
+											<td>需求</td>
+											<td>大</td>
+											<td>低</td>
+											<td>高</td>
+										</tr>
+										<tr>
+											<td>完成网站的英文版</td>
+											<td>文档</td>
+											<td>大</td>
+											<td>低</td>
+											<td>中</td>
+										</tr>
+										<tr>
+											<td>ExpressionConfigurationSettings是否应与ConfigurationSettings合并?</td>
+											<td>疑问</td>
+											<td>小</td>
+											<td>低</td>
+											<td>低</td>
+										</tr>
+										<tr>
+											<td>StandardConfiguration重构, 加入: static StandardConfiguration
+											loadStandardConfiguration()</td>
+											<td>优化</td>
+											<td>小</td>
+											<td>低</td>
+											<td>低</td>
+										</tr>
+										<tr>
+											<td>重构异常, 分析ParsingException, RenderingException,
+											EvaluationException等的关系.</td>
+											<td>优化</td>
+											<td>小</td>
+											<td>低</td>
+											<td>中</td>
+										</tr>
+										<tr>
+											<td>缓存更新方式, 抽取策略接口, 加入Job线程定时更新缓存策略.</td>
+											<td>优化</td>
+											<td>小</td>
+											<td>低</td>
+											<td>中</td>
+										</tr>
+										<tr>
+											<td>用多线程(多核CPU)模拟并发获取模板, 测试并发.</td>
+											<td>测试</td>
+											<td>中</td>
+											<td>低</td>
+											<td>中</td>
+										</tr>
+										<tr>
+											<td>通过跟踪内存栈, 记录模板编译后占用内存大小, 以及模板源内容大小, 给出测试结果Excel对照表 .</td>
+											<td>测试</td>
+											<td>中</td>
+											<td>低</td>
+											<td>中</td>
+										</tr>
+										<tr>
+											<td>是否应支持switch case, while等?</td>
+											<td>疑问</td>
+											<td>小</td>
+											<td>低</td>
+											<td>低</td>
+										</tr>
+										<tr>
+											<td>是否应支持变量别名引用alias?</td>
+											<td>疑问</td>
+											<td>小</td>
+											<td>低</td>
+											<td>低</td>
+										</tr>
+									</table>
+									<br/>
+
+
+										</td>
+									<tr>
+								</table>
+							</td>
+							<td width="20">&nbsp;</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td height="6" align="center"><hr width="94%" align="center"/></td>
+			</tr>
+			<tr>
+				<td height="24" align="center">
+					<table border="0" cellpadding="0" cellspacing="0">
+						<tr>
+							<td>
+								版权所有 &#169; 2007 - 2009 <a href="about.html">CommonTemplate 开发小组</a>
+							</td>
+							<td width="100" align="right">
+								<a href="http://www.commontemplate.org"><img src="../images/logo.gif" border="0" /></a>
+							</td>
+							<td width="100" align="right">
+								<a href="http://www.commontemplate.org"><img src="../images/powered.gif" border="0" /></a>
+							</td>
+						<tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>
